@@ -5,7 +5,7 @@ Version: 0.0.1
 Authors@R: c(
     person("Hannes", "Mühleisen",
              role = c("aut", "cre"),
-             email = "hannes@cwi.nl",
+             email = "hannes@duckdblabs.com",
              comment = c(ORCID = "0000-0001-8552-0029")),
     person("Kirill", "Müller", role=c("aut"),
            comment = c(ORCID = "0000-0002-1416-3412")),
@@ -20,6 +20,9 @@ Depends:
 Imports: 
     duckdb (>= 0.6.0),
     dplyr (>= 1.0.10),
-    testthat (>= 3.1.5),
+    rlang (>= 1.0.6)
+Suggests:
+    testthat (>= 3.1.5)
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 7.2.1
