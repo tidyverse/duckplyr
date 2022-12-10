@@ -1,0 +1,11 @@
+test_that("as_duckplyr_df() commutes for sample_n()", {
+  # Data
+  test_df <- data.frame(a = 1, b = 2)
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% sample_n()
+  post <- test_df %>% sample_n() %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
