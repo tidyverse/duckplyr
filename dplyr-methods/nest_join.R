@@ -1,0 +1,78 @@
+nest_join.data.frame <- function(x,
+         y,
+         by = NULL,
+         copy = FALSE,
+         keep = NULL,
+         name = NULL,
+         ...,
+         na_matches = c("na", "never"),
+         unmatched = "drop") {
+  check_keep(keep)
+  na_matches <- check_na_matches(na_matches)
+
+  if (is.null(name)) {
+    name <- as_label(enexpr(y))
+  } else {
+    check_string(name)
+  }
+
+  x_names <- tbl_vars(x)
+  y_names <- tbl_vars(y)
+
+  if (is_null(by)) {
+    by <- join_by_common(x_names, y_names)
+  } else {
+    by <- as_join_by(by)
+  }
+
+  vars <- join_cols(x_names, y_names, by = by, suffix = c("", ""), keep = keep)
+  y <- auto_copy(x, y, copy = copy)
+
+  x_in <- as_tibble(x, .name_repair = "minimal")
+  y_in <- as_tibble(y, .name_repair = "minimal")
+
+  x_key <- set_names(x_in[vars$x$key], names(vars$x$key))
+  y_key <- set_names(y_in[vars$y$key], names(vars$x$key))
+
+  args <- join_cast_common(x_key, y_key, vars)
+  x_key <- args$x
+  y_key <- args$y
+
+  condition <- by$condition
+  filter <- by$filter
+  cross <- by$cross
+
+  # We always want to retain all of the matches. We never experience a Cartesian
+  # explosion because `nrow(x) == nrow(out)` is an invariant of `nest_join()`,
+  # and the whole point of `nest_join()` is to nest all of the matches for that
+  # row of `x` (#6392).
+  multiple <- "all"
+
+  rows <- join_rows(
+    x_key = x_key,
+    y_key = y_key,
+    type = "nest",
+    na_matches = na_matches,
+    condition = condition,
+    filter = filter,
+    cross = cross,
+    multiple = multiple,
+    unmatched = unmatched,
+    user_env = caller_env()
+  )
+
+  y_loc <- vec_split(rows$y, rows$x)$val
+
+  out <- set_names(x_in[vars$x$out], names(vars$x$out))
+
+  # Modify all columns in one step so that we only need to re-group once
+  new_cols <- vec_cast(out[names(x_key)], x_key)
+
+  y_out <- set_names(y_in[vars$y$out], names(vars$y$out))
+  y_out <- map(y_loc, vec_slice, x = y_out)
+  y_out <- map(y_out, dplyr_reconstruct, template = y)
+  new_cols[[name]] <- y_out
+
+  out <- dplyr_col_modify(out, new_cols)
+  dplyr_reconstruct(out, x)
+}

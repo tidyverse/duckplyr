@@ -1,2 +1,4 @@
 ^duckplyr\.Rproj$
 ^\.Rproj\.user$
+^tools$
+^dplyr-methods$

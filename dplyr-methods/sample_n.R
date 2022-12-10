@@ -1,0 +1,15 @@
+sample_n.data.frame <- function(tbl, size, replace = FALSE,
+         weight = NULL, .env = NULL, ...) {
+  if (!is_null(.env)) {
+    inform("`sample_n() argument `.env` is deprecated and no longer has any effect.")
+  }
+
+  size <- enquo(size)
+  weight <- enquo(weight)
+
+  dplyr_local_error_call()
+  slice(tbl, local({
+    size <- check_size(!!size, n(), replace = replace)
+    sample.int(n(), size, replace = replace, prob = !!weight)
+  }))
+}

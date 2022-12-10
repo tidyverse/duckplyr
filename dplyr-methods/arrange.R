@@ -1,0 +1,13 @@
+arrange.data.frame <- function(.data,
+         ...,
+         .by_group = FALSE,
+         .locale = NULL) {
+  dots <- enquos(...)
+
+  if (.by_group) {
+    dots <- c(quos(!!!groups(.data)), dots)
+  }
+
+  loc <- arrange_rows(.data, dots = dots, locale = .locale)
+  dplyr_row_slice(.data, loc)
+}
