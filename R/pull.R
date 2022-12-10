@@ -5,6 +5,5 @@ pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
   #
   force(.data)
   out <- NextMethod()
-  out <- dplyr_reconstruct(out, .data)
   return(out)
 }
