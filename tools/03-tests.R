@@ -16,6 +16,8 @@ df_methods <-
   # special dplyr methods, won't implement
   filter(!(name %in% c("dplyr_col_modify", "dplyr_row_slice"))) %>%
   mutate(is_tbl_return = !(name %in% c(
+    # Special case: forward to `NextMethod()`, don't change implementation
+    "dplyr_reconstruct",
     "auto_copy", "group_indices", "group_size", "group_vars", "groups",
     "n_groups", "pull", "same_src", "setequal", "tbl_vars"
   ))) %>%
