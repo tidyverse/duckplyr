@@ -7,4 +7,19 @@ inner_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x
   out <- NextMethod()
   out <- dplyr_reconstruct(out, x)
   return(out)
+
+  # dplyr implementation
+  y <- auto_copy(x, y, copy = copy)
+  join_mutate(
+    x = x,
+    y = y,
+    by = by,
+    type = "inner",
+    suffix = suffix,
+    na_matches = na_matches,
+    keep = keep,
+    multiple = multiple,
+    unmatched = unmatched,
+    user_env = caller_env()
+  )
 }

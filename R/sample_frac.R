@@ -7,4 +7,18 @@ sample_frac.duckplyr_df <- function(tbl, size = 1, replace = FALSE, weight = NUL
   out <- NextMethod()
   out <- dplyr_reconstruct(out, tbl)
   return(out)
+
+  # dplyr implementation
+  if (!is_null(.env)) {
+    inform("`.env` is deprecated and no longer has any effect")
+  }
+
+  size <- enquo(size)
+  weight <- enquo(weight)
+
+  dplyr_local_error_call()
+  slice(tbl, local({
+    size <- round(n() * check_frac(!!size, replace = replace))
+    sample.int(n(), size, replace = replace, prob = !!weight)
+  }))
 }

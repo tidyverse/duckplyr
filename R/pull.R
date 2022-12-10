@@ -6,4 +6,13 @@ pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
   force(.data)
   out <- NextMethod()
   return(out)
+
+  # dplyr implementation
+  var <- tidyselect::vars_pull(names(.data), !!enquo(var))
+  name <- enquo(name)
+  if (quo_is_null(name)) {
+    return(.data[[var]])
+  }
+  name <- tidyselect::vars_pull(names(.data), !!name)
+  set_names(.data[[var]], nm = .data[[name]])
 }

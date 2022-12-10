@@ -7,4 +7,15 @@ add_count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, 
   out <- NextMethod()
   out <- dplyr_reconstruct(out, x)
   return(out)
+
+  # dplyr implementation
+  out <- add_count_impl(
+    x,
+    ...,
+    wt = {{ wt }},
+    sort = sort,
+    name = name,
+    .drop = .drop
+  )
+  dplyr_reconstruct(out, x)
 }

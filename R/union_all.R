@@ -7,4 +7,11 @@ union_all.duckplyr_df <- function(x, y, ...) {
   out <- NextMethod()
   out <- dplyr_reconstruct(out, x)
   return(out)
+
+  # dplyr implementation
+  check_dots_empty()
+  check_compatible(x, y)
+
+  out <- vec_rbind(x, y)
+  dplyr_reconstruct(out, x)
 }

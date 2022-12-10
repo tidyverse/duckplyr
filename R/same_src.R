@@ -6,4 +6,7 @@ same_src.duckplyr_df <- function(x, y) {
   force(x)
   out <- NextMethod()
   return(out)
+
+  # dplyr implementation
+  is.data.frame(y)
 }

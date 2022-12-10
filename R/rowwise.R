@@ -7,4 +7,8 @@ rowwise.duckplyr_df <- function(data, ...) {
   out <- NextMethod()
   out <- dplyr_reconstruct(out, data)
   return(out)
+
+  # dplyr implementation
+  vars <- tidyselect::eval_select(expr(c(...)), data)
+  rowwise_df(data, vars)
 }

@@ -7,4 +7,27 @@ group_map.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = deprecat
   out <- NextMethod()
   out <- dplyr_reconstruct(out, .data)
   return(out)
+
+  # dplyr implementation
+  if (!missing(keep)) {
+    lifecycle::deprecate_warn("1.0.0", "group_map(keep = )", "group_map(.keep = )", always = TRUE)
+    .keep <- keep
+  }
+  .f <- as_group_map_function(.f)
+
+  # call the function on each group
+  chunks <- if (is_grouped_df(.data)) {
+    group_split(.data, .keep = isTRUE(.keep))
+  } else {
+    group_split(.data)
+  }
+  keys <- group_keys(.data)
+  group_keys <- map(seq_len(nrow(keys)), function(i) keys[i, , drop = FALSE])
+
+  if (length(chunks)) {
+    map2(chunks, group_keys, .f, ...)
+  } else {
+    # calling .f with .x and .y set to prototypes
+    structure(list(), ptype = .f(attr(chunks, "ptype"), keys[integer(0L), ], ...))
+  }
 }

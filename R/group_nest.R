@@ -7,4 +7,11 @@ group_nest.duckplyr_df <- function(.tbl, ..., .key = "data", keep = FALSE) {
   out <- NextMethod()
   out <- dplyr_reconstruct(out, .tbl)
   return(out)
+
+  # dplyr implementation
+  if (dots_n(...)) {
+    group_nest_impl(group_by(.tbl, ...), .key = .key, keep = keep)
+  } else {
+    tibble(!!.key := list(.tbl))
+  }
 }

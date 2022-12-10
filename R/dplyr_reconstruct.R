@@ -6,4 +6,12 @@ dplyr_reconstruct.duckplyr_df <- function(data, template) {
   force(data)
   out <- NextMethod()
   return(out)
+
+  # dplyr implementation
+  attrs <- attributes(template)
+  attrs$names <- names(data)
+  attrs$row.names <- .row_names_info(data, type = 0L)
+
+  attributes(data) <- attrs
+  data
 }

@@ -6,4 +6,7 @@ tbl_vars.duckplyr_df <- function(x) {
   force(x)
   out <- NextMethod()
   return(out)
+
+  # dplyr implementation
+  names(x)
 }

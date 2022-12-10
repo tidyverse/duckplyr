@@ -6,4 +6,16 @@ group_indices.duckplyr_df <- function(.data, ...) {
   force(.data)
   out <- NextMethod()
   return(out)
+
+  # dplyr implementation
+  if (dots_n(...) > 0) {
+    lifecycle::deprecate_warn(
+      "1.0.0", "group_indices(... = )",
+      details = "Please `group_by()` first",
+      always = TRUE
+    )
+    .data <- group_by(.data, ...)
+  }
+
+  .Call(`dplyr_group_indices`, .data, group_rows(.data))
 }

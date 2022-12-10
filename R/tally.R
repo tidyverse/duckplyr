@@ -7,4 +7,20 @@ tally.duckplyr_df <- function(x, wt = NULL, sort = FALSE, name = NULL) {
   out <- NextMethod()
   out <- dplyr_reconstruct(out, x)
   return(out)
+
+  # dplyr implementation
+  name <- check_name(name, group_vars(x))
+
+  dplyr_local_error_call()
+
+  n <- tally_n(x, {{ wt }})
+
+  local_options(dplyr.summarise.inform = FALSE)
+  out <- summarise(x, !!name := !!n)
+
+  if (sort) {
+    arrange(out, desc(!!sym(name)))
+  } else {
+    out
+  }
 }

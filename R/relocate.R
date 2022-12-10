@@ -7,4 +7,19 @@ relocate.duckplyr_df <- function(.data, ..., .before = NULL, .after = NULL) {
   out <- NextMethod()
   out <- dplyr_reconstruct(out, .data)
   return(out)
+
+  # dplyr implementation
+  loc <- eval_relocate(
+    expr = expr(c(...)),
+    data = .data,
+    before = enquo(.before),
+    after = enquo(.after),
+    before_arg = ".before",
+    after_arg = ".after"
+  )
+
+  out <- dplyr_col_select(.data, loc)
+  out <- set_names(out, names(loc))
+
+  out
 }

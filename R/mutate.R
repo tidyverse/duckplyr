@@ -7,4 +7,36 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
   out <- NextMethod()
   out <- dplyr_reconstruct(out, .data)
   return(out)
+
+  # dplyr implementation
+  keep <- arg_match(.keep)
+
+  by <- compute_by({{ .by }}, .data, by_arg = ".by", data_arg = ".data")
+
+  cols <- mutate_cols(.data, dplyr_quosures(...), by)
+  used <- attr(cols, "used")
+
+  out <- dplyr_col_modify(.data, cols)
+
+  names_original <- names(.data)
+
+  out <- mutate_relocate(
+    out = out,
+    before = {{ .before }},
+    after = {{ .after }},
+    names_original = names_original
+  )
+
+  names_new <- names(cols)
+  names_groups <- by$names
+
+  out <- mutate_keep(
+    out = out,
+    keep = keep,
+    used = used,
+    names_new = names_new,
+    names_groups = names_groups
+  )
+
+  out
 }

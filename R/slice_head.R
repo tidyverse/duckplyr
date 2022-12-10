@@ -7,4 +7,15 @@ slice_head.duckplyr_df <- function(.data, ..., n, prop, by = NULL) {
   out <- NextMethod()
   out <- dplyr_reconstruct(out, .data)
   return(out)
+
+  # dplyr implementation
+  size <- get_slice_size(n = n, prop = prop)
+  idx <- function(n) {
+    seq2(1, size(n))
+  }
+
+  dplyr_local_error_call()
+  dplyr_local_slice_by_arg("by")
+
+  slice(.data, idx(dplyr::n()), .by = {{ by }})
 }

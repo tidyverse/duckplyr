@@ -7,4 +7,12 @@ group_split.duckplyr_df <- function(.tbl, ..., .keep = TRUE, keep = deprecated()
   out <- NextMethod()
   out <- dplyr_reconstruct(out, .tbl)
   return(out)
+
+  # dplyr implementation
+  if (!missing(keep)) {
+    lifecycle::deprecate_warn("1.0.0", "group_split(keep = )", "group_split(.keep = )", always = TRUE)
+    .keep <- keep
+  }
+  data <- group_by(.tbl, ...)
+  group_split_impl(data, .keep = .keep)
 }

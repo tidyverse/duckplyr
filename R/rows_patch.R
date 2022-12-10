@@ -7,4 +7,55 @@ rows_patch.duckplyr_df <- function(x, y, by = NULL, ..., unmatched = c("error", 
   out <- NextMethod()
   out <- dplyr_reconstruct(out, x)
   return(out)
+
+  # dplyr implementation
+  check_dots_empty()
+  rows_df_in_place(in_place)
+
+  y <- auto_copy(x, y, copy = copy)
+
+  by <- rows_check_by(by, y)
+
+  rows_check_containment(x, y)
+
+  x_key <- rows_select_key(x, by, "x")
+  y_key <- rows_select_key(y, by, "y", unique = TRUE)
+  args <- vec_cast_common(x = x_key, y = y_key)
+  x_key <- args$x
+  y_key <- args$y
+
+  values_names <- setdiff(names(y), names(y_key))
+
+  x_values <- x[values_names]
+  y_values <- y[values_names]
+  y_values <- rows_cast_y(y_values, x_values)
+
+  keep <- rows_check_y_unmatched(x_key, y_key, unmatched)
+
+  if (!is.null(keep)) {
+    y_key <- dplyr_row_slice(y_key, keep)
+    y_values <- dplyr_row_slice(y_values, keep)
+  }
+
+  loc <- vec_match(x_key, y_key)
+  match <- !is.na(loc)
+
+  y_loc <- loc[match]
+  x_loc <- which(match)
+
+  x_slice <- dplyr_row_slice(x_values, x_loc)
+  x_slice <- dplyr_new_list(x_slice)
+
+  y_slice <- dplyr_row_slice(y_values, y_loc)
+  y_slice <- dplyr_new_list(y_slice)
+
+  x_patched <- map2(x_slice, y_slice, coalesce)
+  x_patched <- new_data_frame(x_patched, n = length(x_loc))
+
+  x_values <- vec_assign(x_values, x_loc, x_patched)
+  x_values <- dplyr_new_list(x_values)
+
+  x <- dplyr_col_modify(x, x_values)
+
+  x
 }

@@ -7,4 +7,26 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
   out <- NextMethod()
   out <- dplyr_reconstruct(out, .data)
   return(out)
+
+  # dplyr implementation
+  by <- compute_by({{ .by }}, .data, by_arg = ".by", data_arg = ".data")
+
+  cols <- summarise_cols(.data, dplyr_quosures(...), by, "summarise")
+  out <- summarise_build(by, cols)
+
+  if (!cols$all_one) {
+    summarise_deprecate_variable_size()
+  }
+
+  if (!is_tibble(.data)) {
+    # The `by` group data we build from is always a tibble,
+    # so we have to manually downcast as needed
+    out <- as.data.frame(out)
+  }
+
+  if (identical(.groups, "rowwise")) {
+    out <- rowwise_df(out, character())
+  }
+
+  out
 }

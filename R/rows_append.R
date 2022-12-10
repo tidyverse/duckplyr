@@ -7,4 +7,15 @@ rows_append.duckplyr_df <- function(x, y, ..., copy = FALSE, in_place = FALSE) {
   out <- NextMethod()
   out <- dplyr_reconstruct(out, x)
   return(out)
+
+  # dplyr implementation
+  check_dots_empty()
+  rows_df_in_place(in_place)
+
+  y <- auto_copy(x, y, copy = copy)
+
+  rows_check_containment(x, y)
+  y <- rows_cast_y(y, x)
+
+  rows_bind(x, y)
 }

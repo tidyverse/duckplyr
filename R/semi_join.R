@@ -7,4 +7,8 @@ semi_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches
   out <- NextMethod()
   out <- dplyr_reconstruct(out, x)
   return(out)
+
+  # dplyr implementation
+  y <- auto_copy(x, y, copy = copy)
+  join_filter(x, y, by = by, type = "semi", na_matches = na_matches, user_env = caller_env())
 }

@@ -6,4 +6,7 @@ group_vars.duckplyr_df <- function(x) {
   force(x)
   out <- NextMethod()
   return(out)
+
+  # dplyr implementation
+  setdiff(names(group_data(x)), ".rows")
 }

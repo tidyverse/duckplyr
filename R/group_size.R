@@ -6,4 +6,7 @@ group_size.duckplyr_df <- function(x) {
   force(x)
   out <- NextMethod()
   return(out)
+
+  # dplyr implementation
+  lengths(group_rows(x))
 }

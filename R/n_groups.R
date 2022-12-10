@@ -6,4 +6,7 @@ n_groups.duckplyr_df <- function(x) {
   force(x)
   out <- NextMethod()
   return(out)
+
+  # dplyr implementation
+  nrow(group_data(x))
 }

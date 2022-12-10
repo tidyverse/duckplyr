@@ -7,4 +7,8 @@ nest_by.duckplyr_df <- function(.data, ..., .key = "data", .keep = FALSE) {
   out <- NextMethod()
   out <- dplyr_reconstruct(out, .data)
   return(out)
+
+  # dplyr implementation
+  .data <- group_by(.data, ...)
+  nest_by.grouped_df(.data, .key = .key, .keep = .keep)
 }

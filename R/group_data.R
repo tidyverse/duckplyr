@@ -7,4 +7,8 @@ group_data.duckplyr_df <- function(.data) {
   out <- NextMethod()
   out <- dplyr_reconstruct(out, .data)
   return(out)
+
+  # dplyr implementation
+  rows <- new_list_of(list(seq_len(nrow(.data))), ptype = integer())
+  new_data_frame(list(.rows = rows), n = 1L)
 }

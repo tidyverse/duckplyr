@@ -7,4 +7,14 @@ arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
   out <- NextMethod()
   out <- dplyr_reconstruct(out, .data)
   return(out)
+
+  # dplyr implementation
+  dots <- enquos(...)
+
+  if (.by_group) {
+    dots <- c(quos(!!!groups(.data)), dots)
+  }
+
+  loc <- arrange_rows(.data, dots = dots, locale = .locale)
+  dplyr_row_slice(.data, loc)
 }

@@ -6,4 +6,7 @@ groups.duckplyr_df <- function(x) {
   force(x)
   out <- NextMethod()
   return(out)
+
+  # dplyr implementation
+  syms(group_vars(x))
 }

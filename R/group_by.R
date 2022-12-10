@@ -7,4 +7,13 @@ group_by.duckplyr_df <- function(.data, ..., .add = FALSE, .drop = group_by_drop
   out <- NextMethod()
   out <- dplyr_reconstruct(out, .data)
   return(out)
+
+  # dplyr implementation
+  groups <- group_by_prepare(
+    .data,
+    ...,
+    .add = .add,
+    error_call = current_env()
+  )
+  grouped_df(groups$data, groups$group_names, .drop)
 }
