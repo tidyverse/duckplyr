@@ -1,6 +1,6 @@
-#' @importFrom dplyr select
+#' @importFrom dplyr reframe
 #' @export
-select.duckplyr_df <- function(.data, ...) {
+reframe.duckplyr_df <- function(.data, ..., .by = NULL) {
   #
   out <- NextMethod()
   out <- duckplyr_df_reconstruct(out)

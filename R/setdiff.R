@@ -1,6 +1,6 @@
-#' @importFrom dplyr select
+#' @importFrom dplyr setdiff
 #' @export
-select.duckplyr_df <- function(.data, ...) {
+setdiff.duckplyr_df <- function(x, y, ...) {
   #
   out <- NextMethod()
   out <- duckplyr_df_reconstruct(out)

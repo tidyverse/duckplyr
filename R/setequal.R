@@ -1,6 +1,6 @@
-#' @importFrom dplyr select
+#' @importFrom dplyr setequal
 #' @export
-select.duckplyr_df <- function(.data, ...) {
+setequal.duckplyr_df <- function(x, y, ...) {
   #
   out <- NextMethod()
   out <- duckplyr_df_reconstruct(out)

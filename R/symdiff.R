@@ -1,6 +1,6 @@
-#' @importFrom dplyr select
+#' @importFrom dplyr symdiff
 #' @export
-select.duckplyr_df <- function(.data, ...) {
+symdiff.duckplyr_df <- function(x, y, ...) {
   #
   out <- NextMethod()
   out <- duckplyr_df_reconstruct(out)

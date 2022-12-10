@@ -1,6 +1,6 @@
-#' @importFrom dplyr select
+#' @importFrom dplyr rowwise
 #' @export
-select.duckplyr_df <- function(.data, ...) {
+rowwise.duckplyr_df <- function(data, ...) {
   #
   out <- NextMethod()
   out <- duckplyr_df_reconstruct(out)

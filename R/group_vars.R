@@ -1,6 +1,6 @@
-#' @importFrom dplyr select
+#' @importFrom dplyr group_vars
 #' @export
-select.duckplyr_df <- function(.data, ...) {
+group_vars.duckplyr_df <- function(x) {
   #
   out <- NextMethod()
   out <- duckplyr_df_reconstruct(out)

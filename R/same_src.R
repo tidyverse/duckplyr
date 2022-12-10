@@ -1,6 +1,6 @@
-#' @importFrom dplyr select
+#' @importFrom dplyr same_src
 #' @export
-select.duckplyr_df <- function(.data, ...) {
+same_src.duckplyr_df <- function(x, y) {
   #
   out <- NextMethod()
   out <- duckplyr_df_reconstruct(out)

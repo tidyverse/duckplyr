@@ -1,6 +1,6 @@
-#' @importFrom dplyr select
+#' @importFrom dplyr collapse
 #' @export
-select.duckplyr_df <- function(.data, ...) {
+collapse.duckplyr_df <- function(x, ...) {
   #
   out <- NextMethod()
   out <- duckplyr_df_reconstruct(out)
