@@ -3,11 +3,9 @@ Package: duckplyr
 Title: A DuckDB-backed version of dplyr
 Version: 0.0.1
 Authors@R: c(
-    person("Hannes", "Mühleisen",
-             role = c("aut", "cre"),
-             email = "hannes@duckdblabs.com",
-             comment = c(ORCID = "0000-0001-8552-0029")),
-    person("Kirill", "Müller", role=c("aut"),
+    person("Hannes", "Mühleisen", , "hannes@duckdblabs.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-8552-0029")),
+    person("Kirill", "Müller", role = "aut",
            comment = c(ORCID = "0000-0002-1416-3412")),
     person("Posit", role = c("cph", "fnd"))
   )
@@ -18,8 +16,8 @@ BugReports: https://github.com/duckdblabs/duckplyr
 Depends: 
     R (>= 4.0.0)
 Imports: 
-    duckdb (>= 0.6.0),
     dplyr (>= 1.0.10),
+    duckdb (>= 0.6.0),
     rlang (>= 1.0.6)
 Suggests:
     testthat (>= 3.1.5)
