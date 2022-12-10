@@ -14,7 +14,7 @@ df_methods <-
   # lazyeval methods, won't implement
   filter(!grepl("_$", name)) %>%
   # special dplyr methods, won't implement
-  filter(!grepl("^dplyr_", name)) %>%
+  filter(!(name %in% c("dplyr_col_modify", "dplyr_row_slice"))) %>%
   mutate(code = unname(mget(fun, dplyr)))
 
 func_decl <- function(name, code) {
