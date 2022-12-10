@@ -17,6 +17,14 @@ df_methods <-
   filter(!(name %in% c("dplyr_col_modify", "dplyr_row_slice"))) %>%
   mutate(code = unname(mget(fun, dplyr)))
 
+func_decl <- function(formals) {
+  rlang::new_function(formals, expr({
+    out <- NextMethod()
+    out <- dplyr_reconstruct(out, !!sym(names(formals)[[1]]))
+    return(out)
+  }))
+}
+
 func_decl_chr <- function(generic, name, code) {
   code <- paste(capture.output(print(code)), collapse = "\n")
   code <- paste0("#' @importFrom dplyr ", generic, "\n#' @export\n", name, " <- ", code, "\n")
@@ -27,11 +35,7 @@ func_decl_chr <- function(generic, name, code) {
 duckplyr_df_methods <-
   df_methods %>%
   mutate(formals = map(code, formals)) %>%
-  mutate(new_code = map(formals, rlang::new_function, expr({
-    out <- NextMethod()
-    out <- duckplyr_df_reconstruct(out)
-    return(out)
-  }))) %>%
+  mutate(new_code = map(formals, func_decl)) %>%
   mutate(new_code_chr = map(new_code, constructive::construct, check = FALSE)) %>%
   mutate(new_fun = paste0(name, ".duckplyr_df")) %>%
   rowwise() %>%

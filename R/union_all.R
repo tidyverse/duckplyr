@@ -3,6 +3,6 @@
 union_all.duckplyr_df <- function(x, y, ...) {
   #
   out <- NextMethod()
-  out <- duckplyr_df_reconstruct(out)
+  out <- dplyr_reconstruct(out, x)
   return(out)
 }

@@ -3,6 +3,6 @@
 do.duckplyr_df <- function(.data, ...) {
   #
   out <- NextMethod()
-  out <- duckplyr_df_reconstruct(out)
+  out <- dplyr_reconstruct(out, .data)
   return(out)
 }

@@ -3,6 +3,6 @@
 add_count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .drop = deprecated()) {
   #
   out <- NextMethod()
-  out <- duckplyr_df_reconstruct(out)
+  out <- dplyr_reconstruct(out, x)
   return(out)
 }

@@ -3,6 +3,6 @@
 slice_sample.duckplyr_df <- function(.data, ..., n, prop, by = NULL, weight_by = NULL, replace = FALSE) {
   #
   out <- NextMethod()
-  out <- duckplyr_df_reconstruct(out)
+  out <- dplyr_reconstruct(out, .data)
   return(out)
 }

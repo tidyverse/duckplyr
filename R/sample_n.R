@@ -3,6 +3,6 @@
 sample_n.duckplyr_df <- function(tbl, size, replace = FALSE, weight = NULL, .env = NULL, ...) {
   #
   out <- NextMethod()
-  out <- duckplyr_df_reconstruct(out)
+  out <- dplyr_reconstruct(out, tbl)
   return(out)
 }

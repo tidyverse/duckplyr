@@ -3,6 +3,6 @@
 group_size.duckplyr_df <- function(x) {
   #
   out <- NextMethod()
-  out <- duckplyr_df_reconstruct(out)
+  out <- dplyr_reconstruct(out, x)
   return(out)
 }

@@ -3,6 +3,6 @@
 group_nest.duckplyr_df <- function(.tbl, ..., .key = "data", keep = FALSE) {
   #
   out <- NextMethod()
-  out <- duckplyr_df_reconstruct(out)
+  out <- dplyr_reconstruct(out, .tbl)
   return(out)
 }
