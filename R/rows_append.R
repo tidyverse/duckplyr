@@ -2,6 +2,7 @@
 #' @export
 rows_append.duckplyr_df <- function(x, y, ..., copy = FALSE, in_place = FALSE) {
   #
+  force(x)
   out <- NextMethod()
   out <- dplyr_reconstruct(out, x)
   return(out)

@@ -18,9 +18,11 @@ df_methods <-
   mutate(code = unname(mget(fun, dplyr)))
 
 func_decl <- function(formals) {
+  data_arg <- sym(names(formals)[[1]])
   rlang::new_function(formals, expr({
+    force(!!data_arg)
     out <- NextMethod()
-    out <- dplyr_reconstruct(out, !!sym(names(formals)[[1]]))
+    out <- dplyr_reconstruct(out, !!data_arg)
     return(out)
   }))
 }

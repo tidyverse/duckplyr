@@ -2,6 +2,7 @@
 #' @export
 distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
   #
+  force(.data)
   out <- NextMethod()
   out <- dplyr_reconstruct(out, .data)
   return(out)
