@@ -7,5 +7,7 @@
 #' @importFrom dplyr compute
 #' @importFrom dplyr count
 #' @importFrom dplyr tally
+#' @importFrom rlang as_label
+#' @importFrom rlang enexpr
 ## usethis namespace: end
 NULL

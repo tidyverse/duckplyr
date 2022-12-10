@@ -2,9 +2,19 @@
 #' @importFrom dplyr nest_join
 #' @export
 nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, name = NULL, ..., na_matches = c("na", "never"), unmatched = "drop") {
+  # from dplyr implementation
+  dplyr:::check_keep(keep)
+  na_matches <- dplyr:::check_na_matches(na_matches)
+
+  if (is.null(name)) {
+    name <- as_label(enexpr(y))
+  } else {
+    dplyr:::check_string(name)
+  }
+
   # Our implementation
   force(x)
-  out <- NextMethod()
+  out <- NextMethod(name = name)
   out <- dplyr_reconstruct(out, x)
   return(out)
 
