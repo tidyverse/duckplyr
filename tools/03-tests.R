@@ -22,14 +22,31 @@ get_test_code <- function(name, code) {
 
   two_tables <- (length(formals) > 1) && (names(formals)[[2]] == "y")
 
-  test_code <- c(
+  test_code_pre <- c(
     paste0('test_that("as_duckplyr_df() commutes for ', name, '()", {'),
-    "  # Data",
-    "  test_df <- data.frame(a = 1, b = 2)",
-    "",
-    "  # Run",
-    paste0("  pre <- test_df %>% as_duckplyr_df() %>% ", name, "()"),
-    paste0("  post <- test_df %>% ", name, "() %>% as_duckplyr_df()"),
+    "  # Data"
+  )
+
+  if (two_tables) {
+    test_code <- c(
+      "  test_df_x <- data.frame(a = 1, b = 2)",
+      "  test_df_y <- data.frame(a = 1, b = 2)",
+      "",
+      "  # Run",
+      paste0("  pre <- test_df_x %>% as_duckplyr_df() %>% ", name, "(test_df_y)"),
+      paste0("  post <- test_df_x %>% ", name, "(test_df_y) %>% as_duckplyr_df()")
+    )
+  } else {
+    test_code <- c(
+      "  test_df <- data.frame(a = 1, b = 2)",
+      "",
+      "  # Run",
+      paste0("  pre <- test_df %>% as_duckplyr_df() %>% ", name, "()"),
+      paste0("  post <- test_df %>% ", name, "() %>% as_duckplyr_df()")
+    )
+  }
+
+  test_code_post <- c(
     "",
     "  # Compare",
     "  expect_equal(pre, post)",
@@ -37,7 +54,7 @@ get_test_code <- function(name, code) {
     ""
   )
 
-  paste(test_code, collapse = "\n")
+  paste(c(test_code_pre, test_code, test_code_post), collapse = "\n")
 }
 
 tests <-
