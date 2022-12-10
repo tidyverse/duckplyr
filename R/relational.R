@@ -74,17 +74,20 @@ rel_translate <- function(quo, data, alias = NULL) {
 }
 
 rel_is_lazy <- function(df) {
-tryCatch({
+  tryCatch(
+    {
       duckdb:::df_is_materialized(df)
       TRUE
-     }, error = function(e) {
-        FALSE
-    })
+    },
+    error = function(e) {
+      FALSE
+    }
+  )
 }
 
-default_duckdb_connection <- new.env(parent=emptyenv())
+default_duckdb_connection <- new.env(parent = emptyenv())
 get_default_duckdb_connection <- function() {
-  if(!exists("con", default_duckdb_connection)) {
+  if (!exists("con", default_duckdb_connection)) {
     con <- DBI::dbConnect(duckdb::duckdb())
 
     DBI::dbExecute(con, 'CREATE MACRO "<"(a, b) AS a < b')
