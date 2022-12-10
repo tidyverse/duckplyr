@@ -2,7 +2,7 @@
 #' @importFrom dplyr nest_by
 #' @export
 nest_by.duckplyr_df <- function(.data, ..., .key = "data", .keep = FALSE) {
-  #
+  # Our implementation
   force(.data)
   out <- NextMethod()
   out <- dplyr_reconstruct(out, .data)

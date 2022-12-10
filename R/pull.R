@@ -2,7 +2,7 @@
 #' @importFrom dplyr pull
 #' @export
 pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
-  #
+  # Our implementation
   force(.data)
   out <- NextMethod()
   return(out)

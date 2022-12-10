@@ -2,7 +2,7 @@
 #' @importFrom dplyr rows_append
 #' @export
 rows_append.duckplyr_df <- function(x, y, ..., copy = FALSE, in_place = FALSE) {
-  #
+  # Our implementation
   force(x)
   out <- NextMethod()
   out <- dplyr_reconstruct(out, x)

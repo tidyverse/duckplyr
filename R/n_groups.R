@@ -2,7 +2,7 @@
 #' @importFrom dplyr n_groups
 #' @export
 n_groups.duckplyr_df <- function(x) {
-  #
+  # Our implementation
   force(x)
   out <- NextMethod()
   return(out)

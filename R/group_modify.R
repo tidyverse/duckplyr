@@ -2,7 +2,7 @@
 #' @importFrom dplyr group_modify
 #' @export
 group_modify.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = deprecated()) {
-  #
+  # Our implementation
   force(.data)
   out <- NextMethod()
   out <- dplyr_reconstruct(out, .data)

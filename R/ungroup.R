@@ -2,7 +2,7 @@
 #' @importFrom dplyr ungroup
 #' @export
 ungroup.duckplyr_df <- function(x, ...) {
-  #
+  # Our implementation
   force(x)
   out <- NextMethod()
   out <- dplyr_reconstruct(out, x)

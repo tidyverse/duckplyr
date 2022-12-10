@@ -56,7 +56,7 @@ func_decl_chr <- function(generic, name, code) {
     code,
     "\n"
   )
-  code <- gsub("[{]", "{\n  #", code)
+  code <- gsub("[{]", "{\n  # Our implementation", code)
   code
 }
 

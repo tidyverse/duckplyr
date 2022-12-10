@@ -2,7 +2,7 @@
 #' @importFrom dplyr collapse
 #' @export
 collapse.duckplyr_df <- function(x, ...) {
-  #
+  # Our implementation
   force(x)
   out <- NextMethod()
   out <- dplyr_reconstruct(out, x)

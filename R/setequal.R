@@ -2,7 +2,7 @@
 #' @importFrom dplyr setequal
 #' @export
 setequal.duckplyr_df <- function(x, y, ...) {
-  #
+  # Our implementation
   force(x)
   out <- NextMethod()
   return(out)

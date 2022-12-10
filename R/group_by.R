@@ -2,7 +2,7 @@
 #' @importFrom dplyr group_by
 #' @export
 group_by.duckplyr_df <- function(.data, ..., .add = FALSE, .drop = group_by_drop_default(.data)) {
-  #
+  # Our implementation
   force(.data)
   out <- NextMethod()
   out <- dplyr_reconstruct(out, .data)

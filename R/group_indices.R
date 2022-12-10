@@ -2,7 +2,7 @@
 #' @importFrom dplyr group_indices
 #' @export
 group_indices.duckplyr_df <- function(.data, ...) {
-  #
+  # Our implementation
   force(.data)
   out <- NextMethod()
   return(out)

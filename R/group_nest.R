@@ -2,7 +2,7 @@
 #' @importFrom dplyr group_nest
 #' @export
 group_nest.duckplyr_df <- function(.tbl, ..., .key = "data", keep = FALSE) {
-  #
+  # Our implementation
   force(.tbl)
   out <- NextMethod()
   out <- dplyr_reconstruct(out, .tbl)

@@ -2,7 +2,7 @@
 #' @importFrom dplyr semi_join
 #' @export
 semi_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches = c("na", "never")) {
-  #
+  # Our implementation
   force(x)
   out <- NextMethod()
   out <- dplyr_reconstruct(out, x)
