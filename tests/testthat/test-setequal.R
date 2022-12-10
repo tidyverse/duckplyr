@@ -6,7 +6,7 @@ test_that("as_duckplyr_df() commutes for setequal()", {
 
   # Run
   pre <- test_df_x %>% as_duckplyr_df() %>% setequal(test_df_y)
-  post <- test_df_x %>% setequal(test_df_y) %>% as_duckplyr_df()
+  post <- test_df_x %>% setequal(test_df_y)
 
   # Compare
   expect_equal(pre, post)

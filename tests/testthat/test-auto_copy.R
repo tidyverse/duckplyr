@@ -6,7 +6,7 @@ test_that("as_duckplyr_df() commutes for auto_copy()", {
 
   # Run
   pre <- test_df_x %>% as_duckplyr_df() %>% auto_copy(test_df_y)
-  post <- test_df_x %>% auto_copy(test_df_y) %>% as_duckplyr_df()
+  post <- test_df_x %>% auto_copy(test_df_y)
 
   # Compare
   expect_equal(pre, post)

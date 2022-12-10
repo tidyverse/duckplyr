@@ -5,7 +5,7 @@ test_that("as_duckplyr_df() commutes for pull()", {
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% pull()
-  post <- test_df %>% pull() %>% as_duckplyr_df()
+  post <- test_df %>% pull()
 
   # Compare
   expect_equal(pre, post)

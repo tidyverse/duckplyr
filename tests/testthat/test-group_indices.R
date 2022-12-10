@@ -5,7 +5,7 @@ test_that("as_duckplyr_df() commutes for group_indices()", {
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% group_indices()
-  post <- test_df %>% group_indices() %>% as_duckplyr_df()
+  post <- test_df %>% group_indices()
 
   # Compare
   expect_equal(pre, post)

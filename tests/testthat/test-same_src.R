@@ -6,7 +6,7 @@ test_that("as_duckplyr_df() commutes for same_src()", {
 
   # Run
   pre <- test_df_x %>% as_duckplyr_df() %>% same_src(test_df_y)
-  post <- test_df_x %>% same_src(test_df_y) %>% as_duckplyr_df()
+  post <- test_df_x %>% same_src(test_df_y)
 
   # Compare
   expect_equal(pre, post)

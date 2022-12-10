@@ -5,7 +5,7 @@ test_that("as_duckplyr_df() commutes for group_vars()", {
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% group_vars()
-  post <- test_df %>% group_vars() %>% as_duckplyr_df()
+  post <- test_df %>% group_vars()
 
   # Compare
   expect_equal(pre, post)

@@ -5,7 +5,7 @@ test_that("as_duckplyr_df() commutes for tbl_vars()", {
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% tbl_vars()
-  post <- test_df %>% tbl_vars() %>% as_duckplyr_df()
+  post <- test_df %>% tbl_vars()
 
   # Compare
   expect_equal(pre, post)
