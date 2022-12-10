@@ -19,6 +19,7 @@ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, na
   return(out)
 
   # dplyr implementation
+  # duckplyr: Common code
   check_keep(keep)
   na_matches <- check_na_matches(na_matches)
 
@@ -28,6 +29,7 @@ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, na
     check_string(name)
   }
 
+  # duckplyr: Backend-specific
   x_names <- tbl_vars(x)
   y_names <- tbl_vars(y)
 
