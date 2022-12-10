@@ -14,10 +14,15 @@ df_methods <-
   # lazyeval methods, won't implement
   filter(!grepl("_$", name)) %>%
   # special dplyr methods, won't implement
-  filter(!grepl("^dplyr_", name))
+  filter(!grepl("^dplyr_", name)) %>%
+  mutate(code = unname(mget(fun, dplyr)))
 
-get_test_code <- function(name) {
-  paste(
+get_test_code <- function(name, code) {
+  formals <- formals(code)
+
+  two_tables <- (length(formals) > 1) && (names(formals)[[2]] == "y")
+
+  test_code <- c(
     paste0('test_that("as_duckplyr_df() commutes for ', name, '()", {'),
     "  # Data",
     "  test_df <- data.frame(a = 1, b = 2)",
@@ -29,14 +34,15 @@ get_test_code <- function(name) {
     "  # Compare",
     "  expect_equal(pre, post)",
     "})",
-    "",
-    sep = "\n"
+    ""
   )
+
+  paste(test_code, collapse = "\n")
 }
 
 tests <-
   df_methods %>%
-  mutate(test_code = map_chr(name, get_test_code))
+  mutate(test_code = map2_chr(name, code, get_test_code))
 
 tests %>%
   mutate(path = fs::path("tests", "testthat", paste0("test-", name, ".R"))) %>%
