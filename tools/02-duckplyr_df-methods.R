@@ -11,8 +11,8 @@ s3_methods <- as_tibble(
 df_methods <-
   s3_methods %>%
   filter(class == "data.frame") %>%
-  # lazyeval methods, won't implement
-  filter(!grepl("_$", name)) %>%
+  # deprecated and lazyeval methods, won't implement
+  filter(!grepl("_$|^as[.]tbl$", name)) %>%
   # special dplyr methods, won't implement
   filter(!(name %in% c("dplyr_col_modify", "dplyr_row_slice"))) %>%
   mutate(code = unname(mget(fun, dplyr)))
