@@ -1,8 +1,4 @@
-#' @export
-explain <- function(x, ...) {
-  UseMethod("explain")
-}
-
+#' @importFrom dplyr explain
 #' @export
 explain.duckplyr <- function(x, ...) {
    rel_try(
