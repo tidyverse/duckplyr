@@ -83,7 +83,7 @@ get_test_code <- function(name, code, is_tbl_return) {
 }
 
 old <-
-  tibble(path = fs::dir_ls("tests/testthat")) %>%
+  tibble(path = fs::dir_ls("tests/testthat", glob = "*.R")) %>%
   mutate(first_line = map_chr(path, brio::read_lines, 1)) %>%
   filter(first_line == !!first_line)
 
