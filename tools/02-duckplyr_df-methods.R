@@ -16,7 +16,7 @@ df_methods <-
   # special dplyr methods, won't implement
   filter(!(name %in% c("dplyr_col_modify", "dplyr_row_slice"))) %>%
   # methods we don't need to implement but can test
-  filter(!(name %in% c("collapse", "collect", "compute"))) %>%
+  filter(!(name %in% c("collapse", "collect", "compute", "count", "tally"))) %>%
   mutate(is_tbl_return = !(name %in% c(
     # Special case: forward to `NextMethod()`, don't change implementation
     "dplyr_reconstruct",

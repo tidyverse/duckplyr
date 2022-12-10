@@ -5,5 +5,7 @@
 #' @importFrom dplyr collapse
 #' @importFrom dplyr collect
 #' @importFrom dplyr compute
+#' @importFrom dplyr count
+#' @importFrom dplyr tally
 ## usethis namespace: end
 NULL
