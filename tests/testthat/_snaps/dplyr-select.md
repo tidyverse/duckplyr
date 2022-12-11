@@ -1,13 +1,3 @@
-# grouping variables preserved with a message, unless already selected (#1511, #5841)
-
-    Code
-      res <- duckplyr_select(df, x)
-
-# non-syntactic grouping variable is preserved (#1138)
-
-    Code
-      df <- tibble(`a b` = 1L) %>% duckplyr_group_by(`a b`) %>% duckplyr_select()
-
 # duckplyr_select() provides informative errors
 
     Code
