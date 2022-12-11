@@ -2,9 +2,31 @@
 #' @importFrom dplyr filter
 #' @export
 filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
-  # Our implementation
   force(.data)
-  out <- NextMethod(.by = {{ .by }})
+
+  dots <- dplyr_quosures(...)
+  check_filter(dots)
+
+  # Our implementation
+  # Ensure `filter()` appears in call stack
+  filter <- rel_try
+  filter(
+    "Can't use relational with zero-column result set." = (length(.data) == 0),
+    "Can't use relational without filter conditions." = (length(dots) == 0),
+    "Can't use relational with grouped operation." = (!quo_is_null(enquo(.by))), # (length(by$names) > 0),
+    {
+      exprs <- rel_translate_dots(dots, .data)
+      rel <- duckdb_rel_from_df(.data)
+      out_rel <- rel_filter(rel, exprs)
+    },
+    fallback = {
+      out <- NextMethod(.by = {{ .by }})
+      out <- dplyr_reconstruct(out, .data)
+      return(out)
+    }
+  )
+
+  out <- rel_to_df(out_rel)
   out <- dplyr_reconstruct(out, .data)
   return(out)
 
