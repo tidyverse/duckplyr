@@ -17,12 +17,15 @@ union_all.duckplyr_df <- function(x, y, ...) {
 }
 
 duckplyr_union_all <- function(x, y, ...) {
-  if (!identical(class(x), "data.frame") && !identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
-    testthat::skip("`union_all()` only supported for plain data frames or tibbles")
-  }
-
-  x <- as_duckplyr_df(x)
-  y <- as_duckplyr_df(y)
+  try_fetch(
+    {
+      x <- as_duckplyr_df(x)
+      y <- as_duckplyr_df(y)
+    },
+    error = function(e) {
+      testthat::skip(conditionMessage(e))
+    }
+  )
   out <- union_all(x, y, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out

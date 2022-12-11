@@ -92,12 +92,15 @@ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, na
 }
 
 duckplyr_nest_join <- function(x, y, ...) {
-  if (!identical(class(x), "data.frame") && !identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
-    testthat::skip("`nest_join()` only supported for plain data frames or tibbles")
-  }
-
-  x <- as_duckplyr_df(x)
-  y <- as_duckplyr_df(y)
+  try_fetch(
+    {
+      x <- as_duckplyr_df(x)
+      y <- as_duckplyr_df(y)
+    },
+    error = function(e) {
+      testthat::skip(conditionMessage(e))
+    }
+  )
   out <- nest_join(x, y, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out

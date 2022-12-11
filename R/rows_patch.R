@@ -61,12 +61,15 @@ rows_patch.duckplyr_df <- function(x, y, by = NULL, ..., unmatched = c("error", 
 }
 
 duckplyr_rows_patch <- function(x, y, ...) {
-  if (!identical(class(x), "data.frame") && !identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
-    testthat::skip("`rows_patch()` only supported for plain data frames or tibbles")
-  }
-
-  x <- as_duckplyr_df(x)
-  y <- as_duckplyr_df(y)
+  try_fetch(
+    {
+      x <- as_duckplyr_df(x)
+      y <- as_duckplyr_df(y)
+    },
+    error = function(e) {
+      testthat::skip(conditionMessage(e))
+    }
+  )
   out <- rows_patch(x, y, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out

@@ -12,11 +12,12 @@ n_groups.duckplyr_df <- function(x) {
 }
 
 duckplyr_n_groups <- function(x, ...) {
-  if (!identical(class(x), "data.frame") && !identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
-    testthat::skip("`n_groups()` only supported for plain data frames or tibbles")
-  }
-
-  x <- as_duckplyr_df(x)
+  try_fetch(
+    x <- as_duckplyr_df(x),
+    error = function(e) {
+      testthat::skip(conditionMessage(e))
+    }
+  )
   out <- n_groups(x, ...)
   out
 }

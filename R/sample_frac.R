@@ -24,11 +24,12 @@ sample_frac.duckplyr_df <- function(tbl, size = 1, replace = FALSE, weight = NUL
 }
 
 duckplyr_sample_frac <- function(tbl, ...) {
-  if (!identical(class(tbl), "data.frame") && !identical(class(tbl), c("tbl_df", "tbl", "data.frame"))) {
-    testthat::skip("`sample_frac()` only supported for plain data frames or tibbles")
-  }
-
-  tbl <- as_duckplyr_df(tbl)
+  try_fetch(
+    tbl <- as_duckplyr_df(tbl),
+    error = function(e) {
+      testthat::skip(conditionMessage(e))
+    }
+  )
   out <- sample_frac(tbl, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out

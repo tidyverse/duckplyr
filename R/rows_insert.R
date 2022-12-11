@@ -32,12 +32,15 @@ rows_insert.duckplyr_df <- function(x, y, by = NULL, ..., conflict = c("error", 
 }
 
 duckplyr_rows_insert <- function(x, y, ...) {
-  if (!identical(class(x), "data.frame") && !identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
-    testthat::skip("`rows_insert()` only supported for plain data frames or tibbles")
-  }
-
-  x <- as_duckplyr_df(x)
-  y <- as_duckplyr_df(y)
+  try_fetch(
+    {
+      x <- as_duckplyr_df(x)
+      y <- as_duckplyr_df(y)
+    },
+    error = function(e) {
+      testthat::skip(conditionMessage(e))
+    }
+  )
   out <- rows_insert(x, y, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out

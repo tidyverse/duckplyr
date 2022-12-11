@@ -32,11 +32,12 @@ do.duckplyr_df <- function(.data, ...) {
 }
 
 duckplyr_do <- function(.data, ...) {
-  if (!identical(class(.data), "data.frame") && !identical(class(.data), c("tbl_df", "tbl", "data.frame"))) {
-    testthat::skip("`do()` only supported for plain data frames or tibbles")
-  }
-
-  .data <- as_duckplyr_df(.data)
+  try_fetch(
+    .data <- as_duckplyr_df(.data),
+    error = function(e) {
+      testthat::skip(conditionMessage(e))
+    }
+  )
   out <- do(.data, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out

@@ -12,11 +12,12 @@ tbl_vars.duckplyr_df <- function(x) {
 }
 
 duckplyr_tbl_vars <- function(x, ...) {
-  if (!identical(class(x), "data.frame") && !identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
-    testthat::skip("`tbl_vars()` only supported for plain data frames or tibbles")
-  }
-
-  x <- as_duckplyr_df(x)
+  try_fetch(
+    x <- as_duckplyr_df(x),
+    error = function(e) {
+      testthat::skip(conditionMessage(e))
+    }
+  )
   out <- tbl_vars(x, ...)
   out
 }

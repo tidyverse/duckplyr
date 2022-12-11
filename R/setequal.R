@@ -21,12 +21,15 @@ setequal.duckplyr_df <- function(x, y, ...) {
 }
 
 duckplyr_setequal <- function(x, y, ...) {
-  if (!identical(class(x), "data.frame") && !identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
-    testthat::skip("`setequal()` only supported for plain data frames or tibbles")
-  }
-
-  x <- as_duckplyr_df(x)
-  y <- as_duckplyr_df(y)
+  try_fetch(
+    {
+      x <- as_duckplyr_df(x)
+      y <- as_duckplyr_df(y)
+    },
+    error = function(e) {
+      testthat::skip(conditionMessage(e))
+    }
+  )
   out <- setequal(x, y, ...)
   out
 }

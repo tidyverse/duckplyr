@@ -12,11 +12,12 @@ group_vars.duckplyr_df <- function(x) {
 }
 
 duckplyr_group_vars <- function(x, ...) {
-  if (!identical(class(x), "data.frame") && !identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
-    testthat::skip("`group_vars()` only supported for plain data frames or tibbles")
-  }
-
-  x <- as_duckplyr_df(x)
+  try_fetch(
+    x <- as_duckplyr_df(x),
+    error = function(e) {
+      testthat::skip(conditionMessage(e))
+    }
+  )
   out <- group_vars(x, ...)
   out
 }

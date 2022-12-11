@@ -27,11 +27,12 @@ distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
 }
 
 duckplyr_distinct <- function(.data, ...) {
-  if (!identical(class(.data), "data.frame") && !identical(class(.data), c("tbl_df", "tbl", "data.frame"))) {
-    testthat::skip("`distinct()` only supported for plain data frames or tibbles")
-  }
-
-  .data <- as_duckplyr_df(.data)
+  try_fetch(
+    .data <- as_duckplyr_df(.data),
+    error = function(e) {
+      testthat::skip(conditionMessage(e))
+    }
+  )
   out <- distinct(.data, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out

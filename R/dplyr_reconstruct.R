@@ -21,11 +21,12 @@ dplyr_reconstruct.duckplyr_df <- function(data, template) {
 }
 
 duckplyr_dplyr_reconstruct <- function(data, ...) {
-  if (!identical(class(data), "data.frame") && !identical(class(data), c("tbl_df", "tbl", "data.frame"))) {
-    testthat::skip("`dplyr_reconstruct()` only supported for plain data frames or tibbles")
-  }
-
-  data <- as_duckplyr_df(data)
+  try_fetch(
+    data <- as_duckplyr_df(data),
+    error = function(e) {
+      testthat::skip(conditionMessage(e))
+    }
+  )
   out <- dplyr_reconstruct(data, ...)
   out
 }

@@ -18,11 +18,12 @@ pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
 }
 
 duckplyr_pull <- function(.data, ...) {
-  if (!identical(class(.data), "data.frame") && !identical(class(.data), c("tbl_df", "tbl", "data.frame"))) {
-    testthat::skip("`pull()` only supported for plain data frames or tibbles")
-  }
-
-  .data <- as_duckplyr_df(.data)
+  try_fetch(
+    .data <- as_duckplyr_df(.data),
+    error = function(e) {
+      testthat::skip(conditionMessage(e))
+    }
+  )
   out <- pull(.data, ...)
   out
 }

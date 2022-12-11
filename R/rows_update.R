@@ -54,12 +54,15 @@ rows_update.duckplyr_df <- function(x, y, by = NULL, ..., unmatched = c("error",
 }
 
 duckplyr_rows_update <- function(x, y, ...) {
-  if (!identical(class(x), "data.frame") && !identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
-    testthat::skip("`rows_update()` only supported for plain data frames or tibbles")
-  }
-
-  x <- as_duckplyr_df(x)
-  y <- as_duckplyr_df(y)
+  try_fetch(
+    {
+      x <- as_duckplyr_df(x)
+      y <- as_duckplyr_df(y)
+    },
+    error = function(e) {
+      testthat::skip(conditionMessage(e))
+    }
+  )
   out <- rows_update(x, y, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out

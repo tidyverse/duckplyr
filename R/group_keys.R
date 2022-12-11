@@ -22,11 +22,12 @@ group_keys.duckplyr_df <- function(.tbl, ...) {
 }
 
 duckplyr_group_keys <- function(.tbl, ...) {
-  if (!identical(class(.tbl), "data.frame") && !identical(class(.tbl), c("tbl_df", "tbl", "data.frame"))) {
-    testthat::skip("`group_keys()` only supported for plain data frames or tibbles")
-  }
-
-  .tbl <- as_duckplyr_df(.tbl)
+  try_fetch(
+    .tbl <- as_duckplyr_df(.tbl),
+    error = function(e) {
+      testthat::skip(conditionMessage(e))
+    }
+  )
   out <- group_keys(.tbl, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
