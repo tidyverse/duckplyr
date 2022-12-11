@@ -17,10 +17,13 @@ extra_arg_map <- c(
 
 skip_map <- c(
   # FIXME: Fail with group_by()
+  dplyr_reconstruct = "Hack",
   group_by = "Grouped",
   group_map = "WAT",
+  group_modify = "Grouped",
   group_nest = "Always returns tibble",
   group_split = "WAT",
+  group_trim = "Grouped",
   nest_by = "WAT",
   # FIXME: Fail with rowwise()
   rowwise = "Stack overflow",
