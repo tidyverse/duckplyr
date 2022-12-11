@@ -14,7 +14,7 @@ select.duckplyr_df <- function(.data, ...) {
 
   # Our implementation
   loc_name <- names(.data)[loc]
-  exprs <- map2(names(.data)[loc], names(loc), ~ expr_reference(.x, alias = .y))
+  exprs <- map2(names(.data)[loc], names(loc), ~ relexpr_reference(.x, alias = .y))
 
   # Ensure `select()` appears in call stack
   select <- rel_try

@@ -24,6 +24,6 @@ TBD.
 \examples{
 left <- rel_from_df(mtcars)
 right <- rel_from_df(mtcars)
-cond <- list(expr_function("eq", list(expr_reference("cyl", left), expr_reference("cyl", right))))
+cond <- list(relexpr_function("eq", list(relexpr_reference("cyl", left), relexpr_reference("cyl", right))))
 rel2 <- rel_inner_join(left, right, cond)
 }

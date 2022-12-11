@@ -7,7 +7,7 @@
 #'
 #' @name expr
 #' @export
-new_expr <- function(x, class = NULL) {
+new_relexpr <- function(x, class = NULL) {
   structure(x, class = unique(c(class, "relational_expr")))
 }
 
@@ -16,28 +16,28 @@ new_expr <- function(x, class = NULL) {
 #' @param alias An alias for the new expression.
 #' @rdname expr
 #' @export
-expr_reference <- function(name, rel = NULL, alias = NULL) {
-  new_expr(list(name = name, rel = rel, alias = alias), class = "relational_expr_reference")
+relexpr_reference <- function(name, rel = NULL, alias = NULL) {
+  new_relexpr(list(name = name, rel = rel, alias = alias), class = "relational_relexpr_reference")
 }
 
 #' @param val The value to use in the constant expression.
 #' @rdname expr
 #' @export
-expr_constant <- function(val, alias = NULL) {
-  new_expr(list(val = val, alias = alias), class = "relational_expr_constant")
+relexpr_constant <- function(val, alias = NULL) {
+  new_relexpr(list(val = val, alias = alias), class = "relational_relexpr_constant")
 }
 
 #' @param args Function arguments, a list of `expr` objects.
 #' @rdname expr
 #' @export
-expr_function <- function(name, args, alias = NULL) {
-  new_expr(list(name = name, args = args, alias = alias), class = "relational_expr_function")
+relexpr_function <- function(name, args, alias = NULL) {
+  new_relexpr(list(name = name, args = args, alias = alias), class = "relational_relexpr_function")
 }
 
 #' @param expr An `expr` object.
 #' @rdname expr
 #' @export
-expr_set_alias <- function(expr, alias = NULL) {
+relexpr_set_alias <- function(expr, alias = NULL) {
   expr$alias <- alias
   expr
 }

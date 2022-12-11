@@ -1,7 +1,7 @@
 test_that("can construct expressions", {
   expect_snapshot({
-    expr_reference("column")
-    expr_constant(42)
-    expr_function("+", list(expr_reference("column"), expr_constant(42, alias = "fortytwo")))
+    relexpr_reference("column")
+    relexpr_constant(42)
+    relexpr_function("+", list(relexpr_reference("column"), relexpr_constant(42, alias = "fortytwo")))
   })
 })

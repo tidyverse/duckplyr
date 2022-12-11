@@ -20,7 +20,7 @@ new_relational <- function(..., class = NULL) {
 #' @export
 #' @examples
 #' rel <- rel_from_df(mtcars)
-#' rel2 <- rel_filter(rel, list(expr_function("gt", list(expr_reference("cyl"), expr_constant("6")))))
+#' rel2 <- rel_filter(rel, list(relexpr_function("gt", list(relexpr_reference("cyl"), relexpr_constant("6")))))
 rel_to_df <- function(rel, ...) {
   UseMethod("rel_to_df")
 }
@@ -35,7 +35,7 @@ rel_to_df <- function(rel, ...) {
 #' @export
 #' @examples
 #' rel <- rel_from_df(mtcars)
-#' rel2 <- rel_filter(rel, list(expr_function("gt", list(expr_reference("cyl"), expr_constant("6")))))
+#' rel2 <- rel_filter(rel, list(relexpr_function("gt", list(relexpr_reference("cyl"), relexpr_constant("6")))))
 rel_filter <- function(rel, exprs, ...) {
   UseMethod("rel_filter")
 }
@@ -50,7 +50,7 @@ rel_filter <- function(rel, exprs, ...) {
 #' @export
 #' @examples
 #' rel <- rel_from_df(mtcars)
-#' rel2 <- rel_project(rel, list(expr_reference("cyl"), expr_reference("disp")))
+#' rel2 <- rel_project(rel, list(relexpr_reference("cyl"), relexpr_reference("disp")))
 rel_project <- function(rel, exprs, ...) {
   UseMethod("rel_project")
 }
@@ -66,8 +66,8 @@ rel_project <- function(rel, exprs, ...) {
 #' @export
 #' @examples
 #' rel <- rel_from_df(mtcars)
-#' aggrs <- list(avg_hp = expr_function("avg", list(expr_reference("hp"))))
-#' rel2 <- rel_aggregate(rel, list(expr_reference("cyl")), aggrs)
+#' aggrs <- list(avg_hp = relexpr_function("avg", list(relexpr_reference("hp"))))
+#' rel2 <- rel_aggregate(rel, list(relexpr_reference("cyl")), aggrs)
 rel_aggregate <- function(rel, groups, aggregates, ...) {
   UseMethod("rel_aggregate")
 }
@@ -82,7 +82,7 @@ rel_aggregate <- function(rel, groups, aggregates, ...) {
 #' @export
 #' @examples
 #' rel <- rel_from_df(mtcars)
-#' rel2 <- rel_order(rel, list(expr_reference("hp")))
+#' rel2 <- rel_order(rel, list(relexpr_reference("hp")))
 rel_order <- function(rel, orders, ...) {
   UseMethod("rel_order")
 }
@@ -100,7 +100,7 @@ rel_order <- function(rel, orders, ...) {
 #' @examples
 #' left <- rel_from_df(mtcars)
 #' right <- rel_from_df(mtcars)
-#' cond <- list(expr_function("eq", list(expr_reference("cyl", left), expr_reference("cyl", right))))
+#' cond <- list(relexpr_function("eq", list(relexpr_reference("cyl", left), relexpr_reference("cyl", right))))
 #' rel2 <- rel_inner_join(left, right, cond)
 rel_inner_join <- function(left, right, conds, ...) {
   UseMethod("rel_inner_join")

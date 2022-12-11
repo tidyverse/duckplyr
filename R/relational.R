@@ -44,20 +44,20 @@ rel_translate <- function(quo, data, alias = NULL) {
       character = ,
       logical = ,
       integer = ,
-      double = expr_constant(expr),
+      double = relexpr_constant(expr),
       #
       symbol = {
         if (as.character(expr) %in% names(data)) {
-          expr_reference(as.character(expr))
+          relexpr_reference(as.character(expr))
         } else {
           val <- eval_tidy(expr, env = env)
-          expr_constant(val)
+          relexpr_constant(val)
         }
       },
       #
       language = {
         args <- map(expr[-1], do_translate)
-        expr_function(as.character(expr[[1]]), args)
+        relexpr_function(as.character(expr[[1]]), args)
       },
       #
       abort(paste0("Internal: Unknown type ", typeof(expr)))
@@ -67,7 +67,7 @@ rel_translate <- function(quo, data, alias = NULL) {
   out <- do_translate(quo_get_expr(quo))
 
   if (!is.null(alias) && !identical(alias, "")) {
-    out <- expr_set_alias(out, alias)
+    out <- relexpr_set_alias(out, alias)
   }
 
   out

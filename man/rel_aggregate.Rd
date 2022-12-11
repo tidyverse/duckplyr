@@ -23,6 +23,6 @@ TBD.
 }
 \examples{
 rel <- rel_from_df(mtcars)
-aggrs <- list(avg_hp = expr_function("avg", list(expr_reference("hp"))))
-rel2 <- rel_aggregate(rel, list(expr_reference("cyl")), aggrs)
+aggrs <- list(avg_hp = relexpr_function("avg", list(relexpr_reference("hp"))))
+rel2 <- rel_aggregate(rel, list(relexpr_reference("cyl")), aggrs)
 }

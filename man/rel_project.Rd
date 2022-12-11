@@ -21,5 +21,5 @@ TBD.
 }
 \examples{
 rel <- rel_from_df(mtcars)
-rel2 <- rel_project(rel, list(expr_reference("cyl"), expr_reference("disp")))
+rel2 <- rel_project(rel, list(relexpr_reference("cyl"), relexpr_reference("disp")))
 }
