@@ -7,9 +7,15 @@ get_test_code <- function(name, code, is_tbl_return) {
 
   two_tables <- (length(formals) > 1) && (names(formals)[[2]] == "y")
 
+  if (is_tbl_return) {
+    post_coerce <- " %>% as_duckplyr_df()"
+  } else {
+    post_coerce <- ""
+  }
+
   test_code_pre <- c(
     first_line,
-    paste0('test_that("as_duckplyr_df() commutes for ', name, '()", {'),
+    'test_that("as_duckplyr_df() commutes for {{{name}}}()", {',
     "  # Data"
   )
 
@@ -19,34 +25,16 @@ get_test_code <- function(name, code, is_tbl_return) {
       "  test_df_y <- data.frame(a = 1, b = 2)",
       "",
       "  # Run",
-      paste0(
-        "  pre <- test_df_x %>% as_duckplyr_df() %>% ",
-        name,
-        "(test_df_y)"
-      ),
-      paste0(
-        "  post <- test_df_x %>% ",
-        name,
-        "(test_df_y)",
-        if (is_tbl_return) " %>% as_duckplyr_df()"
-      )
+      "  pre <- test_df_x %>% as_duckplyr_df() %>% {{{name}}}(test_df_y)",
+      "  post <- test_df_x %>% {{{name}}}(test_df_y){{{post_coerce}}}"
     )
   } else {
     test_code <- c(
       "  test_df <- data.frame(a = 1, b = 2)",
       "",
       "  # Run",
-      paste0(
-        "  pre <- test_df %>% as_duckplyr_df() %>% ",
-        name,
-        "()"
-      ),
-      paste0(
-        "  post <- test_df %>% ",
-        name,
-        "()",
-        if (is_tbl_return) " %>% as_duckplyr_df()"
-      )
+      "  pre <- test_df %>% as_duckplyr_df() %>% {{{name}}}()",
+      "  post <- test_df %>% {{{name}}}(){{{post_coerce}}}"
     )
   }
 
@@ -58,7 +46,7 @@ get_test_code <- function(name, code, is_tbl_return) {
     ""
   )
 
-  paste(c(test_code_pre, test_code, test_code_post), collapse = "\n")
+  test_code <- whisker::whisker.render(c(test_code_pre, test_code, test_code_post))
 }
 
 old <-
