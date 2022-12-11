@@ -33,14 +33,6 @@ group_map.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = deprecat
 }
 
 duckplyr_group_map <- function(.data, ...) {
-  if (is_grouped_df(.data)) {
-    testthat::skip("`group_map()` not supported for grouped_df")
-  }
-
-  if (inherits(.data, "rowwise_df")) {
-    testthat::skip("`group_map()` not supported for rowwise_df")
-  }
-
   .data <- as_duckplyr_df(.data)
   out <- group_map(.data, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")

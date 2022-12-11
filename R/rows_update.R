@@ -54,14 +54,6 @@ rows_update.duckplyr_df <- function(x, y, by = NULL, ..., unmatched = c("error",
 }
 
 duckplyr_rows_update <- function(.data, ...) {
-  if (is_grouped_df(.data)) {
-    testthat::skip("`rows_update()` not supported for grouped_df")
-  }
-
-  if (inherits(.data, "rowwise_df")) {
-    testthat::skip("`rows_update()` not supported for rowwise_df")
-  }
-
   .data <- as_duckplyr_df(.data)
   out <- rows_update(.data, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")

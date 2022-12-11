@@ -12,14 +12,6 @@ same_src.duckplyr_df <- function(x, y) {
 }
 
 duckplyr_same_src <- function(.data, ...) {
-  if (is_grouped_df(.data)) {
-    testthat::skip("`same_src()` not supported for grouped_df")
-  }
-
-  if (inherits(.data, "rowwise_df")) {
-    testthat::skip("`same_src()` not supported for rowwise_df")
-  }
-
   .data <- as_duckplyr_df(.data)
   out <- same_src(.data, ...)
   out

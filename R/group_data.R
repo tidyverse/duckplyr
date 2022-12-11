@@ -14,14 +14,6 @@ group_data.duckplyr_df <- function(.data) {
 }
 
 duckplyr_group_data <- function(.data, ...) {
-  if (is_grouped_df(.data)) {
-    testthat::skip("`group_data()` not supported for grouped_df")
-  }
-
-  if (inherits(.data, "rowwise_df")) {
-    testthat::skip("`group_data()` not supported for rowwise_df")
-  }
-
   .data <- as_duckplyr_df(.data)
   out <- group_data(.data, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")

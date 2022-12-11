@@ -35,14 +35,6 @@ rename_with.duckplyr_df <- function(.data, .fn, .cols = everything(), ...) {
 }
 
 duckplyr_rename_with <- function(.data, ...) {
-  if (is_grouped_df(.data)) {
-    testthat::skip("`rename_with()` not supported for grouped_df")
-  }
-
-  if (inherits(.data, "rowwise_df")) {
-    testthat::skip("`rename_with()` not supported for rowwise_df")
-  }
-
   .data <- as_duckplyr_df(.data)
   out <- rename_with(.data, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")

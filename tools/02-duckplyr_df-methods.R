@@ -49,14 +49,6 @@ func_decl_chr <- function(generic, code, name, new_code_chr, is_tbl_return) {
     )
   } else {
     test_impl <- c(
-      '  if (is_grouped_df(.data)) {',
-      '    testthat::skip("`{{{generic}}}()` not supported for grouped_df")',
-      '  }',
-      '',
-      '  if (inherits(.data, "rowwise_df")) {',
-      '    testthat::skip("`{{{generic}}}()` not supported for rowwise_df")',
-      '  }',
-      '',
       '  .data <- as_duckplyr_df(.data)',
       '  out <- {{{generic}}}(.data, ...)',
       if (is_tbl_return) '  class(out) <- setdiff(class(out), "duckplyr_df")',

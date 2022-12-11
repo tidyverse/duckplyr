@@ -18,14 +18,6 @@ pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
 }
 
 duckplyr_pull <- function(.data, ...) {
-  if (is_grouped_df(.data)) {
-    testthat::skip("`pull()` not supported for grouped_df")
-  }
-
-  if (inherits(.data, "rowwise_df")) {
-    testthat::skip("`pull()` not supported for rowwise_df")
-  }
-
   .data <- as_duckplyr_df(.data)
   out <- pull(.data, ...)
   out

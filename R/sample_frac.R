@@ -24,14 +24,6 @@ sample_frac.duckplyr_df <- function(tbl, size = 1, replace = FALSE, weight = NUL
 }
 
 duckplyr_sample_frac <- function(.data, ...) {
-  if (is_grouped_df(.data)) {
-    testthat::skip("`sample_frac()` not supported for grouped_df")
-  }
-
-  if (inherits(.data, "rowwise_df")) {
-    testthat::skip("`sample_frac()` not supported for rowwise_df")
-  }
-
   .data <- as_duckplyr_df(.data)
   out <- sample_frac(.data, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")

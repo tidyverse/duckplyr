@@ -12,14 +12,6 @@ tbl_vars.duckplyr_df <- function(x) {
 }
 
 duckplyr_tbl_vars <- function(.data, ...) {
-  if (is_grouped_df(.data)) {
-    testthat::skip("`tbl_vars()` not supported for grouped_df")
-  }
-
-  if (inherits(.data, "rowwise_df")) {
-    testthat::skip("`tbl_vars()` not supported for rowwise_df")
-  }
-
   .data <- as_duckplyr_df(.data)
   out <- tbl_vars(.data, ...)
   out

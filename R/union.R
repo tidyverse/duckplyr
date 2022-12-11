@@ -17,14 +17,6 @@ union.duckplyr_df <- function(x, y, ...) {
 }
 
 duckplyr_union <- function(.data, ...) {
-  if (is_grouped_df(.data)) {
-    testthat::skip("`union()` not supported for grouped_df")
-  }
-
-  if (inherits(.data, "rowwise_df")) {
-    testthat::skip("`union()` not supported for rowwise_df")
-  }
-
   .data <- as_duckplyr_df(.data)
   out <- union(.data, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")

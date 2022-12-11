@@ -25,14 +25,6 @@ right_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x
 }
 
 duckplyr_right_join <- function(.data, ...) {
-  if (is_grouped_df(.data)) {
-    testthat::skip("`right_join()` not supported for grouped_df")
-  }
-
-  if (inherits(.data, "rowwise_df")) {
-    testthat::skip("`right_join()` not supported for rowwise_df")
-  }
-
   .data <- as_duckplyr_df(.data)
   out <- right_join(.data, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")

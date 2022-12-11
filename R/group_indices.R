@@ -21,14 +21,6 @@ group_indices.duckplyr_df <- function(.data, ...) {
 }
 
 duckplyr_group_indices <- function(.data, ...) {
-  if (is_grouped_df(.data)) {
-    testthat::skip("`group_indices()` not supported for grouped_df")
-  }
-
-  if (inherits(.data, "rowwise_df")) {
-    testthat::skip("`group_indices()` not supported for rowwise_df")
-  }
-
   .data <- as_duckplyr_df(.data)
   out <- group_indices(.data, ...)
   out

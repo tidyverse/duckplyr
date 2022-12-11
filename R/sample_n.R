@@ -24,14 +24,6 @@ sample_n.duckplyr_df <- function(tbl, size, replace = FALSE, weight = NULL, .env
 }
 
 duckplyr_sample_n <- function(.data, ...) {
-  if (is_grouped_df(.data)) {
-    testthat::skip("`sample_n()` not supported for grouped_df")
-  }
-
-  if (inherits(.data, "rowwise_df")) {
-    testthat::skip("`sample_n()` not supported for rowwise_df")
-  }
-
   .data <- as_duckplyr_df(.data)
   out <- sample_n(.data, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
