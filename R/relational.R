@@ -44,20 +44,20 @@ rel_translate <- function(quo, data, alias = NULL) {
       character = ,
       logical = ,
       integer = ,
-      double = duckdb:::expr_constant(expr),
+      double = expr_constant(expr),
       #
       symbol = {
         if (as.character(expr) %in% names(data)) {
-          duckdb:::expr_reference(as.character(expr))
+          expr_reference(as.character(expr))
         } else {
           val <- eval_tidy(expr, env = env)
-          duckdb:::expr_constant(val)
+          expr_constant(val)
         }
       },
       #
       language = {
         args <- map(expr[-1], do_translate)
-        duckdb:::expr_function(as.character(expr[[1]]), args)
+        expr_function(as.character(expr[[1]]), args)
       },
       #
       abort(paste0("Internal: Unknown type ", typeof(expr)))
@@ -67,7 +67,7 @@ rel_translate <- function(quo, data, alias = NULL) {
   out <- do_translate(quo_get_expr(quo))
 
   if (!is.null(alias) && !identical(alias, "")) {
-    out <- duckdb:::expr_set_alias(out, alias)
+    out <- expr_set_alias(out, alias)
   }
 
   out
