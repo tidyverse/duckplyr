@@ -4,8 +4,27 @@
 summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
   # Our implementation
   force(.data)
-  out <- NextMethod(.by = {{ .by }})
-  out <- as_duckplyr_df(out)
+
+  # Ensure `summarise()` appears in call stack
+  summarise <- rel_try
+  summarise(
+    {
+      rel <- duckdb_rel_from_df(.data)
+      dots <- dplyr_quosures(...)
+      aggregates <- rel_translate_dots(dots, .data)
+      by <- eval_select_by(enquo(.by), .data)
+      groups <- lapply(by, relexpr_reference)
+
+      out_rel <- rel_aggregate(rel, groups, aggregates)
+      out <- rel_to_df(out_rel)
+      class(out) <- class(.data)
+    },
+    fallback = {
+      out <- NextMethod(.by = {{ .by }})
+      out <- as_duckplyr_df(out)
+    }
+  )
+
   return(out)
 
   # dplyr implementation

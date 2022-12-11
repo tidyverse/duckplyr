@@ -1,15 +1,34 @@
 diff --git b/R/summarise.R a/R/summarise.R
-index 440e8d7..a10029b 100644
+index 440e8d7..97e36d2 100644
 --- b/R/summarise.R
 +++ a/R/summarise.R
-@@ -4,8 +4,8 @@
+@@ -4,8 +4,27 @@
  summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
    # Our implementation
    force(.data)
 -  out <- NextMethod()
 -  out <- dplyr_reconstruct(out, .data)
-+  out <- NextMethod(.by = {{ .by }})
-+  out <- as_duckplyr_df(out)
++
++  # Ensure `summarise()` appears in call stack
++  summarise <- rel_try
++  summarise(
++    {
++      rel <- duckdb_rel_from_df(.data)
++      dots <- dplyr_quosures(...)
++      aggregates <- rel_translate_dots(dots, .data)
++      by <- eval_select_by(enquo(.by), .data)
++      groups <- lapply(by, relexpr_reference)
++
++      out_rel <- rel_aggregate(rel, groups, aggregates)
++      out <- rel_to_df(out_rel)
++      class(out) <- class(.data)
++    },
++    fallback = {
++      out <- NextMethod(.by = {{ .by }})
++      out <- as_duckplyr_df(out)
++    }
++  )
++
    return(out)
  
    # dplyr implementation

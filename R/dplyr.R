@@ -6,4 +6,5 @@ check_transmute_args <- dplyr:::check_transmute_args
 count_regroups <- dplyr:::count_regroups
 dplyr_error_call <- dplyr:::dplyr_error_call
 dplyr_quosures <- dplyr:::dplyr_quosures
+eval_select_by <- dplyr:::eval_select_by
 some <- dplyr:::some
