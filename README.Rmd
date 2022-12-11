@@ -38,13 +38,19 @@ This is a basic example which shows you how to solve a common problem:
 ```{r example}
 library(duckplyr)
 
+# Use `as_duckplyr_df()` to enable processing with duckdb:
 out <- 
   palmerpenguins::penguins %>% 
   as_duckplyr_df() %>% 
   select(-bill_length_mm)
 
+# The result is a data frame or tibble, with its own class.
 class(out)
+names(out)
 
+# The contents of this data frame are computed only upon request:
 out
+
+# Once computed, the results remain available as a data frame:
 out
 ```
