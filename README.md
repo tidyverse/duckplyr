@@ -21,6 +21,8 @@ You can install the development version of duckplyr from [GitHub](https://github
 This is a basic example which shows you how to solve a common problem:
 
 <pre class='chroma'>
+<span><span class='kr'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='o'>(</span><span class='nv'><a href='https://duckdb.org/'>duckdb</a></span><span class='o'>)</span></span>
+<span><span class='c'>#&gt; Loading required package: DBI</span></span>
 <span><span class='kr'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='o'>(</span><span class='nv'><a href='https://github.com/duckdblabs/duckplyr'>duckplyr</a></span><span class='o'>)</span></span>
 <span></span>
 <span><span class='c'># Use `as_duckplyr_df()` to enable processing with duckdb:</span></span>
@@ -38,6 +40,33 @@ This is a basic example which shows you how to solve a common problem:
 <span><span class='c'>#&gt; [4] "flipper_length_mm" "body_mass_g"       "sex"              </span></span>
 <span><span class='c'>#&gt; [7] "year"</span></span>
 <span></span>
+<span><span class='c'># duckdb is responsible for eventually carrying out the operations:</span></span>
+<span><span class='nv'>out</span> <span class='o'>%&gt;%</span> </span>
+<span>  <span class='nf'>explain</span><span class='o'>(</span><span class='o'>)</span></span>
+<span><span class='c'>#&gt; ┌───────────────────────────┐</span></span>
+<span><span class='c'>#&gt; │         PROJECTION        │</span></span>
+<span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class='c'>#&gt; │             #0            │</span></span>
+<span><span class='c'>#&gt; │             #1            │</span></span>
+<span><span class='c'>#&gt; │             #3            │</span></span>
+<span><span class='c'>#&gt; │             #4            │</span></span>
+<span><span class='c'>#&gt; │             #5            │</span></span>
+<span><span class='c'>#&gt; │             #6            │</span></span>
+<span><span class='c'>#&gt; │             #7            │</span></span>
+<span><span class='c'>#&gt; └─────────────┬─────────────┘                             </span></span>
+<span><span class='c'>#&gt; ┌─────────────┴─────────────┐</span></span>
+<span><span class='c'>#&gt; │           FILTER          │</span></span>
+<span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class='c'>#&gt; │  (bill_length_mm &lt; 40.0)  │</span></span>
+<span><span class='c'>#&gt; └─────────────┬─────────────┘                             </span></span>
+<span><span class='c'>#&gt; ┌─────────────┴─────────────┐</span></span>
+<span><span class='c'>#&gt; │      R_DATAFRAME_SCAN     │</span></span>
+<span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class='c'>#&gt; │         data.frame        │</span></span>
+<span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class='c'>#&gt; │           EC=344          │</span></span>
+<span><span class='c'>#&gt; └───────────────────────────┘</span></span>
+<span></span>
 <span><span class='c'># The contents of this data frame are computed only upon request:</span></span>
 <span><span class='nv'>out</span></span>
 <span><span class='c'>#&gt; materializing:</span></span>
@@ -46,7 +75,7 @@ This is a basic example which shows you how to solve a common problem:
 <span><span class='c'>#&gt; ---------------------</span></span>
 <span><span class='c'>#&gt; Projection [species as species, island as island, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year]</span></span>
 <span><span class='c'>#&gt;   Filter [&lt;(bill_length_mm, 40.0)]</span></span>
-<span><span class='c'>#&gt;     r_dataframe_scan(0x10bcd77d8)</span></span>
+<span><span class='c'>#&gt;     r_dataframe_scan(0x12cf72078)</span></span>
 <span><span class='c'>#&gt; </span></span>
 <span><span class='c'>#&gt; ---------------------</span></span>
 <span><span class='c'>#&gt; -- Result Columns  --</span></span>

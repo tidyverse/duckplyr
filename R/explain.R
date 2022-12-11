@@ -1,10 +1,9 @@
 #' @importFrom dplyr explain
 #' @export
-explain.duckplyr <- function(x, ...) {
+explain.duckplyr_df <- function(x, ...) {
   rel_try(
     {
-      rel <- duckdb:::rel_from_altrep_df(x)
-
+      rel <- duckdb_rel_from_df(x)
       duckdb:::rel_explain(rel)
     },
     fallback = {

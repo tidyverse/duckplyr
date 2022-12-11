@@ -36,6 +36,7 @@ pak::pak("duckdblabs/duckplyr")
 This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
+library(duckdb)
 library(duckplyr)
 
 # Use `as_duckplyr_df()` to enable processing with duckdb:
@@ -48,6 +49,10 @@ out <-
 # The result is a data frame or tibble, with its own class.
 class(out)
 names(out)
+
+# duckdb is responsible for eventually carrying out the operations:
+out %>% 
+  explain()
 
 # The contents of this data frame are computed only upon request:
 out
