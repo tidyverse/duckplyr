@@ -1,0 +1,34 @@
+diff --git b/R/transmute.R a/R/transmute.R
+index fa9d6a8..6e2a8ff 100644
+--- b/R/transmute.R
++++ a/R/transmute.R
+@@ -2,9 +2,27 @@
+ #' @importFrom dplyr transmute
+ #' @export
+ transmute.duckplyr_df <- function(.data, ...) {
+-  # Our implementation
+   force(.data)
+-  out <- NextMethod()
++
++  dots <- check_transmute_args(...)
++  dots <- dplyr_quosures(!!!dots)
++
++  # Our implementation
++  # Ensure `transmute()` appears in call stack
++  transmute <- rel_try
++  transmute(
++    "Can't use relational with zero-column result set." = (length(dots) == 0),
++    {
++      exprs <- rel_translate_dots(dots, .data)
++      rel <- duckdb_rel_from_df(.data)
++      out_rel <- rel_project(rel, exprs)
++      out <- rel_to_df(out_rel)
++    },
++    fallback = {
++      out <- NextMethod()
++    }
++  )
++
+   out <- dplyr_reconstruct(out, .data)
+   return(out)
+ 
