@@ -10,6 +10,7 @@
 #' @importFrom dplyr group_rows
 #' @importFrom dplyr is_grouped_df
 #' @importFrom dplyr lead
+#' @importFrom dplyr n
 #' @importFrom dplyr row_number
 #' @importFrom dplyr slice_head
 #' @importFrom dplyr slice_max
