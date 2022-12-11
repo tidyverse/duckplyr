@@ -21,10 +21,10 @@ df_methods <-
     "slice_min", "slice_max", "slice_head", "slice_tail", "slice_sample"
   ))) %>%
   mutate(is_tbl_return = !(name %in% c(
-    # Special case: forward to `NextMethod()`, don't change implementation
-    "dplyr_reconstruct",
-    "auto_copy", "group_indices", "group_size", "group_vars", "groups",
-    "n_groups", "pull", "same_src", "setequal", "tbl_vars"
+    # Special case: forward to `NextMethod()`, don't change output
+    "dplyr_reconstruct", "auto_copy", "pull", "same_src", "setequal", "tbl_vars",
+    # FIXME: Do we even need those?
+    "group_indices", "group_size", "group_vars", "groups", "n_groups"
   ))) %>%
   mutate(code = unname(mget(fun, dplyr)))
 
