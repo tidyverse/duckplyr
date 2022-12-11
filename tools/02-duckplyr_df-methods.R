@@ -76,6 +76,7 @@ func_decl_chr <- function(generic, name, code, is_tbl_return) {
 
 duckplyr_df_methods <-
   df_methods %>%
+  filter(!skip_impl) %>%
   mutate(formals = map(code, formals)) %>%
   mutate(new_code = map2(formals, is_tbl_return, func_decl)) %>%
   mutate(new_code_chr = map(new_code, constructive::construct, check = FALSE)) %>%
