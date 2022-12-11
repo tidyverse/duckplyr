@@ -2,3 +2,4 @@
 ^\.Rproj\.user$
 ^tools$
 ^dplyr-methods$
+^patch$

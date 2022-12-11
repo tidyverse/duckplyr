@@ -110,3 +110,20 @@ duckplyr_df_methods %>%
   mutate(path = fs::path("R", paste0(name, ".R"))) %>%
   select(text = decl_chr, path) %>%
   pwalk(brio::write_file)
+
+# Patch files -------------------------------------------------------------------------
+
+patches <- fs::dir_ls("patch")
+
+walk(patches, ~ system(paste0("patch -p1 < ", .x)))
+
+# Collect new patches -----------------------------------------------------------------
+
+r_status <- gert::git_status(pathspec = "R")
+
+if (nrow(r_status) == 1) {
+  patch_path <- gsub("R/(.*)[.]R", "patch/\\1.patch", r_status$file)
+  system(paste0("git diff -R -- ", r_status$file, " > ", patch_path))
+} else if (nrow(r_status) > 0) {
+  stop("Too many files change, inspect manually.")
+}

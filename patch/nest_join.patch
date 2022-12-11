@@ -1,0 +1,25 @@
+diff --git b/R/nest_join.R a/R/nest_join.R
+index d8dc5b3..3a1af00 100644
+--- b/R/nest_join.R
++++ a/R/nest_join.R
+@@ -2,9 +2,19 @@
+ #' @importFrom dplyr nest_join
+ #' @export
+ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, name = NULL, ..., na_matches = c("na", "never"), unmatched = "drop") {
++  # from dplyr implementation
++  check_keep(keep)
++  na_matches <- check_na_matches(na_matches)
++
++  if (is.null(name)) {
++    name <- as_label(enexpr(y))
++  } else {
++    check_string(name)
++  }
++
+   # Our implementation
+   force(x)
+-  out <- NextMethod()
++  out <- NextMethod(name = name)
+   out <- dplyr_reconstruct(out, x)
+   return(out)
+ 
