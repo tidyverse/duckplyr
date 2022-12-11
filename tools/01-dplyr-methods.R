@@ -1,21 +1,4 @@
-# pak::pak("cynkra/constructive")
-library(tidyverse)
-
-dplyr <- asNamespace("dplyr")
-
-s3_methods <- as_tibble(
-  matrix(as.character(dplyr$.__NAMESPACE__.$S3methods), ncol = 4),
-  .name_repair = ~ c("name", "class", "fun", "what")
-)
-
-df_methods <-
-  s3_methods %>%
-  filter(class == "data.frame") %>%
-  # lazyeval methods, won't implement
-  filter(!grepl("_$|^as[.]tbl$", name)) %>%
-  # special dplyr methods, won't implement
-  filter(!(name %in% c("dplyr_col_modify", "dplyr_row_slice"))) %>%
-  mutate(code = unname(mget(fun, dplyr)))
+source("tools/00-funs.R", echo = TRUE)
 
 func_decl <- function(name, code) {
   code <- capture.output(print(constructive::construct(code, check = FALSE)))
