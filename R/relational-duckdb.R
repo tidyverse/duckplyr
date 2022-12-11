@@ -89,6 +89,9 @@ rel_project.duckdb_relation <- function(rel, exprs, ...) {
 
 #' @export
 rel_aggregate.duckdb_relation <- function(rel, groups, aggregates, ...) {
+  duckdb_groups <- to_duckdb_exprs(groups)
+  duckdb_aggregates <- to_duckdb_exprs(aggregates)
+  duckdb:::rel_aggregate(rel, duckdb_groups, duckdb_aggregates)
 }
 
 #' @export
