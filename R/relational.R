@@ -73,18 +73,6 @@ rel_translate <- function(quo, data, alias = NULL) {
   out
 }
 
-rel_is_lazy <- function(df) {
-  tryCatch(
-    {
-      duckdb:::df_is_materialized(df)
-      TRUE
-    },
-    error = function(e) {
-      FALSE
-    }
-  )
-}
-
 default_duckdb_connection <- new.env(parent = emptyenv())
 get_default_duckdb_connection <- function() {
   if (!exists("con", default_duckdb_connection)) {
