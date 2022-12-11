@@ -107,6 +107,8 @@ get_default_duckdb_connection <- function() {
   default_duckdb_connection$con
 }
 
-rlang::on_load({
-  options(duckdb.materialize_message = TRUE)
+on_load({
+  if (!identical(Sys.getenv("TESTTHAT"), "true")) {
+    options(duckdb.materialize_message = TRUE)
+  }
 })
