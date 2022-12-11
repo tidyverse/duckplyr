@@ -2,6 +2,14 @@
 #' @importFrom dplyr select
 #' @export
 select.duckplyr_df <- function(.data, ...) {
+  error_call <- dplyr_error_call()
+
+  loc <- tidyselect::eval_select(
+    expr(c(...)),
+    data = .data,
+    error_call = error_call
+  )
+
   # Our implementation
   force(.data)
   out <- NextMethod()
