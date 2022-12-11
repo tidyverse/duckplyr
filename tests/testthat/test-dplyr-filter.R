@@ -539,7 +539,6 @@ test_that("duckplyr_filter() with empty dots still calls dplyr_row_slice()", {
   local_methods(
     # `foo_df` always loses class when row slicing
     dplyr_row_slice.foo_df = function(data, i, ...) {
-      message("dplyr_row_slice.foo_df")
       out <- NextMethod()
       new_tibble(out, nrow = nrow(out))
     }
