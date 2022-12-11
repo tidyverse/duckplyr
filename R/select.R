@@ -16,7 +16,9 @@ select.duckplyr_df <- function(.data, ...) {
   loc_name <- names(.data)[loc]
   exprs <- map2(names(.data)[loc], names(loc), ~ relational::expr_reference(.x, alias = .y))
 
-  rel_try(
+  # Ensure `select()` appears in call stack
+  select <- rel_try
+  select(
     "Can't use relational with zero-column result set." = (length(loc) == 0),
     {
       rel <- relational::duckdb_rel_from_df(.data)
