@@ -4,7 +4,7 @@ explain.duckplyr_df <- function(x, ...) {
   rel_try(
     {
       rel <- duckdb_rel_from_df(x)
-      duckdb:::rel_explain(rel)
+      rel_explain(rel)
     },
     fallback = {
       writeLines("Can't convert to relational, fallback implementation will be used.")
