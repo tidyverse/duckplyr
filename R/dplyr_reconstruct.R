@@ -17,6 +17,10 @@ dplyr_reconstruct.duckplyr_df <- function(data, template) {
 }
 
 duckplyr_dplyr_reconstruct <- function(data, ...) {
+  if (!identical(class(data), "data.frame") && !identical(class(data), c("tbl_df", "tbl", "data.frame"))) {
+    testthat::skip("`dplyr_reconstruct()` only supported for plain data frames or tibbles")
+  }
+
   data <- as_duckplyr_df(data)
   out <- dplyr_reconstruct(data, ...)
   out

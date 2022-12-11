@@ -18,6 +18,10 @@ group_split.duckplyr_df <- function(.tbl, ..., .keep = TRUE, keep = deprecated()
 }
 
 duckplyr_group_split <- function(.tbl, ...) {
+  if (!identical(class(.tbl), "data.frame") && !identical(class(.tbl), c("tbl_df", "tbl", "data.frame"))) {
+    testthat::skip("`group_split()` only supported for plain data frames or tibbles")
+  }
+
   .tbl <- as_duckplyr_df(.tbl)
   out <- group_split(.tbl, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")

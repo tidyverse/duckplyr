@@ -14,6 +14,10 @@ ungroup.duckplyr_df <- function(x, ...) {
 }
 
 duckplyr_ungroup <- function(x, ...) {
+  if (!identical(class(x), "data.frame") && !identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
+    testthat::skip("`ungroup()` only supported for plain data frames or tibbles")
+  }
+
   x <- as_duckplyr_df(x)
   out <- ungroup(x, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")

@@ -21,6 +21,10 @@ add_count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, 
 }
 
 duckplyr_add_count <- function(x, ...) {
+  if (!identical(class(x), "data.frame") && !identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
+    testthat::skip("`add_count()` only supported for plain data frames or tibbles")
+  }
+
   x <- as_duckplyr_df(x)
   out <- add_count(x, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")

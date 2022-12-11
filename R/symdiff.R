@@ -21,6 +21,10 @@ symdiff.duckplyr_df <- function(x, y, ...) {
 }
 
 duckplyr_symdiff <- function(x, y, ...) {
+  if (!identical(class(x), "data.frame") && !identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
+    testthat::skip("`symdiff()` only supported for plain data frames or tibbles")
+  }
+
   x <- as_duckplyr_df(x)
   y <- as_duckplyr_df(y)
   out <- symdiff(x, y, ...)

@@ -14,6 +14,10 @@ group_data.duckplyr_df <- function(.data) {
 }
 
 duckplyr_group_data <- function(.data, ...) {
+  if (!identical(class(.data), "data.frame") && !identical(class(.data), c("tbl_df", "tbl", "data.frame"))) {
+    testthat::skip("`group_data()` only supported for plain data frames or tibbles")
+  }
+
   .data <- as_duckplyr_df(.data)
   out <- group_data(.data, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")

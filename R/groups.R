@@ -12,6 +12,10 @@ groups.duckplyr_df <- function(x) {
 }
 
 duckplyr_groups <- function(x, ...) {
+  if (!identical(class(x), "data.frame") && !identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
+    testthat::skip("`groups()` only supported for plain data frames or tibbles")
+  }
+
   x <- as_duckplyr_df(x)
   out <- groups(x, ...)
   out

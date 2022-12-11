@@ -21,6 +21,10 @@ rows_append.duckplyr_df <- function(x, y, ..., copy = FALSE, in_place = FALSE) {
 }
 
 duckplyr_rows_append <- function(x, y, ...) {
+  if (!identical(class(x), "data.frame") && !identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
+    testthat::skip("`rows_append()` only supported for plain data frames or tibbles")
+  }
+
   x <- as_duckplyr_df(x)
   y <- as_duckplyr_df(y)
   out <- rows_append(x, y, ...)

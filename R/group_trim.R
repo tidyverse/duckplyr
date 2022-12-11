@@ -13,6 +13,10 @@ group_trim.duckplyr_df <- function(.tbl, .drop = group_by_drop_default(.tbl)) {
 }
 
 duckplyr_group_trim <- function(.tbl, ...) {
+  if (!identical(class(.tbl), "data.frame") && !identical(class(.tbl), c("tbl_df", "tbl", "data.frame"))) {
+    testthat::skip("`group_trim()` only supported for plain data frames or tibbles")
+  }
+
   .tbl <- as_duckplyr_df(.tbl)
   out <- group_trim(.tbl, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")

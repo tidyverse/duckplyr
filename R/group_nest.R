@@ -17,6 +17,10 @@ group_nest.duckplyr_df <- function(.tbl, ..., .key = "data", keep = FALSE) {
 }
 
 duckplyr_group_nest <- function(.tbl, ...) {
+  if (!identical(class(.tbl), "data.frame") && !identical(class(.tbl), c("tbl_df", "tbl", "data.frame"))) {
+    testthat::skip("`group_nest()` only supported for plain data frames or tibbles")
+  }
+
   .tbl <- as_duckplyr_df(.tbl)
   out <- group_nest(.tbl, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")

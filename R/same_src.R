@@ -12,6 +12,10 @@ same_src.duckplyr_df <- function(x, y) {
 }
 
 duckplyr_same_src <- function(x, y, ...) {
+  if (!identical(class(x), "data.frame") && !identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
+    testthat::skip("`same_src()` only supported for plain data frames or tibbles")
+  }
+
   x <- as_duckplyr_df(x)
   y <- as_duckplyr_df(y)
   out <- same_src(x, y, ...)

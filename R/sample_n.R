@@ -24,6 +24,10 @@ sample_n.duckplyr_df <- function(tbl, size, replace = FALSE, weight = NULL, .env
 }
 
 duckplyr_sample_n <- function(tbl, ...) {
+  if (!identical(class(tbl), "data.frame") && !identical(class(tbl), c("tbl_df", "tbl", "data.frame"))) {
+    testthat::skip("`sample_n()` only supported for plain data frames or tibbles")
+  }
+
   tbl <- as_duckplyr_df(tbl)
   out <- sample_n(tbl, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")

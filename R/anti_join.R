@@ -14,6 +14,10 @@ anti_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches
 }
 
 duckplyr_anti_join <- function(x, y, ...) {
+  if (!identical(class(x), "data.frame") && !identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
+    testthat::skip("`anti_join()` only supported for plain data frames or tibbles")
+  }
+
   x <- as_duckplyr_df(x)
   y <- as_duckplyr_df(y)
   out <- anti_join(x, y, ...)

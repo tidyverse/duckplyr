@@ -12,6 +12,10 @@ group_size.duckplyr_df <- function(x) {
 }
 
 duckplyr_group_size <- function(x, ...) {
+  if (!identical(class(x), "data.frame") && !identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
+    testthat::skip("`group_size()` only supported for plain data frames or tibbles")
+  }
+
   x <- as_duckplyr_df(x)
   out <- group_size(x, ...)
   out

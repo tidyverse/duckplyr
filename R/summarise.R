@@ -32,6 +32,10 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
 }
 
 duckplyr_summarise <- function(.data, ...) {
+  if (!identical(class(.data), "data.frame") && !identical(class(.data), c("tbl_df", "tbl", "data.frame"))) {
+    testthat::skip("`summarise()` only supported for plain data frames or tibbles")
+  }
+
   .data <- as_duckplyr_df(.data)
   out <- summarise(.data, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")

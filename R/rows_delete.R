@@ -43,6 +43,10 @@ rows_delete.duckplyr_df <- function(x, y, by = NULL, ..., unmatched = c("error",
 }
 
 duckplyr_rows_delete <- function(x, y, ...) {
+  if (!identical(class(x), "data.frame") && !identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
+    testthat::skip("`rows_delete()` only supported for plain data frames or tibbles")
+  }
+
   x <- as_duckplyr_df(x)
   y <- as_duckplyr_df(y)
   out <- rows_delete(x, y, ...)

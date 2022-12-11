@@ -52,10 +52,10 @@ func_decl_chr <- function(generic, code, name, new_code_chr, is_tbl_return) {
       '  {{{arg_2}}} <- as_duckplyr_df({{{arg_2}}})'
     )
   } else {
-    arg <- names(formals)[[1]]
-    args <- arg
+    arg_1 <- names(formals)[[1]]
+    args <- arg_1
     assign_impl <- c(
-      '  {{{arg}}} <- as_duckplyr_df({{{arg}}})'
+      '  {{{arg_1}}} <- as_duckplyr_df({{{arg_1}}})'
     )
   }
 
@@ -65,6 +65,10 @@ func_decl_chr <- function(generic, code, name, new_code_chr, is_tbl_return) {
     )
   } else {
     test_impl <- c(
+      '  if (!identical(class({{{arg_1}}}), "data.frame") && !identical(class({{{arg_1}}}), c("tbl_df", "tbl", "data.frame"))) {',
+      '    testthat::skip("`{{{generic}}}()` only supported for plain data frames or tibbles")',
+      '  }',
+      '',
       assign_impl,
       '  out <- {{{generic}}}({{{args}}}, ...)',
       if (is_tbl_return) '  class(out) <- setdiff(class(out), "duckplyr_df")',

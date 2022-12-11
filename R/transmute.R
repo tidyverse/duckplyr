@@ -38,6 +38,10 @@ transmute.duckplyr_df <- function(.data, ...) {
 }
 
 duckplyr_transmute <- function(.data, ...) {
+  if (!identical(class(.data), "data.frame") && !identical(class(.data), c("tbl_df", "tbl", "data.frame"))) {
+    testthat::skip("`transmute()` only supported for plain data frames or tibbles")
+  }
+
   .data <- as_duckplyr_df(.data)
   out <- transmute(.data, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
