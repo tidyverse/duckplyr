@@ -90,3 +90,18 @@ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, na
   out <- dplyr_col_modify(out, new_cols)
   dplyr_reconstruct(out, x)
 }
+
+duckplyr_nest_join <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`nest_join()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`nest_join()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- nest_join(.data, ...)
+  class(out) <- setdiff(class(out), "duckplyr_df")
+  out
+}

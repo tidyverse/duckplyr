@@ -30,3 +30,18 @@ rows_insert.duckplyr_df <- function(x, y, by = NULL, ..., conflict = c("error", 
 
   rows_bind(x, y)
 }
+
+duckplyr_rows_insert <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`rows_insert()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`rows_insert()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- rows_insert(.data, ...)
+  class(out) <- setdiff(class(out), "duckplyr_df")
+  out
+}

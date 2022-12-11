@@ -25,3 +25,18 @@ distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
   out <- dplyr_col_select(out, prep$keep)
   dplyr_row_slice(out, loc)
 }
+
+duckplyr_distinct <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`distinct()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`distinct()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- distinct(.data, ...)
+  class(out) <- setdiff(class(out), "duckplyr_df")
+  out
+}

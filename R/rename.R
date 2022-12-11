@@ -16,3 +16,18 @@ rename.duckplyr_df <- function(.data, ...) {
 
   set_names(.data, names)
 }
+
+duckplyr_rename <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`rename()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`rename()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- rename(.data, ...)
+  class(out) <- setdiff(class(out), "duckplyr_df")
+  out
+}

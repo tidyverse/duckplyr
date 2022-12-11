@@ -10,3 +10,17 @@ groups.duckplyr_df <- function(x) {
   # dplyr implementation
   syms(group_vars(x))
 }
+
+duckplyr_groups <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`groups()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`groups()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- groups(.data, ...)
+  out
+}

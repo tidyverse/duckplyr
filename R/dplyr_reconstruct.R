@@ -15,3 +15,17 @@ dplyr_reconstruct.duckplyr_df <- function(data, template) {
   attributes(data) <- attrs
   data
 }
+
+duckplyr_dplyr_reconstruct <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`dplyr_reconstruct()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`dplyr_reconstruct()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- dplyr_reconstruct(.data, ...)
+  out
+}

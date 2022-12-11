@@ -10,3 +10,17 @@ group_size.duckplyr_df <- function(x) {
   # dplyr implementation
   lengths(group_rows(x))
 }
+
+duckplyr_group_size <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`group_size()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`group_size()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- group_size(.data, ...)
+  out
+}

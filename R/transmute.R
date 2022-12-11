@@ -36,3 +36,18 @@ transmute.duckplyr_df <- function(.data, ...) {
 
   dplyr_col_select(out, cols_retain)
 }
+
+duckplyr_transmute <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`transmute()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`transmute()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- transmute(.data, ...)
+  class(out) <- setdiff(class(out), "duckplyr_df")
+  out
+}

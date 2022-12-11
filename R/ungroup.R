@@ -12,3 +12,18 @@ ungroup.duckplyr_df <- function(x, ...) {
   check_dots_empty()
   x
 }
+
+duckplyr_ungroup <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`ungroup()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`ungroup()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- ungroup(.data, ...)
+  class(out) <- setdiff(class(out), "duckplyr_df")
+  out
+}

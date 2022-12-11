@@ -11,3 +11,18 @@ group_trim.duckplyr_df <- function(.tbl, .drop = group_by_drop_default(.tbl)) {
   # dplyr implementation
   .tbl
 }
+
+duckplyr_group_trim <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`group_trim()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`group_trim()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- group_trim(.data, ...)
+  class(out) <- setdiff(class(out), "duckplyr_df")
+  out
+}

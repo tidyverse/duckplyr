@@ -30,3 +30,18 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
 
   out
 }
+
+duckplyr_summarise <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`summarise()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`summarise()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- summarise(.data, ...)
+  class(out) <- setdiff(class(out), "duckplyr_df")
+  out
+}

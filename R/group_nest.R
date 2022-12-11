@@ -15,3 +15,18 @@ group_nest.duckplyr_df <- function(.tbl, ..., .key = "data", keep = FALSE) {
     tibble(!!.key := list(.tbl))
   }
 }
+
+duckplyr_group_nest <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`group_nest()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`group_nest()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- group_nest(.data, ...)
+  class(out) <- setdiff(class(out), "duckplyr_df")
+  out
+}

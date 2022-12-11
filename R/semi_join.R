@@ -12,3 +12,18 @@ semi_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches
   y <- auto_copy(x, y, copy = copy)
   join_filter(x, y, by = by, type = "semi", na_matches = na_matches, user_env = caller_env())
 }
+
+duckplyr_semi_join <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`semi_join()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`semi_join()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- semi_join(.data, ...)
+  class(out) <- setdiff(class(out), "duckplyr_df")
+  out
+}

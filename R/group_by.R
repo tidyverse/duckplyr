@@ -17,3 +17,18 @@ group_by.duckplyr_df <- function(.data, ..., .add = FALSE, .drop = group_by_drop
   )
   grouped_df(groups$data, groups$group_names, .drop)
 }
+
+duckplyr_group_by <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`group_by()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`group_by()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- group_by(.data, ...)
+  class(out) <- setdiff(class(out), "duckplyr_df")
+  out
+}

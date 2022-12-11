@@ -19,3 +19,17 @@ setequal.duckplyr_df <- function(x, y, ...) {
   cast <- vec_cast_common(x = x, y = y)
   all(vec_in(cast$x, cast$y)) && all(vec_in(cast$y, cast$x))
 }
+
+duckplyr_setequal <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`setequal()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`setequal()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- setequal(.data, ...)
+  out
+}

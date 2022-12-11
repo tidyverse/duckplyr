@@ -16,3 +16,18 @@ group_modify.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = depre
   .f <- as_group_map_function(.f)
   .f(.data, group_keys(.data), ...)
 }
+
+duckplyr_group_modify <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`group_modify()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`group_modify()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- group_modify(.data, ...)
+  class(out) <- setdiff(class(out), "duckplyr_df")
+  out
+}

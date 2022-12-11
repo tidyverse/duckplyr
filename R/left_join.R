@@ -23,3 +23,18 @@ left_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
     user_env = caller_env()
   )
 }
+
+duckplyr_left_join <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`left_join()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`left_join()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- left_join(.data, ...)
+  class(out) <- setdiff(class(out), "duckplyr_df")
+  out
+}

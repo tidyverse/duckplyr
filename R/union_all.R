@@ -15,3 +15,18 @@ union_all.duckplyr_df <- function(x, y, ...) {
   out <- vec_rbind(x, y)
   dplyr_reconstruct(out, x)
 }
+
+duckplyr_union_all <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`union_all()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`union_all()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- union_all(.data, ...)
+  class(out) <- setdiff(class(out), "duckplyr_df")
+  out
+}

@@ -22,3 +22,18 @@ filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
   loc <- filter_rows(.data, dots, by)
   dplyr_row_slice(.data, loc, preserve = .preserve)
 }
+
+duckplyr_filter <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`filter()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`filter()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- filter(.data, ...)
+  class(out) <- setdiff(class(out), "duckplyr_df")
+  out
+}

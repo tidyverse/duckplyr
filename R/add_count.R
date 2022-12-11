@@ -19,3 +19,18 @@ add_count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, 
   )
   dplyr_reconstruct(out, x)
 }
+
+duckplyr_add_count <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`add_count()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`add_count()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- add_count(.data, ...)
+  class(out) <- setdiff(class(out), "duckplyr_df")
+  out
+}

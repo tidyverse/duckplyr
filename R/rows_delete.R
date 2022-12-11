@@ -41,3 +41,18 @@ rows_delete.duckplyr_df <- function(x, y, by = NULL, ..., unmatched = c("error",
 
   dplyr_row_slice(x, x_loc)
 }
+
+duckplyr_rows_delete <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`rows_delete()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`rows_delete()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- rows_delete(.data, ...)
+  class(out) <- setdiff(class(out), "duckplyr_df")
+  out
+}

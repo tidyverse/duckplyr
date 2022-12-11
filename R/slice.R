@@ -21,3 +21,18 @@ slice.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
   loc <- slice_rows(.data, dots, by)
   dplyr_row_slice(.data, loc, preserve = .preserve)
 }
+
+duckplyr_slice <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`slice()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`slice()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- slice(.data, ...)
+  class(out) <- setdiff(class(out), "duckplyr_df")
+  out
+}

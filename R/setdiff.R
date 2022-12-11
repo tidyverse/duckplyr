@@ -16,3 +16,18 @@ setdiff.duckplyr_df <- function(x, y, ...) {
   out <- vec_unique(vec_slice(cast$x, !vec_in(cast$x, cast$y)))
   dplyr_reconstruct(out, x)
 }
+
+duckplyr_setdiff <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`setdiff()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`setdiff()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- setdiff(.data, ...)
+  class(out) <- setdiff(class(out), "duckplyr_df")
+  out
+}

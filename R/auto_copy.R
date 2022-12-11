@@ -10,3 +10,17 @@ auto_copy.duckplyr_df <- function(x, y, copy = FALSE, ...) {
   # dplyr implementation
   as.data.frame(y)
 }
+
+duckplyr_auto_copy <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`auto_copy()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`auto_copy()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- auto_copy(.data, ...)
+  out
+}

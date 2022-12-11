@@ -20,3 +20,18 @@ group_keys.duckplyr_df <- function(.tbl, ...) {
   out <- group_data(.tbl)
   group_keys0(out)
 }
+
+duckplyr_group_keys <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`group_keys()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`group_keys()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- group_keys(.data, ...)
+  class(out) <- setdiff(class(out), "duckplyr_df")
+  out
+}

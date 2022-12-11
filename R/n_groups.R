@@ -10,3 +10,17 @@ n_groups.duckplyr_df <- function(x) {
   # dplyr implementation
   nrow(group_data(x))
 }
+
+duckplyr_n_groups <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`n_groups()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`n_groups()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- n_groups(.data, ...)
+  out
+}

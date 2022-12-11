@@ -12,3 +12,18 @@ nest_by.duckplyr_df <- function(.data, ..., .key = "data", .keep = FALSE) {
   .data <- group_by(.data, ...)
   nest_by.grouped_df(.data, .key = .key, .keep = .keep)
 }
+
+duckplyr_nest_by <- function(.data, ...) {
+  if (is_grouped_df(.data)) {
+    testthat::skip("`nest_by()` not supported for grouped_df")
+  }
+
+  if (inherits(.data, "rowwise_df")) {
+    testthat::skip("`nest_by()` not supported for rowwise_df")
+  }
+
+  .data <- as_duckplyr_df(.data)
+  out <- nest_by(.data, ...)
+  class(out) <- setdiff(class(out), "duckplyr_df")
+  out
+}
