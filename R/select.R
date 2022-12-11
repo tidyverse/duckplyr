@@ -14,14 +14,14 @@ select.duckplyr_df <- function(.data, ...) {
 
   # Our implementation
   loc_name <- names(.data)[loc]
-  exprs <- map2(names(.data)[loc], names(loc), ~ relational::expr_reference(.x, alias = .y))
+  exprs <- map2(names(.data)[loc], names(loc), ~ expr_reference(.x, alias = .y))
 
   # Ensure `select()` appears in call stack
   select <- rel_try
   select(
     "Can't use relational with zero-column result set." = (length(loc) == 0),
     {
-      rel <- relational::duckdb_rel_from_df(.data)
+      rel <- duckdb_rel_from_df(.data)
     }, fallback = {
       out <- NextMethod()
       out <- dplyr_reconstruct(out, .data)
@@ -29,8 +29,8 @@ select.duckplyr_df <- function(.data, ...) {
     }
   )
 
-  out_rel <- relational::rel_project(rel, exprs)
-  out <- relational::rel_to_df(out_rel)
+  out_rel <- rel_project(rel, exprs)
+  out <- rel_to_df(out_rel)
   out <- dplyr_reconstruct(out, .data)
   return(out)
 

@@ -17,5 +17,6 @@
 #' @importFrom purrr map2
 #' @importFrom tibble new_tibble
 #' @importFrom tibble tibble
+#' @useDynLib duckplyr, .registration = TRUE
 ## usethis namespace: end
 NULL
