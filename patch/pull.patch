@@ -1,0 +1,13 @@
+diff --git b/R/pull.R a/R/pull.R
+index 24258d9..929aa4b 100644
+--- b/R/pull.R
++++ a/R/pull.R
+@@ -4,7 +4,7 @@
+ pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
+   # Our implementation
+   force(.data)
+-  out <- NextMethod()
++  out <- NextMethod(var = {{ var }}, name = {{ name }})
+   return(out)
+ 
+   # dplyr implementation

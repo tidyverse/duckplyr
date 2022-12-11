@@ -4,7 +4,7 @@
 filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
   # Our implementation
   force(.data)
-  out <- NextMethod()
+  out <- NextMethod(.by = {{ .by }})
   out <- dplyr_reconstruct(out, .data)
   return(out)
 

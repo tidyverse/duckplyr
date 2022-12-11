@@ -1,0 +1,13 @@
+diff --git b/R/filter.R a/R/filter.R
+index a4d816e..4595564 100644
+--- b/R/filter.R
++++ a/R/filter.R
+@@ -4,7 +4,7 @@
+ filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
+   # Our implementation
+   force(.data)
+-  out <- NextMethod()
++  out <- NextMethod(.by = {{ .by }})
+   out <- dplyr_reconstruct(out, .data)
+   return(out)
+ 

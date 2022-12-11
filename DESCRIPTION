@@ -21,7 +21,8 @@ Imports:
     purrr,
     rlang (>= 1.0.6),
     tibble,
-    tidyselect
+    tidyselect,
+    vctrs
 Suggests:
     testthat (>= 3.1.5)
 Encoding: UTF-8

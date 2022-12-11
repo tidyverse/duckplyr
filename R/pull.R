@@ -4,7 +4,7 @@
 pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
   # Our implementation
   force(.data)
-  out <- NextMethod()
+  out <- NextMethod(var = {{ var }}, name = {{ name }})
   return(out)
 
   # dplyr implementation
