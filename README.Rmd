@@ -42,6 +42,7 @@ library(duckplyr)
 out <- 
   palmerpenguins::penguins %>% 
   as_duckplyr_df() %>% 
+  filter(bill_length_mm < 40) %>%
   select(-bill_length_mm)
 
 # The result is a data frame or tibble, with its own class.
