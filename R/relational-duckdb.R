@@ -46,8 +46,8 @@ duckdb_rel_from_df <- function(df) {
 
   # FIXME: Move to duckdb:::rel_from_df()
 
-  if (!identical(class(df), "data.frame") && !identical(class(df), c("tbl_df", "tbl", "data.frame"))) {
-    stop("Need data frame or tibble to convert to relational.")
+  if (!is_duckplyr_df(df)) {
+    stop("Need duckplyr_df.")
   }
 
   if (is.character(.row_names_info(df, 0L))) {
