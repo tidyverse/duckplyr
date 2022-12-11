@@ -18,6 +18,6 @@ usethis::use_build_ignore("dplyr-methods")
 
 df_methods_def %>%
   filter(!skip_impl) %>%
-  mutate(path = fs::path("dplyr-methods", paste0(name, ".R"))) %>%
+  mutate(path = fs::path("dplyr-methods", paste0(name, ".txt"))) %>%
   select(text = decl_chr, path) %>%
   pwalk(brio::write_file)
