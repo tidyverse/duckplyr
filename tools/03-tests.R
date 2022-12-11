@@ -32,6 +32,7 @@ skip_map <- c(
   slice_min = "External vector?",
   slice_sample = "External vector?",
   slice_tail = "External vector?",
+  ungroup = "Grouped",
   NULL
 )
 
