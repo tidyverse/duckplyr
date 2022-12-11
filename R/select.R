@@ -2,6 +2,8 @@
 #' @importFrom dplyr select
 #' @export
 select.duckplyr_df <- function(.data, ...) {
+  force(.data)
+
   error_call <- dplyr_error_call()
 
   loc <- tidyselect::eval_select(
@@ -11,8 +13,22 @@ select.duckplyr_df <- function(.data, ...) {
   )
 
   # Our implementation
-  force(.data)
-  out <- NextMethod()
+  loc_name <- names(.data)[loc]
+  exprs <- map2(names(.data)[loc], names(loc), ~ relational::expr_reference(.x, alias = .y))
+
+  rel_try(
+    "Can't use relational with zero-column result set." = (length(loc) == 0),
+    {
+      rel <- relational::duckdb_rel_from_df(.data)
+    }, fallback = {
+      out <- NextMethod()
+      out <- dplyr_reconstruct(out, .data)
+      return(out)
+    }
+  )
+
+  out_rel <- relational::rel_project(rel, exprs)
+  out <- relational::rel_to_df(out_rel)
   out <- dplyr_reconstruct(out, .data)
   return(out)
 
