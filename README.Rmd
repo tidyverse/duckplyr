@@ -43,6 +43,7 @@ library(duckplyr)
 out <- 
   palmerpenguins::penguins %>% 
   as_duckplyr_df() %>% 
+  transmute(bill_area = bill_length_mm * bill_depth_mm, bill_length_mm, species, sex) %>%
   filter(bill_length_mm < 40) %>%
   select(-bill_length_mm)
 
