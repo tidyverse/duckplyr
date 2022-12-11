@@ -124,6 +124,7 @@ r_status <- gert::git_status(pathspec = "R")
 if (nrow(r_status) == 1) {
   patch_path <- gsub("R/(.*)[.]R", "patch/\\1.patch", r_status$file)
   system(paste0("git diff -R -- ", r_status$file, " > ", patch_path))
+  system(paste0("git checkout -- ", r_status$file))
 } else if (nrow(r_status) > 0) {
   stop("Too many files change, inspect manually.")
 }
