@@ -1,0 +1,50 @@
+---
+output: downlit::readme_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+
+pkgload::load_all()
+```
+
+# duckplyr
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of duckplyr is to ...
+
+## Installation
+
+You can install the development version of duckplyr from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak", repos = sprintf("https://r-lib.github.io/p/pak/stable/%s/%s/%s", .Platform$pkgType, R.Version()$os, R.Version()$arch))
+pak::pak("duckdblabs/duckplyr")
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
+library(duckplyr)
+
+out <- 
+  palmerpenguins::penguins %>% 
+  as_duckplyr_df() %>% 
+  select(-bill_length_mm)
+
+class(out)
+
+out
+out
+```

@@ -3,3 +3,4 @@
 ^tools$
 ^dplyr-methods$
 ^patch$
+^README\.Rmd$
