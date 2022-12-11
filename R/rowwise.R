@@ -14,5 +14,5 @@ rowwise.duckplyr_df <- function(data, ...) {
 }
 
 duckplyr_rowwise <- function(.data, ...) {
-  testthat::skip("`rowwise()` not supported duckplyr")
+  testthat::skip("`rowwise()` not supported for duckplyr")
 }

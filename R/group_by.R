@@ -19,5 +19,5 @@ group_by.duckplyr_df <- function(.data, ..., .add = FALSE, .drop = group_by_drop
 }
 
 duckplyr_group_by <- function(.data, ...) {
-  testthat::skip("`group_by()` not supported duckplyr")
+  testthat::skip("`group_by()` not supported for duckplyr")
 }
