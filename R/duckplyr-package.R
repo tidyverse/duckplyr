@@ -14,6 +14,7 @@
 #' @importFrom dplyr slice_sample
 #' @importFrom dplyr slice_tail
 #' @importFrom dplyr tally
+#' @importFrom purrr map2
 #' @importFrom tibble new_tibble
 #' @importFrom tibble tibble
 ## usethis namespace: end
