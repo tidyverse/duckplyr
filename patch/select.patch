@@ -1,5 +1,5 @@
 diff --git b/R/select.R a/R/select.R
-index 2b248c8..f42e978 100644
+index c6c19e9..bf75409 100644
 --- b/R/select.R
 +++ a/R/select.R
 @@ -2,9 +2,35 @@
@@ -39,4 +39,15 @@ index 2b248c8..f42e978 100644
 +  out <- rel_to_df(out_rel)
    out <- dplyr_reconstruct(out, .data)
    return(out)
+ 
+@@ -17,9 +43,9 @@ select.duckplyr_df <- function(.data, ...) {
+     data = .data,
+     error_call = error_call
+   )
++  loc <- ensure_group_vars(loc, .data, notify = TRUE)
+ 
+   # duckplyr: Backend-specific
+-  loc <- ensure_group_vars(loc, .data, notify = TRUE)
+   out <- dplyr_col_select(.data, loc)
+   out <- set_names(out, names(loc))
  
