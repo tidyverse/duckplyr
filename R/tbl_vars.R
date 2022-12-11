@@ -5,7 +5,6 @@ tbl_vars.duckplyr_df <- function(x) {
   # Our implementation
   force(x)
   out <- NextMethod()
-  out <- dplyr_reconstruct(out, x)
   return(out)
 
   # dplyr implementation
@@ -23,6 +22,5 @@ duckplyr_tbl_vars <- function(.data, ...) {
 
   .data <- as_duckplyr_df(.data)
   out <- tbl_vars(.data, ...)
-  class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }

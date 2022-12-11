@@ -2,7 +2,7 @@
 test_that("as_duckplyr_df() commutes for slice_min()", {
   skip("External vector?")
 
-  Data
+  # Data
   test_df <- data.frame(a = 1, b = 2)
 
   # Run

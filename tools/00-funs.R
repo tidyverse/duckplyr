@@ -1,5 +1,6 @@
 # pak::pak("cynkra/constructive")
 library(tidyverse)
+library(rlang)
 
 dplyr <- asNamespace("dplyr")
 
@@ -22,7 +23,7 @@ df_methods <-
   )) %>%
   mutate(is_tbl_return = !(name %in% c(
     # Special case: forward to `NextMethod()`, don't change output
-    "dplyr_reconstruct", "auto_copy", "pull", "same_src", "setequal",
+    "dplyr_reconstruct", "auto_copy", "pull", "same_src", "setequal", "tbl_vars",
     # FIXME: Do we even need those?
     "group_indices", "group_size", "group_vars", "groups", "n_groups"
   ))) %>%
