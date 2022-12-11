@@ -17,9 +17,10 @@ intersect.duckplyr_df <- function(x, y, ...) {
   dplyr_reconstruct(out, x)
 }
 
-duckplyr_intersect <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- intersect(.data, ...)
+duckplyr_intersect <- function(x, y, ...) {
+  x <- as_duckplyr_df(x)
+  y <- as_duckplyr_df(y)
+  out <- intersect(x, y, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }

@@ -13,9 +13,10 @@ anti_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches
   join_filter(x, y, by = by, type = "anti", na_matches = na_matches, user_env = caller_env())
 }
 
-duckplyr_anti_join <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- anti_join(.data, ...)
+duckplyr_anti_join <- function(x, y, ...) {
+  x <- as_duckplyr_df(x)
+  y <- as_duckplyr_df(y)
+  out <- anti_join(x, y, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }

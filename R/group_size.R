@@ -11,8 +11,8 @@ group_size.duckplyr_df <- function(x) {
   lengths(group_rows(x))
 }
 
-duckplyr_group_size <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- group_size(.data, ...)
+duckplyr_group_size <- function(x, ...) {
+  x <- as_duckplyr_df(x)
+  out <- group_size(x, ...)
   out
 }

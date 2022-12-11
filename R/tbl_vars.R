@@ -11,8 +11,8 @@ tbl_vars.duckplyr_df <- function(x) {
   names(x)
 }
 
-duckplyr_tbl_vars <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- tbl_vars(.data, ...)
+duckplyr_tbl_vars <- function(x, ...) {
+  x <- as_duckplyr_df(x)
+  out <- tbl_vars(x, ...)
   out
 }

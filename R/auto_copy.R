@@ -11,8 +11,9 @@ auto_copy.duckplyr_df <- function(x, y, copy = FALSE, ...) {
   as.data.frame(y)
 }
 
-duckplyr_auto_copy <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- auto_copy(.data, ...)
+duckplyr_auto_copy <- function(x, y, ...) {
+  x <- as_duckplyr_df(x)
+  y <- as_duckplyr_df(y)
+  out <- auto_copy(x, y, ...)
   out
 }

@@ -17,9 +17,10 @@ setdiff.duckplyr_df <- function(x, y, ...) {
   dplyr_reconstruct(out, x)
 }
 
-duckplyr_setdiff <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- setdiff(.data, ...)
+duckplyr_setdiff <- function(x, y, ...) {
+  x <- as_duckplyr_df(x)
+  y <- as_duckplyr_df(y)
+  out <- setdiff(x, y, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }

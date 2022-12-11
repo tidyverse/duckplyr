@@ -91,9 +91,10 @@ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, na
   dplyr_reconstruct(out, x)
 }
 
-duckplyr_nest_join <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- nest_join(.data, ...)
+duckplyr_nest_join <- function(x, y, ...) {
+  x <- as_duckplyr_df(x)
+  y <- as_duckplyr_df(y)
+  out <- nest_join(x, y, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }

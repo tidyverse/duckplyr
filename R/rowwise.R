@@ -13,6 +13,6 @@ rowwise.duckplyr_df <- function(data, ...) {
   rowwise_df(data, vars)
 }
 
-duckplyr_rowwise <- function(.data, ...) {
+duckplyr_rowwise <- function(data, ...) {
   testthat::skip("`rowwise()` not supported for duckplyr")
 }

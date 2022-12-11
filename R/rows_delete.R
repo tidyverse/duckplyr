@@ -42,9 +42,10 @@ rows_delete.duckplyr_df <- function(x, y, by = NULL, ..., unmatched = c("error",
   dplyr_row_slice(x, x_loc)
 }
 
-duckplyr_rows_delete <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- rows_delete(.data, ...)
+duckplyr_rows_delete <- function(x, y, ...) {
+  x <- as_duckplyr_df(x)
+  y <- as_duckplyr_df(y)
+  out <- rows_delete(x, y, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }

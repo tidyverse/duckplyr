@@ -53,9 +53,10 @@ rows_update.duckplyr_df <- function(x, y, by = NULL, ..., unmatched = c("error",
   x
 }
 
-duckplyr_rows_update <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- rows_update(.data, ...)
+duckplyr_rows_update <- function(x, y, ...) {
+  x <- as_duckplyr_df(x)
+  y <- as_duckplyr_df(y)
+  out <- rows_update(x, y, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }

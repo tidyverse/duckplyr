@@ -43,21 +43,37 @@ func_decl_chr <- function(generic, code, name, new_code_chr, is_tbl_return) {
 
   new_code_chr <- gsub("[}]", paste(dplyr_impl, collapse = "\n"), new_code_chr)
 
+  if (two_tables) {
+    arg_1 <- names(formals)[[1]]
+    arg_2 <- names(formals)[[2]]
+    args <- paste0(arg_1, ", ", arg_2)
+    assign_impl <- c(
+      '  {{{arg_1}}} <- as_duckplyr_df({{{arg_1}}})',
+      '  {{{arg_2}}} <- as_duckplyr_df({{{arg_2}}})'
+    )
+  } else {
+    arg <- names(formals)[[1]]
+    args <- arg
+    assign_impl <- c(
+      '  {{{arg}}} <- as_duckplyr_df({{{arg}}})'
+    )
+  }
+
   if (generic %in% c("group_by", "rowwise")) {
     test_impl <- c(
       '  testthat::skip("`{{{generic}}}()` not supported for duckplyr")'
     )
   } else {
     test_impl <- c(
-      '  .data <- as_duckplyr_df(.data)',
-      '  out <- {{{generic}}}(.data, ...)',
+      assign_impl,
+      '  out <- {{{generic}}}({{{args}}}, ...)',
       if (is_tbl_return) '  class(out) <- setdiff(class(out), "duckplyr_df")',
       '  out'
     )
   }
 
   test_code <- c(
-    'duckplyr_{{{generic}}} <- function(.data, ...) {',
+    'duckplyr_{{{generic}}} <- function({{args}}, ...) {',
     test_impl,
     '}',
     ''

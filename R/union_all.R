@@ -16,9 +16,10 @@ union_all.duckplyr_df <- function(x, y, ...) {
   dplyr_reconstruct(out, x)
 }
 
-duckplyr_union_all <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- union_all(.data, ...)
+duckplyr_union_all <- function(x, y, ...) {
+  x <- as_duckplyr_df(x)
+  y <- as_duckplyr_df(y)
+  out <- union_all(x, y, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }

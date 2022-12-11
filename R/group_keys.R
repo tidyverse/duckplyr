@@ -21,9 +21,9 @@ group_keys.duckplyr_df <- function(.tbl, ...) {
   group_keys0(out)
 }
 
-duckplyr_group_keys <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- group_keys(.data, ...)
+duckplyr_group_keys <- function(.tbl, ...) {
+  .tbl <- as_duckplyr_df(.tbl)
+  out <- group_keys(.tbl, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }

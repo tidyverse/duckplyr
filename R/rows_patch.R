@@ -60,9 +60,10 @@ rows_patch.duckplyr_df <- function(x, y, by = NULL, ..., unmatched = c("error", 
   x
 }
 
-duckplyr_rows_patch <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- rows_patch(.data, ...)
+duckplyr_rows_patch <- function(x, y, ...) {
+  x <- as_duckplyr_df(x)
+  y <- as_duckplyr_df(y)
+  out <- rows_patch(x, y, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }

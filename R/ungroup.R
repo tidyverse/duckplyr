@@ -13,9 +13,9 @@ ungroup.duckplyr_df <- function(x, ...) {
   x
 }
 
-duckplyr_ungroup <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- ungroup(.data, ...)
+duckplyr_ungroup <- function(x, ...) {
+  x <- as_duckplyr_df(x)
+  out <- ungroup(x, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }

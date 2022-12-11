@@ -11,8 +11,9 @@ same_src.duckplyr_df <- function(x, y) {
   is.data.frame(y)
 }
 
-duckplyr_same_src <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- same_src(.data, ...)
+duckplyr_same_src <- function(x, y, ...) {
+  x <- as_duckplyr_df(x)
+  y <- as_duckplyr_df(y)
+  out <- same_src(x, y, ...)
   out
 }

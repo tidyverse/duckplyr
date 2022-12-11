@@ -17,9 +17,9 @@ group_split.duckplyr_df <- function(.tbl, ..., .keep = TRUE, keep = deprecated()
   group_split_impl(data, .keep = .keep)
 }
 
-duckplyr_group_split <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- group_split(.data, ...)
+duckplyr_group_split <- function(.tbl, ...) {
+  .tbl <- as_duckplyr_df(.tbl)
+  out <- group_split(.tbl, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }

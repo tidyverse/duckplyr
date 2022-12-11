@@ -20,8 +20,9 @@ setequal.duckplyr_df <- function(x, y, ...) {
   all(vec_in(cast$x, cast$y)) && all(vec_in(cast$y, cast$x))
 }
 
-duckplyr_setequal <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- setequal(.data, ...)
+duckplyr_setequal <- function(x, y, ...) {
+  x <- as_duckplyr_df(x)
+  y <- as_duckplyr_df(y)
+  out <- setequal(x, y, ...)
   out
 }

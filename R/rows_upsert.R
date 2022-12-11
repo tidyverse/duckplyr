@@ -55,9 +55,10 @@ rows_upsert.duckplyr_df <- function(x, y, by = NULL, ..., copy = FALSE, in_place
   x
 }
 
-duckplyr_rows_upsert <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- rows_upsert(.data, ...)
+duckplyr_rows_upsert <- function(x, y, ...) {
+  x <- as_duckplyr_df(x)
+  y <- as_duckplyr_df(y)
+  out <- rows_upsert(x, y, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }

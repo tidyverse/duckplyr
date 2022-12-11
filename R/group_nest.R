@@ -16,9 +16,9 @@ group_nest.duckplyr_df <- function(.tbl, ..., .key = "data", keep = FALSE) {
   }
 }
 
-duckplyr_group_nest <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- group_nest(.data, ...)
+duckplyr_group_nest <- function(.tbl, ...) {
+  .tbl <- as_duckplyr_df(.tbl)
+  out <- group_nest(.tbl, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }

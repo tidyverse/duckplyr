@@ -23,9 +23,9 @@ sample_n.duckplyr_df <- function(tbl, size, replace = FALSE, weight = NULL, .env
   }))
 }
 
-duckplyr_sample_n <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- sample_n(.data, ...)
+duckplyr_sample_n <- function(tbl, ...) {
+  tbl <- as_duckplyr_df(tbl)
+  out <- sample_n(tbl, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }

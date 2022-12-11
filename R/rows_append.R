@@ -20,9 +20,10 @@ rows_append.duckplyr_df <- function(x, y, ..., copy = FALSE, in_place = FALSE) {
   rows_bind(x, y)
 }
 
-duckplyr_rows_append <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- rows_append(.data, ...)
+duckplyr_rows_append <- function(x, y, ...) {
+  x <- as_duckplyr_df(x)
+  y <- as_duckplyr_df(y)
+  out <- rows_append(x, y, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }

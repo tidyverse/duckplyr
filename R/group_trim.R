@@ -12,9 +12,9 @@ group_trim.duckplyr_df <- function(.tbl, .drop = group_by_drop_default(.tbl)) {
   .tbl
 }
 
-duckplyr_group_trim <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- group_trim(.data, ...)
+duckplyr_group_trim <- function(.tbl, ...) {
+  .tbl <- as_duckplyr_df(.tbl)
+  out <- group_trim(.tbl, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }

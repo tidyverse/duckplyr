@@ -20,9 +20,9 @@ add_count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, 
   dplyr_reconstruct(out, x)
 }
 
-duckplyr_add_count <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- add_count(.data, ...)
+duckplyr_add_count <- function(x, ...) {
+  x <- as_duckplyr_df(x)
+  out <- add_count(x, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }

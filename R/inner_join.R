@@ -24,9 +24,10 @@ inner_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x
   )
 }
 
-duckplyr_inner_join <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- inner_join(.data, ...)
+duckplyr_inner_join <- function(x, y, ...) {
+  x <- as_duckplyr_df(x)
+  y <- as_duckplyr_df(y)
+  out <- inner_join(x, y, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }

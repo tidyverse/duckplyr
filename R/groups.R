@@ -11,8 +11,8 @@ groups.duckplyr_df <- function(x) {
   syms(group_vars(x))
 }
 
-duckplyr_groups <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- groups(.data, ...)
+duckplyr_groups <- function(x, ...) {
+  x <- as_duckplyr_df(x)
+  out <- groups(x, ...)
   out
 }

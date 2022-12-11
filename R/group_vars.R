@@ -11,8 +11,8 @@ group_vars.duckplyr_df <- function(x) {
   setdiff(names(group_data(x)), ".rows")
 }
 
-duckplyr_group_vars <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- group_vars(.data, ...)
+duckplyr_group_vars <- function(x, ...) {
+  x <- as_duckplyr_df(x)
+  out <- group_vars(x, ...)
   out
 }

@@ -25,9 +25,10 @@ full_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
   )
 }
 
-duckplyr_full_join <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- full_join(.data, ...)
+duckplyr_full_join <- function(x, y, ...) {
+  x <- as_duckplyr_df(x)
+  y <- as_duckplyr_df(y)
+  out <- full_join(x, y, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }

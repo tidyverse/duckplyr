@@ -11,8 +11,8 @@ n_groups.duckplyr_df <- function(x) {
   nrow(group_data(x))
 }
 
-duckplyr_n_groups <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- n_groups(.data, ...)
+duckplyr_n_groups <- function(x, ...) {
+  x <- as_duckplyr_df(x)
+  out <- n_groups(x, ...)
   out
 }

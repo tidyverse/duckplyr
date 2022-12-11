@@ -16,8 +16,8 @@ dplyr_reconstruct.duckplyr_df <- function(data, template) {
   data
 }
 
-duckplyr_dplyr_reconstruct <- function(.data, ...) {
-  .data <- as_duckplyr_df(.data)
-  out <- dplyr_reconstruct(.data, ...)
+duckplyr_dplyr_reconstruct <- function(data, ...) {
+  data <- as_duckplyr_df(data)
+  out <- dplyr_reconstruct(data, ...)
   out
 }
