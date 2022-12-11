@@ -29,9 +29,6 @@ This is a basic example which shows you how to solve a common problem:
 <span>  <span class='nf'>as_duckplyr_df</span><span class='o'>(</span><span class='o'>)</span> <span class='o'>%&gt;%</span> </span>
 <span>  <span class='nf'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='o'>(</span><span class='nv'>bill_length_mm</span> <span class='o'>&lt;</span> <span class='m'>40</span><span class='o'>)</span> <span class='o'>%&gt;%</span></span>
 <span>  <span class='nf'>select</span><span class='o'>(</span><span class='o'>-</span><span class='nv'>bill_length_mm</span><span class='o'>)</span></span>
-<span><span class='c'>#&gt; Error processing with relational.</span></span>
-<span><span class='c'>#&gt; <span style='font-weight: bold;'>Caused by error in `FUN()`:</span></span></span>
-<span><span class='c'>#&gt; <span style='color: #BBBB00;'>!</span> Unknown expr class: duckdb_expr</span></span>
 <span></span>
 <span><span class='c'># The result is a data frame or tibble, with its own class.</span></span>
 <span><span class='nf'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='o'>(</span><span class='nv'>out</span><span class='o'>)</span></span>
@@ -48,7 +45,8 @@ This is a basic example which shows you how to solve a common problem:
 <span><span class='c'>#&gt; --- Relation Tree ---</span></span>
 <span><span class='c'>#&gt; ---------------------</span></span>
 <span><span class='c'>#&gt; Projection [species as species, island as island, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year]</span></span>
-<span><span class='c'>#&gt;   r_dataframe_scan(0x10dc55cf8)</span></span>
+<span><span class='c'>#&gt;   Filter [&lt;(bill_length_mm, 40.0)]</span></span>
+<span><span class='c'>#&gt;     r_dataframe_scan(0x10bcd77d8)</span></span>
 <span><span class='c'>#&gt; </span></span>
 <span><span class='c'>#&gt; ---------------------</span></span>
 <span><span class='c'>#&gt; -- Result Columns  --</span></span>
