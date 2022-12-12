@@ -73,28 +73,6 @@ rel_translate <- function(quo, data, alias = NULL) {
   out
 }
 
-default_duckdb_connection <- new.env(parent = emptyenv())
-get_default_duckdb_connection <- function() {
-  if (!exists("con", default_duckdb_connection)) {
-    con <- DBI::dbConnect(duckdb::duckdb())
-
-    DBI::dbExecute(con, 'CREATE MACRO "<"(a, b) AS a < b')
-    DBI::dbExecute(con, 'CREATE MACRO "<="(a, b) AS a <= b')
-    DBI::dbExecute(con, 'CREATE MACRO ">"(a, b) AS a > b')
-    DBI::dbExecute(con, 'CREATE MACRO ">="(a, b) AS a >= b')
-    DBI::dbExecute(con, 'CREATE MACRO "=="(a, b) AS a = b')
-    DBI::dbExecute(con, 'CREATE MACRO "!="(a, b) AS a <> b')
-    DBI::dbExecute(con, 'CREATE MACRO "is.na"(a) AS (a IS NULL)')
-
-    default_duckdb_connection$con <- con
-
-    reg.finalizer(default_duckdb_connection, onexit = TRUE, function(e) {
-      DBI::dbDisconnect(e$con, shutdown = TRUE)
-    })
-  }
-  default_duckdb_connection$con
-}
-
 on_load({
   if (!identical(Sys.getenv("TESTTHAT"), "true")) {
     options(duckdb.materialize_message = TRUE)
