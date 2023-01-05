@@ -610,7 +610,7 @@ test_that("filtering retains labels for zero length groups", {
   df <- duckplyr_group_by(df, e, f, g, .drop = FALSE)
 
   expect_equal(
-    duckplyr_ungroup(count(duckplyr_filter(df, f == 1))),
+    duckplyr_ungroup(duckplyr_count(duckplyr_filter(df, f == 1))),
     tibble(
       e = 1,
       f = factor(1:3),
