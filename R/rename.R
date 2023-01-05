@@ -2,14 +2,31 @@
 #' @importFrom dplyr rename
 #' @export
 rename.duckplyr_df <- function(.data, ...) {
+  loc <- tidyselect::eval_rename(expr(c(...)), .data)
+  # eval_rename() only returns changes
+  names <- names(.data)
+  names[loc] <- names(loc)
+
   # Our implementation
-  force(.data)
-  out <- NextMethod()
-  out <- dplyr_reconstruct(out, .data)
+  exprs <- exprs_from_loc(.data, names)
+
+  # Ensure `rename()` appears in call stack
+  rename <- rel_try
+  rename(
+    "Can't use relational with zero-column result set." = (length(exprs) == 0),
+    {
+      rel <- duckdb_rel_from_df(.data)
+    }, fallback = {
+      out <- NextMethod()
+      out <- dplyr_reconstruct(out, .data)
+      return(out)
+    }
+  )
+
+  out <- exprs_project(rel, exprs, .data)
   return(out)
 
   # dplyr implementation
-  loc <- tidyselect::eval_rename(expr(c(...)), .data)
   # eval_rename() only returns changes
   names <- names(.data)
   names[loc] <- names(loc)
