@@ -2,6 +2,7 @@ source("tools/00-funs.R", echo = TRUE)
 
 tests <- c(
   "helper-s3.R",
+  "test-count-tally.R",
   "test-filter.R",
   "test-pull.R",
   "test-relocate.R",
