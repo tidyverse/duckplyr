@@ -9,6 +9,8 @@ slice.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
   return(out)
 
   # dplyr implementation
+  check_dots_unnamed()
+
   dots <- enquos(...)
 
   by <- compute_by(

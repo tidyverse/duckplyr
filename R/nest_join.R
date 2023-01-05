@@ -20,6 +20,7 @@ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, na
 
   # dplyr implementation
   # duckplyr: Common code
+  check_dots_empty0(...)
   check_keep(keep)
   na_matches <- check_na_matches(na_matches)
 
@@ -32,6 +33,14 @@ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, na
   # duckplyr: Backend-specific
   x_names <- tbl_vars(x)
   y_names <- tbl_vars(y)
+
+  if (is_cross_by(by)) {
+    warn_join_cross_by()
+    by <- new_join_by()
+    cross <- TRUE
+  } else {
+    cross <- FALSE
+  }
 
   if (is_null(by)) {
     by <- join_by_common(x_names, y_names)
@@ -54,7 +63,6 @@ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, na
 
   condition <- by$condition
   filter <- by$filter
-  cross <- by$cross
 
   # We always want to retain all of the matches. We never experience a Cartesian
   # explosion because `nrow(x) == nrow(out)` is an invariant of `nest_join()`,

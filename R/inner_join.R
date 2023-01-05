@@ -9,6 +9,7 @@ inner_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x
   return(out)
 
   # dplyr implementation
+  check_dots_empty0(...)
   y <- auto_copy(x, y, copy = copy)
   join_mutate(
     x = x,
