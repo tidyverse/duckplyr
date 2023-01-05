@@ -27,7 +27,7 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
   x_df <- x
   class(x_df) <- "data.frame"
   out <- count(x_df, !!!quos, wt = {{ wt }}, sort = sort, name = name, .drop = .drop)
-  out <- dplyr_reconstruct(out, x)
+  class(out) <- class(x)
   return(out)
 
   # dplyr implementation

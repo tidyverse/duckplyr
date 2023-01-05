@@ -1,5 +1,5 @@
 diff --git b/R/count.R a/R/count.R
-index bdd387a..e73a40f 100644
+index bdd387a..35e8894 100644
 --- b/R/count.R
 +++ a/R/count.R
 @@ -4,13 +4,33 @@
@@ -7,9 +7,12 @@ index bdd387a..e73a40f 100644
    # Our implementation
    force(x)
 -  out <- NextMethod()
-+
-+  dplyr_local_error_call()
-+
+-  out <- dplyr_reconstruct(out, x)
+-  return(out)
+ 
+-  # dplyr implementation
+   dplyr_local_error_call()
+ 
 +  quos <- enquos(...)
 +  exprs <- unname(map(quos, quo_get_expr))
 +  is_name <- map_lgl(exprs, is_symbol)
@@ -30,12 +33,10 @@ index bdd387a..e73a40f 100644
 +  x_df <- x
 +  class(x_df) <- "data.frame"
 +  out <- count(x_df, !!!quos, wt = {{ wt }}, sort = sort, name = name, .drop = .drop)
-   out <- dplyr_reconstruct(out, x)
-   return(out)
- 
-   # dplyr implementation
--  dplyr_local_error_call()
--
++  class(out) <- class(x)
++  return(out)
++
++  # dplyr implementation
    if (!missing(...)) {
      out <- group_by(x, ..., .add = TRUE, .drop = .drop)
    } else {
