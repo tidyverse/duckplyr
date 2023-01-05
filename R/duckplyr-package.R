@@ -3,6 +3,7 @@
 
 ## usethis namespace: start
 #' @import rlang
+#' @importFrom dplyr add_tally
 #' @importFrom dplyr collapse
 #' @importFrom dplyr collect
 #' @importFrom dplyr compute
