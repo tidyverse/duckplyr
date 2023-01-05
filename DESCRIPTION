@@ -23,9 +23,15 @@ Imports:
     tibble,
     tidyselect,
     vctrs
-Suggests:
+Suggests: 
+    constructive,
+    palmerpenguins,
+    prettycode,
     testthat (>= 3.1.5)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.2
 Config/testthat/edition: 3
+Remotes: 
+    cynkra/constuctive,
+    tidyverse/dplyr
