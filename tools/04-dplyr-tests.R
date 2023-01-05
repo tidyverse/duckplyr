@@ -4,6 +4,7 @@ tests <- c(
   "helper-s3.R",
   "test-filter.R",
   "test-relocate.R",
+  "test-rename.R",
   "test-select.R",
   "test-summarise.R",
   "test-transmute.R",

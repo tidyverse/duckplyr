@@ -24,6 +24,7 @@
 #' @importFrom tibble as_tibble
 #' @importFrom tibble new_tibble
 #' @importFrom tibble tibble
+#' @importFrom tidyselect everything
 #' @importFrom vctrs vec_slice
 #' @useDynLib duckplyr, .registration = TRUE
 ## usethis namespace: end
