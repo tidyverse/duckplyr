@@ -7,13 +7,16 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
 
   dplyr_local_error_call()
 
-  quos <- dplyr_quosures(...)
-  n <- tally_n(x, {{ wt }})
+  quos <- enquos(...)
+  exprs <- unname(map(quos, quo_get_expr))
+  is_name <- map_lgl(exprs, is_symbol)
 
-  name_chr <- check_name(name, names(quos))
+  if (all(is_name) && .drop) {
+    n <- tally_n(x, {{ wt }})
+    by_chr <- map_chr(exprs, as_string)
+    name_chr <- check_name(name, by_chr)
 
-  if (!any("n" %in% names(x)) && .drop) {
-    out <- summarise(x, !!name_chr := !!n, .by = c(!!!quos))
+    out <- summarise(x, !!name_chr := !!n, .by = c(!!!exprs))
     out <- dplyr_reconstruct(out, x)
     return(out)
   }
