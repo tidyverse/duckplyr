@@ -18,7 +18,7 @@ df_methods <-
   filter(!(name %in% c("dplyr_col_modify", "dplyr_row_slice"))) %>%
   # methods we don't need to implement but can test
   mutate(skip_impl = name %in% c(
-    "collapse", "collect", "compute", "count", "tally",
+    "collapse", "collect", "compute", "tally",
     "slice_min", "slice_max", "slice_head", "slice_tail", "slice_sample"
   )) %>%
   mutate(is_tbl_return = !(name %in% c(

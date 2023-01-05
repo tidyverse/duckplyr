@@ -1,0 +1,12 @@
+diff --git b/R/count.R a/R/count.R
+index bdd387a..a879a39 100644
+--- b/R/count.R
++++ a/R/count.R
+@@ -3,6 +3,7 @@
+ #' @export
+ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .drop = group_by_drop_default(x)) {
+   # Our implementation
++  skip("NYI")
+   force(x)
+   out <- NextMethod()
+   out <- dplyr_reconstruct(out, x)
