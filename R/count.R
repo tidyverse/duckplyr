@@ -12,13 +12,16 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
   is_name <- map_lgl(exprs, is_symbol)
 
   if (all(is_name) && .drop) {
-    n <- tally_n(x, {{ wt }})
     by_chr <- map_chr(exprs, as_string)
-    name_chr <- check_name(name, by_chr)
+    name <- check_name(name, by_chr)
 
-    out <- summarise(x, !!name_chr := !!n, .by = c(!!!exprs))
-    out <- dplyr_reconstruct(out, x)
-    return(out)
+    if (!(name %in% by_chr)) {
+      n <- tally_n(x, {{ wt }})
+
+      out <- summarise(x, !!name := !!n, .by = c(!!!exprs))
+      out <- dplyr_reconstruct(out, x)
+      return(out)
+    }
   }
 
   x_df <- x

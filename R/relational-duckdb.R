@@ -14,6 +14,7 @@ get_default_duckdb_connection <- function() {
     DBI::dbExecute(con, 'CREATE MACRO "=="(a, b) AS a = b')
     DBI::dbExecute(con, 'CREATE MACRO "!="(a, b) AS a <> b')
     DBI::dbExecute(con, 'CREATE MACRO "is.na"(a) AS (a IS NULL)')
+    DBI::dbExecute(con, 'CREATE MACRO "n"() AS (COUNT(*))')
 
     default_duckdb_connection$con <- con
 
