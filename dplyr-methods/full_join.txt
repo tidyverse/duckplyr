@@ -7,6 +7,7 @@ full_join.data.frame <- function(x,
          keep = NULL,
          na_matches = c("na", "never"),
          multiple = NULL) {
+  check_dots_empty0(...)
   y <- auto_copy(x, y, copy = copy)
   join_mutate(
     x = x,

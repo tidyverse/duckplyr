@@ -1,4 +1,6 @@
 slice.data.frame <- function(.data, ..., .by = NULL, .preserve = FALSE) {
+  check_dots_unnamed()
+
   dots <- enquos(...)
 
   by <- compute_by(

@@ -8,6 +8,7 @@ inner_join.data.frame <- function(x,
          na_matches = c("na", "never"),
          multiple = NULL,
          unmatched = "drop") {
+  check_dots_empty0(...)
   y <- auto_copy(x, y, copy = copy)
   join_mutate(
     x = x,
