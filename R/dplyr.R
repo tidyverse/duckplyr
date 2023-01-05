@@ -12,3 +12,4 @@ eval_relocate <- dplyr:::eval_relocate
 eval_select_by <- dplyr:::eval_select_by
 group_by_drop_default <- dplyr:::group_by_drop_default
 some <- dplyr:::some
+tally_n <- dplyr:::tally_n

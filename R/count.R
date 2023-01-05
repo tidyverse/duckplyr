@@ -8,12 +8,12 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
   dplyr_local_error_call()
 
   quos <- dplyr_quosures(...)
-  wt_quo <- enquo(wt)
+  n <- tally_n(x, {{ wt }})
 
   name_chr <- check_name(name, names(quos))
 
-  if (quo_is_null(wt_quo) && !any("n" %in% names(x)) && .drop) {
-    out <- summarise(x, !!name_chr := n(), .by = c(!!!quos))
+  if (!any("n" %in% names(x)) && .drop) {
+    out <- summarise(x, !!name_chr := !!n, .by = c(!!!quos))
     out <- dplyr_reconstruct(out, x)
     return(out)
   }
