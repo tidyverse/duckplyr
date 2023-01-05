@@ -22,6 +22,7 @@
 #' @importFrom purrr map
 #' @importFrom purrr map2
 #' @importFrom tibble as_tibble
+#' @importFrom tibble deframe
 #' @importFrom tibble new_tibble
 #' @importFrom tibble tibble
 #' @importFrom tidyselect everything

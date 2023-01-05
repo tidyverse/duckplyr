@@ -2,19 +2,34 @@
 #' @importFrom dplyr pull
 #' @export
 pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
-  # Our implementation
-  force(.data)
-  out <- NextMethod(var = {{ var }}, name = {{ name }})
-  return(out)
-
   # dplyr implementation
   var <- tidyselect::vars_pull(names(.data), !!enquo(var))
   name <- enquo(name)
-  if (quo_is_null(name)) {
-    return(.data[[var]])
+  if (!quo_is_null(name)) {
+    name <- tidyselect::vars_pull(names(.data), !!name)
+    var <- c(name, var)
   }
-  name <- tidyselect::vars_pull(names(.data), !!name)
-  set_names(.data[[var]], nm = .data[[name]])
+
+  loc <- set_names(match(var, names(.data)), var)
+
+  # Our implementation
+  exprs <- exprs_from_loc(.data, loc)
+
+  # Ensure `pull()` appears in call stack
+  pull <- rel_try
+  pull(
+    "Can't use relational with zero-column result set." = (length(exprs) == 0),
+    {
+      rel <- duckdb_rel_from_df(.data)
+    }, fallback = {
+      out <- NextMethod(var = {{ var }}, name = {{ name }})
+      return(out)
+    }
+  )
+
+  out_rel <- rel_project(rel, exprs)
+  out <- rel_to_df(out_rel)
+  deframe(out)
 }
 
 duckplyr_pull <- function(.data, ...) {
