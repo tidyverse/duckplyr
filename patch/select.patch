@@ -1,14 +1,15 @@
 diff --git b/R/select.R a/R/select.R
-index c6c19e9..bf75409 100644
+index c6c19e9..ba3f0f1 100644
 --- b/R/select.R
 +++ a/R/select.R
-@@ -2,9 +2,35 @@
+@@ -2,10 +2,33 @@
  #' @importFrom dplyr select
  #' @export
  select.duckplyr_df <- function(.data, ...) {
 -  # Our implementation
    force(.data)
 -  out <- NextMethod()
+-  out <- dplyr_reconstruct(out, .data)
 +
 +  error_call <- dplyr_error_call()
 +
@@ -19,13 +20,12 @@ index c6c19e9..bf75409 100644
 +  )
 +
 +  # Our implementation
-+  loc_name <- names(.data)[loc]
-+  exprs <- map2(names(.data)[loc], names(loc), ~ relexpr_reference(.x, alias = .y))
++  exprs <- exprs_from_loc(.data, loc)
 +
 +  # Ensure `select()` appears in call stack
 +  select <- rel_try
 +  select(
-+    "Can't use relational with zero-column result set." = (length(loc) == 0),
++    "Can't use relational with zero-column result set." = (length(exprs) == 0),
 +    {
 +      rel <- duckdb_rel_from_df(.data)
 +    }, fallback = {
@@ -35,12 +35,11 @@ index c6c19e9..bf75409 100644
 +    }
 +  )
 +
-+  out_rel <- rel_project(rel, exprs)
-+  out <- rel_to_df(out_rel)
-   out <- dplyr_reconstruct(out, .data)
++  out <- exprs_project(rel, exprs, .data)
    return(out)
  
-@@ -17,9 +43,9 @@ select.duckplyr_df <- function(.data, ...) {
+   # dplyr implementation
+@@ -17,9 +40,9 @@ select.duckplyr_df <- function(.data, ...) {
      data = .data,
      error_call = error_call
    )
