@@ -3,11 +3,13 @@
 
 ## usethis namespace: start
 #' @import rlang
+#' @importFrom dplyr across
 #' @importFrom dplyr add_tally
 #' @importFrom dplyr collapse
 #' @importFrom dplyr collect
 #' @importFrom dplyr compute
 #' @importFrom dplyr count
+#' @importFrom dplyr desc
 #' @importFrom dplyr group_rows
 #' @importFrom dplyr is_grouped_df
 #' @importFrom dplyr lead
@@ -30,6 +32,7 @@
 #' @importFrom tibble new_tibble
 #' @importFrom tibble tibble
 #' @importFrom tidyselect everything
+#' @importFrom vctrs new_rcrd
 #' @importFrom vctrs vec_slice
 #' @useDynLib duckplyr, .registration = TRUE
 ## usethis namespace: end

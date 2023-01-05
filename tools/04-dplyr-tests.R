@@ -2,6 +2,8 @@ source("tools/00-funs.R", echo = TRUE)
 
 tests <- c(
   "helper-s3.R",
+  "helper-encoding.R",
+  "test-arrange.R",
   "test-count-tally.R",
   "test-filter.R",
   "test-pull.R",
