@@ -13,14 +13,14 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
   name_chr <- check_name(name, names(quos))
 
   if (quo_is_null(wt_quo) && !any("n" %in% names(x)) && .drop) {
-    out <- summarise(x, !!name_chr := n(), .by = c(...))
+    out <- summarise(x, !!name_chr := n(), .by = c(!!!quos))
     out <- dplyr_reconstruct(out, x)
     return(out)
   }
 
   x_df <- x
   class(x_df) <- "data.frame"
-  out <- count(x_df, ..., wt = {{ wt }}, sort = sort, name = name, .drop = .drop)
+  out <- count(x_df, !!!quos, wt = {{ wt }}, sort = sort, name = name, .drop = .drop)
   out <- dplyr_reconstruct(out, x)
   return(out)
 
