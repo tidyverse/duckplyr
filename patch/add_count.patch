@@ -1,12 +1,18 @@
 diff --git b/R/add_count.R a/R/add_count.R
-index bd5ba44..37230de 100644
+index bd5ba44..02da341 100644
 --- b/R/add_count.R
 +++ a/R/add_count.R
-@@ -2,6 +2,7 @@
- #' @importFrom dplyr add_count
+@@ -3,9 +3,10 @@
  #' @export
  add_count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .drop = deprecated()) {
-+  skip("NYI")
    # Our implementation
-   force(x)
-   out <- NextMethod()
+-  force(x)
+-  out <- NextMethod()
+-  out <- dplyr_reconstruct(out, x)
++  x_df <- x
++  class(x_df) <- "data.frame"
++  out <- add_count(x_df, ..., wt = {{ wt }}, sort = sort, name = name, .drop = .drop)
++  class(out) <- class(x)
+   return(out)
+ 
+   # dplyr implementation

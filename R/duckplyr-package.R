@@ -19,6 +19,7 @@
 #' @importFrom dplyr slice_sample
 #' @importFrom dplyr slice_tail
 #' @importFrom dplyr tally
+#' @importFrom lifecycle deprecated
 #' @importFrom purrr imap
 #' @importFrom purrr map
 #' @importFrom purrr map_chr

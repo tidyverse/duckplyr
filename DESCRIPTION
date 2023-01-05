@@ -18,6 +18,7 @@ Depends:
 Imports: 
     dplyr (>= 1.0.10),
     duckdb (>= 0.6.0),
+    lifecycle,
     purrr,
     rlang (>= 1.0.6),
     tibble,
