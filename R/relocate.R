@@ -2,13 +2,6 @@
 #' @importFrom dplyr relocate
 #' @export
 relocate.duckplyr_df <- function(.data, ..., .before = NULL, .after = NULL) {
-  # Our implementation
-  force(.data)
-  out <- NextMethod()
-  out <- dplyr_reconstruct(out, .data)
-  return(out)
-
-  # dplyr implementation
   loc <- eval_relocate(
     expr = expr(c(...)),
     data = .data,
@@ -18,6 +11,26 @@ relocate.duckplyr_df <- function(.data, ..., .before = NULL, .after = NULL) {
     after_arg = ".after"
   )
 
+  # Our implementation
+  exprs <- exprs_from_loc(.data, loc)
+
+  # Ensure `relocate()` appears in call stack
+  relocate <- rel_try
+  relocate(
+    "Can't use relational with zero-column result set." = (length(exprs) == 0),
+    {
+      rel <- duckdb_rel_from_df(.data)
+    }, fallback = {
+      out <- NextMethod()
+      out <- dplyr_reconstruct(out, .data)
+      return(out)
+    }
+  )
+
+  out <- exprs_project(rel, exprs, .data)
+  return(out)
+
+  # dplyr implementation
   out <- dplyr_col_select(.data, loc)
   out <- set_names(out, names(loc))
 
