@@ -11,7 +11,7 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
   exprs <- unname(map(quos, quo_get_expr))
   is_name <- map_lgl(exprs, is_symbol)
 
-  if (all(is_name) && .drop) {
+  if (all(is_name) && .drop && !sort) {
     by_chr <- map_chr(exprs, as_string)
     name <- check_name(name, by_chr)
 

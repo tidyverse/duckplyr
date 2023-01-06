@@ -1,5 +1,5 @@
 diff --git b/R/count.R a/R/count.R
-index bdd387a..35e8894 100644
+index bdd387a..7761071 100644
 --- b/R/count.R
 +++ a/R/count.R
 @@ -4,13 +4,33 @@
@@ -17,7 +17,7 @@ index bdd387a..35e8894 100644
 +  exprs <- unname(map(quos, quo_get_expr))
 +  is_name <- map_lgl(exprs, is_symbol)
 +
-+  if (all(is_name) && .drop) {
++  if (all(is_name) && .drop && !sort) {
 +    by_chr <- map_chr(exprs, as_string)
 +    name <- check_name(name, by_chr)
 +
