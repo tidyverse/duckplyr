@@ -1,6 +1,6 @@
 source("tools/00-funs.R", echo = TRUE)
 
-func_decl <- function(formals, is_tbl_return) {
+func_decl <- function(name, formals, is_tbl_return) {
   data_arg <- sym(names(formals)[[1]])
   if (is_tbl_return) {
     rlang::new_function(formals, expr({
@@ -29,7 +29,7 @@ func_decl_chr <- function(generic, code, name, new_code_chr, is_tbl_return, skip
     method_code <- ""
   } else {
     new_code_chr <- paste(capture.output(print(new_code_chr)), collapse = "\n")
-    new_code_chr <- gsub("[{]", "{\n  # Our implementation", new_code_chr)
+    new_code_chr <- sub("[{]", "{\n  # Our implementation", new_code_chr)
 
     dplyr_code <- brio::read_file(fs::path("dplyr-methods", paste0(generic, ".txt")))
     dplyr_impl <- c(
@@ -38,7 +38,7 @@ func_decl_chr <- function(generic, code, name, new_code_chr, is_tbl_return, skip
       gsub("^[^{]*[{]\n", "", dplyr_code, perl = TRUE)
     )
 
-    new_code_chr <- gsub("[}]", paste(dplyr_impl, collapse = "\n"), new_code_chr)
+    new_code_chr <- gsub("\n[}]", paste0("\n", dplyr_impl, collapse = ""), new_code_chr)
 
     method_code <- paste0(
       "#' @importFrom dplyr ",
@@ -108,7 +108,7 @@ func_decl_chr <- function(generic, code, name, new_code_chr, is_tbl_return, skip
 duckplyr_df_methods <-
   df_methods %>%
   mutate(formals = map(code, formals)) %>%
-  mutate(new_code = map2(formals, is_tbl_return, func_decl)) %>%
+  mutate(new_code = pmap(list(name, formals, is_tbl_return), func_decl)) %>%
   mutate(new_code_chr = map(new_code, constructive::construct, check = FALSE)) %>%
   mutate(new_fun = paste0(name, ".duckplyr_df")) %>%
   rowwise() %>%
