@@ -5,12 +5,6 @@ func_decl <- function(formals, is_tbl_return) {
   if (is_tbl_return) {
     rlang::new_function(formals, expr({
       force(!!data_arg)
-      # FIXME: how to run all dplyr tests?
-      # - Tweak tests so that they call helpers that convert args to duckdf-s first?
-      # - Tweak tests so that they run with duckdf-s instead of tibbles
-      #   or data frames?
-      # - Avoid NextMethod(), forward directly to dplyr implementation?
-      # - ...?
       out <- NextMethod()
       out <- dplyr_reconstruct(out, !!data_arg)
       return(out)
