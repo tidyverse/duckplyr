@@ -5,6 +5,7 @@ tests <- c(
   "helper-encoding.R",
   "test-arrange.R",
   "test-count-tally.R",
+  "test-distinct.R",
   "test-filter.R",
   "test-pull.R",
   "test-relocate.R",

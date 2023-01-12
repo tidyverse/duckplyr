@@ -4,7 +4,9 @@
 distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
   # Our implementation
   force(.data)
-  out <- NextMethod()
+  df <- .data
+  class(df) <- "data.frame"
+  out <- distinct(df, ..., .keep_all = .keep_all)
   out <- dplyr_reconstruct(out, .data)
   return(out)
 
