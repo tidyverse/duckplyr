@@ -137,13 +137,11 @@ walk(patches, ~ system(paste0("patch -p1 < ", .x)))
 
 r_status <- gert::git_status(pathspec = "R")
 
-if (nrow(r_status) == 1) {
-  patch_path <- gsub("R/(.*)[.]R", "patch/\\1.patch", r_status$file)
+walk(r_status$file, function(file) {
+  patch_path <- gsub("R/(.*)[.]R", "patch/\\1.patch", file)
   if (fs::file_exists(patch_path)) {
     system(paste0("patch -p1 -R < ", patch_path))
   }
-  system(paste0("git diff -R -- ", r_status$file, " > ", patch_path))
-  system(paste0("git checkout -- ", r_status$file))
-} else if (nrow(r_status) > 0) {
-  stop("Too many files change, inspect manually.")
-}
+  system(paste0("git diff -R -- ", file, " > ", patch_path))
+  system(paste0("git checkout -- ", file))
+})
