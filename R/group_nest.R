@@ -3,8 +3,9 @@
 #' @export
 group_nest.duckplyr_df <- function(.tbl, ..., .key = "data", keep = FALSE) {
   # Our implementation
-  force(.tbl)
-  out <- NextMethod()
+  x_df <- .tbl
+  class(x_df) <- "data.frame"
+  out <- group_nest(x_df, ..., .key = .key, keep = keep)
   out <- dplyr_reconstruct(out, .tbl)
   return(out)
 

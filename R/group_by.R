@@ -3,8 +3,9 @@
 #' @export
 group_by.duckplyr_df <- function(.data, ..., .add = FALSE, .drop = group_by_drop_default(.data)) {
   # Our implementation
-  force(.data)
-  out <- NextMethod()
+  x_df <- .data
+  class(x_df) <- "data.frame"
+  out <- group_by(x_df, ..., .add = .add, .drop = .drop)
   out <- dplyr_reconstruct(out, .data)
   return(out)
 

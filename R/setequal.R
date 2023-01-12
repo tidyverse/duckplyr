@@ -3,8 +3,9 @@
 #' @export
 setequal.duckplyr_df <- function(x, y, ...) {
   # Our implementation
-  force(x)
-  out <- NextMethod()
+  x_df <- x
+  class(x_df) <- "data.frame"
+  out <- setequal(x_df, y, ...)
   return(out)
 
   # dplyr implementation

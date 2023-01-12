@@ -3,8 +3,9 @@
 #' @export
 group_split.duckplyr_df <- function(.tbl, ..., .keep = TRUE, keep = deprecated()) {
   # Our implementation
-  force(.tbl)
-  out <- NextMethod()
+  x_df <- .tbl
+  class(x_df) <- "data.frame"
+  out <- group_split(x_df, ..., .keep = .keep, keep = keep)
   out <- dplyr_reconstruct(out, .tbl)
   return(out)
 

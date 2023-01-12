@@ -3,8 +3,9 @@
 #' @export
 auto_copy.duckplyr_df <- function(x, y, copy = FALSE, ...) {
   # Our implementation
-  force(x)
-  out <- NextMethod()
+  x_df <- x
+  class(x_df) <- "data.frame"
+  out <- auto_copy(x_df, y, copy, ...)
   return(out)
 
   # dplyr implementation

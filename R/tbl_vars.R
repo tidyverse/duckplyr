@@ -3,8 +3,9 @@
 #' @export
 tbl_vars.duckplyr_df <- function(x) {
   # Our implementation
-  force(x)
-  out <- NextMethod()
+  x_df <- x
+  class(x_df) <- "data.frame"
+  out <- tbl_vars(x_df)
   return(out)
 
   # dplyr implementation

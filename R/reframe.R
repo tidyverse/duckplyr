@@ -3,8 +3,9 @@
 #' @export
 reframe.duckplyr_df <- function(.data, ..., .by = NULL) {
   # Our implementation
-  force(.data)
-  out <- NextMethod()
+  x_df <- .data
+  class(x_df) <- "data.frame"
+  out <- reframe(x_df, ..., .by = {{ .by }})
   out <- dplyr_reconstruct(out, .data)
   return(out)
 

@@ -3,8 +3,9 @@
 #' @export
 sample_frac.duckplyr_df <- function(tbl, size = 1, replace = FALSE, weight = NULL, .env = NULL, ...) {
   # Our implementation
-  force(tbl)
-  out <- NextMethod()
+  x_df <- tbl
+  class(x_df) <- "data.frame"
+  out <- sample_frac(x_df, {{ size }}, replace, {{ weight }}, .env, ...)
   out <- dplyr_reconstruct(out, tbl)
   return(out)
 

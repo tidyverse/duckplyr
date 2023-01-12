@@ -3,10 +3,9 @@
 #' @export
 distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
   # Our implementation
-  force(.data)
-  df <- .data
-  class(df) <- "data.frame"
-  out <- distinct(df, ..., .keep_all = .keep_all)
+  x_df <- .data
+  class(x_df) <- "data.frame"
+  out <- distinct(x_df, ..., .keep_all = .keep_all)
   out <- dplyr_reconstruct(out, .data)
   return(out)
 

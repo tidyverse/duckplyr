@@ -3,8 +3,9 @@
 #' @export
 ungroup.duckplyr_df <- function(x, ...) {
   # Our implementation
-  force(x)
-  out <- NextMethod()
+  x_df <- x
+  class(x_df) <- "data.frame"
+  out <- ungroup(x_df, ...)
   out <- dplyr_reconstruct(out, x)
   return(out)
 

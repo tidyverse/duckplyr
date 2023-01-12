@@ -3,8 +3,9 @@
 #' @export
 rows_append.duckplyr_df <- function(x, y, ..., copy = FALSE, in_place = FALSE) {
   # Our implementation
-  force(x)
-  out <- NextMethod()
+  x_df <- x
+  class(x_df) <- "data.frame"
+  out <- rows_append(x_df, y, ..., copy = copy, in_place = in_place)
   out <- dplyr_reconstruct(out, x)
   return(out)
 

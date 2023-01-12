@@ -3,8 +3,9 @@
 #' @export
 group_size.duckplyr_df <- function(x) {
   # Our implementation
-  force(x)
-  out <- NextMethod()
+  x_df <- x
+  class(x_df) <- "data.frame"
+  out <- group_size(x_df)
   return(out)
 
   # dplyr implementation

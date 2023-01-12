@@ -3,8 +3,9 @@
 #' @export
 group_trim.duckplyr_df <- function(.tbl, .drop = group_by_drop_default(.tbl)) {
   # Our implementation
-  force(.tbl)
-  out <- NextMethod()
+  x_df <- .tbl
+  class(x_df) <- "data.frame"
+  out <- group_trim(x_df, .drop)
   out <- dplyr_reconstruct(out, .tbl)
   return(out)
 

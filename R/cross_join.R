@@ -3,8 +3,9 @@
 #' @export
 cross_join.duckplyr_df <- function(x, y, ..., copy = FALSE, suffix = c(".x", ".y")) {
   # Our implementation
-  force(x)
-  out <- NextMethod()
+  x_df <- x
+  class(x_df) <- "data.frame"
+  out <- cross_join(x_df, y, ..., copy = copy, suffix = suffix)
   out <- dplyr_reconstruct(out, x)
   return(out)
 

@@ -3,8 +3,9 @@
 #' @export
 group_indices.duckplyr_df <- function(.data, ...) {
   # Our implementation
-  force(.data)
-  out <- NextMethod()
+  x_df <- .data
+  class(x_df) <- "data.frame"
+  out <- group_indices(x_df, ...)
   return(out)
 
   # dplyr implementation

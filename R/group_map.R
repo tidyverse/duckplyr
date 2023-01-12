@@ -3,8 +3,9 @@
 #' @export
 group_map.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = deprecated()) {
   # Our implementation
-  force(.data)
-  out <- NextMethod()
+  x_df <- .data
+  class(x_df) <- "data.frame"
+  out <- group_map(x_df, .f, ..., .keep = .keep, keep = keep)
   out <- dplyr_reconstruct(out, .data)
   return(out)
 

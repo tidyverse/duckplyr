@@ -3,8 +3,9 @@
 #' @export
 n_groups.duckplyr_df <- function(x) {
   # Our implementation
-  force(x)
-  out <- NextMethod()
+  x_df <- x
+  class(x_df) <- "data.frame"
+  out <- n_groups(x_df)
   return(out)
 
   # dplyr implementation

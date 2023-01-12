@@ -3,8 +3,9 @@
 #' @export
 group_keys.duckplyr_df <- function(.tbl, ...) {
   # Our implementation
-  force(.tbl)
-  out <- NextMethod()
+  x_df <- .tbl
+  class(x_df) <- "data.frame"
+  out <- group_keys(x_df, ...)
   out <- dplyr_reconstruct(out, .tbl)
   return(out)
 

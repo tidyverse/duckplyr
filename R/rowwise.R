@@ -3,8 +3,9 @@
 #' @export
 rowwise.duckplyr_df <- function(data, ...) {
   # Our implementation
-  force(data)
-  out <- NextMethod()
+  x_df <- data
+  class(x_df) <- "data.frame"
+  out <- rowwise(x_df, ...)
   out <- dplyr_reconstruct(out, data)
   return(out)
 

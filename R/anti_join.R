@@ -3,8 +3,9 @@
 #' @export
 anti_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches = c("na", "never")) {
   # Our implementation
-  force(x)
-  out <- NextMethod()
+  x_df <- x
+  class(x_df) <- "data.frame"
+  out <- anti_join(x_df, y, by, copy, ..., na_matches = na_matches)
   out <- dplyr_reconstruct(out, x)
   return(out)
 

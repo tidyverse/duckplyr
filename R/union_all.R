@@ -3,8 +3,9 @@
 #' @export
 union_all.duckplyr_df <- function(x, y, ...) {
   # Our implementation
-  force(x)
-  out <- NextMethod()
+  x_df <- x
+  class(x_df) <- "data.frame"
+  out <- union_all(x_df, y, ...)
   out <- dplyr_reconstruct(out, x)
   return(out)
 
