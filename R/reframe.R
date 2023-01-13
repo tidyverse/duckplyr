@@ -6,7 +6,7 @@ reframe.duckplyr_df <- function(.data, ..., .by = NULL) {
   x_df <- .data
   class(x_df) <- "data.frame"
   out <- reframe(x_df, ..., .by = {{ .by }})
-  out <- dplyr_reconstruct(out, .data)
+  class(out) <- class(.data)
   return(out)
 
   # dplyr implementation
