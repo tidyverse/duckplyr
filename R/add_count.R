@@ -6,7 +6,7 @@ add_count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, 
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- add_count(x_df, ..., wt = {{ wt }}, sort = sort, name = name, .drop = .drop)
-  class(out) <- class(x)
+  out <- dplyr_reconstruct(out, x)
   return(out)
 
   # dplyr implementation
