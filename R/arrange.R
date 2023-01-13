@@ -25,12 +25,14 @@ arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
       rel <- duckdb_rel_from_df(.data)
       out_rel <- rel_order(rel, exprs)
       out <- rel_to_df(out_rel)
+      out <- dplyr_reconstruct(out, .data)
+      return(out)
     },
     fallback = {
-      out <- NextMethod()
     }
   )
 
+  out <- NextMethod()
   out <- dplyr_reconstruct(out, .data)
   return(out)
 
