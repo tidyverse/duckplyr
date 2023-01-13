@@ -10,20 +10,20 @@ rename.duckplyr_df <- function(.data, ...) {
   # Our implementation
   exprs <- exprs_from_loc(.data, names)
 
-  # Ensure `rename()` appears in call stack
-  rename <- rel_try
-  rename(
+  rel_try(
     "Can't use relational with zero-column result set." = (length(exprs) == 0),
     {
       rel <- duckdb_rel_from_df(.data)
-    }, fallback = {
-      out <- NextMethod()
-      out <- dplyr_reconstruct(out, .data)
+      out <- exprs_project(rel, exprs, .data)
       return(out)
+    }, fallback = {
     }
   )
 
-  out <- exprs_project(rel, exprs, .data)
+  x_df <- .data
+  class(x_df) <- "data.frame"
+  out <- rename(x_df, ...)
+  out <- dplyr_reconstruct(out, .data)
   return(out)
 
   # dplyr implementation
