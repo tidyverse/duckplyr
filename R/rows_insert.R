@@ -6,6 +6,7 @@ rows_insert.duckplyr_df <- function(x, y, by = NULL, ..., conflict = c("error", 
   rel_try(
     "No relational implementation for rows_insert()" = TRUE,
     {
+      return(out)
     }
   )
 

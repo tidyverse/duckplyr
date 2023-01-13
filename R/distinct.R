@@ -6,6 +6,7 @@ distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
   rel_try(
     "No relational implementation for distinct()" = TRUE,
     {
+      return(out)
     }
   )
 

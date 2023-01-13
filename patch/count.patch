@@ -1,8 +1,8 @@
 diff --git b/R/count.R a/R/count.R
-index 6ca50df..e17445a 100644
+index 0960599..e17445a 100644
 --- b/R/count.R
 +++ a/R/count.R
-@@ -2,12 +2,29 @@
+@@ -2,13 +2,29 @@
  #' @importFrom dplyr count
  #' @export
  count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .drop = group_by_drop_default(x)) {
@@ -27,7 +27,7 @@ index 6ca50df..e17445a 100644
 +
 +      out <- summarise(x, !!name := !!n, .by = c(!!!exprs))
 +      out <- dplyr_reconstruct(out, x)
-+      return(out)
+       return(out)
      }
 -  )
 +  }

@@ -1,8 +1,8 @@
 diff --git b/R/select.R a/R/select.R
-index 7015081..45bba33 100644
+index f4ad2a0..45bba33 100644
 --- b/R/select.R
 +++ a/R/select.R
-@@ -2,10 +2,24 @@
+@@ -2,10 +2,23 @@
  #' @importFrom dplyr select
  #' @export
  select.duckplyr_df <- function(.data, ...) {
@@ -25,11 +25,10 @@ index 7015081..45bba33 100644
      {
 +      rel <- duckdb_rel_from_df(.data)
 +      out <- exprs_project(rel, exprs, .data)
-+      return(out)
+       return(out)
      }
    )
- 
-@@ -25,6 +39,7 @@ select.duckplyr_df <- function(.data, ...) {
+@@ -26,6 +39,7 @@ select.duckplyr_df <- function(.data, ...) {
      data = .data,
      error_call = error_call
    )

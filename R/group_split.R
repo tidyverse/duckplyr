@@ -6,6 +6,7 @@ group_split.duckplyr_df <- function(.tbl, ..., .keep = TRUE, keep = deprecated()
   rel_try(
     "No relational implementation for group_split()" = TRUE,
     {
+      return(out)
     }
   )
 

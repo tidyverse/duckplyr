@@ -6,6 +6,7 @@ rename_with.duckplyr_df <- function(.data, .fn, .cols = everything(), ...) {
   rel_try(
     "No relational implementation for rename_with()" = TRUE,
     {
+      return(out)
     }
   )
 

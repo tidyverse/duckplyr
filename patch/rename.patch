@@ -1,8 +1,8 @@
 diff --git b/R/rename.R a/R/rename.R
-index 192f7fb..78bb5c5 100644
+index 29c398e..78bb5c5 100644
 --- b/R/rename.R
 +++ a/R/rename.R
-@@ -2,10 +2,19 @@
+@@ -2,10 +2,18 @@
  #' @importFrom dplyr rename
  #' @export
  rename.duckplyr_df <- function(.data, ...) {
@@ -20,7 +20,6 @@ index 192f7fb..78bb5c5 100644
      {
 +      rel <- duckdb_rel_from_df(.data)
 +      out <- exprs_project(rel, exprs, .data)
-+      return(out)
+       return(out)
      }
    )
- 

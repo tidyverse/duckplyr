@@ -6,6 +6,7 @@ slice.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
   rel_try(
     "No relational implementation for slice()" = TRUE,
     {
+      return(out)
     }
   )
 

@@ -6,6 +6,7 @@ rows_append.duckplyr_df <- function(x, y, ..., copy = FALSE, in_place = FALSE) {
   rel_try(
     "No relational implementation for rows_append()" = TRUE,
     {
+      return(out)
     }
   )
 

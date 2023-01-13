@@ -6,6 +6,7 @@ group_keys.duckplyr_df <- function(.tbl, ...) {
   rel_try(
     "No relational implementation for group_keys()" = TRUE,
     {
+      return(out)
     }
   )
 

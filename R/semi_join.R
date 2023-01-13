@@ -6,6 +6,7 @@ semi_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches
   rel_try(
     "No relational implementation for semi_join()" = TRUE,
     {
+      return(out)
     }
   )
 

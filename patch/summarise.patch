@@ -1,8 +1,8 @@
 diff --git b/R/summarise.R a/R/summarise.R
-index c356596..202ce8f 100644
+index c15f56c..202ce8f 100644
 --- b/R/summarise.R
 +++ a/R/summarise.R
-@@ -2,10 +2,24 @@
+@@ -2,10 +2,23 @@
  #' @importFrom dplyr summarise
  #' @export
  summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
@@ -25,7 +25,6 @@ index c356596..202ce8f 100644
 +      # Side effect: fail if vectors are named
 +      out <- as_duckplyr_df(out)
 +
-+      return(out)
+       return(out)
      }
    )
- 

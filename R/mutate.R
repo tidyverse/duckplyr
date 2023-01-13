@@ -6,6 +6,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
   rel_try(
     "No relational implementation for mutate()" = TRUE,
     {
+      return(out)
     }
   )
 

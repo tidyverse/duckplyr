@@ -88,6 +88,7 @@ func_decl_chr <- function(generic, code, name, new_code_chr, is_tbl_return, skip
       "  rel_try(\n",
       '    "No relational implementation for ', generic, '()" = TRUE,\n',
       "    {\n",
+      "      return(out)\n",
       "    }\n",
       "  )\n",
       "\n"

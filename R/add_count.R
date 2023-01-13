@@ -6,6 +6,7 @@ add_count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, 
   rel_try(
     "No relational implementation for add_count()" = TRUE,
     {
+      return(out)
     }
   )
 

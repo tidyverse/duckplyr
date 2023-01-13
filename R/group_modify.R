@@ -6,6 +6,7 @@ group_modify.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = depre
   rel_try(
     "No relational implementation for group_modify()" = TRUE,
     {
+      return(out)
     }
   )
 

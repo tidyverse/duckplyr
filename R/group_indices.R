@@ -6,6 +6,7 @@ group_indices.duckplyr_df <- function(.data, ...) {
   rel_try(
     "No relational implementation for group_indices()" = TRUE,
     {
+      return(out)
     }
   )
 

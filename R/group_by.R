@@ -6,6 +6,7 @@ group_by.duckplyr_df <- function(.data, ..., .add = FALSE, .drop = group_by_drop
   rel_try(
     "No relational implementation for group_by()" = TRUE,
     {
+      return(out)
     }
   )
 

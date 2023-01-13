@@ -6,6 +6,7 @@ group_map.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = deprecat
   rel_try(
     "No relational implementation for group_map()" = TRUE,
     {
+      return(out)
     }
   )
 

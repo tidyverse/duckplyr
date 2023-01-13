@@ -6,6 +6,7 @@ rows_update.duckplyr_df <- function(x, y, by = NULL, ..., unmatched = c("error",
   rel_try(
     "No relational implementation for rows_update()" = TRUE,
     {
+      return(out)
     }
   )
 

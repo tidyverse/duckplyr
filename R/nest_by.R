@@ -6,6 +6,7 @@ nest_by.duckplyr_df <- function(.data, ..., .key = "data", .keep = FALSE) {
   rel_try(
     "No relational implementation for nest_by()" = TRUE,
     {
+      return(out)
     }
   )
 

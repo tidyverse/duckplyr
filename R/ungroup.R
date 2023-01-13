@@ -6,6 +6,7 @@ ungroup.duckplyr_df <- function(x, ...) {
   rel_try(
     "No relational implementation for ungroup()" = TRUE,
     {
+      return(out)
     }
   )
 

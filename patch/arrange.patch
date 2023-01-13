@@ -1,8 +1,8 @@
 diff --git b/R/arrange.R a/R/arrange.R
-index 0c92a1e..d5c6de8 100644
+index 207cd56..d5c6de8 100644
 --- b/R/arrange.R
 +++ a/R/arrange.R
-@@ -2,10 +2,28 @@
+@@ -2,10 +2,27 @@
  #' @importFrom dplyr arrange
  #' @export
  arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
@@ -29,7 +29,6 @@ index 0c92a1e..d5c6de8 100644
 +      out_rel <- rel_order(rel, exprs)
 +      out <- rel_to_df(out_rel)
 +      out <- dplyr_reconstruct(out, .data)
-+      return(out)
+       return(out)
      }
    )
- 

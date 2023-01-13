@@ -6,6 +6,7 @@ do.duckplyr_df <- function(.data, ...) {
   rel_try(
     "No relational implementation for do()" = TRUE,
     {
+      return(out)
     }
   )
 

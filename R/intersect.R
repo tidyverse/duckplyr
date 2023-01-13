@@ -6,6 +6,7 @@ intersect.duckplyr_df <- function(x, y, ...) {
   rel_try(
     "No relational implementation for intersect()" = TRUE,
     {
+      return(out)
     }
   )
 

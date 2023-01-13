@@ -6,6 +6,7 @@ cross_join.duckplyr_df <- function(x, y, ..., copy = FALSE, suffix = c(".x", ".y
   rel_try(
     "No relational implementation for cross_join()" = TRUE,
     {
+      return(out)
     }
   )
 

@@ -6,6 +6,7 @@ n_groups.duckplyr_df <- function(x) {
   rel_try(
     "No relational implementation for n_groups()" = TRUE,
     {
+      return(out)
     }
   )
 

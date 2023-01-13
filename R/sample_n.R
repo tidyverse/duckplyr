@@ -6,6 +6,7 @@ sample_n.duckplyr_df <- function(tbl, size, replace = FALSE, weight = NULL, .env
   rel_try(
     "No relational implementation for sample_n()" = TRUE,
     {
+      return(out)
     }
   )
 

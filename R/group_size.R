@@ -6,6 +6,7 @@ group_size.duckplyr_df <- function(x) {
   rel_try(
     "No relational implementation for group_size()" = TRUE,
     {
+      return(out)
     }
   )
 

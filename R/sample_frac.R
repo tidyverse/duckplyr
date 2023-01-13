@@ -6,6 +6,7 @@ sample_frac.duckplyr_df <- function(tbl, size = 1, replace = FALSE, weight = NUL
   rel_try(
     "No relational implementation for sample_frac()" = TRUE,
     {
+      return(out)
     }
   )
 

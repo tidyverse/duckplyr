@@ -6,6 +6,7 @@ auto_copy.duckplyr_df <- function(x, y, copy = FALSE, ...) {
   rel_try(
     "No relational implementation for auto_copy()" = TRUE,
     {
+      return(out)
     }
   )
 

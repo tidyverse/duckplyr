@@ -1,8 +1,8 @@
 diff --git b/R/filter.R a/R/filter.R
-index 4844b85..471183e 100644
+index 9ea07f5..471183e 100644
 --- b/R/filter.R
 +++ a/R/filter.R
-@@ -2,10 +2,24 @@
+@@ -2,10 +2,23 @@
  #' @importFrom dplyr filter
  #' @export
  filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
@@ -25,7 +25,6 @@ index 4844b85..471183e 100644
 +      out_rel <- rel_filter(rel, exprs)
 +      out <- rel_to_df(out_rel)
 +      out <- dplyr_reconstruct(out, .data)
-+      return(out)
+       return(out)
      }
    )
- 

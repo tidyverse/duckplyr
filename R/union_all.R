@@ -6,6 +6,7 @@ union_all.duckplyr_df <- function(x, y, ...) {
   rel_try(
     "No relational implementation for union_all()" = TRUE,
     {
+      return(out)
     }
   )
 

@@ -6,6 +6,7 @@ group_trim.duckplyr_df <- function(.tbl, .drop = group_by_drop_default(.tbl)) {
   rel_try(
     "No relational implementation for group_trim()" = TRUE,
     {
+      return(out)
     }
   )
 

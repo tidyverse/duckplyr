@@ -6,6 +6,7 @@ reframe.duckplyr_df <- function(.data, ..., .by = NULL) {
   rel_try(
     "No relational implementation for reframe()" = TRUE,
     {
+      return(out)
     }
   )
 

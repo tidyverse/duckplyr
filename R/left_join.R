@@ -6,6 +6,7 @@ left_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
   rel_try(
     "No relational implementation for left_join()" = TRUE,
     {
+      return(out)
     }
   )
 

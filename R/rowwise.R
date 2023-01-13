@@ -6,6 +6,7 @@ rowwise.duckplyr_df <- function(data, ...) {
   rel_try(
     "No relational implementation for rowwise()" = TRUE,
     {
+      return(out)
     }
   )
 

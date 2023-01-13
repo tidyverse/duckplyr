@@ -6,6 +6,7 @@ anti_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches
   rel_try(
     "No relational implementation for anti_join()" = TRUE,
     {
+      return(out)
     }
   )
 

@@ -6,6 +6,7 @@ group_nest.duckplyr_df <- function(.tbl, ..., .key = "data", keep = FALSE) {
   rel_try(
     "No relational implementation for group_nest()" = TRUE,
     {
+      return(out)
     }
   )
 

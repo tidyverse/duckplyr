@@ -6,6 +6,7 @@ groups.duckplyr_df <- function(x) {
   rel_try(
     "No relational implementation for groups()" = TRUE,
     {
+      return(out)
     }
   )
 

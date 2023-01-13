@@ -6,6 +6,7 @@ full_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
   rel_try(
     "No relational implementation for full_join()" = TRUE,
     {
+      return(out)
     }
   )
 
