@@ -15,21 +15,22 @@ pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
   # Our implementation
   exprs <- exprs_from_loc(.data, loc)
 
-  # Ensure `pull()` appears in call stack
-  pull <- rel_try
-  pull(
+  rel_try(
     "Can't use relational with zero-column result set." = (length(exprs) == 0),
     {
       rel <- duckdb_rel_from_df(.data)
-    }, fallback = {
-      out <- NextMethod(var = {{ var }}, name = {{ name }})
+      out_rel <- rel_project(rel, exprs)
+      out <- rel_to_df(out_rel)
+      out <- deframe(out)
       return(out)
+    }, fallback = {
     }
   )
 
-  out_rel <- rel_project(rel, exprs)
-  out <- rel_to_df(out_rel)
-  deframe(out)
+  x_df <- .data
+  class(x_df) <- "data.frame"
+  out <- pull(x_df, {{ var }}, {{ name }}, ...)
+  return(out)
 }
 
 duckplyr_pull <- function(.data, ...) {
