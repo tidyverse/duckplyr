@@ -11,10 +11,7 @@ arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
     dots <- c(quos(!!!groups(.data)), dots)
   }
 
-  # Our implementation
-  # Ensure `arrange()` appears in call stack
-  arrange <- rel_try
-  arrange(
+  rel_try(
     ".locale argument not supported" = !is.null(.locale),
     "dplyr.legacy_locale not supported" = isTRUE(getOption("dplyr.legacy_locale")),
     {
@@ -32,7 +29,10 @@ arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
     }
   )
 
-  out <- NextMethod()
+  # Our implementation
+  x_df <- .data
+  class(x_df) <- "data.frame"
+  out <- arrange(x_df, ..., .by_group = .by_group, .locale = .locale)
   out <- dplyr_reconstruct(out, .data)
   return(out)
 
