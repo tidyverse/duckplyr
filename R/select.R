@@ -15,20 +15,21 @@ select.duckplyr_df <- function(.data, ...) {
   # Our implementation
   exprs <- exprs_from_loc(.data, loc)
 
-  # Ensure `select()` appears in call stack
-  select <- rel_try
-  select(
+  rel_try(
     "Can't use relational with zero-column result set." = (length(exprs) == 0),
     {
       rel <- duckdb_rel_from_df(.data)
-    }, fallback = {
-      out <- NextMethod()
-      out <- dplyr_reconstruct(out, .data)
+      out <- exprs_project(rel, exprs, .data)
       return(out)
+    }, fallback = {
+      # FIXME: Remove fallback argument
     }
   )
 
-  out <- exprs_project(rel, exprs, .data)
+  x_df <- .data
+  class(x_df) <- "data.frame"
+  out <- select(x_df, ...)
+  out <- dplyr_reconstruct(out, .data)
   return(out)
 
   # dplyr implementation
