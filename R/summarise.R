@@ -16,9 +16,6 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
       out <- rel_to_df(out_rel)
       class(out) <- class(.data)
 
-      # Side effect: fail if vectors are named
-      out <- as_duckplyr_df(out)
-
       return(out)
     }
   )
