@@ -1,4 +1,4 @@
-rel_try <- function(rel, fallback, ...) {
+rel_try <- function(rel, ...) {
   # return(rel)
 
   dots <- as.logical(list(...))
@@ -8,7 +8,7 @@ rel_try <- function(rel, fallback, ...) {
       if (!identical(Sys.getenv("TESTTHAT"), "true")) {
         inform(message = c("Requested fallback for relational:", i = names(dots)[[i]]))
       }
-      return(fallback)
+      return()
     }
   }
 
@@ -18,8 +18,7 @@ rel_try <- function(rel, fallback, ...) {
     if (!identical(Sys.getenv("TESTTHAT"), "true")) {
       rlang::cnd_signal(rlang::message_cnd(message = "Error processing with relational.", parent = out))
     }
-
-    fallback
+    return()
   } else {
     out
   }

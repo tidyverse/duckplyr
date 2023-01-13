@@ -20,8 +20,6 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
       out <- as_duckplyr_df(out)
 
       return(out)
-    },
-    fallback = {
     }
   )
 

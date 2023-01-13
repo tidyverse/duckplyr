@@ -22,7 +22,6 @@ pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
       out <- rel_to_df(out_rel)
       out <- deframe(out)
       return(out)
-    }, fallback = {
     }
   )
 

@@ -15,7 +15,6 @@ rename.duckplyr_df <- function(.data, ...) {
       rel <- duckdb_rel_from_df(.data)
       out <- exprs_project(rel, exprs, .data)
       return(out)
-    }, fallback = {
     }
   )
 

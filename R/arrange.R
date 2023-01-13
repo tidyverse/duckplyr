@@ -24,8 +24,6 @@ arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
       out <- rel_to_df(out_rel)
       out <- dplyr_reconstruct(out, .data)
       return(out)
-    },
-    fallback = {
     }
   )
 

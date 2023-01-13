@@ -1,8 +1,8 @@
 diff --git b/R/pull.R a/R/pull.R
-index 16af561..b8c0e18 100644
+index 16af561..a6df9b7 100644
 --- b/R/pull.R
 +++ a/R/pull.R
-@@ -2,6 +2,30 @@
+@@ -2,6 +2,29 @@
  #' @importFrom dplyr pull
  #' @export
  pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
@@ -26,7 +26,6 @@ index 16af561..b8c0e18 100644
 +      out <- rel_to_df(out_rel)
 +      out <- deframe(out)
 +      return(out)
-+    }, fallback = {
 +    }
 +  )
 +

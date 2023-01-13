@@ -5,10 +5,10 @@ explain.duckplyr_df <- function(x, ...) {
     {
       rel <- duckdb_rel_from_df(x)
       rel_explain(rel)
-    },
-    fallback = {
-      writeLines("Can't convert to relational, fallback implementation will be used.")
+      return(invisible())
     }
   )
+
+  writeLines("Can't convert to relational, fallback implementation will be used.")
   invisible()
 }

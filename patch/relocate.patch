@@ -1,8 +1,8 @@
 diff --git b/R/relocate.R a/R/relocate.R
-index caaa263..eb40798 100644
+index caaa263..127e5ae 100644
 --- b/R/relocate.R
 +++ a/R/relocate.R
-@@ -2,6 +2,28 @@
+@@ -2,6 +2,27 @@
  #' @importFrom dplyr relocate
  #' @export
  relocate.duckplyr_df <- function(.data, ..., .before = NULL, .after = NULL) {
@@ -24,7 +24,6 @@ index caaa263..eb40798 100644
 +      rel <- duckdb_rel_from_df(.data)
 +      out <- exprs_project(rel, exprs, .data)
 +      return(out)
-+    }, fallback = {
 +    }
 +  )
 +

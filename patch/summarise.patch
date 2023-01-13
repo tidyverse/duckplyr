@@ -1,8 +1,8 @@
 diff --git b/R/summarise.R a/R/summarise.R
-index c727dd0..3839868 100644
+index c727dd0..1167272 100644
 --- b/R/summarise.R
 +++ a/R/summarise.R
-@@ -2,6 +2,29 @@
+@@ -2,6 +2,27 @@
  #' @importFrom dplyr summarise
  #' @export
  summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
@@ -24,8 +24,6 @@ index c727dd0..3839868 100644
 +      out <- as_duckplyr_df(out)
 +
 +      return(out)
-+    },
-+    fallback = {
 +    }
 +  )
 +
