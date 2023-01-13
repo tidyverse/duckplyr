@@ -4,7 +4,8 @@
 arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
   force(.data)
 
-  dots <- unname(enquos(...))
+  dots <- enquos(...)
+  dots <- unname(dots)
 
   if (.by_group) {
     dots <- c(quos(!!!groups(.data)), dots)
