@@ -1,8 +1,8 @@
 diff --git b/R/pull.R a/R/pull.R
-index 7c06683..abeff35 100644
+index 7c06683..2b3f31f 100644
 --- b/R/pull.R
 +++ a/R/pull.R
-@@ -2,20 +2,35 @@
+@@ -2,6 +2,30 @@
  #' @importFrom dplyr pull
  #' @export
  pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
@@ -16,7 +16,6 @@ index 7c06683..abeff35 100644
 +
 +  loc <- set_names(match(var, names(.data)), var)
 +
-   # Our implementation
 +  exprs <- exprs_from_loc(.data, loc)
 +
 +  rel_try(
@@ -31,19 +30,6 @@ index 7c06683..abeff35 100644
 +    }
 +  )
 +
+   # Our implementation
    x_df <- .data
    class(x_df) <- "data.frame"
-   out <- pull(x_df, {{ var }}, {{ name }}, ...)
-   return(out)
--
--  # dplyr implementation
--  var <- tidyselect::vars_pull(names(.data), !!enquo(var))
--  name <- enquo(name)
--  if (quo_is_null(name)) {
--    return(.data[[var]])
--  }
--  name <- tidyselect::vars_pull(names(.data), !!name)
--  set_names(.data[[var]], nm = .data[[name]])
- }
- 
- duckplyr_pull <- function(.data, ...) {

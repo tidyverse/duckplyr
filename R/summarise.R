@@ -2,7 +2,6 @@
 #' @importFrom dplyr summarise
 #' @export
 summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
-  # Our implementation
   force(.data)
 
   rel_try(
@@ -26,6 +25,7 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
     }
   )
 
+  # Our implementation
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- summarise(x_df, ..., .by = {{ .by }}, .groups = .groups)

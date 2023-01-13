@@ -1,11 +1,11 @@
 diff --git b/R/summarise.R a/R/summarise.R
-index 0473c49..554780f 100644
+index 0473c49..3839868 100644
 --- b/R/summarise.R
 +++ a/R/summarise.R
-@@ -3,10 +3,33 @@
+@@ -2,11 +2,34 @@
+ #' @importFrom dplyr summarise
  #' @export
  summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
-   # Our implementation
 +  force(.data)
 +
 +  rel_try(
@@ -29,6 +29,7 @@ index 0473c49..554780f 100644
 +    }
 +  )
 +
+   # Our implementation
    x_df <- .data
 -  class(x_df) <- "data.frame"
 +  class(x_df) <- setdiff(class(x_df), "duckplyr_df")

@@ -7,9 +7,14 @@ dplyr_reconstruct <- function(data, template) {
 
 #' @export
 dplyr_reconstruct.duckplyr_df <- function(data, template) {
-  # Our implementation
   .Call(copy_df_attribs, data, template)
   return(data)
+
+  # Our implementation
+  x_df <- data
+  class(x_df) <- "data.frame"
+  out <- dplyr_reconstruct(x_df, template)
+  return(out)
 
   # dplyr implementation
   attrs <- attributes(template)

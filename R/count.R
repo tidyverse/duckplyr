@@ -2,7 +2,6 @@
 #' @importFrom dplyr count
 #' @export
 count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .drop = group_by_drop_default(x)) {
-  # Our implementation
   force(x)
 
   dplyr_local_error_call()
@@ -24,9 +23,13 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
     }
   }
 
+  # FIXME: optimize, no need to forward dots
+  # out <- count(x_df, !!!quos, wt = {{ wt }}, sort = sort, name = name, .drop = .drop)
+
+  # Our implementation
   x_df <- x
   class(x_df) <- "data.frame"
-  out <- count(x_df, !!!quos, wt = {{ wt }}, sort = sort, name = name, .drop = .drop)
+  out <- count(x_df, ..., wt = {{ wt }}, sort = sort, name = name, .drop = .drop)
   class(out) <- class(x)
   return(out)
 

@@ -12,7 +12,6 @@ pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
 
   loc <- set_names(match(var, names(.data)), var)
 
-  # Our implementation
   exprs <- exprs_from_loc(.data, loc)
 
   rel_try(
@@ -27,10 +26,20 @@ pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
     }
   )
 
+  # Our implementation
   x_df <- .data
   class(x_df) <- "data.frame"
   out <- pull(x_df, {{ var }}, {{ name }}, ...)
   return(out)
+
+  # dplyr implementation
+  var <- tidyselect::vars_pull(names(.data), !!enquo(var))
+  name <- enquo(name)
+  if (quo_is_null(name)) {
+    return(.data[[var]])
+  }
+  name <- tidyselect::vars_pull(names(.data), !!name)
+  set_names(.data[[var]], nm = .data[[name]])
 }
 
 duckplyr_pull <- function(.data, ...) {
