@@ -34,6 +34,8 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
   return(out)
 
   # dplyr implementation
+  dplyr_local_error_call()
+
   if (!missing(...)) {
     out <- group_by(x, ..., .add = TRUE, .drop = .drop)
   } else {

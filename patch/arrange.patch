@@ -1,5 +1,5 @@
 diff --git b/R/arrange.R a/R/arrange.R
-index 5c00de9..707dd3e 100644
+index 5c00de9..42e75bc 100644
 --- b/R/arrange.R
 +++ a/R/arrange.R
 @@ -2,6 +2,33 @@
@@ -36,16 +36,3 @@ index 5c00de9..707dd3e 100644
    # Our implementation
    x_df <- .data
    class(x_df) <- setdiff(class(x_df), "duckplyr_df")
-@@ -10,12 +37,6 @@ arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
-   return(out)
- 
-   # dplyr implementation
--  dots <- enquos(...)
--
--  if (.by_group) {
--    dots <- c(quos(!!!groups(.data)), dots)
--  }
--
-   loc <- arrange_rows(.data, dots = dots, locale = .locale)
-   dplyr_row_slice(.data, loc)
- }

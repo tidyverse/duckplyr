@@ -9,7 +9,6 @@ filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
 
   by <- enquo(.by)
 
-  # Our implementation
   rel_try(
     "Can't use relational with zero-column result set." = (length(.data) == 0),
     "Can't use relational without filter conditions." = (length(dots) == 0),
@@ -25,6 +24,7 @@ filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
     fallback = {}
   )
 
+  # Our implementation
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- filter(x_df, ..., .by = {{ .by }}, .preserve = .preserve)

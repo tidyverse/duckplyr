@@ -7,7 +7,6 @@ transmute.duckplyr_df <- function(.data, ...) {
   dots <- check_transmute_args(...)
   dots <- dplyr_quosures(!!!dots)
 
-  # Our implementation
   rel_try(
     "Can't use relational with zero-column result set." = (length(dots) == 0),
     {
@@ -22,6 +21,7 @@ transmute.duckplyr_df <- function(.data, ...) {
     }
   )
 
+  # Our implementation
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- transmute(x_df, ...)

@@ -1,8 +1,8 @@
 diff --git b/R/transmute.R a/R/transmute.R
-index 71ab0c0..f8d5bdc 100644
+index 71ab0c0..3a38430 100644
 --- b/R/transmute.R
 +++ a/R/transmute.R
-@@ -2,7 +2,26 @@
+@@ -2,6 +2,25 @@
  #' @importFrom dplyr transmute
  #' @export
  transmute.duckplyr_df <- function(.data, ...) {
@@ -11,7 +11,6 @@ index 71ab0c0..f8d5bdc 100644
 +  dots <- check_transmute_args(...)
 +  dots <- dplyr_quosures(!!!dots)
 +
-   # Our implementation
 +  rel_try(
 +    "Can't use relational with zero-column result set." = (length(dots) == 0),
 +    {
@@ -26,6 +25,6 @@ index 71ab0c0..f8d5bdc 100644
 +    }
 +  )
 +
+   # Our implementation
    x_df <- .data
    class(x_df) <- setdiff(class(x_df), "duckplyr_df")
-   out <- transmute(x_df, ...)

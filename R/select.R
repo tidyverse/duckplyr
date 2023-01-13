@@ -12,7 +12,6 @@ select.duckplyr_df <- function(.data, ...) {
     error_call = error_call
   )
 
-  # Our implementation
   exprs <- exprs_from_loc(.data, loc)
 
   rel_try(
@@ -26,6 +25,7 @@ select.duckplyr_df <- function(.data, ...) {
     }
   )
 
+  # Our implementation
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- select(x_df, ...)
@@ -44,6 +44,7 @@ select.duckplyr_df <- function(.data, ...) {
   loc <- ensure_group_vars(loc, .data, notify = TRUE)
 
   # duckplyr: Backend-specific
+  loc <- ensure_group_vars(loc, .data, notify = TRUE)
   out <- dplyr_col_select(.data, loc)
   out <- set_names(out, names(loc))
 

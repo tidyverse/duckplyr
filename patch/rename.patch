@@ -1,8 +1,8 @@
 diff --git b/R/rename.R a/R/rename.R
-index b0c632a..379cfe5 100644
+index b0c632a..00ea9a4 100644
 --- b/R/rename.R
 +++ a/R/rename.R
-@@ -2,7 +2,24 @@
+@@ -2,6 +2,23 @@
  #' @importFrom dplyr rename
  #' @export
  rename.duckplyr_df <- function(.data, ...) {
@@ -11,7 +11,6 @@ index b0c632a..379cfe5 100644
 +  names <- names(.data)
 +  names[loc] <- names(loc)
 +
-   # Our implementation
 +  exprs <- exprs_from_loc(.data, names)
 +
 +  rel_try(
@@ -24,14 +23,6 @@ index b0c632a..379cfe5 100644
 +    }
 +  )
 +
+   # Our implementation
    x_df <- .data
    class(x_df) <- setdiff(class(x_df), "duckplyr_df")
-   out <- rename(x_df, ...)
-@@ -10,7 +27,6 @@ rename.duckplyr_df <- function(.data, ...) {
-   return(out)
- 
-   # dplyr implementation
--  loc <- tidyselect::eval_rename(expr(c(...)), .data)
-   # eval_rename() only returns changes
-   names <- names(.data)
-   names[loc] <- names(loc)

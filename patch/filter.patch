@@ -1,8 +1,8 @@
 diff --git b/R/filter.R a/R/filter.R
-index 8ebce36..57bc85e 100644
+index 8ebce36..4bc5442 100644
 --- b/R/filter.R
 +++ a/R/filter.R
-@@ -2,7 +2,29 @@
+@@ -2,6 +2,28 @@
  #' @importFrom dplyr filter
  #' @export
  filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
@@ -13,7 +13,6 @@ index 8ebce36..57bc85e 100644
 +
 +  by <- enquo(.by)
 +
-   # Our implementation
 +  rel_try(
 +    "Can't use relational with zero-column result set." = (length(.data) == 0),
 +    "Can't use relational without filter conditions." = (length(dots) == 0),
@@ -29,6 +28,6 @@ index 8ebce36..57bc85e 100644
 +    fallback = {}
 +  )
 +
+   # Our implementation
    x_df <- .data
    class(x_df) <- setdiff(class(x_df), "duckplyr_df")
-   out <- filter(x_df, ..., .by = {{ .by }}, .preserve = .preserve)

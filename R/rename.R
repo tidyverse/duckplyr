@@ -7,7 +7,6 @@ rename.duckplyr_df <- function(.data, ...) {
   names <- names(.data)
   names[loc] <- names(loc)
 
-  # Our implementation
   exprs <- exprs_from_loc(.data, names)
 
   rel_try(
@@ -20,6 +19,7 @@ rename.duckplyr_df <- function(.data, ...) {
     }
   )
 
+  # Our implementation
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- rename(x_df, ...)
@@ -27,6 +27,7 @@ rename.duckplyr_df <- function(.data, ...) {
   return(out)
 
   # dplyr implementation
+  loc <- tidyselect::eval_rename(expr(c(...)), .data)
   # eval_rename() only returns changes
   names <- names(.data)
   names[loc] <- names(loc)
