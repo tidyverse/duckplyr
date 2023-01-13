@@ -2,7 +2,7 @@
 #' @importFrom dplyr rows_patch
 #' @export
 rows_patch.duckplyr_df <- function(x, y, by = NULL, ..., unmatched = c("error", "ignore"), copy = FALSE, in_place = FALSE) {
-  # Our implementation
+  # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- rows_patch(x_df, y, by, ..., unmatched = unmatched, copy = copy, in_place = in_place)

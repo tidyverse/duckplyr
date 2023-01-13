@@ -2,7 +2,7 @@
 #' @importFrom dplyr union_all
 #' @export
 union_all.duckplyr_df <- function(x, y, ...) {
-  # Our implementation
+  # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- union_all(x_df, y, ...)

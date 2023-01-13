@@ -2,7 +2,7 @@
 #' @importFrom dplyr nest_by
 #' @export
 nest_by.duckplyr_df <- function(.data, ..., .key = "data", .keep = FALSE) {
-  # Our implementation
+  # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- nest_by(x_df, ..., .key = .key, .keep = .keep)

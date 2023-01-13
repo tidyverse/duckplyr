@@ -2,7 +2,7 @@
 #' @importFrom dplyr add_count
 #' @export
 add_count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .drop = deprecated()) {
-  # Our implementation
+  # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- add_count(x_df, ..., wt = {{ wt }}, sort = sort, name = name, .drop = .drop)

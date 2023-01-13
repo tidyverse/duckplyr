@@ -2,7 +2,7 @@
 #' @importFrom dplyr rows_upsert
 #' @export
 rows_upsert.duckplyr_df <- function(x, y, by = NULL, ..., copy = FALSE, in_place = FALSE) {
-  # Our implementation
+  # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- rows_upsert(x_df, y, by, ..., copy = copy, in_place = in_place)

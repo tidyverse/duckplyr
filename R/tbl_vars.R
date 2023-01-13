@@ -2,7 +2,7 @@
 #' @importFrom dplyr tbl_vars
 #' @export
 tbl_vars.duckplyr_df <- function(x) {
-  # Our implementation
+  # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- tbl_vars(x_df)

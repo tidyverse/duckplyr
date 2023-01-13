@@ -2,7 +2,7 @@
 #' @importFrom dplyr group_trim
 #' @export
 group_trim.duckplyr_df <- function(.tbl, .drop = group_by_drop_default(.tbl)) {
-  # Our implementation
+  # dplyr forward
   x_df <- .tbl
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- group_trim(x_df, .drop)

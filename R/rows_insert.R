@@ -2,7 +2,7 @@
 #' @importFrom dplyr rows_insert
 #' @export
 rows_insert.duckplyr_df <- function(x, y, by = NULL, ..., conflict = c("error", "ignore"), copy = FALSE, in_place = FALSE) {
-  # Our implementation
+  # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- rows_insert(x_df, y, by, ..., conflict = conflict, copy = copy, in_place = in_place)

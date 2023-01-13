@@ -16,6 +16,6 @@ index 3fa1ff7..97f0d29 100644
 +    check_string(name)
 +  }
 +
-   # Our implementation
+   # dplyr forward
    x_df <- x
    class(x_df) <- setdiff(class(x_df), "duckplyr_df")

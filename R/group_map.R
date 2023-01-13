@@ -2,7 +2,7 @@
 #' @importFrom dplyr group_map
 #' @export
 group_map.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = deprecated()) {
-  # Our implementation
+  # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- group_map(x_df, .f, ..., .keep = .keep, keep = keep)

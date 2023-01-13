@@ -2,7 +2,7 @@
 #' @importFrom dplyr group_split
 #' @export
 group_split.duckplyr_df <- function(.tbl, ..., .keep = TRUE, keep = deprecated()) {
-  # Our implementation
+  # dplyr forward
   x_df <- .tbl
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- group_split(x_df, ..., .keep = .keep, keep = keep)

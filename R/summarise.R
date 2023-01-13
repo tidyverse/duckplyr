@@ -23,7 +23,7 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
     }
   )
 
-  # Our implementation
+  # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- summarise(x_df, ..., .by = {{ .by }}, .groups = .groups)

@@ -23,7 +23,7 @@ filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
     }
   )
 
-  # Our implementation
+  # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- filter(x_df, ..., .by = {{ .by }}, .preserve = .preserve)

@@ -25,7 +25,7 @@ pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
     }
   )
 
-  # Our implementation
+  # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- pull(x_df, {{ var }}, {{ name }}, ...)

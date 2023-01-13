@@ -22,6 +22,6 @@ index b0c632a..5bf6726 100644
 +    }
 +  )
 +
-   # Our implementation
+   # dplyr forward
    x_df <- .data
    class(x_df) <- setdiff(class(x_df), "duckplyr_df")

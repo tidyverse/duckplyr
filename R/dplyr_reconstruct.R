@@ -10,7 +10,7 @@ dplyr_reconstruct.duckplyr_df <- function(data, template) {
   .Call(copy_df_attribs, data, template)
   return(data)
 
-  # Our implementation
+  # dplyr forward
   x_df <- data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- dplyr_reconstruct(x_df, template)

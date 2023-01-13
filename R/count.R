@@ -26,7 +26,7 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
   # FIXME: optimize, no need to forward dots
   # out <- count(x_df, !!!quos, wt = {{ wt }}, sort = sort, name = name, .drop = .drop)
 
-  # Our implementation
+  # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- count(x_df, ..., wt = {{ wt }}, sort = sort, name = name, .drop = .drop)

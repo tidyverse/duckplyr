@@ -2,7 +2,7 @@
 #' @importFrom dplyr reframe
 #' @export
 reframe.duckplyr_df <- function(.data, ..., .by = NULL) {
-  # Our implementation
+  # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- reframe(x_df, ..., .by = {{ .by }})

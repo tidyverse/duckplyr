@@ -2,7 +2,7 @@
 #' @importFrom dplyr group_data
 #' @export
 group_data.duckplyr_df <- function(.data) {
-  # Our implementation
+  # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- group_data(x_df)

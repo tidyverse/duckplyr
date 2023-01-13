@@ -2,7 +2,7 @@
 #' @importFrom dplyr cross_join
 #' @export
 cross_join.duckplyr_df <- function(x, y, ..., copy = FALSE, suffix = c(".x", ".y")) {
-  # Our implementation
+  # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- cross_join(x_df, y, ..., copy = copy, suffix = suffix)

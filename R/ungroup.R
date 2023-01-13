@@ -2,7 +2,7 @@
 #' @importFrom dplyr ungroup
 #' @export
 ungroup.duckplyr_df <- function(x, ...) {
-  # Our implementation
+  # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- ungroup(x_df, ...)

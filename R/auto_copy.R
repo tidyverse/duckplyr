@@ -2,7 +2,7 @@
 #' @importFrom dplyr auto_copy
 #' @export
 auto_copy.duckplyr_df <- function(x, y, copy = FALSE, ...) {
-  # Our implementation
+  # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- auto_copy(x_df, y, copy, ...)

@@ -2,7 +2,7 @@
 #' @importFrom dplyr distinct
 #' @export
 distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
-  # Our implementation
+  # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- distinct(x_df, ..., .keep_all = .keep_all)

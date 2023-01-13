@@ -12,7 +12,7 @@ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, na
     check_string(name)
   }
 
-  # Our implementation
+  # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- nest_join(x_df, y, by, copy, keep, name, ..., na_matches = na_matches, unmatched = unmatched)

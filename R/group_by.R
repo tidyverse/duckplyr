@@ -2,7 +2,7 @@
 #' @importFrom dplyr group_by
 #' @export
 group_by.duckplyr_df <- function(.data, ..., .add = FALSE, .drop = group_by_drop_default(.data)) {
-  # Our implementation
+  # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- group_by(x_df, ..., .add = .add, .drop = .drop)

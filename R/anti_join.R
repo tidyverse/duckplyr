@@ -2,7 +2,7 @@
 #' @importFrom dplyr anti_join
 #' @export
 anti_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches = c("na", "never")) {
-  # Our implementation
+  # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- anti_join(x_df, y, by, copy, ..., na_matches = na_matches)

@@ -2,7 +2,7 @@
 #' @importFrom dplyr group_keys
 #' @export
 group_keys.duckplyr_df <- function(.tbl, ...) {
-  # Our implementation
+  # dplyr forward
   x_df <- .tbl
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- group_keys(x_df, ...)

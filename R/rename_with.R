@@ -2,7 +2,7 @@
 #' @importFrom dplyr rename_with
 #' @export
 rename_with.duckplyr_df <- function(.data, .fn, .cols = everything(), ...) {
-  # Our implementation
+  # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- rename_with(x_df, .fn, {{ .cols }}, ...)

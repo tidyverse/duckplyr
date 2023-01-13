@@ -2,7 +2,7 @@
 #' @importFrom dplyr same_src
 #' @export
 same_src.duckplyr_df <- function(x, y) {
-  # Our implementation
+  # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- same_src(x_df, y)

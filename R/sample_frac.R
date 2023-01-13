@@ -2,7 +2,7 @@
 #' @importFrom dplyr sample_frac
 #' @export
 sample_frac.duckplyr_df <- function(tbl, size = 1, replace = FALSE, weight = NULL, .env = NULL, ...) {
-  # Our implementation
+  # dplyr forward
   x_df <- tbl
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- sample_frac(x_df, {{ size }}, replace, {{ weight }}, .env, ...)
