@@ -1,8 +1,8 @@
 diff --git b/R/rename.R a/R/rename.R
-index fa6ad24..ed3c4bd 100644
+index 910b3f4..4c5f911 100644
 --- b/R/rename.R
 +++ a/R/rename.R
-@@ -2,14 +2,31 @@
+@@ -2,7 +2,24 @@
  #' @importFrom dplyr rename
  #' @export
  rename.duckplyr_df <- function(.data, ...) {
@@ -12,25 +12,22 @@ index fa6ad24..ed3c4bd 100644
 +  names[loc] <- names(loc)
 +
    # Our implementation
--  force(.data)
--  out <- NextMethod()
--  out <- dplyr_reconstruct(out, .data)
 +  exprs <- exprs_from_loc(.data, names)
 +
-+  # Ensure `rename()` appears in call stack
-+  rename <- rel_try
-+  rename(
++  rel_try(
 +    "Can't use relational with zero-column result set." = (length(exprs) == 0),
 +    {
 +      rel <- duckdb_rel_from_df(.data)
-+    }, fallback = {
-+      out <- NextMethod()
-+      out <- dplyr_reconstruct(out, .data)
++      out <- exprs_project(rel, exprs, .data)
 +      return(out)
++    }, fallback = {
 +    }
 +  )
 +
-+  out <- exprs_project(rel, exprs, .data)
+   x_df <- .data
+   class(x_df) <- "data.frame"
+   out <- rename(x_df, ...)
+@@ -10,7 +27,6 @@ rename.duckplyr_df <- function(.data, ...) {
    return(out)
  
    # dplyr implementation

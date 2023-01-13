@@ -1,18 +1,15 @@
 diff --git b/R/count.R a/R/count.R
-index bdd387a..7761071 100644
+index 61324b4..7761071 100644
 --- b/R/count.R
 +++ a/R/count.R
-@@ -4,13 +4,33 @@
+@@ -3,15 +3,34 @@
+ #' @export
  count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .drop = group_by_drop_default(x)) {
    # Our implementation
-   force(x)
--  out <- NextMethod()
--  out <- dplyr_reconstruct(out, x)
--  return(out)
- 
--  # dplyr implementation
-   dplyr_local_error_call()
- 
++  force(x)
++
++  dplyr_local_error_call()
++
 +  quos <- enquos(...)
 +  exprs <- unname(map(quos, quo_get_expr))
 +  is_name <- map_lgl(exprs, is_symbol)
@@ -30,13 +27,17 @@ index bdd387a..7761071 100644
 +    }
 +  }
 +
-+  x_df <- x
-+  class(x_df) <- "data.frame"
+   x_df <- x
+   class(x_df) <- "data.frame"
+-  out <- count(x_df, ..., wt = {{ wt }}, sort = sort, name = name, .drop = .drop)
+-  out <- dplyr_reconstruct(out, x)
 +  out <- count(x_df, !!!quos, wt = {{ wt }}, sort = sort, name = name, .drop = .drop)
 +  class(out) <- class(x)
-+  return(out)
-+
-+  # dplyr implementation
+   return(out)
+ 
+   # dplyr implementation
+-  dplyr_local_error_call()
+-
    if (!missing(...)) {
      out <- group_by(x, ..., .add = TRUE, .drop = .drop)
    } else {

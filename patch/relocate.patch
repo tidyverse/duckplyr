@@ -1,14 +1,15 @@
 diff --git b/R/relocate.R a/R/relocate.R
-index 178ffa4..803fc1a 100644
+index 26e62c1..f6e6bbb 100644
 --- b/R/relocate.R
 +++ a/R/relocate.R
-@@ -2,13 +2,6 @@
+@@ -2,14 +2,6 @@
  #' @importFrom dplyr relocate
  #' @export
  relocate.duckplyr_df <- function(.data, ..., .before = NULL, .after = NULL) {
 -  # Our implementation
--  force(.data)
--  out <- NextMethod()
+-  x_df <- .data
+-  class(x_df) <- "data.frame"
+-  out <- relocate(x_df, ..., .before = {{ .before }}, .after = {{ .after }})
 -  out <- dplyr_reconstruct(out, .data)
 -  return(out)
 -
@@ -16,7 +17,7 @@ index 178ffa4..803fc1a 100644
    loc <- eval_relocate(
      expr = expr(c(...)),
      data = .data,
-@@ -18,6 +11,26 @@ relocate.duckplyr_df <- function(.data, ..., .before = NULL, .after = NULL) {
+@@ -19,6 +11,28 @@ relocate.duckplyr_df <- function(.data, ..., .before = NULL, .after = NULL) {
      after_arg = ".after"
    )
  
@@ -30,7 +31,9 @@ index 178ffa4..803fc1a 100644
 +    {
 +      rel <- duckdb_rel_from_df(.data)
 +    }, fallback = {
-+      out <- NextMethod()
++      x_df <- .data
++      class(x_df) <- "data.frame"
++      out <- relocate(x_df, ..., .before = {{ .before }}, .after = {{ .after }})
 +      out <- dplyr_reconstruct(out, .data)
 +      return(out)
 +    }

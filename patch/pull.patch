@@ -1,48 +1,49 @@
 diff --git b/R/pull.R a/R/pull.R
-index 2b6819c..01c0152 100644
+index 7c06683..abeff35 100644
 --- b/R/pull.R
 +++ a/R/pull.R
-@@ -2,19 +2,34 @@
+@@ -2,20 +2,35 @@
  #' @importFrom dplyr pull
  #' @export
  pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
--  # Our implementation
--  force(.data)
--  out <- NextMethod()
--  return(out)
--
-   # dplyr implementation
-   var <- tidyselect::vars_pull(names(.data), !!enquo(var))
-   name <- enquo(name)
--  if (quo_is_null(name)) {
--    return(.data[[var]])
++  # dplyr implementation
++  var <- tidyselect::vars_pull(names(.data), !!enquo(var))
++  name <- enquo(name)
 +  if (!quo_is_null(name)) {
 +    name <- tidyselect::vars_pull(names(.data), !!name)
 +    var <- c(name, var)
-   }
--  name <- tidyselect::vars_pull(names(.data), !!name)
--  set_names(.data[[var]], nm = .data[[name]])
++  }
 +
 +  loc <- set_names(match(var, names(.data)), var)
 +
-+  # Our implementation
+   # Our implementation
 +  exprs <- exprs_from_loc(.data, loc)
 +
-+  # Ensure `pull()` appears in call stack
-+  pull <- rel_try
-+  pull(
++  rel_try(
 +    "Can't use relational with zero-column result set." = (length(exprs) == 0),
 +    {
 +      rel <- duckdb_rel_from_df(.data)
-+    }, fallback = {
-+      out <- NextMethod(var = {{ var }}, name = {{ name }})
++      out_rel <- rel_project(rel, exprs)
++      out <- rel_to_df(out_rel)
++      out <- deframe(out)
 +      return(out)
++    }, fallback = {
 +    }
 +  )
 +
-+  out_rel <- rel_project(rel, exprs)
-+  out <- rel_to_df(out_rel)
-+  deframe(out)
+   x_df <- .data
+   class(x_df) <- "data.frame"
+   out <- pull(x_df, {{ var }}, {{ name }}, ...)
+   return(out)
+-
+-  # dplyr implementation
+-  var <- tidyselect::vars_pull(names(.data), !!enquo(var))
+-  name <- enquo(name)
+-  if (quo_is_null(name)) {
+-    return(.data[[var]])
+-  }
+-  name <- tidyselect::vars_pull(names(.data), !!name)
+-  set_names(.data[[var]], nm = .data[[name]])
  }
  
  duckplyr_pull <- function(.data, ...) {

@@ -1,20 +1,22 @@
 diff --git b/R/arrange.R a/R/arrange.R
-index 5688b49..c7530aa 100644
+index 1133bbe..dfb1311 100644
 --- b/R/arrange.R
 +++ a/R/arrange.R
-@@ -2,19 +2,38 @@
+@@ -2,20 +2,39 @@
  #' @importFrom dplyr arrange
  #' @export
  arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
 -  # Our implementation
-   force(.data)
--  out <- NextMethod()
+-  x_df <- .data
+-  class(x_df) <- "data.frame"
+-  out <- arrange(x_df, ..., .by_group = .by_group, .locale = .locale)
 -  out <- dplyr_reconstruct(out, .data)
 -  return(out)
++  force(.data)
  
 -  # dplyr implementation
--  dots <- enquos(...)
-+  dots <- unname(enquos(...))
+   dots <- enquos(...)
++  dots <- unname(dots)
  
    if (.by_group) {
      dots <- c(quos(!!!groups(.data)), dots)
