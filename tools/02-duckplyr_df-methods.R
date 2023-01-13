@@ -16,6 +16,8 @@ func_decl <- function(name, formals, is_tbl_return) {
     summarise = c(".by"),
   )
 
+  no_reconstruct <- c("count", "summarise", "reframe")
+
   data_arg <- sym(names(formals)[[1]])
 
   if (name %in% names(nse_args)) {
@@ -44,12 +46,18 @@ func_decl <- function(name, formals, is_tbl_return) {
   forward_call <- rlang::call2(name, !!!forward_formals)
 
   if (is_tbl_return) {
+    if (name %in% no_reconstruct) {
+      reconstruct_call <- expr(class(out) <- class(!!data_arg))
+    } else {
+      reconstruct_call <- expr(out <- dplyr_reconstruct(out, !!data_arg))
+    }
+
     rlang::new_function(formals, expr({
       x_df <- !!data_arg
       class(x_df) <- "data.frame"
       # class(x_df) <- setdiff(class(x_df), "duckplyr_df")
       out <- !!forward_call
-      out <- dplyr_reconstruct(out, !!data_arg)
+      !!reconstruct_call
       return(out)
     }))
   } else {

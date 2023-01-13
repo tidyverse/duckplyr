@@ -1,8 +1,8 @@
 diff --git b/R/count.R a/R/count.R
-index 61324b4..b1c1946 100644
+index 4d53360..b1c1946 100644
 --- b/R/count.R
 +++ a/R/count.R
-@@ -2,16 +2,38 @@
+@@ -2,6 +2,30 @@
  #' @importFrom dplyr count
  #' @export
  count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .drop = group_by_drop_default(x)) {
@@ -33,9 +33,7 @@ index 61324b4..b1c1946 100644
    # Our implementation
    x_df <- x
    class(x_df) <- "data.frame"
-   out <- count(x_df, ..., wt = {{ wt }}, sort = sort, name = name, .drop = .drop)
--  out <- dplyr_reconstruct(out, x)
-+  class(out) <- class(x)
+@@ -10,8 +34,6 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
    return(out)
  
    # dplyr implementation

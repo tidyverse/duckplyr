@@ -1,8 +1,8 @@
 diff --git b/R/summarise.R a/R/summarise.R
-index 0473c49..3839868 100644
+index 88128cd..3839868 100644
 --- b/R/summarise.R
 +++ a/R/summarise.R
-@@ -2,11 +2,34 @@
+@@ -2,9 +2,32 @@
  #' @importFrom dplyr summarise
  #' @export
  summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
@@ -34,8 +34,5 @@ index 0473c49..3839868 100644
 -  class(x_df) <- "data.frame"
 +  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
    out <- summarise(x_df, ..., .by = {{ .by }}, .groups = .groups)
--  out <- dplyr_reconstruct(out, .data)
-+  class(out) <- class(.data)
+   class(out) <- class(.data)
    return(out)
- 
-   # dplyr implementation
