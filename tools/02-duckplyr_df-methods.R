@@ -1,18 +1,63 @@
 source("tools/00-funs.R", echo = TRUE)
 
 func_decl <- function(name, formals, is_tbl_return) {
+  nse_args <- rlang::list2(
+    add_count = c("wt"),
+    count = c("wt"),
+    filter = c(".by"),
+    mutate = c(".by", ".before", ".after"),
+    pull = c("var", "name"),
+    reframe = c(".by"),
+    relocate = c(".before", ".after"),
+    rename_with = c(".cols"),
+    sample_frac = c("size", "weight"),
+    sample_n = c("size", "weight"),
+    slice = c(".by"),
+    summarise = c(".by"),
+  )
+
   data_arg <- sym(names(formals)[[1]])
+
+  if (name %in% names(nse_args)) {
+    nse <- nse_args[[name]]
+  } else {
+    nse <- character()
+  }
+
+  ellipsis <- which(names(formals) == "...")
+
+  sym_formals <- rlang::set_names(rlang::syms(names(formals)), names(formals))
+
+  curly_formals <- map(sym_formals[nse], rlang::call2, .fn = "{")
+  curly_curly_formals <- map(curly_formals, rlang::call2, .fn = "{")
+
+  forward_formals <- sym_formals
+  forward_formals[nse] <- curly_curly_formals
+  forward_formals[[1]] <- rlang::sym("x_df")
+
+  if (length(ellipsis) > 0) {
+    names(forward_formals)[seq.int(ellipsis)] <- ""
+  } else {
+    names(forward_formals) <- NULL
+  }
+
+  forward_call <- rlang::call2(name, !!!forward_formals)
+
   if (is_tbl_return) {
     rlang::new_function(formals, expr({
-      force(!!data_arg)
-      out <- NextMethod()
+      x_df <- !!data_arg
+      class(x_df) <- "data.frame"
+      # class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+      out <- !!forward_call
       out <- dplyr_reconstruct(out, !!data_arg)
       return(out)
     }))
   } else {
     rlang::new_function(formals, expr({
-      force(!!data_arg)
-      out <- NextMethod()
+      x_df <- !!data_arg
+      class(x_df) <- "data.frame"
+      # class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+      out <- !!forward_call
       return(out)
     }))
   }
@@ -132,6 +177,9 @@ duckplyr_df_methods %>%
 patches <- fs::dir_ls("patch")
 
 walk(patches, ~ system(paste0("patch -p1 < ", .x)))
+
+system(paste0("git clean -f -- R"))
+
 
 # Collect new patches -----------------------------------------------------------------
 
