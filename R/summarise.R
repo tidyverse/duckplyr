@@ -5,9 +5,7 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
   # Our implementation
   force(.data)
 
-  # Ensure `summarise()` appears in call stack
-  summarise <- rel_try
-  summarise(
+  rel_try(
     {
       rel <- duckdb_rel_from_df(.data)
       dots <- dplyr_quosures(...)
@@ -18,13 +16,20 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
       out_rel <- rel_aggregate(rel, groups, aggregates)
       out <- rel_to_df(out_rel)
       class(out) <- class(.data)
+
+      # Side effect: fail if vectors are named
+      out <- as_duckplyr_df(out)
+
+      return(out)
     },
     fallback = {
-      out <- NextMethod(.by = {{ .by }})
-      out <- as_duckplyr_df(out)
     }
   )
 
+  x_df <- .data
+  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  out <- summarise(x_df, ..., .by = {{ .by }}, .groups = .groups)
+  class(out) <- class(.data)
   return(out)
 
   # dplyr implementation
