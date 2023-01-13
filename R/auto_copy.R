@@ -4,7 +4,7 @@
 auto_copy.duckplyr_df <- function(x, y, copy = FALSE, ...) {
   # Our implementation
   x_df <- x
-  class(x_df) <- "data.frame"
+  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- auto_copy(x_df, y, copy, ...)
   return(out)
 

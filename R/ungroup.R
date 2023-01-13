@@ -4,7 +4,7 @@
 ungroup.duckplyr_df <- function(x, ...) {
   # Our implementation
   x_df <- x
-  class(x_df) <- "data.frame"
+  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- ungroup(x_df, ...)
   out <- dplyr_reconstruct(out, x)
   return(out)

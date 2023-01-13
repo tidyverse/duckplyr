@@ -26,7 +26,7 @@ relocate.duckplyr_df <- function(.data, ..., .before = NULL, .after = NULL) {
 
   # Our implementation
   x_df <- .data
-  class(x_df) <- "data.frame"
+  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- relocate(x_df, ..., .before = {{ .before }}, .after = {{ .after }})
   out <- dplyr_reconstruct(out, .data)
   return(out)

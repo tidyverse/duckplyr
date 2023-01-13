@@ -4,7 +4,7 @@
 reframe.duckplyr_df <- function(.data, ..., .by = NULL) {
   # Our implementation
   x_df <- .data
-  class(x_df) <- "data.frame"
+  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- reframe(x_df, ..., .by = {{ .by }})
   class(out) <- class(.data)
   return(out)

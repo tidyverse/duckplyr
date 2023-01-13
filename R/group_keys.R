@@ -4,7 +4,7 @@
 group_keys.duckplyr_df <- function(.tbl, ...) {
   # Our implementation
   x_df <- .tbl
-  class(x_df) <- "data.frame"
+  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- group_keys(x_df, ...)
   out <- dplyr_reconstruct(out, .tbl)
   return(out)

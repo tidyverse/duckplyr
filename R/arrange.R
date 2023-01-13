@@ -31,7 +31,7 @@ arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
 
   # Our implementation
   x_df <- .data
-  class(x_df) <- "data.frame"
+  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- arrange(x_df, ..., .by_group = .by_group, .locale = .locale)
   out <- dplyr_reconstruct(out, .data)
   return(out)

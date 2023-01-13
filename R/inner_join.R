@@ -4,7 +4,7 @@
 inner_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ..., keep = NULL, na_matches = c("na", "never"), multiple = NULL, unmatched = "drop") {
   # Our implementation
   x_df <- x
-  class(x_df) <- "data.frame"
+  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- inner_join(x_df, y, by, copy, suffix, ..., keep = keep, na_matches = na_matches, multiple = multiple, unmatched = unmatched)
   out <- dplyr_reconstruct(out, x)
   return(out)

@@ -4,7 +4,7 @@
 anti_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches = c("na", "never")) {
   # Our implementation
   x_df <- x
-  class(x_df) <- "data.frame"
+  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- anti_join(x_df, y, by, copy, ..., na_matches = na_matches)
   out <- dplyr_reconstruct(out, x)
   return(out)

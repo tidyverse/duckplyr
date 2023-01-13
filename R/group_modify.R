@@ -4,7 +4,7 @@
 group_modify.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = deprecated()) {
   # Our implementation
   x_df <- .data
-  class(x_df) <- "data.frame"
+  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- group_modify(x_df, .f, ..., .keep = .keep, keep = keep)
   out <- dplyr_reconstruct(out, .data)
   return(out)

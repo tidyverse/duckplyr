@@ -1,5 +1,5 @@
 diff --git b/R/pull.R a/R/pull.R
-index 7c06683..2b3f31f 100644
+index 16af561..b8c0e18 100644
 --- b/R/pull.R
 +++ a/R/pull.R
 @@ -2,6 +2,30 @@
@@ -32,4 +32,4 @@ index 7c06683..2b3f31f 100644
 +
    # Our implementation
    x_df <- .data
-   class(x_df) <- "data.frame"
+   class(x_df) <- setdiff(class(x_df), "duckplyr_df")

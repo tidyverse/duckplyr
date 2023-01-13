@@ -4,7 +4,7 @@
 slice.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
   # Our implementation
   x_df <- .data
-  class(x_df) <- "data.frame"
+  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- slice(x_df, ..., .by = {{ .by }}, .preserve = .preserve)
   out <- dplyr_reconstruct(out, .data)
   return(out)

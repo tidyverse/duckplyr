@@ -4,7 +4,7 @@
 add_count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .drop = deprecated()) {
   # Our implementation
   x_df <- x
-  class(x_df) <- "data.frame"
+  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- add_count(x_df, ..., wt = {{ wt }}, sort = sort, name = name, .drop = .drop)
   class(out) <- class(x)
   return(out)

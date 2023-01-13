@@ -4,7 +4,7 @@
 group_indices.duckplyr_df <- function(.data, ...) {
   # Our implementation
   x_df <- .data
-  class(x_df) <- "data.frame"
+  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- group_indices(x_df, ...)
   return(out)
 

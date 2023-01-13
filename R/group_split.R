@@ -4,7 +4,7 @@
 group_split.duckplyr_df <- function(.tbl, ..., .keep = TRUE, keep = deprecated()) {
   # Our implementation
   x_df <- .tbl
-  class(x_df) <- "data.frame"
+  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- group_split(x_df, ..., .keep = .keep, keep = keep)
   out <- dplyr_reconstruct(out, .tbl)
   return(out)

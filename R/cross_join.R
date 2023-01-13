@@ -4,7 +4,7 @@
 cross_join.duckplyr_df <- function(x, y, ..., copy = FALSE, suffix = c(".x", ".y")) {
   # Our implementation
   x_df <- x
-  class(x_df) <- "data.frame"
+  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- cross_join(x_df, y, ..., copy = copy, suffix = suffix)
   out <- dplyr_reconstruct(out, x)
   return(out)

@@ -54,8 +54,8 @@ func_decl <- function(name, formals, is_tbl_return) {
 
     rlang::new_function(formals, expr({
       x_df <- !!data_arg
-      class(x_df) <- "data.frame"
-      # class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+      # class(x_df) <- "data.frame"
+      class(x_df) <- setdiff(class(x_df), "duckplyr_df")
       out <- !!forward_call
       !!reconstruct_call
       return(out)
@@ -63,8 +63,8 @@ func_decl <- function(name, formals, is_tbl_return) {
   } else {
     rlang::new_function(formals, expr({
       x_df <- !!data_arg
-      class(x_df) <- "data.frame"
-      # class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+      # class(x_df) <- "data.frame"
+      class(x_df) <- setdiff(class(x_df), "duckplyr_df")
       out <- !!forward_call
       return(out)
     }))
@@ -186,12 +186,14 @@ patches <- fs::dir_ls("patch")
 
 walk(patches, ~ system(paste0("patch -p1 < ", .x)))
 
+# Stop here to overwrite files if the code generation is updated
+
 system(paste0("git clean -f -- R"))
 
 
 # Collect new patches -----------------------------------------------------------------
 
-r_status <- gert::git_status(pathspec = "R")
+r_status <- gert::git_status(pathspec = "R/*.R")
 
 walk(r_status$file, function(file) {
   patch_path <- gsub("R/(.*)[.]R", "patch/\\1.patch", file)

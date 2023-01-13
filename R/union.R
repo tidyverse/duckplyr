@@ -4,7 +4,7 @@
 union.duckplyr_df <- function(x, y, ...) {
   # Our implementation
   x_df <- x
-  class(x_df) <- "data.frame"
+  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   out <- union(x_df, y, ...)
   out <- dplyr_reconstruct(out, x)
   return(out)
