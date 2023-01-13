@@ -82,7 +82,18 @@ func_decl_chr <- function(generic, code, name, new_code_chr, is_tbl_return, skip
     method_code <- ""
   } else {
     new_code_chr <- paste(capture.output(print(new_code_chr)), collapse = "\n")
-    new_code_chr <- sub("[{]", "{\n  # dplyr forward", new_code_chr)
+
+    rel_try_chr <- paste0(
+      "  # Our implementation\n",
+      "  rel_try(\n",
+      '    "No relational implementation for ', generic, '()" = TRUE,\n',
+      "    {\n",
+      "    }\n",
+      "  )\n",
+      "\n"
+    )
+
+    new_code_chr <- sub("[{]", paste0("{\n", rel_try_chr, "  # dplyr forward"), new_code_chr)
 
     dplyr_code <- brio::read_file(fs::path("dplyr-methods", paste0(generic, ".txt")))
     dplyr_impl <- c(

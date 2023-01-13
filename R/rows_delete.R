@@ -2,6 +2,13 @@
 #' @importFrom dplyr rows_delete
 #' @export
 rows_delete.duckplyr_df <- function(x, y, by = NULL, ..., unmatched = c("error", "ignore"), copy = FALSE, in_place = FALSE) {
+  # Our implementation
+  rel_try(
+    "No relational implementation for rows_delete()" = TRUE,
+    {
+    }
+  )
+
   # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")

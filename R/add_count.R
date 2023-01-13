@@ -2,6 +2,13 @@
 #' @importFrom dplyr add_count
 #' @export
 add_count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .drop = deprecated()) {
+  # Our implementation
+  rel_try(
+    "No relational implementation for add_count()" = TRUE,
+    {
+    }
+  )
+
   # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")

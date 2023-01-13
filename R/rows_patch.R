@@ -2,6 +2,13 @@
 #' @importFrom dplyr rows_patch
 #' @export
 rows_patch.duckplyr_df <- function(x, y, by = NULL, ..., unmatched = c("error", "ignore"), copy = FALSE, in_place = FALSE) {
+  # Our implementation
+  rel_try(
+    "No relational implementation for rows_patch()" = TRUE,
+    {
+    }
+  )
+
   # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")

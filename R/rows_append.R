@@ -2,6 +2,13 @@
 #' @importFrom dplyr rows_append
 #' @export
 rows_append.duckplyr_df <- function(x, y, ..., copy = FALSE, in_place = FALSE) {
+  # Our implementation
+  rel_try(
+    "No relational implementation for rows_append()" = TRUE,
+    {
+    }
+  )
+
   # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")

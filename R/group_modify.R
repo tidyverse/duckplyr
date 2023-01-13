@@ -2,6 +2,13 @@
 #' @importFrom dplyr group_modify
 #' @export
 group_modify.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = deprecated()) {
+  # Our implementation
+  rel_try(
+    "No relational implementation for group_modify()" = TRUE,
+    {
+    }
+  )
+
   # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")

@@ -2,6 +2,13 @@
 #' @importFrom dplyr rename_with
 #' @export
 rename_with.duckplyr_df <- function(.data, .fn, .cols = everything(), ...) {
+  # Our implementation
+  rel_try(
+    "No relational implementation for rename_with()" = TRUE,
+    {
+    }
+  )
+
   # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")

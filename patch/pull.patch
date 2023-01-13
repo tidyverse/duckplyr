@@ -1,11 +1,12 @@
 diff --git b/R/pull.R a/R/pull.R
-index 16af561..a6df9b7 100644
+index f437f5f..350a166 100644
 --- b/R/pull.R
 +++ a/R/pull.R
-@@ -2,6 +2,29 @@
+@@ -2,10 +2,26 @@
  #' @importFrom dplyr pull
  #' @export
  pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
+-  # Our implementation
 +  # dplyr implementation
 +  var <- tidyselect::vars_pull(names(.data), !!enquo(var))
 +  name <- enquo(name)
@@ -18,17 +19,15 @@ index 16af561..a6df9b7 100644
 +
 +  exprs <- exprs_from_loc(.data, loc)
 +
-+  rel_try(
+   rel_try(
+-    "No relational implementation for pull()" = TRUE,
 +    "Can't use relational with zero-column result set." = (length(exprs) == 0),
-+    {
+     {
 +      rel <- duckdb_rel_from_df(.data)
 +      out_rel <- rel_project(rel, exprs)
 +      out <- rel_to_df(out_rel)
 +      out <- deframe(out)
 +      return(out)
-+    }
-+  )
-+
-   # dplyr forward
-   x_df <- .data
-   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+     }
+   )
+ 

@@ -1,11 +1,12 @@
 diff --git b/R/relocate.R a/R/relocate.R
-index caaa263..127e5ae 100644
+index 53363ca..6a7538f 100644
 --- b/R/relocate.R
 +++ a/R/relocate.R
-@@ -2,6 +2,27 @@
+@@ -2,10 +2,24 @@
  #' @importFrom dplyr relocate
  #' @export
  relocate.duckplyr_df <- function(.data, ..., .before = NULL, .after = NULL) {
+-  # Our implementation
 +  loc <- eval_relocate(
 +    expr = expr(c(...)),
 +    data = .data,
@@ -18,15 +19,13 @@ index caaa263..127e5ae 100644
 +  exprs <- exprs_from_loc(.data, loc)
 +
 +  # Ensure `relocate()` appears in call stack
-+  rel_try(
+   rel_try(
+-    "No relational implementation for relocate()" = TRUE,
 +    "Can't use relational with zero-column result set." = (length(exprs) == 0),
-+    {
+     {
 +      rel <- duckdb_rel_from_df(.data)
 +      out <- exprs_project(rel, exprs, .data)
 +      return(out)
-+    }
-+  )
-+
-   # dplyr forward
-   x_df <- .data
-   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+     }
+   )
+ 

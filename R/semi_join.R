@@ -2,6 +2,13 @@
 #' @importFrom dplyr semi_join
 #' @export
 semi_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches = c("na", "never")) {
+  # Our implementation
+  rel_try(
+    "No relational implementation for semi_join()" = TRUE,
+    {
+    }
+  )
+
   # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")

@@ -1,11 +1,15 @@
 diff --git b/R/count.R a/R/count.R
-index 9313d82..ac928dc 100644
+index 6ca50df..e17445a 100644
 --- b/R/count.R
 +++ a/R/count.R
-@@ -2,6 +2,30 @@
+@@ -2,12 +2,29 @@
  #' @importFrom dplyr count
  #' @export
  count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .drop = group_by_drop_default(x)) {
+-  # Our implementation
+-  rel_try(
+-    "No relational implementation for count()" = TRUE,
+-    {
 +  force(x)
 +
 +  dplyr_local_error_call()
@@ -24,12 +28,12 @@ index 9313d82..ac928dc 100644
 +      out <- summarise(x, !!name := !!n, .by = c(!!!exprs))
 +      out <- dplyr_reconstruct(out, x)
 +      return(out)
-+    }
+     }
+-  )
 +  }
 +
 +  # FIXME: optimize, no need to forward dots
 +  # out <- count(x_df, !!!quos, wt = {{ wt }}, sort = sort, name = name, .drop = .drop)
-+
+ 
    # dplyr forward
    x_df <- x
-   class(x_df) <- setdiff(class(x_df), "duckplyr_df")

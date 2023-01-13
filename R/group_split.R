@@ -2,6 +2,13 @@
 #' @importFrom dplyr group_split
 #' @export
 group_split.duckplyr_df <- function(.tbl, ..., .keep = TRUE, keep = deprecated()) {
+  # Our implementation
+  rel_try(
+    "No relational implementation for group_split()" = TRUE,
+    {
+    }
+  )
+
   # dplyr forward
   x_df <- .tbl
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")

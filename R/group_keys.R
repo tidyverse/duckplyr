@@ -2,6 +2,13 @@
 #' @importFrom dplyr group_keys
 #' @export
 group_keys.duckplyr_df <- function(.tbl, ...) {
+  # Our implementation
+  rel_try(
+    "No relational implementation for group_keys()" = TRUE,
+    {
+    }
+  )
+
   # dplyr forward
   x_df <- .tbl
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")

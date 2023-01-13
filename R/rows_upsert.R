@@ -2,6 +2,13 @@
 #' @importFrom dplyr rows_upsert
 #' @export
 rows_upsert.duckplyr_df <- function(x, y, by = NULL, ..., copy = FALSE, in_place = FALSE) {
+  # Our implementation
+  rel_try(
+    "No relational implementation for rows_upsert()" = TRUE,
+    {
+    }
+  )
+
   # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")

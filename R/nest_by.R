@@ -2,6 +2,13 @@
 #' @importFrom dplyr nest_by
 #' @export
 nest_by.duckplyr_df <- function(.data, ..., .key = "data", .keep = FALSE) {
+  # Our implementation
+  rel_try(
+    "No relational implementation for nest_by()" = TRUE,
+    {
+    }
+  )
+
   # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")

@@ -2,6 +2,13 @@
 #' @importFrom dplyr union_all
 #' @export
 union_all.duckplyr_df <- function(x, y, ...) {
+  # Our implementation
+  rel_try(
+    "No relational implementation for union_all()" = TRUE,
+    {
+    }
+  )
+
   # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")

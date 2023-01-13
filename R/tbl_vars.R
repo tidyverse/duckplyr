@@ -2,6 +2,13 @@
 #' @importFrom dplyr tbl_vars
 #' @export
 tbl_vars.duckplyr_df <- function(x) {
+  # Our implementation
+  rel_try(
+    "No relational implementation for tbl_vars()" = TRUE,
+    {
+    }
+  )
+
   # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")

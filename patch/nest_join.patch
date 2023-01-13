@@ -1,11 +1,17 @@
 diff --git b/R/nest_join.R a/R/nest_join.R
-index 3fa1ff7..97f0d29 100644
+index 1c8c5d1..c6a66ae 100644
 --- b/R/nest_join.R
 +++ a/R/nest_join.R
-@@ -2,6 +2,16 @@
+@@ -2,12 +2,15 @@
  #' @importFrom dplyr nest_join
  #' @export
  nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, name = NULL, ..., na_matches = c("na", "never"), unmatched = "drop") {
+-  # Our implementation
+-  rel_try(
+-    "No relational implementation for nest_join()" = TRUE,
+-    {
+-    }
+-  )
 +  # from dplyr implementation
 +  check_keep(keep)
 +  na_matches <- check_na_matches(na_matches)
@@ -15,7 +21,6 @@ index 3fa1ff7..97f0d29 100644
 +  } else {
 +    check_string(name)
 +  }
-+
+ 
    # dplyr forward
    x_df <- x
-   class(x_df) <- setdiff(class(x_df), "duckplyr_df")

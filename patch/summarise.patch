@@ -1,15 +1,17 @@
 diff --git b/R/summarise.R a/R/summarise.R
-index c727dd0..1167272 100644
+index c356596..202ce8f 100644
 --- b/R/summarise.R
 +++ a/R/summarise.R
-@@ -2,6 +2,27 @@
+@@ -2,10 +2,24 @@
  #' @importFrom dplyr summarise
  #' @export
  summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
+-  # Our implementation
 +  force(.data)
 +
-+  rel_try(
-+    {
+   rel_try(
+-    "No relational implementation for summarise()" = TRUE,
+     {
 +      rel <- duckdb_rel_from_df(.data)
 +      dots <- dplyr_quosures(...)
 +      aggregates <- rel_translate_dots(dots, .data)
@@ -24,9 +26,6 @@ index c727dd0..1167272 100644
 +      out <- as_duckplyr_df(out)
 +
 +      return(out)
-+    }
-+  )
-+
-   # dplyr forward
-   x_df <- .data
-   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+     }
+   )
+ 

@@ -2,6 +2,13 @@
 #' @importFrom dplyr slice
 #' @export
 slice.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
+  # Our implementation
+  rel_try(
+    "No relational implementation for slice()" = TRUE,
+    {
+    }
+  )
+
   # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")

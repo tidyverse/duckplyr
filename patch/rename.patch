@@ -1,11 +1,12 @@
 diff --git b/R/rename.R a/R/rename.R
-index b0c632a..5bf6726 100644
+index 192f7fb..78bb5c5 100644
 --- b/R/rename.R
 +++ a/R/rename.R
-@@ -2,6 +2,22 @@
+@@ -2,10 +2,19 @@
  #' @importFrom dplyr rename
  #' @export
  rename.duckplyr_df <- function(.data, ...) {
+-  # Our implementation
 +  loc <- tidyselect::eval_rename(expr(c(...)), .data)
 +  # eval_rename() only returns changes
 +  names <- names(.data)
@@ -13,15 +14,13 @@ index b0c632a..5bf6726 100644
 +
 +  exprs <- exprs_from_loc(.data, names)
 +
-+  rel_try(
+   rel_try(
+-    "No relational implementation for rename()" = TRUE,
 +    "Can't use relational with zero-column result set." = (length(exprs) == 0),
-+    {
+     {
 +      rel <- duckdb_rel_from_df(.data)
 +      out <- exprs_project(rel, exprs, .data)
 +      return(out)
-+    }
-+  )
-+
-   # dplyr forward
-   x_df <- .data
-   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+     }
+   )
+ 

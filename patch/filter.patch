@@ -1,11 +1,12 @@
 diff --git b/R/filter.R a/R/filter.R
-index 8ebce36..2a71d0d 100644
+index 4844b85..471183e 100644
 --- b/R/filter.R
 +++ a/R/filter.R
-@@ -2,6 +2,27 @@
+@@ -2,10 +2,24 @@
  #' @importFrom dplyr filter
  #' @export
  filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
+-  # Our implementation
 +  force(.data)
 +
 +  dots <- dplyr_quosures(...)
@@ -13,20 +14,18 @@ index 8ebce36..2a71d0d 100644
 +
 +  by <- enquo(.by)
 +
-+  rel_try(
+   rel_try(
+-    "No relational implementation for filter()" = TRUE,
 +    "Can't use relational with zero-column result set." = (length(.data) == 0),
 +    "Can't use relational without filter conditions." = (length(dots) == 0),
 +    "Can't use relational with grouped operation." = (!quo_is_null(by)), # (length(by$names) > 0),
-+    {
+     {
 +      exprs <- rel_translate_dots(dots, .data)
 +      rel <- duckdb_rel_from_df(.data)
 +      out_rel <- rel_filter(rel, exprs)
 +      out <- rel_to_df(out_rel)
 +      out <- dplyr_reconstruct(out, .data)
 +      return(out)
-+    }
-+  )
-+
-   # dplyr forward
-   x_df <- .data
-   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+     }
+   )
+ 

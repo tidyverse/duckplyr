@@ -2,6 +2,13 @@
 #' @importFrom dplyr group_map
 #' @export
 group_map.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = deprecated()) {
+  # Our implementation
+  rel_try(
+    "No relational implementation for group_map()" = TRUE,
+    {
+    }
+  )
+
   # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")

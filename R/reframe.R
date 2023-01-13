@@ -2,6 +2,13 @@
 #' @importFrom dplyr reframe
 #' @export
 reframe.duckplyr_df <- function(.data, ..., .by = NULL) {
+  # Our implementation
+  rel_try(
+    "No relational implementation for reframe()" = TRUE,
+    {
+    }
+  )
+
   # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")

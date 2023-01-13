@@ -2,6 +2,13 @@
 #' @importFrom dplyr left_join
 #' @export
 left_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ..., keep = NULL, na_matches = c("na", "never"), multiple = NULL, unmatched = "drop") {
+  # Our implementation
+  rel_try(
+    "No relational implementation for left_join()" = TRUE,
+    {
+    }
+  )
+
   # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")

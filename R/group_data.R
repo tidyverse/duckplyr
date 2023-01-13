@@ -2,6 +2,13 @@
 #' @importFrom dplyr group_data
 #' @export
 group_data.duckplyr_df <- function(.data) {
+  # Our implementation
+  rel_try(
+    "No relational implementation for group_data()" = TRUE,
+    {
+    }
+  )
+
   # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")

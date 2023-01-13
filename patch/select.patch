@@ -1,11 +1,12 @@
 diff --git b/R/select.R a/R/select.R
-index c01975b..858805a 100644
+index 7015081..45bba33 100644
 --- b/R/select.R
 +++ a/R/select.R
-@@ -2,6 +2,27 @@
+@@ -2,10 +2,24 @@
  #' @importFrom dplyr select
  #' @export
  select.duckplyr_df <- function(.data, ...) {
+-  # Our implementation
 +  force(.data)
 +
 +  error_call <- dplyr_error_call()
@@ -18,19 +19,17 @@ index c01975b..858805a 100644
 +
 +  exprs <- exprs_from_loc(.data, loc)
 +
-+  rel_try(
+   rel_try(
+-    "No relational implementation for select()" = TRUE,
 +    "Can't use relational with zero-column result set." = (length(exprs) == 0),
-+    {
+     {
 +      rel <- duckdb_rel_from_df(.data)
 +      out <- exprs_project(rel, exprs, .data)
 +      return(out)
-+    }
-+  )
-+
-   # dplyr forward
-   x_df <- .data
-   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
-@@ -18,6 +39,7 @@ select.duckplyr_df <- function(.data, ...) {
+     }
+   )
+ 
+@@ -25,6 +39,7 @@ select.duckplyr_df <- function(.data, ...) {
      data = .data,
      error_call = error_call
    )

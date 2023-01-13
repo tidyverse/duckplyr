@@ -2,6 +2,13 @@
 #' @importFrom dplyr auto_copy
 #' @export
 auto_copy.duckplyr_df <- function(x, y, copy = FALSE, ...) {
+  # Our implementation
+  rel_try(
+    "No relational implementation for auto_copy()" = TRUE,
+    {
+    }
+  )
+
   # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")

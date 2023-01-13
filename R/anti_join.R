@@ -2,6 +2,13 @@
 #' @importFrom dplyr anti_join
 #' @export
 anti_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches = c("na", "never")) {
+  # Our implementation
+  rel_try(
+    "No relational implementation for anti_join()" = TRUE,
+    {
+    }
+  )
+
   # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
