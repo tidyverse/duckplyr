@@ -13,8 +13,9 @@ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, na
   }
 
   # Our implementation
-  force(x)
-  out <- NextMethod(name = name)
+  x_df <- x
+  class(x_df) <- "data.frame"
+  out <- nest_join(x_df, y, by, copy, keep, name, ..., na_matches = na_matches, unmatched = unmatched)
   out <- dplyr_reconstruct(out, x)
   return(out)
 
