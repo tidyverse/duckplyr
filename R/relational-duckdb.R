@@ -15,6 +15,7 @@ get_default_duckdb_connection <- function() {
     DBI::dbExecute(con, 'CREATE MACRO "!="(a, b) AS a <> b')
     DBI::dbExecute(con, 'CREATE MACRO "is.na"(a) AS (a IS NULL)')
     DBI::dbExecute(con, 'CREATE MACRO "n"() AS (COUNT(*))')
+    # FIXME: Implement na.rm = FALSE, https://github.com/duckdb/duckdb/issues/5832#issuecomment-1375735472
     DBI::dbExecute(con, 'CREATE MACRO "sum"(x) AS (CASE WHEN SUM(x) IS NULL THEN 0 ELSE SUM(x) END)')
 
     default_duckdb_connection$con <- con
@@ -113,6 +114,7 @@ rel_limit.duckdb_relation <- function(rel, n, ...) {
 
 #' @export
 rel_distinct.duckdb_relation <- function(rel, ...) {
+  duckdb:::rel_distinct(rel)
 }
 
 #' @export

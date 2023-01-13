@@ -4,8 +4,22 @@
 distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
   # Our implementation
   rel_try(
-    "No relational implementation for distinct()" = TRUE,
+    "distinct(.keep_all = TRUE) not supported for relational" = .keep_all,
     {
+      dots <- enquos(..., .named = TRUE)
+
+      # FIXME: avoid column duplication in a cleaner way
+      dupes <- duplicated(names(dots), fromLast = TRUE)
+      dots <- dots[!dupes]
+
+      exprs <- rel_translate_dots(dots[!dupes], .data)
+      rel <- duckdb_rel_from_df(.data)
+      if (length(exprs) > 0) {
+        rel <- rel_project(rel, exprs)
+      }
+      out_rel <- rel_distinct(rel)
+      out <- rel_to_df(out_rel)
+      out <- dplyr_reconstruct(out, .data)
       return(out)
     }
   )
