@@ -8,21 +8,23 @@ transmute.duckplyr_df <- function(.data, ...) {
   dots <- dplyr_quosures(!!!dots)
 
   # Our implementation
-  # Ensure `transmute()` appears in call stack
-  transmute <- rel_try
-  transmute(
+  rel_try(
     "Can't use relational with zero-column result set." = (length(dots) == 0),
     {
       exprs <- rel_translate_dots(dots, .data)
       rel <- duckdb_rel_from_df(.data)
       out_rel <- rel_project(rel, exprs)
       out <- rel_to_df(out_rel)
+      out <- dplyr_reconstruct(out, .data)
+      return(out)
     },
     fallback = {
-      out <- NextMethod()
     }
   )
 
+  x_df <- .data
+  class(x_df) <- "data.frame"
+  out <- transmute(x_df, ...)
   out <- dplyr_reconstruct(out, .data)
   return(out)
 
