@@ -21,7 +21,9 @@ relocate.duckplyr_df <- function(.data, ..., .before = NULL, .after = NULL) {
     {
       rel <- duckdb_rel_from_df(.data)
     }, fallback = {
-      out <- NextMethod()
+      x_df <- .data
+      class(x_df) <- "data.frame"
+      out <- relocate(x_df, ..., .before = {{ .before }}, .after = {{ .after }})
       out <- dplyr_reconstruct(out, .data)
       return(out)
     }
