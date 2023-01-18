@@ -59,7 +59,6 @@ get_test_code <- function(name, code, is_tbl_return) {
   }
 
   test_code_pre <- c(
-    first_line,
     'test_that("as_duckplyr_df() commutes for {{{name}}}()", {',
     "{{{skip}}}  # Data"
   )
@@ -103,9 +102,12 @@ fs::file_delete(old$path)
 
 tests <-
   df_methods %>%
-  mutate(test_code = pmap(list(name, code, is_tbl_return), get_test_code))
+  mutate(test_code = pmap_chr(list(name, code, is_tbl_return), get_test_code))
 
-tests %>%
-  mutate(path = fs::path("tests", "testthat", paste0("test-", name, ".R"))) %>%
-  select(text = test_code, path) %>%
-  pwalk(brio::write_file)
+all_tests <-
+  paste0(
+    first_line, "\n\n",
+    paste(tests$test_code, collapse = "\n")
+  )
+
+brio::write_file(all_tests, "tests/testthat/test-as_duckplyr_df.R")
