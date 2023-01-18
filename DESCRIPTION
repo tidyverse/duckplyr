@@ -18,6 +18,7 @@ Depends:
 Imports: 
     dplyr (>= 1.0.10),
     duckdb (>= 0.6.0),
+    glue,
     lifecycle,
     purrr,
     rlang (>= 1.0.6),
@@ -26,6 +27,7 @@ Imports:
     vctrs
 Suggests: 
     constructive,
+    lobstr,
     palmerpenguins,
     prettycode,
     testthat (>= 3.1.5)

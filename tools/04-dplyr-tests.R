@@ -7,6 +7,7 @@ tests <- c(
   "test-count-tally.R",
   "test-distinct.R",
   "test-filter.R",
+  "test-mutate.R",
   "test-pull.R",
   "test-relocate.R",
   "test-rename.R",
