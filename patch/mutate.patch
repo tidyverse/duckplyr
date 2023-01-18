@@ -1,0 +1,16 @@
+diff --git b/R/mutate.R a/R/mutate.R
+index e995a26..516957c 100644
+--- b/R/mutate.R
++++ a/R/mutate.R
+@@ -2,8 +2,11 @@
+ #' @importFrom dplyr mutate
+ #' @export
+ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", "unused", "none"), .before = NULL, .after = NULL) {
++  by <- enquo(.by)
++
+   # Our implementation
+   rel_try(
++    "No relational implementation for windowed mutate()" = !quo_is_null(by),
+     "No relational implementation for mutate()" = TRUE,
+     {
+       return(out)
