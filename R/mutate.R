@@ -7,8 +7,17 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
   # Our implementation
   rel_try(
     "No relational implementation for windowed mutate()" = !quo_is_null(by),
-    "No relational implementation for mutate()" = TRUE,
     {
+      rel <- duckdb_rel_from_df(.data)
+      dots <- dplyr_quosures(...)
+
+      keeps <- imap(set_names(names(.data)), relexpr_reference, rel = NULL)
+      mutations <- rel_translate_dots(dots, .data)
+
+      out_rel <- rel_project(rel, c(keeps, mutations))
+      out <- rel_to_df(out_rel)
+      class(out) <- class(.data)
+
       return(out)
     }
   )
