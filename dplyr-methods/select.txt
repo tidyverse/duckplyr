@@ -1,5 +1,4 @@
 select.data.frame <- function(.data, ...) {
-  # duckplyr: Common code
   error_call <- dplyr_error_call()
 
   loc <- tidyselect::eval_select(
@@ -7,9 +6,8 @@ select.data.frame <- function(.data, ...) {
     data = .data,
     error_call = error_call
   )
-
-  # duckplyr: Backend-specific
   loc <- ensure_group_vars(loc, .data, notify = TRUE)
+
   out <- dplyr_col_select(.data, loc)
   out <- set_names(out, names(loc))
 

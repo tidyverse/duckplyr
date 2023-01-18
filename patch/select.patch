@@ -1,8 +1,8 @@
 diff --git b/R/select.R a/R/select.R
-index f4ad2a0..45bba33 100644
+index 4c47487..a89c432 100644
 --- b/R/select.R
 +++ a/R/select.R
-@@ -2,10 +2,23 @@
+@@ -2,14 +2,28 @@
  #' @importFrom dplyr select
  #' @export
  select.duckplyr_df <- function(.data, ...) {
@@ -28,11 +28,8 @@ index f4ad2a0..45bba33 100644
        return(out)
      }
    )
-@@ -26,6 +39,7 @@ select.duckplyr_df <- function(.data, ...) {
-     data = .data,
-     error_call = error_call
-   )
-+  loc <- ensure_group_vars(loc, .data, notify = TRUE)
  
-   # duckplyr: Backend-specific
-   loc <- ensure_group_vars(loc, .data, notify = TRUE)
++
+   # dplyr forward
+   x_df <- .data
+   class(x_df) <- setdiff(class(x_df), "duckplyr_df")

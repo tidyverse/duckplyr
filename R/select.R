@@ -23,6 +23,7 @@ select.duckplyr_df <- function(.data, ...) {
     }
   )
 
+
   # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
@@ -31,7 +32,6 @@ select.duckplyr_df <- function(.data, ...) {
   return(out)
 
   # dplyr implementation
-  # duckplyr: Common code
   error_call <- dplyr_error_call()
 
   loc <- tidyselect::eval_select(
@@ -41,8 +41,6 @@ select.duckplyr_df <- function(.data, ...) {
   )
   loc <- ensure_group_vars(loc, .data, notify = TRUE)
 
-  # duckplyr: Backend-specific
-  loc <- ensure_group_vars(loc, .data, notify = TRUE)
   out <- dplyr_col_select(.data, loc)
   out <- set_names(out, names(loc))
 
