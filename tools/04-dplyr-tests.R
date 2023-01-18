@@ -16,8 +16,6 @@ tests <- c(
   NULL
 )
 
-our_tests <- sub("-", "-dplyr-", tests)
-
 copy_dplyr_test <- function(target, source) {
   rx <- paste0(
     "((?<![a-z_])(?:",
@@ -31,7 +29,7 @@ copy_dplyr_test <- function(target, source) {
 }
 
 walk2(
-  fs::path("tests/testthat", our_tests),
+  fs::path("tests/testthat", tests),
   fs::path("../dplyr/tests/testthat", tests),
   copy_dplyr_test
 )
