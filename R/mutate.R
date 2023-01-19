@@ -3,10 +3,15 @@
 #' @export
 mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", "unused", "none"), .before = NULL, .after = NULL) {
   by <- enquo(.by)
+  before <- enquo(.before)
+  after <- enquo(.after)
 
   # Our implementation
   rel_try(
     "No relational implementation for windowed mutate()" = !quo_is_null(by),
+    "No relational implementation for non-NULL .before" = !quo_is_null(before),
+    "No relational implementation for non-NULL .after" = !quo_is_null(after),
+    "No relational implementation for non-NULL .keep" = !is.null(.keep),
     {
       rel <- duckdb_rel_from_df(.data)
       dots <- dplyr_quosures(...)
@@ -16,8 +21,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
 
       out_rel <- rel_project(rel, c(keeps, mutations))
       out <- rel_to_df(out_rel)
-      class(out) <- class(.data)
-
+      out <- dplyr_reconstruct(out, .data)
       return(out)
     }
   )
