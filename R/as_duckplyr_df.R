@@ -12,6 +12,18 @@ as_duckplyr_df <- function(.data) {
     abort("Must pass data frame without row names to `as_duckplyr_df()`.")
   }
 
+  if (any(map_lgl(.data, any_nan))) {
+    abort("Can't process NaN values with `as_duckplyr_df()`.")
+  }
+
   class(.data) <- c("duckplyr_df", class(.data))
   .data
+}
+
+any_nan <- function(x) {
+  if (!is.numeric(x)) {
+    return(FALSE)
+  }
+
+  any(is.nan(x))
 }
