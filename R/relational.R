@@ -1,7 +1,7 @@
 rel_try <- function(rel, ...) {
   # return(rel)
 
-  dots <- as.logical(list(...))
+  dots <- list(...)
   for (i in seq_along(dots)) {
     if (dots[[i]]) {
       # FIXME: enable always
