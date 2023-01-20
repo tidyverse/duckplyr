@@ -2,27 +2,37 @@
 #' @importFrom dplyr mutate
 #' @export
 mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", "unused", "none"), .before = NULL, .after = NULL) {
-  by <- enquo(.by)
-  .keep <- arg_match(.keep)
+  by_arg <- enquo(.by)
+  keep <- arg_match(.keep)
+
+  # FIXME: remove/adapt when adding support for .by, used in mutate_keep()
+  by <- list(names = character())
 
   # Our implementation
   rel_try(
-    "No relational implementation for windowed mutate()" = !quo_is_null(by),
-    "No relational implementation for non-all .keep" = (.keep != "all"),
+    "No relational implementation for windowed mutate()" = !quo_is_null(by_arg),
     {
       rel <- duckdb_rel_from_df(.data)
       dots <- dplyr_quosures(...)
 
       out <- rel_to_df(rel)
+      names_used <- character()
+      names_new <- character()
 
       # FIXME: use fewer projections
       for (i in seq_along(dots)) {
         new <- names(dots)[[i]]
+        names_new <- c(names_new, new)
+
         new_pos <- match(new, names(out), nomatch = length(out) + 1L)
         exprs <- imap(set_names(names(out)), relexpr_reference, rel = NULL)
-        exprs[[new_pos]] <- rel_translate(dots[[i]], out, alias = new)
+        new_expr <- rel_translate(dots[[i]], out, alias = new)
+        exprs[[new_pos]] <- new_expr
         rel <- rel_project(rel, exprs)
         out <- rel_to_df(rel)
+
+        new_names_used <- intersect(attr(new_expr, "used"), names(.data))
+        names_used <- c(names_used, setdiff(new_names_used, names_used))
       }
 
       out <- dplyr_reconstruct(out, .data)
@@ -34,6 +44,17 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
         before = {{ .before }},
         after = {{ .after }},
         names_original = names_original
+      )
+
+      used <- set_names(names(out) %in% names_used, names(out))
+      names_groups <- by$names
+
+      out <- mutate_keep(
+        out = out,
+        keep = keep,
+        used = used,
+        names_new = names_new,
+        names_groups = names_groups
       )
 
       return(out)
