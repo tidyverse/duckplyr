@@ -3,15 +3,11 @@
 #' @export
 mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", "unused", "none"), .before = NULL, .after = NULL) {
   by <- enquo(.by)
-  before <- enquo(.before)
-  after <- enquo(.after)
   .keep <- arg_match(.keep)
 
   # Our implementation
   rel_try(
     "No relational implementation for windowed mutate()" = !quo_is_null(by),
-    "No relational implementation for non-NULL .before" = !quo_is_null(before),
-    "No relational implementation for non-NULL .after" = !quo_is_null(after),
     "No relational implementation for non-all .keep" = (.keep != "all"),
     {
       rel <- duckdb_rel_from_df(.data)
@@ -30,6 +26,16 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
       }
 
       out <- dplyr_reconstruct(out, .data)
+
+      names_original <- names(.data)
+
+      out <- mutate_relocate(
+        out = out,
+        before = {{ .before }},
+        after = {{ .after }},
+        names_original = names_original
+      )
+
       return(out)
     }
   )

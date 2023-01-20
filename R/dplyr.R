@@ -11,5 +11,6 @@ dplyr_quosures <- dplyr:::dplyr_quosures
 eval_relocate <- dplyr:::eval_relocate
 eval_select_by <- dplyr:::eval_select_by
 group_by_drop_default <- dplyr:::group_by_drop_default
+mutate_relocate <- dplyr:::mutate_relocate
 some <- dplyr:::some
 tally_n <- dplyr:::tally_n
