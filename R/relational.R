@@ -35,6 +35,8 @@ rel_translate_dots <- function(dots, data) {
 rel_translate <- function(quo, data, alias = NULL) {
   env <- quo_get_env(quo)
 
+  used <- character()
+
   do_translate <- function(expr) {
     # I don't understand yet how this can be a quosure
     stopifnot(!is_quosure(expr))
@@ -47,7 +49,11 @@ rel_translate <- function(quo, data, alias = NULL) {
       #
       symbol = {
         if (as.character(expr) %in% names(data)) {
-          relexpr_reference(as.character(expr))
+          ref <- as.character(expr)
+          if (!(ref %in% used)) {
+            used <<- c(used, ref)
+          }
+          relexpr_reference(ref)
         } else {
           val <- eval_tidy(expr, env = env)
           relexpr_constant(val)
@@ -69,7 +75,7 @@ rel_translate <- function(quo, data, alias = NULL) {
     out <- relexpr_set_alias(out, alias)
   }
 
-  out
+  structure(out, used = used)
 }
 
 on_load({
