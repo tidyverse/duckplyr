@@ -5,22 +5,30 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
   by <- enquo(.by)
   before <- enquo(.before)
   after <- enquo(.after)
+  .keep <- arg_match(.keep)
 
   # Our implementation
   rel_try(
     "No relational implementation for windowed mutate()" = !quo_is_null(by),
     "No relational implementation for non-NULL .before" = !quo_is_null(before),
     "No relational implementation for non-NULL .after" = !quo_is_null(after),
-    "No relational implementation for non-NULL .keep" = !is.null(.keep),
+    "No relational implementation for non-all .keep" = (.keep != "all"),
     {
       rel <- duckdb_rel_from_df(.data)
       dots <- dplyr_quosures(...)
 
-      keeps <- imap(set_names(names(.data)), relexpr_reference, rel = NULL)
-      mutations <- rel_translate_dots(dots, .data)
+      out <- rel_to_df(rel)
 
-      out_rel <- rel_project(rel, c(keeps, mutations))
-      out <- rel_to_df(out_rel)
+      # FIXME: use fewer projections
+      for (i in seq_along(dots)) {
+        new <- names(dots)[[i]]
+        new_pos <- match(new, names(out), nomatch = length(out) + 1L)
+        exprs <- imap(set_names(names(out)), relexpr_reference, rel = NULL)
+        exprs[[new_pos]] <- rel_translate(dots[[i]], out, alias = new)
+        rel <- rel_project(rel, exprs)
+        out <- rel_to_df(rel)
+      }
+
       out <- dplyr_reconstruct(out, .data)
       return(out)
     }

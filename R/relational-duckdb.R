@@ -17,6 +17,8 @@ get_default_duckdb_connection <- function() {
     DBI::dbExecute(con, 'CREATE MACRO "n"() AS (COUNT(*))')
     # FIXME: Implement na.rm = FALSE, https://github.com/duckdb/duckdb/issues/5832#issuecomment-1375735472
     DBI::dbExecute(con, 'CREATE MACRO "sum"(x) AS (CASE WHEN SUM(x) IS NULL THEN 0 ELSE SUM(x) END)')
+    DBI::dbExecute(con, 'CREATE MACRO "log10"(x) AS log(x)')
+    DBI::dbExecute(con, 'CREATE MACRO "log"(x) AS ln(x)')
 
     default_duckdb_connection$con <- con
 
