@@ -38,8 +38,10 @@ rel_translate <- function(quo, data, alias = NULL) {
   used <- character()
 
   do_translate <- function(expr) {
-    # I don't understand yet how this can be a quosure
-    stopifnot(!is_quosure(expr))
+    if (is_quosure(expr)) {
+      # FIXME: What to do with the environment here?
+      expr <- quo_get_expr(expr)
+    }
 
     switch(typeof(expr),
       character = ,
