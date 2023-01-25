@@ -1,4 +1,5 @@
 exprs_from_loc <- function(.data, loc) {
+  stopifnot(is.integer(loc))
   map2(names(.data)[loc], names(loc), ~ relexpr_reference(.x, alias = .y))
 }
 
