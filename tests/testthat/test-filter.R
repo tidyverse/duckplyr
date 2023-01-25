@@ -678,3 +678,11 @@ test_that("catches `.by` with rowwise-df", {
     duckplyr_filter(rdf, .by = x)
   })
 })
+
+test_that("catches `by` typo (#6647)", {
+  df <- tibble(x = 1)
+
+  expect_snapshot(error = TRUE, {
+    duckplyr_filter(df, by = x)
+  })
+})
