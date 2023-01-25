@@ -1,27 +1,66 @@
 diff --git b/R/mutate.R a/R/mutate.R
-index e995a26..b9f0de3 100644
+index e995a26..08b6117 100644
 --- b/R/mutate.R
 +++ a/R/mutate.R
-@@ -2,10 +2,22 @@
+@@ -2,10 +2,61 @@
  #' @importFrom dplyr mutate
  #' @export
  mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", "unused", "none"), .before = NULL, .after = NULL) {
-+  by <- enquo(.by)
++  by_arg <- enquo(.by)
++  keep <- arg_match(.keep)
++
++  # FIXME: remove/adapt when adding support for .by, used in mutate_keep()
++  by <- list(names = character())
 +
    # Our implementation
    rel_try(
 -    "No relational implementation for mutate()" = TRUE,
-+    "No relational implementation for windowed mutate()" = !quo_is_null(by),
++    "No relational implementation for windowed mutate()" = !quo_is_null(by_arg),
      {
 +      rel <- duckdb_rel_from_df(.data)
 +      dots <- dplyr_quosures(...)
 +
-+      keeps <- imap(set_names(names(.data)), relexpr_reference, rel = NULL)
-+      mutations <- rel_translate_dots(dots, .data)
++      out <- rel_to_df(rel)
++      names_used <- character()
++      names_new <- character()
 +
-+      out_rel <- rel_project(rel, c(keeps, mutations))
-+      out <- rel_to_df(out_rel)
-+      class(out) <- class(.data)
++      # FIXME: use fewer projections
++      for (i in seq_along(dots)) {
++        new <- names(dots)[[i]]
++        names_new <- c(names_new, new)
++
++        new_pos <- match(new, names(out), nomatch = length(out) + 1L)
++        exprs <- imap(set_names(names(out)), relexpr_reference, rel = NULL)
++        new_expr <- rel_translate(dots[[i]], out, alias = new)
++        exprs[[new_pos]] <- new_expr
++        rel <- rel_project(rel, exprs)
++        out <- rel_to_df(rel)
++
++        new_names_used <- intersect(attr(new_expr, "used"), names(.data))
++        names_used <- c(names_used, setdiff(new_names_used, names_used))
++      }
++
++      out <- dplyr_reconstruct(out, .data)
++
++      names_original <- names(.data)
++
++      out <- mutate_relocate(
++        out = out,
++        before = {{ .before }},
++        after = {{ .after }},
++        names_original = names_original
++      )
++
++      used <- set_names(names(out) %in% names_used, names(out))
++      names_groups <- by$names
++
++      out <- mutate_keep(
++        out = out,
++        keep = keep,
++        used = used,
++        names_new = names_new,
++        names_groups = names_groups
++      )
 +
        return(out)
      }
