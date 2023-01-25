@@ -7,7 +7,8 @@ rename.duckplyr_df <- function(.data, ...) {
   names <- names(.data)
   names[loc] <- names(loc)
 
-  exprs <- exprs_from_loc(.data, names)
+  dupes <- duplicated(loc, fromLast = TRUE)
+  exprs <- exprs_from_loc(.data, loc[!dupes])
 
   rel_try(
     "Can't use relational with zero-column result set." = (length(exprs) == 0),
