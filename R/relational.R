@@ -61,7 +61,7 @@ rel_translate <- function(quo, data, alias = NULL) {
       },
       #
       language = {
-        args <- map(expr[-1], do_translate)
+        args <- map(as.list(expr[-1]), do_translate)
         relexpr_function(as.character(expr[[1]]), args)
       },
       #
