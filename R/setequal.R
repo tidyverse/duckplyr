@@ -13,6 +13,7 @@ setequal.duckplyr_df <- function(x, y, ...) {
   # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  setequal <- dplyr:::setequal.data.frame
   out <- setequal(x_df, y, ...)
   return(out)
 

@@ -13,6 +13,7 @@ group_modify.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = depre
   # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  group_modify <- dplyr:::group_modify.data.frame
   out <- group_modify(x_df, .f, ..., .keep = .keep, keep = keep)
   out <- dplyr_reconstruct(out, .data)
   return(out)

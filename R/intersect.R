@@ -13,6 +13,7 @@ intersect.duckplyr_df <- function(x, y, ...) {
   # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  intersect <- dplyr:::intersect.data.frame
   out <- intersect(x_df, y, ...)
   out <- dplyr_reconstruct(out, x)
   return(out)

@@ -13,6 +13,7 @@ rows_upsert.duckplyr_df <- function(x, y, by = NULL, ..., copy = FALSE, in_place
   # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  rows_upsert <- dplyr:::rows_upsert.data.frame
   out <- rows_upsert(x_df, y, by, ..., copy = copy, in_place = in_place)
   out <- dplyr_reconstruct(out, x)
   return(out)

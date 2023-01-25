@@ -13,6 +13,7 @@ dplyr_reconstruct.duckplyr_df <- function(data, template) {
   # dplyr forward
   x_df <- data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  dplyr_reconstruct <- dplyr:::dplyr_reconstruct.data.frame
   out <- dplyr_reconstruct(x_df, template)
   return(out)
 

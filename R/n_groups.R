@@ -13,6 +13,7 @@ n_groups.duckplyr_df <- function(x) {
   # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  n_groups <- dplyr:::n_groups.data.frame
   out <- n_groups(x_df)
   return(out)
 

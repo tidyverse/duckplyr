@@ -13,6 +13,7 @@ group_nest.duckplyr_df <- function(.tbl, ..., .key = "data", keep = FALSE) {
   # dplyr forward
   x_df <- .tbl
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  group_nest <- dplyr:::group_nest.data.frame
   out <- group_nest(x_df, ..., .key = .key, keep = keep)
   out <- dplyr_reconstruct(out, .tbl)
   return(out)

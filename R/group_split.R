@@ -13,6 +13,7 @@ group_split.duckplyr_df <- function(.tbl, ..., .keep = TRUE, keep = deprecated()
   # dplyr forward
   x_df <- .tbl
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  group_split <- dplyr:::group_split.data.frame
   out <- group_split(x_df, ..., .keep = .keep, keep = keep)
   out <- dplyr_reconstruct(out, .tbl)
   return(out)

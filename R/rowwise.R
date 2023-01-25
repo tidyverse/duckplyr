@@ -13,6 +13,7 @@ rowwise.duckplyr_df <- function(data, ...) {
   # dplyr forward
   x_df <- data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  rowwise <- dplyr:::rowwise.data.frame
   out <- rowwise(x_df, ...)
   out <- dplyr_reconstruct(out, data)
   return(out)

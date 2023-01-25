@@ -13,6 +13,7 @@ same_src.duckplyr_df <- function(x, y) {
   # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  same_src <- dplyr:::same_src.data.frame
   out <- same_src(x_df, y)
   return(out)
 

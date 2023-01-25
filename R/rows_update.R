@@ -13,6 +13,7 @@ rows_update.duckplyr_df <- function(x, y, by = NULL, ..., unmatched = c("error",
   # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  rows_update <- dplyr:::rows_update.data.frame
   out <- rows_update(x_df, y, by, ..., unmatched = unmatched, copy = copy, in_place = in_place)
   out <- dplyr_reconstruct(out, x)
   return(out)

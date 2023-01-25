@@ -13,6 +13,7 @@ auto_copy.duckplyr_df <- function(x, y, copy = FALSE, ...) {
   # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  auto_copy <- dplyr:::auto_copy.data.frame
   out <- auto_copy(x_df, y, copy, ...)
   return(out)
 

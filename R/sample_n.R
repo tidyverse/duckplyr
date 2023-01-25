@@ -13,6 +13,7 @@ sample_n.duckplyr_df <- function(tbl, size, replace = FALSE, weight = NULL, .env
   # dplyr forward
   x_df <- tbl
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  sample_n <- dplyr:::sample_n.data.frame
   out <- sample_n(x_df, {{ size }}, replace, {{ weight }}, .env, ...)
   out <- dplyr_reconstruct(out, tbl)
   return(out)

@@ -13,6 +13,7 @@ group_keys.duckplyr_df <- function(.tbl, ...) {
   # dplyr forward
   x_df <- .tbl
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  group_keys <- dplyr:::group_keys.data.frame
   out <- group_keys(x_df, ...)
   out <- dplyr_reconstruct(out, .tbl)
   return(out)

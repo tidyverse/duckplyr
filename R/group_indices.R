@@ -13,6 +13,7 @@ group_indices.duckplyr_df <- function(.data, ...) {
   # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  group_indices <- dplyr:::group_indices.data.frame
   out <- group_indices(x_df, ...)
   return(out)
 

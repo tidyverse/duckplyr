@@ -13,6 +13,7 @@ group_map.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = deprecat
   # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  group_map <- dplyr:::group_map.data.frame
   out <- group_map(x_df, .f, ..., .keep = .keep, keep = keep)
   out <- dplyr_reconstruct(out, .data)
   return(out)

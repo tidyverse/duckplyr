@@ -22,6 +22,7 @@ transmute.duckplyr_df <- function(.data, ...) {
   # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  transmute <- dplyr:::transmute.data.frame
   out <- transmute(x_df, ...)
   out <- dplyr_reconstruct(out, .data)
   return(out)

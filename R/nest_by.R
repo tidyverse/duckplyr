@@ -13,6 +13,7 @@ nest_by.duckplyr_df <- function(.data, ..., .key = "data", .keep = FALSE) {
   # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  nest_by <- dplyr:::nest_by.data.frame
   out <- nest_by(x_df, ..., .key = .key, .keep = .keep)
   out <- dplyr_reconstruct(out, .data)
   return(out)

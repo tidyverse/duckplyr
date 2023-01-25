@@ -13,6 +13,7 @@ ungroup.duckplyr_df <- function(x, ...) {
   # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  ungroup <- dplyr:::ungroup.data.frame
   out <- ungroup(x_df, ...)
   out <- dplyr_reconstruct(out, x)
   return(out)

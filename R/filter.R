@@ -26,6 +26,7 @@ filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
   # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  filter <- dplyr:::filter.data.frame
   out <- filter(x_df, ..., .by = {{ .by }}, .preserve = .preserve)
   out <- dplyr_reconstruct(out, .data)
   return(out)

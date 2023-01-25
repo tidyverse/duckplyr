@@ -13,6 +13,7 @@ group_trim.duckplyr_df <- function(.tbl, .drop = group_by_drop_default(.tbl)) {
   # dplyr forward
   x_df <- .tbl
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  group_trim <- dplyr:::group_trim.data.frame
   out <- group_trim(x_df, .drop)
   out <- dplyr_reconstruct(out, .tbl)
   return(out)

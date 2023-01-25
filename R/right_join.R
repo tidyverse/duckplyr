@@ -13,6 +13,7 @@ right_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x
   # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  right_join <- dplyr:::right_join.data.frame
   out <- right_join(x_df, y, by, copy, suffix, ..., keep = keep, na_matches = na_matches, multiple = multiple, unmatched = unmatched)
   out <- dplyr_reconstruct(out, x)
   return(out)

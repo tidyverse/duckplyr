@@ -13,6 +13,7 @@ reframe.duckplyr_df <- function(.data, ..., .by = NULL) {
   # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  reframe <- dplyr:::reframe.data.frame
   out <- reframe(x_df, ..., .by = {{ .by }})
   class(out) <- class(.data)
   return(out)

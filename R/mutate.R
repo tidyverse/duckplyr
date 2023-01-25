@@ -64,6 +64,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
   # dplyr forward
   x_df <- .data
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  mutate <- dplyr:::mutate.data.frame
   out <- mutate(x_df, ..., .by = {{ .by }}, .keep = .keep, .before = {{ .before }}, .after = {{ .after }})
   out <- dplyr_reconstruct(out, .data)
   return(out)

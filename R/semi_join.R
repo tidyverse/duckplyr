@@ -13,6 +13,7 @@ semi_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches
   # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  semi_join <- dplyr:::semi_join.data.frame
   out <- semi_join(x_df, y, by, copy, ..., na_matches = na_matches)
   out <- dplyr_reconstruct(out, x)
   return(out)

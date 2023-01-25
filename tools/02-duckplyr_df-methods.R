@@ -43,6 +43,12 @@ func_decl <- function(name, formals, is_tbl_return) {
     names(forward_formals) <- NULL
   }
 
+  reassign_call <- rlang::call2(
+    "<-",
+    rlang::sym(name),
+    rlang::call2(":::", rlang::sym("dplyr"), rlang::sym(paste0(name, ".data.frame")))
+  )
+
   forward_call <- rlang::call2(name, !!!forward_formals)
 
   if (is_tbl_return) {
@@ -56,6 +62,7 @@ func_decl <- function(name, formals, is_tbl_return) {
       x_df <- !!data_arg
       # class(x_df) <- "data.frame"
       class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+      !!reassign_call
       out <- !!forward_call
       !!reconstruct_call
       return(out)
@@ -65,6 +72,7 @@ func_decl <- function(name, formals, is_tbl_return) {
       x_df <- !!data_arg
       # class(x_df) <- "data.frame"
       class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+      !!reassign_call
       out <- !!forward_call
       return(out)
     }))
@@ -199,6 +207,8 @@ patches <- fs::dir_ls("patch")
 walk(patches, ~ system(paste0("patch -p1 < ", .x)))
 
 # Stop here to overwrite files if the code generation is updated
+
+asdf
 
 system(paste0("git clean -f -- R"))
 

@@ -13,6 +13,7 @@ rows_insert.duckplyr_df <- function(x, y, by = NULL, ..., conflict = c("error", 
   # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  rows_insert <- dplyr:::rows_insert.data.frame
   out <- rows_insert(x_df, y, by, ..., conflict = conflict, copy = copy, in_place = in_place)
   out <- dplyr_reconstruct(out, x)
   return(out)
