@@ -1,8 +1,8 @@
 diff --git b/R/rename.R a/R/rename.R
-index 29c398e..78bb5c5 100644
+index 29c398e..971ff4f 100644
 --- b/R/rename.R
 +++ a/R/rename.R
-@@ -2,10 +2,18 @@
+@@ -2,10 +2,19 @@
  #' @importFrom dplyr rename
  #' @export
  rename.duckplyr_df <- function(.data, ...) {
@@ -12,7 +12,8 @@ index 29c398e..78bb5c5 100644
 +  names <- names(.data)
 +  names[loc] <- names(loc)
 +
-+  exprs <- exprs_from_loc(.data, names)
++  dupes <- duplicated(loc, fromLast = TRUE)
++  exprs <- exprs_from_loc(.data, loc[!dupes])
 +
    rel_try(
 -    "No relational implementation for rename()" = TRUE,
