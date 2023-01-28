@@ -138,6 +138,7 @@ rel_set_alias.duckdb_relation <- function(rel, alias, ...) {
 
 #' @export
 rel_names.duckdb_relation <- function(rel, ...) {
+  duckdb:::rapi_rel_names(rel)
 }
 
 to_duckdb_exprs <- function(exprs) {

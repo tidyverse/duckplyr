@@ -4,18 +4,10 @@
 tbl_vars.duckplyr_df <- function(x) {
   # Our implementation
   rel_try(
-    "No relational implementation for tbl_vars()" = TRUE,
     {
-      return(out)
+      return(duckdb:::rel_from_altrep_df(df))
     }
   )
-
-  # dplyr forward
-  x_df <- x
-  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
-  tbl_vars <- dplyr:::tbl_vars.data.frame
-  out <- tbl_vars(x_df)
-  return(out)
 
   # dplyr implementation
   names(x)

@@ -208,8 +208,6 @@ walk(patches, ~ system(paste0("patch -p1 < ", .x)))
 
 # Stop here to overwrite files if the code generation is updated
 
-asdf
-
 system(paste0("git clean -f -- R"))
 
 
