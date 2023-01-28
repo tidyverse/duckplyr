@@ -1,0 +1,26 @@
+diff --git b/R/auto_copy.R a/R/auto_copy.R
+index 578e8d3..7512188 100644
+--- b/R/auto_copy.R
++++ a/R/auto_copy.R
+@@ -2,20 +2,7 @@
+ #' @importFrom dplyr auto_copy
+ #' @export
+ auto_copy.duckplyr_df <- function(x, y, copy = FALSE, ...) {
+-  # Our implementation
+-  rel_try(
+-    "No relational implementation for auto_copy()" = TRUE,
+-    {
+-      return(out)
+-    }
+-  )
+-
+-  # dplyr forward
+-  x_df <- x
+-  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+-  auto_copy <- dplyr:::auto_copy.data.frame
+-  out <- auto_copy(x_df, y, copy, ...)
+-  return(out)
++  return(as_duckplyr_df(y))
+ 
+   # dplyr implementation
+   as.data.frame(y)
