@@ -1,1 +1,3 @@
-compute.data.frame <- function(x, ...) x
+compute.data.frame <- function(x, ...) {
+  x
+}

@@ -1,1 +1,3 @@
-collect.data.frame <- function(x, ...) x
+collect.data.frame <- function(x, ...) {
+  x
+}

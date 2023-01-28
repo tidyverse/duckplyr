@@ -13,6 +13,7 @@ df_methods_def <-
   mutate(decl_chr = func_decl(fun, code)) %>%
   ungroup()
 
+fs::dir_delete("dplyr-methods")
 fs::dir_create("dplyr-methods")
 usethis::use_build_ignore("dplyr-methods")
 
