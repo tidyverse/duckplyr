@@ -23,8 +23,10 @@ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, na
   # dplyr forward
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
+  y_df <- y
+  class(y_df) <- setdiff(class(y_df), "duckplyr_df")
   nest_join <- dplyr:::nest_join.data.frame
-  out <- nest_join(x_df, y, by, copy, keep, name, ..., na_matches = na_matches, unmatched = unmatched)
+  out <- nest_join(x_df, y_df, by, copy, keep, name, ..., na_matches = na_matches, unmatched = unmatched)
   out <- dplyr_reconstruct(out, x)
   return(out)
 
@@ -107,7 +109,13 @@ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, na
   dplyr_reconstruct(out, x)
 }
 
-duckplyr_nest_join <- function(x, y, ...) {
+duckplyr_nest_join <- function(x, y, by = NULL, copy = FALSE, keep = NULL, name = NULL, ...) {
+  if (is.null(name)) {
+    name <- as_label(enexpr(y))
+  } else {
+    check_string(name)
+  }
+
   try_fetch(
     {
       x <- as_duckplyr_df(x)
@@ -117,7 +125,7 @@ duckplyr_nest_join <- function(x, y, ...) {
       testthat::skip(conditionMessage(e))
     }
   )
-  out <- nest_join(x, y, ...)
+  out <- nest_join(x, y, by, copy, keep, name, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }

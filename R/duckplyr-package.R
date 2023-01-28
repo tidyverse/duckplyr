@@ -12,6 +12,7 @@
 #' @importFrom dplyr desc
 #' @importFrom dplyr group_rows
 #' @importFrom dplyr is_grouped_df
+#' @importFrom dplyr join_by
 #' @importFrom dplyr lead
 #' @importFrom dplyr mutate_all
 #' @importFrom dplyr n
@@ -37,6 +38,8 @@
 #' @importFrom tidyselect everything
 #' @importFrom vctrs new_data_frame
 #' @importFrom vctrs new_rcrd
+#' @importFrom vctrs vec_c
+#' @importFrom vctrs vec_cbind
 #' @importFrom vctrs vec_slice
 #' @useDynLib duckplyr, .registration = TRUE
 ## usethis namespace: end
