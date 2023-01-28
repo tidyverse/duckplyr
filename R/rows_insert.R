@@ -26,11 +26,14 @@ rows_insert.duckplyr_df <- function(x, y, by = NULL, ..., conflict = c("error", 
 
   by <- rows_check_by(by, y)
 
-  rows_check_containment(x, y)
+  rows_check_x_contains_y(x, y)
+  rows_check_contains_by(x, by, "x")
+  rows_check_contains_by(y, by, "y")
+
   y <- rows_cast_y(y, x)
 
-  x_key <- rows_select_key(x, by, "x")
-  y_key <- rows_select_key(y, by, "y")
+  x_key <- dplyr_col_select(x, by)
+  y_key <- dplyr_col_select(y, by)
 
   keep <- rows_check_y_conflict(x_key, y_key, conflict)
 

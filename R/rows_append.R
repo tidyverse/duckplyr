@@ -24,7 +24,7 @@ rows_append.duckplyr_df <- function(x, y, ..., copy = FALSE, in_place = FALSE) {
 
   y <- auto_copy(x, y, copy = copy)
 
-  rows_check_containment(x, y)
+  rows_check_x_contains_y(x, y)
   y <- rows_cast_y(y, x)
 
   rows_bind(x, y)

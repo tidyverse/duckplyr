@@ -26,8 +26,12 @@ rows_delete.duckplyr_df <- function(x, y, by = NULL, ..., unmatched = c("error",
 
   by <- rows_check_by(by, y)
 
-  x_key <- rows_select_key(x, by, "x")
-  y_key <- rows_select_key(y, by, "y")
+  rows_check_contains_by(x, by, "x")
+  rows_check_contains_by(y, by, "y")
+
+  x_key <- dplyr_col_select(x, by)
+  y_key <- dplyr_col_select(y, by)
+
   args <- vec_cast_common(x = x_key, y = y_key)
   x_key <- args$x
   y_key <- args$y
