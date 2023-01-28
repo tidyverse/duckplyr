@@ -16,6 +16,7 @@
 #' @importFrom dplyr mutate_all
 #' @importFrom dplyr n
 #' @importFrom dplyr row_number
+#' @importFrom dplyr same_src
 #' @importFrom dplyr slice_head
 #' @importFrom dplyr slice_max
 #' @importFrom dplyr slice_min

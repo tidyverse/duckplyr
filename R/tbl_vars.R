@@ -5,7 +5,8 @@ tbl_vars.duckplyr_df <- function(x) {
   # Our implementation
   rel_try(
     {
-      return(duckdb:::rel_from_altrep_df(df))
+      rel <- duckdb:::rel_from_altrep_df(x)
+      return(rel_names(rel))
     }
   )
 

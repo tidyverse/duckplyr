@@ -1,15 +1,16 @@
 diff --git b/R/tbl_vars.R a/R/tbl_vars.R
-index 52e7ebd..d1ccc0d 100644
+index 52e7ebd..a046a45 100644
 --- b/R/tbl_vars.R
 +++ a/R/tbl_vars.R
-@@ -4,19 +4,11 @@
+@@ -4,19 +4,12 @@
  tbl_vars.duckplyr_df <- function(x) {
    # Our implementation
    rel_try(
 -    "No relational implementation for tbl_vars()" = TRUE,
      {
 -      return(out)
-+      return(duckdb:::rel_from_altrep_df(df))
++      rel <- duckdb:::rel_from_altrep_df(x)
++      return(rel_names(rel))
      }
    )
  
