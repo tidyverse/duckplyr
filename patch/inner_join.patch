@@ -1,0 +1,46 @@
+diff --git b/R/inner_join.R a/R/inner_join.R
+index aecd66b..9d13724 100644
+--- b/R/inner_join.R
++++ a/R/inner_join.R
+@@ -2,10 +2,40 @@
+ #' @importFrom dplyr inner_join
+ #' @export
+ inner_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ..., keep = NULL, na_matches = c("na", "never"), multiple = NULL, unmatched = "drop") {
++  check_dots_empty0(...)
++
++  x_names <- tbl_vars(x)
++  y_names <- tbl_vars(y)
++
++  if (is_cross_by(by)) {
++    by <- new_join_by()
++    cross <- TRUE
++  } else {
++    cross <- FALSE
++  }
++
++  if (is_null(by)) {
++    by <- join_by_common(x_names, y_names, error_call = error_call)
++  } else {
++    by <- as_join_by(by, error_call = error_call)
++  }
++
++  vars <- join_cols(
++    x_names = x_names,
++    y_names = y_names,
++    by = by,
++    suffix = suffix,
++    keep = keep,
++    error_call = error_call
++  )
++
+   # Our implementation
+   rel_try(
+-    "No relational implementation for inner_join()" = TRUE,
++    "No implicit cross joins for inner_join()" = cross,
++    "No relational implementation for inner_join(copy = TRUE)" = copy,
+     {
++      x_rel <- duckdb_rel_from_df(x)
++      y_rel <- duckdb_rel_from_df(x)
+       return(out)
+     }
+   )

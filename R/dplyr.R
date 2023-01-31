@@ -1,3 +1,4 @@
+as_join_by <- dplyr:::as_join_by
 check_filter <- dplyr:::check_filter
 check_keep <- dplyr:::check_keep
 check_name <- dplyr:::check_name
@@ -11,9 +12,13 @@ dplyr_quosures <- dplyr:::dplyr_quosures
 eval_relocate <- dplyr:::eval_relocate
 eval_select_by <- dplyr:::eval_select_by
 group_by_drop_default <- dplyr:::group_by_drop_default
+is_cross_by <- dplyr:::is_cross_by
+join_by_common <- dplyr:::join_by_common
+join_cols <- dplyr:::join_cols
 # Need to reimplement mutate_keep() to avoid dplyr_col_select()
 # mutate_keep <- dplyr:::mutate_keep
 mutate_relocate <- dplyr:::mutate_relocate
+new_join_by <- dplyr:::new_join_by
 some <- dplyr:::some
 tally_n <- dplyr:::tally_n
 
