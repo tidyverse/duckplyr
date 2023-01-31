@@ -5,6 +5,8 @@ inner_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x
   check_dots_empty0(...)
   error_call <- caller_env()
 
+  na_matches <- check_na_matches(na_matches, error_call = error_call)
+
   x_names <- tbl_vars(x)
   y_names <- tbl_vars(y)
 
@@ -32,6 +34,7 @@ inner_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x
 
   # Our implementation
   rel_try(
+    "Only equi-joins for inner_join()" = any(by$condition != "=="),
     "No implicit cross joins for inner_join()" = cross,
     "No relational implementation for inner_join(copy = TRUE)" = copy,
     {
@@ -56,7 +59,13 @@ inner_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x
       x_by <- map(x_by, relexpr_reference, rel = x_rel)
       y_by <- map(y_by, relexpr_reference, rel = y_rel)
 
-      conds <- map2(x_by, y_by, ~ relexpr_function(by$condition, list(.x, .y)))
+      if (na_matches == "na") {
+        cond <- "___eq_na_matches_na"
+      } else {
+        cond <- "=="
+      }
+
+      conds <- map2(x_by, y_by, ~ relexpr_function(cond, list(.x, .y)))
 
       joined <- rel_join(x_rel, y_rel, conds, "inner")
 

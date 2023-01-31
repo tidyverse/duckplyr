@@ -19,6 +19,7 @@ get_default_duckdb_connection <- function() {
     DBI::dbExecute(con, 'CREATE MACRO "sum"(x) AS (CASE WHEN SUM(x) IS NULL THEN 0 ELSE SUM(x) END)')
     DBI::dbExecute(con, 'CREATE MACRO "log10"(x) AS log(x)')
     DBI::dbExecute(con, 'CREATE MACRO "log"(x) AS ln(x)')
+    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(a, b) AS ((A IS NULL AND B IS NULL) OR (a = b))')
 
     default_duckdb_connection$con <- con
 
