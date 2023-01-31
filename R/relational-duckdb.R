@@ -109,6 +109,9 @@ rel_order.duckdb_relation <- function(rel, orders, ...) {
 #' @export
 rel_join.duckdb_relation <- function(left, right, conds, join, ...) {
   duckdb_conds <- to_duckdb_exprs(conds)
+  if (join == "full") {
+    join <- "outer"
+  }
   duckdb:::rel_join(left, right, duckdb_conds, join)
 }
 

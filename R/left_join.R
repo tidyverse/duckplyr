@@ -2,10 +2,16 @@
 #' @importFrom dplyr left_join
 #' @export
 left_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ..., keep = NULL, na_matches = c("na", "never"), multiple = NULL, unmatched = "drop") {
+  check_dots_empty0(...)
+  error_call <- caller_env()
+
   # Our implementation
   rel_try(
-    "No relational implementation for left_join()" = TRUE,
+    "Only equi-joins for left_join()" = inherits(by, "dplyr_join_by") && any(by$condition != "=="),
+    "No implicit cross joins for left_join()" = is_cross_by(by),
+    "No relational implementation for left_join(copy = TRUE)" = copy,
     {
+      out <- rel_join_impl(x, y, by, suffix, keep, na_matches, "left", error_call)
       return(out)
     }
   )

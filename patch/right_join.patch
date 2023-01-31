@@ -1,0 +1,22 @@
+diff --git b/R/right_join.R a/R/right_join.R
+index da411a8..33d825b 100644
+--- b/R/right_join.R
++++ a/R/right_join.R
+@@ -2,10 +2,16 @@
+ #' @importFrom dplyr right_join
+ #' @export
+ right_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ..., keep = NULL, na_matches = c("na", "never"), multiple = NULL, unmatched = "drop") {
++  check_dots_empty0(...)
++  error_call <- caller_env()
++
+   # Our implementation
+   rel_try(
+-    "No relational implementation for right_join()" = TRUE,
++    "Only equi-joins for right_join()" = inherits(by, "dplyr_join_by") && any(by$condition != "=="),
++    "No implicit cross joins for right_join()" = is_cross_by(by),
++    "No relational implementation for right_join(copy = TRUE)" = copy,
+     {
++      out <- rel_join_impl(x, y, by, suffix, keep, na_matches, "right", error_call)
+       return(out)
+     }
+   )
