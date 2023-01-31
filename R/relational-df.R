@@ -34,7 +34,7 @@ rel_order.relational_df <- function(rel, orders, ...) {
 }
 
 #' @export
-rel_inner_join.relational_df <- function(left, right, conds, ...) {
+rel_join.relational_df <- function(left, right, conds, ...) {
 }
 
 #' @export

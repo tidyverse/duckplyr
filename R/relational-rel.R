@@ -101,9 +101,9 @@ rel_order <- function(rel, orders, ...) {
 #' left <- rel_from_df(mtcars)
 #' right <- rel_from_df(mtcars)
 #' cond <- list(relexpr_function("eq", list(relexpr_reference("cyl", left), relexpr_reference("cyl", right))))
-#' rel2 <- rel_inner_join(left, right, cond)
-rel_inner_join <- function(left, right, conds, ...) {
-  UseMethod("rel_inner_join")
+#' rel2 <- rel_join(left, right, cond)
+rel_join <- function(left, right, conds, join, ...) {
+  UseMethod("rel_join")
 }
 
 #' Lazily limit the rows in a relation object
