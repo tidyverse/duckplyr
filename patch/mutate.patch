@@ -1,8 +1,8 @@
 diff --git b/R/mutate.R a/R/mutate.R
-index e995a26..08b6117 100644
+index 3912701..6699297 100644
 --- b/R/mutate.R
 +++ a/R/mutate.R
-@@ -2,10 +2,61 @@
+@@ -2,10 +2,62 @@
  #' @importFrom dplyr mutate
  #' @export
  mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", "unused", "none"), .before = NULL, .after = NULL) {
@@ -25,6 +25,7 @@ index e995a26..08b6117 100644
 +      names_new <- character()
 +
 +      # FIXME: use fewer projections
++      # FIXME: construct out only at the end
 +      for (i in seq_along(dots)) {
 +        new <- names(dots)[[i]]
 +        names_new <- c(names_new, new)

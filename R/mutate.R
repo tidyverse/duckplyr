@@ -20,6 +20,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
       names_new <- character()
 
       # FIXME: use fewer projections
+      # FIXME: construct out only at the end
       for (i in seq_along(dots)) {
         new <- names(dots)[[i]]
         names_new <- c(names_new, new)
