@@ -1,17 +1,22 @@
 diff --git b/R/tbl_vars.R a/R/tbl_vars.R
-index 52e7ebd..a046a45 100644
+index 52e7ebd..6e9cc89 100644
 --- b/R/tbl_vars.R
 +++ a/R/tbl_vars.R
-@@ -4,19 +4,12 @@
+@@ -3,20 +3,15 @@
+ #' @export
  tbl_vars.duckplyr_df <- function(x) {
    # Our implementation
-   rel_try(
+-  rel_try(
 -    "No relational implementation for tbl_vars()" = TRUE,
++  # Avoid rel_try(), it's not an error if the input is not an ALTREP df
++  tryCatch(
      {
 -      return(out)
+-    }
 +      rel <- duckdb:::rel_from_altrep_df(x)
 +      return(rel_names(rel))
-     }
++    },
++    error = identity
    )
  
 -  # dplyr forward

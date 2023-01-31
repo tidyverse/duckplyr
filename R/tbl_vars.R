@@ -3,11 +3,13 @@
 #' @export
 tbl_vars.duckplyr_df <- function(x) {
   # Our implementation
-  rel_try(
+  # Avoid rel_try(), it's not an error if the input is not an ALTREP df
+  tryCatch(
     {
       rel <- duckdb:::rel_from_altrep_df(x)
       return(rel_names(rel))
-    }
+    },
+    error = identity
   )
 
   # dplyr implementation
