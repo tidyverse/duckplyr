@@ -3,12 +3,12 @@
 #' TBD.
 #'
 #' @param x An object.
-#' @param class Classes added in front of the `"relational_expr"` base class.
+#' @param class Classes added in front of the `"relational_relexpr"` base class.
 #'
 #' @name expr
 #' @export
 new_relexpr <- function(x, class = NULL) {
-  structure(x, class = unique(c(class, "relational_expr")))
+  structure(x, class = unique(c(class, "relational_relexpr")))
 }
 
 #' @param name The name of the column or function to reference.
@@ -43,12 +43,12 @@ relexpr_set_alias <- function(expr, alias = NULL) {
 }
 
 #' @export
-print.relational_expr <- function(x, ...) {
+print.relational_relexpr <- function(x, ...) {
   writeLines(format(x, ...))
 }
 
 #' @export
-format.relational_expr <- function(x, ...) {
+format.relational_relexpr <- function(x, ...) {
   # FIXME: Use home-grown code
   utils::capture.output(print(constructive::construct(x)))
 }

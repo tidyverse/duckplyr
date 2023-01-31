@@ -22,7 +22,7 @@ relexpr_set_alias(expr, alias = NULL)
 \arguments{
 \item{x}{An object.}
 
-\item{class}{Classes added in front of the `"relational_expr"` base class.}
+\item{class}{Classes added in front of the `"relational_relexpr"` base class.}
 
 \item{name}{The name of the column or function to reference.}
 
