@@ -11,7 +11,8 @@ inner_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x
     "No implicit cross joins for inner_join()" = is_cross_by(by),
     "No relational implementation for inner_join(copy = TRUE)" = copy,
     {
-      return(rel_join_impl(x, y, by, suffix, keep, na_matches, "inner", error_call))
+      out <- rel_join_impl(x, y, by, suffix, keep, na_matches, "inner", error_call)
+      return(out)
     }
   )
 

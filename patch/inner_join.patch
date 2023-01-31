@@ -1,8 +1,8 @@
 diff --git b/R/inner_join.R a/R/inner_join.R
-index aecd66b..d2b6f1c 100644
+index aecd66b..f51dd05 100644
 --- b/R/inner_join.R
 +++ a/R/inner_join.R
-@@ -2,11 +2,16 @@
+@@ -2,10 +2,16 @@
  #' @importFrom dplyr inner_join
  #' @export
  inner_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ..., keep = NULL, na_matches = c("na", "never"), multiple = NULL, unmatched = "drop") {
@@ -16,8 +16,7 @@ index aecd66b..d2b6f1c 100644
 +    "No implicit cross joins for inner_join()" = is_cross_by(by),
 +    "No relational implementation for inner_join(copy = TRUE)" = copy,
      {
--      return(out)
-+      return(rel_join_impl(x, y, by, suffix, keep, na_matches, "inner", error_call))
++      out <- rel_join_impl(x, y, by, suffix, keep, na_matches, "inner", error_call)
+       return(out)
      }
    )
- 
