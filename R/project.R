@@ -1,6 +1,10 @@
 exprs_from_loc <- function(.data, loc) {
+  nexprs_from_loc(names(.data), loc)
+}
+
+nexprs_from_loc <- function(names, loc) {
   stopifnot(is.integer(loc))
-  map2(names(.data)[loc], names(loc), ~ relexpr_reference(.x, alias = .y))
+  map2(names[loc], names(loc), ~ relexpr_reference(.x, alias = .y))
 }
 
 exprs_project <- function(rel, exprs, .data) {
