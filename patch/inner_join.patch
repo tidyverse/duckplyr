@@ -1,48 +1,41 @@
 diff --git b/R/inner_join.R a/R/inner_join.R
-index aecd66b..21eeab4 100644
+index aecd66b..9e4cb86 100644
 --- b/R/inner_join.R
 +++ a/R/inner_join.R
-@@ -2,10 +2,82 @@
+@@ -2,10 +2,75 @@
  #' @importFrom dplyr inner_join
  #' @export
  inner_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ..., keep = NULL, na_matches = c("na", "never"), multiple = NULL, unmatched = "drop") {
 +  check_dots_empty0(...)
 +  error_call <- caller_env()
 +
-+  na_matches <- check_na_matches(na_matches, error_call = error_call)
-+
-+  x_names <- tbl_vars(x)
-+  y_names <- tbl_vars(y)
-+
-+  if (is_cross_by(by)) {
-+    by <- new_join_by()
-+    cross <- TRUE
-+  } else {
-+    cross <- FALSE
-+  }
-+
-+  if (is_null(by)) {
-+    by <- join_by_common(x_names, y_names, error_call = error_call)
-+  } else {
-+    by <- as_join_by(by, error_call = error_call)
-+  }
-+
-+  vars <- join_cols(
-+    x_names = x_names,
-+    y_names = y_names,
-+    by = by,
-+    suffix = suffix,
-+    keep = keep,
-+    error_call = error_call
-+  )
-+
    # Our implementation
    rel_try(
 -    "No relational implementation for inner_join()" = TRUE,
-+    "Only equi-joins for inner_join()" = any(by$condition != "=="),
-+    "No implicit cross joins for inner_join()" = cross,
++    "Only equi-joins for inner_join()" = inherits(by, "dplyr_join_by") && any(by$condition != "=="),
++    "No implicit cross joins for inner_join()" = is_cross_by(by),
 +    "No relational implementation for inner_join(copy = TRUE)" = copy,
      {
++      na_matches <- check_na_matches(na_matches, error_call = error_call)
++
++      x_names <- tbl_vars(x)
++      y_names <- tbl_vars(y)
++
++      if (is_null(by)) {
++        by <- join_by_common(x_names, y_names, error_call = error_call)
++      } else {
++        by <- as_join_by(by, error_call = error_call)
++      }
++
++      vars <- join_cols(
++        x_names = x_names,
++        y_names = y_names,
++        by = by,
++        suffix = suffix,
++        keep = keep,
++        error_call = error_call
++      )
++
 +      x_by <- by$x
 +      y_by <- by$y
 +      x_rel <- duckdb_rel_from_df(x)
