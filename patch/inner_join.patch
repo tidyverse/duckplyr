@@ -1,5 +1,5 @@
 diff --git b/R/inner_join.R a/R/inner_join.R
-index aecd66b..91cb6aa 100644
+index aecd66b..d2b6f1c 100644
 --- b/R/inner_join.R
 +++ a/R/inner_join.R
 @@ -2,11 +2,16 @@
@@ -17,7 +17,7 @@ index aecd66b..91cb6aa 100644
 +    "No relational implementation for inner_join(copy = TRUE)" = copy,
      {
 -      return(out)
-+      return(rel_join_impl(x, y, by, suffix, keep, na_matches, error_call))
++      return(rel_join_impl(x, y, by, suffix, keep, na_matches, "inner", error_call))
      }
    )
  

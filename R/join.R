@@ -1,4 +1,4 @@
-rel_join_impl <- function(x, y, by, suffix, keep, na_matches, error_call = caller_env()) {
+rel_join_impl <- function(x, y, by, suffix, keep, na_matches, join, error_call = caller_env()) {
   na_matches <- check_na_matches(na_matches, error_call = error_call)
 
   x_names <- tbl_vars(x)
@@ -48,7 +48,7 @@ rel_join_impl <- function(x, y, by, suffix, keep, na_matches, error_call = calle
 
   conds <- map2(x_by, y_by, ~ relexpr_function(cond, list(.x, .y)))
 
-  joined <- rel_join(x_rel, y_rel, conds, "inner")
+  joined <- rel_join(x_rel, y_rel, conds, join)
 
   exprs <- c(
     nexprs_from_loc(x_names, vars$x$out),
