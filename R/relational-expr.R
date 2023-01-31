@@ -17,6 +17,9 @@ new_relexpr <- function(x, class = NULL) {
 #' @rdname expr
 #' @export
 relexpr_reference <- function(name, rel = NULL, alias = NULL) {
+  stopifnot(is_string(name))
+  stopifnot(is.null(rel) || inherits(rel, "duckdb_relation"))
+  stopifnot(is.null(alias) || is_string(alias))
   new_relexpr(list(name = name, rel = rel, alias = alias), class = "relational_relexpr_reference")
 }
 
@@ -24,6 +27,8 @@ relexpr_reference <- function(name, rel = NULL, alias = NULL) {
 #' @rdname expr
 #' @export
 relexpr_constant <- function(val, alias = NULL) {
+  stopifnot(length(val) == 1)
+  stopifnot(is.null(alias) || is_string(alias))
   new_relexpr(list(val = val, alias = alias), class = "relational_relexpr_constant")
 }
 
@@ -31,6 +36,9 @@ relexpr_constant <- function(val, alias = NULL) {
 #' @rdname expr
 #' @export
 relexpr_function <- function(name, args, alias = NULL) {
+  stopifnot(is_string(name))
+  stopifnot(is.list(args))
+  stopifnot(is.null(alias) || is_string(alias))
   new_relexpr(list(name = name, args = args, alias = alias), class = "relational_relexpr_function")
 }
 
@@ -38,6 +46,8 @@ relexpr_function <- function(name, args, alias = NULL) {
 #' @rdname expr
 #' @export
 relexpr_set_alias <- function(expr, alias = NULL) {
+  stopifnot(inherits(expr, "relational_relexpr"))
+  stopifnot(is.null(alias) || is_string(alias))
   expr$alias <- alias
   expr
 }
