@@ -1,6 +1,12 @@
 rel_try <- function(rel, ...) {
   # return(rel)
 
+  call <- as.character(sys.call(-1)[[1]])
+
+  if (!(list(call) %in% stats$calls)) {
+    stats$calls <- c(stats$calls, call)
+  }
+
   stats$attempts <- stats$attempts + 1L
 
   dots <- list(...)

@@ -1,4 +1,4 @@
-stats <- new_environment(list(attempts = 0L, fallback = 0L))
+stats <- new_environment(list(attempts = 0L, fallback = 0L, calls = character()))
 
 #' @export
 stats_show <- function() {
@@ -7,4 +7,5 @@ stats_show <- function() {
     "️: ",
     format(c(stats$attempts, stats$fallback, stats$attempts - stats$fallback))
   ))
+  writeLines(sort(stats$calls))
 }
