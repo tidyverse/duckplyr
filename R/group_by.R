@@ -2,6 +2,8 @@
 #' @importFrom dplyr group_by
 #' @export
 group_by.duckplyr_df <- function(.data, ..., .add = FALSE, .drop = group_by_drop_default(.data)) {
+  testthat::skip("`group_by()` not supported for duckplyr")
+
   # Our implementation
   rel_try(
     "No relational implementation for group_by()" = TRUE,
@@ -29,5 +31,13 @@ group_by.duckplyr_df <- function(.data, ..., .add = FALSE, .drop = group_by_drop
 }
 
 duckplyr_group_by <- function(.data, ...) {
-  testthat::skip("`group_by()` not supported for duckplyr")
+  try_fetch(
+    .data <- as_duckplyr_df(.data),
+    error = function(e) {
+      testthat::skip(conditionMessage(e))
+    }
+  )
+  out <- group_by(.data, ...)
+  class(out) <- setdiff(class(out), "duckplyr_df")
+  out
 }

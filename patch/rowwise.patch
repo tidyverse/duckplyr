@@ -1,0 +1,13 @@
+diff --git b/R/rowwise.R a/R/rowwise.R
+index 68c3d55..7d29666 100644
+--- b/R/rowwise.R
++++ a/R/rowwise.R
+@@ -2,6 +2,8 @@
+ #' @importFrom dplyr rowwise
+ #' @export
+ rowwise.duckplyr_df <- function(data, ...) {
++  testthat::skip("`rowwise()` not supported for duckplyr")
++
+   # Our implementation
+   rel_try(
+     "No relational implementation for rowwise()" = TRUE,

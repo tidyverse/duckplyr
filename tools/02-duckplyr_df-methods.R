@@ -142,23 +142,17 @@ func_decl_chr <- function(generic, code, name, new_code_chr, is_tbl_return, skip
     )
   }
 
-  if (generic %in% c("group_by", "rowwise")) {
-    test_impl <- c(
-      '  testthat::skip("`{{{generic}}}()` not supported for duckplyr")'
-    )
-  } else {
-    test_impl <- c(
-      '  try_fetch(',
-      assign_impl,
-      '    error = function(e) {',
-      '      testthat::skip(conditionMessage(e))',
-      '    }',
-      '  )',
-      '  out <- {{{generic}}}({{{args}}}, ...)',
-      if (is_tbl_return) '  class(out) <- setdiff(class(out), "duckplyr_df")',
-      '  out'
-    )
-  }
+  test_impl <- c(
+    '  try_fetch(',
+    assign_impl,
+    '    error = function(e) {',
+    '      testthat::skip(conditionMessage(e))',
+    '    }',
+    '  )',
+    '  out <- {{{generic}}}({{{args}}}, ...)',
+    if (is_tbl_return) '  class(out) <- setdiff(class(out), "duckplyr_df")',
+    '  out'
+  )
 
   test_code <- c(
     'duckplyr_{{{generic}}} <- function({{args}}, ...) {',

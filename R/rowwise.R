@@ -2,6 +2,8 @@
 #' @importFrom dplyr rowwise
 #' @export
 rowwise.duckplyr_df <- function(data, ...) {
+  testthat::skip("`rowwise()` not supported for duckplyr")
+
   # Our implementation
   rel_try(
     "No relational implementation for rowwise()" = TRUE,
@@ -24,5 +26,13 @@ rowwise.duckplyr_df <- function(data, ...) {
 }
 
 duckplyr_rowwise <- function(data, ...) {
-  testthat::skip("`rowwise()` not supported for duckplyr")
+  try_fetch(
+    data <- as_duckplyr_df(data),
+    error = function(e) {
+      testthat::skip(conditionMessage(e))
+    }
+  )
+  out <- rowwise(data, ...)
+  class(out) <- setdiff(class(out), "duckplyr_df")
+  out
 }
