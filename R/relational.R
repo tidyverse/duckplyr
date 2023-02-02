@@ -1,6 +1,8 @@
 rel_try <- function(rel, ...) {
   # return(rel)
 
+  stats$attempts <- stats$attempts + 1L
+
   dots <- list(...)
   for (i in seq_along(dots)) {
     if (dots[[i]]) {
@@ -8,6 +10,7 @@ rel_try <- function(rel, ...) {
       if (!identical(Sys.getenv("TESTTHAT"), "true")) {
         inform(message = c("Requested fallback for relational:", i = names(dots)[[i]]))
       }
+      stats$fallback <- stats$fallback + 1L
       return()
     }
   }
@@ -18,10 +21,12 @@ rel_try <- function(rel, ...) {
     if (!identical(Sys.getenv("TESTTHAT"), "true")) {
       rlang::cnd_signal(rlang::message_cnd(message = "Error processing with relational.", parent = out))
     }
+    stats$fallback <- stats$fallback + 1L
     return()
-  } else {
-    out
   }
+
+  # Never reached due to return() in code
+  stop("Must use a return() in rel_try().")
 }
 
 rel_translate_dots <- function(dots, data) {
