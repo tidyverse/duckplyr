@@ -219,7 +219,7 @@ test_that("grouped filter handles indices (#880)", {
   res2 <- duckplyr_mutate(res, Petal = Petal.Width * Petal.Length)
   expect_equal(nrow(res), nrow(res2))
   expect_equal(group_rows(res), group_rows(res2))
-  expect_equal(duckplyr_group_keys(res), duckplyr_group_keys(res2))
+  expect_equal(group_keys(res), group_keys(res2))
 })
 
 test_that("duckplyr_filter(FALSE) handles indices", {
@@ -597,7 +597,7 @@ test_that("filter keeps zero length groups", {
   )
   df <- group_by(df, e, f, g, .drop = FALSE)
 
-  expect_equal(duckplyr_group_size(duckplyr_filter(df, f == 1)), c(2, 0, 0) )
+  expect_equal(group_size(duckplyr_filter(df, f == 1)), c(2, 0, 0) )
 })
 
 test_that("filtering retains labels for zero length groups", {

@@ -306,8 +306,8 @@ test_that("arrange keeps zero length groups",{
   )
   df <- group_by(df, e, f, g, .drop = FALSE)
 
-  expect_equal( duckplyr_group_size(duckplyr_arrange(df)), c(2, 2, 0) )
-  expect_equal( duckplyr_group_size(duckplyr_arrange(df, x)), c(2, 2, 0) )
+  expect_equal( group_size(duckplyr_arrange(df)), c(2, 2, 0) )
+  expect_equal( group_size(duckplyr_arrange(df, x)), c(2, 2, 0) )
 })
 
 # legacy --------------------------------------------------------------

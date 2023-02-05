@@ -20,7 +20,9 @@ df_methods <-
     "dplyr_row_slice",
     "group_by",
     "rowwise",
-    "same_src" # data frames can be copied into duck-frames with zero cost
+    "group_data", "group_indices", "group_keys", "group_map", "group_modify", "group_nest", "group_size", "group_split", "group_trim", "groups", "n_groups",
+    "same_src", # data frames can be copied into duck-frames with zero cost
+    NULL
   ))) %>%
   # methods we don't need to implement but can test
   mutate(skip_impl = name %in% c(
@@ -30,7 +32,7 @@ df_methods <-
   mutate(is_tbl_return = !(name %in% c(
     # Special case: forward to `NextMethod()`, don't change output
     "dplyr_reconstruct", "auto_copy", "pull", "setequal", "tbl_vars",
-    # FIXME: Do we even need those?
-    "group_indices", "group_size", "group_vars", "groups", "n_groups"
+    "group_vars",
+    NULL
   ))) %>%
   mutate(code = unname(mget(fun, dplyr)))

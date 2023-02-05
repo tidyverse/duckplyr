@@ -174,124 +174,6 @@ test_that("as_duckplyr_df() commutes for full_join()", {
   expect_equal(pre, post)
 })
 
-test_that("as_duckplyr_df() commutes for group_data()", {
-  # Data
-  test_df <- data.frame(a = 1, b = 2)
-
-  # Run
-  pre <- test_df %>% as_duckplyr_df() %>% group_data()
-  post <- test_df %>% group_data() %>% as_duckplyr_df()
-
-  # Compare
-  expect_equal(pre, post)
-})
-
-test_that("as_duckplyr_df() commutes for group_indices()", {
-  # Data
-  test_df <- data.frame(a = 1, b = 2)
-
-  # Run
-  pre <- test_df %>% as_duckplyr_df() %>% group_indices()
-  post <- test_df %>% group_indices()
-
-  # Compare
-  expect_equal(pre, post)
-})
-
-test_that("as_duckplyr_df() commutes for group_keys()", {
-  # Data
-  test_df <- data.frame(a = 1, b = 2)
-
-  # Run
-  pre <- test_df %>% as_duckplyr_df() %>% group_keys()
-  post <- test_df %>% group_keys() %>% as_duckplyr_df()
-
-  # Compare
-  expect_equal(pre, post)
-})
-
-test_that("as_duckplyr_df() commutes for group_map()", {
-  skip("WAT")
-
-  # Data
-  test_df <- data.frame(a = 1, b = 2)
-
-  # Run
-  pre <- test_df %>% as_duckplyr_df() %>% group_map(~ .x)
-  post <- test_df %>% group_map(~ .x) %>% as_duckplyr_df()
-
-  # Compare
-  expect_equal(pre, post)
-})
-
-test_that("as_duckplyr_df() commutes for group_modify()", {
-  skip("Grouped")
-
-  # Data
-  test_df <- data.frame(a = 1, b = 2)
-
-  # Run
-  pre <- test_df %>% as_duckplyr_df() %>% group_modify(~ .x)
-  post <- test_df %>% group_modify(~ .x) %>% as_duckplyr_df()
-
-  # Compare
-  expect_equal(pre, post)
-})
-
-test_that("as_duckplyr_df() commutes for group_nest()", {
-  skip("Always returns tibble")
-
-  # Data
-  test_df <- data.frame(a = 1, b = 2)
-
-  # Run
-  pre <- test_df %>% as_duckplyr_df() %>% group_nest()
-  post <- test_df %>% group_nest() %>% as_duckplyr_df()
-
-  # Compare
-  expect_equal(pre, post)
-})
-
-test_that("as_duckplyr_df() commutes for group_size()", {
-  # Data
-  test_df <- data.frame(a = 1, b = 2)
-
-  # Run
-  pre <- test_df %>% as_duckplyr_df() %>% group_size()
-  post <- test_df %>% group_size()
-
-  # Compare
-  expect_equal(pre, post)
-})
-
-test_that("as_duckplyr_df() commutes for group_split()", {
-  skip("WAT")
-
-  # Data
-  test_df <- data.frame(a = 1, b = 2)
-
-  # Run
-  pre <- test_df %>% as_duckplyr_df() %>% group_split()
-  post <- test_df %>% group_split() %>% as_duckplyr_df()
-
-  # Compare
-  expect_equal(pre, post)
-})
-
-test_that("as_duckplyr_df() commutes for group_trim()", {
-  skip("Grouped")
-
-  # Data
-  test_df <- data.frame(a = 1, b = 2)
-
-  # Run
-  pre <- test_df %>% as_duckplyr_df() %>% group_trim()
-  post <- test_df %>% group_trim() %>% as_duckplyr_df()
-
-  # Compare
-  expect_equal(pre, post)
-})
-
 test_that("as_duckplyr_df() commutes for group_vars()", {
   # Data
   test_df <- data.frame(a = 1, b = 2)
@@ -299,18 +181,6 @@ test_that("as_duckplyr_df() commutes for group_vars()", {
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% group_vars()
   post <- test_df %>% group_vars()
-
-  # Compare
-  expect_equal(pre, post)
-})
-
-test_that("as_duckplyr_df() commutes for groups()", {
-  # Data
-  test_df <- data.frame(a = 1, b = 2)
-
-  # Run
-  pre <- test_df %>% as_duckplyr_df() %>% groups()
-  post <- test_df %>% groups()
 
   # Compare
   expect_equal(pre, post)
@@ -362,18 +232,6 @@ test_that("as_duckplyr_df() commutes for mutate()", {
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% mutate()
   post <- test_df %>% mutate() %>% as_duckplyr_df()
-
-  # Compare
-  expect_equal(pre, post)
-})
-
-test_that("as_duckplyr_df() commutes for n_groups()", {
-  # Data
-  test_df <- data.frame(a = 1, b = 2)
-
-  # Run
-  pre <- test_df %>% as_duckplyr_df() %>% n_groups()
-  post <- test_df %>% n_groups()
 
   # Compare
   expect_equal(pre, post)
