@@ -1,13 +1,13 @@
 #' @export
-wrap <- function(x) {
+wrap_integer <- function(x) {
 	.Call(chunkrep_wrap, x)
 }
 
 #' @export
 wrap_df <- function(df) {
   stopifnot(is.data.frame(df))
-  out <- lapply(df, wrap)
+  out <- lapply(df, wrap_integer)
   class(out) <- "data.frame"
-  .Call(set_row_names, out, wrap(.set_row_names(nrow(df))))
+  .Call(set_row_names, out, wrap_integer(.set_row_names(nrow(df))))
   out
 }

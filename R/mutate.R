@@ -50,7 +50,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
       used <- set_names(names(out) %in% names_used, names(out))
       names_groups <- by$names
 
-      out <- mutate_keep(
+      out <- duckplyr_mutate_keep(
         out = out,
         keep = keep,
         used = used,

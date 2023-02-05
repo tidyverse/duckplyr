@@ -1,5 +1,5 @@
 diff --git b/R/mutate.R a/R/mutate.R
-index 3912701..6699297 100644
+index 3912701..d1246aa 100644
 --- b/R/mutate.R
 +++ a/R/mutate.R
 @@ -2,10 +2,62 @@
@@ -55,7 +55,7 @@ index 3912701..6699297 100644
 +      used <- set_names(names(out) %in% names_used, names(out))
 +      names_groups <- by$names
 +
-+      out <- mutate_keep(
++      out <- duckplyr_mutate_keep(
 +        out = out,
 +        keep = keep,
 +        used = used,
