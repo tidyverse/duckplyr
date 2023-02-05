@@ -1,8 +1,8 @@
 diff --git b/R/group_vars.R a/R/group_vars.R
-index 06caea7..7140049 100644
+index 06caea7..f3fdd94 100644
 --- b/R/group_vars.R
 +++ a/R/group_vars.R
-@@ -2,23 +2,7 @@
+@@ -2,23 +2,12 @@
  #' @importFrom dplyr group_vars
  #' @export
  group_vars.duckplyr_df <- function(x) {
@@ -20,9 +20,13 @@ index 06caea7..7140049 100644
 -  group_vars <- dplyr:::group_vars.data.frame
 -  out <- group_vars(x_df)
 -  return(out)
--
++  if (inherits(x, c("grouped_df", "rowwise_df"))) {
++    return(dplyr:::group_vars.data.frame(x))
++  }
+ 
 -  # dplyr implementation
 -  setdiff(names(group_data(x)), ".rows")
++  # Avoid calling group_data()
 +  character()
  }
  
