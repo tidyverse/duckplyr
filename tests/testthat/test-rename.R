@@ -6,9 +6,9 @@ test_that("duckplyr_rename() handles deprecated `.data` pronoun", {
 test_that("arguments to duckplyr_rename() don't match vars_rename() arguments (#2861)", {
   df <- tibble(a = 1)
   expect_identical(duckplyr_rename(df, var = a), tibble(var = 1))
-  expect_identical(duckplyr_rename(duckplyr_group_by(df, a), var = a), duckplyr_group_by(tibble(var = 1), var))
+  expect_identical(duckplyr_rename(group_by(df, a), var = a), group_by(tibble(var = 1), var))
   expect_identical(duckplyr_rename(df, strict = a), tibble(strict = 1))
-  expect_identical(duckplyr_rename(duckplyr_group_by(df, a), strict = a), duckplyr_group_by(tibble(strict = 1), strict))
+  expect_identical(duckplyr_rename(group_by(df, a), strict = a), group_by(tibble(strict = 1), strict))
 })
 
 test_that("duckplyr_rename() to UTF-8 column names", {
@@ -26,7 +26,7 @@ test_that("can duckplyr_rename() with strings and character vectors", {
 })
 
 test_that("rename preserves grouping", {
-  gf <- duckplyr_group_by(tibble(g = 1:3, x = 3:1), g)
+  gf <- group_by(tibble(g = 1:3, x = 3:1), g)
 
   i <- count_regroups(out <- duckplyr_rename(gf, h = g))
   expect_equal(i, 0)

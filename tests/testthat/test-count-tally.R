@@ -31,7 +31,7 @@ test_that("output includes empty levels with .drop = FALSE", {
   out <- duckplyr_count(df, f, .drop = FALSE)
   expect_equal(out$n, c(0, 1, 0))
 
-  out <- duckplyr_count(duckplyr_group_by(df, f, .drop = FALSE))
+  out <- duckplyr_count(group_by(df, f, .drop = FALSE))
   expect_equal(out$n, c(0, 1, 0))
 })
 
@@ -40,7 +40,7 @@ test_that("ouput preserves grouping", {
   exp <- tibble(g = c(1, 2), n = c(1, 3))
 
   expect_equal(df %>% duckplyr_count(g), exp)
-  expect_equal(df %>% duckplyr_group_by(g) %>% duckplyr_count(), exp %>% duckplyr_group_by(g))
+  expect_equal(df %>% group_by(g) %>% duckplyr_count(), exp %>% group_by(g))
 })
 
 test_that("output preserves class & attributes where possible", {
@@ -51,7 +51,7 @@ test_that("output preserves class & attributes where possible", {
   expect_s3_class(out, "data.frame", exact = TRUE)
   expect_equal(attr(out, "my_attr"), 1)
 
-  out <- df %>% duckplyr_group_by(g) %>% duckplyr_count()
+  out <- df %>% group_by(g) %>% duckplyr_count()
   expect_s3_class(out, "grouped_df")
   expect_equal(duckplyr_group_vars(out), "g")
   # duckplyr_summarise() currently drops attributes
@@ -118,7 +118,7 @@ test_that("duckplyr_count() owns errors (#6139)", {
 # tally -------------------------------------------------------------------
 
 test_that("tally can sort output", {
-  gf <- duckplyr_group_by(tibble(x = c(1, 1, 2, 2, 2)), x)
+  gf <- group_by(tibble(x = c(1, 1, 2, 2, 2)), x)
   out <- duckplyr_tally(gf, sort = TRUE)
   expect_equal(out, tibble(x = c(2, 1), n = c(3, 2)))
 })
@@ -131,7 +131,7 @@ test_that("weighted tally drops NAs (#1145)", {
 test_that("duckplyr_tally() drops last group (#5199) ", {
   df <- data.frame(x = 1, y = 2, z = 3)
 
-  res <- expect_message(df %>% duckplyr_group_by(x, y) %>% duckplyr_tally(wt = z), NA)
+  res <- expect_message(df %>% group_by(x, y) %>% duckplyr_tally(wt = z), NA)
   expect_equal(duckplyr_group_vars(res), "x")
 })
 
@@ -148,7 +148,7 @@ test_that("ouput preserves grouping", {
   exp <- tibble(g = c(1, 2, 2, 2), n = c(1, 3, 3, 3))
 
   expect_equal(df %>% duckplyr_add_count(g), exp)
-  expect_equal(df %>% duckplyr_group_by(g) %>% duckplyr_add_count(), exp %>% duckplyr_group_by(g))
+  expect_equal(df %>% group_by(g) %>% duckplyr_add_count(), exp %>% group_by(g))
 })
 
 test_that(".drop is deprecated",  {
@@ -170,18 +170,18 @@ test_that("duckplyr_add_count() owns errors (#6139)", {
 test_that("can add tallies of a variable", {
   df <- tibble(a = c(2, 1, 1))
   expect_equal(
-    df %>% duckplyr_group_by(a) %>% add_tally(),
-    duckplyr_group_by(tibble(a = c(2, 1, 1), n = c(1, 2, 2)), a)
+    df %>% group_by(a) %>% add_tally(),
+    group_by(tibble(a = c(2, 1, 1), n = c(1, 2, 2)), a)
   )
 })
 
 test_that("add_tally can be given a weighting variable", {
   df <- data.frame(a = c(1, 1, 2, 2, 2), w = c(1, 1, 2, 3, 4))
 
-  out <- df %>% duckplyr_group_by(a) %>% add_tally(wt = w)
+  out <- df %>% group_by(a) %>% add_tally(wt = w)
   expect_equal(out$n, c(2, 2, 9, 9, 9))
 
-  out <- df %>% duckplyr_group_by(a) %>% add_tally(wt = w + 1)
+  out <- df %>% group_by(a) %>% add_tally(wt = w + 1)
   expect_equal(out$n, c(4, 4, 12, 12, 12))
 })
 

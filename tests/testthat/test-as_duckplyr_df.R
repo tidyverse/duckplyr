@@ -174,20 +174,6 @@ test_that("as_duckplyr_df() commutes for full_join()", {
   expect_equal(pre, post)
 })
 
-test_that("as_duckplyr_df() commutes for group_by()", {
-  skip("Grouped")
-
-  # Data
-  test_df <- data.frame(a = 1, b = 2)
-
-  # Run
-  pre <- test_df %>% as_duckplyr_df() %>% group_by()
-  post <- test_df %>% group_by() %>% as_duckplyr_df()
-
-  # Compare
-  expect_equal(pre, post)
-})
-
 test_that("as_duckplyr_df() commutes for group_data()", {
   # Data
   test_df <- data.frame(a = 1, b = 2)
@@ -566,20 +552,6 @@ test_that("as_duckplyr_df() commutes for rows_upsert()", {
   # Run
   pre <- test_df_x %>% as_duckplyr_df() %>% rows_upsert(test_df_y)
   post <- test_df_x %>% rows_upsert(test_df_y) %>% as_duckplyr_df()
-
-  # Compare
-  expect_equal(pre, post)
-})
-
-test_that("as_duckplyr_df() commutes for rowwise()", {
-  skip("Stack overflow")
-
-  # Data
-  test_df <- data.frame(a = 1, b = 2)
-
-  # Run
-  pre <- test_df %>% as_duckplyr_df() %>% rowwise()
-  post <- test_df %>% rowwise() %>% as_duckplyr_df()
 
   # Compare
   expect_equal(pre, post)

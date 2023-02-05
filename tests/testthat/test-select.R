@@ -1,5 +1,5 @@
 test_that("select preserves grouping", {
-  gf <- duckplyr_group_by(tibble(g = 1:3, x = 3:1), g)
+  gf <- group_by(tibble(g = 1:3, x = 3:1), g)
 
   i <- count_regroups(out <- duckplyr_select(gf, h = g))
   expect_equal(i, 0)
@@ -7,26 +7,26 @@ test_that("select preserves grouping", {
 })
 
 test_that("grouping variables preserved with a message, unless already selected (#1511, #5841)", {
-  df <- tibble(g = 1:3, x = 3:1) %>% duckplyr_group_by(g)
+  df <- tibble(g = 1:3, x = 3:1) %>% group_by(g)
 
   expect_snapshot({
     res <- duckplyr_select(df, x)
   })
   expect_named(res, c("g", "x"))
 
-  df <- tibble(a = 1, b = 2, c = 3) %>% duckplyr_group_by(a)
+  df <- tibble(a = 1, b = 2, c = 3) %>% group_by(a)
   expect_equal(df %>% duckplyr_select(a = b), tibble(a = 2))
 
-  df <- tibble(a = 1, b = 2, c = 3) %>% duckplyr_group_by(a, b)
+  df <- tibble(a = 1, b = 2, c = 3) %>% group_by(a, b)
   expect_snapshot({
-    expect_equal(df %>% duckplyr_select(a = c), tibble(b = 2, a = 3) %>% duckplyr_group_by(b))
-    expect_equal(df %>% duckplyr_select(b = c), tibble(a = 1, b = 3) %>% duckplyr_group_by(a))
+    expect_equal(df %>% duckplyr_select(a = c), tibble(b = 2, a = 3) %>% group_by(b))
+    expect_equal(df %>% duckplyr_select(b = c), tibble(a = 1, b = 3) %>% group_by(a))
   })
 })
 
 test_that("non-syntactic grouping variable is preserved (#1138)", {
   expect_snapshot(
-    df <- tibble(`a b` = 1L) %>% duckplyr_group_by(`a b`) %>% duckplyr_select()
+    df <- tibble(`a b` = 1L) %>% group_by(`a b`) %>% duckplyr_select()
   )
   expect_named(df, "a b")
 })
@@ -84,7 +84,7 @@ test_that("select can be before group_by (#309)", {
     var1 = rnorm(10)
   )
   dfagg <- df %>%
-    duckplyr_group_by(id, year) %>%
+    group_by(id, year) %>%
     duckplyr_select(id, year, var1) %>%
     duckplyr_summarise(var1 = mean(var1))
   expect_equal(names(dfagg), c("id", "year", "var1"))
@@ -101,11 +101,11 @@ test_that("select succeeds in presence of raw columns (#1803)", {
 test_that("arguments to duckplyr_select() don't match vars_select() arguments", {
   df <- tibble(a = 1)
   expect_identical(duckplyr_select(df, var = a), tibble(var = 1))
-  expect_identical(duckplyr_select(duckplyr_group_by(df, a), var = a), duckplyr_group_by(tibble(var = 1), var))
+  expect_identical(duckplyr_select(group_by(df, a), var = a), group_by(tibble(var = 1), var))
   expect_identical(duckplyr_select(df, exclude = a), tibble(exclude = 1))
   expect_identical(duckplyr_select(df, include = a), tibble(include = 1))
-  expect_identical(duckplyr_select(duckplyr_group_by(df, a), exclude = a), duckplyr_group_by(tibble(exclude = 1), exclude))
-  expect_identical(duckplyr_select(duckplyr_group_by(df, a), include = a), duckplyr_group_by(tibble(include = 1), include))
+  expect_identical(duckplyr_select(group_by(df, a), exclude = a), group_by(tibble(exclude = 1), exclude))
+  expect_identical(duckplyr_select(group_by(df, a), include = a), group_by(tibble(include = 1), include))
 })
 
 test_that("can duckplyr_select() with deprecated `.data` pronoun (#2715)", {

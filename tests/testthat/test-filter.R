@@ -13,7 +13,7 @@ test_that("filter handles passing ...", {
   res <- g()
   expect_equal(res$x, 3L)
 
-  df <- duckplyr_group_by(df, x)
+  df <- group_by(df, x)
   res <- g()
   expect_equal(res$x, 3L)
 })
@@ -22,7 +22,7 @@ test_that("filter handles simple symbols", {
   df <- data.frame(x = 1:4, test = rep(c(T, F), each = 2))
   res <- duckplyr_filter(df, test)
 
-  gdf <- duckplyr_group_by(df, x)
+  gdf <- group_by(df, x)
   res <- duckplyr_filter(gdf, test)
 
   h <- function(data) {
@@ -50,7 +50,7 @@ test_that("filter handles simple symbols", {
 
 test_that("filter handlers scalar results", {
   expect_equal(duckplyr_filter(mtcars, min(mpg) > 0), mtcars, ignore_attr = TRUE)
-  expect_equal(duckplyr_filter(duckplyr_group_by(mtcars, cyl), min(mpg) > 0), duckplyr_group_by(mtcars, cyl))
+  expect_equal(duckplyr_filter(group_by(mtcars, cyl), min(mpg) > 0), group_by(mtcars, cyl))
 })
 
 test_that("filter propagates attributes", {
@@ -111,7 +111,7 @@ test_that("$ does not end call traversing. #502", {
 
   # Do some aggregation
   trial_outcomes <- d %>%
-    duckplyr_group_by(Subject, TrialNo) %>%
+    group_by(Subject, TrialNo) %>%
     duckplyr_summarise(MeanOutcome = mean(Outcome), .groups = "drop")
 
   left <- duckplyr_filter(trial_outcomes, MeanOutcome < analysis_opts$min_outcome)
@@ -148,7 +148,7 @@ test_that("%in% works as expected (#126)", {
   res <- df %>% duckplyr_filter(a %in% letters)
   expect_equal(nrow(res), 2L)
 
-  res <- df %>% duckplyr_group_by(g) %>% duckplyr_filter(a %in% letters)
+  res <- df %>% group_by(g) %>% duckplyr_filter(a %in% letters)
   expect_equal(nrow(res), 2L)
 })
 
@@ -173,7 +173,7 @@ test_that("filter does not alter expression (#971)", {
 
 test_that("hybrid evaluation handles $ correctly (#1134)", {
   df <- tibble(x = 1:10, g = rep(1:5, 2))
-  res <- df %>% duckplyr_group_by(g) %>% duckplyr_filter(x > min(df$x))
+  res <- df %>% group_by(g) %>% duckplyr_filter(x > min(df$x))
   expect_equal(nrow(res), 9L)
 })
 
@@ -209,13 +209,13 @@ test_that("filter, slice and arrange preserves attributes (#1064)", {
 
 test_that("filter works with rowwise data (#1099)", {
   df <- tibble(First = c("string1", "string2"), Second = c("Sentence with string1", "something"))
-  res <- df %>% duckplyr_rowwise() %>% duckplyr_filter(grepl(First, Second, fixed = TRUE))
+  res <- df %>% rowwise() %>% duckplyr_filter(grepl(First, Second, fixed = TRUE))
   expect_equal(nrow(res), 1L)
   expect_equal(df[1, ], duckplyr_ungroup(res))
 })
 
 test_that("grouped filter handles indices (#880)", {
-  res <- iris %>% duckplyr_group_by(Species) %>% duckplyr_filter(Sepal.Length > 5)
+  res <- iris %>% group_by(Species) %>% duckplyr_filter(Sepal.Length > 5)
   res2 <- duckplyr_mutate(res, Petal = Petal.Width * Petal.Length)
   expect_equal(nrow(res), nrow(res2))
   expect_equal(group_rows(res), group_rows(res2))
@@ -224,13 +224,13 @@ test_that("grouped filter handles indices (#880)", {
 
 test_that("duckplyr_filter(FALSE) handles indices", {
   out <- mtcars %>%
-    duckplyr_group_by(cyl) %>%
+    group_by(cyl) %>%
     duckplyr_filter(FALSE, .preserve = TRUE) %>%
     group_rows()
   expect_identical(out, list_of(integer(), integer(), integer(), .ptype = integer()))
 
   out <- mtcars %>%
-    duckplyr_group_by(cyl) %>%
+    group_by(cyl) %>%
     duckplyr_filter(FALSE, .preserve = FALSE) %>%
     group_rows()
   expect_identical(out, list_of(.ptype = integer()))
@@ -288,7 +288,7 @@ test_that("filter handles list columns", {
   expect_equal(res, list(1:10))
 
   res <- tibble(a=1:2, x = list(1:10, 1:5)) %>%
-    duckplyr_group_by(a) %>%
+    group_by(a) %>%
     duckplyr_filter(a == 1) %>%
     duckplyr_pull(x)
   expect_equal(res, list(1:10))
@@ -304,19 +304,19 @@ test_that("hybrid function row_number does not trigger warning in filter (#3750)
 test_that("duckplyr_filter() preserve order across groups (#3989)", {
   df <- tibble(g = c(1, 2, 1, 2, 1), time = 5:1, x = 5:1)
   res1 <- df %>%
-    duckplyr_group_by(g) %>%
+    group_by(g) %>%
     duckplyr_filter(x <= 4) %>%
     duckplyr_arrange(time)
 
   res2 <- df %>%
-    duckplyr_group_by(g) %>%
+    group_by(g) %>%
     duckplyr_arrange(time) %>%
     duckplyr_filter(x <= 4)
 
   res3 <- df %>%
     duckplyr_filter(x <= 4) %>%
     duckplyr_arrange(time) %>%
-    duckplyr_group_by(g)
+    group_by(g)
 
   expect_equal(res1, res2)
   expect_equal(res1, res3)
@@ -342,17 +342,17 @@ test_that("duckplyr_filter() handles matrix and data frame columns (#3630)", {
   expect_equal(duckplyr_filter(df, y[,1] == 1), df[1, ])
   expect_equal(duckplyr_filter(df, z$A == 1), df[1, ])
 
-  gdf <- duckplyr_group_by(df, x)
+  gdf <- group_by(df, x)
   expect_equal(duckplyr_filter(gdf, x == 1), gdf[1, ])
   expect_equal(duckplyr_filter(gdf, y[,1] == 1), gdf[1, ])
   expect_equal(duckplyr_filter(gdf, z$A == 1), gdf[1, ])
 
-  gdf <- duckplyr_group_by(df, y)
+  gdf <- group_by(df, y)
   expect_equal(duckplyr_filter(gdf, x == 1), gdf[1, ])
   expect_equal(duckplyr_filter(gdf, y[,1] == 1), gdf[1, ])
   expect_equal(duckplyr_filter(gdf, z$A == 1), gdf[1, ])
 
-  gdf <- duckplyr_group_by(df, z)
+  gdf <- group_by(df, z)
   expect_equal(duckplyr_filter(gdf, x == 1), gdf[1, ])
   expect_equal(duckplyr_filter(gdf, y[,1] == 1), gdf[1, ])
   expect_equal(duckplyr_filter(gdf, z$A == 1), gdf[1, ])
@@ -390,11 +390,11 @@ test_that("duckplyr_filter() allows matrices with 1 column with a deprecation wa
 
   # Only warns once when grouped
   df <- tibble(x = c(1, 1, 2, 2))
-  gdf <- duckplyr_group_by(df, x)
+  gdf <- group_by(df, x)
   expect_snapshot({
     out <- duckplyr_filter(gdf, matrix(c(TRUE, FALSE), nrow = 2))
   })
-  expect_identical(out, duckplyr_group_by(tibble(x = c(1, 2)), x))
+  expect_identical(out, group_by(tibble(x = c(1, 2)), x))
 })
 
 test_that("duckplyr_filter() disallows matrices with >1 column", {
@@ -418,7 +418,7 @@ test_that("duckplyr_filter() gives useful error messages", {
     # wrong type
     (expect_error(
       iris %>%
-        duckplyr_group_by(Species) %>%
+        group_by(Species) %>%
         duckplyr_filter(1:n())
     ))
     (expect_error(
@@ -434,12 +434,12 @@ test_that("duckplyr_filter() gives useful error messages", {
     # wrong size
     (expect_error(
       iris %>%
-        duckplyr_group_by(Species) %>%
+        group_by(Species) %>%
         duckplyr_filter(c(TRUE, FALSE))
     ))
     (expect_error(
                     iris %>%
-                      duckplyr_rowwise(Species) %>%
+                      rowwise(Species) %>%
                       duckplyr_filter(c(TRUE, FALSE))
     ))
     (expect_error(
@@ -450,12 +450,12 @@ test_that("duckplyr_filter() gives useful error messages", {
     # wrong size in column
     (expect_error(
                     iris %>%
-                      duckplyr_group_by(Species) %>%
+                      group_by(Species) %>%
                       duckplyr_filter(data.frame(c(TRUE, FALSE)))
     ))
     (expect_error(
                     iris %>%
-                      duckplyr_rowwise() %>%
+                      rowwise() %>%
                       duckplyr_filter(data.frame(c(TRUE, FALSE)))
     ))
     (expect_error(
@@ -470,7 +470,7 @@ test_that("duckplyr_filter() gives useful error messages", {
     # wrong type in column
     (expect_error(
                     iris %>%
-                      duckplyr_group_by(Species) %>%
+                      group_by(Species) %>%
                       duckplyr_filter(data.frame(Sepal.Length > 3, 1:n()))
     ))
     (expect_error(
@@ -484,7 +484,7 @@ test_that("duckplyr_filter() gives useful error messages", {
     ))
     (expect_error(
                     mtcars %>%
-                      duckplyr_group_by(cyl) %>%
+                      group_by(cyl) %>%
                       duckplyr_filter(`_x`)
     ))
 
@@ -519,7 +519,7 @@ test_that("duckplyr_filter() gives useful error messages", {
 })
 
 test_that("filter preserves grouping", {
-  gf <- duckplyr_group_by(tibble(g = c(1, 1, 1, 2, 2), x = 1:5), g)
+  gf <- group_by(tibble(g = c(1, 1, 1, 2, 2), x = 1:5), g)
 
   i <- count_regroups(out <- duckplyr_filter(gf, x %in% c(3,4)))
   expect_equal(i, 0L)
@@ -595,7 +595,7 @@ test_that("filter keeps zero length groups", {
     g = c(1, 1, 2, 2),
     x = c(1, 2, 1, 4)
   )
-  df <- duckplyr_group_by(df, e, f, g, .drop = FALSE)
+  df <- group_by(df, e, f, g, .drop = FALSE)
 
   expect_equal(duckplyr_group_size(duckplyr_filter(df, f == 1)), c(2, 0, 0) )
 })
@@ -607,7 +607,7 @@ test_that("filtering retains labels for zero length groups", {
     g = c(1, 1, 2, 2),
     x = c(1, 2, 1, 4)
   )
-  df <- duckplyr_group_by(df, e, f, g, .drop = FALSE)
+  df <- group_by(df, e, f, g, .drop = FALSE)
 
   expect_equal(
     duckplyr_ungroup(duckplyr_count(duckplyr_filter(df, f == 1))),
@@ -663,7 +663,7 @@ test_that("can't use `.by` with `.preserve`", {
 
 test_that("catches `.by` with grouped-df", {
   df <- tibble(x = 1)
-  gdf <- duckplyr_group_by(df, x)
+  gdf <- group_by(df, x)
 
   expect_snapshot(error = TRUE, {
     duckplyr_filter(gdf, .by = x)
@@ -672,7 +672,7 @@ test_that("catches `.by` with grouped-df", {
 
 test_that("catches `.by` with rowwise-df", {
   df <- tibble(x = 1)
-  rdf <- duckplyr_rowwise(df)
+  rdf <- rowwise(df)
 
   expect_snapshot(error = TRUE, {
     duckplyr_filter(rdf, .by = x)

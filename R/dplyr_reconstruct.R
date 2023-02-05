@@ -7,7 +7,10 @@ dplyr_reconstruct <- function(data, template) {
 
 #' @export
 dplyr_reconstruct.duckplyr_df <- function(data, template) {
-  .Call(copy_df_attribs, data, template)
+  if (inherits(data, c("grouped_df", "rowwise_df"))) {
+    return(data)
+  }
+  .Call(duckplyr:::copy_df_attribs, data, template)
   return(data)
 
   # dplyr forward

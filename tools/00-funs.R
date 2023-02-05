@@ -18,6 +18,8 @@ df_methods <-
   filter(!(name %in% c(
     "dplyr_col_modify",
     "dplyr_row_slice",
+    "group_by",
+    "rowwise",
     "same_src" # data frames can be copied into duck-frames with zero cost
   ))) %>%
   # methods we don't need to implement but can test

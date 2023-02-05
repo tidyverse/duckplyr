@@ -46,21 +46,21 @@ test_that("distinct doesn't duplicate columns", {
   df <- tibble(a = 1:3, b = 4:6)
 
   expect_named(df %>% duckplyr_distinct(a, a), "a")
-  expect_named(df %>% duckplyr_group_by(a) %>% duckplyr_distinct(a), "a")
+  expect_named(df %>% group_by(a) %>% duckplyr_distinct(a), "a")
 })
 
 test_that("grouped distinct always includes group cols", {
   df <- tibble(g = c(1, 2), x = c(1, 2))
 
-  out <- df %>% duckplyr_group_by(g) %>% duckplyr_distinct(x)
+  out <- df %>% group_by(g) %>% duckplyr_distinct(x)
   expect_named(out, c("g", "x"))
 })
 
 test_that("empty grouped distinct equivalent to empty ungrouped", {
   df <- tibble(g = c(1, 2), x = c(1, 2))
 
-  df1 <- df %>% duckplyr_distinct() %>% duckplyr_group_by(g)
-  df2 <- df %>% duckplyr_group_by(g) %>% duckplyr_distinct()
+  df1 <- df %>% duckplyr_distinct() %>% group_by(g)
+  df2 <- df %>% group_by(g) %>% duckplyr_distinct()
 
   expect_equal(df1, df2)
 })
@@ -109,8 +109,8 @@ test_that("distinct respects order of the specified variables (#3195, #6156)",{
 
 test_that("distinct adds grouping variables to front if missing",{
   d <- data.frame(x = 1:2, y = 3:4)
-  expect_named(duckplyr_distinct(duckplyr_group_by(d, y), x), c("y", "x"))
-  expect_named(duckplyr_distinct(duckplyr_group_by(d, y), x, y), c("x", "y"))
+  expect_named(duckplyr_distinct(group_by(d, y), x), c("y", "x"))
+  expect_named(duckplyr_distinct(group_by(d, y), x, y), c("x", "y"))
 })
 
 test_that("duckplyr_distinct() understands both NA variants (#4516)", {
@@ -147,7 +147,7 @@ test_that("duckplyr_distinct() handles auto splicing", {
 })
 
 test_that("distinct preserves grouping", {
-  gf <- duckplyr_group_by(tibble(x = c(1, 1, 2, 2), y = x), x)
+  gf <- group_by(tibble(x = c(1, 1, 2, 2), y = x), x)
 
   i <- count_regroups(out <- duckplyr_distinct(gf))
   expect_equal(i, 0)
