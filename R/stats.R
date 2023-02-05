@@ -7,5 +7,6 @@ stats_show <- function() {
     "️: ",
     format(c(stats$attempts, stats$fallback, stats$attempts - stats$fallback))
   ))
-  writeLines(sort(stats$calls))
+  calls <- sort(gsub("[.]duckplyr_df", "", stats$calls))
+  writeLines(paste(calls, collapse = ", "))
 }
