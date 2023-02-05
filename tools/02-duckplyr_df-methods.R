@@ -16,7 +16,16 @@ func_decl <- function(name, formals, is_tbl_return) {
     summarise = c(".by"),
   )
 
-  no_reconstruct <- c("count", "summarise", "reframe", "rename", "relocate", "transmute")
+  no_reconstruct <- c(
+    "count",
+    "reframe",
+    "relocate",
+    "rename",
+    "slice",
+    "summarise",
+    "transmute",
+    NULL
+  )
 
   data_arg <- sym(names(formals)[[1]])
 
