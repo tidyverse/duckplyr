@@ -54,7 +54,7 @@ duckdb_rel_from_df <- function(df) {
   # FIXME: Move to duckdb:::rel_from_df()
 
   if (!is_duckplyr_df(df)) {
-    stop("Need duckplyr_df.")
+    df <- as_duckplyr_df(df)
   }
 
   if (is.character(.row_names_info(df, 0L))) {
