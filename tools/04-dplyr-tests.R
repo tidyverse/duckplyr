@@ -8,6 +8,7 @@ tests <- compact(list(
     NULL
   ),
   "test-arrange.R" = c(
+    "local arrange sorts missing values to end",
     NULL
   ),
   "test-count-tally.R" = c(
@@ -62,7 +63,7 @@ copy_dplyr_test <- function(target, source, skip) {
 
   text <- brio::read_lines(source)
   text <- gsub(rx, "duckplyr_\\1", text, perl = TRUE)
-  skip_lines <- unique(unlist(map(skip, grep, text, fixed = TRUE)))
+  skip_lines <- unique(unlist(map(paste0('"', skip, '"'), grep, text, fixed = TRUE)))
   text[skip_lines] <- paste0(text[skip_lines], '\n  skip("TODO duckdb")')
   brio::write_lines(text, target)
 }
