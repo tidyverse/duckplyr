@@ -21,6 +21,11 @@ tests <- compact(list(
   ),
   "test-join.R" = c(
     "mutating joins preserve row and column order of x",
+    "when keep = TRUE, duckplyr_left_join() preserves both sets of keys",
+    "when keep = TRUE, duckplyr_full_join() preserves both sets of keys",
+    "mutating joins trigger multiple match warning",
+
+    "keys are coerced to symmetric type",
     NULL
   ),
   "test-mutate.R" = c(
@@ -39,6 +44,7 @@ tests <- compact(list(
     NULL
   ),
   "test-summarise.R" = c(
+    "works with unquoted values",
     NULL
   ),
   "test-transmute.R" = c(

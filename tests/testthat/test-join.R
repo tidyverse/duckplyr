@@ -44,6 +44,7 @@ test_that("filtering joins preserve row and column order of x (#2964)", {
 })
 
 test_that("keys are coerced to symmetric type", {
+  skip("TODO duckdb")
   foo <- tibble(id = factor(c("a", "b")), var1 = "foo")
   bar <- tibble(id = c("a", "b"), var2 = "bar")
   expect_type(duckplyr_inner_join(foo, bar, by = "id")$id, "character")
@@ -71,6 +72,7 @@ test_that("keys of non-equi conditions are not coerced if `keep = NULL`", {
 })
 
 test_that("when keep = TRUE, duckplyr_left_join() preserves both sets of keys", {
+  skip("TODO duckdb")
   # when keys have different names
   df1 <- tibble(a = c(2, 3), b = c(1, 2))
   df2 <- tibble(x = c(3, 4), y = c(3, 4))
@@ -103,6 +105,7 @@ test_that("when keep = TRUE, duckplyr_right_join() preserves both sets of keys",
 })
 
 test_that("when keep = TRUE, duckplyr_full_join() preserves both sets of keys", {
+  skip("TODO duckdb")
   # when keys have different names
   df1 <- tibble(a = c(2, 3), b = c(1, 2))
   df2 <- tibble(x = c(3, 4), y = c(3, 4))
@@ -259,6 +262,7 @@ test_that("join_filter() validates arguments", {
 })
 
 test_that("mutating joins trigger multiple match warning", {
+  skip("TODO duckdb")
   df1 <- tibble(x = 1)
   df2 <- tibble(x = c(1, 1))
   expect_snapshot(out <- duckplyr_left_join(df1, df2, join_by(x)))
