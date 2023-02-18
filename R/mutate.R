@@ -71,7 +71,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
   return(out)
 
   # dplyr implementation
-  keep <- arg_match(.keep)
+  keep <- arg_match0(.keep, values = c("all", "used", "unused", "none"))
 
   by <- compute_by({{ .by }}, .data, by_arg = ".by", data_arg = ".data")
 
