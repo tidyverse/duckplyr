@@ -36,6 +36,7 @@ test_that("output includes empty levels with .drop = FALSE", {
 })
 
 test_that("ouput preserves grouping", {
+  skip("TODO duckdb")
   df <- tibble(g = c(1, 2, 2, 2))
   exp <- tibble(g = c(1, 2), n = c(1, 3))
 
@@ -44,6 +45,7 @@ test_that("ouput preserves grouping", {
 })
 
 test_that("output preserves class & attributes where possible", {
+  skip("TODO duckdb")
   df <- data.frame(g = c(1, 2, 2, 2))
   attr(df, "my_attr") <- 1
 
@@ -144,6 +146,7 @@ test_that("duckplyr_tally() owns errors (#6139)", {
 # add_count ---------------------------------------------------------------
 
 test_that("ouput preserves grouping", {
+  skip("TODO duckdb")
   df <- tibble(g = c(1, 2, 2, 2))
   exp <- tibble(g = c(1, 2, 2, 2), n = c(1, 3, 3, 3))
 

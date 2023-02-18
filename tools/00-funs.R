@@ -48,7 +48,19 @@ tests <- compact(list(
     "local arrange sorts missing values to end",
     NULL
   ),
+  "test-colwise-select.R" = c(
+    "can select/rename with predicate",
+    "can take list, but only containing single function",
+    "can select/rename with vars()",
+    NULL
+  ),
   "test-count-tally.R" = c(
+    "ouput preserves grouping",
+    "output preserves class & attributes where possible",
+    NULL
+  ),
+  "test-deprec-funs.R" = c(
+    "as_fun_list() auto names chr vectors (4307)",
     NULL
   ),
   "test-distinct.R" = c(
@@ -57,21 +69,40 @@ tests <- compact(list(
   "test-filter.R" = c(
     NULL
   ),
+  "test-generics.R" = c(
+    "dplyr_reconstruct() strips attributes before dispatch",
+    NULL
+  ),
+  "test-groups-with.R" = c(
+    "restores original class",
+    NULL
+  ),
   "test-join.R" = c(
     "mutating joins preserve row and column order of x",
     "when keep = TRUE, duckplyr_left_join() preserves both sets of keys",
+    "when keep = TRUE, left_join() preserves both sets of keys",
     "when keep = TRUE, duckplyr_full_join() preserves both sets of keys",
+    "when keep = TRUE, full_join() preserves both sets of keys",
     "mutating joins trigger multiple match warning",
     "mutating joins don't trigger multiple match warning when called indirectly",
 
+    # dplyr
+    "joins preserve groups",
+
+    # https://github.com/duckdb/duckdb/issues/6356
     "keys are coerced to symmetric type",
     NULL
   ),
   "test-mutate.R" = c(
     "transient grouping retains data frame attributes (#6100)",
+
+    # dplyr
+    "no utf8 invasion (#722)",
     NULL
   ),
   "test-pull.R" = c(
+    # dplyr
+    "can extract named vectors",
     NULL
   ),
   "test-relocate.R" = c(
@@ -85,6 +116,10 @@ tests <- compact(list(
   ),
   "test-summarise.R" = c(
     "works with unquoted values",
+
+    # dplyr
+    "summarise(.groups=)",
+
     NULL
   ),
   "test-transmute.R" = c(

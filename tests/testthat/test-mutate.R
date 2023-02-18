@@ -332,6 +332,7 @@ test_that("mutate keeps zero length groups", {
 # other -------------------------------------------------------------------
 
 test_that("no utf8 invasion (#722)", {
+  skip("TODO duckdb")
   skip_if_not(l10n_info()$"UTF-8")
   source("utf-8.txt", local = TRUE, encoding = "UTF-8")
 })

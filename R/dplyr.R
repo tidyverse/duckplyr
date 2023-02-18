@@ -1,3 +1,4 @@
+as_fun_list <- dplyr:::as_fun_list
 as_join_by <- dplyr:::as_join_by
 check_filter <- dplyr:::check_filter
 check_keep <- dplyr:::check_keep

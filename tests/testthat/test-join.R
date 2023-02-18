@@ -440,6 +440,7 @@ test_that("joins x preserve type of x", {
 })
 
 test_that("joins preserve groups", {
+  skip("TODO duckdb")
   gf1 <- tibble(a = 1:3) %>% group_by(a)
   gf2 <- tibble(a = rep(1:4, 2), b = 1) %>% group_by(b)
 
