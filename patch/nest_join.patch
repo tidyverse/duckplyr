@@ -1,5 +1,5 @@
 diff --git b/R/nest_join.R a/R/nest_join.R
-index d1729a6..af89734 100644
+index ecc4c74..af89734 100644
 --- b/R/nest_join.R
 +++ a/R/nest_join.R
 @@ -2,6 +2,16 @@
@@ -26,7 +26,7 @@ index d1729a6..af89734 100644
 +  y_df <- y
 +  class(y_df) <- setdiff(class(y_df), "duckplyr_df")
    nest_join <- dplyr:::nest_join.data.frame
--  out <- nest_join(x_df, y, by, copy, keep, name, ..., na_matches = na_matches, unmatched = unmatched)
+-  out <- nest_join(x_df, {{ y }}, by, copy, keep, name, ..., na_matches = na_matches, unmatched = unmatched)
 +  out <- nest_join(x_df, y_df, by, copy, keep, name, ..., na_matches = na_matches, unmatched = unmatched)
    out <- dplyr_reconstruct(out, x)
    return(out)

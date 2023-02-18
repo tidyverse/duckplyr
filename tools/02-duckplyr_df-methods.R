@@ -6,6 +6,7 @@ func_decl <- function(name, formals, is_tbl_return) {
     count = c("wt"),
     filter = c(".by"),
     mutate = c(".by", ".before", ".after"),
+    nest_join = c("y"),
     pull = c("var", "name"),
     reframe = c(".by"),
     relocate = c(".before", ".after"),
