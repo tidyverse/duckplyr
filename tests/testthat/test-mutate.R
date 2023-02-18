@@ -761,3 +761,19 @@ test_that("duckplyr_mutate() errors refer to expressions if not named", {
     (expect_error(duckplyr_mutate(group_by(mtcars, cyl), 1:3)))
   })
 })
+
+test_that("duckplyr_mutate() correctly auto-names expressions", {
+  df <- tibble(a = 1L)
+
+  expect_identical(duckplyr_mutate(df, -a), tibble(a = 1L, "-a" = -1L))
+
+  foo <- "foobar"
+  expect_identical(duckplyr_mutate(df, foo), tibble(a = 1L, foo = "foobar"))
+
+  a <- 2L
+  expect_identical(duckplyr_mutate(df, a), tibble(a = 1L))
+
+  df <- tibble(a = 1L, "a + 1" = 5L)
+  a <- 2L
+  expect_identical(duckplyr_mutate(df, a + 1), tibble(a = 1L, "a + 1" = 2))
+})
