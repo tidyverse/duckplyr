@@ -1,8 +1,8 @@
 diff --git b/R/collect.R a/R/collect.R
-index aabc60b..eac4dec 100644
+index e7ae0a7..eac4dec 100644
 --- b/R/collect.R
 +++ a/R/collect.R
-@@ -2,23 +2,8 @@
+@@ -2,20 +2,8 @@
  #' @importFrom dplyr collect
  #' @export
  collect.duckplyr_df <- function(x, ...) {
@@ -15,11 +15,8 @@ index aabc60b..eac4dec 100644
 -  )
 -
 -  # dplyr forward
--  x_df <- x
--  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
 -  collect <- dplyr:::collect.data.frame
--  out <- collect(x_df, ...)
--  out <- dplyr_reconstruct(out, x)
+-  out <- collect(x, ...)
 -  return(out)
 -
 -  # dplyr implementation

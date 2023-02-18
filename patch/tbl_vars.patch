@@ -1,8 +1,8 @@
 diff --git b/R/tbl_vars.R a/R/tbl_vars.R
-index 52e7ebd..6e9cc89 100644
+index d3642f6..6e9cc89 100644
 --- b/R/tbl_vars.R
 +++ a/R/tbl_vars.R
-@@ -3,20 +3,15 @@
+@@ -3,18 +3,15 @@
  #' @export
  tbl_vars.duckplyr_df <- function(x) {
    # Our implementation
@@ -20,10 +20,8 @@ index 52e7ebd..6e9cc89 100644
    )
  
 -  # dplyr forward
--  x_df <- x
--  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
 -  tbl_vars <- dplyr:::tbl_vars.data.frame
--  out <- tbl_vars(x_df)
+-  out <- tbl_vars(x)
 -  return(out)
 -
    # dplyr implementation

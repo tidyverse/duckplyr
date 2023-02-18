@@ -1,5 +1,5 @@
 diff --git b/R/left_join.R a/R/left_join.R
-index 4112854..6f13b56 100644
+index b69e741..973cc09 100644
 --- b/R/left_join.R
 +++ a/R/left_join.R
 @@ -2,10 +2,16 @@
@@ -20,7 +20,7 @@ index 4112854..6f13b56 100644
        return(out)
      }
    )
-@@ -36,6 +42,12 @@ left_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
+@@ -33,6 +39,12 @@ left_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
  }
  
  duckplyr_left_join <- function(x, y, ...) {
