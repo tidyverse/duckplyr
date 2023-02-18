@@ -12,10 +12,8 @@ union.duckplyr_df <- function(x, y, ...) {
 
   # dplyr forward
   x_df <- x
-  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   union <- dplyr:::union.data.frame
   out <- union(x_df, y, ...)
-  out <- dplyr_reconstruct(out, x)
   return(out)
 
   # dplyr implementation

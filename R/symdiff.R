@@ -12,10 +12,8 @@ symdiff.duckplyr_df <- function(x, y, ...) {
 
   # dplyr forward
   x_df <- x
-  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   symdiff <- dplyr:::symdiff.data.frame
   out <- symdiff(x_df, y, ...)
-  out <- dplyr_reconstruct(out, x)
   return(out)
 
   # dplyr implementation

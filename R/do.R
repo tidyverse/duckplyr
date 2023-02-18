@@ -12,10 +12,8 @@ do.duckplyr_df <- function(.data, ...) {
 
   # dplyr forward
   x_df <- .data
-  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   do <- dplyr:::do.data.frame
   out <- do(x_df, ...)
-  out <- dplyr_reconstruct(out, .data)
   return(out)
 
   # dplyr implementation

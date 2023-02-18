@@ -12,10 +12,8 @@ cross_join.duckplyr_df <- function(x, y, ..., copy = FALSE, suffix = c(".x", ".y
 
   # dplyr forward
   x_df <- x
-  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   cross_join <- dplyr:::cross_join.data.frame
   out <- cross_join(x_df, y, ..., copy = copy, suffix = suffix)
-  out <- dplyr_reconstruct(out, x)
   return(out)
 
   # dplyr implementation

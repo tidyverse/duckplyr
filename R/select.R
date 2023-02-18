@@ -26,10 +26,8 @@ select.duckplyr_df <- function(.data, ...) {
 
   # dplyr forward
   x_df <- .data
-  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   select <- dplyr:::select.data.frame
   out <- select(x_df, ...)
-  out <- dplyr_reconstruct(out, .data)
   return(out)
 
   # dplyr implementation

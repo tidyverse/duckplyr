@@ -12,10 +12,8 @@ anti_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches
 
   # dplyr forward
   x_df <- x
-  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   anti_join <- dplyr:::anti_join.data.frame
   out <- anti_join(x_df, y, by, copy, ..., na_matches = na_matches)
-  out <- dplyr_reconstruct(out, x)
   return(out)
 
   # dplyr implementation

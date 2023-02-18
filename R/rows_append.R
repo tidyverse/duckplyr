@@ -12,10 +12,8 @@ rows_append.duckplyr_df <- function(x, y, ..., copy = FALSE, in_place = FALSE) {
 
   # dplyr forward
   x_df <- x
-  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   rows_append <- dplyr:::rows_append.data.frame
   out <- rows_append(x_df, y, ..., copy = copy, in_place = in_place)
-  out <- dplyr_reconstruct(out, x)
   return(out)
 
   # dplyr implementation

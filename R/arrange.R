@@ -29,10 +29,8 @@ arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
 
   # dplyr forward
   x_df <- .data
-  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   arrange <- dplyr:::arrange.data.frame
   out <- arrange(x_df, ..., .by_group = .by_group, .locale = .locale)
-  out <- dplyr_reconstruct(out, .data)
   return(out)
 
   # dplyr implementation

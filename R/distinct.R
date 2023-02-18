@@ -26,10 +26,8 @@ distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
 
   # dplyr forward
   x_df <- .data
-  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   distinct <- dplyr:::distinct.data.frame
   out <- distinct(x_df, ..., .keep_all = .keep_all)
-  out <- dplyr_reconstruct(out, .data)
   return(out)
 
   # dplyr implementation

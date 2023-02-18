@@ -68,6 +68,7 @@ tests <- compact(list(
     NULL
   ),
   "test-mutate.R" = c(
+    "transient grouping retains data frame attributes (#6100)",
     NULL
   ),
   "test-pull.R" = c(

@@ -18,10 +18,8 @@ full_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
 
   # dplyr forward
   x_df <- x
-  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   full_join <- dplyr:::full_join.data.frame
   out <- full_join(x_df, y, by, copy, suffix, ..., keep = keep, na_matches = na_matches, multiple = multiple)
-  out <- dplyr_reconstruct(out, x)
   return(out)
 
   # dplyr implementation

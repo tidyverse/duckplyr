@@ -21,10 +21,8 @@ rename.duckplyr_df <- function(.data, ...) {
 
   # dplyr forward
   x_df <- .data
-  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   rename <- dplyr:::rename.data.frame
   out <- rename(x_df, ...)
-  class(out) <- class(.data)
   return(out)
 
   # dplyr implementation
