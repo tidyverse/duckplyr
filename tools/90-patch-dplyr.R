@@ -25,3 +25,24 @@ duckplyr_texts <- str_replace_all(duckplyr_texts, "dplyr:::([a-z_]+)[.]data[.]fr
 duckplyr_texts <- str_replace_all(duckplyr_texts, fixed(".duckplyr_df <- function("), ".data.frame <- function(")
 # Write as single file
 brio::write_lines(duckplyr_texts, "../dplyr/R/zzz-duckplyr.R")
+
+patch_dplyr_test <- function(file) {
+  base <- basename(file)
+  if (!(base %in% names(tests))) {
+    return()
+  }
+
+  skip <- tests[[base]]
+  if (length(skip) == 0) {
+    return()
+  }
+
+  text <- brio::read_lines(file)
+  text <- text[grep("TODO duckdb", text, invert = TRUE, fixed = TRUE)]
+  skip_lines <- unique(unlist(map(paste0('"', skip, '"'), grep, text, fixed = TRUE)))
+  text[skip_lines] <- paste0(text[skip_lines], '\n  skip("TODO duckdb")')
+  brio::write_lines(text, file)
+}
+
+dplyr_test_files <- fs::dir_ls("../dplyr/tests/testthat/", type = "file", glob = "*.R")
+walk(dplyr_test_files, patch_dplyr_test)

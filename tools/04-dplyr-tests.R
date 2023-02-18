@@ -1,59 +1,5 @@
 source("tools/00-funs.R", echo = TRUE)
 
-tests <- compact(list(
-  "helper-s3.R" = c(
-    NULL
-  ),
-  "helper-encoding.R" = c(
-    NULL
-  ),
-  "test-arrange.R" = c(
-    "local arrange sorts missing values to end",
-    NULL
-  ),
-  "test-count-tally.R" = c(
-    NULL
-  ),
-  "test-distinct.R" = c(
-    NULL
-  ),
-  "test-filter.R" = c(
-    NULL
-  ),
-  "test-join.R" = c(
-    "mutating joins preserve row and column order of x",
-    "when keep = TRUE, duckplyr_left_join() preserves both sets of keys",
-    "when keep = TRUE, duckplyr_full_join() preserves both sets of keys",
-    "mutating joins trigger multiple match warning",
-
-    "keys are coerced to symmetric type",
-    NULL
-  ),
-  "test-mutate.R" = c(
-    NULL
-  ),
-  "test-pull.R" = c(
-    NULL
-  ),
-  "test-relocate.R" = c(
-    NULL
-  ),
-  "test-rename.R" = c(
-    NULL
-  ),
-  "test-select.R" = c(
-    NULL
-  ),
-  "test-summarise.R" = c(
-    "works with unquoted values",
-    NULL
-  ),
-  "test-transmute.R" = c(
-    NULL
-  ),
-  NULL
-))
-
 copy_dplyr_test <- function(target, source, skip) {
   rx <- paste0(
     "((?<![a-z_])(?:",
