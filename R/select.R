@@ -25,9 +25,8 @@ select.duckplyr_df <- function(.data, ...) {
 
 
   # dplyr forward
-  x_df <- .data
   select <- dplyr:::select.data.frame
-  out <- select(x_df, ...)
+  out <- select(.data, ...)
   return(out)
 
   # dplyr implementation

@@ -11,9 +11,8 @@ slice.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
   )
 
   # dplyr forward
-  x_df <- .data
   slice <- dplyr:::slice.data.frame
-  out <- slice(x_df, ..., .by = {{ .by }}, .preserve = .preserve)
+  out <- slice(.data, ..., .by = {{ .by }}, .preserve = .preserve)
   return(out)
 
   # dplyr implementation

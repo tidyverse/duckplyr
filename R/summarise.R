@@ -21,9 +21,8 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
   )
 
   # dplyr forward
-  x_df <- .data
   summarise <- dplyr:::summarise.data.frame
-  out <- summarise(x_df, ..., .by = {{ .by }}, .groups = .groups)
+  out <- summarise(.data, ..., .by = {{ .by }}, .groups = .groups)
   return(out)
 
   # dplyr implementation

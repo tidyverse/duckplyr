@@ -11,9 +11,8 @@ rows_upsert.duckplyr_df <- function(x, y, by = NULL, ..., copy = FALSE, in_place
   )
 
   # dplyr forward
-  x_df <- x
   rows_upsert <- dplyr:::rows_upsert.data.frame
-  out <- rows_upsert(x_df, y, by, ..., copy = copy, in_place = in_place)
+  out <- rows_upsert(x, y, by, ..., copy = copy, in_place = in_place)
   return(out)
 
   # dplyr implementation

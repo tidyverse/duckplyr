@@ -11,9 +11,8 @@ nest_by.duckplyr_df <- function(.data, ..., .key = "data", .keep = FALSE) {
   )
 
   # dplyr forward
-  x_df <- .data
   nest_by <- dplyr:::nest_by.data.frame
-  out <- nest_by(x_df, ..., .key = .key, .keep = .keep)
+  out <- nest_by(.data, ..., .key = .key, .keep = .keep)
   return(out)
 
   # dplyr implementation

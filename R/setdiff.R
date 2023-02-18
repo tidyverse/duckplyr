@@ -11,9 +11,8 @@ setdiff.duckplyr_df <- function(x, y, ...) {
   )
 
   # dplyr forward
-  x_df <- x
   setdiff <- dplyr:::setdiff.data.frame
-  out <- setdiff(x_df, y, ...)
+  out <- setdiff(x, y, ...)
   return(out)
 
   # dplyr implementation

@@ -63,9 +63,8 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
   )
 
   # dplyr forward
-  x_df <- .data
   mutate <- dplyr:::mutate.data.frame
-  out <- mutate(x_df, ..., .by = {{ .by }}, .keep = .keep, .before = {{ .before }}, .after = {{ .after }})
+  out <- mutate(.data, ..., .by = {{ .by }}, .keep = .keep, .before = {{ .before }}, .after = {{ .after }})
   return(out)
 
   # dplyr implementation

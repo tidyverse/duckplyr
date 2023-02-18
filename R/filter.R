@@ -24,9 +24,8 @@ filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
   )
 
   # dplyr forward
-  x_df <- .data
   filter <- dplyr:::filter.data.frame
-  out <- filter(x_df, ..., .by = {{ .by }}, .preserve = .preserve)
+  out <- filter(.data, ..., .by = {{ .by }}, .preserve = .preserve)
   return(out)
 
   # dplyr implementation

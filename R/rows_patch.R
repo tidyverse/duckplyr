@@ -11,9 +11,8 @@ rows_patch.duckplyr_df <- function(x, y, by = NULL, ..., unmatched = c("error", 
   )
 
   # dplyr forward
-  x_df <- x
   rows_patch <- dplyr:::rows_patch.data.frame
-  out <- rows_patch(x_df, y, by, ..., unmatched = unmatched, copy = copy, in_place = in_place)
+  out <- rows_patch(x, y, by, ..., unmatched = unmatched, copy = copy, in_place = in_place)
   return(out)
 
   # dplyr implementation

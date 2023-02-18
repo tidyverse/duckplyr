@@ -20,9 +20,8 @@ rename.duckplyr_df <- function(.data, ...) {
   )
 
   # dplyr forward
-  x_df <- .data
   rename <- dplyr:::rename.data.frame
-  out <- rename(x_df, ...)
+  out <- rename(.data, ...)
   return(out)
 
   # dplyr implementation

@@ -11,9 +11,8 @@ intersect.duckplyr_df <- function(x, y, ...) {
   )
 
   # dplyr forward
-  x_df <- x
   intersect <- dplyr:::intersect.data.frame
-  out <- intersect(x_df, y, ...)
+  out <- intersect(x, y, ...)
   return(out)
 
   # dplyr implementation

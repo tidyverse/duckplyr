@@ -17,9 +17,8 @@ inner_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x
   )
 
   # dplyr forward
-  x_df <- x
   inner_join <- dplyr:::inner_join.data.frame
-  out <- inner_join(x_df, y, by, copy, suffix, ..., keep = keep, na_matches = na_matches, multiple = multiple, unmatched = unmatched)
+  out <- inner_join(x, y, by, copy, suffix, ..., keep = keep, na_matches = na_matches, multiple = multiple, unmatched = unmatched)
   return(out)
 
   # dplyr implementation

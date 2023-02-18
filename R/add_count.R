@@ -11,9 +11,8 @@ add_count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, 
   )
 
   # dplyr forward
-  x_df <- x
   add_count <- dplyr:::add_count.data.frame
-  out <- add_count(x_df, ..., wt = {{ wt }}, sort = sort, name = name, .drop = .drop)
+  out <- add_count(x, ..., wt = {{ wt }}, sort = sort, name = name, .drop = .drop)
   return(out)
 
   # dplyr implementation

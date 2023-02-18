@@ -11,9 +11,8 @@ compute.duckplyr_df <- function(x, ...) {
   )
 
   # dplyr forward
-  x_df <- x
   compute <- dplyr:::compute.data.frame
-  out <- compute(x_df, ...)
+  out <- compute(x, ...)
   return(out)
 
   # dplyr implementation

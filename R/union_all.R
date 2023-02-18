@@ -11,9 +11,8 @@ union_all.duckplyr_df <- function(x, y, ...) {
   )
 
   # dplyr forward
-  x_df <- x
   union_all <- dplyr:::union_all.data.frame
-  out <- union_all(x_df, y, ...)
+  out <- union_all(x, y, ...)
   return(out)
 
   # dplyr implementation

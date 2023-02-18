@@ -11,9 +11,8 @@ sample_frac.duckplyr_df <- function(tbl, size = 1, replace = FALSE, weight = NUL
   )
 
   # dplyr forward
-  x_df <- tbl
   sample_frac <- dplyr:::sample_frac.data.frame
-  out <- sample_frac(x_df, {{ size }}, replace, {{ weight }}, .env, ...)
+  out <- sample_frac(tbl, {{ size }}, replace, {{ weight }}, .env, ...)
   return(out)
 
   # dplyr implementation

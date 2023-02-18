@@ -11,9 +11,8 @@ symdiff.duckplyr_df <- function(x, y, ...) {
   )
 
   # dplyr forward
-  x_df <- x
   symdiff <- dplyr:::symdiff.data.frame
-  out <- symdiff(x_df, y, ...)
+  out <- symdiff(x, y, ...)
   return(out)
 
   # dplyr implementation

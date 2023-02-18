@@ -11,9 +11,8 @@ reframe.duckplyr_df <- function(.data, ..., .by = NULL) {
   )
 
   # dplyr forward
-  x_df <- .data
   reframe <- dplyr:::reframe.data.frame
-  out <- reframe(x_df, ..., .by = {{ .by }})
+  out <- reframe(.data, ..., .by = {{ .by }})
   return(out)
 
   # dplyr implementation

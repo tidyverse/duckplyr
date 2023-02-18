@@ -20,9 +20,8 @@ transmute.duckplyr_df <- function(.data, ...) {
   )
 
   # dplyr forward
-  x_df <- .data
   transmute <- dplyr:::transmute.data.frame
-  out <- transmute(x_df, ...)
+  out <- transmute(.data, ...)
   return(out)
 
   # dplyr implementation

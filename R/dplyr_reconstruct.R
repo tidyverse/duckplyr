@@ -14,9 +14,8 @@ dplyr_reconstruct.duckplyr_df <- function(data, template) {
   return(data)
 
   # dplyr forward
-  x_df <- data
   dplyr_reconstruct <- dplyr:::dplyr_reconstruct.data.frame
-  out <- dplyr_reconstruct(x_df, template)
+  out <- dplyr_reconstruct(data, template)
   return(out)
 
   # dplyr implementation

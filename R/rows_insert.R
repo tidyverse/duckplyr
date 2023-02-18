@@ -11,9 +11,8 @@ rows_insert.duckplyr_df <- function(x, y, by = NULL, ..., conflict = c("error", 
   )
 
   # dplyr forward
-  x_df <- x
   rows_insert <- dplyr:::rows_insert.data.frame
-  out <- rows_insert(x_df, y, by, ..., conflict = conflict, copy = copy, in_place = in_place)
+  out <- rows_insert(x, y, by, ..., conflict = conflict, copy = copy, in_place = in_place)
   return(out)
 
   # dplyr implementation

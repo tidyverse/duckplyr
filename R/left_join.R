@@ -17,9 +17,8 @@ left_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
   )
 
   # dplyr forward
-  x_df <- x
   left_join <- dplyr:::left_join.data.frame
-  out <- left_join(x_df, y, by, copy, suffix, ..., keep = keep, na_matches = na_matches, multiple = multiple, unmatched = unmatched)
+  out <- left_join(x, y, by, copy, suffix, ..., keep = keep, na_matches = na_matches, multiple = multiple, unmatched = unmatched)
   return(out)
 
   # dplyr implementation

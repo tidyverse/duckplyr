@@ -11,9 +11,8 @@ ungroup.duckplyr_df <- function(x, ...) {
   )
 
   # dplyr forward
-  x_df <- x
   ungroup <- dplyr:::ungroup.data.frame
-  out <- ungroup(x_df, ...)
+  out <- ungroup(x, ...)
   return(out)
 
   # dplyr implementation

@@ -25,9 +25,8 @@ distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
   )
 
   # dplyr forward
-  x_df <- .data
   distinct <- dplyr:::distinct.data.frame
-  out <- distinct(x_df, ..., .keep_all = .keep_all)
+  out <- distinct(.data, ..., .keep_all = .keep_all)
   return(out)
 
   # dplyr implementation

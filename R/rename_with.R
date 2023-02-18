@@ -11,9 +11,8 @@ rename_with.duckplyr_df <- function(.data, .fn, .cols = everything(), ...) {
   )
 
   # dplyr forward
-  x_df <- .data
   rename_with <- dplyr:::rename_with.data.frame
-  out <- rename_with(x_df, .fn, {{ .cols }}, ...)
+  out <- rename_with(.data, .fn, {{ .cols }}, ...)
   return(out)
 
   # dplyr implementation

@@ -11,9 +11,8 @@ union.duckplyr_df <- function(x, y, ...) {
   )
 
   # dplyr forward
-  x_df <- x
   union <- dplyr:::union.data.frame
-  out <- union(x_df, y, ...)
+  out <- union(x, y, ...)
   return(out)
 
   # dplyr implementation

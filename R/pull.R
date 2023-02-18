@@ -26,9 +26,8 @@ pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
   )
 
   # dplyr forward
-  x_df <- .data
   pull <- dplyr:::pull.data.frame
-  out <- pull(x_df, {{ var }}, {{ name }}, ...)
+  out <- pull(.data, {{ var }}, {{ name }}, ...)
   return(out)
 
   # dplyr implementation

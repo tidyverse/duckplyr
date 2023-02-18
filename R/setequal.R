@@ -11,9 +11,8 @@ setequal.duckplyr_df <- function(x, y, ...) {
   )
 
   # dplyr forward
-  x_df <- x
   setequal <- dplyr:::setequal.data.frame
-  out <- setequal(x_df, y, ...)
+  out <- setequal(x, y, ...)
   return(out)
 
   # dplyr implementation
