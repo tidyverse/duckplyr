@@ -22,12 +22,20 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
       # FIXME: use fewer projections
       # FIXME: construct out only at the end
       for (i in seq_along(dots)) {
-        new <- names(dots)[[i]]
+        dot <- dots[[i]]
+        quo_data <- attr(dot, "dplyr:::data")
+
+        if (quo_data$is_named) {
+          new <- quo_data$name_given
+        } else {
+          new <- quo_data$name_auto
+        }
+
         names_new <- c(names_new, new)
 
         new_pos <- match(new, names(out), nomatch = length(out) + 1L)
         exprs <- imap(set_names(names(out)), relexpr_reference, rel = NULL)
-        new_expr <- rel_translate(dots[[i]], out, alias = new)
+        new_expr <- rel_translate(dot, out, alias = new)
         exprs[[new_pos]] <- new_expr
         rel <- rel_project(rel, exprs)
         out <- rel_to_df(rel)
