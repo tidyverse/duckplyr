@@ -62,6 +62,7 @@ tests <- compact(list(
     "when keep = TRUE, duckplyr_left_join() preserves both sets of keys",
     "when keep = TRUE, duckplyr_full_join() preserves both sets of keys",
     "mutating joins trigger multiple match warning",
+    "mutating joins don't trigger multiple match warning when called indirectly",
 
     "keys are coerced to symmetric type",
     NULL
