@@ -24,10 +24,3 @@ index 96dd9e3..dca13db 100644
        return(out)
      }
    )
-@@ -34,5 +43,6 @@ duckplyr_rename <- function(.data, ...) {
-     }
-   )
-   out <- rename(.data, ...)
-+  class(out) <- setdiff(class(out), "duckplyr_df")
-   out
- }
