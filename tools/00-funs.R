@@ -37,7 +37,7 @@ df_methods <-
   ))) %>%
   mutate(code = unname(mget(fun, dplyr)))
 
-tests <- compact(list(
+tests <- head(n = -1, list(
   "helper-s3.R" = c(
     NULL
   ),
