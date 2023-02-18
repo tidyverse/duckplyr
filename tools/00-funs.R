@@ -45,7 +45,6 @@ tests <- head(n = -1, list(
     NULL
   ),
   "test-arrange.R" = c(
-    "local arrange sorts missing values to end",
     NULL
   ),
   "test-colwise-select.R" = c(
