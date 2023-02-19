@@ -3,9 +3,31 @@
 #' @export
 intersect.duckplyr_df <- function(x, y, ...) {
   # Our implementation
+  check_dots_empty()
+
+  x_names <- names(x)
+  y_names <- names(y)
+  if (identical(x_names, y_names)) {
+    # Ensure identical() is very cheap
+    y_names <- x_names
+  }
+
   rel_try(
-    "No relational implementation for intersect()" = TRUE,
+    "No duplicate names" = !identical(x_names, y_names) && anyDuplicated(x_names) && anyDuplicated(y_names),
+    "Tables of different width" = length(x_names) != length(y_names),
+    "Name mismatch" = !identical(x_names, y_names) && !all(y_names %in% x_names),
     {
+      x_rel <- duckdb_rel_from_df(x)
+      y_rel <- duckdb_rel_from_df(y)
+      if (!identical(x_names, y_names)) {
+        # FIXME: Select by position
+        exprs <- nexprs_from_loc(x_names, set_names(seq_along(x_names), x_names))
+        y_rel <- rel_project(y_rel, exprs)
+      }
+
+      rel <- duckdb:::rel_set_intersect(x_rel, y_rel)
+      out <- rel_to_df(rel)
+      out <- dplyr_reconstruct(out, x)
       return(out)
     }
   )
