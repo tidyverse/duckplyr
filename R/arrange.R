@@ -15,11 +15,12 @@ arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
     ".locale argument not supported" = !is.null(.locale),
     "dplyr.legacy_locale not supported" = isTRUE(getOption("dplyr.legacy_locale")),
     {
+      # Translate to df before early exit, so that we can bail out for subclasses
+      rel <- duckdb_rel_from_df(.data)
       if (length(dots) == 0) {
         return(.data)
       }
       exprs <- rel_translate_dots(dots, .data)
-      rel <- duckdb_rel_from_df(.data)
       out_rel <- rel_order(rel, exprs)
       out <- rel_to_df(out_rel)
       out <- dplyr_reconstruct(out, .data)
