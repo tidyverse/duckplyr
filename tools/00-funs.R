@@ -48,14 +48,13 @@ tests <- head(n = -1, list(
     NULL
   ),
   "test-colwise-select.R" = c(
-    "can select/rename with predicate",
-    "can take list, but only containing single function",
-    "can select/rename with vars()",
+    # dplyr
+    "can select/rename with predicate", "can take list, but only containing single function", "can select/rename with vars()",
     NULL
   ),
   "test-count-tally.R" = c(
-    "ouput preserves grouping",
-    "output preserves class & attributes where possible",
+    # dplyr
+    "ouput preserves grouping", "output preserves class & attributes where possible",
     NULL
   ),
   "test-deprec-funs.R" = c(
@@ -69,10 +68,12 @@ tests <- head(n = -1, list(
     NULL
   ),
   "test-generics.R" = c(
+    # dplyr
     "dplyr_reconstruct() strips attributes before dispatch",
     NULL
   ),
   "test-groups-with.R" = c(
+    # dplyr
     "restores original class",
     NULL
   ),
@@ -100,8 +101,6 @@ tests <- head(n = -1, list(
     NULL
   ),
   "test-pull.R" = c(
-    # dplyr
-    "can extract named vectors",
     NULL
   ),
   "test-relocate.R" = c(

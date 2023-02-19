@@ -15,7 +15,6 @@ test_that("can extract by name, or positive/negative position", {
 })
 
 test_that("can extract named vectors", {
-  skip("TODO duckdb")
   x <- 1:10
   y <- letters[x]
   df <- tibble(x = x, y = y)

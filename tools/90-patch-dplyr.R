@@ -36,14 +36,13 @@ patch_dplyr_test <- function(file) {
   }
 
   skip <- all_tests[[base]]
-  if (length(skip) == 0) {
-    return()
-  }
 
   text <- brio::read_lines(file)
   text <- text[grep('skip("TODO duckdb")', text, invert = TRUE, fixed = TRUE)]
-  skip_lines <- unique(unlist(map(paste0('"', skip, '"'), grep, text, fixed = TRUE)))
-  text[skip_lines] <- paste0(text[skip_lines], '\n  skip("TODO duckdb")')
+  if (!is.null(skip)) {
+    skip_lines <- unique(unlist(map(paste0('"', skip, '"'), grep, text, fixed = TRUE)))
+    text[skip_lines] <- paste0(text[skip_lines], '\n  skip("TODO duckdb")')
+  }
   brio::write_lines(text, file)
 }
 
