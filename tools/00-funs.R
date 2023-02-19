@@ -27,7 +27,7 @@ df_methods <-
   # methods we don't need to implement but can test
   mutate(skip_impl = name %in% c(
     "collapse", "tally",
-    "slice_min", "slice_max", "slice_head", "slice_tail", "slice_sample"
+    "slice_min", "slice_max", "slice_sample"
   )) %>%
   mutate(is_tbl_return = !(name %in% c(
     # Special case: forward to `NextMethod()`, don't change output
@@ -103,6 +103,9 @@ tests <- head(n = -1, list(
     "x used as basis of output (#3839)",
     # https://github.com/duckdb/duckdb/issues/6369
     "set operations (apart from union_all) remove duplicates",
+    NULL
+  ),
+  "test-slice.R" = c(
     NULL
   ),
   "test-summarise.R" = c(

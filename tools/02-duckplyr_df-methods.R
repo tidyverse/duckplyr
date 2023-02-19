@@ -14,6 +14,8 @@ func_decl <- function(name, formals) {
     sample_frac = c("size", "weight"),
     sample_n = c("size", "weight"),
     slice = c(".by"),
+    slice_head = c("by"),
+    slice_tail = c("by"),
     summarise = c(".by"),
   )
 

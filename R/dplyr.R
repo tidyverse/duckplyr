@@ -12,6 +12,7 @@ dplyr_local_error_call <- dplyr:::dplyr_local_error_call
 dplyr_quosures <- dplyr:::dplyr_quosures
 eval_relocate <- dplyr:::eval_relocate
 eval_select_by <- dplyr:::eval_select_by
+get_slice_size <- dplyr:::get_slice_size
 group_by_drop_default <- dplyr:::group_by_drop_default
 is_compatible <- dplyr:::is_compatible
 is_cross_by <- dplyr:::is_cross_by
