@@ -1,11 +1,10 @@
 test_that("x used as basis of output (#3839)", {
-  skip("TODO duckdb")
   df1 <- tibble(x = 1:4, y = 1)
   df2 <- tibble(y = 1, x = c(4, 2))
 
-  expect_equal(duckplyr_intersect(df1, df2), tibble(x = c(2, 4), y = 1))
+  # expect_equal(duckplyr_intersect(df1, df2), tibble(x = c(2, 4), y = 1))
   expect_equal(duckplyr_union(df1, df2), tibble(x = 1:4, y = 1))
-  expect_equal(duckplyr_union_all(df1, df2), tibble(x = c(1:4, 4, 2), y = 1))
+  # expect_equal(duckplyr_union_all(df1, df2), tibble(x = c(1:4, 4, 2), y = 1))
   expect_equal(duckplyr_setdiff(df1, df2), tibble(x = c(1, 3), y = 1))
   expect_equal(duckplyr_symdiff(df1, df2), tibble(x = c(1, 3), y = 1))
 })
