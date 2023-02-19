@@ -28,11 +28,14 @@ brio::write_lines(duckplyr_texts, "../dplyr/R/zzz-duckplyr.R")
 
 patch_dplyr_test <- function(file) {
   base <- basename(file)
-  if (!(base %in% names(tests))) {
+
+  all_tests <- c(tests, dplyr_only_tests)
+
+  if (!(base %in% names(all_tests))) {
     return()
   }
 
-  skip <- tests[[base]]
+  skip <- all_tests[[base]]
   if (length(skip) == 0) {
     return()
   }

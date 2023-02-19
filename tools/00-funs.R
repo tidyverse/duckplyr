@@ -92,11 +92,6 @@ tests <- head(n = -1, list(
     "keys are coerced to symmetric type",
     NULL
   ),
-  "test-join-rows.R" = c(
-    # dplyr
-    "join_rows() gives meaningful error/warning message on multiple matches",
-    NULL
-  ),
   "test-mutate.R" = c(
     "transient grouping retains data frame attributes (#6100)",
 
@@ -127,6 +122,15 @@ tests <- head(n = -1, list(
     NULL
   ),
   "test-transmute.R" = c(
+    NULL
+  ),
+  NULL
+))
+
+dplyr_only_tests <- head(n = -1, list(
+  "test-join-rows.R" = c(
+    # dplyr
+    "join_rows() gives meaningful error/warning message on multiple matches",
     NULL
   ),
   NULL
