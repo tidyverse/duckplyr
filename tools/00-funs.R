@@ -99,7 +99,7 @@ tests <- head(n = -1, list(
     NULL
   ),
   "test-sets.R" = c(
-    "summarise(.groups=)",
+    "x used as basis of output (#3839)",
     NULL
   ),
   "test-summarise.R" = c(
