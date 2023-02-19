@@ -98,6 +98,10 @@ tests <- head(n = -1, list(
   "test-select.R" = c(
     NULL
   ),
+  "test-sets.R" = c(
+    "summarise(.groups=)",
+    NULL
+  ),
   "test-summarise.R" = c(
     "works with unquoted values",
     NULL

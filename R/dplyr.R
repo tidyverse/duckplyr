@@ -13,6 +13,7 @@ dplyr_quosures <- dplyr:::dplyr_quosures
 eval_relocate <- dplyr:::eval_relocate
 eval_select_by <- dplyr:::eval_select_by
 group_by_drop_default <- dplyr:::group_by_drop_default
+is_compatible <- dplyr:::is_compatible
 is_cross_by <- dplyr:::is_cross_by
 join_by_common <- dplyr:::join_by_common
 join_cols <- dplyr:::join_cols
