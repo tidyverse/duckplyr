@@ -487,3 +487,9 @@ test_that("non-summary results are deprecated in favor of `duckplyr_reframe()` (
   })
   expect_identical(out$x, c(1L, 1L))
 })
+
+test_that("duckplyr_summarise() correctly auto-names expressions", {
+  df <- tibble(a = 1L)
+
+  expect_equal(duckplyr_summarise(df, sum(-a)), tibble("sum(-a)" = -1))
+})

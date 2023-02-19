@@ -8,6 +8,7 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
     {
       rel <- duckdb_rel_from_df(.data)
       dots <- dplyr_quosures(...)
+      dots <- fix_auto_name(dots)
       aggregates <- rel_translate_dots(dots, .data)
       by <- eval_select_by(enquo(.by), .data)
       groups <- lapply(by, relexpr_reference)
