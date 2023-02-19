@@ -1,5 +1,4 @@
 test_that("restores original class", {
-  skip("TODO duckdb")
   df <- data.frame(x = 1:2)
   gf <- group_by(df, x)
 

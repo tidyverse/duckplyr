@@ -8,14 +8,12 @@ test_that("can select/rename all variables", {
 })
 
 test_that("can select/rename with predicate", {
-  skip("TODO duckdb")
   expect_identical(select_if(df, is_integerish), duckplyr_select(df, x, z))
   expect_identical(select_if(df, is_integerish, toupper), set_names(df[c("x", "z")], c("X", "Z")))
   expect_identical(rename_if(df, is_integerish, toupper), set_names(df, c("X", "y", "Z")))
 })
 
 test_that("can take list, but only containing single function", {
-  skip("TODO duckdb")
   expect_identical(
     select_if(df, list(~ is_integerish(.)), list(~ toupper(.))),
     set_names(df[c("x", "z")], c("X", "Z"))
@@ -28,7 +26,6 @@ test_that("can take list, but only containing single function", {
 })
 
 test_that("can select/rename with vars()", {
-  skip("TODO duckdb")
   expect_identical(select_at(df, vars(x:y)), df[-3])
   expect_identical(select_at(df, vars(x:y), toupper), set_names(df[-3], c("X", "Y")))
   expect_identical(rename_at(df, vars(x:y), toupper), set_names(df, c("X", "Y", "z")))

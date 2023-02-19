@@ -35,7 +35,7 @@ patch_dplyr_test <- function(file) {
     return()
   }
 
-  skip <- all_tests[[base]]
+  skip <- unlist(all_tests[names(all_tests) == base])
 
   text <- brio::read_lines(file)
   text <- text[grep('skip("TODO duckdb")', text, invert = TRUE, fixed = TRUE)]
