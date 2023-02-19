@@ -10,8 +10,10 @@ copy_dplyr_test <- function(target, source, skip) {
   text <- brio::read_lines(source)
   text <- gsub(rx, "duckplyr_\\1", text, perl = TRUE)
   text <- text[grep('skip("TODO duckdb")', text, invert = TRUE, fixed = TRUE)]
-  skip_lines <- unique(unlist(map(paste0('"', skip, '"'), grep, text, fixed = TRUE)))
-  text[skip_lines] <- paste0(text[skip_lines], '\n  skip("TODO duckdb")')
+  if (!is.null(skip)) {
+    skip_lines <- unique(unlist(map(paste0('"', skip, '"'), grep, text, fixed = TRUE)))
+    text[skip_lines] <- paste0(text[skip_lines], '\n  skip("TODO duckdb")')
+  }
   brio::write_lines(text, target)
 }
 
