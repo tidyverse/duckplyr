@@ -1,8 +1,8 @@
 diff --git b/R/mutate.R a/R/mutate.R
-index 3912701..d1246aa 100644
+index 8f153a7..da15edb 100644
 --- b/R/mutate.R
 +++ a/R/mutate.R
-@@ -2,10 +2,62 @@
+@@ -2,10 +2,70 @@
  #' @importFrom dplyr mutate
  #' @export
  mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", "unused", "none"), .before = NULL, .after = NULL) {
@@ -27,12 +27,20 @@ index 3912701..d1246aa 100644
 +      # FIXME: use fewer projections
 +      # FIXME: construct out only at the end
 +      for (i in seq_along(dots)) {
-+        new <- names(dots)[[i]]
++        dot <- dots[[i]]
++        quo_data <- attr(dot, "dplyr:::data")
++
++        if (quo_data$is_named) {
++          new <- quo_data$name_given
++        } else {
++          new <- quo_data$name_auto
++        }
++
 +        names_new <- c(names_new, new)
 +
 +        new_pos <- match(new, names(out), nomatch = length(out) + 1L)
 +        exprs <- imap(set_names(names(out)), relexpr_reference, rel = NULL)
-+        new_expr <- rel_translate(dots[[i]], out, alias = new)
++        new_expr <- rel_translate(dot, out, alias = new)
 +        exprs[[new_pos]] <- new_expr
 +        rel <- rel_project(rel, exprs)
 +        out <- rel_to_df(rel)

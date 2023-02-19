@@ -1,8 +1,8 @@
 diff --git b/R/summarise.R a/R/summarise.R
-index c15f56c..7c7bac4 100644
+index fb60bdd..0c5ee3d 100644
 --- b/R/summarise.R
 +++ a/R/summarise.R
-@@ -2,10 +2,20 @@
+@@ -2,10 +2,21 @@
  #' @importFrom dplyr summarise
  #' @export
  summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
@@ -14,6 +14,7 @@ index c15f56c..7c7bac4 100644
      {
 +      rel <- duckdb_rel_from_df(.data)
 +      dots <- dplyr_quosures(...)
++      dots <- fix_auto_name(dots)
 +      aggregates <- rel_translate_dots(dots, .data)
 +      by <- eval_select_by(enquo(.by), .data)
 +      groups <- lapply(by, relexpr_reference)
