@@ -10,3 +10,11 @@ test_that("rel_try() with reason", {
     )
   })
 })
+
+test_that("inline parens (3)", {
+  df <- data.frame(a = 1, b = 2)
+  expect_identical(
+    rel_translate(quo((a) * (b)), df),
+    rel_translate(quo((a * b)), df),
+  )
+})
