@@ -1,5 +1,7 @@
 rel_try <- function(rel, ...) {
-  # return(rel)
+  if (Sys.getenv("DUCKPLYR_FORCE") != "") {
+    return(rel)
+  }
 
   call <- as.character(sys.call(-1)[[1]])
 

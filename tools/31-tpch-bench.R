@@ -1,17 +1,18 @@
 pkgload::load_all()
 
-test_dplyr_q <- list()
+Sys.setenv(DUCKPLYR_FORCE = 1)
 
 tables <- c("lineitem", "partsupp", "part", "supplier", "nation", "orders", "customer", "region")
 env <- environment()
 
 
 lapply(tables, function(t) {
-  assign(t, arrow::read_parquet(fs::path("tools/tpch/001", paste0(t, ".parquet"))), env=env)
+  assign(t, arrow::read_parquet(fs::path("tools/tpch/001", paste0(t, ".parquet"))), env = env)
   NULL
 })
 
 
+test_dplyr_q <- list()
 
 test_dplyr_q[[1]] <- function() {
   lineitem |>
