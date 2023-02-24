@@ -22,6 +22,8 @@ get_default_duckdb_connection <- function() {
     # TPCH
     DBI::dbExecute(con, 'CREATE MACRO "as.Date"(x) AS strptime(x, \'%Y-%m-%d\')')
     DBI::dbExecute(con, 'CREATE MACRO "grepl"(pattern, x) AS (x SIMILAR TO pattern)')
+    DBI::dbExecute(con, 'CREATE MACRO "as.integer"(x) AS CAST(x AS int32)')
+    DBI::dbExecute(con, 'CREATE MACRO "ifelse"(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)')
 
     DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(a, b) AS ((a IS NULL AND b IS NULL) OR (a = b))')
     DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(a, b) AS COALESCE(a, b)')

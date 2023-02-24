@@ -452,7 +452,7 @@ test_dplyr_q[[6]]()
 
 # test_dplyr_q[[7]]()
 
-# test_dplyr_q[[8]]()
+test_dplyr_q[[8]]()
 
 # test_dplyr_q[[9]]()
 
