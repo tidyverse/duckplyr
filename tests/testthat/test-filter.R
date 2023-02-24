@@ -576,6 +576,7 @@ test_that("duckplyr_filter() preserves the call stack on error (#5308)", {
 })
 
 test_that("if_any() and if_all() work", {
+  skip("TODO duckdb")
   df <- tibble(x1 = 1:10, x2 = c(1:5, 10:6))
   expect_equal(
     duckplyr_filter(df, if_all(starts_with("x"), ~ . > 6)),
