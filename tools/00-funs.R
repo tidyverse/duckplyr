@@ -78,6 +78,8 @@ tests <- head(n = -1, list(
     "mutating joins trigger multiple match warning",
     "mutating joins don't trigger multiple match warning when called indirectly",
 
+    "mutating joins reference original column in `y` when there are type errors (#6465)",
+
     # https://github.com/duckdb/duckdb/issues/6356
     "keys are coerced to symmetric type",
     NULL

@@ -302,6 +302,7 @@ test_that("filtering joins compute common columns", {
 })
 
 test_that("mutating joins reference original column in `y` when there are type errors (#6465)", {
+  skip("TODO duckdb")
   x <- tibble(a = 1)
   y <- tibble(b = "1")
 

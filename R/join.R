@@ -26,17 +26,15 @@ rel_join_impl <- function(x, y, by, suffix, keep, na_matches, join, error_call =
   y_rel <- duckdb_rel_from_df(y)
 
   # Rename if non-unique column names
-  if (length(intersect(x_names, y_names)) != 0) {
-    x_names_remap <- paste0(x_names, "_x")
-    x_by <- paste0(x_by, "_x")
-    x_exprs <- exprs_from_loc(x, set_names(seq_along(x_names_remap), x_names_remap))
-    x_rel <- rel_project(x_rel, x_exprs)
+  x_names_remap <- paste0(x_names, "_x")
+  x_by <- paste0(x_by, "_x")
+  x_exprs <- exprs_from_loc(x, set_names(seq_along(x_names_remap), x_names_remap))
+  x_rel <- rel_project(x_rel, x_exprs)
 
-    y_names_remap <- paste0(y_names, "_y")
-    y_by <- paste0(y_by, "_y")
-    y_exprs <- exprs_from_loc(y, set_names(seq_along(y_names_remap), y_names_remap))
-    y_rel <- rel_project(y_rel, y_exprs)
-  }
+  y_names_remap <- paste0(y_names, "_y")
+  y_by <- paste0(y_by, "_y")
+  y_exprs <- exprs_from_loc(y, set_names(seq_along(y_names_remap), y_names_remap))
+  y_rel <- rel_project(y_rel, y_exprs)
 
   x_by <- map(x_by, relexpr_reference, rel = x_rel)
   y_by <- map(y_by, relexpr_reference, rel = y_rel)
