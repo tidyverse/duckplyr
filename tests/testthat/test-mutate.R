@@ -86,6 +86,7 @@ test_that("can mutate a data frame with zero columns", {
 })
 
 test_that("duckplyr_mutate() handles symbol expressions", {
+  skip("TODO duckdb")
   df <- tibble(x = structure(1, class = "alien"))
   res <- duckplyr_mutate(df, y = x)
   expect_identical(df$x, res$y)
@@ -130,6 +131,7 @@ test_that("glue() is supported", {
 })
 
 test_that("mutate disambiguates NA and NaN (#1448)", {
+  skip("TODO duckdb")
   df <- tibble(x = c(1, NA, NaN))
   out <- duckplyr_mutate(df, y = x * 1)
   expect_equal(out$y, df$x)

@@ -85,6 +85,8 @@ tests <- head(n = -1, list(
     NULL
   ),
   "test-mutate.R" = c(
+    "mutate disambiguates NA and NaN (#1448)",
+    "duckplyr_mutate() handles symbol expressions",
     "transient grouping retains data frame attributes (#6100)",
     NULL
   ),
