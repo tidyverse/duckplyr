@@ -46,7 +46,7 @@ get_default_duckdb_connection <- function() {
 #' @return A relational object.
 #'
 #' @export
-duckdb_rel_from_df <- function(df, torture = FALSE) {
+duckdb_rel_from_df <- function(df) {
   # FIXME: make generic
   stopifnot(is.data.frame(df))
 
@@ -81,14 +81,7 @@ duckdb_rel_from_df <- function(df, torture = FALSE) {
     }
   }
 
-  con <- get_default_duckdb_connection()
-
-  if (torture) {
-    gctorture2(1)
-    on.exit(gctorture2(0))
-  }
-
-  duckdb:::rel_from_df(con, df)
+  duckdb:::rel_from_df(get_default_duckdb_connection(), df)
 }
 
 #' @export
