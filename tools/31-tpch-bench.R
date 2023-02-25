@@ -438,23 +438,27 @@ test_dplyr_q[[10]] <- function() {
   res
 }
 
-test_dplyr_q[[1]]()
+# test_dplyr_q[[1]]()
 
-# test_dplyr_q[[2]]()
+gctorture2(2001)
+
+test_dplyr_q[[2]]()
 
 test_dplyr_q[[3]]()
 
 test_dplyr_q[[4]]()
 
-# test_dplyr_q[[5]]()
+asdf
+
+test_dplyr_q[[5]]()
 
 test_dplyr_q[[6]]()
 
-# test_dplyr_q[[7]]()
+test_dplyr_q[[7]]()
 
 test_dplyr_q[[8]]()
 
-# test_dplyr_q[[9]]()
+test_dplyr_q[[9]]()
 
 test_dplyr_q[[10]]()
 
