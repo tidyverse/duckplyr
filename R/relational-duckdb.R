@@ -81,7 +81,13 @@ duckdb_rel_from_df <- function(df) {
     }
   }
 
-  duckdb:::rel_from_df(get_default_duckdb_connection(), df)
+  # FIXME: For some reason, it's important to create an alias here
+  con <- get_default_duckdb_connection()
+
+  duckdb:::rel_from_df(con, df)
+
+  # Causes protection errors
+  # duckdb:::rel_from_df(get_default_duckdb_connection(), df)
 }
 
 #' @export
