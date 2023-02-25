@@ -48,6 +48,7 @@ duckplyr_right_join <- function(x, y, ...) {
       testthat::skip(conditionMessage(e))
     }
   )
+
   out <- right_join(x, y, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
