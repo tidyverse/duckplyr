@@ -84,7 +84,11 @@ duckdb_rel_from_df <- function(df) {
   # FIXME: For some reason, it's important to create an alias here
   con <- get_default_duckdb_connection()
 
-  duckdb:::rel_from_df(con, df)
+  # FIXME: For some other reason, it seems crucial to assign the result to a
+  # variable before returning it
+  out <- duckdb:::rel_from_df(con, df)
+
+  out
 
   # Causes protection errors
   # duckdb:::rel_from_df(get_default_duckdb_connection(), df)
