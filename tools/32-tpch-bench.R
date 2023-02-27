@@ -127,7 +127,7 @@ test_dplyr_q[[4]] <- function() {
 
   # distinct after join, tested and indeed faster
   lo <- duckplyr_inner_join(l, o, by = c("l_orderkey" = "o_orderkey")) |>
-    distinct() |>
+    duckplyr_distinct() |>
     duckplyr_select(o_orderpriority)
 
   aggr <- lo |>
