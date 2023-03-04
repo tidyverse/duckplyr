@@ -83,7 +83,7 @@ tpch_13 <- function() {
 tpch_14 <- function() {
   lineitem |>
     duckplyr_filter(
-      l_shipdate >= as.Date("1995-01-01"),
+      l_shipdate >= as.Date("1995-09-01"),
       l_shipdate < as.Date("1995-10-01")
     ) |>
     duckplyr_inner_join(part, by = c("l_partkey" = "p_partkey")) |>
