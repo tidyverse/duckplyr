@@ -1,12 +1,4 @@
-pkgload::load_all()
-
-Sys.setenv(DUCKPLYR_FORCE = 1)
-
-load("tools/tpch/001.rda")
-
-test_dplyr_q <- list()
-
-test_dplyr_q[[1]] <- function() {
+tpch_01 <- function() {
   lineitem |>
     duckplyr_select(l_shipdate, l_returnflag, l_linestatus, l_quantity, l_extendedprice, l_discount, l_tax) |>
     duckplyr_filter(l_shipdate <= as.Date("1998-09-02")) |>
@@ -25,7 +17,7 @@ test_dplyr_q[[1]] <- function() {
     duckplyr_arrange(l_returnflag, l_linestatus)
 }
 
-test_dplyr_q[[2]] <- function() {
+tpch_02 <- function() {
   ps <- partsupp |> duckplyr_select(ps_partkey, ps_suppkey, ps_supplycost)
 
   p <- part |>
@@ -42,7 +34,7 @@ test_dplyr_q[[2]] <- function() {
     )
 
   psps <- duckplyr_inner_join(psp, sp,
-    by = c("ps_suppkey" = "s_suppkey")
+                              by = c("ps_suppkey" = "s_suppkey")
   ) |>
     duckplyr_select(
       ps_partkey, ps_supplycost, p_mfgr, s_nationkey,
@@ -66,7 +58,7 @@ test_dplyr_q[[2]] <- function() {
     duckplyr_summarise(min_ps_supplycost = min(ps_supplycost), .by = ps_partkey)
 
   sj <- duckplyr_inner_join(pspsnr, aggr,
-    by = c("ps_partkey" = "ps_partkey", "ps_supplycost" = "min_ps_supplycost")
+                            by = c("ps_partkey" = "ps_partkey", "ps_supplycost" = "min_ps_supplycost")
   )
 
 
@@ -83,7 +75,7 @@ test_dplyr_q[[2]] <- function() {
   res
 }
 
-test_dplyr_q[[3]] <- function() {
+tpch_03 <- function() {
   oc <- duckplyr_inner_join(
     orders |>
       duckplyr_select(o_orderkey, o_custkey, o_orderdate, o_shippriority) |>
@@ -114,7 +106,7 @@ test_dplyr_q[[3]] <- function() {
   aggr
 }
 
-test_dplyr_q[[4]] <- function() {
+tpch_04 <- function() {
   l <- lineitem |>
     duckplyr_select(l_orderkey, l_commitdate, l_receiptdate) |>
     duckplyr_filter(l_commitdate < l_receiptdate) |>
@@ -137,7 +129,7 @@ test_dplyr_q[[4]] <- function() {
   aggr
 }
 
-test_dplyr_q[[5]] <- function() {
+tpch_05 <- function() {
   nr <- duckplyr_inner_join(
     nation |>
       duckplyr_select(n_nationkey, n_regionkey, n_name),
@@ -168,12 +160,12 @@ test_dplyr_q[[5]] <- function() {
     duckplyr_select(o_orderkey, o_custkey)
 
   oc <- duckplyr_inner_join(o, customer |> duckplyr_select(c_custkey, c_nationkey),
-    by = c("o_custkey" = "c_custkey")
+                            by = c("o_custkey" = "c_custkey")
   ) |>
     duckplyr_select(o_orderkey, c_nationkey)
 
   lsnroc <- duckplyr_inner_join(lsnr, oc,
-    by = c("l_orderkey" = "o_orderkey", "s_nationkey" = "c_nationkey")
+                                by = c("l_orderkey" = "o_orderkey", "s_nationkey" = "c_nationkey")
   ) |>
     duckplyr_select(l_extendedprice, l_discount, n_name)
 
@@ -186,7 +178,7 @@ test_dplyr_q[[5]] <- function() {
   aggr
 }
 
-test_dplyr_q[[6]] <- function() {
+tpch_06 <- function() {
   lineitem |>
     duckplyr_select(l_shipdate, l_extendedprice, l_discount, l_quantity) |>
     duckplyr_filter(
@@ -200,7 +192,7 @@ test_dplyr_q[[6]] <- function() {
     duckplyr_summarise(revenue = sum(l_extendedprice * l_discount))
 }
 
-test_dplyr_q[[7]] <- function() {
+tpch_07 <- function() {
   sn <- duckplyr_inner_join(
     supplier |>
       duckplyr_select(s_nationkey, s_suppkey),
@@ -244,7 +236,7 @@ test_dplyr_q[[7]] <- function() {
 
   aggr <- all |>
     duckplyr_filter((n1_name == "FRANCE" & n2_name == "GERMANY") |
-      (n1_name == "GERMANY" & n2_name == "FRANCE")) |>
+                      (n1_name == "GERMANY" & n2_name == "FRANCE")) |>
     duckplyr_mutate(
       supp_nation = n1_name,
       cust_nation = n2_name,
@@ -258,7 +250,7 @@ test_dplyr_q[[7]] <- function() {
   aggr
 }
 
-test_dplyr_q[[8]] <- function() {
+tpch_08 <- function() {
   nr <- duckplyr_inner_join(
     nation |>
       duckplyr_select(n1_nationkey = n_nationkey, n1_regionkey = n_regionkey),
@@ -296,25 +288,25 @@ test_dplyr_q[[8]] <- function() {
     duckplyr_select(l_partkey, l_suppkey, l_extendedprice, l_discount, o_orderdate)
 
   locnrp <- duckplyr_inner_join(locnr,
-    part |>
-      duckplyr_select(p_partkey, p_type) |>
-      duckplyr_filter(p_type == "ECONOMY ANODIZED STEEL") |>
-      duckplyr_select(p_partkey),
-    by = c("l_partkey" = "p_partkey")
+                                part |>
+                                  duckplyr_select(p_partkey, p_type) |>
+                                  duckplyr_filter(p_type == "ECONOMY ANODIZED STEEL") |>
+                                  duckplyr_select(p_partkey),
+                                by = c("l_partkey" = "p_partkey")
   ) |>
     duckplyr_select(l_suppkey, l_extendedprice, l_discount, o_orderdate)
 
   locnrps <- duckplyr_inner_join(locnrp,
-    supplier |>
-      duckplyr_select(s_suppkey, s_nationkey),
-    by = c("l_suppkey" = "s_suppkey")
+                                 supplier |>
+                                   duckplyr_select(s_suppkey, s_nationkey),
+                                 by = c("l_suppkey" = "s_suppkey")
   ) |>
     duckplyr_select(l_extendedprice, l_discount, o_orderdate, s_nationkey)
 
   all <- duckplyr_inner_join(locnrps,
-    nation |>
-      duckplyr_select(n2_nationkey = n_nationkey, n2_name = n_name),
-    by = c("s_nationkey" = "n2_nationkey")
+                             nation |>
+                               duckplyr_select(n2_nationkey = n_nationkey, n2_name = n_name),
+                             by = c("s_nationkey" = "n2_nationkey")
   ) |>
     duckplyr_select(l_extendedprice, l_discount, o_orderdate, n2_name)
 
@@ -333,7 +325,7 @@ test_dplyr_q[[8]] <- function() {
   aggr
 }
 
-test_dplyr_q[[9]] <- function() {
+tpch_09 <- function() {
   p <- part |>
     duckplyr_select(p_name, p_partkey) |>
     duckplyr_filter(grepl("green", p_name)) |>
@@ -387,7 +379,7 @@ test_dplyr_q[[9]] <- function() {
   aggr
 }
 
-test_dplyr_q[[10]] <- function() {
+tpch_10 <- function() {
   l <- lineitem |>
     duckplyr_select(l_orderkey, l_returnflag, l_extendedprice, l_discount) |>
     duckplyr_filter(l_returnflag == "R") |>
@@ -399,7 +391,7 @@ test_dplyr_q[[10]] <- function() {
     duckplyr_select(o_orderkey, o_custkey)
 
   lo <- duckplyr_inner_join(l, o,
-    by = c("l_orderkey" = "o_orderkey")
+                            by = c("l_orderkey" = "o_orderkey")
   ) |>
     duckplyr_select(l_extendedprice, l_discount, o_custkey)
   # first aggregate, then join with customer/nation,
@@ -415,7 +407,7 @@ test_dplyr_q[[10]] <- function() {
   loc <- duckplyr_inner_join(lo_aggr, c, by = c("o_custkey" = "c_custkey"))
 
   locn <- duckplyr_inner_join(loc, nation |> duckplyr_select(n_nationkey, n_name),
-    by = c("c_nationkey" = "n_nationkey")
+                              by = c("c_nationkey" = "n_nationkey")
   )
 
   res <- locn |>
@@ -429,43 +421,3 @@ test_dplyr_q[[10]] <- function() {
 
   res
 }
-
-# gctorture2(1001)
-
-test_dplyr_q[[1]]()
-
-test_dplyr_q[[2]]()
-
-test_dplyr_q[[3]]()
-
-test_dplyr_q[[4]]()
-
-test_dplyr_q[[5]]()
-
-test_dplyr_q[[6]]()
-
-test_dplyr_q[[7]]()
-
-test_dplyr_q[[8]]()
-
-test_dplyr_q[[9]]()
-
-test_dplyr_q[[10]]()
-
-asf
-
-
-
-res <- list()
-
-for (q in seq_along(test_dplyr_q)) {
-  f <- test_dplyr_q[[q]]
-  cold <- as.data.frame(f())
-  time <- system.time(as.data.frame(f()))[[3]]
-  print(q)
-  print(time)
-  res[[q]] <- data.frame(pkg = pkg, q = q, time = time)
-}
-
-df <- do.call(rbind, res)
-write.csv(df, paste0("res-", pkg, ".csv"))
