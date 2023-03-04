@@ -25,7 +25,7 @@ tpch_02 <- function() {
     duckplyr_filter(p_size == 15, grepl("BRASS$", p_type)) |>
     duckplyr_select(p_partkey, p_mfgr)
 
-  psp <- duckplyr_inner_join(ps, p, by = c("ps_partkey" = "p_partkey"))
+  psp <- duckplyr_inner_join(p, ps, by = c("p_partkey" = "ps_partkey"))
 
   sp <- supplier |>
     duckplyr_select(
@@ -37,7 +37,7 @@ tpch_02 <- function() {
     by = c("ps_suppkey" = "s_suppkey")
   ) |>
     duckplyr_select(
-      ps_partkey, ps_supplycost, p_mfgr, s_nationkey,
+      p_partkey, ps_supplycost, p_mfgr, s_nationkey,
       s_acctbal, s_name, s_address, s_phone, s_comment
     )
 
@@ -50,26 +50,26 @@ tpch_02 <- function() {
 
   pspsnr <- duckplyr_inner_join(psps, nr, by = c("s_nationkey" = "n_nationkey")) |>
     duckplyr_select(
-      ps_partkey, ps_supplycost, p_mfgr, n_name, s_acctbal,
+      p_partkey, ps_supplycost, p_mfgr, n_name, s_acctbal,
       s_name, s_address, s_phone, s_comment
     )
 
   aggr <- pspsnr |>
-    duckplyr_summarise(min_ps_supplycost = min(ps_supplycost), .by = ps_partkey)
+    duckplyr_summarise(min_ps_supplycost = min(ps_supplycost), .by = p_partkey)
 
   sj <- duckplyr_inner_join(pspsnr, aggr,
     by = c(
-      "ps_partkey" = "ps_partkey",
+      "p_partkey" = "p_partkey",
       "ps_supplycost" = "min_ps_supplycost"
     )
   )
 
   res <- sj |>
     duckplyr_select(
-      s_acctbal, s_name, n_name, ps_partkey, p_mfgr,
+      s_acctbal, s_name, n_name, p_partkey, p_mfgr,
       s_address, s_phone, s_comment
     ) |>
-    duckplyr_arrange(-s_acctbal, n_name, s_name, ps_partkey) |>
+    duckplyr_arrange(-s_acctbal, n_name, s_name, p_partkey) |>
     head(100)
 
   res
@@ -401,7 +401,7 @@ tpch_10 <- function() {
   c <- customer |>
     duckplyr_select(c_custkey, c_nationkey, c_name, c_acctbal, c_phone, c_address, c_comment)
 
-  loc <- duckplyr_inner_join(lo_aggr, c, by = c("o_custkey" = "c_custkey"))
+  loc <- duckplyr_inner_join(c, lo_aggr, by = c("c_custkey" = "o_custkey"))
 
   locn <- duckplyr_inner_join(loc, nation |> duckplyr_select(n_nationkey, n_name),
     by = c("c_nationkey" = "n_nationkey")
@@ -409,7 +409,7 @@ tpch_10 <- function() {
 
   res <- locn |>
     duckplyr_select(
-      o_custkey, c_name, revenue, c_acctbal, n_name,
+      c_custkey, c_name, revenue, c_acctbal, n_name,
       c_address, c_phone, c_comment
     ) |>
     duckplyr_arrange(-revenue) |>
