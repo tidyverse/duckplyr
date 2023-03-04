@@ -171,8 +171,8 @@ tpch_17 <- function() {
 
 tpch_18 <- function() {
   big_orders <- lineitem |>
-    duckplyr_summarise(`sum(l_quantity)` = sum(l_quantity), .by = l_orderkey) |>
-    duckplyr_filter(`sum(l_quantity)` > 300)
+    duckplyr_summarise(sum = sum(l_quantity), .by = l_orderkey) |>
+    duckplyr_filter(sum > 300)
 
   orders |>
     duckplyr_inner_join(big_orders, by = c("o_orderkey" = "l_orderkey")) |>
@@ -180,7 +180,7 @@ tpch_18 <- function() {
     duckplyr_select(
       c_name,
       c_custkey = o_custkey, o_orderkey,
-      o_orderdate, o_totalprice, `sum(l_quantity)`
+      o_orderdate, o_totalprice, sum
     ) |>
     duckplyr_arrange(desc(o_totalprice), o_orderdate) |>
     head(100) |>

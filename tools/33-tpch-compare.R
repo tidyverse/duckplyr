@@ -73,9 +73,10 @@ stopifnot(isTRUE(all.equal(res, correct, tolerance = 1e-12)))
 # correct <- read.delim("tests/testthat/tpch-sf0.01/q17.csv", sep = "|")
 # stopifnot(isTRUE(all.equal(res, correct, tolerance = 1e-12)))
 
-# res <- tpch_18()
-# correct <- read.delim("tests/testthat/tpch-sf0.01/q18.csv", sep = "|")
-# stopifnot(isTRUE(all.equal(res, correct, tolerance = 1e-12)))
+res <- tpch_18()
+correct <- read.delim("tests/testthat/tpch-sf0.01/q18.csv", sep = "|")
+correct$o_orderdate <- as.Date(correct$o_orderdate)
+stopifnot(isTRUE(all.equal(res, correct, tolerance = 1e-12)))
 
 res <- tpch_19()
 correct <- read.delim("tests/testthat/tpch-sf0.01/q19.csv", sep = "|")
