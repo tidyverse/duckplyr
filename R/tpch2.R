@@ -179,7 +179,8 @@ tpc_h18 <- function() {
     inner_join(big_orders, by = c("o_orderkey" = "l_orderkey")) %>%
     inner_join(customer, by = c("o_custkey" = "c_custkey")) %>%
     select(
-      c_name, c_custkey = o_custkey, o_orderkey,
+      c_name,
+      c_custkey = o_custkey, o_orderkey,
       o_orderdate, o_totalprice, `sum(l_quantity)`
     ) %>%
     arrange(desc(o_totalprice), o_orderdate) %>%
@@ -195,7 +196,7 @@ tpc_h19 <- function() {
     filter(
       (
         p_brand == "Brand#12" &
-          p_container %in% c('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') &
+          p_container %in% c("SM CASE", "SM BOX", "SM PACK", "SM PKG") &
           l_quantity >= 1 &
           l_quantity <= (1 + 10) &
           p_size >= 1 &
@@ -205,7 +206,7 @@ tpc_h19 <- function() {
       ) |
         (
           p_brand == "Brand#23" &
-            p_container %in% c('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') &
+            p_container %in% c("MED BAG", "MED BOX", "MED PKG", "MED PACK") &
             l_quantity >= 10 &
             l_quantity <= (10 + 10) &
             p_size >= 1 &
@@ -215,7 +216,7 @@ tpc_h19 <- function() {
         ) |
         (
           p_brand == "Brand#34" &
-            p_container %in% c('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') &
+            p_container %in% c("LG CASE", "LG BOX", "LG PACK", "LG PKG") &
             l_quantity >= 20 &
             l_quantity <= (20 + 10) &
             p_size >= 1 &
