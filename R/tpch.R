@@ -34,7 +34,7 @@ tpch_02 <- function() {
     )
 
   psps <- duckplyr_inner_join(psp, sp,
-                              by = c("ps_suppkey" = "s_suppkey")
+    by = c("ps_suppkey" = "s_suppkey")
   ) |>
     duckplyr_select(
       ps_partkey, ps_supplycost, p_mfgr, s_nationkey,
@@ -58,7 +58,7 @@ tpch_02 <- function() {
     duckplyr_summarise(min_ps_supplycost = min(ps_supplycost), .by = ps_partkey)
 
   sj <- duckplyr_inner_join(pspsnr, aggr,
-                            by = c("ps_partkey" = "ps_partkey", "ps_supplycost" = "min_ps_supplycost")
+    by = c("ps_partkey" = "ps_partkey", "ps_supplycost" = "min_ps_supplycost")
   )
 
 
@@ -67,9 +67,7 @@ tpch_02 <- function() {
       s_acctbal, s_name, n_name, ps_partkey, p_mfgr,
       s_address, s_phone, s_comment
     ) |>
-    # TODO
-    # duckplyr_arrange(desc(s_acctbal), n_name, s_name, ps_partkey) |>
-    duckplyr_arrange(s_acctbal, n_name, s_name, ps_partkey) |>
+    duckplyr_arrange(-s_acctbal, n_name, s_name, ps_partkey) |>
     head(100)
 
   res
@@ -100,8 +98,7 @@ tpch_03 <- function() {
     duckplyr_mutate(volume = l_extendedprice * (1 - l_discount)) |>
     duckplyr_summarise(revenue = sum(volume), .by = c(l_orderkey, o_orderdate, o_shippriority)) |>
     duckplyr_select(l_orderkey, revenue, o_orderdate, o_shippriority) |>
-    # duckplyr_arrange(desc(revenue), o_orderdate) |>
-    duckplyr_arrange(revenue, o_orderdate) |>
+    duckplyr_arrange(-revenue, o_orderdate) |>
     head(10)
   aggr
 }
@@ -160,20 +157,19 @@ tpch_05 <- function() {
     duckplyr_select(o_orderkey, o_custkey)
 
   oc <- duckplyr_inner_join(o, customer |> duckplyr_select(c_custkey, c_nationkey),
-                            by = c("o_custkey" = "c_custkey")
+    by = c("o_custkey" = "c_custkey")
   ) |>
     duckplyr_select(o_orderkey, c_nationkey)
 
   lsnroc <- duckplyr_inner_join(lsnr, oc,
-                                by = c("l_orderkey" = "o_orderkey", "s_nationkey" = "c_nationkey")
+    by = c("l_orderkey" = "o_orderkey", "s_nationkey" = "c_nationkey")
   ) |>
     duckplyr_select(l_extendedprice, l_discount, n_name)
 
   aggr <- lsnroc |>
     duckplyr_mutate(volume = l_extendedprice * (1 - l_discount)) |>
     duckplyr_summarise(revenue = sum(volume), .by = n_name) |>
-    # duckplyr_arrange(desc(revenue)) # TODO
-    duckplyr_arrange(revenue)
+    duckplyr_arrange(-revenue)
 
   aggr
 }
@@ -236,7 +232,7 @@ tpch_07 <- function() {
 
   aggr <- all |>
     duckplyr_filter((n1_name == "FRANCE" & n2_name == "GERMANY") |
-                      (n1_name == "GERMANY" & n2_name == "FRANCE")) |>
+      (n1_name == "GERMANY" & n2_name == "FRANCE")) |>
     duckplyr_mutate(
       supp_nation = n1_name,
       cust_nation = n2_name,
@@ -288,25 +284,25 @@ tpch_08 <- function() {
     duckplyr_select(l_partkey, l_suppkey, l_extendedprice, l_discount, o_orderdate)
 
   locnrp <- duckplyr_inner_join(locnr,
-                                part |>
-                                  duckplyr_select(p_partkey, p_type) |>
-                                  duckplyr_filter(p_type == "ECONOMY ANODIZED STEEL") |>
-                                  duckplyr_select(p_partkey),
-                                by = c("l_partkey" = "p_partkey")
+    part |>
+      duckplyr_select(p_partkey, p_type) |>
+      duckplyr_filter(p_type == "ECONOMY ANODIZED STEEL") |>
+      duckplyr_select(p_partkey),
+    by = c("l_partkey" = "p_partkey")
   ) |>
     duckplyr_select(l_suppkey, l_extendedprice, l_discount, o_orderdate)
 
   locnrps <- duckplyr_inner_join(locnrp,
-                                 supplier |>
-                                   duckplyr_select(s_suppkey, s_nationkey),
-                                 by = c("l_suppkey" = "s_suppkey")
+    supplier |>
+      duckplyr_select(s_suppkey, s_nationkey),
+    by = c("l_suppkey" = "s_suppkey")
   ) |>
     duckplyr_select(l_extendedprice, l_discount, o_orderdate, s_nationkey)
 
   all <- duckplyr_inner_join(locnrps,
-                             nation |>
-                               duckplyr_select(n2_nationkey = n_nationkey, n2_name = n_name),
-                             by = c("s_nationkey" = "n2_nationkey")
+    nation |>
+      duckplyr_select(n2_nationkey = n_nationkey, n2_name = n_name),
+    by = c("s_nationkey" = "n2_nationkey")
   ) |>
     duckplyr_select(l_extendedprice, l_discount, o_orderdate, n2_name)
 
@@ -373,8 +369,7 @@ tpch_09 <- function() {
     ) |>
     duckplyr_select(nation, o_year, amount) |>
     duckplyr_summarise(sum_profit = sum(amount), .by = c(nation, o_year)) |>
-    # duckplyr_arrange(nation, desc(o_year)) TODO
-    duckplyr_arrange(nation, o_year)
+    duckplyr_arrange(nation, -o_year)
 
   aggr
 }
@@ -391,7 +386,7 @@ tpch_10 <- function() {
     duckplyr_select(o_orderkey, o_custkey)
 
   lo <- duckplyr_inner_join(l, o,
-                            by = c("l_orderkey" = "o_orderkey")
+    by = c("l_orderkey" = "o_orderkey")
   ) |>
     duckplyr_select(l_extendedprice, l_discount, o_custkey)
   # first aggregate, then join with customer/nation,
@@ -407,7 +402,7 @@ tpch_10 <- function() {
   loc <- duckplyr_inner_join(lo_aggr, c, by = c("o_custkey" = "c_custkey"))
 
   locn <- duckplyr_inner_join(loc, nation |> duckplyr_select(n_nationkey, n_name),
-                              by = c("c_nationkey" = "n_nationkey")
+    by = c("c_nationkey" = "n_nationkey")
   )
 
   res <- locn |>
@@ -415,8 +410,7 @@ tpch_10 <- function() {
       o_custkey, c_name, revenue, c_acctbal, n_name,
       c_address, c_phone, c_comment
     ) |>
-    # duckplyr_arrange(desc(revenue)) |> TODO
-    duckplyr_arrange(revenue) |>
+    duckplyr_arrange(-revenue) |>
     head(20)
 
   res
