@@ -21,7 +21,7 @@ get_default_duckdb_connection <- function() {
     DBI::dbExecute(con, 'CREATE MACRO "log"(x) AS ln(x)')
     # TPCH
     DBI::dbExecute(con, 'CREATE MACRO "as.Date"(x) AS strptime(x, \'%Y-%m-%d\')')
-    DBI::dbExecute(con, 'CREATE MACRO "grepl"(pattern, x) AS (x SIMILAR TO pattern)')
+    DBI::dbExecute(con, 'CREATE MACRO "grepl"(pattern, x) AS regexp_matches(x, pattern)')
     DBI::dbExecute(con, 'CREATE MACRO "as.integer"(x) AS CAST(x AS int32)')
     DBI::dbExecute(con, 'CREATE MACRO "ifelse"(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)')
     DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)')
