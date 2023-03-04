@@ -76,9 +76,24 @@ rel_translate <- function(quo, data, alias = NULL) {
       },
       #
       language = {
-        if (identical(as.character(expr[[1]]), "(")) {
-          return(do_translate(expr[[2]]))
-        }
+        switch(as.character(expr[[1]]),
+          "(" = {
+            return(do_translate(expr[[2]]))
+          },
+          "%in%" = {
+            tryCatch(
+              {
+                values <- eval(expr[[3]], env = baseenv())
+                consts <- map(values, do_translate)
+                ops <- map(consts, list, do_translate(expr[[2]]))
+                cmp <- map(ops, relexpr_function, name = "==")
+                alt <- reduce(cmp, ~ relexpr_function("|", list(.x, .y)))
+                return(alt)
+              },
+              error = identity
+            )
+          }
+        )
         args <- map(as.list(expr[-1]), do_translate)
         relexpr_function(as.character(expr[[1]]), args)
       },

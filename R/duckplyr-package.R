@@ -52,6 +52,7 @@
 #' @importFrom purrr map_lgl
 #' @importFrom purrr map2
 #' @importFrom purrr pmap
+#' @importFrom purrr reduce
 #' @importFrom tibble as_tibble
 #' @importFrom tibble deframe
 #' @importFrom tibble new_tibble
