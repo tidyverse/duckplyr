@@ -69,7 +69,8 @@ tpch_13 <- function() {
       by = c("c_custkey" = "o_custkey")
     ) |>
     duckplyr_summarise(
-      c_count = sum(!is.na(o_orderkey)),
+      # FIXME: sum(!is.na(o_orderkey))
+      c_count = sum(ifelse(is.na(o_orderkey), 0L, 1L)),
       .by = c_custkey
     )
 
