@@ -69,9 +69,9 @@ res <- tpch_16()
 correct <- read.delim("tests/testthat/tpch-sf0.01/q16.csv", sep = "|")
 stopifnot(isTRUE(all.equal(res, correct, tolerance = 1e-12)))
 
-# res <- tpch_17()
-# correct <- read.delim("tests/testthat/tpch-sf0.01/q17.csv", sep = "|")
-# stopifnot(isTRUE(all.equal(res, correct, tolerance = 1e-12)))
+res <- tpch_17()
+correct <- read.delim("tests/testthat/tpch-sf0.01/q17.csv", sep = "|")
+stopifnot(isTRUE(all.equal(res, correct, tolerance = 1e-12)))
 
 res <- tpch_18()
 correct <- read.delim("tests/testthat/tpch-sf0.01/q18.csv", sep = "|")
