@@ -14,6 +14,7 @@ waldo::compare(res, correct, tolerance = 1e-12)
 
 res <- tpch_03()
 correct <- read.delim("tests/testthat/tpch-sf0.01/q03.csv", sep = "|")
+correct$o_orderdate <- as.Date(correct$o_orderdate)
 waldo::compare(res, correct, tolerance = 1e-12)
 
 res <- tpch_04()
