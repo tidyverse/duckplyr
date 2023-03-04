@@ -1,4 +1,4 @@
-tpc_h11 <- function() {
+tpch_11 <- function() {
   nation <- nation |>
     duckplyr_filter(n_name == "GERMANY")
 
@@ -27,7 +27,7 @@ tpc_h11 <- function() {
     collect()
 }
 
-tpc_h12 <- function() {
+tpch_12 <- function() {
   lineitem |>
     duckplyr_filter(
       l_shipmode %in% c("MAIL", "SHIP"),
@@ -61,7 +61,7 @@ tpc_h12 <- function() {
     collect()
 }
 
-tpc_h13 <- function() {
+tpch_13 <- function() {
   c_orders <- customer |>
     duckplyr_left_join(
       orders |>
@@ -79,7 +79,7 @@ tpc_h13 <- function() {
     collect()
 }
 
-tpc_h14 <- function() {
+tpch_14 <- function() {
   lineitem |>
     duckplyr_filter(
       l_shipdate >= as.Date("1995-01-01"),
@@ -94,7 +94,7 @@ tpc_h14 <- function() {
     collect()
 }
 
-tpc_h15 <- function() {
+tpch_15 <- function() {
   revenue_by_supplier <- lineitem |>
     duckplyr_filter(
       l_shipdate >= as.Date("1996-01-01"),
@@ -122,7 +122,7 @@ tpc_h15 <- function() {
 }
 
 
-tpc_h16 <- function() {
+tpch_16 <- function() {
   part_filtered <- part |>
     duckplyr_filter(
       p_brand != "Brand#45",
@@ -148,7 +148,7 @@ tpc_h16 <- function() {
     collect()
 }
 
-tpc_h17 <- function() {
+tpch_17 <- function() {
   parts_filtered <- part |>
     duckplyr_filter(
       p_brand == "Brand#23",
@@ -168,7 +168,7 @@ tpc_h17 <- function() {
     collect()
 }
 
-tpc_h18 <- function() {
+tpch_18 <- function() {
   big_orders <- lineitem |>
     duckplyr_summarise(`sum(l_quantity)` = sum(l_quantity), .by = l_orderkey) |>
     duckplyr_filter(`sum(l_quantity)` > 300)
@@ -186,7 +186,7 @@ tpc_h18 <- function() {
     collect()
 }
 
-tpc_h19 <- function() {
+tpch_19 <- function() {
   joined <- lineitem |>
     duckplyr_inner_join(part, by = c("l_partkey" = "p_partkey"))
 
@@ -231,7 +231,7 @@ tpc_h19 <- function() {
     collect()
 }
 
-tpc_h20 <- function() {
+tpch_20 <- function() {
   supplier_ca <- supplier |>
     duckplyr_inner_join(
       nation |> duckplyr_filter(n_name == "CANADA"),
@@ -268,7 +268,7 @@ tpc_h20 <- function() {
     collect()
 }
 
-tpc_h21 <- function() {
+tpch_21 <- function() {
   orders_with_more_than_one_supplier <- lineitem |>
     duckplyr_count(l_orderkey, l_suppkey) |>
     duckplyr_summarise(n_supplier = n(), .by = l_orderkey) |>
@@ -303,7 +303,7 @@ tpc_h21 <- function() {
     collect()
 }
 
-tpc_h22 <- function() {
+tpch_22 <- function() {
   acctbal_mins <- customer |>
     duckplyr_filter(
       substr(c_phone, 1, 2) %in% c("13", "31", "23", "29", "30", "18", "17") &
