@@ -6,11 +6,10 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
   keep <- arg_match(.keep)
 
   # FIXME: remove/adapt when adding support for .by, used in mutate_keep()
-  by <- list(names = character())
+  by_names <- eval_select_by(by_arg, .data)
 
   # Our implementation
   rel_try(
-    "No relational implementation for windowed mutate()" = !quo_is_null(by_arg),
     {
       rel <- duckdb_rel_from_df(.data)
       dots <- dplyr_quosures(...)
@@ -31,7 +30,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
 
         new_pos <- match(new, names(out), nomatch = length(out) + 1L)
         exprs <- imap(set_names(names(out)), relexpr_reference, rel = NULL)
-        new_expr <- rel_translate(dot, out, alias = new)
+        new_expr <- rel_translate(dot, out, alias = new, partition = by_names)
         exprs[[new_pos]] <- new_expr
         rel <- rel_project(rel, unname(exprs))
         out <- rel_to_df(rel)
@@ -52,7 +51,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
       )
 
       used <- set_names(names(out) %in% names_used, names(out))
-      names_groups <- by$names
+      names_groups <- by_names
 
       out <- duckplyr_mutate_keep(
         out = out,

@@ -269,6 +269,13 @@ to_duckdb_expr <- function(x) {
       }
       out
     },
+    relational_relexpr_window = {
+      out <- duckdb:::expr_window(to_duckdb_expr(x$expr), to_duckdb_exprs(x$part))
+      if (!is.null(x$alias)) {
+        duckdb:::expr_set_alias(out, x$alias)
+      }
+      out
+    },
     relational_relexpr_constant = {
       if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
         experimental <- (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE")

@@ -6,6 +6,7 @@
 \alias{relexpr_reference}
 \alias{relexpr_constant}
 \alias{relexpr_function}
+\alias{relexpr_window}
 \alias{relexpr_set_alias}
 \title{Relational expressions}
 \usage{
@@ -16,6 +17,8 @@ relexpr_reference(name, rel = NULL, alias = NULL)
 relexpr_constant(val, alias = NULL)
 
 relexpr_function(name, args, alias = NULL)
+
+relexpr_window(expr, part, alias = NULL)
 
 relexpr_set_alias(expr, alias = NULL)
 }
@@ -35,6 +38,8 @@ relexpr_set_alias(expr, alias = NULL)
 \item{args}{Function arguments, a list of `expr` objects.}
 
 \item{expr}{An `expr` object.}
+
+\item{partition}{Partitions, a list of `expr` objects.}
 }
 \description{
 TBD.

@@ -49,12 +49,12 @@ rel_translate_dots <- function(dots, data) {
   }
 }
 
-rel_translate <- function(quo, data, alias = NULL) {
+rel_translate <- function(quo, data, alias = NULL, partition = NULL) {
   env <- quo_get_env(quo)
 
   used <- character()
 
-  do_translate <- function(expr) {
+  do_translate <- function(expr, window = TRUE) {
     if (is_quosure(expr)) {
       # FIXME: What to do with the environment here?
       expr <- quo_get_expr(expr)
@@ -82,13 +82,13 @@ rel_translate <- function(quo, data, alias = NULL) {
       language = {
         switch(as.character(expr[[1]]),
           "(" = {
-            return(do_translate(expr[[2]]))
+            return(do_translate(expr[[2]], window = window))
           },
           "%in%" = {
             tryCatch(
               {
                 values <- eval(expr[[3]], env = baseenv())
-                consts <- map(values, do_translate)
+                consts <- map(values, do_translate, window = window)
                 ops <- map(consts, list, do_translate(expr[[2]]))
                 cmp <- map(ops, relexpr_function, name = "==")
                 alt <- reduce(cmp, ~ relexpr_function("|", list(.x, .y)))
@@ -98,8 +98,13 @@ rel_translate <- function(quo, data, alias = NULL) {
             )
           }
         )
-        args <- map(as.list(expr[-1]), do_translate)
-        relexpr_function(as.character(expr[[1]]), args)
+        args <- map(as.list(expr[-1]), do_translate, window = FALSE)
+        fun <- relexpr_function(as.character(expr[[1]]), args)
+        if (window && length(partition)) {
+          part <- map(partition, relexpr_reference)
+          fun <- relexpr_window(fun, part)
+        }
+        fun
       },
       #
       abort(paste0("Internal: Unknown type ", typeof(expr)))

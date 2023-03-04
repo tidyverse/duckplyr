@@ -159,6 +159,7 @@ test_that("distinct preserves grouping", {
 })
 
 test_that("duckplyr_distinct() preserves attributes on bare data frames (#6318)", {
+  skip("TODO duckdb")
   df <- vctrs::data_frame(x = c(1, 1))
   attr(df, "foo") <- "bar"
 

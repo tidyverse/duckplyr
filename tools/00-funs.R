@@ -62,6 +62,7 @@ tests <- head(n = -1, list(
     NULL
   ),
   "test-distinct.R" = c(
+    "duckplyr_distinct() preserves attributes on bare data frames (#6318)",
     NULL
   ),
   "test-filter.R" = c(

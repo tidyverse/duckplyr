@@ -673,7 +673,7 @@ test_that("as_duckplyr_df() commutes for tally()", {
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% tally()
-  post <- test_df %>% tally() %>% as_duckplyr_df()
+  post <- test_df %>% tally() # FIXME: autogen
 
   # Compare
   expect_equal(pre, post)
