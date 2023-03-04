@@ -1,4 +1,4 @@
-tpc_h10 <- function(collect_func = dplyr::collect) {
+tpc_h10 <- function() {
   l <- lineitem %>%
     select(l_orderkey, l_returnflag, l_extendedprice, l_discount) %>%
     filter(l_returnflag == "R") %>%
@@ -33,10 +33,10 @@ tpc_h10 <- function(collect_func = dplyr::collect) {
            c_address, c_phone, c_comment) %>%
     arrange(desc(revenue)) %>%
     head(20) %>%
-    collect_func()
+    collect()
 }
 
-tpc_h11 <- function(collect_func = dplyr::collect) {
+tpc_h11 <- function() {
   nation <- nation %>%
     filter(n_name == "GERMANY")
 
@@ -60,10 +60,10 @@ tpc_h11 <- function(collect_func = dplyr::collect) {
     filter(value > global_value) %>%
     arrange(desc(value)) %>%
     select(ps_partkey, value) %>%
-    collect_func()
+    collect()
 }
 
-tpc_h12 <- function(collect_func = dplyr::collect) {
+tpc_h12 <- function() {
   lineitem %>%
     filter(
       l_shipmode %in% c("MAIL", "SHIP"),
@@ -95,10 +95,10 @@ tpc_h12 <- function(collect_func = dplyr::collect) {
     ) %>%
     ungroup() %>%
     arrange(l_shipmode) %>%
-    collect_func()
+    collect()
 }
 
-tpc_h13 <- function(collect_func = dplyr::collect) {
+tpc_h13 <- function() {
   c_orders <- customer %>%
     left_join(
       orders %>%
@@ -115,10 +115,10 @@ tpc_h13 <- function(collect_func = dplyr::collect) {
     summarise(custdist = n()) %>%
     ungroup() %>%
     arrange(desc(custdist), desc(c_count)) %>%
-    collect_func()
+    collect()
 }
 
-tpc_h14 <- function(collect_func = dplyr::collect) {
+tpc_h14 <- function() {
   lineitem %>%
     filter(
       l_shipdate >= as.Date("1995-01-01"),
@@ -130,10 +130,10 @@ tpc_h14 <- function(collect_func = dplyr::collect) {
         if_else(grepl("^PROMO", p_type), l_extendedprice * (1 - l_discount), 0)
       ) / sum(l_extendedprice * (1 - l_discount))
     ) %>%
-    collect_func()
+    collect()
 }
 
-tpc_h15 <- function(collect_func = dplyr::collect) {
+tpc_h15 <- function() {
   revenue_by_supplier <- lineitem %>%
     filter(
       l_shipdate >= as.Date("1996-01-01"),
@@ -157,11 +157,11 @@ tpc_h15 <- function(collect_func = dplyr::collect) {
     filter(abs(total_revenue - max_total_revenue) < 1e-9) %>%
     inner_join(supplier, by = c("l_suppkey" = "s_suppkey")) %>%
     select(s_suppkey = l_suppkey, s_name, s_address, s_phone, total_revenue) %>%
-    collect_func()
+    collect()
 }
 
 
-tpc_h16 <- function(collect_func = dplyr::collect) {
+tpc_h16 <- function() {
   part_filtered <- part %>%
     filter(
       p_brand != "Brand#45",
@@ -183,10 +183,10 @@ tpc_h16 <- function(collect_func = dplyr::collect) {
     ungroup() %>%
     select(p_brand, p_type, p_size, supplier_cnt) %>%
     arrange(desc(supplier_cnt), p_brand, p_type, p_size) %>%
-    collect_func()
+    collect()
 }
 
-tpc_h17 <- function(collect_func = dplyr::collect) {
+tpc_h17 <- function() {
   parts_filtered <- part %>%
     filter(
       p_brand == "Brand#23",
@@ -204,10 +204,10 @@ tpc_h17 <- function(collect_func = dplyr::collect) {
     inner_join(quantity_by_part, by = "l_partkey") %>%
     filter(l_quantity < quantity_threshold) %>%
     summarise(avg_yearly = sum(l_extendedprice) / 7.0) %>%
-    collect_func()
+    collect()
 }
 
-tpc_h18 <- function(collect_func = dplyr::collect) {
+tpc_h18 <- function() {
   big_orders <- lineitem %>%
     group_by(l_orderkey) %>%
     summarise(`sum(l_quantity)` = sum(l_quantity)) %>%
@@ -222,10 +222,10 @@ tpc_h18 <- function(collect_func = dplyr::collect) {
     ) %>%
     arrange(desc(o_totalprice), o_orderdate) %>%
     head(100) %>%
-    collect_func()
+    collect()
 }
 
-tpc_h19 <- function(collect_func = dplyr::collect) {
+tpc_h19 <- function() {
   joined <- lineitem %>%
     inner_join(part, by = c("l_partkey" = "p_partkey"))
 
@@ -267,10 +267,10 @@ tpc_h19 <- function(collect_func = dplyr::collect) {
     summarise(
       revenue = sum(l_extendedprice * (1 - l_discount))
     ) %>%
-    collect_func()
+    collect()
 }
 
-tpc_h20 <- function(collect_func = dplyr::collect) {
+tpc_h20 <- function() {
   supplier_ca <- supplier %>%
     inner_join(
       nation %>% filter(n_name == "CANADA"),
@@ -305,10 +305,10 @@ tpc_h20 <- function(collect_func = dplyr::collect) {
     semi_join(partsupp_forest_ca_filtered, by = c("s_suppkey" = "ps_suppkey")) %>%
     select(s_name, s_address) %>%
     arrange(s_name) %>%
-    collect_func()
+    collect()
 }
 
-tpc_h21 <- function(collect_func = dplyr::collect) {
+tpc_h21 <- function() {
   orders_with_more_than_one_supplier <- lineitem %>%
     group_by(l_orderkey) %>%
     count(l_suppkey) %>%
@@ -339,10 +339,10 @@ tpc_h21 <- function(collect_func = dplyr::collect) {
     ungroup() %>%
     arrange(desc(numwait), s_name) %>%
     head(100) %>%
-    collect_func()
+    collect()
 }
 
-tpc_h22 <- function(collect_func = dplyr::collect) {
+tpc_h22 <- function() {
   acctbal_mins <- customer %>%
     filter(
       substr(c_phone, 1, 2) %in% c("13", "31", "23", "29", "30", "18", "17") &
@@ -366,5 +366,5 @@ tpc_h22 <- function(collect_func = dplyr::collect) {
     ) %>%
     ungroup() %>%
     arrange(cntrycode) %>%
-    collect_func()
+    collect()
 }
