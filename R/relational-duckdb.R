@@ -26,6 +26,7 @@ get_default_duckdb_connection <- function() {
     DBI::dbExecute(con, 'CREATE MACRO "ifelse"(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)')
     DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)')
     DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)')
+    DBI::dbExecute(con, 'CREATE MACRO "!"(x) AS (NOT x)')
     DBI::dbExecute(con, 'CREATE MACRO "desc"(x) AS (-x)')
 
     DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(a, b) AS ((a IS NULL AND b IS NULL) OR (a = b))')
