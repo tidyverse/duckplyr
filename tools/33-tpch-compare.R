@@ -45,3 +45,50 @@ res <- tpch_10()
 correct <- read.delim("tests/testthat/tpch-sf0.01/q10.csv", sep = "|")
 stopifnot(isTRUE(all.equal(res, correct, tolerance = 1e-12)))
 
+res <- tpch_11()
+correct <- read.delim("tests/testthat/tpch-sf0.01/q11.csv", sep = "|")
+stopifnot(isTRUE(all.equal(res, correct, tolerance = 1e-12)))
+
+res <- tpch_12()
+correct <- read.delim("tests/testthat/tpch-sf0.01/q12.csv", sep = "|")
+stopifnot(isTRUE(all.equal(res, correct, tolerance = 1e-12)))
+
+res <- tpch_13()
+correct <- read.delim("tests/testthat/tpch-sf0.01/q13.csv", sep = "|")
+stopifnot(isTRUE(all.equal(res, correct, tolerance = 1e-12)))
+
+# res <- tpch_14()
+# correct <- read.delim("tests/testthat/tpch-sf0.01/q14.csv", sep = "|")
+# stopifnot(isTRUE(all.equal(res, correct, tolerance = 1e-12)))
+
+res <- tpch_15()
+correct <- read.delim("tests/testthat/tpch-sf0.01/q15.csv", sep = "|")
+stopifnot(isTRUE(all.equal(res, correct, tolerance = 1e-12)))
+
+res <- tpch_16()
+correct <- read.delim("tests/testthat/tpch-sf0.01/q16.csv", sep = "|")
+stopifnot(isTRUE(all.equal(res, correct, tolerance = 1e-12)))
+
+# res <- tpch_17()
+# correct <- read.delim("tests/testthat/tpch-sf0.01/q17.csv", sep = "|")
+# stopifnot(isTRUE(all.equal(res, correct, tolerance = 1e-12)))
+
+# res <- tpch_18()
+# correct <- read.delim("tests/testthat/tpch-sf0.01/q18.csv", sep = "|")
+# stopifnot(isTRUE(all.equal(res, correct, tolerance = 1e-12)))
+
+res <- tpch_19()
+correct <- read.delim("tests/testthat/tpch-sf0.01/q19.csv", sep = "|")
+stopifnot(isTRUE(all.equal(res, correct, tolerance = 1e-12)))
+
+# res <- tpch_20()
+# correct <- read.delim("tests/testthat/tpch-sf0.01/q20.csv", sep = "|")
+# stopifnot(isTRUE(all.equal(res, correct, tolerance = 1e-12)))
+#
+# res <- tpch_21()
+# correct <- read.delim("tests/testthat/tpch-sf0.01/q21.csv", sep = "|")
+# stopifnot(isTRUE(all.equal(res, correct, tolerance = 1e-12)))
+
+# res <- tpch_22()
+# correct <- read.delim("tests/testthat/tpch-sf0.01/q22.csv", sep = "|")
+# stopifnot(isTRUE(all.equal(res, correct, tolerance = 1e-12)))
