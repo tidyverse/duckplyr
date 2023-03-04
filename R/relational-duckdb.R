@@ -2,9 +2,9 @@
 
 # singleton DuckDB instance since we need only one really
 # we need a finalizer to disconnect on exit otherwise we get a warning
-default_duckdb_connection <- new.env(parent=emptyenv())
+default_duckdb_connection <- new.env(parent = emptyenv())
 get_default_duckdb_connection <- function() {
-  if(!exists("con", default_duckdb_connection)) {
+  if (!exists("con", default_duckdb_connection)) {
     con <- DBI::dbConnect(duckdb::duckdb())
 
     DBI::dbExecute(con, 'CREATE MACRO "<"(a, b) AS a < b')

@@ -64,4 +64,3 @@ rel_set_alias.relational_df <- function(rel, alias, ...) {
 #' @export
 rel_names.relational_df <- function(rel, ...) {
 }
-

@@ -5,8 +5,7 @@ duckplyr_mutate_keep <- function(out, keep, used, names_new, names_groups) {
 
   names <- names(out)
 
-  names_keep <- switch(
-    keep,
+  names_keep <- switch(keep,
     used = names(used)[used],
     unused = names(used)[!used],
     none = character(),

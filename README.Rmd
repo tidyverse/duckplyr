@@ -40,9 +40,9 @@ library(duckdb)
 library(duckplyr)
 
 # Use `as_duckplyr_df()` to enable processing with duckdb:
-out <- 
-  palmerpenguins::penguins %>% 
-  as_duckplyr_df() %>% 
+out <-
+  palmerpenguins::penguins %>%
+  as_duckplyr_df() %>%
   transmute(bill_area = bill_length_mm * bill_depth_mm, bill_length_mm, species, sex) %>%
   filter(bill_length_mm < 40) %>%
   select(-bill_length_mm)
@@ -52,7 +52,7 @@ class(out)
 names(out)
 
 # duckdb is responsible for eventually carrying out the operations:
-out %>% 
+out %>%
   explain()
 
 # The contents of this data frame are computed only upon request:

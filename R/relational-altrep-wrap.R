@@ -1,6 +1,6 @@
 #' @export
 wrap_integer <- function(x) {
-	.Call(chunkrep_wrap, x)
+  .Call(chunkrep_wrap, x)
 }
 
 #' @export

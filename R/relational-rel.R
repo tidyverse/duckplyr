@@ -187,4 +187,3 @@ rel_set_alias <- function(rel, alias, ...) {
 rel_names <- function(rel, ...) {
   UseMethod("rel_names")
 }
-
