@@ -13,8 +13,10 @@ tpc_h11 <- function() {
     duckplyr_mutate(global_agr_key = 1L)
 
   partkey_agr <- joined_filtered |>
-    group_by(ps_partkey) |>
-    duckplyr_summarise(value = sum(ps_supplycost * ps_availqty))
+    duckplyr_summarise(
+      value = sum(ps_supplycost * ps_availqty),
+      .by = ps_partkey
+    )
 
   partkey_agr |>
     duckplyr_mutate(global_agr_key = 1L) |>
@@ -38,7 +40,6 @@ tpc_h12 <- function() {
       orders,
       by = c("l_orderkey" = "o_orderkey")
     ) |>
-    group_by(l_shipmode) |>
     duckplyr_summarise(
       high_line_count = sum(
         if_else(
@@ -53,9 +54,9 @@ tpc_h12 <- function() {
           1L,
           0L
         )
-      )
+      ),
+      .by = l_shipmode
     ) |>
-    ungroup() |>
     duckplyr_arrange(l_shipmode) |>
     collect()
 }
@@ -67,15 +68,13 @@ tpc_h13 <- function() {
         duckplyr_filter(!grepl("special.*?requests", o_comment)),
       by = c("c_custkey" = "o_custkey")
     ) |>
-    group_by(c_custkey) |>
     duckplyr_summarise(
-      c_count = sum(!is.na(o_orderkey))
+      c_count = sum(!is.na(o_orderkey)),
+      .by = c_custkey
     )
 
   c_orders |>
-    group_by(c_count) |>
-    duckplyr_summarise(custdist = n()) |>
-    ungroup() |>
+    duckplyr_summarise(custdist = n(), .by = c_count) |>
     duckplyr_arrange(desc(custdist), desc(c_count)) |>
     collect()
 }
@@ -101,16 +100,16 @@ tpc_h15 <- function() {
       l_shipdate >= as.Date("1996-01-01"),
       l_shipdate < as.Date("1996-04-01")
     ) |>
-    group_by(l_suppkey) |>
     duckplyr_summarise(
-      total_revenue = sum(l_extendedprice * (1 - l_discount))
+      total_revenue = sum(l_extendedprice * (1 - l_discount)),
+      .by = l_suppkey
     )
 
   global_revenue <- revenue_by_supplier |>
     duckplyr_mutate(global_agr_key = 1L) |>
-    group_by(global_agr_key) |>
     duckplyr_summarise(
-      max_total_revenue = max(total_revenue)
+      max_total_revenue = max(total_revenue),
+      .by = global_agr_key
     )
 
   revenue_by_supplier |>
@@ -140,9 +139,10 @@ tpc_h16 <- function() {
 
   part_filtered |>
     duckplyr_inner_join(partsupp_filtered, by = c("p_partkey" = "ps_partkey")) |>
-    group_by(p_brand, p_type, p_size) |>
-    duckplyr_summarise(supplier_cnt = n_distinct(ps_suppkey)) |>
-    ungroup() |>
+    duckplyr_summarise(
+      supplier_cnt = n_distinct(ps_suppkey),
+      .by = c(p_brand, p_type, p_size)
+    ) |>
     duckplyr_select(p_brand, p_type, p_size, supplier_cnt) |>
     duckplyr_arrange(desc(supplier_cnt), p_brand, p_type, p_size) |>
     collect()
@@ -159,8 +159,7 @@ tpc_h17 <- function() {
     duckplyr_inner_join(parts_filtered, by = c("l_partkey" = "p_partkey"))
 
   quantity_by_part <- joined |>
-    group_by(l_partkey) |>
-    duckplyr_summarise(quantity_threshold = 0.2 * mean(l_quantity))
+    duckplyr_summarise(quantity_threshold = 0.2 * mean(l_quantity), .by = l_partkey)
 
   joined |>
     duckplyr_inner_join(quantity_by_part, by = "l_partkey") |>
@@ -171,8 +170,7 @@ tpc_h17 <- function() {
 
 tpc_h18 <- function() {
   big_orders <- lineitem |>
-    group_by(l_orderkey) |>
-    duckplyr_summarise(`sum(l_quantity)` = sum(l_quantity)) |>
+    duckplyr_summarise(`sum(l_quantity)` = sum(l_quantity), .by = l_orderkey) |>
     duckplyr_filter(`sum(l_quantity)` > 300)
 
   orders |>
@@ -254,8 +252,7 @@ tpc_h20 <- function() {
       l_shipdate < as.Date("1995-01-01")
     ) |>
     duckplyr_semi_join(partsupp_forest_ca, by = c("l_partkey" = "ps_partkey", "l_suppkey" = "ps_suppkey")) |>
-    group_by(l_suppkey) |>
-    duckplyr_summarise(qty_threshold = 0.5 * sum(l_quantity))
+    duckplyr_summarise(qty_threshold = 0.5 * sum(l_quantity), .by = l_suppkey)
 
   partsupp_forest_ca_filtered <- partsupp_forest_ca |>
     duckplyr_inner_join(
@@ -273,20 +270,23 @@ tpc_h20 <- function() {
 
 tpc_h21 <- function() {
   orders_with_more_than_one_supplier <- lineitem |>
-    group_by(l_orderkey) |>
-    duckplyr_count(l_suppkey) |>
-    group_by(l_orderkey) |>
-    duckplyr_summarise(n_supplier = n()) |>
+    duckplyr_count(l_orderkey, l_suppkey) |>
+    duckplyr_summarise(n_supplier = n(), .by = l_orderkey) |>
     duckplyr_filter(n_supplier > 1)
 
   line_items_needed <- lineitem |>
     duckplyr_semi_join(orders_with_more_than_one_supplier) |>
     duckplyr_inner_join(orders, by = c("l_orderkey" = "o_orderkey")) |>
     duckplyr_filter(o_orderstatus == "F") |>
-    group_by(l_orderkey, l_suppkey) |>
-    duckplyr_summarise(failed_delivery_commit = any(l_receiptdate > l_commitdate)) |>
-    group_by(l_orderkey) |>
-    duckplyr_summarise(n_supplier = n(), num_failed = sum(failed_delivery_commit)) |>
+    duckplyr_summarise(
+      failed_delivery_commit = any(l_receiptdate > l_commitdate),
+      .by = c(l_orderkey, l_suppkey)
+    ) |>
+    duckplyr_summarise(
+      n_supplier = n(),
+      num_failed = sum(failed_delivery_commit),
+      .by = l_orderkey
+    ) |>
     duckplyr_filter(n_supplier > 1 & num_failed == 1)
 
   line_items <- lineitem |>
@@ -297,9 +297,7 @@ tpc_h21 <- function() {
     duckplyr_filter(l_receiptdate > l_commitdate) |>
     duckplyr_inner_join(nation, by = c("s_nationkey" = "n_nationkey")) |>
     duckplyr_filter(n_name == "SAUDI ARABIA") |>
-    group_by(s_name) |>
-    duckplyr_summarise(numwait = n()) |>
-    ungroup() |>
+    duckplyr_summarise(numwait = n(), .by = s_name) |>
     duckplyr_arrange(desc(numwait), s_name) |>
     head(100) |>
     collect()
@@ -322,12 +320,11 @@ tpc_h22 <- function() {
     ) |>
     anti_join(orders, by = c("c_custkey" = "o_custkey")) |>
     duckplyr_select(cntrycode, c_acctbal) |>
-    group_by(cntrycode) |>
     duckplyr_summarise(
       numcust = n(),
-      totacctbal = sum(c_acctbal)
+      totacctbal = sum(c_acctbal),
+      .by = cntrycode
     ) |>
-    ungroup() |>
     duckplyr_arrange(cntrycode) |>
     collect()
 }
