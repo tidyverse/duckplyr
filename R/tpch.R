@@ -58,9 +58,11 @@ tpch_02 <- function() {
     duckplyr_summarise(min_ps_supplycost = min(ps_supplycost), .by = ps_partkey)
 
   sj <- duckplyr_inner_join(pspsnr, aggr,
-    by = c("ps_partkey" = "ps_partkey", "ps_supplycost" = "min_ps_supplycost")
+    by = c(
+      "ps_partkey" = "ps_partkey",
+      "ps_supplycost" = "min_ps_supplycost"
+    )
   )
-
 
   res <- sj |>
     duckplyr_select(
