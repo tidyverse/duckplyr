@@ -42,14 +42,14 @@ tpch_12 <- function() {
     ) |>
     duckplyr_summarise(
       high_line_count = sum(
-        if_else(
+        ifelse(
           (o_orderpriority == "1-URGENT") | (o_orderpriority == "2-HIGH"),
           1L,
           0L
         )
       ),
       low_line_count = sum(
-        if_else(
+        ifelse(
           (o_orderpriority != "1-URGENT") & (o_orderpriority != "2-HIGH"),
           1L,
           0L
@@ -88,7 +88,7 @@ tpch_14 <- function() {
     duckplyr_inner_join(part, by = c("l_partkey" = "p_partkey")) |>
     duckplyr_summarise(
       promo_revenue = 100 * sum(
-        if_else(grepl("^PROMO", p_type), l_extendedprice * (1 - l_discount), 0)
+        ifelse(grepl("^PROMO", p_type), l_extendedprice * (1 - l_discount), 0)
       ) / sum(l_extendedprice * (1 - l_discount))
     ) |>
     collect()
