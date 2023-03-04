@@ -72,7 +72,7 @@ tpch_02 <- function() {
       s_acctbal, s_name, n_name, p_partkey, p_mfgr,
       s_address, s_phone, s_comment
     ) |>
-    duckplyr_arrange(-s_acctbal, n_name, s_name, p_partkey) |>
+    duckplyr_arrange(desc(s_acctbal), n_name, s_name, p_partkey) |>
     head(100)
 
   res
@@ -103,7 +103,7 @@ tpch_03 <- function() {
     duckplyr_mutate(volume = l_extendedprice * (1 - l_discount)) |>
     duckplyr_summarise(revenue = sum(volume), .by = c(l_orderkey, o_orderdate, o_shippriority)) |>
     duckplyr_select(l_orderkey, revenue, o_orderdate, o_shippriority) |>
-    duckplyr_arrange(-revenue, o_orderdate) |>
+    duckplyr_arrange(desc(revenue), o_orderdate) |>
     head(10)
   aggr
 }
@@ -174,7 +174,7 @@ tpch_05 <- function() {
   aggr <- lsnroc |>
     duckplyr_mutate(volume = l_extendedprice * (1 - l_discount)) |>
     duckplyr_summarise(revenue = sum(volume), .by = n_name) |>
-    duckplyr_arrange(-revenue)
+    duckplyr_arrange(desc(revenue))
 
   aggr
 }
@@ -374,7 +374,7 @@ tpch_09 <- function() {
     ) |>
     duckplyr_select_opt(nation, o_year, amount) |>
     duckplyr_summarise(sum_profit = sum(amount), .by = c(nation, o_year)) |>
-    duckplyr_arrange(nation, -o_year)
+    duckplyr_arrange(nation, desc(o_year))
 
   aggr
 }
@@ -415,7 +415,7 @@ tpch_10 <- function() {
       c_custkey, c_name, revenue, c_acctbal, n_name,
       c_address, c_phone, c_comment
     ) |>
-    duckplyr_arrange(-revenue) |>
+    duckplyr_arrange(desc(revenue)) |>
     head(20)
 
   res
