@@ -306,13 +306,16 @@ tpch_21 <- function() {
 tpch_22 <- function() {
   acctbal_mins <- customer |>
     duckplyr_filter(
-      substr(c_phone, 1, 2) %in% c("13", "31", "23", "29", "30", "18", "17") &
+      # FIXME: substr(c_phone, 1, 2)
+      substr(c_phone, 1L, 2L) %in% c("13", "31", "23", "29", "30", "18", "17") &
         c_acctbal > 0
     ) |>
-    duckplyr_summarise(acctbal_min = mean(c_acctbal, na.rm = TRUE), join_id = 1L)
+    # FIXME: mean(na.rm = TRUE)
+    duckplyr_summarise(acctbal_min = mean(c_acctbal), join_id = 1L)
 
   customer |>
-    duckplyr_mutate(cntrycode = substr(c_phone, 1, 2), join_id = 1L) |>
+    # FIXME: substr(c_phone, 1, 2)
+    duckplyr_mutate(cntrycode = substr(c_phone, 1L, 2L), join_id = 1L) |>
     duckplyr_left_join(acctbal_mins, by = "join_id") |>
     duckplyr_filter(
       cntrycode %in% c("13", "31", "23", "29", "30", "18", "17") &
