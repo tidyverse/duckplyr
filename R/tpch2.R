@@ -322,7 +322,7 @@ tpch_22 <- function() {
       cntrycode %in% c("13", "31", "23", "29", "30", "18", "17") &
         c_acctbal > acctbal_min
     ) |>
-    anti_join(orders, by = c("c_custkey" = "o_custkey")) |>
+    duckplyr_anti_join(orders, by = c("c_custkey" = "o_custkey")) |>
     duckplyr_select(cntrycode, c_acctbal) |>
     duckplyr_summarise(
       numcust = n(),
