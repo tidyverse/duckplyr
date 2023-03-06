@@ -4,20 +4,22 @@
 summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
   force(.data)
 
-  rel_try({
-    rel <- duckdb_rel_from_df(.data)
-    dots <- dplyr_quosures(...)
-    dots <- fix_auto_name(dots)
-    aggregates <- rel_translate_dots(dots, .data)
-    by <- eval_select_by(enquo(.by), .data)
-    groups <- lapply(by, relexpr_reference)
+  rel_try(
+    {
+      rel <- duckdb_rel_from_df(.data)
+      dots <- dplyr_quosures(...)
+      dots <- fix_auto_name(dots)
+      aggregates <- rel_translate_dots(dots, .data)
+      by <- eval_select_by(enquo(.by), .data)
+      groups <- lapply(by, relexpr_reference)
 
-    out_rel <- rel_aggregate(rel, groups, aggregates)
-    out <- rel_to_df(out_rel)
-    class(out) <- class(.data)
+      out_rel <- rel_aggregate(rel, groups, aggregates)
+      out <- rel_to_df(out_rel)
+      class(out) <- class(.data)
 
-    return(out)
-  })
+      return(out)
+    }
+  )
 
   # dplyr forward
   summarise <- dplyr:::summarise.data.frame
