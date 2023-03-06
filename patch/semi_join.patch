@@ -1,0 +1,23 @@
+diff --git b/R/semi_join.R a/R/semi_join.R
+index 5252ef0..45ce3ca 100644
+--- b/R/semi_join.R
++++ a/R/semi_join.R
+@@ -2,10 +2,17 @@
+ #' @importFrom dplyr semi_join
+ #' @export
+ semi_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches = c("na", "never")) {
++  check_dots_empty0(...)
++  error_call <- caller_env()
++
+   # Our implementation
+   rel_try(
+-    "No relational implementation for semi_join()" = TRUE,
++    "Only equi-joins for semi_join()" = inherits(by, "dplyr_join_by") && any(by$condition != "=="),
++    "No relational implementation for semi_join(copy = TRUE)" = copy,
++    # https://github.com/duckdb/duckdb/issues/6597
++    "Can't use semi_join(na_matches = \"na\")" = (na_matches == "na"),
+     {
++      out <- rel_filter_join_impl(x, y, by, na_matches, "semi", error_call)
+       return(out)
+     }
+   )
