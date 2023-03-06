@@ -1,14 +1,14 @@
-duckplyr_select_opt <- duckplyr_select
-# duckplyr_select_opt <- function(x, ...) x
+select_opt <- select
+# select_opt <- function(x, ...) x
 
 TPCH_NA_MATCHES <- "never"
 
 tpch_01 <- function() {
   lineitem |>
-    duckplyr_select_opt(l_shipdate, l_returnflag, l_linestatus, l_quantity, l_extendedprice, l_discount, l_tax) |>
-    duckplyr_filter(l_shipdate <= as.Date("1998-09-02")) |>
-    duckplyr_select_opt(l_returnflag, l_linestatus, l_quantity, l_extendedprice, l_discount, l_tax) |>
-    duckplyr_summarise(
+    select_opt(l_shipdate, l_returnflag, l_linestatus, l_quantity, l_extendedprice, l_discount, l_tax) |>
+    filter(l_shipdate <= as.Date("1998-09-02")) |>
+    select_opt(l_returnflag, l_linestatus, l_quantity, l_extendedprice, l_discount, l_tax) |>
+    summarise(
       sum_qty = sum(l_quantity),
       sum_base_price = sum(l_extendedprice),
       sum_disc_price = sum(l_extendedprice * (1 - l_discount)),
@@ -19,50 +19,50 @@ tpch_01 <- function() {
       count_order = n(),
       .by = c(l_returnflag, l_linestatus)
     ) |>
-    duckplyr_arrange(l_returnflag, l_linestatus)
+    arrange(l_returnflag, l_linestatus)
 }
 
 tpch_02 <- function() {
-  ps <- partsupp |> duckplyr_select_opt(ps_partkey, ps_suppkey, ps_supplycost)
+  ps <- partsupp |> select_opt(ps_partkey, ps_suppkey, ps_supplycost)
 
   p <- part |>
-    duckplyr_select_opt(p_partkey, p_type, p_size, p_mfgr) |>
-    duckplyr_filter(p_size == 15, grepl("BRASS$", p_type)) |>
-    duckplyr_select_opt(p_partkey, p_mfgr)
+    select_opt(p_partkey, p_type, p_size, p_mfgr) |>
+    filter(p_size == 15, grepl("BRASS$", p_type)) |>
+    select_opt(p_partkey, p_mfgr)
 
-  psp <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, p, ps, by = c("p_partkey" = "ps_partkey"))
+  psp <- inner_join(na_matches = TPCH_NA_MATCHES, p, ps, by = c("p_partkey" = "ps_partkey"))
 
   sp <- supplier |>
-    duckplyr_select_opt(
+    select_opt(
       s_suppkey, s_nationkey, s_acctbal, s_name,
       s_address, s_phone, s_comment
     )
 
-  psps <- duckplyr_inner_join(psp, sp,
+  psps <- inner_join(psp, sp,
     by = c("ps_suppkey" = "s_suppkey")
   ) |>
-    duckplyr_select_opt(
+    select_opt(
       p_partkey, ps_supplycost, p_mfgr, s_nationkey,
       s_acctbal, s_name, s_address, s_phone, s_comment
     )
 
-  nr <- duckplyr_inner_join(
+  nr <- inner_join(
     nation,
-    region |> duckplyr_filter(r_name == "EUROPE"),
+    region |> filter(r_name == "EUROPE"),
     by = c("n_regionkey" = "r_regionkey")
   ) |>
-    duckplyr_select_opt(n_nationkey, n_name)
+    select_opt(n_nationkey, n_name)
 
-  pspsnr <- duckplyr_inner_join(psps, nr, by = c("s_nationkey" = "n_nationkey")) |>
-    duckplyr_select_opt(
+  pspsnr <- inner_join(psps, nr, by = c("s_nationkey" = "n_nationkey")) |>
+    select_opt(
       p_partkey, ps_supplycost, p_mfgr, n_name, s_acctbal,
       s_name, s_address, s_phone, s_comment
     )
 
   aggr <- pspsnr |>
-    duckplyr_summarise(min_ps_supplycost = min(ps_supplycost), .by = p_partkey)
+    summarise(min_ps_supplycost = min(ps_supplycost), .by = p_partkey)
 
-  sj <- duckplyr_inner_join(pspsnr, aggr,
+  sj <- inner_join(pspsnr, aggr,
     by = c(
       "p_partkey" = "p_partkey",
       "ps_supplycost" = "min_ps_supplycost"
@@ -70,354 +70,354 @@ tpch_02 <- function() {
   )
 
   res <- sj |>
-    duckplyr_select(
+    select(
       s_acctbal, s_name, n_name, p_partkey, p_mfgr,
       s_address, s_phone, s_comment
     ) |>
-    duckplyr_arrange(desc(s_acctbal), n_name, s_name, p_partkey) |>
+    arrange(desc(s_acctbal), n_name, s_name, p_partkey) |>
     head(100)
 
   res
 }
 
 tpch_03 <- function() {
-  oc <- duckplyr_inner_join(
+  oc <- inner_join(
     orders |>
-      duckplyr_select_opt(o_orderkey, o_custkey, o_orderdate, o_shippriority) |>
-      duckplyr_filter(o_orderdate < as.Date("1995-03-15")),
+      select_opt(o_orderkey, o_custkey, o_orderdate, o_shippriority) |>
+      filter(o_orderdate < as.Date("1995-03-15")),
     customer |>
-      duckplyr_select_opt(c_custkey, c_mktsegment) |>
-      duckplyr_filter(c_mktsegment == "BUILDING"),
+      select_opt(c_custkey, c_mktsegment) |>
+      filter(c_mktsegment == "BUILDING"),
     by = c("o_custkey" = "c_custkey")
   ) |>
-    duckplyr_select_opt(o_orderkey, o_orderdate, o_shippriority)
+    select_opt(o_orderkey, o_orderdate, o_shippriority)
 
-  loc <- duckplyr_inner_join(
+  loc <- inner_join(
     lineitem |>
-      duckplyr_select_opt(l_orderkey, l_shipdate, l_extendedprice, l_discount) |>
-      duckplyr_filter(l_shipdate > as.Date("1995-03-15")) |>
-      duckplyr_select_opt(l_orderkey, l_extendedprice, l_discount),
+      select_opt(l_orderkey, l_shipdate, l_extendedprice, l_discount) |>
+      filter(l_shipdate > as.Date("1995-03-15")) |>
+      select_opt(l_orderkey, l_extendedprice, l_discount),
     oc,
     by = c("l_orderkey" = "o_orderkey")
   )
 
   aggr <- loc |>
-    duckplyr_mutate(volume = l_extendedprice * (1 - l_discount)) |>
-    duckplyr_summarise(revenue = sum(volume), .by = c(l_orderkey, o_orderdate, o_shippriority)) |>
-    duckplyr_select(l_orderkey, revenue, o_orderdate, o_shippriority) |>
-    duckplyr_arrange(desc(revenue), o_orderdate) |>
+    mutate(volume = l_extendedprice * (1 - l_discount)) |>
+    summarise(revenue = sum(volume), .by = c(l_orderkey, o_orderdate, o_shippriority)) |>
+    select(l_orderkey, revenue, o_orderdate, o_shippriority) |>
+    arrange(desc(revenue), o_orderdate) |>
     head(10)
   aggr
 }
 
 tpch_04 <- function() {
   l <- lineitem |>
-    duckplyr_select_opt(l_orderkey, l_commitdate, l_receiptdate) |>
-    duckplyr_filter(l_commitdate < l_receiptdate) |>
-    duckplyr_select(l_orderkey)
+    select_opt(l_orderkey, l_commitdate, l_receiptdate) |>
+    filter(l_commitdate < l_receiptdate) |>
+    select(l_orderkey)
 
   o <- orders |>
-    duckplyr_select_opt(o_orderkey, o_orderdate, o_orderpriority) |>
-    duckplyr_filter(o_orderdate >= as.Date("1993-07-01"), o_orderdate < as.Date("1993-10-01")) |>
-    duckplyr_select(o_orderkey, o_orderpriority)
+    select_opt(o_orderkey, o_orderdate, o_orderpriority) |>
+    filter(o_orderdate >= as.Date("1993-07-01"), o_orderdate < as.Date("1993-10-01")) |>
+    select(o_orderkey, o_orderpriority)
 
   # distinct after join, tested and indeed faster
-  lo <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, l, o, by = c("l_orderkey" = "o_orderkey")) |>
-    duckplyr_distinct() |>
-    duckplyr_select_opt(o_orderpriority)
+  lo <- inner_join(na_matches = TPCH_NA_MATCHES, l, o, by = c("l_orderkey" = "o_orderkey")) |>
+    distinct() |>
+    select_opt(o_orderpriority)
 
   aggr <- lo |>
-    duckplyr_summarise(order_count = n(), .by = o_orderpriority) |>
-    duckplyr_arrange(o_orderpriority)
+    summarise(order_count = n(), .by = o_orderpriority) |>
+    arrange(o_orderpriority)
 
   aggr
 }
 
 tpch_05 <- function() {
-  nr <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES,
+  nr <- inner_join(na_matches = TPCH_NA_MATCHES,
     nation |>
-      duckplyr_select_opt(n_nationkey, n_regionkey, n_name),
+      select_opt(n_nationkey, n_regionkey, n_name),
     region |>
-      duckplyr_select_opt(r_regionkey, r_name) |>
-      duckplyr_filter(r_name == "ASIA"),
+      select_opt(r_regionkey, r_name) |>
+      filter(r_name == "ASIA"),
     by = c("n_regionkey" = "r_regionkey")
   ) |>
-    duckplyr_select_opt(n_nationkey, n_name)
+    select_opt(n_nationkey, n_name)
 
-  snr <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES,
+  snr <- inner_join(na_matches = TPCH_NA_MATCHES,
     supplier |>
-      duckplyr_select_opt(s_suppkey, s_nationkey),
+      select_opt(s_suppkey, s_nationkey),
     nr,
     by = c("s_nationkey" = "n_nationkey")
   ) |>
-    duckplyr_select_opt(s_suppkey, s_nationkey, n_name)
+    select_opt(s_suppkey, s_nationkey, n_name)
 
-  lsnr <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES,
-    lineitem |> duckplyr_select_opt(l_suppkey, l_orderkey, l_extendedprice, l_discount),
+  lsnr <- inner_join(na_matches = TPCH_NA_MATCHES,
+    lineitem |> select_opt(l_suppkey, l_orderkey, l_extendedprice, l_discount),
     snr,
     by = c("l_suppkey" = "s_suppkey")
   )
 
   o <- orders |>
-    duckplyr_select_opt(o_orderdate, o_orderkey, o_custkey) |>
-    duckplyr_filter(o_orderdate >= as.Date("1994-01-01"), o_orderdate < as.Date("1995-01-01")) |>
-    duckplyr_select_opt(o_orderkey, o_custkey)
+    select_opt(o_orderdate, o_orderkey, o_custkey) |>
+    filter(o_orderdate >= as.Date("1994-01-01"), o_orderdate < as.Date("1995-01-01")) |>
+    select_opt(o_orderkey, o_custkey)
 
-  oc <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, o, customer |> duckplyr_select_opt(c_custkey, c_nationkey),
+  oc <- inner_join(na_matches = TPCH_NA_MATCHES, o, customer |> select_opt(c_custkey, c_nationkey),
     by = c("o_custkey" = "c_custkey")
   ) |>
-    duckplyr_select_opt(o_orderkey, c_nationkey)
+    select_opt(o_orderkey, c_nationkey)
 
-  lsnroc <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, lsnr, oc,
+  lsnroc <- inner_join(na_matches = TPCH_NA_MATCHES, lsnr, oc,
     by = c("l_orderkey" = "o_orderkey", "s_nationkey" = "c_nationkey")
   ) |>
-    duckplyr_select_opt(l_extendedprice, l_discount, n_name)
+    select_opt(l_extendedprice, l_discount, n_name)
 
   aggr <- lsnroc |>
-    duckplyr_mutate(volume = l_extendedprice * (1 - l_discount)) |>
-    duckplyr_summarise(revenue = sum(volume), .by = n_name) |>
-    duckplyr_arrange(desc(revenue))
+    mutate(volume = l_extendedprice * (1 - l_discount)) |>
+    summarise(revenue = sum(volume), .by = n_name) |>
+    arrange(desc(revenue))
 
   aggr
 }
 
 tpch_06 <- function() {
   lineitem |>
-    duckplyr_select_opt(l_shipdate, l_extendedprice, l_discount, l_quantity) |>
-    duckplyr_filter(
+    select_opt(l_shipdate, l_extendedprice, l_discount, l_quantity) |>
+    filter(
       l_shipdate >= as.Date("1994-01-01"),
       l_shipdate < as.Date("1995-01-01"),
       l_discount >= 0.05,
       l_discount <= 0.07,
       l_quantity < 24
     ) |>
-    duckplyr_select_opt(l_extendedprice, l_discount) |>
-    duckplyr_summarise(revenue = sum(l_extendedprice * l_discount))
+    select_opt(l_extendedprice, l_discount) |>
+    summarise(revenue = sum(l_extendedprice * l_discount))
 }
 
 tpch_07 <- function() {
-  sn <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES,
+  sn <- inner_join(na_matches = TPCH_NA_MATCHES,
     supplier |>
-      duckplyr_select_opt(s_nationkey, s_suppkey),
+      select_opt(s_nationkey, s_suppkey),
     nation |>
-      duckplyr_select(n1_nationkey = n_nationkey, n1_name = n_name) |>
-      # duckplyr_filter(n1_name %in% c("FRANCE", "GERMANY")),  TODO
-      duckplyr_filter(n1_name == "FRANCE" | n1_name == "GERMANY"),
+      select(n1_nationkey = n_nationkey, n1_name = n_name) |>
+      # filter(n1_name %in% c("FRANCE", "GERMANY")),  TODO
+      filter(n1_name == "FRANCE" | n1_name == "GERMANY"),
     by = c("s_nationkey" = "n1_nationkey")
   ) |>
-    duckplyr_select_opt(s_suppkey, n1_name)
+    select_opt(s_suppkey, n1_name)
 
-  cn <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES,
+  cn <- inner_join(na_matches = TPCH_NA_MATCHES,
     customer |>
-      duckplyr_select_opt(c_custkey, c_nationkey),
+      select_opt(c_custkey, c_nationkey),
     nation |>
-      duckplyr_select(n2_nationkey = n_nationkey, n2_name = n_name) |>
-      # duckplyr_filter(n2_name %in% c("FRANCE", "GERMANY")),
-      duckplyr_filter(n2_name == "FRANCE" | n2_name == "GERMANY"),
+      select(n2_nationkey = n_nationkey, n2_name = n_name) |>
+      # filter(n2_name %in% c("FRANCE", "GERMANY")),
+      filter(n2_name == "FRANCE" | n2_name == "GERMANY"),
     by = c("c_nationkey" = "n2_nationkey")
   ) |>
-    duckplyr_select_opt(c_custkey, n2_name)
+    select_opt(c_custkey, n2_name)
 
-  cno <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES,
+  cno <- inner_join(na_matches = TPCH_NA_MATCHES,
     orders |>
-      duckplyr_select_opt(o_custkey, o_orderkey),
+      select_opt(o_custkey, o_orderkey),
     cn,
     by = c("o_custkey" = "c_custkey")
   ) |>
-    duckplyr_select_opt(o_orderkey, n2_name)
+    select_opt(o_orderkey, n2_name)
 
-  cnol <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES,
+  cnol <- inner_join(na_matches = TPCH_NA_MATCHES,
     lineitem |>
-      duckplyr_select_opt(l_orderkey, l_suppkey, l_shipdate, l_extendedprice, l_discount) |>
-      duckplyr_filter(l_shipdate >= as.Date("1995-01-01"), l_shipdate <= as.Date("1996-12-31")),
+      select_opt(l_orderkey, l_suppkey, l_shipdate, l_extendedprice, l_discount) |>
+      filter(l_shipdate >= as.Date("1995-01-01"), l_shipdate <= as.Date("1996-12-31")),
     cno,
     by = c("l_orderkey" = "o_orderkey")
   ) |>
-    duckplyr_select_opt(l_suppkey, l_shipdate, l_extendedprice, l_discount, n2_name)
+    select_opt(l_suppkey, l_shipdate, l_extendedprice, l_discount, n2_name)
 
-  all <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, cnol, sn, by = c("l_suppkey" = "s_suppkey"))
+  all <- inner_join(na_matches = TPCH_NA_MATCHES, cnol, sn, by = c("l_suppkey" = "s_suppkey"))
 
   aggr <- all |>
-    duckplyr_filter((n1_name == "FRANCE" & n2_name == "GERMANY") |
+    filter((n1_name == "FRANCE" & n2_name == "GERMANY") |
       (n1_name == "GERMANY" & n2_name == "FRANCE")) |>
-    duckplyr_mutate(
+    mutate(
       supp_nation = n1_name,
       cust_nation = n2_name,
       l_year = as.integer(strftime(l_shipdate, "%Y")),
       volume = l_extendedprice * (1 - l_discount)
     ) |>
-    duckplyr_select_opt(supp_nation, cust_nation, l_year, volume) |>
-    duckplyr_summarise(revenue = sum(volume), .by = c(supp_nation, cust_nation, l_year)) |>
-    duckplyr_arrange(supp_nation, cust_nation, l_year)
+    select_opt(supp_nation, cust_nation, l_year, volume) |>
+    summarise(revenue = sum(volume), .by = c(supp_nation, cust_nation, l_year)) |>
+    arrange(supp_nation, cust_nation, l_year)
 
   aggr
 }
 
 tpch_08 <- function() {
-  nr <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES,
+  nr <- inner_join(na_matches = TPCH_NA_MATCHES,
     nation |>
-      duckplyr_select(n1_nationkey = n_nationkey, n1_regionkey = n_regionkey),
+      select(n1_nationkey = n_nationkey, n1_regionkey = n_regionkey),
     region |>
-      duckplyr_select_opt(r_regionkey, r_name) |>
-      duckplyr_filter(r_name == "AMERICA") |>
-      duckplyr_select_opt(r_regionkey),
+      select_opt(r_regionkey, r_name) |>
+      filter(r_name == "AMERICA") |>
+      select_opt(r_regionkey),
     by = c("n1_regionkey" = "r_regionkey")
   ) |>
-    duckplyr_select_opt(n1_nationkey)
+    select_opt(n1_nationkey)
 
-  cnr <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES,
+  cnr <- inner_join(na_matches = TPCH_NA_MATCHES,
     customer |>
-      duckplyr_select_opt(c_custkey, c_nationkey),
+      select_opt(c_custkey, c_nationkey),
     nr,
     by = c("c_nationkey" = "n1_nationkey")
   ) |>
-    duckplyr_select_opt(c_custkey)
+    select_opt(c_custkey)
 
-  ocnr <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES,
+  ocnr <- inner_join(na_matches = TPCH_NA_MATCHES,
     orders |>
-      duckplyr_select_opt(o_orderkey, o_custkey, o_orderdate) |>
-      duckplyr_filter(o_orderdate >= as.Date("1995-01-01"), o_orderdate <= as.Date("1996-12-31")),
+      select_opt(o_orderkey, o_custkey, o_orderdate) |>
+      filter(o_orderdate >= as.Date("1995-01-01"), o_orderdate <= as.Date("1996-12-31")),
     cnr,
     by = c("o_custkey" = "c_custkey")
   ) |>
-    duckplyr_select_opt(o_orderkey, o_orderdate)
+    select_opt(o_orderkey, o_orderdate)
 
-  locnr <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES,
+  locnr <- inner_join(na_matches = TPCH_NA_MATCHES,
     lineitem |>
-      duckplyr_select_opt(l_orderkey, l_partkey, l_suppkey, l_extendedprice, l_discount),
+      select_opt(l_orderkey, l_partkey, l_suppkey, l_extendedprice, l_discount),
     ocnr,
     by = c("l_orderkey" = "o_orderkey")
   ) |>
-    duckplyr_select_opt(l_partkey, l_suppkey, l_extendedprice, l_discount, o_orderdate)
+    select_opt(l_partkey, l_suppkey, l_extendedprice, l_discount, o_orderdate)
 
-  locnrp <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, locnr,
+  locnrp <- inner_join(na_matches = TPCH_NA_MATCHES, locnr,
     part |>
-      duckplyr_select_opt(p_partkey, p_type) |>
-      duckplyr_filter(p_type == "ECONOMY ANODIZED STEEL") |>
-      duckplyr_select_opt(p_partkey),
+      select_opt(p_partkey, p_type) |>
+      filter(p_type == "ECONOMY ANODIZED STEEL") |>
+      select_opt(p_partkey),
     by = c("l_partkey" = "p_partkey")
   ) |>
-    duckplyr_select_opt(l_suppkey, l_extendedprice, l_discount, o_orderdate)
+    select_opt(l_suppkey, l_extendedprice, l_discount, o_orderdate)
 
-  locnrps <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, locnrp,
+  locnrps <- inner_join(na_matches = TPCH_NA_MATCHES, locnrp,
     supplier |>
-      duckplyr_select_opt(s_suppkey, s_nationkey),
+      select_opt(s_suppkey, s_nationkey),
     by = c("l_suppkey" = "s_suppkey")
   ) |>
-    duckplyr_select_opt(l_extendedprice, l_discount, o_orderdate, s_nationkey)
+    select_opt(l_extendedprice, l_discount, o_orderdate, s_nationkey)
 
-  all <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, locnrps,
+  all <- inner_join(na_matches = TPCH_NA_MATCHES, locnrps,
     nation |>
-      duckplyr_select(n2_nationkey = n_nationkey, n2_name = n_name),
+      select(n2_nationkey = n_nationkey, n2_name = n_name),
     by = c("s_nationkey" = "n2_nationkey")
   ) |>
-    duckplyr_select_opt(l_extendedprice, l_discount, o_orderdate, n2_name)
+    select_opt(l_extendedprice, l_discount, o_orderdate, n2_name)
 
   aggr <- all |>
-    duckplyr_mutate(
+    mutate(
       o_year = as.integer(strftime(o_orderdate, "%Y")),
       volume = l_extendedprice * (1 - l_discount),
       nation = n2_name
     ) |>
-    duckplyr_select_opt(o_year, volume, nation) |>
-    duckplyr_summarise(
+    select_opt(o_year, volume, nation) |>
+    summarise(
       mkt_share = sum(ifelse(nation == "BRAZIL", volume, 0)) / sum(volume),
       .by = o_year
     ) |>
-    duckplyr_arrange(o_year)
+    arrange(o_year)
   aggr
 }
 
 tpch_09 <- function() {
   p <- part |>
-    duckplyr_select_opt(p_name, p_partkey) |>
-    duckplyr_filter(grepl("green", p_name)) |>
-    duckplyr_select_opt(p_partkey)
+    select_opt(p_name, p_partkey) |>
+    filter(grepl("green", p_name)) |>
+    select_opt(p_partkey)
 
-  psp <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES,
+  psp <- inner_join(na_matches = TPCH_NA_MATCHES,
     partsupp |>
-      duckplyr_select_opt(ps_suppkey, ps_partkey, ps_supplycost),
+      select_opt(ps_suppkey, ps_partkey, ps_supplycost),
     p,
     by = c("ps_partkey" = "p_partkey")
   )
 
-  sn <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES,
+  sn <- inner_join(na_matches = TPCH_NA_MATCHES,
     supplier |>
-      duckplyr_select_opt(s_suppkey, s_nationkey),
+      select_opt(s_suppkey, s_nationkey),
     nation |>
-      duckplyr_select_opt(n_nationkey, n_name),
+      select_opt(n_nationkey, n_name),
     by = c("s_nationkey" = "n_nationkey")
   ) |>
-    duckplyr_select_opt(s_suppkey, n_name)
+    select_opt(s_suppkey, n_name)
 
-  pspsn <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, psp, sn, by = c("ps_suppkey" = "s_suppkey"))
+  pspsn <- inner_join(na_matches = TPCH_NA_MATCHES, psp, sn, by = c("ps_suppkey" = "s_suppkey"))
 
-  lpspsn <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES,
+  lpspsn <- inner_join(na_matches = TPCH_NA_MATCHES,
     lineitem |>
-      duckplyr_select_opt(l_suppkey, l_partkey, l_orderkey, l_extendedprice, l_discount, l_quantity),
+      select_opt(l_suppkey, l_partkey, l_orderkey, l_extendedprice, l_discount, l_quantity),
     pspsn,
     by = c("l_suppkey" = "ps_suppkey", "l_partkey" = "ps_partkey")
   ) |>
-    duckplyr_select_opt(l_orderkey, l_extendedprice, l_discount, l_quantity, ps_supplycost, n_name)
+    select_opt(l_orderkey, l_extendedprice, l_discount, l_quantity, ps_supplycost, n_name)
 
-  all <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES,
+  all <- inner_join(na_matches = TPCH_NA_MATCHES,
     orders |>
-      duckplyr_select_opt(o_orderkey, o_orderdate),
+      select_opt(o_orderkey, o_orderdate),
     lpspsn,
     by = c("o_orderkey" = "l_orderkey")
   ) |>
-    duckplyr_select_opt(l_extendedprice, l_discount, l_quantity, ps_supplycost, n_name, o_orderdate)
+    select_opt(l_extendedprice, l_discount, l_quantity, ps_supplycost, n_name, o_orderdate)
 
   aggr <- all |>
-    duckplyr_mutate(
+    mutate(
       nation = n_name,
       o_year = as.integer(strftime(o_orderdate, "%Y")),
       amount = l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity
     ) |>
-    duckplyr_select_opt(nation, o_year, amount) |>
-    duckplyr_summarise(sum_profit = sum(amount), .by = c(nation, o_year)) |>
-    duckplyr_arrange(nation, desc(o_year))
+    select_opt(nation, o_year, amount) |>
+    summarise(sum_profit = sum(amount), .by = c(nation, o_year)) |>
+    arrange(nation, desc(o_year))
 
   aggr
 }
 
 tpch_10 <- function() {
   l <- lineitem |>
-    duckplyr_select_opt(l_orderkey, l_returnflag, l_extendedprice, l_discount) |>
-    duckplyr_filter(l_returnflag == "R") |>
-    duckplyr_select_opt(l_orderkey, l_extendedprice, l_discount)
+    select_opt(l_orderkey, l_returnflag, l_extendedprice, l_discount) |>
+    filter(l_returnflag == "R") |>
+    select_opt(l_orderkey, l_extendedprice, l_discount)
 
   o <- orders |>
-    duckplyr_select_opt(o_orderkey, o_custkey, o_orderdate) |>
-    duckplyr_filter(o_orderdate >= as.Date("1993-10-01"), o_orderdate < as.Date("1994-01-01")) |>
-    duckplyr_select_opt(o_orderkey, o_custkey)
+    select_opt(o_orderkey, o_custkey, o_orderdate) |>
+    filter(o_orderdate >= as.Date("1993-10-01"), o_orderdate < as.Date("1994-01-01")) |>
+    select_opt(o_orderkey, o_custkey)
 
-  lo <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, l, o,
+  lo <- inner_join(na_matches = TPCH_NA_MATCHES, l, o,
     by = c("l_orderkey" = "o_orderkey")
   ) |>
-    duckplyr_select_opt(l_extendedprice, l_discount, o_custkey)
+    select_opt(l_extendedprice, l_discount, o_custkey)
   # first aggregate, then join with customer/nation,
   # otherwise we need to aggr over lots of cols
 
   lo_aggr <- lo |>
-    duckplyr_mutate(volume = l_extendedprice * (1 - l_discount)) |>
-    duckplyr_summarise(revenue = sum(volume), .by = o_custkey)
+    mutate(volume = l_extendedprice * (1 - l_discount)) |>
+    summarise(revenue = sum(volume), .by = o_custkey)
 
   c <- customer |>
-    duckplyr_select_opt(c_custkey, c_nationkey, c_name, c_acctbal, c_phone, c_address, c_comment)
+    select_opt(c_custkey, c_nationkey, c_name, c_acctbal, c_phone, c_address, c_comment)
 
-  loc <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, c, lo_aggr, by = c("c_custkey" = "o_custkey"))
+  loc <- inner_join(na_matches = TPCH_NA_MATCHES, c, lo_aggr, by = c("c_custkey" = "o_custkey"))
 
-  locn <- duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, loc, nation |> duckplyr_select_opt(n_nationkey, n_name),
+  locn <- inner_join(na_matches = TPCH_NA_MATCHES, loc, nation |> select_opt(n_nationkey, n_name),
     by = c("c_nationkey" = "n_nationkey")
   )
 
   res <- locn |>
-    duckplyr_select(
+    select(
       c_custkey, c_name, revenue, c_acctbal, n_name,
       c_address, c_phone, c_comment
     ) |>
-    duckplyr_arrange(desc(revenue)) |>
+    arrange(desc(revenue)) |>
     head(20)
 
   res

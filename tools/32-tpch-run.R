@@ -4,6 +4,15 @@ Sys.setenv(DUCKPLYR_FORCE = 1)
 
 load("tools/tpch/001.rda")
 
+customer <- as_duckplyr_df(customer)
+lineitem <- as_duckplyr_df(lineitem)
+nation <- as_duckplyr_df(nation)
+orders <- as_duckplyr_df(orders)
+part <- as_duckplyr_df(part)
+partsupp <- as_duckplyr_df(partsupp)
+region <- as_duckplyr_df(region)
+supplier <- as_duckplyr_df(supplier)
+
 tpch_01()
 tpch_02()
 tpch_03()
