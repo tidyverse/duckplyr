@@ -13,7 +13,7 @@ anti_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches
     "Only equi-joins for anti_join()" = inherits(by, "dplyr_join_by") && any(by$condition != "=="),
     "No relational implementation for anti_join(copy = TRUE)" = copy,
     # https://github.com/duckdb/duckdb/issues/6597
-    "Can't use na_matches = \"na\"" = (na_matches == "na"),
+    "Can't use anti_join(na_matches = \"na\")" = (na_matches == "na"),
     {
       out <- rel_filter_join_impl(x, y, by, na_matches, "anti", error_call)
       return(out)
