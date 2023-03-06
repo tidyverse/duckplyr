@@ -58,6 +58,7 @@
 #' @importFrom tibble new_tibble
 #' @importFrom tibble tibble
 #' @importFrom tidyselect everything
+#' @importFrom utils head
 #' @importFrom vctrs list_of
 #' @importFrom vctrs new_data_frame
 #' @importFrom vctrs new_rcrd

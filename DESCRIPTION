@@ -24,6 +24,7 @@ Imports:
     rlang (>= 1.0.6),
     tibble,
     tidyselect,
+    utils,
     vctrs
 Suggests: 
     constructive,
