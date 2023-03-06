@@ -43,8 +43,8 @@ pkg <- "duckdb"
 
 for (q in seq_along(test_dplyr_q)) {
   f <- test_dplyr_q[[q]]
-  cold <- as.data.frame(f())
-  time <- system.time(as.data.frame(f()))[[3]]
+  cold <- collect(f())
+  time <- system.time(collect(f()))[[3]]
   print(q)
   print(time)
   res[[q]] <- data.frame(pkg = pkg, q = q, time = time)
