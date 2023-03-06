@@ -25,6 +25,7 @@
 #' @importFrom dplyr lead
 #' @importFrom dplyr mutate_all
 #' @importFrom dplyr n
+#' @importFrom dplyr n_distinct
 #' @importFrom dplyr rename_all
 #' @importFrom dplyr rename_at
 #' @importFrom dplyr rename_if
