@@ -23,8 +23,7 @@ tpch_11 <- function() {
     inner_join(na_matches = TPCH_NA_MATCHES, global_agr, by = "global_agr_key") |>
     filter(value > global_value) |>
     arrange(desc(value)) |>
-    select(ps_partkey, value) |>
-    collect()
+    select(ps_partkey, value)
 }
 
 tpch_12 <- function() {
@@ -57,8 +56,7 @@ tpch_12 <- function() {
       ),
       .by = l_shipmode
     ) |>
-    arrange(l_shipmode) |>
-    collect()
+    arrange(l_shipmode)
 }
 
 tpch_13 <- function() {
@@ -76,8 +74,7 @@ tpch_13 <- function() {
 
   c_orders |>
     summarise(custdist = n(), .by = c_count) |>
-    arrange(desc(custdist), desc(c_count)) |>
-    collect()
+    arrange(desc(custdist), desc(c_count))
 }
 
 tpch_14 <- function() {
@@ -91,8 +88,7 @@ tpch_14 <- function() {
       promo_revenue = 100 * sum(
         ifelse(grepl("^PROMO", p_type), l_extendedprice * (1 - l_discount), 0)
       ) / sum(l_extendedprice * (1 - l_discount))
-    ) |>
-    collect()
+    )
 }
 
 tpch_15 <- function() {
@@ -118,8 +114,7 @@ tpch_15 <- function() {
     inner_join(na_matches = TPCH_NA_MATCHES, global_revenue, by = "global_agr_key") |>
     filter(abs(total_revenue - max_total_revenue) < 1e-9) |>
     inner_join(na_matches = TPCH_NA_MATCHES, supplier, by = c("l_suppkey" = "s_suppkey")) |>
-    select(s_suppkey = l_suppkey, s_name, s_address, s_phone, total_revenue) |>
-    collect()
+    select(s_suppkey = l_suppkey, s_name, s_address, s_phone, total_revenue)
 }
 
 
@@ -145,8 +140,7 @@ tpch_16 <- function() {
       .by = c(p_brand, p_type, p_size)
     ) |>
     select(p_brand, p_type, p_size, supplier_cnt) |>
-    arrange(desc(supplier_cnt), p_brand, p_type, p_size) |>
-    collect()
+    arrange(desc(supplier_cnt), p_brand, p_type, p_size)
 }
 
 tpch_17 <- function() {
@@ -165,8 +159,7 @@ tpch_17 <- function() {
   joined |>
     inner_join(na_matches = TPCH_NA_MATCHES, quantity_by_part, by = "l_partkey") |>
     filter(l_quantity < quantity_threshold) |>
-    summarise(avg_yearly = sum(l_extendedprice) / 7.0) |>
-    collect()
+    summarise(avg_yearly = sum(l_extendedprice) / 7.0)
 }
 
 tpch_18 <- function() {
@@ -183,8 +176,7 @@ tpch_18 <- function() {
       o_orderdate, o_totalprice, sum
     ) |>
     arrange(desc(o_totalprice), o_orderdate) |>
-    head(100) |>
-    collect()
+    head(100)
 }
 
 tpch_19 <- function() {
@@ -228,8 +220,7 @@ tpch_19 <- function() {
   result |>
     summarise(
       revenue = sum(l_extendedprice * (1 - l_discount))
-    ) |>
-    collect()
+    )
 }
 
 tpch_20 <- function() {
@@ -265,8 +256,7 @@ tpch_20 <- function() {
   supplier_ca |>
     semi_join(na_matches = TPCH_NA_MATCHES, partsupp_forest_ca_filtered, by = c("s_suppkey" = "ps_suppkey")) |>
     select(s_name, s_address) |>
-    arrange(s_name) |>
-    collect()
+    arrange(s_name)
 }
 
 tpch_21 <- function() {
@@ -300,8 +290,7 @@ tpch_21 <- function() {
     filter(n_name == "SAUDI ARABIA") |>
     summarise(numwait = n(), .by = s_name) |>
     arrange(desc(numwait), s_name) |>
-    head(100) |>
-    collect()
+    head(100)
 }
 
 tpch_22 <- function() {
@@ -329,6 +318,5 @@ tpch_22 <- function() {
       totacctbal = sum(c_acctbal),
       .by = cntrycode
     ) |>
-    arrange(cntrycode) |>
-    collect()
+    arrange(cntrycode)
 }
