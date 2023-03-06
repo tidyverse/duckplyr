@@ -285,7 +285,7 @@ tpch_21 <- function() {
     ) |>
     duckplyr_summarise(
       n_supplier = n(),
-      num_failed = sum(failed_delivery_commit),
+      num_failed = sum(ifelse(failed_delivery_commit, 1, 0)),
       .by = l_orderkey
     ) |>
     duckplyr_filter(n_supplier > 1 & num_failed == 1)
