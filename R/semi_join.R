@@ -2,10 +2,15 @@
 #' @importFrom dplyr semi_join
 #' @export
 semi_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches = c("na", "never")) {
+  check_dots_empty0(...)
+  error_call <- caller_env()
+
   # Our implementation
   rel_try(
-    "No relational implementation for semi_join()" = TRUE,
+    "Only equi-joins for semi_join()" = inherits(by, "dplyr_join_by") && any(by$condition != "=="),
+    "No relational implementation for semi_join(copy = TRUE)" = copy,
     {
+      out <- rel_filter_join_impl(x, y, by, na_matches, "semi", error_call)
       return(out)
     }
   )
