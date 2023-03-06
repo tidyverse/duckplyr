@@ -3,8 +3,8 @@ tpch_11 <- function() {
     duckplyr_filter(n_name == "GERMANY")
 
   joined_filtered <- partsupp |>
-    duckplyr_inner_join(supplier, by = c("ps_suppkey" = "s_suppkey")) |>
-    duckplyr_inner_join(nation, by = c("s_nationkey" = "n_nationkey"))
+    duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, supplier, by = c("ps_suppkey" = "s_suppkey")) |>
+    duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, nation, by = c("s_nationkey" = "n_nationkey"))
 
   global_agr <- joined_filtered |>
     duckplyr_summarise(
@@ -20,7 +20,7 @@ tpch_11 <- function() {
 
   partkey_agr |>
     duckplyr_mutate(global_agr_key = 1L) |>
-    duckplyr_inner_join(global_agr, by = "global_agr_key") |>
+    duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, global_agr, by = "global_agr_key") |>
     duckplyr_filter(value > global_value) |>
     duckplyr_arrange(desc(value)) |>
     duckplyr_select(ps_partkey, value) |>
@@ -36,7 +36,7 @@ tpch_12 <- function() {
       l_receiptdate >= as.Date("1994-01-01"),
       l_receiptdate < as.Date("1995-01-01")
     ) |>
-    duckplyr_inner_join(
+    duckplyr_inner_join(na_matches = TPCH_NA_MATCHES,
       orders,
       by = c("l_orderkey" = "o_orderkey")
     ) |>
@@ -63,7 +63,7 @@ tpch_12 <- function() {
 
 tpch_13 <- function() {
   c_orders <- customer |>
-    duckplyr_left_join(
+    duckplyr_left_join(na_matches = TPCH_NA_MATCHES,
       orders |>
         duckplyr_filter(!grepl("special.*?requests", o_comment)),
       by = c("c_custkey" = "o_custkey")
@@ -86,7 +86,7 @@ tpch_14 <- function() {
       l_shipdate >= as.Date("1995-09-01"),
       l_shipdate < as.Date("1995-10-01")
     ) |>
-    duckplyr_inner_join(part, by = c("l_partkey" = "p_partkey")) |>
+    duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, part, by = c("l_partkey" = "p_partkey")) |>
     duckplyr_summarise(
       promo_revenue = 100 * sum(
         ifelse(grepl("^PROMO", p_type), l_extendedprice * (1 - l_discount), 0)
@@ -115,9 +115,9 @@ tpch_15 <- function() {
 
   revenue_by_supplier |>
     duckplyr_mutate(global_agr_key = 1L) |>
-    duckplyr_inner_join(global_revenue, by = "global_agr_key") |>
+    duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, global_revenue, by = "global_agr_key") |>
     duckplyr_filter(abs(total_revenue - max_total_revenue) < 1e-9) |>
-    duckplyr_inner_join(supplier, by = c("l_suppkey" = "s_suppkey")) |>
+    duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, supplier, by = c("l_suppkey" = "s_suppkey")) |>
     duckplyr_select(s_suppkey = l_suppkey, s_name, s_address, s_phone, total_revenue) |>
     collect()
 }
@@ -135,11 +135,11 @@ tpch_16 <- function() {
     duckplyr_filter(!grepl("Customer.*?Complaints", s_comment))
 
   partsupp_filtered <- partsupp |>
-    duckplyr_inner_join(supplier_filtered, by = c("ps_suppkey" = "s_suppkey")) |>
+    duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, supplier_filtered, by = c("ps_suppkey" = "s_suppkey")) |>
     duckplyr_select(ps_partkey, ps_suppkey)
 
   part_filtered |>
-    duckplyr_inner_join(partsupp_filtered, by = c("p_partkey" = "ps_partkey")) |>
+    duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, partsupp_filtered, by = c("p_partkey" = "ps_partkey")) |>
     duckplyr_summarise(
       supplier_cnt = n_distinct(ps_suppkey),
       .by = c(p_brand, p_type, p_size)
@@ -157,13 +157,13 @@ tpch_17 <- function() {
     )
 
   joined <- lineitem |>
-    duckplyr_inner_join(parts_filtered, by = c("l_partkey" = "p_partkey"))
+    duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, parts_filtered, by = c("l_partkey" = "p_partkey"))
 
   quantity_by_part <- joined |>
     duckplyr_summarise(quantity_threshold = 0.2 * mean(l_quantity), .by = l_partkey)
 
   joined |>
-    duckplyr_inner_join(quantity_by_part, by = "l_partkey") |>
+    duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, quantity_by_part, by = "l_partkey") |>
     duckplyr_filter(l_quantity < quantity_threshold) |>
     duckplyr_summarise(avg_yearly = sum(l_extendedprice) / 7.0) |>
     collect()
@@ -175,8 +175,8 @@ tpch_18 <- function() {
     duckplyr_filter(sum > 300)
 
   orders |>
-    duckplyr_inner_join(big_orders, by = c("o_orderkey" = "l_orderkey")) |>
-    duckplyr_inner_join(customer, by = c("o_custkey" = "c_custkey")) |>
+    duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, big_orders, by = c("o_orderkey" = "l_orderkey")) |>
+    duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, customer, by = c("o_custkey" = "c_custkey")) |>
     duckplyr_select(
       c_name,
       c_custkey = o_custkey, o_orderkey,
@@ -189,7 +189,7 @@ tpch_18 <- function() {
 
 tpch_19 <- function() {
   joined <- lineitem |>
-    duckplyr_inner_join(part, by = c("l_partkey" = "p_partkey"))
+    duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, part, by = c("l_partkey" = "p_partkey"))
 
   result <- joined |>
     duckplyr_filter(
@@ -234,7 +234,7 @@ tpch_19 <- function() {
 
 tpch_20 <- function() {
   supplier_ca <- supplier |>
-    duckplyr_inner_join(
+    duckplyr_inner_join(na_matches = TPCH_NA_MATCHES,
       nation |> duckplyr_filter(n_name == "CANADA"),
       by = c("s_nationkey" = "n_nationkey")
     ) |>
@@ -244,26 +244,26 @@ tpch_20 <- function() {
     duckplyr_filter(grepl("^forest", p_name))
 
   partsupp_forest_ca <- partsupp |>
-    duckplyr_semi_join(supplier_ca, c("ps_suppkey" = "s_suppkey")) |>
-    duckplyr_semi_join(part_forest, by = c("ps_partkey" = "p_partkey"))
+    duckplyr_semi_join(na_matches = TPCH_NA_MATCHES, supplier_ca, c("ps_suppkey" = "s_suppkey")) |>
+    duckplyr_semi_join(na_matches = TPCH_NA_MATCHES, part_forest, by = c("ps_partkey" = "p_partkey"))
 
   qty_threshold <- lineitem |>
     duckplyr_filter(
       l_shipdate >= as.Date("1994-01-01"),
       l_shipdate < as.Date("1995-01-01")
     ) |>
-    duckplyr_semi_join(partsupp_forest_ca, by = c("l_partkey" = "ps_partkey", "l_suppkey" = "ps_suppkey")) |>
+    duckplyr_semi_join(na_matches = TPCH_NA_MATCHES, partsupp_forest_ca, by = c("l_partkey" = "ps_partkey", "l_suppkey" = "ps_suppkey")) |>
     duckplyr_summarise(qty_threshold = 0.5 * sum(l_quantity), .by = l_suppkey)
 
   partsupp_forest_ca_filtered <- partsupp_forest_ca |>
-    duckplyr_inner_join(
+    duckplyr_inner_join(na_matches = TPCH_NA_MATCHES,
       qty_threshold,
       by = c("ps_suppkey" = "l_suppkey")
     ) |>
     duckplyr_filter(ps_availqty > qty_threshold)
 
   supplier_ca |>
-    duckplyr_semi_join(partsupp_forest_ca_filtered, by = c("s_suppkey" = "ps_suppkey")) |>
+    duckplyr_semi_join(na_matches = TPCH_NA_MATCHES, partsupp_forest_ca_filtered, by = c("s_suppkey" = "ps_suppkey")) |>
     duckplyr_select(s_name, s_address) |>
     duckplyr_arrange(s_name) |>
     collect()
@@ -276,8 +276,8 @@ tpch_21 <- function() {
     duckplyr_filter(n_supplier > 1)
 
   line_items_needed <- lineitem |>
-    duckplyr_semi_join(orders_with_more_than_one_supplier) |>
-    duckplyr_inner_join(orders, by = c("l_orderkey" = "o_orderkey")) |>
+    duckplyr_semi_join(na_matches = TPCH_NA_MATCHES, orders_with_more_than_one_supplier) |>
+    duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, orders, by = c("l_orderkey" = "o_orderkey")) |>
     duckplyr_filter(o_orderstatus == "F") |>
     duckplyr_summarise(
       failed_delivery_commit = any(l_receiptdate > l_commitdate),
@@ -291,12 +291,12 @@ tpch_21 <- function() {
     duckplyr_filter(n_supplier > 1 & num_failed == 1)
 
   line_items <- lineitem |>
-    duckplyr_semi_join(line_items_needed)
+    duckplyr_semi_join(na_matches = TPCH_NA_MATCHES, line_items_needed)
 
   supplier |>
-    duckplyr_inner_join(line_items, by = c("s_suppkey" = "l_suppkey")) |>
+    duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, line_items, by = c("s_suppkey" = "l_suppkey")) |>
     duckplyr_filter(l_receiptdate > l_commitdate) |>
-    duckplyr_inner_join(nation, by = c("s_nationkey" = "n_nationkey")) |>
+    duckplyr_inner_join(na_matches = TPCH_NA_MATCHES, nation, by = c("s_nationkey" = "n_nationkey")) |>
     duckplyr_filter(n_name == "SAUDI ARABIA") |>
     duckplyr_summarise(numwait = n(), .by = s_name) |>
     duckplyr_arrange(desc(numwait), s_name) |>
@@ -317,12 +317,12 @@ tpch_22 <- function() {
   customer |>
     # FIXME: substr(c_phone, 1, 2)
     duckplyr_mutate(cntrycode = substr(c_phone, 1L, 2L), join_id = 1L) |>
-    duckplyr_left_join(acctbal_mins, by = "join_id") |>
+    duckplyr_left_join(na_matches = TPCH_NA_MATCHES, acctbal_mins, by = "join_id") |>
     duckplyr_filter(
       cntrycode %in% c("13", "31", "23", "29", "30", "18", "17") &
         c_acctbal > acctbal_min
     ) |>
-    duckplyr_anti_join(orders, by = c("c_custkey" = "o_custkey")) |>
+    duckplyr_anti_join(na_matches = TPCH_NA_MATCHES, orders, by = c("c_custkey" = "o_custkey")) |>
     duckplyr_select(cntrycode, c_acctbal) |>
     duckplyr_summarise(
       numcust = n(),
