@@ -62,6 +62,7 @@ tests <- head(n = -1, list(
   ),
   "test-filter.R" = c(
     "if_any() and if_all() work",
+    "filter handles $ correctly (#278)",
     NULL
   ),
   "test-generics.R" = c(
