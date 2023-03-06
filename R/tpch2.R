@@ -266,7 +266,7 @@ tpch_21 <- function() {
     filter(n_supplier > 1)
 
   line_items_needed <- lineitem |>
-    semi_join(na_matches = TPCH_NA_MATCHES, orders_with_more_than_one_supplier) |>
+    semi_join(na_matches = TPCH_NA_MATCHES, orders_with_more_than_one_supplier, by = "l_orderkey") |>
     inner_join(na_matches = TPCH_NA_MATCHES, orders, by = c("l_orderkey" = "o_orderkey")) |>
     filter(o_orderstatus == "F") |>
     summarise(
@@ -281,7 +281,7 @@ tpch_21 <- function() {
     filter(n_supplier > 1 & num_failed == 1)
 
   line_items <- lineitem |>
-    semi_join(na_matches = TPCH_NA_MATCHES, line_items_needed)
+    semi_join(na_matches = TPCH_NA_MATCHES, line_items_needed, by = "l_orderkey")
 
   supplier |>
     inner_join(na_matches = TPCH_NA_MATCHES, line_items, by = c("s_suppkey" = "l_suppkey")) |>
