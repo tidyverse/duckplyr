@@ -1,6 +1,6 @@
 pkgload::load_all()
 
-load("tools/tpch/010.rda")
+load("tools/tpch/100.rda")
 
 test_dplyr_q <- list(
   tpch_01,
