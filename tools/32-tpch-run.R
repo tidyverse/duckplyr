@@ -1,6 +1,6 @@
 pkgload::load_all()
 
-Sys.setenv(DUCKPLYR_FORCE = 1)
+Sys.setenv(DUCKPLYR_FORCE = TRUE)
 
 load("tools/tpch/001.rda")
 

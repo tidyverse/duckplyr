@@ -1,5 +1,5 @@
 rel_try <- function(rel, ...) {
-  if (Sys.getenv("DUCKPLYR_FORCE") != "") {
+  if (Sys.getenv("DUCKPLYR_FORCE") == "TRUE") {
     return(rel)
   }
 
