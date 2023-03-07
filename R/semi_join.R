@@ -5,6 +5,9 @@ semi_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches
   check_dots_empty0(...)
   error_call <- caller_env()
 
+  # https://github.com/duckdb/duckdb/issues/6597
+  na_matches <- check_na_matches(na_matches, error_call = error_call)
+
   # Our implementation
   rel_try(
     "Only equi-joins for semi_join()" = inherits(by, "dplyr_join_by") && any(by$condition != "=="),
