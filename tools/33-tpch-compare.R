@@ -3,6 +3,8 @@ pkgload::load_all()
 Sys.setenv(DUCKPLYR_FORCE = TRUE)
 Sys.setenv(DUCKPLYR_EXPERIMENTAL = FALSE)
 
+# Sys.setenv(DUCKPLYR_JOIN_OUTPUT_ORDER = TRUE)
+
 load("tools/tpch/001.rda")
 answer <- "tpch-sf0.01"
 

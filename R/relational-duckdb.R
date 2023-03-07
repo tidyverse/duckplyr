@@ -184,14 +184,70 @@ rel_join.duckdb_relation <- function(left, right, conds, join, ...) {
     join <- "outer"
   }
 
+  if (Sys.getenv("DUCKPLYR_JOIN_OUTPUT_ORDER") == "TRUE") {
+    out <- duckdb_rel_join_oo(left, right, duckdb_conds, join)
+
+    meta_rel_register(out, expr(duckdb_rel_join_oo(
+      !!meta_rel_get(left)$name,
+      !!meta_rel_get(right)$name,
+      list(!!!to_duckdb_exprs_meta(conds)),
+      !!join
+    )))
+  } else {
+    out <- duckdb:::rel_join(left, right, duckdb_conds, join)
+
+    meta_rel_register(out, expr(duckdb:::rel_join(
+      !!meta_rel_get(left)$name,
+      !!meta_rel_get(right)$name,
+      list(!!!to_duckdb_exprs_meta(conds)),
+      !!join
+    )))
+  }
+
+  out
+}
+
+duckdb_rel_join_oo <- function(left, right, duckdb_conds, join) {
+  x_rn_expr <- duckdb:::expr_window(
+    duckdb:::expr_function("row_number", list()),
+    list()
+  )
+  duckdb:::expr_set_alias(x_rn_expr, "___x_row_number")
+
+  left_names <- duckdb:::rapi_rel_names(left)
+  left_exprs <- map(left_names, duckdb:::expr_reference)
+
+  left <- duckdb:::rel_project(left, c(list(x_rn_expr), left_exprs))
+
+  if (join != "semi" && join != "anti") {
+    y_rn_expr <- duckdb:::expr_window(
+      duckdb:::expr_function("row_number", list()),
+      list()
+    )
+    duckdb:::expr_set_alias(y_rn_expr, "___y_row_number")
+
+    right_names <- duckdb:::rapi_rel_names(right)
+    right_exprs <- map(right_names, duckdb:::expr_reference)
+
+    right <- duckdb:::rel_project(right, c(list(y_rn_expr), right_exprs))
+  }
+
   out <- duckdb:::rel_join(left, right, duckdb_conds, join)
 
-  meta_rel_register(out, expr(duckdb:::rel_join(
-    !!meta_rel_get(left)$name,
-    !!meta_rel_get(right)$name,
-    list(!!!to_duckdb_exprs_meta(conds)),
-    !!join
-  )))
+  if (join != "semi" && join != "anti") {
+    out <- duckdb:::rel_order(out, list(
+      duckdb:::expr_reference("___x_row_number"),
+      duckdb:::expr_reference("___y_row_number")
+    ))
+
+    out <- duckdb:::rel_project(out, c(left_exprs, right_exprs))
+  } else {
+    out <- duckdb:::rel_order(out, list(
+      duckdb:::expr_reference("___x_row_number")
+    ))
+
+    out <- duckdb:::rel_project(out, left_exprs)
+  }
 
   out
 }

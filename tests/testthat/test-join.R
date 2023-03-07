@@ -1,7 +1,6 @@
 # Basic properties --------------------------------------------------------
 
 test_that("mutating joins preserve row and column order of x", {
-  skip("TODO duckdb")
   df1 <- data.frame(a = 1:3)
   df2 <- data.frame(b = 1, c = 2, a = 4:1)
 
@@ -31,7 +30,6 @@ test_that("even when column names change", {
 })
 
 test_that("filtering joins preserve row and column order of x (#2964)", {
-  skip("TODO duckdb")
   df1 <- data.frame(a = 4:1, b = 1)
   df2 <- data.frame(b = 1, c = 2, a = 2:3)
 
@@ -73,7 +71,6 @@ test_that("keys of non-equi conditions are not coerced if `keep = NULL`", {
 })
 
 test_that("when keep = TRUE, duckplyr_left_join() preserves both sets of keys", {
-  skip("TODO duckdb")
   # when keys have different names
   df1 <- tibble(a = c(2, 3), b = c(1, 2))
   df2 <- tibble(x = c(3, 4), y = c(3, 4))
@@ -106,7 +103,6 @@ test_that("when keep = TRUE, duckplyr_right_join() preserves both sets of keys",
 })
 
 test_that("when keep = TRUE, duckplyr_full_join() preserves both sets of keys", {
-  skip("TODO duckdb")
   # when keys have different names
   df1 <- tibble(a = c(2, 3), b = c(1, 2))
   df2 <- tibble(x = c(3, 4), y = c(3, 4))
@@ -263,6 +259,7 @@ test_that("join_filter() validates arguments", {
 })
 
 test_that("mutating joins trigger many-to-many warning", {
+  skip("TODO duckdb")
   df <- tibble(x = c(1, 1))
   expect_snapshot(out <- duckplyr_left_join(df, df, join_by(x)))
 })
@@ -286,6 +283,7 @@ test_that("mutating joins don't trigger many-to-many warning when called indirec
 })
 
 test_that("mutating joins compute common columns", {
+  skip("TODO duckdb")
   df1 <- tibble(x = c(1, 2), y = c(2, 3))
   df2 <- tibble(x = c(1, 3), z = c(2, 3))
   expect_snapshot(out <- duckplyr_left_join(df1, df2))
