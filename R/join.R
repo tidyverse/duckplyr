@@ -23,9 +23,9 @@ rel_join_impl <- function(x, y, by, suffix, keep, na_matches, join, error_call =
   x_by <- by$x
   y_by <- by$y
   x_rel <- duckdb_rel_from_df(x)
-  x_rel <- duckdb:::rel_set_alias(x_rel, "lhs")
+  x_rel <- rel_set_alias(x_rel, "lhs")
   y_rel <- duckdb_rel_from_df(y)
-  y_rel <- duckdb:::rel_set_alias(y_rel, "rhs")
+  y_rel <- rel_set_alias(y_rel, "rhs")
 
   # Rename if non-unique column names
   if (length(intersect(x_names, y_names)) != 0) {
@@ -99,9 +99,9 @@ rel_filter_join_impl <- function(x, y, by, na_matches, join, error_call = caller
   x_by <- by$x
   y_by <- by$y
   x_rel <- duckdb_rel_from_df(x)
-  x_rel <- duckdb:::rel_set_alias(x_rel, "lhs")
+  x_rel <- rel_set_alias(x_rel, "lhs")
   y_rel <- duckdb_rel_from_df(y)
-  y_rel <- duckdb:::rel_set_alias(y_rel, "rhs")
+  y_rel <- rel_set_alias(y_rel, "rhs")
 
   x_by <- map(x_by, relexpr_reference, rel = x_rel)
   y_by <- map(y_by, relexpr_reference, rel = y_rel)

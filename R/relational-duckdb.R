@@ -163,6 +163,7 @@ rel_alias.duckdb_relation <- function(rel, ...) {
 
 #' @export
 rel_set_alias.duckdb_relation <- function(rel, alias, ...) {
+  duckdb:::rel_set_alias(rel, alias)
 }
 
 #' @export
