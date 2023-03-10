@@ -54,6 +54,7 @@
 #' @importFrom purrr map2
 #' @importFrom purrr pmap
 #' @importFrom purrr reduce
+#' @importFrom purrr walk
 #' @importFrom tibble as_tibble
 #' @importFrom tibble deframe
 #' @importFrom tibble new_tibble

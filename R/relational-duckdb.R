@@ -97,6 +97,8 @@ duckdb_rel_from_df <- function(df) {
   # variable before returning it
   out <- duckdb:::rel_from_df(con, df)
 
+  meta_rel_register_df(out, df)
+
   out
 
   # Causes protection errors
@@ -111,26 +113,58 @@ rel_to_df.duckdb_relation <- function(rel, ...) {
 #' @export
 rel_filter.duckdb_relation <- function(rel, exprs, ...) {
   duckdb_exprs <- to_duckdb_exprs(exprs)
-  duckdb:::rel_filter(rel, duckdb_exprs)
+  out <- duckdb:::rel_filter(rel, duckdb_exprs)
+
+  meta_rel_register(out, expr(duckdb:::rel_filter(
+    !!meta_rel_get(rel)$name,
+    list(!!!to_duckdb_exprs_meta(exprs))
+  )))
+
+  out
 }
 
 #' @export
 rel_project.duckdb_relation <- function(rel, exprs, ...) {
   duckdb_exprs <- to_duckdb_exprs(exprs)
-  duckdb:::rel_project(rel, duckdb_exprs)
+
+  out <- duckdb:::rel_project(rel, duckdb_exprs)
+
+  meta_rel_register(out, expr(duckdb:::rel_project(
+    !!meta_rel_get(rel)$name,
+    list(!!!to_duckdb_exprs_meta(exprs))
+  )))
+
+  out
 }
 
 #' @export
 rel_aggregate.duckdb_relation <- function(rel, groups, aggregates, ...) {
   duckdb_groups <- to_duckdb_exprs(groups)
   duckdb_aggregates <- to_duckdb_exprs(aggregates)
-  duckdb:::rel_aggregate(rel, duckdb_groups, duckdb_aggregates)
+
+  out <- duckdb:::rel_aggregate(rel, duckdb_groups, duckdb_aggregates)
+
+  meta_rel_register(out, expr(duckdb:::rel_aggregate(
+    !!meta_rel_get(rel)$name,
+    list(!!!to_duckdb_exprs_meta(groups)),
+    list(!!!to_duckdb_exprs_meta(aggregates))
+  )))
+
+  out
 }
 
 #' @export
 rel_order.duckdb_relation <- function(rel, orders, ...) {
   duckdb_orders <- to_duckdb_exprs(orders)
-  duckdb:::rel_order(rel, duckdb_orders)
+
+  out <- duckdb:::rel_order(rel, duckdb_orders)
+
+  meta_rel_register(out, expr(duckdb:::rel_order(
+    !!meta_rel_get(rel)$name,
+    list(!!!to_duckdb_exprs_meta(orders))
+  )))
+
+  out
 }
 
 #' @export
@@ -139,17 +173,40 @@ rel_join.duckdb_relation <- function(left, right, conds, join, ...) {
   if (join == "full") {
     join <- "outer"
   }
-  duckdb:::rel_join(left, right, duckdb_conds, join)
+
+  out <- duckdb:::rel_join(left, right, duckdb_conds, join)
+
+  meta_rel_register(out, expr(duckdb:::rel_join(
+    !!meta_rel_get(left)$name,
+    !!meta_rel_get(right)$name,
+    list(!!!to_duckdb_exprs_meta(conds)),
+    !!join
+  )))
+
+  out
 }
 
 #' @export
 rel_limit.duckdb_relation <- function(rel, n, ...) {
-  duckdb:::rapi_rel_limit(rel, n)
+  out <- duckdb:::rel_limit(rel, n)
+
+  meta_rel_register(out, expr(duckdb:::rel_limit(
+    !!meta_rel_get(rel)$name,
+    !!n
+  )))
+
+  out
 }
 
 #' @export
 rel_distinct.duckdb_relation <- function(rel, ...) {
-  duckdb:::rel_distinct(rel)
+  out <- duckdb:::rel_distinct(rel)
+
+  meta_rel_register(out, expr(duckdb:::rel_distinct(
+    !!meta_rel_get(rel)$name
+  )))
+
+  out
 }
 
 #' @export
@@ -167,7 +224,14 @@ rel_alias.duckdb_relation <- function(rel, ...) {
 
 #' @export
 rel_set_alias.duckdb_relation <- function(rel, alias, ...) {
-  duckdb:::rel_set_alias(rel, alias)
+  out <- duckdb:::rel_set_alias(rel, alias)
+
+  meta_rel_register(out, expr(duckdb:::rel_set_alias(
+    !!meta_rel_get(rel)$name,
+    !!alias
+  )))
+
+  out
 }
 
 #' @export
@@ -199,6 +263,53 @@ to_duckdb_expr <- function(x) {
       out <- duckdb:::expr_constant(x$val)
       if (!is.null(x$alias)) {
         duckdb:::expr_set_alias(out, x$alias)
+      }
+      out
+    },
+    stop("Unknown expr class: ", class(x)[[1]])
+  )
+}
+
+to_duckdb_exprs_meta <- function(exprs) {
+  lapply(exprs, to_duckdb_expr_meta)
+}
+
+to_duckdb_expr_meta <- function(x) {
+  switch(class(x)[[1]],
+    relational_relexpr_reference = {
+      args <- list(x$name)
+      if (!is.null(x$rel)) {
+        args <- c(args, meta_rel_get(x$rel)$name)
+      }
+      out <- expr(duckdb:::expr_reference(!!!args))
+      if (!is.null(x$alias)) {
+        out <- expr({
+          tmp_expr <- !!out
+          duckdb:::expr_set_alias(tmp_expr, !!x$alias)
+          tmp_expr
+        })
+      }
+      out
+    },
+    relational_relexpr_function = {
+      out <- expr(duckdb:::expr_function(!!x$name, list(!!!to_duckdb_exprs_meta(x$args))))
+      if (!is.null(x$alias)) {
+        out <- expr({
+          tmp_expr <- !!out
+          duckdb:::expr_set_alias(tmp_expr, !!x$alias)
+          tmp_expr
+        })
+      }
+      out
+    },
+    relational_relexpr_constant = {
+      out <- expr(duckdb:::expr_constant(!!x$val))
+      if (!is.null(x$alias)) {
+        out <- expr({
+          tmp_expr <- !!out
+          duckdb:::expr_set_alias(tmp_expr, !!x$alias)
+          tmp_expr
+        })
       }
       out
     },

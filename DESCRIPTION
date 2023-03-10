@@ -16,6 +16,7 @@ BugReports: https://github.com/duckdblabs/duckplyr
 Depends: 
     R (>= 4.0.0)
 Imports: 
+    collections,
     dplyr (>= 1.0.10),
     duckdb (>= 0.6.0),
     glue,
