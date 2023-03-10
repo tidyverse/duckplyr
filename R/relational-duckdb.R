@@ -5,42 +5,46 @@
 default_duckdb_connection <- new.env(parent = emptyenv())
 get_default_duckdb_connection <- function() {
   if (!exists("con", default_duckdb_connection)) {
-    con <- DBI::dbConnect(duckdb::duckdb())
-
-    DBI::dbExecute(con, 'CREATE MACRO "<"(a, b) AS a < b')
-    DBI::dbExecute(con, 'CREATE MACRO "<="(a, b) AS a <= b')
-    DBI::dbExecute(con, 'CREATE MACRO ">"(a, b) AS a > b')
-    DBI::dbExecute(con, 'CREATE MACRO ">="(a, b) AS a >= b')
-    DBI::dbExecute(con, 'CREATE MACRO "=="(a, b) AS a = b')
-    DBI::dbExecute(con, 'CREATE MACRO "!="(a, b) AS a <> b')
-    DBI::dbExecute(con, 'CREATE MACRO "is.na"(a) AS (a IS NULL)')
-    DBI::dbExecute(con, 'CREATE MACRO "n"() AS (COUNT(*))')
-    # FIXME: Implement na.rm = FALSE, https://github.com/duckdb/duckdb/issues/5832#issuecomment-1375735472
-    DBI::dbExecute(con, 'CREATE MACRO "sum"(x) AS (CASE WHEN SUM(x) IS NULL THEN 0 ELSE SUM(x) END)')
-    DBI::dbExecute(con, 'CREATE MACRO "log10"(x) AS log(x)')
-    DBI::dbExecute(con, 'CREATE MACRO "log"(x) AS ln(x)')
-    # TPCH
-    DBI::dbExecute(con, 'CREATE MACRO "as.Date"(x) AS strptime(x, \'%Y-%m-%d\')')
-    DBI::dbExecute(con, 'CREATE MACRO "grepl"(pattern, x) AS regexp_matches(x, pattern)')
-    DBI::dbExecute(con, 'CREATE MACRO "as.integer"(x) AS CAST(x AS int32)')
-    DBI::dbExecute(con, 'CREATE MACRO "ifelse"(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)')
-    DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)')
-    DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)')
-    DBI::dbExecute(con, 'CREATE MACRO "!"(x) AS (NOT x)')
-    DBI::dbExecute(con, 'CREATE MACRO "any"(x) AS (bool_or(x))')
-    DBI::dbExecute(con, 'CREATE MACRO "desc"(x) AS (-x)')
-    DBI::dbExecute(con, 'CREATE MACRO "n_distinct"(x) AS (COUNT(DISTINCT x))')
-
-    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(a, b) AS ((a IS NULL AND b IS NULL) OR (a = b))')
-    DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(a, b) AS COALESCE(a, b)')
-
-    default_duckdb_connection$con <- con
+    default_duckdb_connection$con <- create_default_duckdb_connection()
 
     reg.finalizer(default_duckdb_connection, onexit = TRUE, function(e) {
       DBI::dbDisconnect(e$con, shutdown = TRUE)
     })
   }
   default_duckdb_connection$con
+}
+
+create_default_duckdb_connection <- function() {
+  con <- DBI::dbConnect(duckdb::duckdb())
+
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "<"(a, b) AS a < b'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "<="(a, b) AS a <= b'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO ">"(a, b) AS a > b'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO ">="(a, b) AS a >= b'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(a, b) AS a = b'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "!="(a, b) AS a <> b'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "is.na"(a) AS (a IS NULL)'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS (COUNT(*))'))
+  # FIXME: Implement na.rm = FALSE, https://github.com/duckdb/duckdb/issues/5832#issuecomment-1375735472
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "sum"(x) AS (CASE WHEN SUM(x) IS NULL THEN 0 ELSE SUM(x) END)'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "log10"(x) AS log(x)'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "log"(x) AS ln(x)'))
+  # TPCH
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "as.Date"(x) AS strptime(x, \'%Y-%m-%d\')'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "grepl"(pattern, x) AS regexp_matches(x, pattern)'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "as.integer"(x) AS CAST(x AS int32)'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "ifelse"(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "!"(x) AS (NOT x)'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "any"(x) AS (bool_or(x))'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "desc"(x) AS (-x)'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "n_distinct"(x) AS (COUNT(DISTINCT x))'))
+
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(a, b) AS ((a IS NULL AND b IS NULL) OR (a = b))'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(a, b) AS COALESCE(a, b)'))
+
+  con
 }
 
 #' DuckDB relational backend
