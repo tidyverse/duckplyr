@@ -39,8 +39,22 @@ meta_df_register <- function(df) {
   count <- df_cache$size()
   name <- sym(paste0("df", count + 1))
 
-  # meta_record(constructive::construct_multi(list2(!!name := df)))
-  meta_record(constructive::construct_multi(list2(!!name := data.frame())))
+  global_dfs <- mget(ls(.GlobalEnv), .GlobalEnv, mode = "list", ifnotfound = list(NULL))
+
+  df_expr <- NULL
+  for (df_name in names(global_dfs)) {
+    global_df <- global_dfs[[df_name]]
+    if (identical(df, global_df)) {
+      df_expr <- sym(df_name)
+      break
+    }
+  }
+
+  if (is.null(df_expr)) {
+    meta_record(constructive::construct_multi(list2(!!name := df)))
+  } else {
+    meta_record(constructive::deparse_call(expr(!!name <- !!df_expr)))
+  }
 
   df_cache$set(df, name)
   invisible(name)
