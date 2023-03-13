@@ -14,26 +14,89 @@ region <- as_duckplyr_df(region)
 supplier <- as_duckplyr_df(supplier)
 
 invisible(tpch_01())
-invisible(tpch_02())
-invisible(tpch_03())
-invisible(tpch_04())
-invisible(tpch_05())
-invisible(tpch_06())
-invisible(tpch_07())
-invisible(tpch_08())
-invisible(tpch_09())
-invisible(tpch_10())
-invisible(tpch_11())
-invisible(tpch_12())
-invisible(tpch_13())
-invisible(tpch_14())
-invisible(tpch_15())
-invisible(tpch_16())
-invisible(tpch_17())
-invisible(tpch_18())
-invisible(tpch_19())
-invisible(tpch_20())
-invisible(tpch_21())
-invisible(tpch_22())
+meta_replay_to_file("tools/tpch-raw/01.R", 'load("tools/tpch/001.rda")')
+meta_clear()
 
-meta_replay_to_file("tools/38-tpch-raw.R", 'load("tools/tpch/001.rda")')
+invisible(tpch_02())
+meta_replay_to_file("tools/tpch-raw/02.R", 'load("tools/tpch/001.rda")')
+meta_clear()
+
+invisible(tpch_03())
+meta_replay_to_file("tools/tpch-raw/03.R", 'load("tools/tpch/001.rda")')
+meta_clear()
+
+invisible(tpch_04())
+meta_replay_to_file("tools/tpch-raw/04.R", 'load("tools/tpch/001.rda")')
+meta_clear()
+
+invisible(tpch_05())
+meta_replay_to_file("tools/tpch-raw/05.R", 'load("tools/tpch/001.rda")')
+meta_clear()
+
+invisible(tpch_06())
+meta_replay_to_file("tools/tpch-raw/06.R", 'load("tools/tpch/001.rda")')
+meta_clear()
+
+invisible(tpch_07())
+meta_replay_to_file("tools/tpch-raw/07.R", 'load("tools/tpch/001.rda")')
+meta_clear()
+
+invisible(tpch_08())
+meta_replay_to_file("tools/tpch-raw/08.R", 'load("tools/tpch/001.rda")')
+meta_clear()
+
+invisible(tpch_09())
+meta_replay_to_file("tools/tpch-raw/09.R", 'load("tools/tpch/001.rda")')
+meta_clear()
+
+invisible(tpch_10())
+meta_replay_to_file("tools/tpch-raw/10.R", 'load("tools/tpch/001.rda")')
+meta_clear()
+
+invisible(tpch_11())
+meta_replay_to_file("tools/tpch-raw/11.R", 'load("tools/tpch/001.rda")')
+meta_clear()
+
+invisible(tpch_12())
+meta_replay_to_file("tools/tpch-raw/12.R", 'load("tools/tpch/001.rda")')
+meta_clear()
+
+invisible(tpch_13())
+meta_replay_to_file("tools/tpch-raw/13.R", 'load("tools/tpch/001.rda")')
+meta_clear()
+
+invisible(tpch_14())
+meta_replay_to_file("tools/tpch-raw/14.R", 'load("tools/tpch/001.rda")')
+meta_clear()
+
+invisible(tpch_15())
+meta_replay_to_file("tools/tpch-raw/15.R", 'load("tools/tpch/001.rda")')
+meta_clear()
+
+invisible(tpch_16())
+meta_replay_to_file("tools/tpch-raw/16.R", 'load("tools/tpch/001.rda")')
+meta_clear()
+
+invisible(tpch_17())
+meta_replay_to_file("tools/tpch-raw/17.R", 'load("tools/tpch/001.rda")')
+meta_clear()
+
+invisible(tpch_18())
+meta_replay_to_file("tools/tpch-raw/18.R", 'load("tools/tpch/001.rda")')
+meta_clear()
+
+invisible(tpch_19())
+meta_replay_to_file("tools/tpch-raw/19.R", 'load("tools/tpch/001.rda")')
+meta_clear()
+
+invisible(tpch_20())
+meta_replay_to_file("tools/tpch-raw/20.R", 'load("tools/tpch/001.rda")')
+meta_clear()
+
+invisible(tpch_21())
+meta_replay_to_file("tools/tpch-raw/21.R", 'load("tools/tpch/001.rda")')
+meta_clear()
+
+invisible(tpch_22())
+meta_replay_to_file("tools/tpch-raw/22.R", 'load("tools/tpch/001.rda")')
+meta_clear()

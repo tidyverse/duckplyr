@@ -1,4 +1,12 @@
 code_cache <- collections::queue()
+df_cache <- collections::dict()
+rel_cache <- collections::dict()
+
+meta_clear <- function() {
+  code_cache$clear()
+  df_cache$clear()
+  rel_cache$clear()
+}
 
 meta_record <- function(code) {
   code_cache$push(code)
@@ -34,8 +42,6 @@ meta_eval <- function() {
   eval(parse(text = code))
 }
 
-df_cache <- collections::dict()
-
 meta_df_register <- function(df) {
   if (df_cache$has(df)) {
     return(invisible(df_cache$get(df)))
@@ -64,8 +70,6 @@ meta_df_register <- function(df) {
   df_cache$set(df, name)
   invisible(name)
 }
-
-rel_cache <- collections::dict()
 
 meta_rel_register_df <- function(rel, df) {
   df_name <- meta_df_register(df)

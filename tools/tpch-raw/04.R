@@ -1,0 +1,179 @@
+load("tools/tpch/001.rda")
+con <- DBI::dbConnect(duckdb::duckdb())
+invisible(DBI::dbExecute(con, "CREATE MACRO \"<\"(a, b) AS a < b"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"<=\"(a, b) AS a <= b"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \">\"(a, b) AS a > b"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \">=\"(a, b) AS a >= b"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"!=\"(a, b) AS a <> b"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"is.na\"(a) AS (a IS NULL)"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS (COUNT(*))"))
+invisible(
+  DBI::dbExecute(con, "CREATE MACRO \"sum\"(x) AS (CASE WHEN SUM(x) IS NULL THEN 0 ELSE SUM(x) END)")
+)
+invisible(DBI::dbExecute(con, "CREATE MACRO \"log10\"(x) AS log(x)"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"log\"(x) AS ln(x)"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"as.Date\"(x) AS strptime(x, '%Y-%m-%d')"))
+invisible(
+  DBI::dbExecute(con, "CREATE MACRO \"grepl\"(pattern, x) AS regexp_matches(x, pattern)")
+)
+invisible(DBI::dbExecute(con, "CREATE MACRO \"as.integer\"(x) AS CAST(x AS int32)"))
+invisible(
+  DBI::dbExecute(
+    con,
+    "CREATE MACRO \"ifelse\"(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)"
+  )
+)
+invisible(DBI::dbExecute(con, "CREATE MACRO \"|\"(x, y) AS (x OR y)"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"&\"(x, y) AS (x AND y)"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"!\"(x) AS (NOT x)"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"any\"(x) AS (bool_or(x))"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"desc\"(x) AS (-x)"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"n_distinct\"(x) AS (COUNT(DISTINCT x))"))
+invisible(
+  DBI::dbExecute(
+    con,
+    "CREATE MACRO \"___eq_na_matches_na\"(a, b) AS ((a IS NULL AND b IS NULL) OR (a = b))"
+  )
+)
+invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
+df1 <- lineitem
+rel1 <- duckdb:::rel_from_df(con, df1)
+rel2 <- duckdb:::rel_project(
+  rel1,
+  list(
+    {
+      tmp_expr <- duckdb:::expr_reference("l_orderkey")
+      duckdb:::expr_set_alias(tmp_expr, "l_orderkey")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_reference("l_commitdate")
+      duckdb:::expr_set_alias(tmp_expr, "l_commitdate")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_reference("l_receiptdate")
+      duckdb:::expr_set_alias(tmp_expr, "l_receiptdate")
+      tmp_expr
+    }
+  )
+)
+rel3 <- duckdb:::rel_filter(
+  rel2,
+  list(
+    duckdb:::expr_function(
+      "<",
+      list(duckdb:::expr_reference("l_commitdate"), duckdb:::expr_reference("l_receiptdate"))
+    )
+  )
+)
+rel4 <- duckdb:::rel_project(
+  rel3,
+  list({
+    tmp_expr <- duckdb:::expr_reference("l_orderkey")
+    duckdb:::expr_set_alias(tmp_expr, "l_orderkey")
+    tmp_expr
+  })
+)
+df2 <- orders
+rel5 <- duckdb:::rel_from_df(con, df2)
+rel6 <- duckdb:::rel_project(
+  rel5,
+  list(
+    {
+      tmp_expr <- duckdb:::expr_reference("o_orderkey")
+      duckdb:::expr_set_alias(tmp_expr, "o_orderkey")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_reference("o_orderdate")
+      duckdb:::expr_set_alias(tmp_expr, "o_orderdate")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_reference("o_orderpriority")
+      duckdb:::expr_set_alias(tmp_expr, "o_orderpriority")
+      tmp_expr
+    }
+  )
+)
+rel7 <- duckdb:::rel_filter(
+  rel6,
+  list(
+    duckdb:::expr_function(
+      ">=",
+      list(duckdb:::expr_reference("o_orderdate"), duckdb:::expr_function("as.Date", list(duckdb:::expr_constant("1993-07-01"))))
+    ),
+    duckdb:::expr_function(
+      "<",
+      list(duckdb:::expr_reference("o_orderdate"), duckdb:::expr_function("as.Date", list(duckdb:::expr_constant("1993-10-01"))))
+    )
+  )
+)
+rel8 <- duckdb:::rel_project(
+  rel7,
+  list(
+    {
+      tmp_expr <- duckdb:::expr_reference("o_orderkey")
+      duckdb:::expr_set_alias(tmp_expr, "o_orderkey")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_reference("o_orderpriority")
+      duckdb:::expr_set_alias(tmp_expr, "o_orderpriority")
+      tmp_expr
+    }
+  )
+)
+rel9 <- duckdb:::rel_set_alias(rel4, "lhs")
+rel10 <- duckdb:::rel_set_alias(rel8, "rhs")
+rel11 <- duckdb:::rel_join(
+  rel9,
+  rel10,
+  list(
+    duckdb:::expr_function(
+      "==",
+      list(duckdb:::expr_reference("l_orderkey", rel9), duckdb:::expr_reference("o_orderkey", rel10))
+    )
+  ),
+  "inner"
+)
+rel12 <- duckdb:::rel_project(
+  rel11,
+  list(
+    {
+      tmp_expr <- duckdb:::expr_reference("l_orderkey")
+      duckdb:::expr_set_alias(tmp_expr, "l_orderkey")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_reference("o_orderpriority")
+      duckdb:::expr_set_alias(tmp_expr, "o_orderpriority")
+      tmp_expr
+    }
+  )
+)
+rel13 <- duckdb:::rel_distinct(rel12)
+rel14 <- duckdb:::rel_project(
+  rel13,
+  list({
+    tmp_expr <- duckdb:::expr_reference("o_orderpriority")
+    duckdb:::expr_set_alias(tmp_expr, "o_orderpriority")
+    tmp_expr
+  })
+)
+rel15 <- duckdb:::rel_aggregate(
+  rel14,
+  list(duckdb:::expr_reference("o_orderpriority")),
+  list(
+    order_count = {
+      tmp_expr <- duckdb:::expr_function("n", list())
+      duckdb:::expr_set_alias(tmp_expr, "order_count")
+      tmp_expr
+    }
+  )
+)
+rel16 <- duckdb:::rel_order(rel15, list(duckdb:::expr_reference("o_orderpriority")))
+rel16
+duckdb:::rel_to_altrep(rel16)
