@@ -19,6 +19,11 @@ meta_replay <- function() {
   walk(c(con_code, code_cache$as_list(), res_code), print)
 }
 
+meta_replay_to_file <- function(path, extra = character()) {
+  code <- capture.output(meta_replay())
+  writeLines(c(extra, code), path)
+}
+
 meta_replay_to_new_doc <- function() {
   code <- capture.output(meta_replay())
   rstudioapi::documentNew(code, execute = TRUE)
