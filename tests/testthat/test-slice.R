@@ -227,10 +227,30 @@ test_that("slice_helpers() call get_slice_size()", {
 test_that("get_slice_size() validates its inputs", {
   expect_snapshot(error = TRUE, {
     get_slice_size(n = 1, prop = 1)
-    get_slice_size(n = foo)
-    get_slice_size(prop = foo)
     get_slice_size(n = "a")
     get_slice_size(prop = "a")
+  })
+})
+
+test_that("get_slice_size() snapshots", {
+  expect_snapshot({
+    body(get_slice_size(prop = 0))
+
+    body(get_slice_size(prop = 0.4))
+    body(get_slice_size(prop = 2))
+    body(get_slice_size(prop = 2, allow_outsize = TRUE))
+
+    body(get_slice_size(prop = -0.4))
+    body(get_slice_size(prop = -2))
+
+    body(get_slice_size(n = 0))
+
+    body(get_slice_size(n = 4))
+    body(get_slice_size(n = 20))
+    body(get_slice_size(n = 20, allow_outsize = TRUE))
+
+    body(get_slice_size(n = -4))
+    body(get_slice_size(n = -20))
   })
 })
 
@@ -438,6 +458,26 @@ test_that("slice_min/max() work with `by`", {
   expect_identical(duckplyr_slice_max(df, x, by = g), df[c(2, 3),])
 })
 
+test_that("slice_min/max() inject `with_ties` and `na_rm` (#6725)", {
+  # So columns named `with_ties` and `na_rm` don't mask those arguments
+
+  df <- tibble(x = c(1, 1, 2, 2), with_ties = 1:4)
+
+  expect_identical(duckplyr_slice_min(df, x, n = 1), vec_slice(df, 1:2))
+  expect_identical(duckplyr_slice_min(df, x, n = 1, with_ties = FALSE), vec_slice(df, 1))
+
+  expect_identical(duckplyr_slice_max(df, x, n = 1), vec_slice(df, 3:4))
+  expect_identical(duckplyr_slice_max(df, x, n = 1, with_ties = FALSE), vec_slice(df, 3))
+
+  df <- tibble(x = c(1, NA), na_rm = 1:2)
+
+  expect_identical(duckplyr_slice_min(df, x, n = 2), df)
+  expect_identical(duckplyr_slice_min(df, x, n = 2, na_rm = TRUE), vec_slice(df, 1))
+
+  expect_identical(duckplyr_slice_max(df, x, n = 2), df)
+  expect_identical(duckplyr_slice_max(df, x, n = 2, na_rm = TRUE), vec_slice(df, 1))
+})
+
 test_that("slice_min/max() check size of `order_by=` (#5922)", {
   expect_snapshot(error = TRUE, {
     duckplyr_slice_min(data.frame(x = 1:10), 1:6)
@@ -493,6 +533,13 @@ test_that("`duckplyr_slice_sample()` validates `replace`", {
     duckplyr_slice_sample(df, replace = 1)
     duckplyr_slice_sample(df, replace = NA)
   })
+})
+
+test_that("duckplyr_slice_sample() injects `replace` (#6725)", {
+  # So a column named `replace` doesn't mask that argument
+  df <- tibble(replace = 1)
+  expect_identical(duckplyr_slice_sample(df, n = 2), df)
+  expect_identical(duckplyr_slice_sample(df, n = 2, replace = TRUE), vec_slice(df, c(1, 1)))
 })
 
 test_that("duckplyr_slice_sample() handles positive n= and prop=", {

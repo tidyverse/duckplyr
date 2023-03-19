@@ -105,6 +105,15 @@ test_that("arrange ignores NULLs (#6193)", {
   expect_equal(out$x, 2:1)
 })
 
+test_that("`duckplyr_arrange()` works with `numeric_version` (#6680)", {
+  x <- numeric_version(c("1.11", "1.2.3", "1.2.2"))
+  df <- tibble(x = x)
+
+  expect <- df[c(3, 2, 1),]
+
+  expect_identical(duckplyr_arrange(df, x), expect)
+})
+
 # locale --------------------------------------------------------------
 
 test_that("arrange defaults to the C locale", {
@@ -417,6 +426,17 @@ test_that("legacy - arrange handles S4 classes (#1105)", {
 
   df <- tibble(x = 1:3, y = TestS4(3:1))
   expect_equal(duckplyr_arrange(df, y), df[3:1, ])
+})
+
+test_that("legacy - `duckplyr_arrange()` works with `numeric_version` (#6680)", {
+  local_options(dplyr.legacy_locale = TRUE)
+
+  x <- numeric_version(c("1.11", "1.2.3", "1.2.2"))
+  df <- tibble(x = x)
+
+  expect <- df[c(3, 2, 1),]
+
+  expect_identical(duckplyr_arrange(df, x), expect)
 })
 
 test_that("legacy - arrange works with two columns when the first has a data frame proxy (#6268)", {

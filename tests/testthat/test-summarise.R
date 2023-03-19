@@ -142,6 +142,56 @@ test_that("named data frame results with 0 columns participate in recycling (#65
   )
 })
 
+test_that("can't overwrite column active bindings (#6666)", {
+  skip_if(getRversion() < "3.6.3", message = "Active binding error changed")
+
+  df <- tibble(g = c(1, 1, 2, 2), x = 1:4)
+  gdf <- group_by(df, g)
+
+  # The error seen here comes from trying to `<-` to an active binding when
+  # the active binding function has 0 arguments.
+  expect_snapshot(error = TRUE, {
+    duckplyr_summarise(df, y = {
+      x <<- x + 2L
+      mean(x)
+    })
+  })
+  expect_snapshot(error = TRUE, {
+    duckplyr_summarise(df, .by = g, y = {
+      x <<- x + 2L
+      mean(x)
+    })
+  })
+  expect_snapshot(error = TRUE, {
+    duckplyr_summarise(gdf, y = {
+      x <<- x + 2L
+      mean(x)
+    })
+  })
+})
+
+test_that("assigning with `<-` doesn't affect the mask (#6666)", {
+  df <- tibble(g = c(1, 1, 2, 2), x = 1:4)
+  gdf <- group_by(df, g)
+
+  out <- duckplyr_summarise(df, .by = g, y = {
+    x <- x + 4L
+    mean(x)
+  })
+  expect_identical(out$y, c(5.5, 7.5))
+
+  out <- duckplyr_summarise(gdf, y = {
+    x <- x + 4L
+    mean(x)
+  })
+  expect_identical(out$y, c(5.5, 7.5))
+})
+
+test_that("duckplyr_summarise() correctly auto-names expressions (#6741)", {
+  df <- tibble(a = 1L)
+  expect_identical(duckplyr_summarise(df, sum(-a)), tibble("sum(-a)" = -1L))
+})
+
 # grouping ----------------------------------------------------------------
 
 test_that("peels off a single layer of grouping", {
@@ -369,6 +419,18 @@ test_that("duckplyr_summarise() preserves the call stack on error (#5308)", {
   expect_true(some(stack, is_call, "foobar"))
 })
 
+test_that("`duckplyr_summarise()` doesn't allow data frames with missing or empty names (#6758)", {
+  df1 <- new_data_frame(set_names(list(1), ""))
+  df2 <- new_data_frame(set_names(list(1), NA_character_))
+
+  expect_snapshot(error = TRUE, {
+    duckplyr_summarise(df1)
+  })
+  expect_snapshot(error = TRUE, {
+    duckplyr_summarise(df2)
+  })
+})
+
 test_that("duckplyr_summarise() gives meaningful errors", {
   eval(envir = global_env(), expr({
     expect_snapshot({
@@ -433,10 +495,6 @@ test_that("duckplyr_summarise() gives meaningful errors", {
                       data.frame(x = 1:2, g = 1:2) %>% group_by(g) %>% duckplyr_summarise(x = if(g == 2) 42)
       ))
 
-      # Missing variable
-      (expect_error(duckplyr_summarise(mtcars, a = mean(not_there))))
-      (expect_error(duckplyr_summarise(group_by(mtcars, cyl), a = mean(not_there))))
-
       # .data pronoun
       (expect_error(duckplyr_summarise(tibble(a = 1), c = .data$b)))
       (expect_error(duckplyr_summarise(group_by(tibble(a = 1:3), a), c = .data$b)))
@@ -486,10 +544,4 @@ test_that("non-summary results are deprecated in favor of `duckplyr_reframe()` (
     out <- duckplyr_summarise(rdf, x = which(x < 3))
   })
   expect_identical(out$x, c(1L, 1L))
-})
-
-test_that("duckplyr_summarise() correctly auto-names expressions", {
-  df <- tibble(a = 1L)
-
-  expect_equal(duckplyr_summarise(df, sum(-a)), tibble("sum(-a)" = -1))
 })
