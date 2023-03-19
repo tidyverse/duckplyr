@@ -13,7 +13,7 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
   # FIXME: Use rel_try() for accurate stats
   if (all(is_name) && .drop && !sort) {
     by_chr <- map_chr(exprs, as_string)
-    name <- check_name(name, by_chr)
+    name <- check_n_name(name, by_chr)
 
     if (!(name %in% by_chr)) {
       n <- tally_n(x, {{ wt }})

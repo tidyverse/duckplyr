@@ -3,6 +3,7 @@ as_join_by <- dplyr:::as_join_by
 check_filter <- dplyr:::check_filter
 check_keep <- dplyr:::check_keep
 check_name <- dplyr:::check_name
+check_n_name <- dplyr:::check_n_name
 check_na_matches <- dplyr:::check_na_matches
 check_string <- dplyr:::check_string
 check_transmute_args <- dplyr:::check_transmute_args
