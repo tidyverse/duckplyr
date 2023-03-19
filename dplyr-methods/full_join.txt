@@ -6,7 +6,8 @@ full_join.data.frame <- function(x,
          ...,
          keep = NULL,
          na_matches = c("na", "never"),
-         multiple = NULL) {
+         multiple = "all",
+         relationship = NULL) {
   check_dots_empty0(...)
   y <- auto_copy(x, y, copy = copy)
   join_mutate(
@@ -20,6 +21,7 @@ full_join.data.frame <- function(x,
     multiple = multiple,
     # All keys from both inputs are retained. Erroring never makes sense.
     unmatched = "drop",
+    relationship = relationship,
     user_env = caller_env()
   )
 }
