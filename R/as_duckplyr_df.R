@@ -12,6 +12,10 @@ as_duckplyr_df <- function(.data) {
     abort("Must pass data frame without row names to `as_duckplyr_df()`.")
   }
 
+  if (anyNA(names(.data)) || any(names(.data) == "")) {
+    abort("Missing or empty names not allowed.")
+  }
+
   class(.data) <- c("duckplyr_df", class(.data))
   .data
 }
