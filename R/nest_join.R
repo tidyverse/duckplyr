@@ -80,6 +80,10 @@ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, na
   # row of `x` (#6392).
   multiple <- "all"
 
+  # Will be set to `"none"` in `join_rows()`. Because we can't have a Cartesian
+  # explosion, we don't care about many-to-many relationships.
+  relationship <- NULL
+
   rows <- join_rows(
     x_key = x_key,
     y_key = y_key,
@@ -90,6 +94,7 @@ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, na
     cross = cross,
     multiple = multiple,
     unmatched = unmatched,
+    relationship = relationship,
     user_env = caller_env()
   )
 

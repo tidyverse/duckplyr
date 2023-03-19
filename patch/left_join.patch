@@ -1,11 +1,11 @@
 diff --git b/R/left_join.R a/R/left_join.R
-index b69e741..973cc09 100644
+index 2dad930..f2a0795 100644
 --- b/R/left_join.R
 +++ a/R/left_join.R
 @@ -2,10 +2,16 @@
  #' @importFrom dplyr left_join
  #' @export
- left_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ..., keep = NULL, na_matches = c("na", "never"), multiple = NULL, unmatched = "drop") {
+ left_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ..., keep = NULL, na_matches = c("na", "never"), multiple = "all", unmatched = "drop", relationship = NULL) {
 +  check_dots_empty0(...)
 +  error_call <- caller_env()
 +
@@ -20,7 +20,7 @@ index b69e741..973cc09 100644
        return(out)
      }
    )
-@@ -33,6 +39,12 @@ left_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
+@@ -34,6 +40,12 @@ left_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
  }
  
  duckplyr_left_join <- function(x, y, ...) {

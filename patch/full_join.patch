@@ -1,11 +1,11 @@
 diff --git b/R/full_join.R a/R/full_join.R
-index ce144e7..4e95fbe 100644
+index 9f3a400..e6f0983 100644
 --- b/R/full_join.R
 +++ a/R/full_join.R
 @@ -2,10 +2,16 @@
  #' @importFrom dplyr full_join
  #' @export
- full_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ..., keep = NULL, na_matches = c("na", "never"), multiple = NULL) {
+ full_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ..., keep = NULL, na_matches = c("na", "never"), multiple = "all", relationship = NULL) {
 +  check_dots_empty0(...)
 +  error_call <- caller_env()
 +
