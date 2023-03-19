@@ -1,13 +1,16 @@
 diff --git b/R/semi_join.R a/R/semi_join.R
-index 5252ef0..45ce3ca 100644
+index 5252ef0..150da69 100644
 --- b/R/semi_join.R
 +++ a/R/semi_join.R
-@@ -2,10 +2,17 @@
+@@ -2,10 +2,20 @@
  #' @importFrom dplyr semi_join
  #' @export
  semi_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches = c("na", "never")) {
 +  check_dots_empty0(...)
 +  error_call <- caller_env()
++
++  # https://github.com/duckdb/duckdb/issues/6597
++  na_matches <- check_na_matches(na_matches, error_call = error_call)
 +
    # Our implementation
    rel_try(
