@@ -1,3 +1,30 @@
+# can't overwrite column active bindings (#6666)
+
+    Code
+      duckplyr_summarise(df, y = {
+        x <<- x + 2L
+        mean(x)
+      })
+    Condition
+      Error in `summarise()`:
+      i In argument: `y = { ... }`.
+      Caused by error:
+      ! unused argument (base::quote(3:6))
+
+---
+
+    Code
+      duckplyr_summarise(df, .by = g, y = {
+        x <<- x + 2L
+        mean(x)
+      })
+    Condition
+      Error in `summarise()`:
+      i In argument: `y = { ... }`.
+      i In group 1: `g = 1`.
+      Caused by error:
+      ! unused argument (base::quote(3:4))
+
 # can't use `.by` with `.groups`
 
     Code
@@ -5,6 +32,22 @@
     Condition
       Error in `summarise()`:
       ! Can't supply both `.by` and `.groups`.
+
+# `duckplyr_summarise()` doesn't allow data frames with missing or empty names (#6758)
+
+    Code
+      duckplyr_summarise(df1)
+    Condition
+      Error in `summarise()`:
+      ! Can't transform a data frame with `NA` or `""` names.
+
+---
+
+    Code
+      duckplyr_summarise(df2)
+    Condition
+      Error in `summarise()`:
+      ! Can't transform a data frame with `NA` or `""` names.
 
 # non-summary results are deprecated in favor of `duckplyr_reframe()` (#6382)
 

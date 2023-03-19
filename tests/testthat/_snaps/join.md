@@ -50,15 +50,10 @@
       Error in `join_filter()`:
       ! could not find function "join_filter"
 
-# mutating joins trigger multiple match warning
+# mutating joins trigger many-to-many warning
 
     Code
-      out <- duckplyr_left_join(df1, df2, join_by(x))
-    Condition
-      Warning in `left_join()`:
-      Each row in `x` is expected to match at most 1 row in `y`.
-      i Row 1 of `x` matches multiple rows.
-      i If multiple matches are expected, set `multiple = "all"` to silence this warning.
+      out <- duckplyr_left_join(df, df, join_by(x))
 
 # mutating joins compute common columns
 
@@ -198,14 +193,14 @@
       ! Each row of `y` must be matched by `x`.
       i Row 1 of `y` was not matched.
 
-# `by = character()` technically respects `multiple`
+# `by = character()` technically respects `relationship`
 
     Code
-      duckplyr_left_join(df, df, by = character(), multiple = "error")
+      duckplyr_left_join(df, df, by = character(), relationship = "many-to-one")
     Condition
       Error in `left_join()`:
       ! Each row in `x` must match at most 1 row in `y`.
-      i Row 1 of `x` matches multiple rows.
+      i Row 1 of `x` matches multiple rows in `y`.
 
 # `by = character()` for a cross join is deprecated (#6604)
 

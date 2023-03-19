@@ -6,8 +6,6 @@
       Warning:
       Using one column matrices in `filter()` was deprecated in dplyr 1.1.0.
       i Please use one dimensional logical vectors instead.
-      i The deprecated feature was likely used in the dplyr package.
-        Please report the issue at <https://github.com/tidyverse/dplyr/issues>.
 
 # duckplyr_filter() disallows matrices with >1 column
 
@@ -30,6 +28,22 @@
       i In argument: `array(TRUE, dim = c(3, 1, 1))`.
       Caused by error:
       ! `..1` must be a logical vector, not a logical array.
+
+# `duckplyr_filter()` doesn't allow data frames with missing or empty names (#6758)
+
+    Code
+      duckplyr_filter(df1)
+    Condition
+      Error in `filter()`:
+      ! Can't transform a data frame with `NA` or `""` names.
+
+---
+
+    Code
+      duckplyr_filter(df2)
+    Condition
+      Error in `filter()`:
+      ! Can't transform a data frame with `NA` or `""` names.
 
 # can't use `.by` with `.preserve`
 

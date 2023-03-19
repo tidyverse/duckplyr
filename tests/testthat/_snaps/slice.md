@@ -92,20 +92,6 @@
       Error:
       ! Must supply `n` or `prop`, but not both.
     Code
-      get_slice_size(n = foo)
-    Condition
-      Error:
-      ! `n` must be a constant.
-      Caused by error in `force()`:
-      ! object 'foo' not found
-    Code
-      get_slice_size(prop = foo)
-    Condition
-      Error:
-      ! `prop` must be a constant.
-      Caused by error in `force()`:
-      ! object 'foo' not found
-    Code
       get_slice_size(n = "a")
     Condition
       Error:
@@ -115,6 +101,57 @@
     Condition
       Error:
       ! `prop` must be a number, not the string "a".
+
+# get_slice_size() snapshots
+
+    Code
+      body(get_slice_size(prop = 0))
+    Output
+      clamp(0, floor(0 * n), n)
+    Code
+      body(get_slice_size(prop = 0.4))
+    Output
+      clamp(0, floor(0.4 * n), n)
+    Code
+      body(get_slice_size(prop = 2))
+    Output
+      clamp(0, floor(2 * n), n)
+    Code
+      body(get_slice_size(prop = 2, allow_outsize = TRUE))
+    Output
+      floor(2 * n)
+    Code
+      body(get_slice_size(prop = -0.4))
+    Output
+      clamp(0, ceiling(n + -0.4 * n), n)
+    Code
+      body(get_slice_size(prop = -2))
+    Output
+      clamp(0, ceiling(n + -2 * n), n)
+    Code
+      body(get_slice_size(n = 0))
+    Output
+      clamp(0, 0, n)
+    Code
+      body(get_slice_size(n = 4))
+    Output
+      clamp(0, 4, n)
+    Code
+      body(get_slice_size(n = 20))
+    Output
+      clamp(0, 20, n)
+    Code
+      body(get_slice_size(n = 20, allow_outsize = TRUE))
+    Output
+      [1] 20
+    Code
+      body(get_slice_size(n = -4))
+    Output
+      clamp(0, ceiling(n + -4), n)
+    Code
+      body(get_slice_size(n = -20))
+    Output
+      clamp(0, ceiling(n + -20), n)
 
 # n must be an integer
 
