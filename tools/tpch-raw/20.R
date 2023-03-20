@@ -1,42 +1,16 @@
 load("tools/tpch/001.rda")
 con <- DBI::dbConnect(duckdb::duckdb())
-invisible(DBI::dbExecute(con, "CREATE MACRO \"<\"(a, b) AS a < b"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"<=\"(a, b) AS a <= b"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \">\"(a, b) AS a > b"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \">=\"(a, b) AS a >= b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"!=\"(a, b) AS a <> b"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"is.na\"(a) AS (a IS NULL)"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS (COUNT(*))"))
-invisible(
-  DBI::dbExecute(con, "CREATE MACRO \"sum\"(x) AS (CASE WHEN SUM(x) IS NULL THEN 0 ELSE SUM(x) END)")
-)
-invisible(DBI::dbExecute(con, "CREATE MACRO \"log10\"(x) AS log(x)"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"log\"(x) AS ln(x)"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"as.Date\"(x) AS strptime(x, '%Y-%m-%d')"))
 invisible(
   DBI::dbExecute(con, "CREATE MACRO \"grepl\"(pattern, x) AS regexp_matches(x, pattern)")
 )
-invisible(DBI::dbExecute(con, "CREATE MACRO \"as.integer\"(x) AS CAST(x AS int32)"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \">=\"(a, b) AS a >= b"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"as.Date\"(x) AS strptime(x, '%Y-%m-%d')"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"<\"(a, b) AS a < b"))
 invisible(
-  DBI::dbExecute(
-    con,
-    "CREATE MACRO \"ifelse\"(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)"
-  )
+  DBI::dbExecute(con, "CREATE MACRO \"sum\"(x) AS (CASE WHEN SUM(x) IS NULL THEN 0 ELSE SUM(x) END)")
 )
-invisible(DBI::dbExecute(con, "CREATE MACRO \"|\"(x, y) AS (x OR y)"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"&\"(x, y) AS (x AND y)"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"!\"(x) AS (NOT x)"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"any\"(x) AS (bool_or(x))"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"desc\"(x) AS (-x)"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"n_distinct\"(x) AS (COUNT(DISTINCT x))"))
-invisible(
-  DBI::dbExecute(
-    con,
-    "CREATE MACRO \"___eq_na_matches_na\"(a, b) AS ((a IS NULL AND b IS NULL) OR (a = b))"
-  )
-)
-invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \">\"(a, b) AS a > b"))
 df1 <- nation
 rel1 <- duckdb:::rel_from_df(con, df1)
 rel2 <- duckdb:::rel_filter(

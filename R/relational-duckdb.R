@@ -301,6 +301,7 @@ to_duckdb_expr_meta <- function(x) {
       out
     },
     relational_relexpr_function = {
+      meta_macro_register(x$name)
       out <- expr(duckdb:::expr_function(!!x$name, list(!!!to_duckdb_exprs_meta(x$args))))
       if (!is.null(x$alias)) {
         out <- expr({

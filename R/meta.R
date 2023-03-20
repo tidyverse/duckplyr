@@ -1,11 +1,20 @@
+pre_code_cache <- collections::queue()
 code_cache <- collections::queue()
+macro_cache <- collections::dict()
 df_cache <- collections::dict()
 rel_cache <- collections::dict()
 
 meta_clear <- function() {
+  pre_code_cache$clear()
   code_cache$clear()
+  macro_cache$clear()
   df_cache$clear()
   rel_cache$clear()
+}
+
+meta_pre_record <- function(code) {
+  pre_code_cache$push(code)
+  invisible()
 }
 
 meta_record <- function(code) {
@@ -14,9 +23,9 @@ meta_record <- function(code) {
 }
 
 meta_replay <- function() {
-  con_expr <- as.list(body(create_default_duckdb_connection))
-  con_expr <- con_expr[seq2(2, length(con_expr) - 1)]
-  con_code <- map(con_expr, constructive::deparse_call)
+  con_code <- list(constructive::deparse_call(
+    expr(con <- DBI::dbConnect(duckdb::duckdb()))
+  ))
 
   # HACK
   count <- rel_cache$size()
@@ -24,7 +33,7 @@ meta_replay <- function() {
   res_mat_expr <- expr(duckdb:::rel_to_altrep(!!res_name))
   res_code <- map(list(res_name, res_mat_expr), constructive::deparse_call)
 
-  walk(c(con_code, code_cache$as_list(), res_code), print)
+  walk(c(con_code, pre_code_cache$as_list(), code_cache$as_list(), res_code), print)
 }
 
 meta_replay_to_file <- function(path, extra = character()) {
@@ -40,6 +49,25 @@ meta_replay_to_new_doc <- function() {
 meta_eval <- function() {
   code <- capture.output(meta_replay())
   eval(parse(text = code))
+}
+
+meta_macro_register <- function(name) {
+  macro <- duckplyr_macros[name]
+  if (is.na(macro)) {
+    return(invisible())
+  }
+
+  if (macro_cache$has(name)) {
+    return(invisible())
+  }
+
+  macro_expr <- expr(invisible(
+    DBI::dbExecute(con, !!paste0('CREATE MACRO "', names(macro), '"', macro))
+  ))
+  meta_pre_record(constructive::deparse_call(macro_expr))
+
+  macro_cache$set(name, TRUE)
+  invisible()
 }
 
 meta_df_register <- function(df) {
