@@ -22,7 +22,7 @@ meta_record <- function(code) {
   invisible()
 }
 
-meta_replay <- function() {
+meta_replay <- function(pre_code = TRUE) {
   con_code <- list(constructive::deparse_call(
     expr(con <- DBI::dbConnect(duckdb::duckdb()))
   ))
@@ -33,7 +33,13 @@ meta_replay <- function() {
   res_mat_expr <- expr(duckdb:::rel_to_altrep(!!res_name))
   res_code <- map(list(res_name, res_mat_expr), constructive::deparse_call)
 
-  walk(c(con_code, pre_code_cache$as_list(), code_cache$as_list(), res_code), print)
+  all_code <- c(
+    if (pre_code) c(con_code, pre_code_cache$as_list()),
+    code_cache$as_list(),
+    res_code
+  )
+
+  walk(all_code, print)
 }
 
 meta_replay_to_file <- function(path, extra = character()) {
