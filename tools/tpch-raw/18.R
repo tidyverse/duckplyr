@@ -1,5 +1,6 @@
 load("tools/tpch/001.rda")
 con <- DBI::dbConnect(duckdb::duckdb())
+experimental <- FALSE
 invisible(
   DBI::dbExecute(con, "CREATE MACRO \"sum\"(x) AS (CASE WHEN SUM(x) IS NULL THEN 0 ELSE SUM(x) END)")
 )
@@ -7,7 +8,7 @@ invisible(DBI::dbExecute(con, "CREATE MACRO \">\"(a, b) AS a > b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"desc\"(x) AS (-x)"))
 df1 <- lineitem
-rel1 <- duckdb:::rel_from_df(con, df1)
+rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb:::rel_aggregate(
   rel1,
   list(duckdb:::expr_reference("l_orderkey")),
@@ -22,11 +23,21 @@ rel2 <- duckdb:::rel_aggregate(
 rel3 <- duckdb:::rel_filter(
   rel2,
   list(
-    duckdb:::expr_function(">", list(duckdb:::expr_reference("sum"), duckdb:::expr_constant(300)))
+    duckdb:::expr_function(
+      ">",
+      list(
+        duckdb:::expr_reference("sum"),
+        if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+          duckdb:::expr_constant(300, experimental = experimental)
+        } else {
+          duckdb:::expr_constant(300)
+        }
+      )
+    )
   )
 )
 df2 <- orders
-rel4 <- duckdb:::rel_from_df(con, df2)
+rel4 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
 rel5 <- duckdb:::rel_set_alias(rel4, "lhs")
 rel6 <- duckdb:::rel_set_alias(rel3, "rhs")
 rel7 <- duckdb:::rel_join(
@@ -97,7 +108,7 @@ rel8 <- duckdb:::rel_project(
 )
 rel9 <- duckdb:::rel_set_alias(rel8, "lhs")
 df3 <- customer
-rel10 <- duckdb:::rel_from_df(con, df3)
+rel10 <- duckdb:::rel_from_df(con, df3, experimental = experimental)
 rel11 <- duckdb:::rel_set_alias(rel10, "rhs")
 rel12 <- duckdb:::rel_join(
   rel9,

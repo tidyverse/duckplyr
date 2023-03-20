@@ -1,5 +1,6 @@
 load("tools/tpch/001.rda")
 con <- DBI::dbConnect(duckdb::duckdb())
+experimental <- FALSE
 invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS (COUNT(*))"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \">\"(a, b) AS a > b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
@@ -16,7 +17,7 @@ invisible(
 invisible(DBI::dbExecute(con, "CREATE MACRO \"&\"(x, y) AS (x AND y)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"desc\"(x) AS (-x)"))
 df1 <- lineitem
-rel1 <- duckdb:::rel_from_df(con, df1)
+rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb:::rel_aggregate(
   rel1,
   list(duckdb:::expr_reference("l_orderkey"), duckdb:::expr_reference("l_suppkey")),
@@ -42,10 +43,20 @@ rel3 <- duckdb:::rel_aggregate(
 rel4 <- duckdb:::rel_filter(
   rel3,
   list(
-    duckdb:::expr_function(">", list(duckdb:::expr_reference("n_supplier"), duckdb:::expr_constant(1)))
+    duckdb:::expr_function(
+      ">",
+      list(
+        duckdb:::expr_reference("n_supplier"),
+        if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+          duckdb:::expr_constant(1, experimental = experimental)
+        } else {
+          duckdb:::expr_constant(1)
+        }
+      )
+    )
   )
 )
-rel5 <- duckdb:::rel_from_df(con, df1)
+rel5 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
 rel6 <- duckdb:::rel_set_alias(rel5, "lhs")
 rel7 <- duckdb:::rel_set_alias(rel4, "rhs")
 rel8 <- duckdb:::rel_join(
@@ -61,7 +72,7 @@ rel8 <- duckdb:::rel_join(
 )
 rel9 <- duckdb:::rel_set_alias(rel8, "lhs")
 df2 <- orders
-rel10 <- duckdb:::rel_from_df(con, df2)
+rel10 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
 rel11 <- duckdb:::rel_set_alias(rel10, "rhs")
 rel12 <- duckdb:::rel_join(
   rel9,
@@ -202,7 +213,17 @@ rel13 <- duckdb:::rel_project(
 rel14 <- duckdb:::rel_filter(
   rel13,
   list(
-    duckdb:::expr_function("==", list(duckdb:::expr_reference("o_orderstatus"), duckdb:::expr_constant("F")))
+    duckdb:::expr_function(
+      "==",
+      list(
+        duckdb:::expr_reference("o_orderstatus"),
+        if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+          duckdb:::expr_constant("F", experimental = experimental)
+        } else {
+          duckdb:::expr_constant("F")
+        }
+      )
+    )
   )
 )
 rel15 <- duckdb:::rel_aggregate(
@@ -239,7 +260,19 @@ rel16 <- duckdb:::rel_aggregate(
         list(
           duckdb:::expr_function(
             "ifelse",
-            list(duckdb:::expr_reference("failed_delivery_commit"), duckdb:::expr_constant(1), duckdb:::expr_constant(0))
+            list(
+              duckdb:::expr_reference("failed_delivery_commit"),
+              if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                duckdb:::expr_constant(1, experimental = experimental)
+              } else {
+                duckdb:::expr_constant(1)
+              },
+              if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                duckdb:::expr_constant(0, experimental = experimental)
+              } else {
+                duckdb:::expr_constant(0)
+              }
+            )
           )
         )
       )
@@ -254,13 +287,33 @@ rel17 <- duckdb:::rel_filter(
     duckdb:::expr_function(
       "&",
       list(
-        duckdb:::expr_function(">", list(duckdb:::expr_reference("n_supplier"), duckdb:::expr_constant(1))),
-        duckdb:::expr_function("==", list(duckdb:::expr_reference("num_failed"), duckdb:::expr_constant(1)))
+        duckdb:::expr_function(
+          ">",
+          list(
+            duckdb:::expr_reference("n_supplier"),
+            if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+              duckdb:::expr_constant(1, experimental = experimental)
+            } else {
+              duckdb:::expr_constant(1)
+            }
+          )
+        ),
+        duckdb:::expr_function(
+          "==",
+          list(
+            duckdb:::expr_reference("num_failed"),
+            if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+              duckdb:::expr_constant(1, experimental = experimental)
+            } else {
+              duckdb:::expr_constant(1)
+            }
+          )
+        )
       )
     )
   )
 )
-rel18 <- duckdb:::rel_from_df(con, df1)
+rel18 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
 rel19 <- duckdb:::rel_set_alias(rel18, "lhs")
 rel20 <- duckdb:::rel_set_alias(rel17, "rhs")
 rel21 <- duckdb:::rel_join(
@@ -275,7 +328,7 @@ rel21 <- duckdb:::rel_join(
   "semi"
 )
 df3 <- supplier
-rel22 <- duckdb:::rel_from_df(con, df3)
+rel22 <- duckdb:::rel_from_df(con, df3, experimental = experimental)
 rel23 <- duckdb:::rel_set_alias(rel22, "lhs")
 rel24 <- duckdb:::rel_set_alias(rel21, "rhs")
 rel25 <- duckdb:::rel_join(
@@ -415,7 +468,7 @@ rel27 <- duckdb:::rel_filter(
 )
 rel28 <- duckdb:::rel_set_alias(rel27, "lhs")
 df4 <- nation
-rel29 <- duckdb:::rel_from_df(con, df4)
+rel29 <- duckdb:::rel_from_df(con, df4, experimental = experimental)
 rel30 <- duckdb:::rel_set_alias(rel29, "rhs")
 rel31 <- duckdb:::rel_join(
   rel28,
@@ -561,7 +614,17 @@ rel32 <- duckdb:::rel_project(
 rel33 <- duckdb:::rel_filter(
   rel32,
   list(
-    duckdb:::expr_function("==", list(duckdb:::expr_reference("n_name"), duckdb:::expr_constant("SAUDI ARABIA")))
+    duckdb:::expr_function(
+      "==",
+      list(
+        duckdb:::expr_reference("n_name"),
+        if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+          duckdb:::expr_constant("SAUDI ARABIA", experimental = experimental)
+        } else {
+          duckdb:::expr_constant("SAUDI ARABIA")
+        }
+      )
+    )
   )
 )
 rel34 <- duckdb:::rel_aggregate(

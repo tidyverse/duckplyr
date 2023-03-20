@@ -1,5 +1,6 @@
 load("tools/tpch/001.rda")
 con <- DBI::dbConnect(duckdb::duckdb())
+experimental <- FALSE
 invisible(DBI::dbExecute(con, "CREATE MACRO \"!\"(x) AS (NOT x)"))
 invisible(
   DBI::dbExecute(con, "CREATE MACRO \"grepl\"(pattern, x) AS regexp_matches(x, pattern)")
@@ -18,7 +19,7 @@ invisible(DBI::dbExecute(con, "CREATE MACRO \"is.na\"(a) AS (a IS NULL)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS (COUNT(*))"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"desc\"(x) AS (-x)"))
 df1 <- orders
-rel1 <- duckdb:::rel_from_df(con, df1)
+rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb:::rel_filter(
   rel1,
   list(
@@ -27,14 +28,21 @@ rel2 <- duckdb:::rel_filter(
       list(
         duckdb:::expr_function(
           "grepl",
-          list(duckdb:::expr_constant("special.*?requests"), duckdb:::expr_reference("o_comment"))
+          list(
+            if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+              duckdb:::expr_constant("special.*?requests", experimental = experimental)
+            } else {
+              duckdb:::expr_constant("special.*?requests")
+            },
+            duckdb:::expr_reference("o_comment")
+          )
         )
       )
     )
   )
 )
 df2 <- customer
-rel3 <- duckdb:::rel_from_df(con, df2)
+rel3 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
 rel4 <- duckdb:::rel_set_alias(rel3, "lhs")
 rel5 <- duckdb:::rel_set_alias(rel2, "rhs")
 rel6 <- duckdb:::rel_join(
@@ -143,7 +151,19 @@ rel8 <- duckdb:::rel_aggregate(
         list(
           duckdb:::expr_function(
             "ifelse",
-            list(duckdb:::expr_function("is.na", list(duckdb:::expr_reference("o_orderkey"))), duckdb:::expr_constant(0L), duckdb:::expr_constant(1L))
+            list(
+              duckdb:::expr_function("is.na", list(duckdb:::expr_reference("o_orderkey"))),
+              if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                duckdb:::expr_constant(0L, experimental = experimental)
+              } else {
+                duckdb:::expr_constant(0L)
+              },
+              if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                duckdb:::expr_constant(1L, experimental = experimental)
+              } else {
+                duckdb:::expr_constant(1L)
+              }
+            )
           )
         )
       )

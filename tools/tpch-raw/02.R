@@ -1,9 +1,7 @@
 load("tools/tpch/001.rda")
 con <- DBI::dbConnect(duckdb::duckdb())
+experimental <- FALSE
 invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
-invisible(
-  DBI::dbExecute(con, "CREATE MACRO \"grepl\"(pattern, x) AS regexp_matches(x, pattern)")
-)
 invisible(
   DBI::dbExecute(
     con,
@@ -12,7 +10,7 @@ invisible(
 )
 invisible(DBI::dbExecute(con, "CREATE MACRO \"desc\"(x) AS (-x)"))
 df1 <- partsupp
-rel1 <- duckdb:::rel_from_df(con, df1)
+rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb:::rel_project(
   rel1,
   list(
@@ -34,7 +32,7 @@ rel2 <- duckdb:::rel_project(
   )
 )
 df2 <- part
-rel3 <- duckdb:::rel_from_df(con, df2)
+rel3 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
 rel4 <- duckdb:::rel_project(
   rel3,
   list(
@@ -63,8 +61,28 @@ rel4 <- duckdb:::rel_project(
 rel5 <- duckdb:::rel_filter(
   rel4,
   list(
-    duckdb:::expr_function("==", list(duckdb:::expr_reference("p_size"), duckdb:::expr_constant(15))),
-    duckdb:::expr_function("grepl", list(duckdb:::expr_constant("BRASS$"), duckdb:::expr_reference("p_type")))
+    duckdb:::expr_function(
+      "==",
+      list(
+        duckdb:::expr_reference("p_size"),
+        if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+          duckdb:::expr_constant(15, experimental = experimental)
+        } else {
+          duckdb:::expr_constant(15)
+        }
+      )
+    ),
+    duckdb:::expr_function(
+      "suffix",
+      list(
+        duckdb:::expr_reference("p_type"),
+        if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+          duckdb:::expr_constant("BRASS", experimental = experimental)
+        } else {
+          duckdb:::expr_constant("BRASS")
+        }
+      )
+    )
   )
 )
 rel6 <- duckdb:::rel_project(
@@ -121,7 +139,7 @@ rel10 <- duckdb:::rel_project(
   )
 )
 df3 <- supplier
-rel11 <- duckdb:::rel_from_df(con, df3)
+rel11 <- duckdb:::rel_from_df(con, df3, experimental = experimental)
 rel12 <- duckdb:::rel_project(
   rel11,
   list(
@@ -281,15 +299,25 @@ rel17 <- duckdb:::rel_project(
   )
 )
 df4 <- region
-rel18 <- duckdb:::rel_from_df(con, df4)
+rel18 <- duckdb:::rel_from_df(con, df4, experimental = experimental)
 rel19 <- duckdb:::rel_filter(
   rel18,
   list(
-    duckdb:::expr_function("==", list(duckdb:::expr_reference("r_name"), duckdb:::expr_constant("EUROPE")))
+    duckdb:::expr_function(
+      "==",
+      list(
+        duckdb:::expr_reference("r_name"),
+        if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+          duckdb:::expr_constant("EUROPE", experimental = experimental)
+        } else {
+          duckdb:::expr_constant("EUROPE")
+        }
+      )
+    )
   )
 )
 df5 <- nation
-rel20 <- duckdb:::rel_from_df(con, df5)
+rel20 <- duckdb:::rel_from_df(con, df5, experimental = experimental)
 rel21 <- duckdb:::rel_set_alias(rel20, "lhs")
 rel22 <- duckdb:::rel_set_alias(rel19, "rhs")
 rel23 <- duckdb:::rel_join(

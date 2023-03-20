@@ -1,5 +1,6 @@
 load("tools/tpch/001.rda")
 con <- DBI::dbConnect(duckdb::duckdb())
+experimental <- FALSE
 invisible(DBI::dbExecute(con, "CREATE MACRO \"<=\"(a, b) AS a <= b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"as.Date\"(x) AS strptime(x, '%Y-%m-%d')"))
 invisible(
@@ -7,7 +8,7 @@ invisible(
 )
 invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS (COUNT(*))"))
 df1 <- lineitem
-rel1 <- duckdb:::rel_from_df(con, df1)
+rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb:::rel_project(
   rel1,
   list(
@@ -53,7 +54,19 @@ rel3 <- duckdb:::rel_filter(
   list(
     duckdb:::expr_function(
       "<=",
-      list(duckdb:::expr_reference("l_shipdate"), duckdb:::expr_function("as.Date", list(duckdb:::expr_constant("1998-09-02"))))
+      list(
+        duckdb:::expr_reference("l_shipdate"),
+        duckdb:::expr_function(
+          "as.Date",
+          list(
+            if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+              duckdb:::expr_constant("1998-09-02", experimental = experimental)
+            } else {
+              duckdb:::expr_constant("1998-09-02")
+            }
+          )
+        )
+      )
     )
   )
 )
@@ -114,7 +127,17 @@ rel5 <- duckdb:::rel_aggregate(
             "*",
             list(
               duckdb:::expr_reference("l_extendedprice"),
-              duckdb:::expr_function("-", list(duckdb:::expr_constant(1), duckdb:::expr_reference("l_discount")))
+              duckdb:::expr_function(
+                "-",
+                list(
+                  if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                    duckdb:::expr_constant(1, experimental = experimental)
+                  } else {
+                    duckdb:::expr_constant(1)
+                  },
+                  duckdb:::expr_reference("l_discount")
+                )
+              )
             )
           )
         )
@@ -133,10 +156,30 @@ rel5 <- duckdb:::rel_aggregate(
                 "*",
                 list(
                   duckdb:::expr_reference("l_extendedprice"),
-                  duckdb:::expr_function("-", list(duckdb:::expr_constant(1), duckdb:::expr_reference("l_discount")))
+                  duckdb:::expr_function(
+                    "-",
+                    list(
+                      if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                        duckdb:::expr_constant(1, experimental = experimental)
+                      } else {
+                        duckdb:::expr_constant(1)
+                      },
+                      duckdb:::expr_reference("l_discount")
+                    )
+                  )
                 )
               ),
-              duckdb:::expr_function("+", list(duckdb:::expr_constant(1), duckdb:::expr_reference("l_tax")))
+              duckdb:::expr_function(
+                "+",
+                list(
+                  if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                    duckdb:::expr_constant(1, experimental = experimental)
+                  } else {
+                    duckdb:::expr_constant(1)
+                  },
+                  duckdb:::expr_reference("l_tax")
+                )
+              )
             )
           )
         )

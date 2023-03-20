@@ -1,5 +1,6 @@
 load("tools/tpch/001.rda")
 con <- DBI::dbConnect(duckdb::duckdb())
+experimental <- FALSE
 invisible(DBI::dbExecute(con, "CREATE MACRO \">=\"(a, b) AS a >= b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"as.Date\"(x) AS strptime(x, '%Y-%m-%d')"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"<\"(a, b) AS a < b"))
@@ -8,17 +9,41 @@ invisible(
 )
 invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
 df1 <- lineitem
-rel1 <- duckdb:::rel_from_df(con, df1)
+rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb:::rel_filter(
   rel1,
   list(
     duckdb:::expr_function(
       ">=",
-      list(duckdb:::expr_reference("l_shipdate"), duckdb:::expr_function("as.Date", list(duckdb:::expr_constant("1996-01-01"))))
+      list(
+        duckdb:::expr_reference("l_shipdate"),
+        duckdb:::expr_function(
+          "as.Date",
+          list(
+            if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+              duckdb:::expr_constant("1996-01-01", experimental = experimental)
+            } else {
+              duckdb:::expr_constant("1996-01-01")
+            }
+          )
+        )
+      )
     ),
     duckdb:::expr_function(
       "<",
-      list(duckdb:::expr_reference("l_shipdate"), duckdb:::expr_function("as.Date", list(duckdb:::expr_constant("1996-04-01"))))
+      list(
+        duckdb:::expr_reference("l_shipdate"),
+        duckdb:::expr_function(
+          "as.Date",
+          list(
+            if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+              duckdb:::expr_constant("1996-04-01", experimental = experimental)
+            } else {
+              duckdb:::expr_constant("1996-04-01")
+            }
+          )
+        )
+      )
     )
   )
 )
@@ -34,7 +59,17 @@ rel3 <- duckdb:::rel_aggregate(
             "*",
             list(
               duckdb:::expr_reference("l_extendedprice"),
-              duckdb:::expr_function("-", list(duckdb:::expr_constant(1), duckdb:::expr_reference("l_discount")))
+              duckdb:::expr_function(
+                "-",
+                list(
+                  if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                    duckdb:::expr_constant(1, experimental = experimental)
+                  } else {
+                    duckdb:::expr_constant(1)
+                  },
+                  duckdb:::expr_reference("l_discount")
+                )
+              )
             )
           )
         )
@@ -57,7 +92,11 @@ rel4 <- duckdb:::rel_project(
       duckdb:::expr_set_alias(tmp_expr, "total_revenue")
       tmp_expr
     }, {
-      tmp_expr <- duckdb:::expr_constant(1L)
+      tmp_expr <- if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+        duckdb:::expr_constant(1L, experimental = experimental)
+      } else {
+        duckdb:::expr_constant(1L)
+      }
       duckdb:::expr_set_alias(tmp_expr, "global_agr_key")
       tmp_expr
     }
@@ -87,7 +126,11 @@ rel6 <- duckdb:::rel_project(
       duckdb:::expr_set_alias(tmp_expr, "total_revenue")
       tmp_expr
     }, {
-      tmp_expr <- duckdb:::expr_constant(1L)
+      tmp_expr <- if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+        duckdb:::expr_constant(1L, experimental = experimental)
+      } else {
+        duckdb:::expr_constant(1L)
+      }
       duckdb:::expr_set_alias(tmp_expr, "global_agr_key")
       tmp_expr
     }
@@ -181,14 +224,18 @@ rel13 <- duckdb:::rel_filter(
             )
           )
         ),
-        duckdb:::expr_constant(1e-09)
+        if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+          duckdb:::expr_constant(1e-09, experimental = experimental)
+        } else {
+          duckdb:::expr_constant(1e-09)
+        }
       )
     )
   )
 )
 rel14 <- duckdb:::rel_set_alias(rel13, "lhs")
 df2 <- supplier
-rel15 <- duckdb:::rel_from_df(con, df2)
+rel15 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
 rel16 <- duckdb:::rel_set_alias(rel15, "rhs")
 rel17 <- duckdb:::rel_join(
   rel14,

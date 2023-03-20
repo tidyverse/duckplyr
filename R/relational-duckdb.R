@@ -104,7 +104,8 @@ duckdb_rel_from_df <- function(df) {
 
   # FIXME: For some other reason, it seems crucial to assign the result to a
   # variable before returning it
-  out <- duckdb:::rel_from_df(con, df)
+  experimental <- (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE")
+  out <- duckdb:::rel_from_df(con, df, experimental = experimental)
 
   meta_rel_register_df(out, df)
 
@@ -269,7 +270,12 @@ to_duckdb_expr <- function(x) {
       out
     },
     relational_relexpr_constant = {
-      out <- duckdb:::expr_constant(x$val)
+      if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+        experimental <- (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE")
+        out <- duckdb:::expr_constant(x$val, experimental = experimental)
+      } else {
+        out <- duckdb:::expr_constant(x$val)
+      }
       if (!is.null(x$alias)) {
         duckdb:::expr_set_alias(out, x$alias)
       }
@@ -313,7 +319,15 @@ to_duckdb_expr_meta <- function(x) {
       out
     },
     relational_relexpr_constant = {
-      out <- expr(duckdb:::expr_constant(!!x$val))
+      out <- expr(
+        # FIXME: always pass experimental flag once it's merged
+        if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+          duckdb:::expr_constant(!!x$val, experimental = experimental)
+        } else {
+          duckdb:::expr_constant(!!x$val)
+        }
+      )
+
       if (!is.null(x$alias)) {
         out <- expr({
           tmp_expr <- !!out

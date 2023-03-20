@@ -1,5 +1,6 @@
 load("tools/tpch/001.rda")
 con <- DBI::dbConnect(duckdb::duckdb())
+experimental <- FALSE
 invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
 invisible(
   DBI::dbExecute(con, "CREATE MACRO \"sum\"(x) AS (CASE WHEN SUM(x) IS NULL THEN 0 ELSE SUM(x) END)")
@@ -7,18 +8,28 @@ invisible(
 invisible(DBI::dbExecute(con, "CREATE MACRO \">\"(a, b) AS a > b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"desc\"(x) AS (-x)"))
 df1 <- nation
-rel1 <- duckdb:::rel_from_df(con, df1)
+rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb:::rel_filter(
   rel1,
   list(
-    duckdb:::expr_function("==", list(duckdb:::expr_reference("n_name"), duckdb:::expr_constant("GERMANY")))
+    duckdb:::expr_function(
+      "==",
+      list(
+        duckdb:::expr_reference("n_name"),
+        if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+          duckdb:::expr_constant("GERMANY", experimental = experimental)
+        } else {
+          duckdb:::expr_constant("GERMANY")
+        }
+      )
+    )
   )
 )
 df2 <- partsupp
-rel3 <- duckdb:::rel_from_df(con, df2)
+rel3 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
 rel4 <- duckdb:::rel_set_alias(rel3, "lhs")
 df3 <- supplier
-rel5 <- duckdb:::rel_from_df(con, df3)
+rel5 <- duckdb:::rel_from_df(con, df3, experimental = experimental)
 rel6 <- duckdb:::rel_set_alias(rel5, "rhs")
 rel7 <- duckdb:::rel_join(
   rel4,
@@ -196,7 +207,11 @@ rel13 <- duckdb:::rel_aggregate(
               )
             )
           ),
-          duckdb:::expr_constant(1e-04)
+          if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+            duckdb:::expr_constant(1e-04, experimental = experimental)
+          } else {
+            duckdb:::expr_constant(1e-04)
+          }
         )
       )
       duckdb:::expr_set_alias(tmp_expr, "global_value")
@@ -212,7 +227,11 @@ rel14 <- duckdb:::rel_project(
       duckdb:::expr_set_alias(tmp_expr, "global_value")
       tmp_expr
     }, {
-      tmp_expr <- duckdb:::expr_constant(1L)
+      tmp_expr <- if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+        duckdb:::expr_constant(1L, experimental = experimental)
+      } else {
+        duckdb:::expr_constant(1L)
+      }
       duckdb:::expr_set_alias(tmp_expr, "global_agr_key")
       tmp_expr
     }
@@ -250,7 +269,11 @@ rel16 <- duckdb:::rel_project(
       duckdb:::expr_set_alias(tmp_expr, "value")
       tmp_expr
     }, {
-      tmp_expr <- duckdb:::expr_constant(1L)
+      tmp_expr <- if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+        duckdb:::expr_constant(1L, experimental = experimental)
+      } else {
+        duckdb:::expr_constant(1L)
+      }
       duckdb:::expr_set_alias(tmp_expr, "global_agr_key")
       tmp_expr
     }

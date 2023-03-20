@@ -1,10 +1,9 @@
 pkgload::load_all()
 
-Sys.setenv(DUCKPLYR_FORCE = TRUE)
-
 load("tools/tpch/100.rda")
 
 con <- get_default_duckdb_connection()
+experimental <- FALSE
 
 test_dplyr_q <- head(n = -1, list(
   tpch_01 = tpch_raw_01,
@@ -37,8 +36,8 @@ pkg <- "duckdb"
 
 for (q in names(test_dplyr_q)) {
   f <- test_dplyr_q[[q]]
-  cold <- collect(f())
-  time <- system.time(collect(f()))[[3]]
+  cold <- collect(f(experimental))
+  time <- system.time(collect(f(experimental)))[[3]]
   print(q)
   print(time)
   res[[q]] <- data.frame(pkg = pkg, q = q, time = time)

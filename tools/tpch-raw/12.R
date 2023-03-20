@@ -1,5 +1,6 @@
 load("tools/tpch/001.rda")
 con <- DBI::dbConnect(duckdb::duckdb())
+experimental <- FALSE
 invisible(DBI::dbExecute(con, "CREATE MACRO \"|\"(x, y) AS (x OR y)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"<\"(a, b) AS a < b"))
@@ -17,15 +18,35 @@ invisible(
 invisible(DBI::dbExecute(con, "CREATE MACRO \"&\"(x, y) AS (x AND y)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"!=\"(a, b) AS a <> b"))
 df1 <- lineitem
-rel1 <- duckdb:::rel_from_df(con, df1)
+rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb:::rel_filter(
   rel1,
   list(
     duckdb:::expr_function(
       "|",
       list(
-        duckdb:::expr_function("==", list(duckdb:::expr_constant("MAIL"), duckdb:::expr_reference("l_shipmode"))),
-        duckdb:::expr_function("==", list(duckdb:::expr_constant("SHIP"), duckdb:::expr_reference("l_shipmode")))
+        duckdb:::expr_function(
+          "==",
+          list(
+            if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+              duckdb:::expr_constant("MAIL", experimental = experimental)
+            } else {
+              duckdb:::expr_constant("MAIL")
+            },
+            duckdb:::expr_reference("l_shipmode")
+          )
+        ),
+        duckdb:::expr_function(
+          "==",
+          list(
+            if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+              duckdb:::expr_constant("SHIP", experimental = experimental)
+            } else {
+              duckdb:::expr_constant("SHIP")
+            },
+            duckdb:::expr_reference("l_shipmode")
+          )
+        )
       )
     ),
     duckdb:::expr_function(
@@ -38,17 +59,41 @@ rel2 <- duckdb:::rel_filter(
     ),
     duckdb:::expr_function(
       ">=",
-      list(duckdb:::expr_reference("l_receiptdate"), duckdb:::expr_function("as.Date", list(duckdb:::expr_constant("1994-01-01"))))
+      list(
+        duckdb:::expr_reference("l_receiptdate"),
+        duckdb:::expr_function(
+          "as.Date",
+          list(
+            if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+              duckdb:::expr_constant("1994-01-01", experimental = experimental)
+            } else {
+              duckdb:::expr_constant("1994-01-01")
+            }
+          )
+        )
+      )
     ),
     duckdb:::expr_function(
       "<",
-      list(duckdb:::expr_reference("l_receiptdate"), duckdb:::expr_function("as.Date", list(duckdb:::expr_constant("1995-01-01"))))
+      list(
+        duckdb:::expr_reference("l_receiptdate"),
+        duckdb:::expr_function(
+          "as.Date",
+          list(
+            if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+              duckdb:::expr_constant("1995-01-01", experimental = experimental)
+            } else {
+              duckdb:::expr_constant("1995-01-01")
+            }
+          )
+        )
+      )
     )
   )
 )
 rel3 <- duckdb:::rel_set_alias(rel2, "lhs")
 df2 <- orders
-rel4 <- duckdb:::rel_from_df(con, df2)
+rel4 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
 rel5 <- duckdb:::rel_set_alias(rel4, "rhs")
 rel6 <- duckdb:::rel_join(
   rel3,
@@ -202,16 +247,38 @@ rel8 <- duckdb:::rel_aggregate(
                 list(
                   duckdb:::expr_function(
                     "==",
-                    list(duckdb:::expr_reference("o_orderpriority"), duckdb:::expr_constant("1-URGENT"))
+                    list(
+                      duckdb:::expr_reference("o_orderpriority"),
+                      if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                        duckdb:::expr_constant("1-URGENT", experimental = experimental)
+                      } else {
+                        duckdb:::expr_constant("1-URGENT")
+                      }
+                    )
                   ),
                   duckdb:::expr_function(
                     "==",
-                    list(duckdb:::expr_reference("o_orderpriority"), duckdb:::expr_constant("2-HIGH"))
+                    list(
+                      duckdb:::expr_reference("o_orderpriority"),
+                      if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                        duckdb:::expr_constant("2-HIGH", experimental = experimental)
+                      } else {
+                        duckdb:::expr_constant("2-HIGH")
+                      }
+                    )
                   )
                 )
               ),
-              duckdb:::expr_constant(1L),
-              duckdb:::expr_constant(0L)
+              if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                duckdb:::expr_constant(1L, experimental = experimental)
+              } else {
+                duckdb:::expr_constant(1L)
+              },
+              if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                duckdb:::expr_constant(0L, experimental = experimental)
+              } else {
+                duckdb:::expr_constant(0L)
+              }
             )
           )
         )
@@ -231,16 +298,38 @@ rel8 <- duckdb:::rel_aggregate(
                 list(
                   duckdb:::expr_function(
                     "!=",
-                    list(duckdb:::expr_reference("o_orderpriority"), duckdb:::expr_constant("1-URGENT"))
+                    list(
+                      duckdb:::expr_reference("o_orderpriority"),
+                      if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                        duckdb:::expr_constant("1-URGENT", experimental = experimental)
+                      } else {
+                        duckdb:::expr_constant("1-URGENT")
+                      }
+                    )
                   ),
                   duckdb:::expr_function(
                     "!=",
-                    list(duckdb:::expr_reference("o_orderpriority"), duckdb:::expr_constant("2-HIGH"))
+                    list(
+                      duckdb:::expr_reference("o_orderpriority"),
+                      if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                        duckdb:::expr_constant("2-HIGH", experimental = experimental)
+                      } else {
+                        duckdb:::expr_constant("2-HIGH")
+                      }
+                    )
                   )
                 )
               ),
-              duckdb:::expr_constant(1L),
-              duckdb:::expr_constant(0L)
+              if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                duckdb:::expr_constant(1L, experimental = experimental)
+              } else {
+                duckdb:::expr_constant(1L)
+              },
+              if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                duckdb:::expr_constant(0L, experimental = experimental)
+              } else {
+                duckdb:::expr_constant(0L)
+              }
             )
           )
         )

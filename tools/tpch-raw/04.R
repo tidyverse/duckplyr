@@ -1,12 +1,13 @@
 load("tools/tpch/001.rda")
 con <- DBI::dbConnect(duckdb::duckdb())
+experimental <- FALSE
 invisible(DBI::dbExecute(con, "CREATE MACRO \"<\"(a, b) AS a < b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \">=\"(a, b) AS a >= b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"as.Date\"(x) AS strptime(x, '%Y-%m-%d')"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS (COUNT(*))"))
 df1 <- lineitem
-rel1 <- duckdb:::rel_from_df(con, df1)
+rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb:::rel_project(
   rel1,
   list(
@@ -45,7 +46,7 @@ rel4 <- duckdb:::rel_project(
   })
 )
 df2 <- orders
-rel5 <- duckdb:::rel_from_df(con, df2)
+rel5 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
 rel6 <- duckdb:::rel_project(
   rel5,
   list(
@@ -71,11 +72,35 @@ rel7 <- duckdb:::rel_filter(
   list(
     duckdb:::expr_function(
       ">=",
-      list(duckdb:::expr_reference("o_orderdate"), duckdb:::expr_function("as.Date", list(duckdb:::expr_constant("1993-07-01"))))
+      list(
+        duckdb:::expr_reference("o_orderdate"),
+        duckdb:::expr_function(
+          "as.Date",
+          list(
+            if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+              duckdb:::expr_constant("1993-07-01", experimental = experimental)
+            } else {
+              duckdb:::expr_constant("1993-07-01")
+            }
+          )
+        )
+      )
     ),
     duckdb:::expr_function(
       "<",
-      list(duckdb:::expr_reference("o_orderdate"), duckdb:::expr_function("as.Date", list(duckdb:::expr_constant("1993-10-01"))))
+      list(
+        duckdb:::expr_reference("o_orderdate"),
+        duckdb:::expr_function(
+          "as.Date",
+          list(
+            if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+              duckdb:::expr_constant("1993-10-01", experimental = experimental)
+            } else {
+              duckdb:::expr_constant("1993-10-01")
+            }
+          )
+        )
+      )
     )
   )
 )

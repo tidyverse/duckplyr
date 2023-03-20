@@ -1,6 +1,7 @@
 pkgload::load_all()
 
 Sys.setenv(DUCKPLYR_FORCE = TRUE)
+Sys.setenv(DUCKPLYR_EXPERIMENTAL = FALSE)
 
 load("tools/tpch/001.rda")
 answer <- "tpch-sf0.01"

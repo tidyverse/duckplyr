@@ -1,5 +1,6 @@
 load("tools/tpch/001.rda")
 con <- DBI::dbConnect(duckdb::duckdb())
+experimental <- FALSE
 invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \">=\"(a, b) AS a >= b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"as.Date\"(x) AS strptime(x, '%Y-%m-%d')"))
@@ -9,7 +10,7 @@ invisible(
 )
 invisible(DBI::dbExecute(con, "CREATE MACRO \"desc\"(x) AS (-x)"))
 df1 <- nation
-rel1 <- duckdb:::rel_from_df(con, df1)
+rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb:::rel_project(
   rel1,
   list(
@@ -31,7 +32,7 @@ rel2 <- duckdb:::rel_project(
   )
 )
 df2 <- region
-rel3 <- duckdb:::rel_from_df(con, df2)
+rel3 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
 rel4 <- duckdb:::rel_project(
   rel3,
   list(
@@ -50,7 +51,17 @@ rel4 <- duckdb:::rel_project(
 rel5 <- duckdb:::rel_filter(
   rel4,
   list(
-    duckdb:::expr_function("==", list(duckdb:::expr_reference("r_name"), duckdb:::expr_constant("ASIA")))
+    duckdb:::expr_function(
+      "==",
+      list(
+        duckdb:::expr_reference("r_name"),
+        if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+          duckdb:::expr_constant("ASIA", experimental = experimental)
+        } else {
+          duckdb:::expr_constant("ASIA")
+        }
+      )
+    )
   )
 )
 rel6 <- duckdb:::rel_set_alias(rel2, "lhs")
@@ -107,7 +118,7 @@ rel10 <- duckdb:::rel_project(
   )
 )
 df3 <- supplier
-rel11 <- duckdb:::rel_from_df(con, df3)
+rel11 <- duckdb:::rel_from_df(con, df3, experimental = experimental)
 rel12 <- duckdb:::rel_project(
   rel11,
   list(
@@ -177,7 +188,7 @@ rel17 <- duckdb:::rel_project(
   )
 )
 df4 <- lineitem
-rel18 <- duckdb:::rel_from_df(con, df4)
+rel18 <- duckdb:::rel_from_df(con, df4, experimental = experimental)
 rel19 <- duckdb:::rel_project(
   rel18,
   list(
@@ -252,7 +263,7 @@ rel23 <- duckdb:::rel_project(
   )
 )
 df5 <- orders
-rel24 <- duckdb:::rel_from_df(con, df5)
+rel24 <- duckdb:::rel_from_df(con, df5, experimental = experimental)
 rel25 <- duckdb:::rel_project(
   rel24,
   list(
@@ -278,11 +289,35 @@ rel26 <- duckdb:::rel_filter(
   list(
     duckdb:::expr_function(
       ">=",
-      list(duckdb:::expr_reference("o_orderdate"), duckdb:::expr_function("as.Date", list(duckdb:::expr_constant("1994-01-01"))))
+      list(
+        duckdb:::expr_reference("o_orderdate"),
+        duckdb:::expr_function(
+          "as.Date",
+          list(
+            if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+              duckdb:::expr_constant("1994-01-01", experimental = experimental)
+            } else {
+              duckdb:::expr_constant("1994-01-01")
+            }
+          )
+        )
+      )
     ),
     duckdb:::expr_function(
       "<",
-      list(duckdb:::expr_reference("o_orderdate"), duckdb:::expr_function("as.Date", list(duckdb:::expr_constant("1995-01-01"))))
+      list(
+        duckdb:::expr_reference("o_orderdate"),
+        duckdb:::expr_function(
+          "as.Date",
+          list(
+            if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+              duckdb:::expr_constant("1995-01-01", experimental = experimental)
+            } else {
+              duckdb:::expr_constant("1995-01-01")
+            }
+          )
+        )
+      )
     )
   )
 )
@@ -302,7 +337,7 @@ rel27 <- duckdb:::rel_project(
   )
 )
 df6 <- customer
-rel28 <- duckdb:::rel_from_df(con, df6)
+rel28 <- duckdb:::rel_from_df(con, df6, experimental = experimental)
 rel29 <- duckdb:::rel_project(
   rel28,
   list(
@@ -460,7 +495,17 @@ rel40 <- duckdb:::rel_project(
         "*",
         list(
           duckdb:::expr_reference("l_extendedprice"),
-          duckdb:::expr_function("-", list(duckdb:::expr_constant(1), duckdb:::expr_reference("l_discount")))
+          duckdb:::expr_function(
+            "-",
+            list(
+              if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                duckdb:::expr_constant(1, experimental = experimental)
+              } else {
+                duckdb:::expr_constant(1)
+              },
+              duckdb:::expr_reference("l_discount")
+            )
+          )
         )
       )
       duckdb:::expr_set_alias(tmp_expr, "volume")
