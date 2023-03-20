@@ -243,7 +243,7 @@ tpch_07 <- function() {
     mutate(
       supp_nation = n1_name,
       cust_nation = n2_name,
-      l_year = as.integer(strftime(l_shipdate, "%Y")),
+      l_year = year(l_shipdate),
       volume = l_extendedprice * (1 - l_discount)
     ) |>
     select_opt(supp_nation, cust_nation, l_year, volume) |>
@@ -315,7 +315,7 @@ tpch_08 <- function() {
 
   aggr <- all |>
     mutate(
-      o_year = as.integer(strftime(o_orderdate, "%Y")),
+      o_year = year(o_orderdate),
       volume = l_extendedprice * (1 - l_discount),
       nation = n2_name
     ) |>
@@ -371,7 +371,7 @@ tpch_09 <- function() {
   aggr <- all |>
     mutate(
       nation = n_name,
-      o_year = as.integer(strftime(o_orderdate, "%Y")),
+      o_year = year(o_orderdate),
       amount = l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity
     ) |>
     select_opt(nation, o_year, amount) |>

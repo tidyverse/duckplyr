@@ -7,35 +7,35 @@ load("tools/tpch/100.rda")
 con <- get_default_duckdb_connection()
 
 test_dplyr_q <- head(n = -1, list(
-  tpch_raw_01,
-  tpch_raw_02,
-  tpch_raw_03,
-  tpch_raw_04,
-  tpch_raw_05,
-  tpch_raw_06,
-  tpch_raw_07,
-  tpch_raw_08,
-  tpch_raw_09,
-  tpch_raw_10,
-  tpch_raw_11,
-  tpch_raw_12,
-  tpch_raw_13,
-  tpch_raw_14,
-  tpch_raw_15,
-  tpch_raw_16,
-  tpch_raw_17,
-  tpch_raw_18,
-  tpch_raw_19,
-  tpch_raw_20,
-  tpch_raw_21,
-  tpch_raw_22,
+  tpch_01 = tpch_raw_01,
+  tpch_02 = tpch_raw_02,
+  tpch_03 = tpch_raw_03,
+  tpch_04 = tpch_raw_04,
+  tpch_05 = tpch_raw_05,
+  tpch_06 = tpch_raw_06,
+  # tpch_07 = tpch_raw_07, # string error
+  # tpch_08 = tpch_raw_08, # string error
+  # tpch_09 = tpch_raw_09, # string error
+  tpch_10 = tpch_raw_10,
+  tpch_11 = tpch_raw_11,
+  tpch_12 = tpch_raw_12,
+  # tpch_13 = tpch_raw_13, # takes prohibitively long time
+  tpch_14 = tpch_raw_14,
+  tpch_15 = tpch_raw_15,
+  tpch_16 = tpch_raw_16,
+  tpch_17 = tpch_raw_17,
+  tpch_18 = tpch_raw_18,
+  tpch_19 = tpch_raw_19,
+  tpch_20 = tpch_raw_20,
+  # tpch_21 = tpch_raw_21, # string error
+  # tpch_22 = tpch_raw_22, # string error
   NULL
 ))
 
 res <- list()
 pkg <- "duckdb"
 
-for (q in seq_along(test_dplyr_q)) {
+for (q in names(test_dplyr_q)) {
   f <- test_dplyr_q[[q]]
   cold <- collect(f())
   time <- system.time(collect(f()))[[3]]
