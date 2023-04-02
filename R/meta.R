@@ -68,6 +68,11 @@ meta_replay_to_new_doc <- function() {
   rstudioapi::documentNew(code, execute = TRUE)
 }
 
+meta_replay_to_reprex <- function(...) {
+  code <- capture.output(meta_replay())
+  reprex::reprex(input = code, ...)
+}
+
 meta_eval <- function() {
   code <- capture.output(meta_replay())
   eval(parse(text = code))
