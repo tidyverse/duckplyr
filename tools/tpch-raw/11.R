@@ -222,11 +222,12 @@ rel13 <- duckdb:::rel_aggregate(
 rel14 <- duckdb:::rel_project(
   rel13,
   list(
-    global_value = {
+    {
       tmp_expr <- duckdb:::expr_reference("global_value")
       duckdb:::expr_set_alias(tmp_expr, "global_value")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
         duckdb:::expr_constant(1L, experimental = experimental)
       } else {
@@ -259,16 +260,17 @@ rel15 <- duckdb:::rel_aggregate(
 rel16 <- duckdb:::rel_project(
   rel15,
   list(
-    ps_partkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_partkey")
       duckdb:::expr_set_alias(tmp_expr, "ps_partkey")
       tmp_expr
     },
-    value = {
+    {
       tmp_expr <- duckdb:::expr_reference("value")
       duckdb:::expr_set_alias(tmp_expr, "value")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
         duckdb:::expr_constant(1L, experimental = experimental)
       } else {

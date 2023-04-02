@@ -467,36 +467,37 @@ rel37 <- duckdb:::rel_project(
 rel38 <- duckdb:::rel_project(
   rel37,
   list(
-    l_extendedprice = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_extendedprice")
       duckdb:::expr_set_alias(tmp_expr, "l_extendedprice")
       tmp_expr
     },
-    l_discount = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_discount")
       duckdb:::expr_set_alias(tmp_expr, "l_discount")
       tmp_expr
     },
-    l_quantity = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_quantity")
       duckdb:::expr_set_alias(tmp_expr, "l_quantity")
       tmp_expr
     },
-    ps_supplycost = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_supplycost")
       duckdb:::expr_set_alias(tmp_expr, "ps_supplycost")
       tmp_expr
     },
-    n_name = {
+    {
       tmp_expr <- duckdb:::expr_reference("n_name")
       duckdb:::expr_set_alias(tmp_expr, "n_name")
       tmp_expr
     },
-    o_orderdate = {
+    {
       tmp_expr <- duckdb:::expr_reference("o_orderdate")
       duckdb:::expr_set_alias(tmp_expr, "o_orderdate")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- duckdb:::expr_reference("n_name")
       duckdb:::expr_set_alias(tmp_expr, "nation")
       tmp_expr
@@ -506,41 +507,42 @@ rel38 <- duckdb:::rel_project(
 rel39 <- duckdb:::rel_project(
   rel38,
   list(
-    l_extendedprice = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_extendedprice")
       duckdb:::expr_set_alias(tmp_expr, "l_extendedprice")
       tmp_expr
     },
-    l_discount = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_discount")
       duckdb:::expr_set_alias(tmp_expr, "l_discount")
       tmp_expr
     },
-    l_quantity = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_quantity")
       duckdb:::expr_set_alias(tmp_expr, "l_quantity")
       tmp_expr
     },
-    ps_supplycost = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_supplycost")
       duckdb:::expr_set_alias(tmp_expr, "ps_supplycost")
       tmp_expr
     },
-    n_name = {
+    {
       tmp_expr <- duckdb:::expr_reference("n_name")
       duckdb:::expr_set_alias(tmp_expr, "n_name")
       tmp_expr
     },
-    o_orderdate = {
+    {
       tmp_expr <- duckdb:::expr_reference("o_orderdate")
       duckdb:::expr_set_alias(tmp_expr, "o_orderdate")
       tmp_expr
     },
-    nation = {
+    {
       tmp_expr <- duckdb:::expr_reference("nation")
       duckdb:::expr_set_alias(tmp_expr, "nation")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- duckdb:::expr_function("year", list(duckdb:::expr_reference("o_orderdate")))
       duckdb:::expr_set_alias(tmp_expr, "o_year")
       tmp_expr
@@ -550,46 +552,47 @@ rel39 <- duckdb:::rel_project(
 rel40 <- duckdb:::rel_project(
   rel39,
   list(
-    l_extendedprice = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_extendedprice")
       duckdb:::expr_set_alias(tmp_expr, "l_extendedprice")
       tmp_expr
     },
-    l_discount = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_discount")
       duckdb:::expr_set_alias(tmp_expr, "l_discount")
       tmp_expr
     },
-    l_quantity = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_quantity")
       duckdb:::expr_set_alias(tmp_expr, "l_quantity")
       tmp_expr
     },
-    ps_supplycost = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_supplycost")
       duckdb:::expr_set_alias(tmp_expr, "ps_supplycost")
       tmp_expr
     },
-    n_name = {
+    {
       tmp_expr <- duckdb:::expr_reference("n_name")
       duckdb:::expr_set_alias(tmp_expr, "n_name")
       tmp_expr
     },
-    o_orderdate = {
+    {
       tmp_expr <- duckdb:::expr_reference("o_orderdate")
       duckdb:::expr_set_alias(tmp_expr, "o_orderdate")
       tmp_expr
     },
-    nation = {
+    {
       tmp_expr <- duckdb:::expr_reference("nation")
       duckdb:::expr_set_alias(tmp_expr, "nation")
       tmp_expr
     },
-    o_year = {
+    {
       tmp_expr <- duckdb:::expr_reference("o_year")
       duckdb:::expr_set_alias(tmp_expr, "o_year")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- duckdb:::expr_function(
         "-",
         list(

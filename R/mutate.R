@@ -33,7 +33,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
         exprs <- imap(set_names(names(out)), relexpr_reference, rel = NULL)
         new_expr <- rel_translate(dot, out, alias = new)
         exprs[[new_pos]] <- new_expr
-        rel <- rel_project(rel, exprs)
+        rel <- rel_project(rel, unname(exprs))
         out <- rel_to_df(rel)
 
         new_names_used <- intersect(attr(new_expr, "used"), names(.data))

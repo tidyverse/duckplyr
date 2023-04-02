@@ -467,21 +467,22 @@ tpch_raw_05 <- function(experimental) {
   rel40 <- duckdb:::rel_project(
     rel39,
     list(
-      l_extendedprice = {
+      {
         tmp_expr <- duckdb:::expr_reference("l_extendedprice")
         duckdb:::expr_set_alias(tmp_expr, "l_extendedprice")
         tmp_expr
       },
-      l_discount = {
+      {
         tmp_expr <- duckdb:::expr_reference("l_discount")
         duckdb:::expr_set_alias(tmp_expr, "l_discount")
         tmp_expr
       },
-      n_name = {
+      {
         tmp_expr <- duckdb:::expr_reference("n_name")
         duckdb:::expr_set_alias(tmp_expr, "n_name")
         tmp_expr
-      }, {
+      },
+      {
         tmp_expr <- duckdb:::expr_function(
           "*",
           list(

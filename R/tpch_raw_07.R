@@ -554,36 +554,37 @@ tpch_raw_07 <- function(experimental) {
   rel41 <- duckdb:::rel_project(
     rel40,
     list(
-      l_suppkey = {
+      {
         tmp_expr <- duckdb:::expr_reference("l_suppkey")
         duckdb:::expr_set_alias(tmp_expr, "l_suppkey")
         tmp_expr
       },
-      l_shipdate = {
+      {
         tmp_expr <- duckdb:::expr_reference("l_shipdate")
         duckdb:::expr_set_alias(tmp_expr, "l_shipdate")
         tmp_expr
       },
-      l_extendedprice = {
+      {
         tmp_expr <- duckdb:::expr_reference("l_extendedprice")
         duckdb:::expr_set_alias(tmp_expr, "l_extendedprice")
         tmp_expr
       },
-      l_discount = {
+      {
         tmp_expr <- duckdb:::expr_reference("l_discount")
         duckdb:::expr_set_alias(tmp_expr, "l_discount")
         tmp_expr
       },
-      n2_name = {
+      {
         tmp_expr <- duckdb:::expr_reference("n2_name")
         duckdb:::expr_set_alias(tmp_expr, "n2_name")
         tmp_expr
       },
-      n1_name = {
+      {
         tmp_expr <- duckdb:::expr_reference("n1_name")
         duckdb:::expr_set_alias(tmp_expr, "n1_name")
         tmp_expr
-      }, {
+      },
+      {
         tmp_expr <- duckdb:::expr_reference("n1_name")
         duckdb:::expr_set_alias(tmp_expr, "supp_nation")
         tmp_expr
@@ -593,41 +594,42 @@ tpch_raw_07 <- function(experimental) {
   rel42 <- duckdb:::rel_project(
     rel41,
     list(
-      l_suppkey = {
+      {
         tmp_expr <- duckdb:::expr_reference("l_suppkey")
         duckdb:::expr_set_alias(tmp_expr, "l_suppkey")
         tmp_expr
       },
-      l_shipdate = {
+      {
         tmp_expr <- duckdb:::expr_reference("l_shipdate")
         duckdb:::expr_set_alias(tmp_expr, "l_shipdate")
         tmp_expr
       },
-      l_extendedprice = {
+      {
         tmp_expr <- duckdb:::expr_reference("l_extendedprice")
         duckdb:::expr_set_alias(tmp_expr, "l_extendedprice")
         tmp_expr
       },
-      l_discount = {
+      {
         tmp_expr <- duckdb:::expr_reference("l_discount")
         duckdb:::expr_set_alias(tmp_expr, "l_discount")
         tmp_expr
       },
-      n2_name = {
+      {
         tmp_expr <- duckdb:::expr_reference("n2_name")
         duckdb:::expr_set_alias(tmp_expr, "n2_name")
         tmp_expr
       },
-      n1_name = {
+      {
         tmp_expr <- duckdb:::expr_reference("n1_name")
         duckdb:::expr_set_alias(tmp_expr, "n1_name")
         tmp_expr
       },
-      supp_nation = {
+      {
         tmp_expr <- duckdb:::expr_reference("supp_nation")
         duckdb:::expr_set_alias(tmp_expr, "supp_nation")
         tmp_expr
-      }, {
+      },
+      {
         tmp_expr <- duckdb:::expr_reference("n2_name")
         duckdb:::expr_set_alias(tmp_expr, "cust_nation")
         tmp_expr
@@ -637,46 +639,47 @@ tpch_raw_07 <- function(experimental) {
   rel43 <- duckdb:::rel_project(
     rel42,
     list(
-      l_suppkey = {
+      {
         tmp_expr <- duckdb:::expr_reference("l_suppkey")
         duckdb:::expr_set_alias(tmp_expr, "l_suppkey")
         tmp_expr
       },
-      l_shipdate = {
+      {
         tmp_expr <- duckdb:::expr_reference("l_shipdate")
         duckdb:::expr_set_alias(tmp_expr, "l_shipdate")
         tmp_expr
       },
-      l_extendedprice = {
+      {
         tmp_expr <- duckdb:::expr_reference("l_extendedprice")
         duckdb:::expr_set_alias(tmp_expr, "l_extendedprice")
         tmp_expr
       },
-      l_discount = {
+      {
         tmp_expr <- duckdb:::expr_reference("l_discount")
         duckdb:::expr_set_alias(tmp_expr, "l_discount")
         tmp_expr
       },
-      n2_name = {
+      {
         tmp_expr <- duckdb:::expr_reference("n2_name")
         duckdb:::expr_set_alias(tmp_expr, "n2_name")
         tmp_expr
       },
-      n1_name = {
+      {
         tmp_expr <- duckdb:::expr_reference("n1_name")
         duckdb:::expr_set_alias(tmp_expr, "n1_name")
         tmp_expr
       },
-      supp_nation = {
+      {
         tmp_expr <- duckdb:::expr_reference("supp_nation")
         duckdb:::expr_set_alias(tmp_expr, "supp_nation")
         tmp_expr
       },
-      cust_nation = {
+      {
         tmp_expr <- duckdb:::expr_reference("cust_nation")
         duckdb:::expr_set_alias(tmp_expr, "cust_nation")
         tmp_expr
-      }, {
+      },
+      {
         tmp_expr <- duckdb:::expr_function("year", list(duckdb:::expr_reference("l_shipdate")))
         duckdb:::expr_set_alias(tmp_expr, "l_year")
         tmp_expr
@@ -686,51 +689,52 @@ tpch_raw_07 <- function(experimental) {
   rel44 <- duckdb:::rel_project(
     rel43,
     list(
-      l_suppkey = {
+      {
         tmp_expr <- duckdb:::expr_reference("l_suppkey")
         duckdb:::expr_set_alias(tmp_expr, "l_suppkey")
         tmp_expr
       },
-      l_shipdate = {
+      {
         tmp_expr <- duckdb:::expr_reference("l_shipdate")
         duckdb:::expr_set_alias(tmp_expr, "l_shipdate")
         tmp_expr
       },
-      l_extendedprice = {
+      {
         tmp_expr <- duckdb:::expr_reference("l_extendedprice")
         duckdb:::expr_set_alias(tmp_expr, "l_extendedprice")
         tmp_expr
       },
-      l_discount = {
+      {
         tmp_expr <- duckdb:::expr_reference("l_discount")
         duckdb:::expr_set_alias(tmp_expr, "l_discount")
         tmp_expr
       },
-      n2_name = {
+      {
         tmp_expr <- duckdb:::expr_reference("n2_name")
         duckdb:::expr_set_alias(tmp_expr, "n2_name")
         tmp_expr
       },
-      n1_name = {
+      {
         tmp_expr <- duckdb:::expr_reference("n1_name")
         duckdb:::expr_set_alias(tmp_expr, "n1_name")
         tmp_expr
       },
-      supp_nation = {
+      {
         tmp_expr <- duckdb:::expr_reference("supp_nation")
         duckdb:::expr_set_alias(tmp_expr, "supp_nation")
         tmp_expr
       },
-      cust_nation = {
+      {
         tmp_expr <- duckdb:::expr_reference("cust_nation")
         duckdb:::expr_set_alias(tmp_expr, "cust_nation")
         tmp_expr
       },
-      l_year = {
+      {
         tmp_expr <- duckdb:::expr_reference("l_year")
         duckdb:::expr_set_alias(tmp_expr, "l_year")
         tmp_expr
-      }, {
+      },
+      {
         tmp_expr <- duckdb:::expr_function(
           "*",
           list(

@@ -659,26 +659,27 @@ rel56 <- duckdb:::rel_project(
 rel57 <- duckdb:::rel_project(
   rel56,
   list(
-    l_extendedprice = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_extendedprice")
       duckdb:::expr_set_alias(tmp_expr, "l_extendedprice")
       tmp_expr
     },
-    l_discount = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_discount")
       duckdb:::expr_set_alias(tmp_expr, "l_discount")
       tmp_expr
     },
-    o_orderdate = {
+    {
       tmp_expr <- duckdb:::expr_reference("o_orderdate")
       duckdb:::expr_set_alias(tmp_expr, "o_orderdate")
       tmp_expr
     },
-    n2_name = {
+    {
       tmp_expr <- duckdb:::expr_reference("n2_name")
       duckdb:::expr_set_alias(tmp_expr, "n2_name")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- duckdb:::expr_function("year", list(duckdb:::expr_reference("o_orderdate")))
       duckdb:::expr_set_alias(tmp_expr, "o_year")
       tmp_expr
@@ -688,31 +689,32 @@ rel57 <- duckdb:::rel_project(
 rel58 <- duckdb:::rel_project(
   rel57,
   list(
-    l_extendedprice = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_extendedprice")
       duckdb:::expr_set_alias(tmp_expr, "l_extendedprice")
       tmp_expr
     },
-    l_discount = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_discount")
       duckdb:::expr_set_alias(tmp_expr, "l_discount")
       tmp_expr
     },
-    o_orderdate = {
+    {
       tmp_expr <- duckdb:::expr_reference("o_orderdate")
       duckdb:::expr_set_alias(tmp_expr, "o_orderdate")
       tmp_expr
     },
-    n2_name = {
+    {
       tmp_expr <- duckdb:::expr_reference("n2_name")
       duckdb:::expr_set_alias(tmp_expr, "n2_name")
       tmp_expr
     },
-    o_year = {
+    {
       tmp_expr <- duckdb:::expr_reference("o_year")
       duckdb:::expr_set_alias(tmp_expr, "o_year")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- duckdb:::expr_function(
         "*",
         list(
@@ -738,36 +740,37 @@ rel58 <- duckdb:::rel_project(
 rel59 <- duckdb:::rel_project(
   rel58,
   list(
-    l_extendedprice = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_extendedprice")
       duckdb:::expr_set_alias(tmp_expr, "l_extendedprice")
       tmp_expr
     },
-    l_discount = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_discount")
       duckdb:::expr_set_alias(tmp_expr, "l_discount")
       tmp_expr
     },
-    o_orderdate = {
+    {
       tmp_expr <- duckdb:::expr_reference("o_orderdate")
       duckdb:::expr_set_alias(tmp_expr, "o_orderdate")
       tmp_expr
     },
-    n2_name = {
+    {
       tmp_expr <- duckdb:::expr_reference("n2_name")
       duckdb:::expr_set_alias(tmp_expr, "n2_name")
       tmp_expr
     },
-    o_year = {
+    {
       tmp_expr <- duckdb:::expr_reference("o_year")
       duckdb:::expr_set_alias(tmp_expr, "o_year")
       tmp_expr
     },
-    volume = {
+    {
       tmp_expr <- duckdb:::expr_reference("volume")
       duckdb:::expr_set_alias(tmp_expr, "volume")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- duckdb:::expr_reference("n2_name")
       duckdb:::expr_set_alias(tmp_expr, "nation")
       tmp_expr

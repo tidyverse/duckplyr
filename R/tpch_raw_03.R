@@ -258,31 +258,32 @@ tpch_raw_03 <- function(experimental) {
   rel20 <- duckdb:::rel_project(
     rel19,
     list(
-      l_orderkey = {
+      {
         tmp_expr <- duckdb:::expr_reference("l_orderkey")
         duckdb:::expr_set_alias(tmp_expr, "l_orderkey")
         tmp_expr
       },
-      l_extendedprice = {
+      {
         tmp_expr <- duckdb:::expr_reference("l_extendedprice")
         duckdb:::expr_set_alias(tmp_expr, "l_extendedprice")
         tmp_expr
       },
-      l_discount = {
+      {
         tmp_expr <- duckdb:::expr_reference("l_discount")
         duckdb:::expr_set_alias(tmp_expr, "l_discount")
         tmp_expr
       },
-      o_orderdate = {
+      {
         tmp_expr <- duckdb:::expr_reference("o_orderdate")
         duckdb:::expr_set_alias(tmp_expr, "o_orderdate")
         tmp_expr
       },
-      o_shippriority = {
+      {
         tmp_expr <- duckdb:::expr_reference("o_shippriority")
         duckdb:::expr_set_alias(tmp_expr, "o_shippriority")
         tmp_expr
-      }, {
+      },
+      {
         tmp_expr <- duckdb:::expr_function(
           "*",
           list(

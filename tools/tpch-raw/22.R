@@ -268,46 +268,47 @@ rel4 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
 rel5 <- duckdb:::rel_project(
   rel4,
   list(
-    c_custkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_custkey")
       duckdb:::expr_set_alias(tmp_expr, "c_custkey")
       tmp_expr
     },
-    c_name = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_name")
       duckdb:::expr_set_alias(tmp_expr, "c_name")
       tmp_expr
     },
-    c_address = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_address")
       duckdb:::expr_set_alias(tmp_expr, "c_address")
       tmp_expr
     },
-    c_nationkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_nationkey")
       duckdb:::expr_set_alias(tmp_expr, "c_nationkey")
       tmp_expr
     },
-    c_phone = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_phone")
       duckdb:::expr_set_alias(tmp_expr, "c_phone")
       tmp_expr
     },
-    c_acctbal = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_acctbal")
       duckdb:::expr_set_alias(tmp_expr, "c_acctbal")
       tmp_expr
     },
-    c_mktsegment = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_mktsegment")
       duckdb:::expr_set_alias(tmp_expr, "c_mktsegment")
       tmp_expr
     },
-    c_comment = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_comment")
       duckdb:::expr_set_alias(tmp_expr, "c_comment")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- duckdb:::expr_function(
         "substr",
         list(
@@ -332,51 +333,52 @@ rel5 <- duckdb:::rel_project(
 rel6 <- duckdb:::rel_project(
   rel5,
   list(
-    c_custkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_custkey")
       duckdb:::expr_set_alias(tmp_expr, "c_custkey")
       tmp_expr
     },
-    c_name = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_name")
       duckdb:::expr_set_alias(tmp_expr, "c_name")
       tmp_expr
     },
-    c_address = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_address")
       duckdb:::expr_set_alias(tmp_expr, "c_address")
       tmp_expr
     },
-    c_nationkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_nationkey")
       duckdb:::expr_set_alias(tmp_expr, "c_nationkey")
       tmp_expr
     },
-    c_phone = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_phone")
       duckdb:::expr_set_alias(tmp_expr, "c_phone")
       tmp_expr
     },
-    c_acctbal = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_acctbal")
       duckdb:::expr_set_alias(tmp_expr, "c_acctbal")
       tmp_expr
     },
-    c_mktsegment = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_mktsegment")
       duckdb:::expr_set_alias(tmp_expr, "c_mktsegment")
       tmp_expr
     },
-    c_comment = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_comment")
       duckdb:::expr_set_alias(tmp_expr, "c_comment")
       tmp_expr
     },
-    cntrycode = {
+    {
       tmp_expr <- duckdb:::expr_reference("cntrycode")
       duckdb:::expr_set_alias(tmp_expr, "cntrycode")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
         duckdb:::expr_constant(1L, experimental = experimental)
       } else {

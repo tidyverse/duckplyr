@@ -82,16 +82,17 @@ rel3 <- duckdb:::rel_aggregate(
 rel4 <- duckdb:::rel_project(
   rel3,
   list(
-    l_suppkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_suppkey")
       duckdb:::expr_set_alias(tmp_expr, "l_suppkey")
       tmp_expr
     },
-    total_revenue = {
+    {
       tmp_expr <- duckdb:::expr_reference("total_revenue")
       duckdb:::expr_set_alias(tmp_expr, "total_revenue")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
         duckdb:::expr_constant(1L, experimental = experimental)
       } else {
@@ -116,16 +117,17 @@ rel5 <- duckdb:::rel_aggregate(
 rel6 <- duckdb:::rel_project(
   rel3,
   list(
-    l_suppkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_suppkey")
       duckdb:::expr_set_alias(tmp_expr, "l_suppkey")
       tmp_expr
     },
-    total_revenue = {
+    {
       tmp_expr <- duckdb:::expr_reference("total_revenue")
       duckdb:::expr_set_alias(tmp_expr, "total_revenue")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
         duckdb:::expr_constant(1L, experimental = experimental)
       } else {

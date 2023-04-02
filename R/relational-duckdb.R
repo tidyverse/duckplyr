@@ -318,6 +318,17 @@ to_duckdb_expr_meta <- function(x) {
       }
       out
     },
+    relational_relexpr_window = {
+      out <- expr(duckdb:::expr_window(!!to_duckdb_expr_meta(x$expr), list(!!!to_duckdb_exprs_meta(x$part))))
+      if (!is.null(x$alias)) {
+        out <- expr({
+          tmp_expr <- !!out
+          duckdb:::expr_set_alias(tmp_expr, !!x$alias)
+          tmp_expr
+        })
+      }
+      out
+    },
     relational_relexpr_constant = {
       out <- expr(
         # FIXME: always pass experimental flag once it's merged
