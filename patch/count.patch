@@ -1,5 +1,5 @@
 diff --git b/R/count.R a/R/count.R
-index 2d3783d..3599b13 100644
+index 2d3783d..ecabe9f 100644
 --- b/R/count.R
 +++ a/R/count.R
 @@ -2,13 +2,30 @@
@@ -21,7 +21,7 @@ index 2d3783d..3599b13 100644
 +  # FIXME: Use rel_try() for accurate stats
 +  if (all(is_name) && .drop && !sort) {
 +    by_chr <- map_chr(exprs, as_string)
-+    name <- check_name(name, by_chr)
++    name <- check_n_name(name, by_chr)
 +
 +    if (!(name %in% by_chr)) {
 +      n <- tally_n(x, {{ wt }})
