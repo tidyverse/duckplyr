@@ -17,7 +17,7 @@ Depends:
     R (>= 4.0.0)
 Imports: 
     collections,
-    dplyr (>= 1.1.0.9000),
+    dplyr (>= 1.1.1),
     duckdb (>= 0.6.0),
     glue,
     lifecycle,
@@ -39,5 +39,4 @@ RoxygenNote: 7.2.3
 Config/testthat/edition: 3
 Config/testthat/start-first: filter, count-tally
 Remotes: 
-    cynkra/constructive,
-    tidyverse/dplyr
+    cynkra/constructive
