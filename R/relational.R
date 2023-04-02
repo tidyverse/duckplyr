@@ -54,7 +54,7 @@ rel_translate <- function(quo, data, alias = NULL, partition = NULL) {
 
   used <- character()
 
-  do_translate <- function(expr, window = TRUE) {
+  do_translate <- function(expr, in_window = FALSE) {
     if (is_quosure(expr)) {
       # FIXME: What to do with the environment here?
       expr <- quo_get_expr(expr)
@@ -82,13 +82,13 @@ rel_translate <- function(quo, data, alias = NULL, partition = NULL) {
       language = {
         switch(as.character(expr[[1]]),
           "(" = {
-            return(do_translate(expr[[2]], window = window))
+            return(do_translate(expr[[2]], in_window = in_window))
           },
           "%in%" = {
             tryCatch(
               {
                 values <- eval(expr[[3]], env = baseenv())
-                consts <- map(values, do_translate, window = window)
+                consts <- map(values, do_translate, in_window = in_window)
                 ops <- map(consts, list, do_translate(expr[[2]]))
                 cmp <- map(ops, relexpr_function, name = "==")
                 alt <- reduce(cmp, ~ relexpr_function("|", list(.x, .y)))
@@ -98,9 +98,24 @@ rel_translate <- function(quo, data, alias = NULL, partition = NULL) {
             )
           }
         )
-        args <- map(as.list(expr[-1]), do_translate, window = FALSE)
-        fun <- relexpr_function(as.character(expr[[1]]), args)
-        if (window && length(partition)) {
+
+        name <- as.character(expr[[1]])
+
+        window <- name %in% c(
+          # Window functions
+          "rank", "rank_dense", "dense_rank", "percent_rank",
+          "row_number", "first_value", "first", "last_value", "last", "nth_value",
+          "cume_dist", "lead", "lag", "ntile",
+
+          # Aggregates
+          "sum", "mean",
+
+          NULL
+        )
+
+        args <- map(as.list(expr[-1]), do_translate, in_window = in_window || window)
+        fun <- relexpr_function(name, args)
+        if (window) {
           part <- map(partition, relexpr_reference)
           fun <- relexpr_window(fun, part)
         }

@@ -98,6 +98,8 @@ tests <- head(n = -1, list(
     "mutate disambiguates NA and NaN (#1448)",
     "duckplyr_mutate() handles symbol expressions",
     "transient grouping retains data frame attributes (#6100)",
+    # https://github.com/duckdb/duckdb/issues/6947
+    "can group transiently using `.by`",
     NULL
   ),
   "test-pull.R" = c(
