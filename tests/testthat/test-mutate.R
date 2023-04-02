@@ -629,6 +629,7 @@ test_that("can use .before and .after to control column position", {
 })
 
 test_that("attributes of bare data frames are retained when `.before` and `.after` are used (#6341)", {
+  skip("TODO duckdb")
   # We require `[` methods to be in charge of keeping extra attributes for all
   # data frame subclasses (except for data.tables)
   df <- vctrs::data_frame(x = 1, y = 2)

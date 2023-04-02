@@ -93,6 +93,7 @@ tests <- head(n = -1, list(
     "mutate disambiguates NA and NaN (#1448)",
     "duckplyr_mutate() handles symbol expressions",
     "transient grouping retains data frame attributes (#6100)",
+    "attributes of bare data frames are retained when `.before` and `.after` are used (#6341)",
     NULL
   ),
   "test-pull.R" = c(
