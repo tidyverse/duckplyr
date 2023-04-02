@@ -166,7 +166,12 @@ duckplyr_df_methods <-
   df_methods %>%
   mutate(formals = map(code, formals)) %>%
   mutate(new_code = pmap(list(name, formals), func_decl)) %>%
-  mutate(new_code_chr = map(new_code, constructive::construct, check = FALSE)) %>%
+  mutate(new_code_chr = map(
+    new_code,
+    constructive::construct,
+    check = FALSE,
+    constructive::opts_function(environment = FALSE)
+  )) %>%
   mutate(new_fun = paste0(name, ".duckplyr_df")) %>%
   rowwise() %>%
   mutate(decl_chr = func_decl_chr(name, code, new_fun, new_code_chr, is_tbl_return, skip_impl)) %>%
