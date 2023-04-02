@@ -25,11 +25,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
         dot <- dots[[i]]
         quo_data <- attr(dot, "dplyr:::data")
 
-        if (quo_data$is_named) {
-          new <- quo_data$name_given
-        } else {
-          new <- quo_data$name_auto
-        }
+        new <- quo_data$name
 
         names_new <- c(names_new, new)
 
