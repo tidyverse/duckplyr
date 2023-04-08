@@ -260,7 +260,7 @@ test_that("as_duckplyr_df() commutes for nest_by()", {
 })
 
 test_that("as_duckplyr_df() commutes for nest_join()", {
-  withr::local_envvar(DUCKPLYR_FORCE = "FALSE") # FIXME: Autogen
+  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   # Data
   test_df_x <- data.frame(a = 1, b = 2)
   test_df_y <- data.frame(a = 1, b = 2)

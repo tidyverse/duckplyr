@@ -41,7 +41,10 @@ skip_map <- c(
   NULL
 )
 
-
+force_override <- c(
+  nest_join = FALSE,
+  NULL
+)
 
 get_test_code <- function(name, code, is_tbl_return) {
   formals <- formals(code)
@@ -55,11 +58,11 @@ get_test_code <- function(name, code, is_tbl_return) {
 
   extra_arg <- extra_arg_map[[name]] %||% ""
 
-  has_patch <- fs::file_exists(fs::path("patch", paste0(name, ".patch")))
-  if (!has_patch) {
-    force <- '  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")\n'
-  } else {
+  with_force <- force_override[name] %|% fs::file_exists(fs::path("patch", paste0(name, ".patch")))
+  if (with_force) {
     force <- ""
+  } else {
+    force <- '  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")\n'
   }
 
   skip <- skip_map[name]
