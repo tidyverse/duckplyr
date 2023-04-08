@@ -5,7 +5,7 @@ withr::local_envvar(DUCKPLYR_FORCE = "TRUE")
 test_that("as_duckplyr_df() commutes for add_count()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% add_count()
@@ -30,7 +30,7 @@ test_that("as_duckplyr_df() commutes for anti_join(join_by(a))", {
 
 test_that("as_duckplyr_df() commutes for arrange()", {
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% arrange()
@@ -56,7 +56,7 @@ test_that("as_duckplyr_df() commutes for auto_copy()", {
 test_that("as_duckplyr_df() commutes for collapse()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% collapse()
@@ -68,7 +68,7 @@ test_that("as_duckplyr_df() commutes for collapse()", {
 
 test_that("as_duckplyr_df() commutes for collect()", {
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% collect()
@@ -81,7 +81,7 @@ test_that("as_duckplyr_df() commutes for collect()", {
 test_that("as_duckplyr_df() commutes for compute()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% compute()
@@ -93,7 +93,7 @@ test_that("as_duckplyr_df() commutes for compute()", {
 
 test_that("as_duckplyr_df() commutes for count()", {
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% count()
@@ -119,7 +119,7 @@ test_that("as_duckplyr_df() commutes for cross_join()", {
 
 test_that("as_duckplyr_df() commutes for distinct()", {
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% distinct()
@@ -132,7 +132,7 @@ test_that("as_duckplyr_df() commutes for distinct()", {
 test_that("as_duckplyr_df() commutes for do(data.frame(c = 1))", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% do(data.frame(c = 1))
@@ -146,7 +146,7 @@ test_that("as_duckplyr_df() commutes for dplyr_reconstruct(test_df)", {
   skip("Hack")
 
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% dplyr_reconstruct(test_df)
@@ -158,7 +158,7 @@ test_that("as_duckplyr_df() commutes for dplyr_reconstruct(test_df)", {
 
 test_that("as_duckplyr_df() commutes for filter(a == 1)", {
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% filter(a == 1)
@@ -183,7 +183,7 @@ test_that("as_duckplyr_df() commutes for full_join(join_by(a))", {
 
 test_that("as_duckplyr_df() commutes for group_vars()", {
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% group_vars()
@@ -234,7 +234,7 @@ test_that("as_duckplyr_df() commutes for left_join(join_by(a))", {
 
 test_that("as_duckplyr_df() commutes for mutate()", {
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% mutate()
@@ -249,7 +249,7 @@ test_that("as_duckplyr_df() commutes for nest_by()", {
   skip("WAT")
 
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% nest_by()
@@ -275,7 +275,7 @@ test_that("as_duckplyr_df() commutes for nest_join(join_by(a))", {
 
 test_that("as_duckplyr_df() commutes for pull()", {
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% pull()
@@ -288,7 +288,7 @@ test_that("as_duckplyr_df() commutes for pull()", {
 test_that("as_duckplyr_df() commutes for reframe()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% reframe()
@@ -300,7 +300,7 @@ test_that("as_duckplyr_df() commutes for reframe()", {
 
 test_that("as_duckplyr_df() commutes for relocate()", {
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% relocate()
@@ -312,7 +312,7 @@ test_that("as_duckplyr_df() commutes for relocate()", {
 
 test_that("as_duckplyr_df() commutes for rename()", {
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% rename()
@@ -325,7 +325,7 @@ test_that("as_duckplyr_df() commutes for rename()", {
 
 test_that("as_duckplyr_df() commutes for rename(c = a)", {
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% rename(c = a)
@@ -338,7 +338,7 @@ test_that("as_duckplyr_df() commutes for rename(c = a)", {
 test_that("as_duckplyr_df() commutes for rename_with(identity)", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% rename_with(identity)
@@ -447,8 +447,10 @@ test_that("as_duckplyr_df() commutes for rows_upsert(by = \"a\")", {
 
 test_that("as_duckplyr_df() commutes for sample_frac()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+  skip("Random seed")
+
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% sample_frac()
@@ -460,8 +462,10 @@ test_that("as_duckplyr_df() commutes for sample_frac()", {
 
 test_that("as_duckplyr_df() commutes for sample_n(size = 1)", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+  skip("Random seed")
+
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% sample_n(size = 1)
@@ -473,7 +477,7 @@ test_that("as_duckplyr_df() commutes for sample_n(size = 1)", {
 
 test_that("as_duckplyr_df() commutes for select(a)", {
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% select(a)
@@ -486,7 +490,7 @@ test_that("as_duckplyr_df() commutes for select(a)", {
 
 test_that("as_duckplyr_df() commutes for select(everything())", {
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% select(everything())
@@ -539,7 +543,7 @@ test_that("as_duckplyr_df() commutes for setequal()", {
 test_that("as_duckplyr_df() commutes for slice()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% slice()
@@ -554,7 +558,7 @@ test_that("as_duckplyr_df() commutes for slice_head()", {
   skip("External vector?")
 
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% slice_head()
@@ -569,7 +573,7 @@ test_that("as_duckplyr_df() commutes for slice_max(a)", {
   skip("External vector?")
 
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% slice_max(a)
@@ -584,7 +588,7 @@ test_that("as_duckplyr_df() commutes for slice_min(a)", {
   skip("External vector?")
 
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% slice_min(a)
@@ -599,7 +603,7 @@ test_that("as_duckplyr_df() commutes for slice_sample()", {
   skip("External vector?")
 
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% slice_sample()
@@ -614,7 +618,7 @@ test_that("as_duckplyr_df() commutes for slice_tail()", {
   skip("External vector?")
 
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% slice_tail()
@@ -626,7 +630,7 @@ test_that("as_duckplyr_df() commutes for slice_tail()", {
 
 test_that("as_duckplyr_df() commutes for summarise(c = mean(a))", {
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% summarise(c = mean(a))
@@ -639,7 +643,7 @@ test_that("as_duckplyr_df() commutes for summarise(c = mean(a))", {
 
 test_that("as_duckplyr_df() commutes for summarise(c = mean(a), .by = b)", {
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% summarise(c = mean(a), .by = b)
@@ -665,7 +669,7 @@ test_that("as_duckplyr_df() commutes for symdiff()", {
 test_that("as_duckplyr_df() commutes for tally()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% tally()
@@ -677,7 +681,7 @@ test_that("as_duckplyr_df() commutes for tally()", {
 
 test_that("as_duckplyr_df() commutes for tbl_vars()", {
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% tbl_vars()
@@ -689,7 +693,7 @@ test_that("as_duckplyr_df() commutes for tbl_vars()", {
 
 test_that("as_duckplyr_df() commutes for transmute(c = a + 1)", {
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% transmute(c = a + 1)
@@ -704,7 +708,7 @@ test_that("as_duckplyr_df() commutes for ungroup()", {
   skip("Grouped")
 
   # Data
-  test_df <- data.frame(a = 1, b = 2)
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% ungroup()

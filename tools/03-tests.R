@@ -43,6 +43,8 @@ skip_map <- c(
   nest_by = "WAT",
   # FIXME: Fail with rowwise()
   rowwise = "Stack overflow",
+  sample_frac = "Random seed",
+  sample_n = "Random seed",
   slice_head = "External vector?",
   slice_max = "External vector?",
   slice_min = "External vector?",
@@ -113,7 +115,7 @@ get_test_code_one <- function(extra_arg, name, two_tables, force = "", skip = ""
     )
   } else {
     test_code <- c(
-      "  test_df <- data.frame(a = 1, b = 2)",
+      "  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))",
       "",
       "  # Run",
       "  pre <- test_df %>% as_duckplyr_df() %>% {{{name}}}({{{extra_arg}}})",
