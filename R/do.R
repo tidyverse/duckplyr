@@ -46,6 +46,5 @@ duckplyr_do <- function(.data, ...) {
     }
   )
   out <- do(.data, ...)
-  class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }

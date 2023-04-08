@@ -38,6 +38,5 @@ duckplyr_reframe <- function(.data, ...) {
     }
   )
   out <- reframe(.data, ...)
-  class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }

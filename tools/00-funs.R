@@ -33,6 +33,10 @@ df_methods <-
     # Special case: forward to `NextMethod()`, don't change output
     "dplyr_reconstruct", "auto_copy", "pull", "setequal", "tbl_vars",
     "group_vars",
+
+    # For 03-tests.R
+    "do", "reframe",
+
     NULL
   ))) %>%
   mutate(code = unname(mget(fun, dplyr)))

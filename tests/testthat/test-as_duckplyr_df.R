@@ -136,7 +136,7 @@ test_that("as_duckplyr_df() commutes for do()", {
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% do(data.frame(c = 1))
-  post <- test_df %>% do(data.frame(c = 1)) # FIXME: autogen
+  post <- test_df %>% do(data.frame(c = 1))
 
   # Compare
   expect_equal(pre, post)
@@ -292,7 +292,7 @@ test_that("as_duckplyr_df() commutes for reframe()", {
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% reframe()
-  post <- test_df %>% reframe() # FIXME: autogen
+  post <- test_df %>% reframe()
 
   # Compare
   expect_equal(pre, post)
