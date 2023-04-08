@@ -7,7 +7,7 @@ fix_auto_name <- function(dots) {
     dot <- dots[[i]]
     if (names(dots)[[i]] == "") {
       quo_data <- attr(dot, "dplyr:::data")
-      names(dots)[[i]] <- quo_data$name_auto
+      names(dots)[[i]] <- as_label(quo_data$name)
     }
   }
 

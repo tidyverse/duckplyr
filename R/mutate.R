@@ -14,6 +14,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
     {
       rel <- duckdb_rel_from_df(.data)
       dots <- dplyr_quosures(...)
+      dots <- fix_auto_name(dots)
 
       out <- rel_to_df(rel)
       names_used <- character()
@@ -23,9 +24,8 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
       # FIXME: construct out only at the end
       for (i in seq_along(dots)) {
         dot <- dots[[i]]
-        quo_data <- attr(dot, "dplyr:::data")
 
-        new <- quo_data$name
+        new <- names(dots)[[i]]
 
         names_new <- c(names_new, new)
 

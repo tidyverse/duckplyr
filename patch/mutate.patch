@@ -1,5 +1,5 @@
 diff --git b/R/mutate.R a/R/mutate.R
-index 8f153a7..640957c 100644
+index 8f153a7..283fde9 100644
 --- b/R/mutate.R
 +++ a/R/mutate.R
 @@ -2,10 +2,66 @@
@@ -19,6 +19,7 @@ index 8f153a7..640957c 100644
      {
 +      rel <- duckdb_rel_from_df(.data)
 +      dots <- dplyr_quosures(...)
++      dots <- fix_auto_name(dots)
 +
 +      out <- rel_to_df(rel)
 +      names_used <- character()
@@ -28,9 +29,8 @@ index 8f153a7..640957c 100644
 +      # FIXME: construct out only at the end
 +      for (i in seq_along(dots)) {
 +        dot <- dots[[i]]
-+        quo_data <- attr(dot, "dplyr:::data")
 +
-+        new <- quo_data$name
++        new <- names(dots)[[i]]
 +
 +        names_new <- c(names_new, new)
 +
@@ -38,7 +38,7 @@ index 8f153a7..640957c 100644
 +        exprs <- imap(set_names(names(out)), relexpr_reference, rel = NULL)
 +        new_expr <- rel_translate(dot, out, alias = new)
 +        exprs[[new_pos]] <- new_expr
-+        rel <- rel_project(rel, exprs)
++        rel <- rel_project(rel, unname(exprs))
 +        out <- rel_to_df(rel)
 +
 +        new_names_used <- intersect(attr(new_expr, "used"), names(.data))

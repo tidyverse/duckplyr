@@ -119,6 +119,9 @@ tests <- head(n = -1, list(
   ),
   "test-summarise.R" = c(
     "works with unquoted values",
+
+    # sum(1L) returns numeric in R
+    "duckplyr_summarise() correctly auto-names expressions (#6741)",
     NULL
   ),
   "test-transmute.R" = c(
