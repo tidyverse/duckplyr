@@ -12,10 +12,10 @@ extra_arg_map <- list(
   rename_with = "identity",
   rows_insert = ', conflict = "ignore"',
   sample_n = "size = 1",
-  select = "a",
+  select = c("a", "everything()"),
   slice_max = 'a',
   slice_min = 'a',
-  summarise = "c = mean(a)",
+  summarise = c("c = mean(a)", "c = mean(a), .by = b"),
   transmute = "c = a + 1",
   NULL
 )

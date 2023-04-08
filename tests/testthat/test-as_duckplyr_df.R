@@ -483,6 +483,19 @@ test_that("as_duckplyr_df() commutes for select(a)", {
   expect_equal(pre, post)
 })
 
+
+test_that("as_duckplyr_df() commutes for select(everything())", {
+  # Data
+  test_df <- data.frame(a = 1, b = 2)
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% select(everything())
+  post <- test_df %>% select(everything()) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 test_that("as_duckplyr_df() commutes for semi_join()", {
   # Data
   test_df_x <- data.frame(a = 1, b = 2)
@@ -618,6 +631,19 @@ test_that("as_duckplyr_df() commutes for summarise(c = mean(a))", {
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% summarise(c = mean(a))
   post <- test_df %>% summarise(c = mean(a)) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() commutes for summarise(c = mean(a), .by = b)", {
+  # Data
+  test_df <- data.frame(a = 1, b = 2)
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% summarise(c = mean(a), .by = b)
+  post <- test_df %>% summarise(c = mean(a), .by = b) %>% as_duckplyr_df()
 
   # Compare
   expect_equal(pre, post)
