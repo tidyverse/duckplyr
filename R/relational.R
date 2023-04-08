@@ -49,7 +49,7 @@ rel_translate_dots <- function(dots, data) {
   }
 }
 
-rel_translate <- function(quo, data, alias = NULL, partition = NULL) {
+rel_translate <- function(quo, data, alias = NULL, partition = NULL, need_window = FALSE) {
   env <- quo_get_env(quo)
 
   used <- character()
@@ -101,7 +101,7 @@ rel_translate <- function(quo, data, alias = NULL, partition = NULL) {
 
         name <- as.character(expr[[1]])
 
-        window <- name %in% c(
+        window <- need_window && (name %in% c(
           # Window functions
           "rank", "rank_dense", "dense_rank", "percent_rank",
           "row_number", "first_value", "first", "last_value", "last", "nth_value",
@@ -111,7 +111,7 @@ rel_translate <- function(quo, data, alias = NULL, partition = NULL) {
           "sum", "mean",
 
           NULL
-        )
+        ))
 
         args <- map(as.list(expr[-1]), do_translate, in_window = in_window || window)
         fun <- relexpr_function(name, args)

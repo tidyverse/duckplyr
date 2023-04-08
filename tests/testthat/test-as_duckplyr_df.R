@@ -667,13 +667,12 @@ test_that("as_duckplyr_df() commutes for symdiff()", {
 })
 
 test_that("as_duckplyr_df() commutes for tally()", {
-  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% tally()
-  post <- test_df %>% tally() # FIXME: autogen
+  post <- test_df %>% tally() %>% as_duckplyr_df()
 
   # Compare
   expect_equal(pre, post)

@@ -30,7 +30,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
 
         new_pos <- match(new, names(out), nomatch = length(out) + 1L)
         exprs <- imap(set_names(names(out)), relexpr_reference, rel = NULL)
-        new_expr <- rel_translate(dot, out, alias = new, partition = by_names)
+        new_expr <- rel_translate(dot, out, alias = new, partition = by_names, need_window = TRUE)
         exprs[[new_pos]] <- new_expr
         rel <- rel_project(rel, unname(exprs))
         out <- rel_to_df(rel)

@@ -56,6 +56,7 @@ skip_map <- c(
 
 force_override <- c(
   nest_join = FALSE,
+  tally = TRUE,
   NULL
 )
 
