@@ -1,19 +1,21 @@
 diff --git b/R/rename.R a/R/rename.R
-index 96dd9e3..dca13db 100644
+index 59e5a80..14e1739 100644
 --- b/R/rename.R
 +++ a/R/rename.R
-@@ -2,10 +2,19 @@
+@@ -2,10 +2,21 @@
  #' @importFrom dplyr rename
  #' @export
  rename.duckplyr_df <- function(.data, ...) {
 -  # Our implementation
 +  loc <- tidyselect::eval_rename(expr(c(...)), .data)
-+  # eval_rename() only returns changes
-+  names <- names(.data)
-+  names[loc] <- names(loc)
-+
 +  dupes <- duplicated(loc, fromLast = TRUE)
-+  exprs <- exprs_from_loc(.data, loc[!dupes])
++  loc <- loc[!dupes]
++
++  # eval_rename() only returns changes
++  proj <- rlang::set_names(seq_along(.data), names(.data))
++  names(proj)[loc] <- names(loc)
++
++  exprs <- exprs_from_loc(.data, proj)
 +
    rel_try(
 -    "No relational implementation for rename()" = TRUE,
