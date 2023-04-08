@@ -129,7 +129,7 @@ test_that("as_duckplyr_df() commutes for distinct()", {
   expect_equal(pre, post)
 })
 
-test_that("as_duckplyr_df() commutes for do()", {
+test_that("as_duckplyr_df() commutes for do(data.frame(c = 1))", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   # Data
   test_df <- data.frame(a = 1, b = 2)
@@ -142,7 +142,7 @@ test_that("as_duckplyr_df() commutes for do()", {
   expect_equal(pre, post)
 })
 
-test_that("as_duckplyr_df() commutes for dplyr_reconstruct()", {
+test_that("as_duckplyr_df() commutes for dplyr_reconstruct(test_df)", {
   skip("Hack")
 
   # Data
@@ -156,7 +156,7 @@ test_that("as_duckplyr_df() commutes for dplyr_reconstruct()", {
   expect_equal(pre, post)
 })
 
-test_that("as_duckplyr_df() commutes for filter()", {
+test_that("as_duckplyr_df() commutes for filter(a == 1)", {
   # Data
   test_df <- data.frame(a = 1, b = 2)
 
@@ -310,7 +310,7 @@ test_that("as_duckplyr_df() commutes for relocate()", {
   expect_equal(pre, post)
 })
 
-test_that("as_duckplyr_df() commutes for rename()", {
+test_that("as_duckplyr_df() commutes for rename(c = a)", {
   # Data
   test_df <- data.frame(a = 1, b = 2)
 
@@ -322,7 +322,7 @@ test_that("as_duckplyr_df() commutes for rename()", {
   expect_equal(pre, post)
 })
 
-test_that("as_duckplyr_df() commutes for rename_with()", {
+test_that("as_duckplyr_df() commutes for rename_with(identity)", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   # Data
   test_df <- data.frame(a = 1, b = 2)
@@ -376,7 +376,7 @@ test_that("as_duckplyr_df() commutes for rows_delete()", {
   expect_equal(pre, post)
 })
 
-test_that("as_duckplyr_df() commutes for rows_insert()", {
+test_that("as_duckplyr_df() commutes for rows_insert(, conflict = \"ignore\")", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   # Data
   test_df_x <- data.frame(a = 1, b = 2)
@@ -445,7 +445,7 @@ test_that("as_duckplyr_df() commutes for sample_frac()", {
   expect_equal(pre, post)
 })
 
-test_that("as_duckplyr_df() commutes for sample_n()", {
+test_that("as_duckplyr_df() commutes for sample_n(size = 1)", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   # Data
   test_df <- data.frame(a = 1, b = 2)
@@ -458,7 +458,7 @@ test_that("as_duckplyr_df() commutes for sample_n()", {
   expect_equal(pre, post)
 })
 
-test_that("as_duckplyr_df() commutes for select()", {
+test_that("as_duckplyr_df() commutes for select(a)", {
   # Data
   test_df <- data.frame(a = 1, b = 2)
 
@@ -538,7 +538,7 @@ test_that("as_duckplyr_df() commutes for slice_head()", {
   expect_equal(pre, post)
 })
 
-test_that("as_duckplyr_df() commutes for slice_max()", {
+test_that("as_duckplyr_df() commutes for slice_max(a)", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   skip("External vector?")
 
@@ -546,14 +546,14 @@ test_that("as_duckplyr_df() commutes for slice_max()", {
   test_df <- data.frame(a = 1, b = 2)
 
   # Run
-  pre <- test_df %>% as_duckplyr_df() %>% slice_max("a")
-  post <- test_df %>% slice_max("a") %>% as_duckplyr_df()
+  pre <- test_df %>% as_duckplyr_df() %>% slice_max(a)
+  post <- test_df %>% slice_max(a) %>% as_duckplyr_df()
 
   # Compare
   expect_equal(pre, post)
 })
 
-test_that("as_duckplyr_df() commutes for slice_min()", {
+test_that("as_duckplyr_df() commutes for slice_min(a)", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   skip("External vector?")
 
@@ -561,8 +561,8 @@ test_that("as_duckplyr_df() commutes for slice_min()", {
   test_df <- data.frame(a = 1, b = 2)
 
   # Run
-  pre <- test_df %>% as_duckplyr_df() %>% slice_min("a")
-  post <- test_df %>% slice_min("a") %>% as_duckplyr_df()
+  pre <- test_df %>% as_duckplyr_df() %>% slice_min(a)
+  post <- test_df %>% slice_min(a) %>% as_duckplyr_df()
 
   # Compare
   expect_equal(pre, post)
@@ -598,7 +598,7 @@ test_that("as_duckplyr_df() commutes for slice_tail()", {
   expect_equal(pre, post)
 })
 
-test_that("as_duckplyr_df() commutes for summarise()", {
+test_that("as_duckplyr_df() commutes for summarise(c = mean(a))", {
   # Data
   test_df <- data.frame(a = 1, b = 2)
 
@@ -648,7 +648,7 @@ test_that("as_duckplyr_df() commutes for tbl_vars()", {
   expect_equal(pre, post)
 })
 
-test_that("as_duckplyr_df() commutes for transmute()", {
+test_that("as_duckplyr_df() commutes for transmute(c = a + 1)", {
   # Data
   test_df <- data.frame(a = 1, b = 2)
 

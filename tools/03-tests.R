@@ -13,8 +13,8 @@ extra_arg_map <- list(
   rows_insert = ', conflict = "ignore"',
   sample_n = "size = 1",
   select = "a",
-  slice_max = '"a"',
-  slice_min = '"a"',
+  slice_max = 'a',
+  slice_min = 'a',
   summarise = "c = mean(a)",
   transmute = "c = a + 1",
   NULL
@@ -72,8 +72,10 @@ get_test_code <- function(name, code, is_tbl_return) {
     skip <- paste0('  skip("', skip, '")\n\n')
   }
 
+  extra_arg_esc <- gsub('"', '\\\\"', extra_arg)
+
   test_code_pre <- c(
-    'test_that("as_duckplyr_df() commutes for {{{name}}}()", {',
+    'test_that("as_duckplyr_df() commutes for {{{name}}}({{{extra_arg_esc}}})", {',
     "{{{force}}}{{{skip}}}  # Data"
   )
 
