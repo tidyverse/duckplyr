@@ -8,7 +8,7 @@ extra_arg_map <- list(
   filter = "a == 1",
   group_map = "~ .x",
   group_modify = "~ .x",
-  rename = "c = a",
+  rename = c("", "c = a"),
   rename_with = "identity",
   rows_insert = ', conflict = "ignore"',
   sample_n = "size = 1",
@@ -50,26 +50,34 @@ get_test_code <- function(name, code, is_tbl_return) {
   formals <- formals(code)
   two_tables <- (length(formals) > 1) && (names(formals)[[2]] == "y")
 
+  extra_args <- extra_arg_map[[name]] %||% c("")
+
+  if (length(extra_args) == 1) {
+    with_force <- force_override[name] %|% fs::file_exists(fs::path("patch", paste0(name, ".patch")))
+    if (with_force) {
+      force <- ""
+    } else {
+      force <- '  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")\n'
+    }
+
+    skip <- skip_map[name]
+    if (is.na(skip)) {
+      skip <- ""
+    } else {
+      skip <- paste0('  skip("', skip, '")\n\n')
+    }
+
+    get_test_code_one(extra_args, name, two_tables, force, skip, is_tbl_return)
+  } else {
+    paste(map_chr(extra_args, get_test_code_one, name, two_tables), collapse = "\n\n")
+  }
+}
+
+get_test_code_one <- function(extra_arg, name, two_tables, force = "", skip = "", is_tbl_return = TRUE) {
   if (is_tbl_return) {
     post_coerce <- " %>% as_duckplyr_df()"
   } else {
     post_coerce <- ""
-  }
-
-  extra_arg <- extra_arg_map[[name]] %||% ""
-
-  with_force <- force_override[name] %|% fs::file_exists(fs::path("patch", paste0(name, ".patch")))
-  if (with_force) {
-    force <- ""
-  } else {
-    force <- '  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")\n'
-  }
-
-  skip <- skip_map[name]
-  if (is.na(skip)) {
-    skip <- ""
-  } else {
-    skip <- paste0('  skip("', skip, '")\n\n')
   }
 
   extra_arg_esc <- gsub('"', '\\\\"', extra_arg)

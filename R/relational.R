@@ -1,8 +1,4 @@
 rel_try <- function(rel, ...) {
-  if (Sys.getenv("DUCKPLYR_FORCE") == "TRUE") {
-    return(rel)
-  }
-
   call <- as.character(sys.call(-1)[[1]])
 
   if (!(list(call) %in% stats$calls)) {
@@ -19,8 +15,16 @@ rel_try <- function(rel, ...) {
         inform(message = c("Requested fallback for relational:", i = names(dots)[[i]]))
       }
       stats$fallback <- stats$fallback + 1L
+      if (Sys.getenv("DUCKPLYR_FORCE") == "TRUE") {
+        abort("Fallback requested with DUCKPLYR_FORCE")
+      }
+
       return()
     }
+  }
+
+  if (Sys.getenv("DUCKPLYR_FORCE") == "TRUE") {
+    return(rel)
   }
 
   out <- rlang::try_fetch(rel, error = identity)
