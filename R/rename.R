@@ -3,12 +3,14 @@
 #' @export
 rename.duckplyr_df <- function(.data, ...) {
   loc <- tidyselect::eval_rename(expr(c(...)), .data)
-  # eval_rename() only returns changes
-  names <- names(.data)
-  names[loc] <- names(loc)
-
   dupes <- duplicated(loc, fromLast = TRUE)
-  exprs <- exprs_from_loc(.data, loc[!dupes])
+  loc <- loc[!dupes]
+
+  # eval_rename() only returns changes
+  proj <- rlang::set_names(seq_along(.data), names(.data))
+  names(proj)[loc] <- names(loc)
+
+  exprs <- exprs_from_loc(.data, proj)
 
   rel_try(
     "Can't use relational with zero-column result set." = (length(exprs) == 0),
