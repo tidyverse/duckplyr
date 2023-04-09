@@ -44,13 +44,13 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
         names_used <- c(names_used, setdiff(new_names_used, names_used))
       }
 
+      if (length(by_names) > 0) {
+        rel <- oo_restore(rel)
+      }
+
       out <- rel_to_df(rel)
 
       out <- dplyr_reconstruct(out, .data)
-
-      if (length(by_names) > 0) {
-        out <- oo_restore(out)
-      }
 
       names_original <- names(.data)
 
