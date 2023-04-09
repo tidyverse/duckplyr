@@ -1,5 +1,10 @@
 rel_join_impl <- function(x, y, by, join, na_matches, suffix, keep, error_call = caller_env()) {
-  check_keep(keep, error_call = error_call)
+  mutating <- !(join %in% c("semi", "anti"))
+
+  if (mutating) {
+    check_keep(keep, error_call = error_call)
+  }
+
   na_matches <- check_na_matches(na_matches, error_call = error_call)
 
   x_names <- tbl_vars(x)
@@ -11,15 +16,6 @@ rel_join_impl <- function(x, y, by, join, na_matches, suffix, keep, error_call =
     by <- as_join_by(by, error_call = error_call)
   }
 
-  vars <- join_cols(
-    x_names = x_names,
-    y_names = y_names,
-    by = by,
-    suffix = suffix,
-    keep = keep,
-    error_call = error_call
-  )
-
   x_by <- by$x
   y_by <- by$y
   x_rel <- duckdb_rel_from_df(x)
@@ -28,19 +24,21 @@ rel_join_impl <- function(x, y, by, join, na_matches, suffix, keep, error_call =
   y_rel <- rel_set_alias(y_rel, "rhs")
 
   # Rename if non-unique column names
-  if (length(intersect(x_names, y_names)) != 0) {
-    x_names_remap <- paste0(x_names, "_x")
-    x_by <- paste0(x_by, "_x")
-    x_exprs <- exprs_from_loc(x, set_names(seq_along(x_names_remap), x_names_remap))
-    x_rel <- rel_project(x_rel, x_exprs)
+  if (mutating) {
+    if (length(intersect(x_names, y_names)) != 0) {
+      x_names_remap <- paste0(x_names, "_x")
+      x_by <- paste0(x_by, "_x")
+      x_exprs <- exprs_from_loc(x, set_names(seq_along(x_names_remap), x_names_remap))
+      x_rel <- rel_project(x_rel, x_exprs)
 
-    y_names_remap <- paste0(y_names, "_y")
-    y_by <- paste0(y_by, "_y")
-    y_exprs <- exprs_from_loc(y, set_names(seq_along(y_names_remap), y_names_remap))
-    y_rel <- rel_project(y_rel, y_exprs)
-  } else {
-    x_names_remap <- x_names
-    y_names_remap <- y_names
+      y_names_remap <- paste0(y_names, "_y")
+      y_by <- paste0(y_by, "_y")
+      y_exprs <- exprs_from_loc(y, set_names(seq_along(y_names_remap), y_names_remap))
+      y_rel <- rel_project(y_rel, y_exprs)
+    } else {
+      x_names_remap <- x_names
+      y_names_remap <- y_names
+    }
   }
 
   x_by <- map(x_by, relexpr_reference, rel = x_rel)
@@ -56,27 +54,38 @@ rel_join_impl <- function(x, y, by, join, na_matches, suffix, keep, error_call =
 
   joined <- rel_join(x_rel, y_rel, conds, join)
 
-  exprs <- c(
-    nexprs_from_loc(x_names_remap, vars$x$out),
-    nexprs_from_loc(y_names_remap, vars$y$out)
-  )
+  if (mutating) {
+    vars <- join_cols(
+      x_names = x_names,
+      y_names = y_names,
+      by = by,
+      suffix = suffix,
+      keep = keep,
+      error_call = error_call
+    )
 
-  remap <- (is.null(keep) || is_false(keep))
+    exprs <- c(
+      nexprs_from_loc(x_names_remap, vars$x$out),
+      nexprs_from_loc(y_names_remap, vars$y$out)
+    )
 
-  if (remap && join %in% c("right", "full")) {
-    by_pos <- match(names(vars$x$key), x_names)
+    remap <- (is.null(keep) || is_false(keep))
 
-    if (join == "right") {
-      exprs[by_pos] <- map2(y_by, names(vars$x$key), relexpr_set_alias)
-    } else if (join == "full") {
-      exprs[by_pos] <- pmap(
-        list(x_by, y_by, names(vars$x$key)),
-        ~ relexpr_function("___coalesce", list(..1, ..2), alias = ..3)
-      )
+    if (remap && join %in% c("right", "full")) {
+      by_pos <- match(names(vars$x$key), x_names)
+
+      if (join == "right") {
+        exprs[by_pos] <- map2(y_by, names(vars$x$key), relexpr_set_alias)
+      } else if (join == "full") {
+        exprs[by_pos] <- pmap(
+          list(x_by, y_by, names(vars$x$key)),
+          ~ relexpr_function("___coalesce", list(..1, ..2), alias = ..3)
+        )
+      }
     }
-  }
 
-  out <- rel_project(joined, exprs)
+    out <- rel_project(joined, exprs)
+  }
 
   out <- rel_to_df(out)
   out <- dplyr_reconstruct(out, x)
@@ -114,7 +123,9 @@ rel_filter_join_impl <- function(x, y, by, join, na_matches, error_call = caller
 
   conds <- map2(x_by, y_by, ~ relexpr_function(cond, list(.x, .y)))
 
-  out <- rel_join(x_rel, y_rel, conds, join)
+  joined <- rel_join(x_rel, y_rel, conds, join)
+
+  out <- joined
 
   out <- rel_to_df(out)
   out <- dplyr_reconstruct(out, x)
