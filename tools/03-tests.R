@@ -15,6 +15,8 @@ extra_arg_map <- list(
   mutate = c(
     "",
     "a + 1",
+    "c = a + 1",
+    "`if` = a + 1",
     # "sum(a)",
     # "sum(a), .by = g",
     "mean(a)",
