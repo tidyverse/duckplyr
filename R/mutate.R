@@ -20,12 +20,11 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
       dots <- dplyr_quosures(...)
       dots <- fix_auto_name(dots)
 
-      out <- rel_to_df(rel)
       names_used <- character()
       names_new <- character()
+      names_out <- names(data_in)
 
       # FIXME: use fewer projections
-      # FIXME: construct out only at the end
       for (i in seq_along(dots)) {
         dot <- dots[[i]]
 
@@ -33,16 +32,19 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
 
         names_new <- c(names_new, new)
 
-        new_pos <- match(new, names(out), nomatch = length(out) + 1L)
-        exprs <- imap(set_names(names(out)), relexpr_reference, rel = NULL)
-        new_expr <- rel_translate(dot, out, alias = new, partition = by_names, need_window = TRUE)
+        new_pos <- match(new, names_out, nomatch = length(names_out) + 1L)
+        exprs <- imap(set_names(names_out), relexpr_reference, rel = NULL)
+        new_expr <- rel_translate(dot, names_data = names_out, alias = new, partition = by_names, need_window = TRUE)
         exprs[[new_pos]] <- new_expr
+
         rel <- rel_project(rel, unname(exprs))
-        out <- rel_to_df(rel)
+        names_out[[new_pos]] <- new
 
         new_names_used <- intersect(attr(new_expr, "used"), names(.data))
         names_used <- c(names_used, setdiff(new_names_used, names_used))
       }
+
+      out <- rel_to_df(rel)
 
       out <- dplyr_reconstruct(out, .data)
 

@@ -49,7 +49,13 @@ rel_translate_dots <- function(dots, data) {
   }
 }
 
-rel_translate <- function(quo, data, alias = NULL, partition = NULL, need_window = FALSE) {
+rel_translate <- function(
+    quo, data,
+    alias = NULL,
+    partition = NULL,
+    need_window = FALSE,
+    names_data = names(data)
+) {
   env <- quo_get_env(quo)
 
   used <- character()
@@ -67,7 +73,7 @@ rel_translate <- function(quo, data, alias = NULL, partition = NULL, need_window
       double = relexpr_constant(expr),
       #
       symbol = {
-        if (as.character(expr) %in% names(data)) {
+        if (as.character(expr) %in% names_data) {
           ref <- as.character(expr)
           if (!(ref %in% used)) {
             used <<- c(used, ref)
