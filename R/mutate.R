@@ -11,7 +11,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
   rel_try(
     {
       if (length(by_names) > 0) {
-        data_in <- mutate(.data, `___row_number` = row_number())
+        data_in <- oo_prep(.data)
       } else {
         data_in <- .data
       }
@@ -47,8 +47,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
       out <- dplyr_reconstruct(out, .data)
 
       if (length(by_names) > 0) {
-        out <- arrange(out, `___row_number`)
-        out <- select(out, -`___row_number`)
+        out <- oo_restore(out)
       }
 
       names_original <- names(.data)
