@@ -46,6 +46,23 @@ rel_distinct.relational_df <- function(rel, ...) {
 }
 
 #' @export
+rel_set_intersect.relational_df <- function(rel_a, rel_b, ...) {
+}
+
+#' @export
+rel_set_diff.relational_df <- function(rel_a, rel_b, ...) {
+}
+
+#' @export
+rel_set_symdiff.relational_df <- function(rel_a, rel_b, ...) {
+}
+
+#' @export
+rel_union_all.relational_df <- function(rel_a, rel_b, ...) {
+}
+
+
+#' @export
 rel_tostring.relational_df <- function(rel, ...) {
 }
 

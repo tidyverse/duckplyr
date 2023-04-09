@@ -131,6 +131,62 @@ rel_distinct <- function(rel, ...) {
   UseMethod("rel_distinct")
 }
 
+#' Lazily compute a set_intersect result on a relation object
+#'
+#' TBD.
+#'
+#' @inheritParams rel_to_df
+#' @return a new relation object with the result
+#' @export
+#' @examples
+#' rel <- rel_from_df(mtcars)
+#' rel2 <- rel_set_intersect(rel)
+rel_set_intersect <- function(rel_a, rel_b, ...) {
+  UseMethod("rel_set_intersect")
+}
+
+#' Lazily compute a set_diff result on a relation object
+#'
+#' TBD.
+#'
+#' @inheritParams rel_to_df
+#' @return a new relation object with the result
+#' @export
+#' @examples
+#' rel <- rel_from_df(mtcars)
+#' rel2 <- rel_set_diff(rel)
+rel_set_diff <- function(rel_a, rel_b, ...) {
+  UseMethod("rel_set_diff")
+}
+
+#' Lazily compute a set_symdiff result on a relation object
+#'
+#' TBD.
+#'
+#' @inheritParams rel_to_df
+#' @return a new relation object with the result
+#' @export
+#' @examples
+#' rel <- rel_from_df(mtcars)
+#' rel2 <- rel_set_symdiff(rel)
+rel_set_symdiff <- function(rel_a, rel_b, ...) {
+  UseMethod("rel_set_symdiff")
+}
+
+#' Lazily compute a set_union_all result on a relation object
+#'
+#' TBD.
+#'
+#' @inheritParams rel_to_df
+#' @return a new relation object with the result
+#' @export
+#' @examples
+#' rel <- rel_from_df(mtcars)
+#' rel2 <- rel_union_all(rel)
+rel_union_all <- function(rel_a, rel_b, ...) {
+  UseMethod("rel_union_all")
+}
+
 #' TBD
 #'
 #' TBD.

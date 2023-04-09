@@ -25,8 +25,8 @@ union.duckplyr_df <- function(x, y, ...) {
         y_rel <- rel_project(y_rel, exprs)
       }
 
-      rel <- duckdb:::rel_union_all(x_rel, y_rel)
-      rel <- duckdb:::rel_distinct(rel)
+      rel <- rel_union_all(x_rel, y_rel)
+      rel <- rel_distinct(rel)
       out <- rel_to_df(rel)
       out <- dplyr_reconstruct(out, x)
       return(out)

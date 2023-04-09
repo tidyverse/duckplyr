@@ -220,6 +220,54 @@ rel_distinct.duckdb_relation <- function(rel, ...) {
 }
 
 #' @export
+rel_set_intersect.duckdb_relation <- function(rel_a, rel_b, ...) {
+  out <- duckdb:::rel_set_intersect(rel_a, rel_b)
+
+  meta_rel_register(out, expr(duckdb:::rel_set_intersect(
+    !!meta_rel_get(rel_a)$name,
+    !!meta_rel_get(rel_b)$name
+  )))
+
+  out
+}
+
+#' @export
+rel_set_diff.duckdb_relation <- function(rel_a, rel_b, ...) {
+  out <- duckdb:::rel_set_diff(rel_a, rel_b)
+
+  meta_rel_register(out, expr(duckdb:::rel_set_diff(
+    !!meta_rel_get(rel_a)$name,
+    !!meta_rel_get(rel_b)$name
+  )))
+
+  out
+}
+
+#' @export
+rel_set_symdiff.duckdb_relation <- function(rel_a, rel_b, ...) {
+  out <- duckdb:::rel_set_symdiff(rel_a, rel_b)
+
+  meta_rel_register(out, expr(duckdb:::rel_set_symdiff(
+    !!meta_rel_get(rel_a)$name,
+    !!meta_rel_get(rel_b)$name
+  )))
+
+  out
+}
+
+#' @export
+rel_union_all.duckdb_relation <- function(rel_a, rel_b, ...) {
+  out <- duckdb:::rel_union_all(rel_a, rel_b)
+
+  meta_rel_register(out, expr(duckdb:::rel_union_all(
+    !!meta_rel_get(rel_a)$name,
+    !!meta_rel_get(rel_b)$name
+  )))
+
+  out
+}
+
+#' @export
 rel_tostring.duckdb_relation <- function(rel, ...) {
 }
 
