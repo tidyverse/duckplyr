@@ -77,18 +77,14 @@ tests <- head(n = -1, list(
     NULL
   ),
   "test-join.R" = c(
-    "mutating joins preserve row and column order of x",
-    "when keep = TRUE, duckplyr_left_join() preserves both sets of keys",
-    "when keep = TRUE, left_join() preserves both sets of keys",
-    "when keep = TRUE, duckplyr_full_join() preserves both sets of keys",
-    "when keep = TRUE, full_join() preserves both sets of keys",
     "mutating joins trigger multiple match warning",
     "mutating joins don't trigger multiple match warning when called indirectly",
 
-    "filtering joins preserve row and column order of x (#2964)",
-
     "mutating joins reference original column in `y` when there are type errors (#6465)",
     "filtering joins reference original column in `y` when there are type errors (#6465)",
+
+    "mutating joins trigger many-to-many warning",
+    "mutating joins compute common columns",
 
     # https://github.com/duckdb/duckdb/issues/6356
     "keys are coerced to symmetric type",

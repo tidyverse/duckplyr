@@ -41,6 +41,11 @@ rel_join_impl <- function(x, y, by, join, na_matches, suffix, keep, error_call =
     }
   }
 
+  x_rel <- oo_prep(x_rel, "___row_number_x")
+  if (mutating) {
+    y_rel <- oo_prep(y_rel, "___row_number_y")
+  }
+
   x_by <- map(x_by, relexpr_reference, rel = x_rel)
   y_by <- map(y_by, relexpr_reference, rel = y_rel)
 
@@ -55,6 +60,12 @@ rel_join_impl <- function(x, y, by, join, na_matches, suffix, keep, error_call =
   joined <- rel_join(x_rel, y_rel, conds, join)
 
   if (mutating) {
+    joined <- oo_restore_order(
+      joined,
+      c("___row_number_x", "___row_number_y"),
+      list(x_rel, y_rel)
+    )
+
     vars <- join_cols(
       x_names = x_names,
       y_names = y_names,
@@ -86,7 +97,7 @@ rel_join_impl <- function(x, y, by, join, na_matches, suffix, keep, error_call =
 
     out <- rel_project(joined, exprs)
   } else {
-    out <- joined
+    out <- oo_restore(joined, "___row_number_x", list(x_rel))
   }
 
   out <- rel_to_df(out)
