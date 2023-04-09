@@ -12,6 +12,15 @@ extra_arg_map <- list(
   group_modify = "~ .x",
   inner_join = "join_by(a)",
   left_join = "join_by(a)",
+  mutate = c(
+    "",
+    "a + 1",
+    # "sum(a)",
+    # "sum(a), .by = g",
+    "mean(a)",
+    # "mean(a), .by = g",
+    NULL
+  ),
   nest_join = "join_by(a)",
   rename = c("", "c = a"),
   rename_with = "identity",
