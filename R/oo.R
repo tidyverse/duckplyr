@@ -1,13 +1,26 @@
-oo_prep <- function(data, colname = "___row_number") {
+oo_prep <- function(rel, colname = "___row_number") {
   if (Sys.getenv("DUCKPLYR_OUTPUT_ORDER") != "TRUE") {
-    return(data)
+    return(rel)
   }
 
-  if (colname %in% names(data)) {
-    abort("Must use column name not yet present in data")
+  names <- rel_names(rel)
+
+  if (colname %in% names) {
+    abort("Must use column name not yet present in rel")
   }
 
-  mutate(data, "{colname}" := row_number())
+  proj_exprs <- c(
+    imap(set_names(names), relexpr_reference, rel = NULL),
+    list(
+      relexpr_window(
+        relexpr_function("row_number", list()),
+        list(),
+        alias = colname
+      )
+    )
+  )
+
+  rel_project(rel, proj_exprs)
 }
 
 oo_restore <- function(rel, colname = "___row_number") {

@@ -10,19 +10,18 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
   # Our implementation
   rel_try(
     {
+      rel <- duckdb_rel_from_df(.data)
+
       if (length(by_names) > 0) {
-        data_in <- oo_prep(.data)
-      } else {
-        data_in <- .data
+        rel <- oo_prep(rel)
       }
 
-      rel <- duckdb_rel_from_df(data_in)
       dots <- dplyr_quosures(...)
       dots <- fix_auto_name(dots)
 
       names_used <- character()
       names_new <- character()
-      names_out <- names(data_in)
+      names_out <- rel_names(rel)
 
       # FIXME: use fewer projections
       for (i in seq_along(dots)) {
