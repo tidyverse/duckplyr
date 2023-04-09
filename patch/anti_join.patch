@@ -1,5 +1,5 @@
 diff --git b/R/anti_join.R a/R/anti_join.R
-index b1cad94..b3ca3af 100644
+index b1cad94..2a0ab1d 100644
 --- b/R/anti_join.R
 +++ a/R/anti_join.R
 @@ -2,10 +2,18 @@
@@ -18,7 +18,7 @@ index b1cad94..b3ca3af 100644
 +    "Only equi-joins for anti_join()" = inherits(by, "dplyr_join_by") && any(by$condition != "=="),
 +    "No relational implementation for anti_join(copy = TRUE)" = copy,
      {
-+      out <- rel_filter_join_impl(x, y, by, "anti", na_matches, error_call = error_call)
++      out <- rel_join_impl(x, y, by, "anti", na_matches, error_call = error_call)
        return(out)
      }
    )

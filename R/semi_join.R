@@ -13,7 +13,7 @@ semi_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches
     "Only equi-joins for semi_join()" = inherits(by, "dplyr_join_by") && any(by$condition != "=="),
     "No relational implementation for semi_join(copy = TRUE)" = copy,
     {
-      out <- rel_filter_join_impl(x, y, by, "semi", na_matches, error_call = error_call)
+      out <- rel_join_impl(x, y, by, "semi", na_matches, error_call = error_call)
       return(out)
     }
   )

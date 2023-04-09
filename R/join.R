@@ -85,47 +85,9 @@ rel_join_impl <- function(x, y, by, join, na_matches, suffix, keep, error_call =
     }
 
     out <- rel_project(joined, exprs)
-  }
-
-  out <- rel_to_df(out)
-  out <- dplyr_reconstruct(out, x)
-
-  return(out)
-}
-
-rel_filter_join_impl <- function(x, y, by, join, na_matches, error_call = caller_env()) {
-  na_matches <- check_na_matches(na_matches, error_call = error_call)
-
-  x_names <- tbl_vars(x)
-  y_names <- tbl_vars(y)
-
-  if (is_null(by)) {
-    by <- join_by_common(x_names, y_names, error_call = error_call)
   } else {
-    by <- as_join_by(by, error_call = error_call)
+    out <- joined
   }
-
-  x_by <- by$x
-  y_by <- by$y
-  x_rel <- duckdb_rel_from_df(x)
-  x_rel <- rel_set_alias(x_rel, "lhs")
-  y_rel <- duckdb_rel_from_df(y)
-  y_rel <- rel_set_alias(y_rel, "rhs")
-
-  x_by <- map(x_by, relexpr_reference, rel = x_rel)
-  y_by <- map(y_by, relexpr_reference, rel = y_rel)
-
-  if (na_matches == "na") {
-    cond <- "___eq_na_matches_na"
-  } else {
-    cond <- "=="
-  }
-
-  conds <- map2(x_by, y_by, ~ relexpr_function(cond, list(.x, .y)))
-
-  joined <- rel_join(x_rel, y_rel, conds, join)
-
-  out <- joined
 
   out <- rel_to_df(out)
   out <- dplyr_reconstruct(out, x)
