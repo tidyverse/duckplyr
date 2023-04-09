@@ -15,7 +15,7 @@ oo_restore <- function(data, colname = "___row_number") {
     return(data)
   }
 
-  col <- sym(colname)
-  sorted <- arrange(data, !!col)
-  select(sorted, -!!col)
+  col <- syms(colname)
+  sorted <- arrange(data, !!!col)
+  select(sorted, -c(!!!col))
 }
