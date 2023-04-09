@@ -181,6 +181,84 @@ test_that("as_duckplyr_df() commutes for distinct(g)", {
   expect_equal(pre, post)
 })
 
+
+test_that("as_duckplyr_df() commutes for union_all(data.frame(a = 1L, b = 3, g = 2L)) %>% distinct(g)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% union_all(data.frame(a = 1L, b = 3, g = 2L)) %>% distinct(g)
+  post <- test_df %>% union_all(data.frame(a = 1L, b = 3, g = 2L)) %>% distinct(g) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() commutes for union_all(data.frame(a = 1L, b = 4, g = 2L)) %>% distinct(g)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% union_all(data.frame(a = 1L, b = 4, g = 2L)) %>% distinct(g)
+  post <- test_df %>% union_all(data.frame(a = 1L, b = 4, g = 2L)) %>% distinct(g) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() commutes for union_all(data.frame(a = 1L, b = 5, g = 2L)) %>% distinct(g)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% union_all(data.frame(a = 1L, b = 5, g = 2L)) %>% distinct(g)
+  post <- test_df %>% union_all(data.frame(a = 1L, b = 5, g = 2L)) %>% distinct(g) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() commutes for union_all(data.frame(a = 1L, b = 6, g = 2L)) %>% distinct(g)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% union_all(data.frame(a = 1L, b = 6, g = 2L)) %>% distinct(g)
+  post <- test_df %>% union_all(data.frame(a = 1L, b = 6, g = 2L)) %>% distinct(g) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() commutes for union_all(data.frame(a = 1L, b = 7, g = 2L)) %>% distinct(g)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% union_all(data.frame(a = 1L, b = 7, g = 2L)) %>% distinct(g)
+  post <- test_df %>% union_all(data.frame(a = 1L, b = 7, g = 2L)) %>% distinct(g) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() commutes for distinct(g, .keep_all = TRUE)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% distinct(g, .keep_all = TRUE)
+  post <- test_df %>% distinct(g, .keep_all = TRUE) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 test_that("as_duckplyr_df() commutes for do(data.frame(c = 1))", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   # Data

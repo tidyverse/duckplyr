@@ -10,6 +10,15 @@ extra_arg_map <- list(
     "a, b",
     "b, b",
     "g",
+
+    # https://github.com/duckdb/duckdb/issues/6369, needs several repetitions
+    "union_all(data.frame(a = 1L, b = 3, g = 2L))" = "g",
+    "union_all(data.frame(a = 1L, b = 4, g = 2L))" = "g",
+    "union_all(data.frame(a = 1L, b = 5, g = 2L))" = "g",
+    "union_all(data.frame(a = 1L, b = 6, g = 2L))" = "g",
+    "union_all(data.frame(a = 1L, b = 7, g = 2L))" = "g",
+
+    "g, .keep_all = TRUE",
     NULL
   ),
   do = "data.frame(c = 1)",
@@ -100,23 +109,33 @@ get_test_code <- function(name, code, is_tbl_return) {
       skip <- paste0('  skip("', skip, '")\n\n')
     }
 
-    get_test_code_one(extra_args, name, two_tables, force, skip, is_tbl_return)
+    get_test_code_one(extra_args, pre_step = "", name, two_tables, force, skip, is_tbl_return)
   } else {
-    paste(map_chr(extra_args, get_test_code_one, name, two_tables), collapse = "\n\n")
+    paste(map2_chr(
+      extra_args, names2(extra_args),
+      get_test_code_one,
+      name,
+      two_tables
+    ), collapse = "\n\n")
   }
 }
 
-get_test_code_one <- function(extra_arg, name, two_tables, force = "", skip = "", is_tbl_return = TRUE) {
+get_test_code_one <- function(extra_arg, pre_step, name, two_tables, force = "", skip = "", is_tbl_return = TRUE) {
   if (is_tbl_return) {
     post_coerce <- " %>% as_duckplyr_df()"
   } else {
     post_coerce <- ""
   }
 
+  if (pre_step != "") {
+    pre_step <- paste0(pre_step, " %>% ")
+    pre_step <- gsub('"', '\\\\"', pre_step)
+  }
+
   extra_arg_esc <- gsub('"', '\\\\"', extra_arg)
 
   test_code_pre <- c(
-    'test_that("as_duckplyr_df() commutes for {{{name}}}({{{extra_arg_esc}}})", {',
+    'test_that("as_duckplyr_df() commutes for {{{pre_step}}}{{{name}}}({{{extra_arg_esc}}})", {',
     "{{{force}}}{{{skip}}}  # Data"
   )
 
@@ -138,8 +157,8 @@ get_test_code_one <- function(extra_arg, name, two_tables, force = "", skip = ""
       "  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))",
       "",
       "  # Run",
-      "  pre <- test_df %>% as_duckplyr_df() %>% {{{name}}}({{{extra_arg}}})",
-      "  post <- test_df %>% {{{name}}}({{{extra_arg}}}){{{post_coerce}}}"
+      "  pre <- test_df %>% as_duckplyr_df() %>% {{{pre_step}}}{{{name}}}({{{extra_arg}}})",
+      "  post <- test_df %>% {{{pre_step}}}{{{name}}}({{{extra_arg}}}){{{post_coerce}}}"
     )
   }
 

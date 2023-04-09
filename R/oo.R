@@ -9,16 +9,12 @@ oo_prep <- function(rel, colname = "___row_number") {
     abort("Must use column name not yet present in rel")
   }
 
-  proj_exprs <- c(
-    imap(set_names(names), relexpr_reference, rel = NULL),
-    list(
-      relexpr_window(
-        relexpr_function("row_number", list()),
-        list(),
-        alias = colname
-      )
-    )
-  )
+  proj_exprs <- imap(set_names(names), relexpr_reference, rel = NULL)
+  proj_exprs <- c(proj_exprs, list(relexpr_window(
+    relexpr_function("row_number", list()),
+    part = list(),
+    alias = colname
+  )))
 
   rel_project(rel, proj_exprs)
 }
@@ -37,12 +33,18 @@ oo_restore_order <- function(rel, colname = "___row_number", column_rels = list(
   rel_order(rel, order_exprs)
 }
 
-oo_restore_cols <- function(rel, colname = "___row_number") {
+oo_restore_cols <- function(rel, colname = "___row_number", extra = NULL) {
   if (Sys.getenv("DUCKPLYR_OUTPUT_ORDER") != "TRUE") {
+    if (!is.null(extra)) {
+      names <- setdiff(rel_names(rel), extra)
+      proj_exprs <- imap(set_names(names), relexpr_reference, rel = NULL)
+      rel <- rel_project(rel, proj_exprs)
+    }
+
     return(rel)
   }
 
-  names <- setdiff(rel_names(rel), colname)
+  names <- setdiff(rel_names(rel), c(colname, extra))
   proj_exprs <- imap(set_names(names), relexpr_reference, rel = NULL)
 
   rel_project(rel, proj_exprs)
