@@ -270,6 +270,19 @@ test_that("as_duckplyr_df() commutes for mutate(mean(a))", {
   expect_equal(pre, post)
 })
 
+
+test_that("as_duckplyr_df() commutes for mutate(mean(a), .by = g)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(mean(a), .by = g)
+  post <- test_df %>% mutate(mean(a), .by = g) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 test_that("as_duckplyr_df() commutes for nest_by()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   skip("WAT")

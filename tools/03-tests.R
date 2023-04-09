@@ -18,7 +18,7 @@ extra_arg_map <- list(
     # "sum(a)",
     # "sum(a), .by = g",
     "mean(a)",
-    # "mean(a), .by = g",
+    "mean(a), .by = g",
     NULL
   ),
   nest_join = "join_by(a)",

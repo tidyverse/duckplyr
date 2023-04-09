@@ -5,13 +5,18 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
   by_arg <- enquo(.by)
   keep <- arg_match(.keep)
 
-  # FIXME: remove/adapt when adding support for .by, used in mutate_keep()
   by_names <- eval_select_by(by_arg, .data)
 
   # Our implementation
   rel_try(
     {
-      rel <- duckdb_rel_from_df(.data)
+      if (length(by_names) > 0) {
+        data_in <- mutate(.data, `___row_number` = row_number())
+      } else {
+        data_in <- .data
+      }
+
+      rel <- duckdb_rel_from_df(data_in)
       dots <- dplyr_quosures(...)
       dots <- fix_auto_name(dots)
 
@@ -40,6 +45,11 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
       }
 
       out <- dplyr_reconstruct(out, .data)
+
+      if (length(by_names) > 0) {
+        out <- arrange(out, `___row_number`)
+        out <- select(out, -`___row_number`)
+      }
 
       names_original <- names(.data)
 
