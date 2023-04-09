@@ -129,6 +129,45 @@ test_that("as_duckplyr_df() commutes for distinct()", {
   expect_equal(pre, post)
 })
 
+
+test_that("as_duckplyr_df() commutes for distinct(a)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% distinct(a)
+  post <- test_df %>% distinct(a) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() commutes for distinct(a, b)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% distinct(a, b)
+  post <- test_df %>% distinct(a, b) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() commutes for distinct(g)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% distinct(g)
+  post <- test_df %>% distinct(g) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 test_that("as_duckplyr_df() commutes for do(data.frame(c = 1))", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   # Data
