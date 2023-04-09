@@ -156,6 +156,19 @@ test_that("as_duckplyr_df() commutes for distinct(a, b)", {
 })
 
 
+test_that("as_duckplyr_df() commutes for distinct(b, b)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% distinct(b, b)
+  post <- test_df %>% distinct(b, b) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
 test_that("as_duckplyr_df() commutes for distinct(g)", {
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))

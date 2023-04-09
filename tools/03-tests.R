@@ -8,6 +8,7 @@ extra_arg_map <- list(
     "",
     "a",
     "a, b",
+    "b, b",
     "g",
     NULL
   ),

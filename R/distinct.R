@@ -12,7 +12,7 @@ distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
       dupes <- duplicated(names(dots), fromLast = TRUE)
       dots <- dots[!dupes]
 
-      exprs <- rel_translate_dots(dots[!dupes], .data)
+      exprs <- rel_translate_dots(dots, .data)
       rel <- duckdb_rel_from_df(.data)
       if (length(exprs) > 0) {
         rel <- rel_project(rel, exprs)
