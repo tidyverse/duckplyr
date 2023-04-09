@@ -1,4 +1,4 @@
-rel_join_impl <- function(x, y, by, suffix, keep, na_matches, join, error_call = caller_env()) {
+rel_join_impl <- function(x, y, by, join, na_matches, suffix, keep, error_call = caller_env()) {
   check_keep(keep, error_call = error_call)
   na_matches <- check_na_matches(na_matches, error_call = error_call)
 
@@ -84,7 +84,7 @@ rel_join_impl <- function(x, y, by, suffix, keep, na_matches, join, error_call =
   return(out)
 }
 
-rel_filter_join_impl <- function(x, y, by, na_matches, join, error_call = caller_env()) {
+rel_filter_join_impl <- function(x, y, by, join, na_matches, error_call = caller_env()) {
   na_matches <- check_na_matches(na_matches, error_call = error_call)
 
   x_names <- tbl_vars(x)

@@ -11,7 +11,7 @@ right_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x
     "No implicit cross joins for right_join()" = is_cross_by(by),
     "No relational implementation for right_join(copy = TRUE)" = copy,
     {
-      out <- rel_join_impl(x, y, by, suffix, keep, na_matches, "right", error_call)
+      out <- rel_join_impl(x, y, by, "right", na_matches, suffix, keep, error_call)
       return(out)
     }
   )

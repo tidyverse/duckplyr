@@ -1,5 +1,5 @@
 diff --git b/R/full_join.R a/R/full_join.R
-index 9f3a400..e6f0983 100644
+index 9f3a400..30ebd3f 100644
 --- b/R/full_join.R
 +++ a/R/full_join.R
 @@ -2,10 +2,16 @@
@@ -16,7 +16,7 @@ index 9f3a400..e6f0983 100644
 +    "No implicit cross joins for full_join()" = is_cross_by(by),
 +    "No relational implementation for full_join(copy = TRUE)" = copy,
      {
-+      out <- rel_join_impl(x, y, by, suffix, keep, na_matches, "full", error_call)
++      out <- rel_join_impl(x, y, by, "full", na_matches, suffix, keep, error_call)
        return(out)
      }
    )

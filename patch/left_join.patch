@@ -1,5 +1,5 @@
 diff --git b/R/left_join.R a/R/left_join.R
-index 2dad930..f2a0795 100644
+index 2dad930..fa87b51 100644
 --- b/R/left_join.R
 +++ a/R/left_join.R
 @@ -2,10 +2,16 @@
@@ -16,7 +16,7 @@ index 2dad930..f2a0795 100644
 +    "No implicit cross joins for left_join()" = is_cross_by(by),
 +    "No relational implementation for left_join(copy = TRUE)" = copy,
      {
-+      out <- rel_join_impl(x, y, by, suffix, keep, na_matches, "left", error_call)
++      out <- rel_join_impl(x, y, by, "left", na_matches, suffix, keep, error_call)
        return(out)
      }
    )
