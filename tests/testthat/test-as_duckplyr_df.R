@@ -388,6 +388,19 @@ test_that("as_duckplyr_df() commutes for mutate(a + 1)", {
 })
 
 
+test_that("as_duckplyr_df() commutes for mutate(a + 1, .by = g)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(a + 1, .by = g)
+  post <- test_df %>% mutate(a + 1, .by = g) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
 test_that("as_duckplyr_df() commutes for mutate(c = a + 1)", {
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
@@ -460,6 +473,58 @@ test_that("as_duckplyr_df() commutes for mutate(mean(a), .by = g)", {
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% mutate(mean(a), .by = g)
   post <- test_df %>% mutate(mean(a), .by = g) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() commutes for mutate(min(a))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(min(a))
+  post <- test_df %>% mutate(min(a)) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() commutes for mutate(min(a), .by = g)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(min(a), .by = g)
+  post <- test_df %>% mutate(min(a), .by = g) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() commutes for mutate(max(a))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(max(a))
+  post <- test_df %>% mutate(max(a)) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() commutes for mutate(max(a), .by = g)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(max(a), .by = g)
+  post <- test_df %>% mutate(max(a), .by = g) %>% as_duckplyr_df()
 
   # Compare
   expect_equal(pre, post)

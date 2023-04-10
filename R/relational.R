@@ -114,7 +114,7 @@ rel_translate <- function(
           "cume_dist", "lead", "lag", "ntile",
 
           # Aggregates
-          "sum", "mean",
+          "sum", "mean", "min", "max",
 
           NULL
         ))

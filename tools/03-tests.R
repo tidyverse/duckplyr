@@ -32,12 +32,61 @@ extra_arg_map <- list(
   mutate = c(
     "",
     "a + 1",
+    "a + 1, .by = g",
     "c = a + 1",
     "`if` = a + 1",
     "sum(a)",
     "sum(a), .by = g",
     "mean(a)",
     "mean(a), .by = g",
+
+    # sd() doesn't exist
+    # "sd(a)",
+    # "sd(a), .by = g",
+
+    # prod() doesn't exist
+    # "prod(a)",
+    # "prod(a), .by = g",
+
+    # Need to fix implementation
+    # "lag(a)",
+    # "lag(a), .by = g",
+    # "lead(a)",
+    # "lead(a), .by = g",
+    # "lag(a, 2)",
+    # "lag(a, 2), .by = g",
+    # "lead(a, 2)",
+    # "lead(a, 2), .by = g",
+    # "lag(a, 4)",
+    # "lag(a, 4), .by = g",
+    # "lead(a, 4)",
+    # "lead(a, 4), .by = g",
+    # "lag(a, -1)",
+    # "lag(a, -1), .by = g",
+    # "lead(a, -1)",
+    # "lead(a, -1), .by = g",
+    # "lag(a, default = 0)",
+    # "lag(a, default = 0), .by = g",
+    # "lead(a, default = 1000)",
+    # "lead(a, default = 1000), .by = g",
+    # "lag(a, order_by = -a)",
+    # "lag(a, order_by = -a), .by = g",
+    # "lead(a, order_by = -a)",
+    # "lead(a, order_by = -a), .by = g",
+
+    "min(a)",
+    "min(a), .by = g",
+    "max(a)",
+    "max(a), .by = g",
+
+    # Need aliases
+    # "first(a)",
+    # "first(a), .by = g",
+    # "last(a)",
+    # "last(a), .by = g",
+    # "nth(a, 2)",
+    # "nth(a, 2), .by = g",
+
     NULL
   ),
   nest_join = "join_by(a)",
