@@ -141,6 +141,10 @@ meta_df_register <- function(df) {
 }
 
 meta_rel_register_df <- function(rel, df) {
+  if (Sys.getenv("DUCKPLYR_META_SKIP") == "TRUE") {
+    return(invisible())
+  }
+
   df_name <- meta_df_register(df)
   # Expect experimental argument from outside
   rel_expr <- expr(duckdb:::rel_from_df(con, !!df_name, experimental = experimental))
@@ -148,6 +152,10 @@ meta_rel_register_df <- function(rel, df) {
 }
 
 meta_rel_register <- function(rel, rel_expr) {
+  if (Sys.getenv("DUCKPLYR_META_SKIP") == "TRUE") {
+    return(invisible())
+  }
+
   force(rel_expr)
 
   count <- rel_cache$size()
