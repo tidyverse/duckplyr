@@ -85,6 +85,10 @@ extra_arg_map <- list(
     "nth(a, 2)",
     "nth(a, 2), .by = g",
 
+    # Different results
+    # "nth(a, -2)",
+    # "nth(a, -2), .by = g",
+
     NULL
   ),
   nest_join = "join_by(a)",
