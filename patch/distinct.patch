@@ -1,26 +1,66 @@
 diff --git b/R/distinct.R a/R/distinct.R
-index f7be010..311295e 100644
+index 92656b4..4948af0 100644
 --- b/R/distinct.R
 +++ a/R/distinct.R
-@@ -4,8 +4,22 @@
+@@ -4,8 +4,62 @@
  distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
    # Our implementation
    rel_try(
 -    "No relational implementation for distinct()" = TRUE,
-+    "distinct(.keep_all = TRUE) not supported for relational" = .keep_all,
      {
 +      dots <- enquos(..., .named = TRUE)
-+
 +      # FIXME: avoid column duplication in a cleaner way
 +      dupes <- duplicated(names(dots), fromLast = TRUE)
 +      dots <- dots[!dupes]
 +
-+      exprs <- rel_translate_dots(dots[!dupes], .data)
 +      rel <- duckdb_rel_from_df(.data)
-+      if (length(exprs) > 0) {
-+        rel <- rel_project(rel, exprs)
++
++      oo <- .keep_all || (Sys.getenv("DUCKPLYR_OUTPUT_ORDER") == "TRUE")
++
++      if (oo) {
++        # Push row number as separate projection
++        rel <- oo_prep(rel)
++
++        exprs <- rel_translate_dots(dots, .data)
++        all_exprs <- NULL
++        if (length(exprs) == 0) {
++          exprs <- imap(set_names(names(.data)), relexpr_reference, rel = NULL)
++          all_exprs <- exprs
++        }
++
++        if (.keep_all) {
++          proj_exprs <- all_exprs %||% imap(set_names(names(.data)), relexpr_reference, rel = NULL)
++        } else {
++          proj_exprs <- exprs
++        }
++
++        proj_exprs <- c(proj_exprs, list(
++          relexpr_reference("___row_number"),
++          relexpr_window(
++            relexpr_function("row_number", list()),
++            part = exprs,
++            alias = "___row_number_by"
++          )
++        ))
++
++        rel <- rel_project(rel, proj_exprs)
++
++        expr_filter <- rel_translate(
++          quo(`___row_number_by` == 1L),
++          names_data = "___row_number_by"
++        )
++        out_rel <- rel_filter(rel, list(expr_filter))
++
++        out_rel <- oo_restore_order(out_rel)
++        out_rel <- oo_restore_cols(out_rel, extra = "___row_number_by")
++      } else {
++        exprs <- rel_translate_dots(dots, .data)
++        if (length(exprs) > 0) {
++          rel <- rel_project(rel, exprs)
++        }
++        out_rel <- rel_distinct(rel)
 +      }
-+      out_rel <- rel_distinct(rel)
++
 +      out <- rel_to_df(out_rel)
 +      out <- dplyr_reconstruct(out, .data)
        return(out)

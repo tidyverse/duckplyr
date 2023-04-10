@@ -1,5 +1,5 @@
 diff --git b/R/intersect.R a/R/intersect.R
-index 7208000..c4aa48d 100644
+index 7208000..ba2cf2d 100644
 --- b/R/intersect.R
 +++ a/R/intersect.R
 @@ -3,9 +3,31 @@
@@ -29,7 +29,7 @@ index 7208000..c4aa48d 100644
 +        y_rel <- rel_project(y_rel, exprs)
 +      }
 +
-+      rel <- duckdb:::rel_set_intersect(x_rel, y_rel)
++      rel <- rel_set_intersect(x_rel, y_rel)
 +      out <- rel_to_df(rel)
 +      out <- dplyr_reconstruct(out, x)
        return(out)

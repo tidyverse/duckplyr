@@ -1,5 +1,5 @@
 diff --git b/R/symdiff.R a/R/symdiff.R
-index 4f6a8ff..2a36969 100644
+index 4f6a8ff..b12c50a 100644
 --- b/R/symdiff.R
 +++ a/R/symdiff.R
 @@ -3,9 +3,31 @@
@@ -29,7 +29,7 @@ index 4f6a8ff..2a36969 100644
 +        y_rel <- rel_project(y_rel, exprs)
 +      }
 +
-+      rel <- duckdb:::rel_set_symdiff(x_rel, y_rel)
++      rel <- rel_set_symdiff(x_rel, y_rel)
 +      out <- rel_to_df(rel)
 +      out <- dplyr_reconstruct(out, x)
        return(out)

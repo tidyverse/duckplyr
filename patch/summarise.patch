@@ -1,5 +1,5 @@
 diff --git b/R/summarise.R a/R/summarise.R
-index fb60bdd..0c5ee3d 100644
+index fb60bdd..3b8502f 100644
 --- b/R/summarise.R
 +++ a/R/summarise.R
 @@ -2,10 +2,21 @@
@@ -19,7 +19,7 @@ index fb60bdd..0c5ee3d 100644
 +      by <- eval_select_by(enquo(.by), .data)
 +      groups <- lapply(by, relexpr_reference)
 +
-+      out_rel <- rel_aggregate(rel, groups, aggregates)
++      out_rel <- rel_aggregate(rel, groups, unname(aggregates))
 +      out <- rel_to_df(out_rel)
 +      class(out) <- class(.data)
 +

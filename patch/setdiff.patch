@@ -1,5 +1,5 @@
 diff --git b/R/setdiff.R a/R/setdiff.R
-index d7eeb1a..768c89c 100644
+index d7eeb1a..c4c10e8 100644
 --- b/R/setdiff.R
 +++ a/R/setdiff.R
 @@ -3,9 +3,31 @@
@@ -29,7 +29,7 @@ index d7eeb1a..768c89c 100644
 +        y_rel <- rel_project(y_rel, exprs)
 +      }
 +
-+      rel <- duckdb:::rel_set_diff(x_rel, y_rel)
++      rel <- rel_set_diff(x_rel, y_rel)
 +      out <- rel_to_df(rel)
 +      out <- dplyr_reconstruct(out, x)
        return(out)
