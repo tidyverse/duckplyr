@@ -239,12 +239,12 @@ tpch_raw_22 <- function(experimental) {
     rel2,
     list(),
     list(
-      acctbal_min = {
+      {
         tmp_expr <- duckdb:::expr_function("mean", list(duckdb:::expr_reference("c_acctbal")))
         duckdb:::expr_set_alias(tmp_expr, "acctbal_min")
         tmp_expr
       },
-      join_id = {
+      {
         tmp_expr <- if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
           duckdb:::expr_constant(1L, experimental = experimental)
         } else {
@@ -678,12 +678,12 @@ tpch_raw_22 <- function(experimental) {
     rel18,
     list(duckdb:::expr_reference("cntrycode")),
     list(
-      numcust = {
+      {
         tmp_expr <- duckdb:::expr_function("n", list())
         duckdb:::expr_set_alias(tmp_expr, "numcust")
         tmp_expr
       },
-      totacctbal = {
+      {
         tmp_expr <- duckdb:::expr_function("sum", list(duckdb:::expr_reference("c_acctbal")))
         duckdb:::expr_set_alias(tmp_expr, "totacctbal")
         tmp_expr

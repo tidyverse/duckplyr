@@ -102,17 +102,17 @@ tpch_raw_01 <- function(experimental) {
     rel4,
     list(duckdb:::expr_reference("l_returnflag"), duckdb:::expr_reference("l_linestatus")),
     list(
-      sum_qty = {
+      {
         tmp_expr <- duckdb:::expr_function("sum", list(duckdb:::expr_reference("l_quantity")))
         duckdb:::expr_set_alias(tmp_expr, "sum_qty")
         tmp_expr
       },
-      sum_base_price = {
+      {
         tmp_expr <- duckdb:::expr_function("sum", list(duckdb:::expr_reference("l_extendedprice")))
         duckdb:::expr_set_alias(tmp_expr, "sum_base_price")
         tmp_expr
       },
-      sum_disc_price = {
+      {
         tmp_expr <- duckdb:::expr_function(
           "sum",
           list(
@@ -138,7 +138,7 @@ tpch_raw_01 <- function(experimental) {
         duckdb:::expr_set_alias(tmp_expr, "sum_disc_price")
         tmp_expr
       },
-      sum_charge = {
+      {
         tmp_expr <- duckdb:::expr_function(
           "sum",
           list(
@@ -180,22 +180,22 @@ tpch_raw_01 <- function(experimental) {
         duckdb:::expr_set_alias(tmp_expr, "sum_charge")
         tmp_expr
       },
-      avg_qty = {
+      {
         tmp_expr <- duckdb:::expr_function("mean", list(duckdb:::expr_reference("l_quantity")))
         duckdb:::expr_set_alias(tmp_expr, "avg_qty")
         tmp_expr
       },
-      avg_price = {
+      {
         tmp_expr <- duckdb:::expr_function("mean", list(duckdb:::expr_reference("l_extendedprice")))
         duckdb:::expr_set_alias(tmp_expr, "avg_price")
         tmp_expr
       },
-      avg_disc = {
+      {
         tmp_expr <- duckdb:::expr_function("mean", list(duckdb:::expr_reference("l_discount")))
         duckdb:::expr_set_alias(tmp_expr, "avg_disc")
         tmp_expr
       },
-      count_order = {
+      {
         tmp_expr <- duckdb:::expr_function("n", list())
         duckdb:::expr_set_alias(tmp_expr, "count_order")
         tmp_expr

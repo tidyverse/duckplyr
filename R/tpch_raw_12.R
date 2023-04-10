@@ -218,7 +218,7 @@ tpch_raw_12 <- function(experimental) {
     rel7,
     list(duckdb:::expr_reference("l_shipmode")),
     list(
-      high_line_count = {
+      {
         tmp_expr <- duckdb:::expr_function(
           "sum",
           list(
@@ -269,7 +269,7 @@ tpch_raw_12 <- function(experimental) {
         duckdb:::expr_set_alias(tmp_expr, "high_line_count")
         tmp_expr
       },
-      low_line_count = {
+      {
         tmp_expr <- duckdb:::expr_function(
           "sum",
           list(

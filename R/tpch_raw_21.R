@@ -5,24 +5,20 @@ tpch_raw_21 <- function(experimental) {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     list(duckdb:::expr_reference("l_orderkey"), duckdb:::expr_reference("l_suppkey")),
-    list(
-      n = {
-        tmp_expr <- duckdb:::expr_function("n", list())
-        duckdb:::expr_set_alias(tmp_expr, "n")
-        tmp_expr
-      }
-    )
+    list({
+      tmp_expr <- duckdb:::expr_function("n", list())
+      duckdb:::expr_set_alias(tmp_expr, "n")
+      tmp_expr
+    })
   )
   rel3 <- duckdb:::rel_aggregate(
     rel2,
     list(duckdb:::expr_reference("l_orderkey")),
-    list(
-      n_supplier = {
-        tmp_expr <- duckdb:::expr_function("n", list())
-        duckdb:::expr_set_alias(tmp_expr, "n_supplier")
-        tmp_expr
-      }
-    )
+    list({
+      tmp_expr <- duckdb:::expr_function("n", list())
+      duckdb:::expr_set_alias(tmp_expr, "n_supplier")
+      tmp_expr
+    })
   )
   rel4 <- duckdb:::rel_filter(
     rel3,
@@ -213,32 +209,30 @@ tpch_raw_21 <- function(experimental) {
   rel15 <- duckdb:::rel_aggregate(
     rel14,
     list(duckdb:::expr_reference("l_orderkey"), duckdb:::expr_reference("l_suppkey")),
-    list(
-      failed_delivery_commit = {
-        tmp_expr <- duckdb:::expr_function(
-          "any",
-          list(
-            duckdb:::expr_function(
-              ">",
-              list(duckdb:::expr_reference("l_receiptdate"), duckdb:::expr_reference("l_commitdate"))
-            )
+    list({
+      tmp_expr <- duckdb:::expr_function(
+        "any",
+        list(
+          duckdb:::expr_function(
+            ">",
+            list(duckdb:::expr_reference("l_receiptdate"), duckdb:::expr_reference("l_commitdate"))
           )
         )
-        duckdb:::expr_set_alias(tmp_expr, "failed_delivery_commit")
-        tmp_expr
-      }
-    )
+      )
+      duckdb:::expr_set_alias(tmp_expr, "failed_delivery_commit")
+      tmp_expr
+    })
   )
   rel16 <- duckdb:::rel_aggregate(
     rel15,
     list(duckdb:::expr_reference("l_orderkey")),
     list(
-      n_supplier = {
+      {
         tmp_expr <- duckdb:::expr_function("n", list())
         duckdb:::expr_set_alias(tmp_expr, "n_supplier")
         tmp_expr
       },
-      num_failed = {
+      {
         tmp_expr <- duckdb:::expr_function(
           "sum",
           list(
@@ -614,13 +608,11 @@ tpch_raw_21 <- function(experimental) {
   rel34 <- duckdb:::rel_aggregate(
     rel33,
     list(duckdb:::expr_reference("s_name")),
-    list(
-      numwait = {
-        tmp_expr <- duckdb:::expr_function("n", list())
-        duckdb:::expr_set_alias(tmp_expr, "numwait")
-        tmp_expr
-      }
-    )
+    list({
+      tmp_expr <- duckdb:::expr_function("n", list())
+      duckdb:::expr_set_alias(tmp_expr, "numwait")
+      tmp_expr
+    })
   )
   rel35 <- duckdb:::rel_order(
     rel34,

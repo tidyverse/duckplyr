@@ -153,13 +153,11 @@ tpch_raw_04 <- function(experimental) {
   rel15 <- duckdb:::rel_aggregate(
     rel14,
     list(duckdb:::expr_reference("o_orderpriority")),
-    list(
-      order_count = {
-        tmp_expr <- duckdb:::expr_function("n", list())
-        duckdb:::expr_set_alias(tmp_expr, "order_count")
-        tmp_expr
-      }
-    )
+    list({
+      tmp_expr <- duckdb:::expr_function("n", list())
+      duckdb:::expr_set_alias(tmp_expr, "order_count")
+      tmp_expr
+    })
   )
   rel16 <- duckdb:::rel_order(rel15, list(duckdb:::expr_reference("o_orderpriority")))
   rel16

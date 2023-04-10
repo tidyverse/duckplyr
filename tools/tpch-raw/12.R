@@ -232,7 +232,7 @@ rel8 <- duckdb:::rel_aggregate(
   rel7,
   list(duckdb:::expr_reference("l_shipmode")),
   list(
-    high_line_count = {
+    {
       tmp_expr <- duckdb:::expr_function(
         "sum",
         list(
@@ -283,7 +283,7 @@ rel8 <- duckdb:::rel_aggregate(
       duckdb:::expr_set_alias(tmp_expr, "high_line_count")
       tmp_expr
     },
-    low_line_count = {
+    {
       tmp_expr <- duckdb:::expr_function(
         "sum",
         list(

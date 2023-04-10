@@ -13,7 +13,7 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
       by <- eval_select_by(enquo(.by), .data)
       groups <- lapply(by, relexpr_reference)
 
-      out_rel <- rel_aggregate(rel, groups, aggregates)
+      out_rel <- rel_aggregate(rel, groups, unname(aggregates))
       out <- rel_to_df(out_rel)
       class(out) <- class(.data)
 

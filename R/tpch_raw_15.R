@@ -42,34 +42,32 @@ tpch_raw_15 <- function(experimental) {
   rel3 <- duckdb:::rel_aggregate(
     rel2,
     list(duckdb:::expr_reference("l_suppkey")),
-    list(
-      total_revenue = {
-        tmp_expr <- duckdb:::expr_function(
-          "sum",
-          list(
-            duckdb:::expr_function(
-              "*",
-              list(
-                duckdb:::expr_reference("l_extendedprice"),
-                duckdb:::expr_function(
-                  "-",
-                  list(
-                    if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                      duckdb:::expr_constant(1, experimental = experimental)
-                    } else {
-                      duckdb:::expr_constant(1)
-                    },
-                    duckdb:::expr_reference("l_discount")
-                  )
+    list({
+      tmp_expr <- duckdb:::expr_function(
+        "sum",
+        list(
+          duckdb:::expr_function(
+            "*",
+            list(
+              duckdb:::expr_reference("l_extendedprice"),
+              duckdb:::expr_function(
+                "-",
+                list(
+                  if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                    duckdb:::expr_constant(1, experimental = experimental)
+                  } else {
+                    duckdb:::expr_constant(1)
+                  },
+                  duckdb:::expr_reference("l_discount")
                 )
               )
             )
           )
         )
-        duckdb:::expr_set_alias(tmp_expr, "total_revenue")
-        tmp_expr
-      }
-    )
+      )
+      duckdb:::expr_set_alias(tmp_expr, "total_revenue")
+      tmp_expr
+    })
   )
   rel4 <- duckdb:::rel_project(
     rel3,
@@ -98,13 +96,11 @@ tpch_raw_15 <- function(experimental) {
   rel5 <- duckdb:::rel_aggregate(
     rel4,
     list(duckdb:::expr_reference("global_agr_key")),
-    list(
-      max_total_revenue = {
-        tmp_expr <- duckdb:::expr_function("max", list(duckdb:::expr_reference("total_revenue")))
-        duckdb:::expr_set_alias(tmp_expr, "max_total_revenue")
-        tmp_expr
-      }
-    )
+    list({
+      tmp_expr <- duckdb:::expr_function("max", list(duckdb:::expr_reference("total_revenue")))
+      duckdb:::expr_set_alias(tmp_expr, "max_total_revenue")
+      tmp_expr
+    })
   )
   rel6 <- duckdb:::rel_project(
     rel3,

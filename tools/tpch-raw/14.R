@@ -193,81 +193,79 @@ rel7 <- duckdb:::rel_project(
 rel8 <- duckdb:::rel_aggregate(
   rel7,
   list(),
-  list(
-    promo_revenue = {
-      tmp_expr <- duckdb:::expr_function(
-        "/",
-        list(
-          duckdb:::expr_function(
-            "*",
-            list(
-              if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                duckdb:::expr_constant(100, experimental = experimental)
-              } else {
-                duckdb:::expr_constant(100)
-              },
-              duckdb:::expr_function(
-                "sum",
-                list(
-                  duckdb:::expr_function(
-                    "ifelse",
-                    list(
-                      duckdb:::expr_function(
-                        "prefix",
-                        list(
-                          duckdb:::expr_reference("p_type"),
-                          if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                            duckdb:::expr_constant("PROMO", experimental = experimental)
-                          } else {
-                            duckdb:::expr_constant("PROMO")
-                          }
-                        )
-                      ),
-                      duckdb:::expr_function(
-                        "*",
-                        list(
-                          duckdb:::expr_reference("l_extendedprice"),
-                          duckdb:::expr_function(
-                            "-",
-                            list(
-                              if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                                duckdb:::expr_constant(1, experimental = experimental)
-                              } else {
-                                duckdb:::expr_constant(1)
-                              },
-                              duckdb:::expr_reference("l_discount")
-                            )
+  list({
+    tmp_expr <- duckdb:::expr_function(
+      "/",
+      list(
+        duckdb:::expr_function(
+          "*",
+          list(
+            if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+              duckdb:::expr_constant(100, experimental = experimental)
+            } else {
+              duckdb:::expr_constant(100)
+            },
+            duckdb:::expr_function(
+              "sum",
+              list(
+                duckdb:::expr_function(
+                  "ifelse",
+                  list(
+                    duckdb:::expr_function(
+                      "prefix",
+                      list(
+                        duckdb:::expr_reference("p_type"),
+                        if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                          duckdb:::expr_constant("PROMO", experimental = experimental)
+                        } else {
+                          duckdb:::expr_constant("PROMO")
+                        }
+                      )
+                    ),
+                    duckdb:::expr_function(
+                      "*",
+                      list(
+                        duckdb:::expr_reference("l_extendedprice"),
+                        duckdb:::expr_function(
+                          "-",
+                          list(
+                            if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                              duckdb:::expr_constant(1, experimental = experimental)
+                            } else {
+                              duckdb:::expr_constant(1)
+                            },
+                            duckdb:::expr_reference("l_discount")
                           )
                         )
-                      ),
-                      if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                        duckdb:::expr_constant(0, experimental = experimental)
-                      } else {
-                        duckdb:::expr_constant(0)
-                      }
-                    )
+                      )
+                    ),
+                    if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                      duckdb:::expr_constant(0, experimental = experimental)
+                    } else {
+                      duckdb:::expr_constant(0)
+                    }
                   )
                 )
               )
             )
-          ),
-          duckdb:::expr_function(
-            "sum",
-            list(
-              duckdb:::expr_function(
-                "*",
-                list(
-                  duckdb:::expr_reference("l_extendedprice"),
-                  duckdb:::expr_function(
-                    "-",
-                    list(
-                      if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                        duckdb:::expr_constant(1, experimental = experimental)
-                      } else {
-                        duckdb:::expr_constant(1)
-                      },
-                      duckdb:::expr_reference("l_discount")
-                    )
+          )
+        ),
+        duckdb:::expr_function(
+          "sum",
+          list(
+            duckdb:::expr_function(
+              "*",
+              list(
+                duckdb:::expr_reference("l_extendedprice"),
+                duckdb:::expr_function(
+                  "-",
+                  list(
+                    if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                      duckdb:::expr_constant(1, experimental = experimental)
+                    } else {
+                      duckdb:::expr_constant(1)
+                    },
+                    duckdb:::expr_reference("l_discount")
                   )
                 )
               )
@@ -275,10 +273,10 @@ rel8 <- duckdb:::rel_aggregate(
           )
         )
       )
-      duckdb:::expr_set_alias(tmp_expr, "promo_revenue")
-      tmp_expr
-    }
-  )
+    )
+    duckdb:::expr_set_alias(tmp_expr, "promo_revenue")
+    tmp_expr
+  })
 )
 rel8
 duckdb:::rel_to_altrep(rel8)

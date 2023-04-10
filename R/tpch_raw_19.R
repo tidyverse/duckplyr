@@ -751,34 +751,32 @@ tpch_raw_19 <- function(experimental) {
   rel8 <- duckdb:::rel_aggregate(
     rel7,
     list(),
-    list(
-      revenue = {
-        tmp_expr <- duckdb:::expr_function(
-          "sum",
-          list(
-            duckdb:::expr_function(
-              "*",
-              list(
-                duckdb:::expr_reference("l_extendedprice"),
-                duckdb:::expr_function(
-                  "-",
-                  list(
-                    if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                      duckdb:::expr_constant(1, experimental = experimental)
-                    } else {
-                      duckdb:::expr_constant(1)
-                    },
-                    duckdb:::expr_reference("l_discount")
-                  )
+    list({
+      tmp_expr <- duckdb:::expr_function(
+        "sum",
+        list(
+          duckdb:::expr_function(
+            "*",
+            list(
+              duckdb:::expr_reference("l_extendedprice"),
+              duckdb:::expr_function(
+                "-",
+                list(
+                  if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                    duckdb:::expr_constant(1, experimental = experimental)
+                  } else {
+                    duckdb:::expr_constant(1)
+                  },
+                  duckdb:::expr_reference("l_discount")
                 )
               )
             )
           )
         )
-        duckdb:::expr_set_alias(tmp_expr, "revenue")
-        tmp_expr
-      }
-    )
+      )
+      duckdb:::expr_set_alias(tmp_expr, "revenue")
+      tmp_expr
+    })
   )
   rel8
   duckdb:::rel_to_altrep(rel8)

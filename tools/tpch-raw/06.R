@@ -120,21 +120,19 @@ rel4 <- duckdb:::rel_project(
 rel5 <- duckdb:::rel_aggregate(
   rel4,
   list(),
-  list(
-    revenue = {
-      tmp_expr <- duckdb:::expr_function(
-        "sum",
-        list(
-          duckdb:::expr_function(
-            "*",
-            list(duckdb:::expr_reference("l_extendedprice"), duckdb:::expr_reference("l_discount"))
-          )
+  list({
+    tmp_expr <- duckdb:::expr_function(
+      "sum",
+      list(
+        duckdb:::expr_function(
+          "*",
+          list(duckdb:::expr_reference("l_extendedprice"), duckdb:::expr_reference("l_discount"))
         )
       )
-      duckdb:::expr_set_alias(tmp_expr, "revenue")
-      tmp_expr
-    }
-  )
+    )
+    duckdb:::expr_set_alias(tmp_expr, "revenue")
+    tmp_expr
+  })
 )
 rel5
 duckdb:::rel_to_altrep(rel5)

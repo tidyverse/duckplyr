@@ -175,23 +175,21 @@ rel7 <- duckdb:::rel_project(
 rel8 <- duckdb:::rel_aggregate(
   rel7,
   list(duckdb:::expr_reference("l_partkey")),
-  list(
-    quantity_threshold = {
-      tmp_expr <- duckdb:::expr_function(
-        "*",
-        list(
-          if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-            duckdb:::expr_constant(0.2, experimental = experimental)
-          } else {
-            duckdb:::expr_constant(0.2)
-          },
-          duckdb:::expr_function("mean", list(duckdb:::expr_reference("l_quantity")))
-        )
+  list({
+    tmp_expr <- duckdb:::expr_function(
+      "*",
+      list(
+        if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+          duckdb:::expr_constant(0.2, experimental = experimental)
+        } else {
+          duckdb:::expr_constant(0.2)
+        },
+        duckdb:::expr_function("mean", list(duckdb:::expr_reference("l_quantity")))
       )
-      duckdb:::expr_set_alias(tmp_expr, "quantity_threshold")
-      tmp_expr
-    }
-  )
+    )
+    duckdb:::expr_set_alias(tmp_expr, "quantity_threshold")
+    tmp_expr
+  })
 )
 rel9 <- duckdb:::rel_set_alias(rel7, "lhs")
 rel10 <- duckdb:::rel_set_alias(rel8, "rhs")
@@ -488,23 +486,21 @@ rel15 <- duckdb:::rel_filter(
 rel16 <- duckdb:::rel_aggregate(
   rel15,
   list(),
-  list(
-    avg_yearly = {
-      tmp_expr <- duckdb:::expr_function(
-        "/",
-        list(
-          duckdb:::expr_function("sum", list(duckdb:::expr_reference("l_extendedprice"))),
-          if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-            duckdb:::expr_constant(7, experimental = experimental)
-          } else {
-            duckdb:::expr_constant(7)
-          }
-        )
+  list({
+    tmp_expr <- duckdb:::expr_function(
+      "/",
+      list(
+        duckdb:::expr_function("sum", list(duckdb:::expr_reference("l_extendedprice"))),
+        if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+          duckdb:::expr_constant(7, experimental = experimental)
+        } else {
+          duckdb:::expr_constant(7)
+        }
       )
-      duckdb:::expr_set_alias(tmp_expr, "avg_yearly")
-      tmp_expr
-    }
-  )
+    )
+    duckdb:::expr_set_alias(tmp_expr, "avg_yearly")
+    tmp_expr
+  })
 )
 rel16
 duckdb:::rel_to_altrep(rel16)

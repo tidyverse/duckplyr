@@ -239,13 +239,11 @@ tpch_raw_10 <- function(experimental) {
   rel15 <- duckdb:::rel_aggregate(
     rel14,
     list(duckdb:::expr_reference("o_custkey")),
-    list(
-      revenue = {
-        tmp_expr <- duckdb:::expr_function("sum", list(duckdb:::expr_reference("volume")))
-        duckdb:::expr_set_alias(tmp_expr, "revenue")
-        tmp_expr
-      }
-    )
+    list({
+      tmp_expr <- duckdb:::expr_function("sum", list(duckdb:::expr_reference("volume")))
+      duckdb:::expr_set_alias(tmp_expr, "revenue")
+      tmp_expr
+    })
   )
   df3 <- customer
   rel16 <- duckdb:::rel_from_df(con, df3, experimental = experimental)
