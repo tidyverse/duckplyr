@@ -76,6 +76,7 @@ stopifnot(isTRUE(all.equal(res, correct, tolerance = 1e-12)))
 
 res <- tpch_raw_17(experimental)
 correct <- read.delim(fs::path("tests/testthat", answer, "q17.csv"), sep = "|")
+correct$avg_yearly <- as.numeric(correct$avg_yearly)
 stopifnot(isTRUE(all.equal(res, correct, tolerance = 1e-12)))
 
 res <- tpch_raw_18(experimental)

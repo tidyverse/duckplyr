@@ -87,6 +87,7 @@ stopifnot(isTRUE(all.equal(as.data.frame(res), correct, tolerance = 1e-12)))
 
 res <- tpch_17()
 correct <- read.delim(fs::path("tests/testthat", answer, "q17.csv"), sep = "|")
+correct$avg_yearly <- as.numeric(correct$avg_yearly)
 stopifnot(isTRUE(all.equal(as.data.frame(res), correct, tolerance = 1e-12)))
 
 res <- tpch_18()

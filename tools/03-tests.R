@@ -34,8 +34,8 @@ extra_arg_map <- list(
     "a + 1",
     "c = a + 1",
     "`if` = a + 1",
-    # "sum(a)",
-    # "sum(a), .by = g",
+    "sum(a)",
+    "sum(a), .by = g",
     "mean(a)",
     "mean(a), .by = g",
     NULL

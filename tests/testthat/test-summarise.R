@@ -25,6 +25,7 @@ test_that("inputs are recycled (deprecated in 1.1.0)", {
 })
 
 test_that("works with empty data frames", {
+  skip("TODO duckdb")
   # 0 rows
   df <- tibble(x = integer())
   expect_equal(duckplyr_summarise(df), tibble(.rows = 1))

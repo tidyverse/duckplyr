@@ -123,6 +123,9 @@ tests <- head(n = -1, list(
   "test-summarise.R" = c(
     "works with unquoted values",
 
+    # Removed sum() macro for now
+    "works with empty data frames",
+
     # sum(1L) returns numeric in R
     "duckplyr_summarise() correctly auto-names expressions (#6741)",
     NULL

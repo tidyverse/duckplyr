@@ -23,8 +23,7 @@ duckplyr_macros <- c(
   "!=" = '(a, b) AS a <> b',
   "is.na" = '(a) AS (a IS NULL)',
   "n" = '() AS (COUNT(*))',
-  # FIXME: Implement na.rm = FALSE, https://github.com/duckdb/duckdb/issues/5832#issuecomment-1375735472
-  "sum" = '(x) AS (CASE WHEN SUM(x) IS NULL THEN 0 ELSE SUM(x) END)',
+
   "log10" = '(x) AS log(x)',
   "log" = '(x) AS ln(x)',
   # TPCH
