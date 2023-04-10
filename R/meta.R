@@ -55,13 +55,13 @@ meta_replay <- function(add_pre_code = TRUE) {
 meta_replay_to_fun_code <- function() {
   code <- capture.output(meta_replay(add_pre_code = FALSE))
   code <- c(
-    paste0("function(experimental) {"),
+    paste0("function(con, experimental) {"),
     paste0("  ", code),
     "}"
   )
 
   # Trailing newline
-  paste(code, "\n", collapse = "")
+  paste0(code, "\n", collapse = "")
 }
 
 meta_replay_to_fun <- function() {
@@ -76,7 +76,7 @@ meta_replay_to_fun_file <- function(name) {
 
   path <- file.path("R", paste0(name, ".R"))
 
-  writeLines(code, path)
+  brio::write_file(code, path)
 }
 
 meta_replay_to_file <- function(path, extra = character()) {

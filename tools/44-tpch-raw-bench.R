@@ -36,8 +36,8 @@ pkg <- "duckdb"
 
 for (q in names(test_dplyr_q)) {
   f <- test_dplyr_q[[q]]
-  cold <- collect(f(experimental))
-  time <- system.time(collect(f(experimental)))[[3]]
+  cold <- collect(f(con, experimental))
+  time <- system.time(collect(f(con, experimental)))[[3]]
   print(q)
   print(time)
   res[[q]] <- data.frame(pkg = pkg, q = q, time = time)
