@@ -23,6 +23,7 @@
 #' @importFrom dplyr group_size
 #' @importFrom dplyr is_grouped_df
 #' @importFrom dplyr join_by
+#' @importFrom dplyr lag
 #' @importFrom dplyr last
 #' @importFrom dplyr lead
 #' @importFrom dplyr mutate_all
