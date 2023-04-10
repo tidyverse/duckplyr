@@ -1,3 +1,13 @@
+rel_stats_env <- new.env(parent = emptyenv(), size = 937L)
+
+rel_stats_clean <- function() {
+  rm(list = ls(rel_stats_env, all.names = TRUE), pos = rel_stats_env)
+}
+
+rel_stats_get <- function() {
+  arrange(tibble::enframe(unlist(as.list(rel_stats_env)), "fun", "count"), desc(count))
+}
+
 #' Relational API
 #'
 #' TBD.
@@ -22,6 +32,7 @@ new_relational <- function(..., class = NULL) {
 #' rel <- rel_from_df(mtcars)
 #' rel2 <- rel_filter(rel, list(relexpr_function("gt", list(relexpr_reference("cyl"), relexpr_constant("6")))))
 rel_to_df <- function(rel, ...) {
+  rel_stats_env$rel_to_df <- (rel_stats_env$rel_to_df %||% 0L) + 1L
   UseMethod("rel_to_df")
 }
 
@@ -37,6 +48,7 @@ rel_to_df <- function(rel, ...) {
 #' rel <- rel_from_df(mtcars)
 #' rel2 <- rel_filter(rel, list(relexpr_function("gt", list(relexpr_reference("cyl"), relexpr_constant("6")))))
 rel_filter <- function(rel, exprs, ...) {
+  rel_stats_env$rel_filter <- (rel_stats_env$rel_filter %||% 0L) + 1L
   UseMethod("rel_filter")
 }
 
@@ -52,6 +64,7 @@ rel_filter <- function(rel, exprs, ...) {
 #' rel <- rel_from_df(mtcars)
 #' rel2 <- rel_project(rel, list(relexpr_reference("cyl"), relexpr_reference("disp")))
 rel_project <- function(rel, exprs, ...) {
+  rel_stats_env$rel_project <- (rel_stats_env$rel_project %||% 0L) + 1L
   UseMethod("rel_project")
 }
 
@@ -69,6 +82,7 @@ rel_project <- function(rel, exprs, ...) {
 #' aggrs <- list(avg_hp = relexpr_function("avg", list(relexpr_reference("hp"))))
 #' rel2 <- rel_aggregate(rel, list(relexpr_reference("cyl")), aggrs)
 rel_aggregate <- function(rel, groups, aggregates, ...) {
+  rel_stats_env$rel_aggregate <- (rel_stats_env$rel_aggregate %||% 0L) + 1L
   UseMethod("rel_aggregate")
 }
 
@@ -84,6 +98,7 @@ rel_aggregate <- function(rel, groups, aggregates, ...) {
 #' rel <- rel_from_df(mtcars)
 #' rel2 <- rel_order(rel, list(relexpr_reference("hp")))
 rel_order <- function(rel, orders, ...) {
+  rel_stats_env$rel_order <- (rel_stats_env$rel_order %||% 0L) + 1L
   UseMethod("rel_order")
 }
 
@@ -103,6 +118,7 @@ rel_order <- function(rel, orders, ...) {
 #' cond <- list(relexpr_function("eq", list(relexpr_reference("cyl", left), relexpr_reference("cyl", right))))
 #' rel2 <- rel_join(left, right, cond)
 rel_join <- function(left, right, conds, join, ...) {
+  rel_stats_env$rel_join <- (rel_stats_env$rel_join %||% 0L) + 1L
   UseMethod("rel_join")
 }
 
@@ -114,6 +130,7 @@ rel_join <- function(left, right, conds, join, ...) {
 #' @param n The number of rows.
 #' @export
 rel_limit <- function(rel, n, ...) {
+  rel_stats_env$rel_limit <- (rel_stats_env$rel_limit %||% 0L) + 1L
   UseMethod("rel_limit")
 }
 
@@ -128,6 +145,7 @@ rel_limit <- function(rel, n, ...) {
 #' rel <- rel_from_df(mtcars)
 #' rel2 <- rel_distinct(rel)
 rel_distinct <- function(rel, ...) {
+  rel_stats_env$rel_distinct <- (rel_stats_env$rel_distinct %||% 0L) + 1L
   UseMethod("rel_distinct")
 }
 
@@ -142,6 +160,7 @@ rel_distinct <- function(rel, ...) {
 #' rel <- rel_from_df(mtcars)
 #' rel2 <- rel_set_intersect(rel)
 rel_set_intersect <- function(rel_a, rel_b, ...) {
+  rel_stats_env$rel_set_intersect <- (rel_stats_env$rel_set_intersect %||% 0L) + 1L
   UseMethod("rel_set_intersect")
 }
 
@@ -156,6 +175,7 @@ rel_set_intersect <- function(rel_a, rel_b, ...) {
 #' rel <- rel_from_df(mtcars)
 #' rel2 <- rel_set_diff(rel)
 rel_set_diff <- function(rel_a, rel_b, ...) {
+  rel_stats_env$rel_set_diff <- (rel_stats_env$rel_set_diff %||% 0L) + 1L
   UseMethod("rel_set_diff")
 }
 
@@ -170,6 +190,7 @@ rel_set_diff <- function(rel_a, rel_b, ...) {
 #' rel <- rel_from_df(mtcars)
 #' rel2 <- rel_set_symdiff(rel)
 rel_set_symdiff <- function(rel_a, rel_b, ...) {
+  rel_stats_env$rel_set_symdiff <- (rel_stats_env$rel_set_symdiff %||% 0L) + 1L
   UseMethod("rel_set_symdiff")
 }
 
@@ -184,6 +205,7 @@ rel_set_symdiff <- function(rel_a, rel_b, ...) {
 #' rel <- rel_from_df(mtcars)
 #' rel2 <- rel_union_all(rel)
 rel_union_all <- function(rel_a, rel_b, ...) {
+  rel_stats_env$rel_union_all <- (rel_stats_env$rel_union_all %||% 0L) + 1L
   UseMethod("rel_union_all")
 }
 
@@ -195,6 +217,7 @@ rel_union_all <- function(rel_a, rel_b, ...) {
 #' @rdname rel
 #' @export
 rel_tostring <- function(rel, ...) {
+  rel_stats_env$rel_tostring <- (rel_stats_env$rel_tostring %||% 0L) + 1L
   UseMethod("rel_tostring")
 }
 
@@ -208,6 +231,7 @@ rel_tostring <- function(rel, ...) {
 #' rel <- rel_from_df(mtcars)
 #' rel_explain(rel)
 rel_explain <- function(rel, ...) {
+  rel_stats_env$rel_explain <- (rel_stats_env$rel_explain %||% 0L) + 1L
   UseMethod("rel_explain")
 }
 
@@ -221,6 +245,7 @@ rel_explain <- function(rel, ...) {
 #' rel <- rel_from_df(mtcars)
 #' rel_alias(rel)
 rel_alias <- function(rel, ...) {
+  rel_stats_env$rel_alias <- (rel_stats_env$rel_alias %||% 0L) + 1L
   UseMethod("rel_alias")
 }
 
@@ -235,11 +260,13 @@ rel_alias <- function(rel, ...) {
 #' rel <- rel_from_df(mtcars)
 #' rel_set_alias(rel, "my_new_alias")
 rel_set_alias <- function(rel, alias, ...) {
+  rel_stats_env$rel_set_alias <- (rel_stats_env$rel_set_alias %||% 0L) + 1L
   UseMethod("rel_set_alias")
 }
 
 #' @rdname rel
 #' @export
 rel_names <- function(rel, ...) {
+  rel_stats_env$rel_names <- (rel_stats_env$rel_names %||% 0L) + 1L
   UseMethod("rel_names")
 }
