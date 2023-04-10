@@ -661,6 +661,58 @@ test_that("as_duckplyr_df() commutes for mutate(lead(a, 4), .by = g)", {
 })
 
 
+test_that("as_duckplyr_df() commutes for mutate(lag(a, default = 0))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(lag(a, default = 0))
+  post <- test_df %>% mutate(lag(a, default = 0)) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() commutes for mutate(lag(a, default = 0), .by = g)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(lag(a, default = 0), .by = g)
+  post <- test_df %>% mutate(lag(a, default = 0), .by = g) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() commutes for mutate(lead(a, default = 1000))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(lead(a, default = 1000))
+  post <- test_df %>% mutate(lead(a, default = 1000)) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() commutes for mutate(lead(a, default = 1000), .by = g)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(lead(a, default = 1000), .by = g)
+  post <- test_df %>% mutate(lead(a, default = 1000), .by = g) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
 test_that("as_duckplyr_df() commutes for mutate(min(a))", {
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))

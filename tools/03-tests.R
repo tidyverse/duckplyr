@@ -47,7 +47,6 @@ extra_arg_map <- list(
     # "prod(a)",
     # "prod(a), .by = g",
 
-    # Need to fix implementation
     "lag(a)",
     "lag(a), .by = g",
     "lead(a)",
@@ -60,10 +59,12 @@ extra_arg_map <- list(
     "lag(a, 4), .by = g",
     "lead(a, 4)",
     "lead(a, 4), .by = g",
-    # "lag(a, default = 0)",
-    # "lag(a, default = 0), .by = g",
-    # "lead(a, default = 1000)",
-    # "lead(a, default = 1000), .by = g",
+    "lag(a, default = 0)",
+    "lag(a, default = 0), .by = g",
+    "lead(a, default = 1000)",
+    "lead(a, default = 1000), .by = g",
+
+    # Need to fix implementation, wrong output order
     # "lag(a, order_by = -a)",
     # "lag(a, order_by = -a), .by = g",
     # "lead(a, order_by = -a)",

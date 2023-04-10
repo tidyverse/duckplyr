@@ -141,6 +141,16 @@ rel_translate <- function(
 
           offset_expr <- relexpr_constant(expr$n %||% 1L)
           expr$n <- NULL
+
+          if (!is.null(expr$default)) {
+            default_expr <- do_translate(expr$default, in_window = TRUE)
+            expr$default <- NULL
+          }
+
+          if (!is.null(expr$order_by)) {
+            order_bys <- list(do_translate(expr$order_by, in_window = TRUE))
+            expr$order_by <- NULL
+          }
         }
 
         args <- map(as.list(expr[-1]), do_translate, in_window = in_window || window)
