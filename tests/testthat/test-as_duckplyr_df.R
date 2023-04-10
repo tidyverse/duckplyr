@@ -2,8 +2,13 @@
 
 withr::local_envvar(DUCKPLYR_FORCE = "TRUE")
 
+meta <- testthat::is_parallel() # Slow!
+# meta <- TRUE
+
 test_that("as_duckplyr_df() and add_count()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -16,6 +21,8 @@ test_that("as_duckplyr_df() and add_count()", {
 })
 
 test_that("as_duckplyr_df() and anti_join(join_by(a))", {
+  meta_clear()
+
   # Data
   test_df_x <- data.frame(a = 1, b = 2)
   test_df_y <- data.frame(a = 1, b = 2)
@@ -26,9 +33,18 @@ test_that("as_duckplyr_df() and anti_join(join_by(a))", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 test_that("as_duckplyr_df() and arrange()", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -38,9 +54,19 @@ test_that("as_duckplyr_df() and arrange()", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 test_that("as_duckplyr_df() and auto_copy()", {
+  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+  meta_clear()
+
   # Data
   test_df_x <- data.frame(a = 1, b = 2)
   test_df_y <- data.frame(a = 1, b = 2)
@@ -55,6 +81,8 @@ test_that("as_duckplyr_df() and auto_copy()", {
 
 test_that("as_duckplyr_df() and collapse()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -67,6 +95,9 @@ test_that("as_duckplyr_df() and collapse()", {
 })
 
 test_that("as_duckplyr_df() and collect()", {
+  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -80,6 +111,8 @@ test_that("as_duckplyr_df() and collect()", {
 
 test_that("as_duckplyr_df() and compute()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -92,6 +125,8 @@ test_that("as_duckplyr_df() and compute()", {
 })
 
 test_that("as_duckplyr_df() and count()", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -101,10 +136,19 @@ test_that("as_duckplyr_df() and count()", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 test_that("as_duckplyr_df() and cross_join()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+  meta_clear()
+
   # Data
   test_df_x <- data.frame(a = 1, b = 2)
   test_df_y <- data.frame(a = 1, b = 2)
@@ -118,6 +162,8 @@ test_that("as_duckplyr_df() and cross_join()", {
 })
 
 test_that("as_duckplyr_df() and distinct()", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -127,10 +173,19 @@ test_that("as_duckplyr_df() and distinct()", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and distinct(a)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -140,10 +195,19 @@ test_that("as_duckplyr_df() and distinct(a)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and distinct(a, b)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -153,10 +217,19 @@ test_that("as_duckplyr_df() and distinct(a, b)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and distinct(b, b)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -166,10 +239,19 @@ test_that("as_duckplyr_df() and distinct(b, b)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and distinct(g)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -179,10 +261,19 @@ test_that("as_duckplyr_df() and distinct(g)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and union_all(data.frame(a = 1L, b = 3, g = 2L)) %>% distinct(g)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -192,10 +283,19 @@ test_that("as_duckplyr_df() and union_all(data.frame(a = 1L, b = 3, g = 2L)) %>%
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and union_all(data.frame(a = 1L, b = 4, g = 2L)) %>% distinct(g)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -205,10 +305,19 @@ test_that("as_duckplyr_df() and union_all(data.frame(a = 1L, b = 4, g = 2L)) %>%
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and union_all(data.frame(a = 1L, b = 5, g = 2L)) %>% distinct(g)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -218,10 +327,19 @@ test_that("as_duckplyr_df() and union_all(data.frame(a = 1L, b = 5, g = 2L)) %>%
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and union_all(data.frame(a = 1L, b = 6, g = 2L)) %>% distinct(g)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -231,10 +349,19 @@ test_that("as_duckplyr_df() and union_all(data.frame(a = 1L, b = 6, g = 2L)) %>%
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and union_all(data.frame(a = 1L, b = 7, g = 2L)) %>% distinct(g)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -244,10 +371,19 @@ test_that("as_duckplyr_df() and union_all(data.frame(a = 1L, b = 7, g = 2L)) %>%
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and distinct(g, .keep_all = TRUE)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -257,10 +393,19 @@ test_that("as_duckplyr_df() and distinct(g, .keep_all = TRUE)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 test_that("as_duckplyr_df() and do(data.frame(c = 1))", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -273,7 +418,10 @@ test_that("as_duckplyr_df() and do(data.frame(c = 1))", {
 })
 
 test_that("as_duckplyr_df() and dplyr_reconstruct(test_df)", {
+  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   skip("Hack")
+
+  meta_clear()
 
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
@@ -287,6 +435,8 @@ test_that("as_duckplyr_df() and dplyr_reconstruct(test_df)", {
 })
 
 test_that("as_duckplyr_df() and filter(a == 1)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -296,9 +446,18 @@ test_that("as_duckplyr_df() and filter(a == 1)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 test_that("as_duckplyr_df() and full_join(join_by(a))", {
+  meta_clear()
+
   # Data
   test_df_x <- data.frame(a = 1, b = 2)
   test_df_y <- data.frame(a = 1, b = 2)
@@ -309,9 +468,19 @@ test_that("as_duckplyr_df() and full_join(join_by(a))", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 test_that("as_duckplyr_df() and group_vars()", {
+  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -324,6 +493,8 @@ test_that("as_duckplyr_df() and group_vars()", {
 })
 
 test_that("as_duckplyr_df() and inner_join(join_by(a))", {
+  meta_clear()
+
   # Data
   test_df_x <- data.frame(a = 1, b = 2)
   test_df_y <- data.frame(a = 1, b = 2)
@@ -334,9 +505,18 @@ test_that("as_duckplyr_df() and inner_join(join_by(a))", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 test_that("as_duckplyr_df() and intersect()", {
+  meta_clear()
+
   # Data
   test_df_x <- data.frame(a = 1, b = 2)
   test_df_y <- data.frame(a = 1, b = 2)
@@ -347,9 +527,18 @@ test_that("as_duckplyr_df() and intersect()", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 test_that("as_duckplyr_df() and left_join(join_by(a))", {
+  meta_clear()
+
   # Data
   test_df_x <- data.frame(a = 1, b = 2)
   test_df_y <- data.frame(a = 1, b = 2)
@@ -360,9 +549,18 @@ test_that("as_duckplyr_df() and left_join(join_by(a))", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 test_that("as_duckplyr_df() and mutate()", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -372,10 +570,19 @@ test_that("as_duckplyr_df() and mutate()", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(a + 1)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -385,10 +592,19 @@ test_that("as_duckplyr_df() and mutate(a + 1)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(a + 1, .by = g)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -398,10 +614,19 @@ test_that("as_duckplyr_df() and mutate(a + 1, .by = g)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(c = a + 1)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -411,10 +636,19 @@ test_that("as_duckplyr_df() and mutate(c = a + 1)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(`if` = a + 1)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -424,10 +658,19 @@ test_that("as_duckplyr_df() and mutate(`if` = a + 1)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(sum(a))", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -437,10 +680,19 @@ test_that("as_duckplyr_df() and mutate(sum(a))", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(sum(a), .by = g)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -450,10 +702,19 @@ test_that("as_duckplyr_df() and mutate(sum(a), .by = g)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(mean(a))", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -463,10 +724,19 @@ test_that("as_duckplyr_df() and mutate(mean(a))", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(mean(a), .by = g)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -476,10 +746,19 @@ test_that("as_duckplyr_df() and mutate(mean(a), .by = g)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(sd(a))", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -489,10 +768,19 @@ test_that("as_duckplyr_df() and mutate(sd(a))", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(sd(a), .by = g)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -502,10 +790,19 @@ test_that("as_duckplyr_df() and mutate(sd(a), .by = g)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(lag(a))", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -515,10 +812,19 @@ test_that("as_duckplyr_df() and mutate(lag(a))", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(lag(a), .by = g)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -528,10 +834,19 @@ test_that("as_duckplyr_df() and mutate(lag(a), .by = g)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(lead(a))", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -541,10 +856,19 @@ test_that("as_duckplyr_df() and mutate(lead(a))", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(lead(a), .by = g)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -554,10 +878,19 @@ test_that("as_duckplyr_df() and mutate(lead(a), .by = g)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(lag(a, 2))", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -567,10 +900,19 @@ test_that("as_duckplyr_df() and mutate(lag(a, 2))", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(lag(a, 2), .by = g)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -580,10 +922,19 @@ test_that("as_duckplyr_df() and mutate(lag(a, 2), .by = g)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(lead(a, 2))", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -593,10 +944,19 @@ test_that("as_duckplyr_df() and mutate(lead(a, 2))", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(lead(a, 2), .by = g)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -606,10 +966,19 @@ test_that("as_duckplyr_df() and mutate(lead(a, 2), .by = g)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(lag(a, 4))", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -619,10 +988,19 @@ test_that("as_duckplyr_df() and mutate(lag(a, 4))", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(lag(a, 4), .by = g)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -632,10 +1010,19 @@ test_that("as_duckplyr_df() and mutate(lag(a, 4), .by = g)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(lead(a, 4))", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -645,10 +1032,19 @@ test_that("as_duckplyr_df() and mutate(lead(a, 4))", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(lead(a, 4), .by = g)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -658,10 +1054,19 @@ test_that("as_duckplyr_df() and mutate(lead(a, 4), .by = g)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(lag(a, default = 0))", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -671,10 +1076,19 @@ test_that("as_duckplyr_df() and mutate(lag(a, default = 0))", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(lag(a, default = 0), .by = g)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -684,10 +1098,19 @@ test_that("as_duckplyr_df() and mutate(lag(a, default = 0), .by = g)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(lead(a, default = 1000))", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -697,10 +1120,19 @@ test_that("as_duckplyr_df() and mutate(lead(a, default = 1000))", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(lead(a, default = 1000), .by = g)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -710,10 +1142,19 @@ test_that("as_duckplyr_df() and mutate(lead(a, default = 1000), .by = g)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(min(a))", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -723,10 +1164,19 @@ test_that("as_duckplyr_df() and mutate(min(a))", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(min(a), .by = g)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -736,10 +1186,19 @@ test_that("as_duckplyr_df() and mutate(min(a), .by = g)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(max(a))", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -749,10 +1208,19 @@ test_that("as_duckplyr_df() and mutate(max(a))", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(max(a), .by = g)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -762,10 +1230,19 @@ test_that("as_duckplyr_df() and mutate(max(a), .by = g)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(first(a))", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -775,10 +1252,19 @@ test_that("as_duckplyr_df() and mutate(first(a))", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(first(a), .by = g)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -788,10 +1274,19 @@ test_that("as_duckplyr_df() and mutate(first(a), .by = g)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(last(a))", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -801,10 +1296,19 @@ test_that("as_duckplyr_df() and mutate(last(a))", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(last(a), .by = g)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -814,10 +1318,19 @@ test_that("as_duckplyr_df() and mutate(last(a), .by = g)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(nth(a, 2))", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -827,10 +1340,19 @@ test_that("as_duckplyr_df() and mutate(nth(a, 2))", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and mutate(nth(a, 2), .by = g)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -840,11 +1362,20 @@ test_that("as_duckplyr_df() and mutate(nth(a, 2), .by = g)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 test_that("as_duckplyr_df() and nest_by()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   skip("WAT")
+
+  meta_clear()
 
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
@@ -859,6 +1390,8 @@ test_that("as_duckplyr_df() and nest_by()", {
 
 test_that("as_duckplyr_df() and nest_join(join_by(a))", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+  meta_clear()
+
   # Data
   test_df_x <- data.frame(a = 1, b = 2)
   test_df_y <- data.frame(a = 1, b = 2)
@@ -872,6 +1405,8 @@ test_that("as_duckplyr_df() and nest_join(join_by(a))", {
 })
 
 test_that("as_duckplyr_df() and pull()", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -885,6 +1420,8 @@ test_that("as_duckplyr_df() and pull()", {
 
 test_that("as_duckplyr_df() and reframe()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -897,6 +1434,8 @@ test_that("as_duckplyr_df() and reframe()", {
 })
 
 test_that("as_duckplyr_df() and relocate()", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -906,9 +1445,18 @@ test_that("as_duckplyr_df() and relocate()", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 test_that("as_duckplyr_df() and rename()", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -918,10 +1466,19 @@ test_that("as_duckplyr_df() and rename()", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and rename(c = a)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -931,10 +1488,19 @@ test_that("as_duckplyr_df() and rename(c = a)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 test_that("as_duckplyr_df() and rename_with(identity)", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -947,6 +1513,8 @@ test_that("as_duckplyr_df() and rename_with(identity)", {
 })
 
 test_that("as_duckplyr_df() and right_join(join_by(a))", {
+  meta_clear()
+
   # Data
   test_df_x <- data.frame(a = 1, b = 2)
   test_df_y <- data.frame(a = 1, b = 2)
@@ -957,10 +1525,19 @@ test_that("as_duckplyr_df() and right_join(join_by(a))", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 test_that("as_duckplyr_df() and rows_append()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+  meta_clear()
+
   # Data
   test_df_x <- data.frame(a = 1, b = 2)
   test_df_y <- data.frame(a = 1, b = 2)
@@ -975,6 +1552,8 @@ test_that("as_duckplyr_df() and rows_append()", {
 
 test_that("as_duckplyr_df() and rows_delete(by = c(\"a\", \"b\"))", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+  meta_clear()
+
   # Data
   test_df_x <- data.frame(a = 1, b = 2)
   test_df_y <- data.frame(a = 1, b = 2)
@@ -989,6 +1568,8 @@ test_that("as_duckplyr_df() and rows_delete(by = c(\"a\", \"b\"))", {
 
 test_that("as_duckplyr_df() and rows_insert(by = \"a\", conflict = \"ignore\")", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+  meta_clear()
+
   # Data
   test_df_x <- data.frame(a = 1, b = 2)
   test_df_y <- data.frame(a = 1, b = 2)
@@ -1003,6 +1584,8 @@ test_that("as_duckplyr_df() and rows_insert(by = \"a\", conflict = \"ignore\")",
 
 test_that("as_duckplyr_df() and rows_patch(by = \"a\")", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+  meta_clear()
+
   # Data
   test_df_x <- data.frame(a = 1, b = 2)
   test_df_y <- data.frame(a = 1, b = 2)
@@ -1017,6 +1600,8 @@ test_that("as_duckplyr_df() and rows_patch(by = \"a\")", {
 
 test_that("as_duckplyr_df() and rows_update(by = \"a\")", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+  meta_clear()
+
   # Data
   test_df_x <- data.frame(a = 1, b = 2)
   test_df_y <- data.frame(a = 1, b = 2)
@@ -1031,6 +1616,8 @@ test_that("as_duckplyr_df() and rows_update(by = \"a\")", {
 
 test_that("as_duckplyr_df() and rows_upsert(by = \"a\")", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+  meta_clear()
+
   # Data
   test_df_x <- data.frame(a = 1, b = 2)
   test_df_y <- data.frame(a = 1, b = 2)
@@ -1047,6 +1634,8 @@ test_that("as_duckplyr_df() and sample_frac()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   skip("Random seed")
 
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -1062,6 +1651,8 @@ test_that("as_duckplyr_df() and sample_n(size = 1)", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   skip("Random seed")
 
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -1074,6 +1665,8 @@ test_that("as_duckplyr_df() and sample_n(size = 1)", {
 })
 
 test_that("as_duckplyr_df() and select(a)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -1083,10 +1676,19 @@ test_that("as_duckplyr_df() and select(a)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and select(everything())", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -1096,9 +1698,18 @@ test_that("as_duckplyr_df() and select(everything())", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 test_that("as_duckplyr_df() and semi_join(join_by(a))", {
+  meta_clear()
+
   # Data
   test_df_x <- data.frame(a = 1, b = 2)
   test_df_y <- data.frame(a = 1, b = 2)
@@ -1109,9 +1720,18 @@ test_that("as_duckplyr_df() and semi_join(join_by(a))", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 test_that("as_duckplyr_df() and setdiff()", {
+  meta_clear()
+
   # Data
   test_df_x <- data.frame(a = 1, b = 2)
   test_df_y <- data.frame(a = 1, b = 2)
@@ -1122,10 +1742,19 @@ test_that("as_duckplyr_df() and setdiff()", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 test_that("as_duckplyr_df() and setequal()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+  meta_clear()
+
   # Data
   test_df_x <- data.frame(a = 1, b = 2)
   test_df_y <- data.frame(a = 1, b = 2)
@@ -1140,6 +1769,8 @@ test_that("as_duckplyr_df() and setequal()", {
 
 test_that("as_duckplyr_df() and slice()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -1154,6 +1785,8 @@ test_that("as_duckplyr_df() and slice()", {
 test_that("as_duckplyr_df() and slice_head()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   skip("External vector?")
+
+  meta_clear()
 
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
@@ -1170,6 +1803,8 @@ test_that("as_duckplyr_df() and slice_max(a)", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   skip("External vector?")
 
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -1184,6 +1819,8 @@ test_that("as_duckplyr_df() and slice_max(a)", {
 test_that("as_duckplyr_df() and slice_min(a)", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   skip("External vector?")
+
+  meta_clear()
 
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
@@ -1200,6 +1837,8 @@ test_that("as_duckplyr_df() and slice_sample()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   skip("External vector?")
 
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -1215,6 +1854,8 @@ test_that("as_duckplyr_df() and slice_tail()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   skip("External vector?")
 
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -1227,6 +1868,8 @@ test_that("as_duckplyr_df() and slice_tail()", {
 })
 
 test_that("as_duckplyr_df() and summarise(c = mean(a))", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -1236,10 +1879,19 @@ test_that("as_duckplyr_df() and summarise(c = mean(a))", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 
 test_that("as_duckplyr_df() and summarise(c = mean(a), .by = b)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -1249,9 +1901,18 @@ test_that("as_duckplyr_df() and summarise(c = mean(a), .by = b)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 test_that("as_duckplyr_df() and symdiff()", {
+  meta_clear()
+
   # Data
   test_df_x <- data.frame(a = 1, b = 2)
   test_df_y <- data.frame(a = 1, b = 2)
@@ -1262,9 +1923,18 @@ test_that("as_duckplyr_df() and symdiff()", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 test_that("as_duckplyr_df() and tally()", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -1274,9 +1944,18 @@ test_that("as_duckplyr_df() and tally()", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 test_that("as_duckplyr_df() and tbl_vars()", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -1289,6 +1968,8 @@ test_that("as_duckplyr_df() and tbl_vars()", {
 })
 
 test_that("as_duckplyr_df() and transmute(c = a + 1)", {
+  meta_clear()
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -1298,11 +1979,20 @@ test_that("as_duckplyr_df() and transmute(c = a + 1)", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 test_that("as_duckplyr_df() and ungroup()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
   skip("Grouped")
+
+  meta_clear()
 
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
@@ -1316,6 +2006,8 @@ test_that("as_duckplyr_df() and ungroup()", {
 })
 
 test_that("as_duckplyr_df() and union()", {
+  meta_clear()
+
   # Data
   test_df_x <- data.frame(a = 1, b = 2)
   test_df_y <- data.frame(a = 1, b = 2)
@@ -1326,9 +2018,18 @@ test_that("as_duckplyr_df() and union()", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
 
 test_that("as_duckplyr_df() and union_all()", {
+  meta_clear()
+
   # Data
   test_df_x <- data.frame(a = 1, b = 2)
   test_df_y <- data.frame(a = 1, b = 2)
@@ -1339,4 +2040,11 @@ test_that("as_duckplyr_df() and union_all()", {
 
   # Compare
   expect_equal(pre, post)
+
+  # Meta
+  if (meta) {
+    meta_fun <- meta_replay_to_fun()
+    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+    expect_equal(meta, post)
+  }
 })
