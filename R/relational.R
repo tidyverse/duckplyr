@@ -132,11 +132,28 @@ rel_translate <- function(
           NULL
         ))
 
+        order_bys <- list()
+        offset_expr <- NULL
+        default_expr <- NULL
+        if (name %in% c("lag", "lead")) {
+          # x, n = 1L, default = NULL, order_by = NULL
+          expr <- match.call(lag, expr)
+
+          offset_expr <- relexpr_constant(expr$n %||% 1L)
+          expr$n <- NULL
+        }
+
         args <- map(as.list(expr[-1]), do_translate, in_window = in_window || window)
         fun <- relexpr_function(name, args)
         if (window) {
-          part <- map(partition, relexpr_reference)
-          fun <- relexpr_window(fun, part)
+          partitions <- map(partition, relexpr_reference)
+          fun <- relexpr_window(
+            fun,
+            partitions,
+            order_bys,
+            offset_expr = offset_expr,
+            default_expr = default_expr
+          )
         }
         fun
       },
