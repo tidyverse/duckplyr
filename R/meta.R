@@ -64,8 +64,8 @@ meta_replay_to_fun_code <- function() {
   paste0(code, "\n", collapse = "")
 }
 
-meta_replay_to_fun <- function() {
-  parse(text = meta_replay_to_fun_code())
+meta_replay_to_fun <- function(text = meta_replay_to_fun_code()) {
+  eval(parse(text = text)[[1]])
 }
 
 meta_replay_to_fun_file <- function(name) {
