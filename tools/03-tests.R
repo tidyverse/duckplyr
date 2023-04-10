@@ -170,7 +170,7 @@ get_test_code <- function(name, code, is_tbl_return) {
 
 get_test_code_one <- function(extra_arg, pre_step, name, two_tables, force = "", skip = "", is_tbl_return = TRUE) {
   if (is_tbl_return) {
-    post_coerce <- " %>% as_duckplyr_df()"
+    post_coerce <- " %>% as.data.frame()"
   } else {
     post_coerce <- ""
   }
@@ -183,7 +183,7 @@ get_test_code_one <- function(extra_arg, pre_step, name, two_tables, force = "",
   extra_arg_esc <- gsub('"', '\\\\"', extra_arg)
 
   test_code_pre <- c(
-    'test_that("as_duckplyr_df() commutes for {{{pre_step}}}{{{name}}}({{{extra_arg_esc}}})", {',
+    'test_that("as_duckplyr_df() and {{{pre_step}}}{{{name}}}({{{extra_arg_esc}}})", {',
     "{{{force}}}{{{skip}}}  # Data"
   )
 
@@ -197,16 +197,16 @@ get_test_code_one <- function(extra_arg, pre_step, name, two_tables, force = "",
       "  test_df_y <- data.frame(a = 1, b = 2)",
       "",
       "  # Run",
-      "  pre <- test_df_x %>% as_duckplyr_df() %>% {{{name}}}(test_df_y{{{extra_arg}}})",
-      "  post <- test_df_x %>% {{{name}}}(test_df_y{{{extra_arg}}}){{{post_coerce}}}"
+      "  pre <- test_df_x %>% as_duckplyr_df() %>% {{{name}}}(test_df_y{{{extra_arg}}}){{{post_coerce}}}",
+      "  post <- test_df_x %>% {{{name}}}(test_df_y{{{extra_arg}}})"
     )
   } else {
     test_code <- c(
       "  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))",
       "",
       "  # Run",
-      "  pre <- test_df %>% as_duckplyr_df() %>% {{{pre_step}}}{{{name}}}({{{extra_arg}}})",
-      "  post <- test_df %>% {{{pre_step}}}{{{name}}}({{{extra_arg}}}){{{post_coerce}}}"
+      "  pre <- test_df %>% as_duckplyr_df() %>% {{{pre_step}}}{{{name}}}({{{extra_arg}}}){{{post_coerce}}}",
+      "  post <- test_df %>% {{{pre_step}}}{{{name}}}({{{extra_arg}}})"
     )
   }
 
