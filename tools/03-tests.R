@@ -40,9 +40,8 @@ extra_arg_map <- list(
     "mean(a)",
     "mean(a), .by = g",
 
-    # sd() doesn't exist
-    # "sd(a)",
-    # "sd(a), .by = g",
+    "sd(a)",
+    "sd(a), .by = g",
 
     # prod() doesn't exist
     # "prod(a)",
@@ -79,13 +78,12 @@ extra_arg_map <- list(
     "max(a)",
     "max(a), .by = g",
 
-    # Need aliases
-    # "first(a)",
-    # "first(a), .by = g",
-    # "last(a)",
-    # "last(a), .by = g",
-    # "nth(a, 2)",
-    # "nth(a, 2), .by = g",
+    "first(a)",
+    "first(a), .by = g",
+    "last(a)",
+    "last(a), .by = g",
+    "nth(a, 2)",
+    "nth(a, 2), .by = g",
 
     NULL
   ),

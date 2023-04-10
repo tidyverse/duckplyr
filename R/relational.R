@@ -107,14 +107,27 @@ rel_translate <- function(
 
         name <- as.character(expr[[1]])
 
+        aliases <- c(
+          sd = "stddev",
+          first = "first_value",
+          last = "last_value",
+          nth = "nth_value",
+          NULL
+        )
+
+        if (name %in% names(aliases)) {
+          name <- aliases[[name]]
+        }
+        # name <- aliases[name] %|% name
+
         window <- need_window && (name %in% c(
           # Window functions
           "rank", "rank_dense", "dense_rank", "percent_rank",
-          "row_number", "first_value", "first", "last_value", "last", "nth_value",
+          "row_number", "first_value", "last_value", "nth_value",
           "cume_dist", "lead", "lag", "ntile",
 
           # Aggregates
-          "sum", "mean", "min", "max",
+          "sum", "mean", "stddev", "min", "max",
 
           NULL
         ))
