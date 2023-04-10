@@ -317,7 +317,13 @@ to_duckdb_expr <- function(x) {
       out
     },
     relational_relexpr_window = {
-      out <- duckdb:::expr_window(to_duckdb_expr(x$expr), to_duckdb_exprs(x$part))
+      out <- duckdb:::expr_window(
+        to_duckdb_expr(x$expr),
+        to_duckdb_exprs(x$partitions),
+        to_duckdb_exprs(x$order_bys),
+        offset_expr = to_duckdb_expr(x$offset_expr),
+        default_expr = to_duckdb_expr(x$default_expr)
+      )
       if (!is.null(x$alias)) {
         duckdb:::expr_set_alias(out, x$alias)
       }
@@ -335,6 +341,7 @@ to_duckdb_expr <- function(x) {
       }
       out
     },
+    NULL = NULL,
     stop("Unknown expr class: ", class(x)[[1]])
   )
 }
@@ -373,7 +380,13 @@ to_duckdb_expr_meta <- function(x) {
       out
     },
     relational_relexpr_window = {
-      out <- expr(duckdb:::expr_window(!!to_duckdb_expr_meta(x$expr), list(!!!to_duckdb_exprs_meta(x$part))))
+      out <- expr(duckdb:::expr_window(
+        !!to_duckdb_expr_meta(x$expr),
+        list(!!!to_duckdb_exprs_meta(x$partitions)),
+        list(!!!to_duckdb_exprs_meta(x$order_bys)),
+        offset_expr = !!to_duckdb_expr_meta(x$offset_expr),
+        default_expr = !!to_duckdb_expr_meta(x$default_expr)
+      ))
       if (!is.null(x$alias)) {
         out <- expr({
           tmp_expr <- !!out
@@ -402,6 +415,7 @@ to_duckdb_expr_meta <- function(x) {
       }
       out
     },
+    NULL = expr(NULL),
     stop("Unknown expr class: ", class(x)[[1]])
   )
 }

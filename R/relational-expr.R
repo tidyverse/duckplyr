@@ -45,11 +45,31 @@ relexpr_function <- function(name, args, alias = NULL) {
 #' @param partition Partitions, a list of `expr` objects.
 #' @rdname expr
 #' @export
-relexpr_window <- function(expr, part, alias = NULL) {
+relexpr_window <- function(
+    expr,
+    partitions,
+    order_bys = list(),
+    offset_expr = NULL,
+    default_expr = NULL,
+    alias = NULL
+) {
   stopifnot(inherits(expr, "relational_relexpr"))
-  stopifnot(is.list(part))
+  stopifnot(is.list(partitions))
+  stopifnot(is.list(order_bys))
+  stopifnot(is.null(offset_expr) || inherits(offset_expr, "relational_relexpr"))
+  stopifnot(is.null(default_expr) || inherits(default_expr, "relational_relexpr"))
   stopifnot(is.null(alias) || is_string(alias))
-  new_relexpr(list(expr = expr, part = part, alias = alias), class = "relational_relexpr_window")
+  new_relexpr(
+    list(
+      expr = expr,
+      partitions = partitions,
+      order_bys = order_bys,
+      offset_expr = offset_expr,
+      default_expr = default_expr,
+      alias = alias
+    ),
+    class = "relational_relexpr_window"
+  )
 }
 
 #' @param expr An `expr` object.
