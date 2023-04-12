@@ -515,7 +515,6 @@ test_that("duckplyr_mutate() correctly auto-names expressions (#6741)", {
 # .by -------------------------------------------------------------------------
 
 test_that("can group transiently using `.by`", {
-  skip("TODO duckdb")
   df <- tibble(g = c(1, 1, 2, 1, 2), x = c(5, 2, 1, 2, 3))
 
   out <- duckplyr_mutate(df, x = mean(x), .by = g)

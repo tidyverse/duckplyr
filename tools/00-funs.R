@@ -94,8 +94,6 @@ tests <- head(n = -1, list(
     "mutate disambiguates NA and NaN (#1448)",
     "duckplyr_mutate() handles symbol expressions",
     "transient grouping retains data frame attributes (#6100)",
-    # https://github.com/duckdb/duckdb/issues/6947
-    "can group transiently using `.by`",
     NULL
   ),
   "test-pull.R" = c(
@@ -113,8 +111,6 @@ tests <- head(n = -1, list(
   "test-sets.R" = c(
     # https://github.com/duckdb/duckdb/issues/6368
     "x used as basis of output (#3839)",
-    # https://github.com/duckdb/duckdb/issues/6369
-    "set operations (apart from union_all) remove duplicates",
     NULL
   ),
   "test-slice.R" = c(
@@ -126,7 +122,7 @@ tests <- head(n = -1, list(
     # Removed sum() macro for now
     "works with empty data frames",
 
-    # sum(1L) returns numeric in R
+    # sum(1:3) returns HUGEINT in duckdb
     "duckplyr_summarise() correctly auto-names expressions (#6741)",
     NULL
   ),
