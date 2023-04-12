@@ -143,6 +143,7 @@ meta_df_register <- function(df) {
   df_cache$set(df, name)
 
   if (is.null(df_expr)) {
+    class(df) <- setdiff(class(df), "duckplyr_df")
     meta_record(constructive::construct_multi(list2(!!name := df)))
   } else {
     # Changes df in-place!
