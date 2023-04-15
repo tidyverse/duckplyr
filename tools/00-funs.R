@@ -117,6 +117,7 @@ tests <- head(n = -1, list(
     NULL
   ),
   "test-summarise.R" = c(
+    # https://github.com/duckdb/duckdb/issues/7095
     "works with unquoted values",
 
     # Removed sum() macro for now
