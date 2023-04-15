@@ -168,3 +168,141 @@ dplyr_only_tests <- head(n = -1, list(
   ),
   NULL
 ))
+
+test_extra_arg_map <- list(
+  anti_join = "join_by(a)",
+  distinct = c(
+    "",
+    "a",
+    "a, b",
+    "b, b",
+    "g",
+
+    # https://github.com/duckdb/duckdb/issues/6369, needs several repetitions
+    "union_all(data.frame(a = 1L, b = 3, g = 2L))" = "g",
+    "union_all(data.frame(a = 1L, b = 4, g = 2L))" = "g",
+    "union_all(data.frame(a = 1L, b = 5, g = 2L))" = "g",
+    "union_all(data.frame(a = 1L, b = 6, g = 2L))" = "g",
+    "union_all(data.frame(a = 1L, b = 7, g = 2L))" = "g",
+
+    "g, .keep_all = TRUE",
+    NULL
+  ),
+  do = "data.frame(c = 1)",
+  dplyr_reconstruct = "test_df",
+  filter = "a == 1",
+  full_join = "join_by(a)",
+  group_map = "~ .x",
+  group_modify = "~ .x",
+  inner_join = "join_by(a)",
+  left_join = "join_by(a)",
+  mutate = c(
+    "",
+    "a + 1",
+    "a + 1, .by = g",
+    "c = a + 1",
+    "`if` = a + 1",
+    "sum(a)",
+    "sum(a), .by = g",
+    "mean(a)",
+    "mean(a), .by = g",
+
+    "sd(a)",
+    "sd(a), .by = g",
+
+    # prod() doesn't exist
+    # "prod(a)",
+    # "prod(a), .by = g",
+
+    "lag(a)",
+    "lag(a), .by = g",
+    "lead(a)",
+    "lead(a), .by = g",
+    "lag(a, 2)",
+    "lag(a, 2), .by = g",
+    "lead(a, 2)",
+    "lead(a, 2), .by = g",
+    "lag(a, 4)",
+    "lag(a, 4), .by = g",
+    "lead(a, 4)",
+    "lead(a, 4), .by = g",
+    "lag(a, default = 0)",
+    "lag(a, default = 0), .by = g",
+    "lead(a, default = 1000)",
+    "lead(a, default = 1000), .by = g",
+
+    # Need to fix implementation, wrong output order
+    # "lag(a, order_by = -a)",
+    # "lag(a, order_by = -a), .by = g",
+    # "lead(a, order_by = -a)",
+    # "lead(a, order_by = -a), .by = g",
+
+    "min(a)",
+    "min(a), .by = g",
+    "max(a)",
+    "max(a), .by = g",
+
+    "first(a)",
+    "first(a), .by = g",
+    "last(a)",
+    "last(a), .by = g",
+    "nth(a, 2)",
+    "nth(a, 2), .by = g",
+
+    # Different results
+    # "nth(a, -2)",
+    # "nth(a, -2), .by = g",
+
+    NULL
+  ),
+  nest_join = "join_by(a)",
+  rename = c("", "c = a"),
+  rename_with = "identity",
+  right_join = "join_by(a)",
+  rows_delete = 'by = c("a", "b")',
+  rows_insert = 'by = "a", conflict = "ignore"',
+  rows_patch = 'by = "a"',
+  rows_update = 'by = "a"',
+  rows_upsert = 'by = "a"',
+  sample_n = "size = 1",
+  select = c("a", "everything()"),
+  semi_join = "join_by(a)",
+  slice_max = 'a',
+  slice_min = 'a',
+  summarise = c("c = mean(a)", "c = mean(a), .by = b"),
+  transmute = "c = a + 1",
+  NULL
+)
+
+test_skip_map <- c(
+  # FIXME: Fail with group_by()
+  dplyr_reconstruct = "Hack",
+  group_by = "Grouped",
+  group_map = "WAT",
+  group_modify = "Grouped",
+  group_nest = "Always returns tibble",
+  group_split = "WAT",
+  group_trim = "Grouped",
+  nest_by = "WAT",
+  # FIXME: Fail with rowwise()
+  rowwise = "Stack overflow",
+  sample_frac = "Random seed",
+  sample_n = "Random seed",
+  slice_head = "External vector?",
+  slice_max = "External vector?",
+  slice_min = "External vector?",
+  slice_sample = "External vector?",
+  slice_tail = "External vector?",
+  ungroup = "Grouped",
+  NULL
+)
+
+test_force_override <- c(
+  auto_copy = FALSE,
+  collect = FALSE,
+  dplyr_reconstruct = FALSE,
+  group_vars = FALSE,
+  nest_join = FALSE,
+  tally = TRUE,
+  NULL
+)
