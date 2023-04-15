@@ -58,15 +58,16 @@ tests <- head(n = -1, list(
     NULL
   ),
   "test-deprec-funs.R" = c(
-    "as_fun_list() auto names chr vectors (4307)",
     NULL
   ),
   "test-distinct.R" = c(
-    "duckplyr_distinct() preserves attributes on bare data frames (#6318)",
     NULL
   ),
   "test-filter.R" = c(
+    # FIXME: oo for filter?
     "if_any() and if_all() work",
+
+    # FIXME: oo for %in%
     "filter handles $ correctly (#278)",
     NULL
   ),
@@ -91,9 +92,8 @@ tests <- head(n = -1, list(
     NULL
   ),
   "test-mutate.R" = c(
-    "mutate disambiguates NA and NaN (#1448)",
+    # FIXME: vector class?
     "duckplyr_mutate() handles symbol expressions",
-    "transient grouping retains data frame attributes (#6100)",
     NULL
   ),
   "test-pull.R" = c(

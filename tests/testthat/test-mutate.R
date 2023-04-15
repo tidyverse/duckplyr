@@ -210,7 +210,6 @@ test_that("glue() is supported", {
 })
 
 test_that("mutate disambiguates NA and NaN (#1448)", {
-  skip("TODO duckdb")
   df <- tibble(x = c(1, NA, NaN))
   out <- duckplyr_mutate(df, y = x * 1)
   expect_equal(out$y, df$x)
@@ -531,7 +530,6 @@ test_that("transient grouping retains bare data.frame class", {
 })
 
 test_that("transient grouping retains data frame attributes (#6100)", {
-  skip("TODO duckdb")
   # With data.frames or tibbles
   df <- data.frame(g = c(1, 1, 2), x = c(1, 2, 1))
   tbl <- as_tibble(df)

@@ -107,7 +107,6 @@ test_that("funs_ works", {
 })
 
 test_that("as_fun_list() auto names chr vectors (4307)", {
-  skip("TODO duckdb")
   df <- data.frame(x = 1:10)
 
   expect_named(
