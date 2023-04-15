@@ -197,31 +197,32 @@ rel7 <- duckdb:::rel_set_alias(rel4, "rhs")
 rel8 <- duckdb:::rel_project(
   rel6,
   list(
-    ps_partkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_partkey")
       duckdb:::expr_set_alias(tmp_expr, "ps_partkey")
       tmp_expr
     },
-    ps_suppkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_suppkey")
       duckdb:::expr_set_alias(tmp_expr, "ps_suppkey")
       tmp_expr
     },
-    ps_availqty = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_availqty")
       duckdb:::expr_set_alias(tmp_expr, "ps_availqty")
       tmp_expr
     },
-    ps_supplycost = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_supplycost")
       duckdb:::expr_set_alias(tmp_expr, "ps_supplycost")
       tmp_expr
     },
-    ps_comment = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_comment")
       duckdb:::expr_set_alias(tmp_expr, "ps_comment")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
       duckdb:::expr_set_alias(tmp_expr, "___row_number_x")
       tmp_expr
@@ -231,41 +232,42 @@ rel8 <- duckdb:::rel_project(
 rel9 <- duckdb:::rel_project(
   rel7,
   list(
-    s_suppkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("s_suppkey")
       duckdb:::expr_set_alias(tmp_expr, "s_suppkey")
       tmp_expr
     },
-    s_name = {
+    {
       tmp_expr <- duckdb:::expr_reference("s_name")
       duckdb:::expr_set_alias(tmp_expr, "s_name")
       tmp_expr
     },
-    s_address = {
+    {
       tmp_expr <- duckdb:::expr_reference("s_address")
       duckdb:::expr_set_alias(tmp_expr, "s_address")
       tmp_expr
     },
-    s_nationkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("s_nationkey")
       duckdb:::expr_set_alias(tmp_expr, "s_nationkey")
       tmp_expr
     },
-    s_phone = {
+    {
       tmp_expr <- duckdb:::expr_reference("s_phone")
       duckdb:::expr_set_alias(tmp_expr, "s_phone")
       tmp_expr
     },
-    s_acctbal = {
+    {
       tmp_expr <- duckdb:::expr_reference("s_acctbal")
       duckdb:::expr_set_alias(tmp_expr, "s_acctbal")
       tmp_expr
     },
-    s_comment = {
+    {
       tmp_expr <- duckdb:::expr_reference("s_comment")
       duckdb:::expr_set_alias(tmp_expr, "s_comment")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
       duckdb:::expr_set_alias(tmp_expr, "___row_number_y")
       tmp_expr
@@ -367,51 +369,52 @@ rel15 <- duckdb:::rel_set_alias(rel13, "rhs")
 rel16 <- duckdb:::rel_project(
   rel14,
   list(
-    p_partkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("p_partkey")
       duckdb:::expr_set_alias(tmp_expr, "p_partkey")
       tmp_expr
     },
-    p_name = {
+    {
       tmp_expr <- duckdb:::expr_reference("p_name")
       duckdb:::expr_set_alias(tmp_expr, "p_name")
       tmp_expr
     },
-    p_mfgr = {
+    {
       tmp_expr <- duckdb:::expr_reference("p_mfgr")
       duckdb:::expr_set_alias(tmp_expr, "p_mfgr")
       tmp_expr
     },
-    p_brand = {
+    {
       tmp_expr <- duckdb:::expr_reference("p_brand")
       duckdb:::expr_set_alias(tmp_expr, "p_brand")
       tmp_expr
     },
-    p_type = {
+    {
       tmp_expr <- duckdb:::expr_reference("p_type")
       duckdb:::expr_set_alias(tmp_expr, "p_type")
       tmp_expr
     },
-    p_size = {
+    {
       tmp_expr <- duckdb:::expr_reference("p_size")
       duckdb:::expr_set_alias(tmp_expr, "p_size")
       tmp_expr
     },
-    p_container = {
+    {
       tmp_expr <- duckdb:::expr_reference("p_container")
       duckdb:::expr_set_alias(tmp_expr, "p_container")
       tmp_expr
     },
-    p_retailprice = {
+    {
       tmp_expr <- duckdb:::expr_reference("p_retailprice")
       duckdb:::expr_set_alias(tmp_expr, "p_retailprice")
       tmp_expr
     },
-    p_comment = {
+    {
       tmp_expr <- duckdb:::expr_reference("p_comment")
       duckdb:::expr_set_alias(tmp_expr, "p_comment")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
       duckdb:::expr_set_alias(tmp_expr, "___row_number_x")
       tmp_expr
@@ -421,16 +424,17 @@ rel16 <- duckdb:::rel_project(
 rel17 <- duckdb:::rel_project(
   rel15,
   list(
-    ps_partkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_partkey")
       duckdb:::expr_set_alias(tmp_expr, "ps_partkey")
       tmp_expr
     },
-    ps_suppkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_suppkey")
       duckdb:::expr_set_alias(tmp_expr, "ps_suppkey")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
       duckdb:::expr_set_alias(tmp_expr, "___row_number_y")
       tmp_expr
@@ -509,8 +513,8 @@ rel20 <- duckdb:::rel_project(
 )
 rel21 <- duckdb:::rel_aggregate(
   rel20,
-  list(duckdb:::expr_reference("p_brand"), duckdb:::expr_reference("p_type"), duckdb:::expr_reference("p_size")),
-  list({
+  groups = list(duckdb:::expr_reference("p_brand"), duckdb:::expr_reference("p_type"), duckdb:::expr_reference("p_size")),
+  aggregates = list({
     tmp_expr <- duckdb:::expr_function("n_distinct", list(duckdb:::expr_reference("ps_suppkey")))
     duckdb:::expr_set_alias(tmp_expr, "supplier_cnt")
     tmp_expr

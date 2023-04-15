@@ -16,7 +16,7 @@ oo_prep <- function(rel, colname = "___row_number") {
     alias = colname
   )))
 
-  rel_project(rel, proj_exprs)
+  rel_project(rel, unname(proj_exprs))
 }
 
 oo_restore <- function(rel, colname = "___row_number", column_rels = list(NULL)) {
@@ -38,7 +38,7 @@ oo_restore_cols <- function(rel, colname = "___row_number", extra = NULL) {
     if (!is.null(extra)) {
       names <- setdiff(rel_names(rel), extra)
       proj_exprs <- imap(set_names(names), relexpr_reference, rel = NULL)
-      rel <- rel_project(rel, proj_exprs)
+      rel <- rel_project(rel, unname(proj_exprs))
     }
 
     return(rel)
@@ -47,5 +47,5 @@ oo_restore_cols <- function(rel, colname = "___row_number", extra = NULL) {
   names <- setdiff(rel_names(rel), c(colname, extra))
   proj_exprs <- imap(set_names(names), relexpr_reference, rel = NULL)
 
-  rel_project(rel, proj_exprs)
+  rel_project(rel, unname(proj_exprs))
 }

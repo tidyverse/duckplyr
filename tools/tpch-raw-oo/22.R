@@ -243,8 +243,8 @@ rel2 <- duckdb:::rel_filter(
 )
 rel3 <- duckdb:::rel_aggregate(
   rel2,
-  list(),
-  list(
+  groups = list(),
+  aggregates = list(
     {
       tmp_expr <- duckdb:::expr_function("mean", list(duckdb:::expr_reference("c_acctbal")))
       duckdb:::expr_set_alias(tmp_expr, "acctbal_min")
@@ -461,56 +461,57 @@ rel10 <- duckdb:::rel_project(
 rel11 <- duckdb:::rel_project(
   rel9,
   list(
-    c_custkey_x = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_custkey_x")
       duckdb:::expr_set_alias(tmp_expr, "c_custkey_x")
       tmp_expr
     },
-    c_name_x = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_name_x")
       duckdb:::expr_set_alias(tmp_expr, "c_name_x")
       tmp_expr
     },
-    c_address_x = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_address_x")
       duckdb:::expr_set_alias(tmp_expr, "c_address_x")
       tmp_expr
     },
-    c_nationkey_x = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_nationkey_x")
       duckdb:::expr_set_alias(tmp_expr, "c_nationkey_x")
       tmp_expr
     },
-    c_phone_x = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_phone_x")
       duckdb:::expr_set_alias(tmp_expr, "c_phone_x")
       tmp_expr
     },
-    c_acctbal_x = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_acctbal_x")
       duckdb:::expr_set_alias(tmp_expr, "c_acctbal_x")
       tmp_expr
     },
-    c_mktsegment_x = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_mktsegment_x")
       duckdb:::expr_set_alias(tmp_expr, "c_mktsegment_x")
       tmp_expr
     },
-    c_comment_x = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_comment_x")
       duckdb:::expr_set_alias(tmp_expr, "c_comment_x")
       tmp_expr
     },
-    cntrycode_x = {
+    {
       tmp_expr <- duckdb:::expr_reference("cntrycode_x")
       duckdb:::expr_set_alias(tmp_expr, "cntrycode_x")
       tmp_expr
     },
-    join_id_x = {
+    {
       tmp_expr <- duckdb:::expr_reference("join_id_x")
       duckdb:::expr_set_alias(tmp_expr, "join_id_x")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
       duckdb:::expr_set_alias(tmp_expr, "___row_number_x")
       tmp_expr
@@ -520,16 +521,17 @@ rel11 <- duckdb:::rel_project(
 rel12 <- duckdb:::rel_project(
   rel10,
   list(
-    acctbal_min_y = {
+    {
       tmp_expr <- duckdb:::expr_reference("acctbal_min_y")
       duckdb:::expr_set_alias(tmp_expr, "acctbal_min_y")
       tmp_expr
     },
-    join_id_y = {
+    {
       tmp_expr <- duckdb:::expr_reference("join_id_y")
       duckdb:::expr_set_alias(tmp_expr, "join_id_y")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
       duckdb:::expr_set_alias(tmp_expr, "___row_number_y")
       tmp_expr
@@ -739,61 +741,62 @@ rel19 <- duckdb:::rel_set_alias(rel18, "rhs")
 rel20 <- duckdb:::rel_project(
   rel17,
   list(
-    c_custkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_custkey")
       duckdb:::expr_set_alias(tmp_expr, "c_custkey")
       tmp_expr
     },
-    c_name = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_name")
       duckdb:::expr_set_alias(tmp_expr, "c_name")
       tmp_expr
     },
-    c_address = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_address")
       duckdb:::expr_set_alias(tmp_expr, "c_address")
       tmp_expr
     },
-    c_nationkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_nationkey")
       duckdb:::expr_set_alias(tmp_expr, "c_nationkey")
       tmp_expr
     },
-    c_phone = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_phone")
       duckdb:::expr_set_alias(tmp_expr, "c_phone")
       tmp_expr
     },
-    c_acctbal = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_acctbal")
       duckdb:::expr_set_alias(tmp_expr, "c_acctbal")
       tmp_expr
     },
-    c_mktsegment = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_mktsegment")
       duckdb:::expr_set_alias(tmp_expr, "c_mktsegment")
       tmp_expr
     },
-    c_comment = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_comment")
       duckdb:::expr_set_alias(tmp_expr, "c_comment")
       tmp_expr
     },
-    cntrycode = {
+    {
       tmp_expr <- duckdb:::expr_reference("cntrycode")
       duckdb:::expr_set_alias(tmp_expr, "cntrycode")
       tmp_expr
     },
-    join_id = {
+    {
       tmp_expr <- duckdb:::expr_reference("join_id")
       duckdb:::expr_set_alias(tmp_expr, "join_id")
       tmp_expr
     },
-    acctbal_min = {
+    {
       tmp_expr <- duckdb:::expr_reference("acctbal_min")
       duckdb:::expr_set_alias(tmp_expr, "acctbal_min")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
       duckdb:::expr_set_alias(tmp_expr, "___row_number_x")
       tmp_expr
@@ -815,57 +818,57 @@ rel22 <- duckdb:::rel_order(rel21, list(duckdb:::expr_reference("___row_number_x
 rel23 <- duckdb:::rel_project(
   rel22,
   list(
-    c_custkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_custkey")
       duckdb:::expr_set_alias(tmp_expr, "c_custkey")
       tmp_expr
     },
-    c_name = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_name")
       duckdb:::expr_set_alias(tmp_expr, "c_name")
       tmp_expr
     },
-    c_address = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_address")
       duckdb:::expr_set_alias(tmp_expr, "c_address")
       tmp_expr
     },
-    c_nationkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_nationkey")
       duckdb:::expr_set_alias(tmp_expr, "c_nationkey")
       tmp_expr
     },
-    c_phone = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_phone")
       duckdb:::expr_set_alias(tmp_expr, "c_phone")
       tmp_expr
     },
-    c_acctbal = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_acctbal")
       duckdb:::expr_set_alias(tmp_expr, "c_acctbal")
       tmp_expr
     },
-    c_mktsegment = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_mktsegment")
       duckdb:::expr_set_alias(tmp_expr, "c_mktsegment")
       tmp_expr
     },
-    c_comment = {
+    {
       tmp_expr <- duckdb:::expr_reference("c_comment")
       duckdb:::expr_set_alias(tmp_expr, "c_comment")
       tmp_expr
     },
-    cntrycode = {
+    {
       tmp_expr <- duckdb:::expr_reference("cntrycode")
       duckdb:::expr_set_alias(tmp_expr, "cntrycode")
       tmp_expr
     },
-    join_id = {
+    {
       tmp_expr <- duckdb:::expr_reference("join_id")
       duckdb:::expr_set_alias(tmp_expr, "join_id")
       tmp_expr
     },
-    acctbal_min = {
+    {
       tmp_expr <- duckdb:::expr_reference("acctbal_min")
       duckdb:::expr_set_alias(tmp_expr, "acctbal_min")
       tmp_expr
@@ -889,8 +892,8 @@ rel24 <- duckdb:::rel_project(
 )
 rel25 <- duckdb:::rel_aggregate(
   rel24,
-  list(duckdb:::expr_reference("cntrycode")),
-  list(
+  groups = list(duckdb:::expr_reference("cntrycode")),
+  aggregates = list(
     {
       tmp_expr <- duckdb:::expr_function("n", list())
       duckdb:::expr_set_alias(tmp_expr, "numcust")

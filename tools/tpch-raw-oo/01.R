@@ -104,8 +104,8 @@ rel4 <- duckdb:::rel_project(
 )
 rel5 <- duckdb:::rel_aggregate(
   rel4,
-  list(duckdb:::expr_reference("l_returnflag"), duckdb:::expr_reference("l_linestatus")),
-  list(
+  groups = list(duckdb:::expr_reference("l_returnflag"), duckdb:::expr_reference("l_linestatus")),
+  aggregates = list(
     {
       tmp_expr <- duckdb:::expr_function("sum", list(duckdb:::expr_reference("l_quantity")))
       duckdb:::expr_set_alias(tmp_expr, "sum_qty")

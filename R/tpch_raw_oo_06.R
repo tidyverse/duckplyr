@@ -114,8 +114,8 @@ tpch_raw_oo_06 <- function(con, experimental) {
   )
   rel5 <- duckdb:::rel_aggregate(
     rel4,
-    list(),
-    list({
+    groups = list(),
+    aggregates = list({
       tmp_expr <- duckdb:::expr_function(
         "sum",
         list(

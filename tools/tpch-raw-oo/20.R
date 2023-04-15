@@ -31,41 +31,42 @@ rel5 <- duckdb:::rel_set_alias(rel2, "rhs")
 rel6 <- duckdb:::rel_project(
   rel4,
   list(
-    s_suppkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("s_suppkey")
       duckdb:::expr_set_alias(tmp_expr, "s_suppkey")
       tmp_expr
     },
-    s_name = {
+    {
       tmp_expr <- duckdb:::expr_reference("s_name")
       duckdb:::expr_set_alias(tmp_expr, "s_name")
       tmp_expr
     },
-    s_address = {
+    {
       tmp_expr <- duckdb:::expr_reference("s_address")
       duckdb:::expr_set_alias(tmp_expr, "s_address")
       tmp_expr
     },
-    s_nationkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("s_nationkey")
       duckdb:::expr_set_alias(tmp_expr, "s_nationkey")
       tmp_expr
     },
-    s_phone = {
+    {
       tmp_expr <- duckdb:::expr_reference("s_phone")
       duckdb:::expr_set_alias(tmp_expr, "s_phone")
       tmp_expr
     },
-    s_acctbal = {
+    {
       tmp_expr <- duckdb:::expr_reference("s_acctbal")
       duckdb:::expr_set_alias(tmp_expr, "s_acctbal")
       tmp_expr
     },
-    s_comment = {
+    {
       tmp_expr <- duckdb:::expr_reference("s_comment")
       duckdb:::expr_set_alias(tmp_expr, "s_comment")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
       duckdb:::expr_set_alias(tmp_expr, "___row_number_x")
       tmp_expr
@@ -75,26 +76,27 @@ rel6 <- duckdb:::rel_project(
 rel7 <- duckdb:::rel_project(
   rel5,
   list(
-    n_nationkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("n_nationkey")
       duckdb:::expr_set_alias(tmp_expr, "n_nationkey")
       tmp_expr
     },
-    n_name = {
+    {
       tmp_expr <- duckdb:::expr_reference("n_name")
       duckdb:::expr_set_alias(tmp_expr, "n_name")
       tmp_expr
     },
-    n_regionkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("n_regionkey")
       duckdb:::expr_set_alias(tmp_expr, "n_regionkey")
       tmp_expr
     },
-    n_comment = {
+    {
       tmp_expr <- duckdb:::expr_reference("n_comment")
       duckdb:::expr_set_alias(tmp_expr, "n_comment")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
       duckdb:::expr_set_alias(tmp_expr, "___row_number_y")
       tmp_expr
@@ -216,31 +218,32 @@ rel16 <- duckdb:::rel_set_alias(rel11, "rhs")
 rel17 <- duckdb:::rel_project(
   rel15,
   list(
-    ps_partkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_partkey")
       duckdb:::expr_set_alias(tmp_expr, "ps_partkey")
       tmp_expr
     },
-    ps_suppkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_suppkey")
       duckdb:::expr_set_alias(tmp_expr, "ps_suppkey")
       tmp_expr
     },
-    ps_availqty = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_availqty")
       duckdb:::expr_set_alias(tmp_expr, "ps_availqty")
       tmp_expr
     },
-    ps_supplycost = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_supplycost")
       duckdb:::expr_set_alias(tmp_expr, "ps_supplycost")
       tmp_expr
     },
-    ps_comment = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_comment")
       duckdb:::expr_set_alias(tmp_expr, "ps_comment")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
       duckdb:::expr_set_alias(tmp_expr, "___row_number_x")
       tmp_expr
@@ -262,27 +265,27 @@ rel19 <- duckdb:::rel_order(rel18, list(duckdb:::expr_reference("___row_number_x
 rel20 <- duckdb:::rel_project(
   rel19,
   list(
-    ps_partkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_partkey")
       duckdb:::expr_set_alias(tmp_expr, "ps_partkey")
       tmp_expr
     },
-    ps_suppkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_suppkey")
       duckdb:::expr_set_alias(tmp_expr, "ps_suppkey")
       tmp_expr
     },
-    ps_availqty = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_availqty")
       duckdb:::expr_set_alias(tmp_expr, "ps_availqty")
       tmp_expr
     },
-    ps_supplycost = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_supplycost")
       duckdb:::expr_set_alias(tmp_expr, "ps_supplycost")
       tmp_expr
     },
-    ps_comment = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_comment")
       duckdb:::expr_set_alias(tmp_expr, "ps_comment")
       tmp_expr
@@ -294,31 +297,32 @@ rel22 <- duckdb:::rel_set_alias(rel13, "rhs")
 rel23 <- duckdb:::rel_project(
   rel21,
   list(
-    ps_partkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_partkey")
       duckdb:::expr_set_alias(tmp_expr, "ps_partkey")
       tmp_expr
     },
-    ps_suppkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_suppkey")
       duckdb:::expr_set_alias(tmp_expr, "ps_suppkey")
       tmp_expr
     },
-    ps_availqty = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_availqty")
       duckdb:::expr_set_alias(tmp_expr, "ps_availqty")
       tmp_expr
     },
-    ps_supplycost = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_supplycost")
       duckdb:::expr_set_alias(tmp_expr, "ps_supplycost")
       tmp_expr
     },
-    ps_comment = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_comment")
       duckdb:::expr_set_alias(tmp_expr, "ps_comment")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
       duckdb:::expr_set_alias(tmp_expr, "___row_number_x")
       tmp_expr
@@ -340,27 +344,27 @@ rel25 <- duckdb:::rel_order(rel24, list(duckdb:::expr_reference("___row_number_x
 rel26 <- duckdb:::rel_project(
   rel25,
   list(
-    ps_partkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_partkey")
       duckdb:::expr_set_alias(tmp_expr, "ps_partkey")
       tmp_expr
     },
-    ps_suppkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_suppkey")
       duckdb:::expr_set_alias(tmp_expr, "ps_suppkey")
       tmp_expr
     },
-    ps_availqty = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_availqty")
       duckdb:::expr_set_alias(tmp_expr, "ps_availqty")
       tmp_expr
     },
-    ps_supplycost = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_supplycost")
       duckdb:::expr_set_alias(tmp_expr, "ps_supplycost")
       tmp_expr
     },
-    ps_comment = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_comment")
       duckdb:::expr_set_alias(tmp_expr, "ps_comment")
       tmp_expr
@@ -411,86 +415,87 @@ rel30 <- duckdb:::rel_set_alias(rel26, "rhs")
 rel31 <- duckdb:::rel_project(
   rel29,
   list(
-    l_orderkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_orderkey")
       duckdb:::expr_set_alias(tmp_expr, "l_orderkey")
       tmp_expr
     },
-    l_partkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_partkey")
       duckdb:::expr_set_alias(tmp_expr, "l_partkey")
       tmp_expr
     },
-    l_suppkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_suppkey")
       duckdb:::expr_set_alias(tmp_expr, "l_suppkey")
       tmp_expr
     },
-    l_linenumber = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_linenumber")
       duckdb:::expr_set_alias(tmp_expr, "l_linenumber")
       tmp_expr
     },
-    l_quantity = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_quantity")
       duckdb:::expr_set_alias(tmp_expr, "l_quantity")
       tmp_expr
     },
-    l_extendedprice = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_extendedprice")
       duckdb:::expr_set_alias(tmp_expr, "l_extendedprice")
       tmp_expr
     },
-    l_discount = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_discount")
       duckdb:::expr_set_alias(tmp_expr, "l_discount")
       tmp_expr
     },
-    l_tax = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_tax")
       duckdb:::expr_set_alias(tmp_expr, "l_tax")
       tmp_expr
     },
-    l_returnflag = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_returnflag")
       duckdb:::expr_set_alias(tmp_expr, "l_returnflag")
       tmp_expr
     },
-    l_linestatus = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_linestatus")
       duckdb:::expr_set_alias(tmp_expr, "l_linestatus")
       tmp_expr
     },
-    l_shipdate = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_shipdate")
       duckdb:::expr_set_alias(tmp_expr, "l_shipdate")
       tmp_expr
     },
-    l_commitdate = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_commitdate")
       duckdb:::expr_set_alias(tmp_expr, "l_commitdate")
       tmp_expr
     },
-    l_receiptdate = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_receiptdate")
       duckdb:::expr_set_alias(tmp_expr, "l_receiptdate")
       tmp_expr
     },
-    l_shipinstruct = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_shipinstruct")
       duckdb:::expr_set_alias(tmp_expr, "l_shipinstruct")
       tmp_expr
     },
-    l_shipmode = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_shipmode")
       duckdb:::expr_set_alias(tmp_expr, "l_shipmode")
       tmp_expr
     },
-    l_comment = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_comment")
       duckdb:::expr_set_alias(tmp_expr, "l_comment")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
       duckdb:::expr_set_alias(tmp_expr, "___row_number_x")
       tmp_expr
@@ -516,82 +521,82 @@ rel33 <- duckdb:::rel_order(rel32, list(duckdb:::expr_reference("___row_number_x
 rel34 <- duckdb:::rel_project(
   rel33,
   list(
-    l_orderkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_orderkey")
       duckdb:::expr_set_alias(tmp_expr, "l_orderkey")
       tmp_expr
     },
-    l_partkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_partkey")
       duckdb:::expr_set_alias(tmp_expr, "l_partkey")
       tmp_expr
     },
-    l_suppkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_suppkey")
       duckdb:::expr_set_alias(tmp_expr, "l_suppkey")
       tmp_expr
     },
-    l_linenumber = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_linenumber")
       duckdb:::expr_set_alias(tmp_expr, "l_linenumber")
       tmp_expr
     },
-    l_quantity = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_quantity")
       duckdb:::expr_set_alias(tmp_expr, "l_quantity")
       tmp_expr
     },
-    l_extendedprice = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_extendedprice")
       duckdb:::expr_set_alias(tmp_expr, "l_extendedprice")
       tmp_expr
     },
-    l_discount = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_discount")
       duckdb:::expr_set_alias(tmp_expr, "l_discount")
       tmp_expr
     },
-    l_tax = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_tax")
       duckdb:::expr_set_alias(tmp_expr, "l_tax")
       tmp_expr
     },
-    l_returnflag = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_returnflag")
       duckdb:::expr_set_alias(tmp_expr, "l_returnflag")
       tmp_expr
     },
-    l_linestatus = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_linestatus")
       duckdb:::expr_set_alias(tmp_expr, "l_linestatus")
       tmp_expr
     },
-    l_shipdate = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_shipdate")
       duckdb:::expr_set_alias(tmp_expr, "l_shipdate")
       tmp_expr
     },
-    l_commitdate = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_commitdate")
       duckdb:::expr_set_alias(tmp_expr, "l_commitdate")
       tmp_expr
     },
-    l_receiptdate = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_receiptdate")
       duckdb:::expr_set_alias(tmp_expr, "l_receiptdate")
       tmp_expr
     },
-    l_shipinstruct = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_shipinstruct")
       duckdb:::expr_set_alias(tmp_expr, "l_shipinstruct")
       tmp_expr
     },
-    l_shipmode = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_shipmode")
       duckdb:::expr_set_alias(tmp_expr, "l_shipmode")
       tmp_expr
     },
-    l_comment = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_comment")
       duckdb:::expr_set_alias(tmp_expr, "l_comment")
       tmp_expr
@@ -600,8 +605,8 @@ rel34 <- duckdb:::rel_project(
 )
 rel35 <- duckdb:::rel_aggregate(
   rel34,
-  list(duckdb:::expr_reference("l_suppkey")),
-  list({
+  groups = list(duckdb:::expr_reference("l_suppkey")),
+  aggregates = list({
     tmp_expr <- duckdb:::expr_function(
       "*",
       list(
@@ -622,31 +627,32 @@ rel37 <- duckdb:::rel_set_alias(rel35, "rhs")
 rel38 <- duckdb:::rel_project(
   rel36,
   list(
-    ps_partkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_partkey")
       duckdb:::expr_set_alias(tmp_expr, "ps_partkey")
       tmp_expr
     },
-    ps_suppkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_suppkey")
       duckdb:::expr_set_alias(tmp_expr, "ps_suppkey")
       tmp_expr
     },
-    ps_availqty = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_availqty")
       duckdb:::expr_set_alias(tmp_expr, "ps_availqty")
       tmp_expr
     },
-    ps_supplycost = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_supplycost")
       duckdb:::expr_set_alias(tmp_expr, "ps_supplycost")
       tmp_expr
     },
-    ps_comment = {
+    {
       tmp_expr <- duckdb:::expr_reference("ps_comment")
       duckdb:::expr_set_alias(tmp_expr, "ps_comment")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
       duckdb:::expr_set_alias(tmp_expr, "___row_number_x")
       tmp_expr
@@ -656,16 +662,17 @@ rel38 <- duckdb:::rel_project(
 rel39 <- duckdb:::rel_project(
   rel37,
   list(
-    l_suppkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("l_suppkey")
       duckdb:::expr_set_alias(tmp_expr, "l_suppkey")
       tmp_expr
     },
-    qty_threshold = {
+    {
       tmp_expr <- duckdb:::expr_reference("qty_threshold")
       duckdb:::expr_set_alias(tmp_expr, "qty_threshold")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
       duckdb:::expr_set_alias(tmp_expr, "___row_number_y")
       tmp_expr
@@ -736,21 +743,22 @@ rel45 <- duckdb:::rel_set_alias(rel43, "rhs")
 rel46 <- duckdb:::rel_project(
   rel44,
   list(
-    s_suppkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("s_suppkey")
       duckdb:::expr_set_alias(tmp_expr, "s_suppkey")
       tmp_expr
     },
-    s_name = {
+    {
       tmp_expr <- duckdb:::expr_reference("s_name")
       duckdb:::expr_set_alias(tmp_expr, "s_name")
       tmp_expr
     },
-    s_address = {
+    {
       tmp_expr <- duckdb:::expr_reference("s_address")
       duckdb:::expr_set_alias(tmp_expr, "s_address")
       tmp_expr
-    }, {
+    },
+    {
       tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
       duckdb:::expr_set_alias(tmp_expr, "___row_number_x")
       tmp_expr
@@ -772,17 +780,17 @@ rel48 <- duckdb:::rel_order(rel47, list(duckdb:::expr_reference("___row_number_x
 rel49 <- duckdb:::rel_project(
   rel48,
   list(
-    s_suppkey = {
+    {
       tmp_expr <- duckdb:::expr_reference("s_suppkey")
       duckdb:::expr_set_alias(tmp_expr, "s_suppkey")
       tmp_expr
     },
-    s_name = {
+    {
       tmp_expr <- duckdb:::expr_reference("s_name")
       duckdb:::expr_set_alias(tmp_expr, "s_name")
       tmp_expr
     },
-    s_address = {
+    {
       tmp_expr <- duckdb:::expr_reference("s_address")
       duckdb:::expr_set_alias(tmp_expr, "s_address")
       tmp_expr

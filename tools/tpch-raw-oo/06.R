@@ -119,8 +119,8 @@ rel4 <- duckdb:::rel_project(
 )
 rel5 <- duckdb:::rel_aggregate(
   rel4,
-  list(),
-  list({
+  groups = list(),
+  aggregates = list({
     tmp_expr <- duckdb:::expr_function(
       "sum",
       list(
