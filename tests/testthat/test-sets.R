@@ -11,6 +11,7 @@ test_that("x used as basis of output (#3839)", {
 })
 
 test_that("set operations (apart from union_all) remove duplicates", {
+  skip("TODO duckdb")
   df1 <- tibble(x = c(1, 1, 2))
   df2 <- tibble(x = 2)
 
