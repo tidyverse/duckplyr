@@ -171,8 +171,8 @@ tpch_raw_17 <- function(con, experimental) {
   )
   rel8 <- duckdb:::rel_aggregate(
     rel7,
-    list(duckdb:::expr_reference("l_partkey")),
-    list({
+    groups = list(duckdb:::expr_reference("l_partkey")),
+    aggregates = list({
       tmp_expr <- duckdb:::expr_function(
         "*",
         list(
@@ -482,8 +482,8 @@ tpch_raw_17 <- function(con, experimental) {
   )
   rel16 <- duckdb:::rel_aggregate(
     rel15,
-    list(),
-    list({
+    groups = list(),
+    aggregates = list({
       tmp_expr <- duckdb:::expr_function(
         "/",
         list(

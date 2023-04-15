@@ -212,8 +212,8 @@ tpch_raw_20 <- function(con, experimental) {
   )
   rel23 <- duckdb:::rel_aggregate(
     rel22,
-    list(duckdb:::expr_reference("l_suppkey")),
-    list({
+    groups = list(duckdb:::expr_reference("l_suppkey")),
+    aggregates = list({
       tmp_expr <- duckdb:::expr_function(
         "*",
         list(

@@ -181,8 +181,8 @@ tpch_raw_14 <- function(con, experimental) {
   )
   rel8 <- duckdb:::rel_aggregate(
     rel7,
-    list(),
-    list({
+    groups = list(),
+    aggregates = list({
       tmp_expr <- duckdb:::expr_function(
         "/",
         list(

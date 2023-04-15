@@ -756,8 +756,8 @@ rel7 <- duckdb:::rel_filter(
 )
 rel8 <- duckdb:::rel_aggregate(
   rel7,
-  list(),
-  list({
+  groups = list(),
+  aggregates = list({
     tmp_expr <- duckdb:::expr_function(
       "sum",
       list(

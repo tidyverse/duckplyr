@@ -174,8 +174,8 @@ rel7 <- duckdb:::rel_project(
 )
 rel8 <- duckdb:::rel_aggregate(
   rel7,
-  list(duckdb:::expr_reference("l_partkey")),
-  list({
+  groups = list(duckdb:::expr_reference("l_partkey")),
+  aggregates = list({
     tmp_expr <- duckdb:::expr_function(
       "*",
       list(
@@ -485,8 +485,8 @@ rel15 <- duckdb:::rel_filter(
 )
 rel16 <- duckdb:::rel_aggregate(
   rel15,
-  list(),
-  list({
+  groups = list(),
+  aggregates = list({
     tmp_expr <- duckdb:::expr_function(
       "/",
       list(

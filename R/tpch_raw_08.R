@@ -785,8 +785,8 @@ tpch_raw_08 <- function(con, experimental) {
   )
   rel61 <- duckdb:::rel_aggregate(
     rel60,
-    list(duckdb:::expr_reference("o_year")),
-    list({
+    groups = list(duckdb:::expr_reference("o_year")),
+    aggregates = list({
       tmp_expr <- duckdb:::expr_function(
         "/",
         list(

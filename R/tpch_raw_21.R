@@ -4,8 +4,8 @@ tpch_raw_21 <- function(con, experimental) {
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
   rel2 <- duckdb:::rel_aggregate(
     rel1,
-    list(duckdb:::expr_reference("l_orderkey"), duckdb:::expr_reference("l_suppkey")),
-    list({
+    groups = list(duckdb:::expr_reference("l_orderkey"), duckdb:::expr_reference("l_suppkey")),
+    aggregates = list({
       tmp_expr <- duckdb:::expr_function("n", list())
       duckdb:::expr_set_alias(tmp_expr, "n")
       tmp_expr
@@ -13,8 +13,8 @@ tpch_raw_21 <- function(con, experimental) {
   )
   rel3 <- duckdb:::rel_aggregate(
     rel2,
-    list(duckdb:::expr_reference("l_orderkey")),
-    list({
+    groups = list(duckdb:::expr_reference("l_orderkey")),
+    aggregates = list({
       tmp_expr <- duckdb:::expr_function("n", list())
       duckdb:::expr_set_alias(tmp_expr, "n_supplier")
       tmp_expr
@@ -208,8 +208,8 @@ tpch_raw_21 <- function(con, experimental) {
   )
   rel15 <- duckdb:::rel_aggregate(
     rel14,
-    list(duckdb:::expr_reference("l_orderkey"), duckdb:::expr_reference("l_suppkey")),
-    list({
+    groups = list(duckdb:::expr_reference("l_orderkey"), duckdb:::expr_reference("l_suppkey")),
+    aggregates = list({
       tmp_expr <- duckdb:::expr_function(
         "any",
         list(
@@ -225,8 +225,8 @@ tpch_raw_21 <- function(con, experimental) {
   )
   rel16 <- duckdb:::rel_aggregate(
     rel15,
-    list(duckdb:::expr_reference("l_orderkey")),
-    list(
+    groups = list(duckdb:::expr_reference("l_orderkey")),
+    aggregates = list(
       {
         tmp_expr <- duckdb:::expr_function("n", list())
         duckdb:::expr_set_alias(tmp_expr, "n_supplier")
@@ -607,8 +607,8 @@ tpch_raw_21 <- function(con, experimental) {
   )
   rel34 <- duckdb:::rel_aggregate(
     rel33,
-    list(duckdb:::expr_reference("s_name")),
-    list({
+    groups = list(duckdb:::expr_reference("s_name")),
+    aggregates = list({
       tmp_expr <- duckdb:::expr_function("n", list())
       duckdb:::expr_set_alias(tmp_expr, "numwait")
       tmp_expr

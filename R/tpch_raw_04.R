@@ -152,8 +152,8 @@ tpch_raw_04 <- function(con, experimental) {
   )
   rel15 <- duckdb:::rel_aggregate(
     rel14,
-    list(duckdb:::expr_reference("o_orderpriority")),
-    list({
+    groups = list(duckdb:::expr_reference("o_orderpriority")),
+    aggregates = list({
       tmp_expr <- duckdb:::expr_function("n", list())
       duckdb:::expr_set_alias(tmp_expr, "order_count")
       tmp_expr

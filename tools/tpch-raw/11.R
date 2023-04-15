@@ -189,8 +189,8 @@ rel12 <- duckdb:::rel_project(
 )
 rel13 <- duckdb:::rel_aggregate(
   rel12,
-  list(),
-  list({
+  groups = list(),
+  aggregates = list({
     tmp_expr <- duckdb:::expr_function(
       "*",
       list(
@@ -235,8 +235,8 @@ rel14 <- duckdb:::rel_project(
 )
 rel15 <- duckdb:::rel_aggregate(
   rel12,
-  list(duckdb:::expr_reference("ps_partkey")),
-  list({
+  groups = list(duckdb:::expr_reference("ps_partkey")),
+  aggregates = list({
     tmp_expr <- duckdb:::expr_function(
       "sum",
       list(

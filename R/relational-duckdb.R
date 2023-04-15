@@ -151,12 +151,16 @@ rel_aggregate.duckdb_relation <- function(rel, groups, aggregates, ...) {
   duckdb_groups <- to_duckdb_exprs(groups)
   duckdb_aggregates <- to_duckdb_exprs(aggregates)
 
-  out <- duckdb:::rel_aggregate(rel, duckdb_groups, duckdb_aggregates)
+  out <- duckdb:::rel_aggregate(
+    rel,
+    groups = duckdb_groups,
+    aggregates = duckdb_aggregates
+  )
 
   meta_rel_register(out, expr(duckdb:::rel_aggregate(
     !!meta_rel_get(rel)$name,
-    list(!!!to_duckdb_exprs_meta(groups)),
-    list(!!!to_duckdb_exprs_meta(aggregates))
+    groups = list(!!!to_duckdb_exprs_meta(groups)),
+    aggregates = list(!!!to_duckdb_exprs_meta(aggregates))
   )))
 
   out

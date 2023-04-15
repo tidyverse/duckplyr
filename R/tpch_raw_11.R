@@ -185,8 +185,8 @@ tpch_raw_11 <- function(con, experimental) {
   )
   rel13 <- duckdb:::rel_aggregate(
     rel12,
-    list(),
-    list({
+    groups = list(),
+    aggregates = list({
       tmp_expr <- duckdb:::expr_function(
         "*",
         list(
@@ -231,8 +231,8 @@ tpch_raw_11 <- function(con, experimental) {
   )
   rel15 <- duckdb:::rel_aggregate(
     rel12,
-    list(duckdb:::expr_reference("ps_partkey")),
-    list({
+    groups = list(duckdb:::expr_reference("ps_partkey")),
+    aggregates = list({
       tmp_expr <- duckdb:::expr_function(
         "sum",
         list(

@@ -230,8 +230,8 @@ rel7 <- duckdb:::rel_project(
 )
 rel8 <- duckdb:::rel_aggregate(
   rel7,
-  list(duckdb:::expr_reference("l_shipmode")),
-  list(
+  groups = list(duckdb:::expr_reference("l_shipmode")),
+  aggregates = list(
     {
       tmp_expr <- duckdb:::expr_function(
         "sum",

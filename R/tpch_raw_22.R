@@ -237,8 +237,8 @@ tpch_raw_22 <- function(con, experimental) {
   )
   rel3 <- duckdb:::rel_aggregate(
     rel2,
-    list(),
-    list(
+    groups = list(),
+    aggregates = list(
       {
         tmp_expr <- duckdb:::expr_function("mean", list(duckdb:::expr_reference("c_acctbal")))
         duckdb:::expr_set_alias(tmp_expr, "acctbal_min")
@@ -676,8 +676,8 @@ tpch_raw_22 <- function(con, experimental) {
   )
   rel19 <- duckdb:::rel_aggregate(
     rel18,
-    list(duckdb:::expr_reference("cntrycode")),
-    list(
+    groups = list(duckdb:::expr_reference("cntrycode")),
+    aggregates = list(
       {
         tmp_expr <- duckdb:::expr_function("n", list())
         duckdb:::expr_set_alias(tmp_expr, "numcust")

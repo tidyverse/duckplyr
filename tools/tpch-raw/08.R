@@ -796,8 +796,8 @@ rel60 <- duckdb:::rel_project(
 )
 rel61 <- duckdb:::rel_aggregate(
   rel60,
-  list(duckdb:::expr_reference("o_year")),
-  list({
+  groups = list(duckdb:::expr_reference("o_year")),
+  aggregates = list({
     tmp_expr <- duckdb:::expr_function(
       "/",
       list(

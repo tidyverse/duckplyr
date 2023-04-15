@@ -140,8 +140,8 @@ rel7 <- duckdb:::rel_project(
 )
 rel8 <- duckdb:::rel_aggregate(
   rel7,
-  list(duckdb:::expr_reference("c_custkey")),
-  list({
+  groups = list(duckdb:::expr_reference("c_custkey")),
+  aggregates = list({
     tmp_expr <- duckdb:::expr_function(
       "sum",
       list(
@@ -169,8 +169,8 @@ rel8 <- duckdb:::rel_aggregate(
 )
 rel9 <- duckdb:::rel_aggregate(
   rel8,
-  list(duckdb:::expr_reference("c_count")),
-  list({
+  groups = list(duckdb:::expr_reference("c_count")),
+  aggregates = list({
     tmp_expr <- duckdb:::expr_function("n", list())
     duckdb:::expr_set_alias(tmp_expr, "custdist")
     tmp_expr

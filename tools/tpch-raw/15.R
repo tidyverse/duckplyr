@@ -46,8 +46,8 @@ rel2 <- duckdb:::rel_filter(
 )
 rel3 <- duckdb:::rel_aggregate(
   rel2,
-  list(duckdb:::expr_reference("l_suppkey")),
-  list({
+  groups = list(duckdb:::expr_reference("l_suppkey")),
+  aggregates = list({
     tmp_expr <- duckdb:::expr_function(
       "sum",
       list(
@@ -100,8 +100,8 @@ rel4 <- duckdb:::rel_project(
 )
 rel5 <- duckdb:::rel_aggregate(
   rel4,
-  list(duckdb:::expr_reference("global_agr_key")),
-  list({
+  groups = list(duckdb:::expr_reference("global_agr_key")),
+  aggregates = list({
     tmp_expr <- duckdb:::expr_function("max", list(duckdb:::expr_reference("total_revenue")))
     duckdb:::expr_set_alias(tmp_expr, "max_total_revenue")
     tmp_expr

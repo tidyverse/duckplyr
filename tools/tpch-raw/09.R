@@ -643,8 +643,8 @@ rel41 <- duckdb:::rel_project(
 )
 rel42 <- duckdb:::rel_aggregate(
   rel41,
-  list(duckdb:::expr_reference("nation"), duckdb:::expr_reference("o_year")),
-  list({
+  groups = list(duckdb:::expr_reference("nation"), duckdb:::expr_reference("o_year")),
+  aggregates = list({
     tmp_expr <- duckdb:::expr_function("sum", list(duckdb:::expr_reference("amount")))
     duckdb:::expr_set_alias(tmp_expr, "sum_profit")
     tmp_expr

@@ -308,8 +308,8 @@ tpch_raw_03 <- function(con, experimental) {
   )
   rel21 <- duckdb:::rel_aggregate(
     rel20,
-    list(duckdb:::expr_reference("l_orderkey"), duckdb:::expr_reference("o_orderdate"), duckdb:::expr_reference("o_shippriority")),
-    list({
+    groups = list(duckdb:::expr_reference("l_orderkey"), duckdb:::expr_reference("o_orderdate"), duckdb:::expr_reference("o_shippriority")),
+    aggregates = list({
       tmp_expr <- duckdb:::expr_function("sum", list(duckdb:::expr_reference("volume")))
       duckdb:::expr_set_alias(tmp_expr, "revenue")
       tmp_expr

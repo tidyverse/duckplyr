@@ -244,8 +244,8 @@ rel14 <- duckdb:::rel_project(
 )
 rel15 <- duckdb:::rel_aggregate(
   rel14,
-  list(duckdb:::expr_reference("o_custkey")),
-  list({
+  groups = list(duckdb:::expr_reference("o_custkey")),
+  aggregates = list({
     tmp_expr <- duckdb:::expr_function("sum", list(duckdb:::expr_reference("volume")))
     duckdb:::expr_set_alias(tmp_expr, "revenue")
     tmp_expr
