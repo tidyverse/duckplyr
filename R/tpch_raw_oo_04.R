@@ -203,17 +203,18 @@ tpch_raw_oo_04 <- function(con, experimental) {
   rel17 <- duckdb:::rel_project(
     rel16,
     list(
-      l_orderkey = {
+      {
         tmp_expr <- duckdb:::expr_reference("l_orderkey")
         duckdb:::expr_set_alias(tmp_expr, "l_orderkey")
         tmp_expr
       },
-      o_orderpriority = {
+      {
         tmp_expr <- duckdb:::expr_reference("o_orderpriority")
         duckdb:::expr_set_alias(tmp_expr, "o_orderpriority")
         tmp_expr
       },
-      duckdb:::expr_reference("___row_number"), {
+      duckdb:::expr_reference("___row_number"),
+      {
         tmp_expr <- duckdb:::expr_window(
           duckdb:::expr_function("row_number", list()),
           list(
