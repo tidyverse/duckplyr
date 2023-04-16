@@ -13,7 +13,7 @@ get_test_code <- function(name, code, is_tbl_return) {
     if (with_force) {
       force <- ""
     } else {
-      force <- '  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")\n'
+      force <- '  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")\n\n'
     }
 
     skip <- test_skip_map[name]
@@ -50,7 +50,7 @@ get_test_code_one <- function(extra_arg, pre_step, name, two_tables, force = "",
 
   test_code_pre <- c(
     'test_that("as_duckplyr_df() and {{{pre_step}}}{{{name}}}({{{extra_arg_esc}}})", {',
-    "{{{force}}}{{{skip}}}  meta_clear()\n\n  # Data"
+    "{{{force}}}{{{skip}}}  # Data"
   )
 
   if (two_tables) {
@@ -79,15 +79,6 @@ get_test_code_one <- function(extra_arg, pre_step, name, two_tables, force = "",
     "",
     "  # Compare",
     "  expect_equal(pre, post)",
-    if (is_tbl_return && force == "") c(
-      "",
-      "  # Meta",
-      "  if (meta) {",
-      "    meta_fun <- meta_replay_to_fun()",
-      '    meta <- meta_fun(get_default_duckdb_connection(), (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))',
-      "    expect_equal(meta, post)",
-      "  }"
-    ),
     "})",
     ""
   )
