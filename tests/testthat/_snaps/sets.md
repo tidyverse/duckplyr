@@ -47,7 +47,7 @@
     Code
       duckplyr_union(df1, df2)
     Condition
-      Error in `union()`:
+      Error in `union_all()`:
       ! `x` and `y` are not compatible.
       x Different number of columns: 1 vs 2.
     Code

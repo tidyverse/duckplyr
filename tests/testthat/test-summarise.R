@@ -77,7 +77,6 @@ test_that("preserved class, but not attributes", {
 })
 
 test_that("works with unquoted values", {
-  skip("TODO duckdb")
   df <- tibble(g = c(1, 1, 2, 2, 2), x = 1:5)
   expect_equal(duckplyr_summarise(df, out = !!1), tibble(out = 1))
   expect_equal(duckplyr_summarise(df, out = !!quo(1)), tibble(out = 1))

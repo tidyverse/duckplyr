@@ -14,6 +14,10 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
       groups <- lapply(by, relexpr_reference)
 
       out_rel <- rel_aggregate(rel, groups, unname(aggregates))
+      # https://github.com/duckdb/duckdb/issues/7095
+      if (length(groups) == 0) {
+        out_rel <- rel_distinct(out_rel)
+      }
       out <- rel_to_df(out_rel)
       class(out) <- class(.data)
 

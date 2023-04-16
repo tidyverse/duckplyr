@@ -1494,6 +1494,32 @@ test_that("as_duckplyr_df() and summarise(c = mean(a), .by = g)", {
   expect_equal(pre, post)
 })
 
+
+test_that("as_duckplyr_df() and summarise(c = 1)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% summarise(c = 1) %>% as.data.frame()
+  post <- test_df %>% summarise(c = 1)
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and summarise(c = 1, .by = g)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% summarise(c = 1, .by = g) %>% as.data.frame()
+  post <- test_df %>% summarise(c = 1, .by = g)
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 test_that("as_duckplyr_df() and symdiff()", {
   # Data
   test_df_x <- data.frame(a = 1:4, b = 2)

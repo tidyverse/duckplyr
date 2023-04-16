@@ -121,9 +121,6 @@ tests <- head(n = -1, list(
     NULL
   ),
   "test-summarise.R" = c(
-    # https://github.com/duckdb/duckdb/issues/7095
-    "works with unquoted values",
-
     # Removed sum() macro for now
     "works with empty data frames",
 
@@ -318,6 +315,8 @@ test_extra_arg_map <- list(
     "c = mean(a)",
     "c = mean(a), .by = b",
     "c = mean(a), .by = g",
+    "c = 1",
+    "c = 1, .by = g",
     # "sum(a < 3)",
     # "sum(a < 3, .by = g)",
     NULL
