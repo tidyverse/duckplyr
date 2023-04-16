@@ -299,10 +299,10 @@ test_extra_arg_map <- list(
   ),
   rename_with = "identity",
   right_join = "join_by(a)",
-  rows_delete = 'by = c("a", "b")',
+  rows_delete = 'by = c("a", "b"), unmatched = "ignore"',
   rows_insert = 'by = "a", conflict = "ignore"',
-  rows_patch = 'by = "a"',
-  rows_update = 'by = "a"',
+  rows_patch = 'by = "a", unmatched = "ignore"',
+  rows_update = 'by = "a", unmatched = "ignore"',
   rows_upsert = 'by = "a"',
   sample_n = "size = 1",
   select = c(
@@ -375,7 +375,7 @@ test_df_code <- "  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))"
 test_df_op_code <- "{{{pre_step}}}{{{name}}}({{{extra_arg}}})"
 
 test_df_xy_code <- c(
-  "  test_df_x <- data.frame(a = 1, b = 2)",
-  "  test_df_y <- data.frame(a = 1, b = 2)"
+  "  test_df_x <- data.frame(a = 1:4, b = 2)",
+  "  test_df_y <- data.frame(a = 2:5, b = 2)"
 )
 test_df_xy_op_code <- "{{{name}}}(test_df_y{{{extra_arg}}})"

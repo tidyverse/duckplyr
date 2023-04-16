@@ -21,8 +21,8 @@ test_that("as_duckplyr_df() and add_count()", {
 
 test_that("as_duckplyr_df() and anti_join(join_by(a))", {
   # Data
-  test_df_x <- data.frame(a = 1, b = 2)
-  test_df_y <- data.frame(a = 1, b = 2)
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
 
   # Run
   pre <- test_df_x %>% as_duckplyr_df() %>% anti_join(test_df_y, join_by(a)) %>% as.data.frame()
@@ -100,8 +100,8 @@ test_that("as_duckplyr_df() and auto_copy()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
   # Data
-  test_df_x <- data.frame(a = 1, b = 2)
-  test_df_y <- data.frame(a = 1, b = 2)
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
 
   # Run
   pre <- test_df_x %>% as_duckplyr_df() %>% auto_copy(test_df_y)
@@ -234,8 +234,8 @@ test_that("as_duckplyr_df() and cross_join()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
   # Data
-  test_df_x <- data.frame(a = 1, b = 2)
-  test_df_y <- data.frame(a = 1, b = 2)
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
 
   # Run
   pre <- test_df_x %>% as_duckplyr_df() %>% cross_join(test_df_y) %>% as.data.frame()
@@ -457,8 +457,8 @@ test_that("as_duckplyr_df() and filter(a %in% 2:3 & g == 2)", {
 
 test_that("as_duckplyr_df() and full_join(join_by(a))", {
   # Data
-  test_df_x <- data.frame(a = 1, b = 2)
-  test_df_y <- data.frame(a = 1, b = 2)
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
 
   # Run
   pre <- test_df_x %>% as_duckplyr_df() %>% full_join(test_df_y, join_by(a)) %>% as.data.frame()
@@ -484,8 +484,8 @@ test_that("as_duckplyr_df() and group_vars()", {
 
 test_that("as_duckplyr_df() and inner_join(join_by(a))", {
   # Data
-  test_df_x <- data.frame(a = 1, b = 2)
-  test_df_y <- data.frame(a = 1, b = 2)
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
 
   # Run
   pre <- test_df_x %>% as_duckplyr_df() %>% inner_join(test_df_y, join_by(a)) %>% as.data.frame()
@@ -497,8 +497,8 @@ test_that("as_duckplyr_df() and inner_join(join_by(a))", {
 
 test_that("as_duckplyr_df() and intersect()", {
   # Data
-  test_df_x <- data.frame(a = 1, b = 2)
-  test_df_y <- data.frame(a = 1, b = 2)
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
 
   # Run
   pre <- test_df_x %>% as_duckplyr_df() %>% intersect(test_df_y) %>% as.data.frame()
@@ -510,8 +510,8 @@ test_that("as_duckplyr_df() and intersect()", {
 
 test_that("as_duckplyr_df() and left_join(join_by(a))", {
   # Data
-  test_df_x <- data.frame(a = 1, b = 2)
-  test_df_y <- data.frame(a = 1, b = 2)
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
 
   # Run
   pre <- test_df_x %>% as_duckplyr_df() %>% left_join(test_df_y, join_by(a)) %>% as.data.frame()
@@ -1021,8 +1021,8 @@ test_that("as_duckplyr_df() and nest_join(join_by(a))", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
   # Data
-  test_df_x <- data.frame(a = 1, b = 2)
-  test_df_y <- data.frame(a = 1, b = 2)
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
 
   # Run
   pre <- test_df_x %>% as_duckplyr_df() %>% nest_join(test_df_y, join_by(a)) %>% as.data.frame()
@@ -1150,8 +1150,8 @@ test_that("as_duckplyr_df() and rename_with(identity)", {
 
 test_that("as_duckplyr_df() and right_join(join_by(a))", {
   # Data
-  test_df_x <- data.frame(a = 1, b = 2)
-  test_df_y <- data.frame(a = 1, b = 2)
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
 
   # Run
   pre <- test_df_x %>% as_duckplyr_df() %>% right_join(test_df_y, join_by(a)) %>% as.data.frame()
@@ -1165,8 +1165,8 @@ test_that("as_duckplyr_df() and rows_append()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
   # Data
-  test_df_x <- data.frame(a = 1, b = 2)
-  test_df_y <- data.frame(a = 1, b = 2)
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
 
   # Run
   pre <- test_df_x %>% as_duckplyr_df() %>% rows_append(test_df_y) %>% as.data.frame()
@@ -1176,16 +1176,16 @@ test_that("as_duckplyr_df() and rows_append()", {
   expect_equal(pre, post)
 })
 
-test_that("as_duckplyr_df() and rows_delete(by = c(\"a\", \"b\"))", {
+test_that("as_duckplyr_df() and rows_delete(by = c(\"a\", \"b\"), unmatched = \"ignore\")", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
   # Data
-  test_df_x <- data.frame(a = 1, b = 2)
-  test_df_y <- data.frame(a = 1, b = 2)
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
 
   # Run
-  pre <- test_df_x %>% as_duckplyr_df() %>% rows_delete(test_df_y, by = c("a", "b")) %>% as.data.frame()
-  post <- test_df_x %>% rows_delete(test_df_y, by = c("a", "b"))
+  pre <- test_df_x %>% as_duckplyr_df() %>% rows_delete(test_df_y, by = c("a", "b"), unmatched = "ignore") %>% as.data.frame()
+  post <- test_df_x %>% rows_delete(test_df_y, by = c("a", "b"), unmatched = "ignore")
 
   # Compare
   expect_equal(pre, post)
@@ -1195,8 +1195,8 @@ test_that("as_duckplyr_df() and rows_insert(by = \"a\", conflict = \"ignore\")",
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
   # Data
-  test_df_x <- data.frame(a = 1, b = 2)
-  test_df_y <- data.frame(a = 1, b = 2)
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
 
   # Run
   pre <- test_df_x %>% as_duckplyr_df() %>% rows_insert(test_df_y, by = "a", conflict = "ignore") %>% as.data.frame()
@@ -1206,31 +1206,31 @@ test_that("as_duckplyr_df() and rows_insert(by = \"a\", conflict = \"ignore\")",
   expect_equal(pre, post)
 })
 
-test_that("as_duckplyr_df() and rows_patch(by = \"a\")", {
+test_that("as_duckplyr_df() and rows_patch(by = \"a\", unmatched = \"ignore\")", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
   # Data
-  test_df_x <- data.frame(a = 1, b = 2)
-  test_df_y <- data.frame(a = 1, b = 2)
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
 
   # Run
-  pre <- test_df_x %>% as_duckplyr_df() %>% rows_patch(test_df_y, by = "a") %>% as.data.frame()
-  post <- test_df_x %>% rows_patch(test_df_y, by = "a")
+  pre <- test_df_x %>% as_duckplyr_df() %>% rows_patch(test_df_y, by = "a", unmatched = "ignore") %>% as.data.frame()
+  post <- test_df_x %>% rows_patch(test_df_y, by = "a", unmatched = "ignore")
 
   # Compare
   expect_equal(pre, post)
 })
 
-test_that("as_duckplyr_df() and rows_update(by = \"a\")", {
+test_that("as_duckplyr_df() and rows_update(by = \"a\", unmatched = \"ignore\")", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
   # Data
-  test_df_x <- data.frame(a = 1, b = 2)
-  test_df_y <- data.frame(a = 1, b = 2)
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
 
   # Run
-  pre <- test_df_x %>% as_duckplyr_df() %>% rows_update(test_df_y, by = "a") %>% as.data.frame()
-  post <- test_df_x %>% rows_update(test_df_y, by = "a")
+  pre <- test_df_x %>% as_duckplyr_df() %>% rows_update(test_df_y, by = "a", unmatched = "ignore") %>% as.data.frame()
+  post <- test_df_x %>% rows_update(test_df_y, by = "a", unmatched = "ignore")
 
   # Compare
   expect_equal(pre, post)
@@ -1240,8 +1240,8 @@ test_that("as_duckplyr_df() and rows_upsert(by = \"a\")", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
   # Data
-  test_df_x <- data.frame(a = 1, b = 2)
-  test_df_y <- data.frame(a = 1, b = 2)
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
 
   # Run
   pre <- test_df_x %>% as_duckplyr_df() %>% rows_upsert(test_df_y, by = "a") %>% as.data.frame()
@@ -1323,8 +1323,8 @@ test_that("as_duckplyr_df() and select(everything())", {
 
 test_that("as_duckplyr_df() and semi_join(join_by(a))", {
   # Data
-  test_df_x <- data.frame(a = 1, b = 2)
-  test_df_y <- data.frame(a = 1, b = 2)
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
 
   # Run
   pre <- test_df_x %>% as_duckplyr_df() %>% semi_join(test_df_y, join_by(a)) %>% as.data.frame()
@@ -1336,8 +1336,8 @@ test_that("as_duckplyr_df() and semi_join(join_by(a))", {
 
 test_that("as_duckplyr_df() and setdiff()", {
   # Data
-  test_df_x <- data.frame(a = 1, b = 2)
-  test_df_y <- data.frame(a = 1, b = 2)
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
 
   # Run
   pre <- test_df_x %>% as_duckplyr_df() %>% setdiff(test_df_y) %>% as.data.frame()
@@ -1351,8 +1351,8 @@ test_that("as_duckplyr_df() and setequal()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
   # Data
-  test_df_x <- data.frame(a = 1, b = 2)
-  test_df_y <- data.frame(a = 1, b = 2)
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
 
   # Run
   pre <- test_df_x %>% as_duckplyr_df() %>% setequal(test_df_y)
@@ -1496,8 +1496,8 @@ test_that("as_duckplyr_df() and summarise(c = mean(a), .by = g)", {
 
 test_that("as_duckplyr_df() and symdiff()", {
   # Data
-  test_df_x <- data.frame(a = 1, b = 2)
-  test_df_y <- data.frame(a = 1, b = 2)
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
 
   # Run
   pre <- test_df_x %>% as_duckplyr_df() %>% symdiff(test_df_y) %>% as.data.frame()
@@ -1561,8 +1561,8 @@ test_that("as_duckplyr_df() and ungroup()", {
 
 test_that("as_duckplyr_df() and union()", {
   # Data
-  test_df_x <- data.frame(a = 1, b = 2)
-  test_df_y <- data.frame(a = 1, b = 2)
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
 
   # Run
   pre <- test_df_x %>% as_duckplyr_df() %>% union(test_df_y) %>% as.data.frame()
@@ -1574,8 +1574,8 @@ test_that("as_duckplyr_df() and union()", {
 
 test_that("as_duckplyr_df() and union_all()", {
   # Data
-  test_df_x <- data.frame(a = 1, b = 2)
-  test_df_y <- data.frame(a = 1, b = 2)
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
 
   # Run
   pre <- test_df_x %>% as_duckplyr_df() %>% union_all(test_df_y) %>% as.data.frame()

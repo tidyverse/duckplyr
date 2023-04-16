@@ -12,11 +12,13 @@ test_that("relational anti_join(join_by(a)) order-preserving", {
       "CREATE MACRO \"___eq_na_matches_na\"(a, b) AS ((a IS NULL AND b IS NULL) OR (a = b))"
     )
   )
-  df1 <- data.frame(a = 1, b = 2)
+  df1 <- data.frame(a = 1:4, b = c(2, 2, 2, 2))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
   rel2 <- duckdb:::rel_set_alias(rel1, "lhs")
-  rel3 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
+  df2 <- data.frame(a = 2:5, b = c(2, 2, 2, 2))
+
+  rel3 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
   rel4 <- duckdb:::rel_set_alias(rel3, "rhs")
   rel5 <- duckdb:::rel_project(
     rel2,
@@ -66,7 +68,7 @@ test_that("relational anti_join(join_by(a)) order-preserving", {
   out <- duckdb:::rel_to_altrep(rel8)
   expect_equal(
     out,
-    data.frame(a = numeric(0), b = numeric(0))
+    data.frame(a = 1L, b = 2)
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
@@ -83,11 +85,13 @@ test_that("relational anti_join(join_by(a)) order-enforcing", {
       "CREATE MACRO \"___eq_na_matches_na\"(a, b) AS ((a IS NULL AND b IS NULL) OR (a = b))"
     )
   )
-  df1 <- data.frame(a = 1, b = 2)
+  df1 <- data.frame(a = 1:4, b = c(2, 2, 2, 2))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
   rel2 <- duckdb:::rel_set_alias(rel1, "lhs")
-  rel3 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
+  df2 <- data.frame(a = 2:5, b = c(2, 2, 2, 2))
+
+  rel3 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
   rel4 <- duckdb:::rel_set_alias(rel3, "rhs")
   rel5 <- duckdb:::rel_join(
     rel2,
@@ -102,7 +106,7 @@ test_that("relational anti_join(join_by(a)) order-enforcing", {
   out <- duckdb:::rel_to_altrep(rel6)
   expect_equal(
     out,
-    data.frame(a = numeric(0), b = numeric(0))
+    data.frame(a = 1L, b = 2)
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
@@ -2448,11 +2452,13 @@ test_that("relational full_join(join_by(a)) order-preserving", {
     )
   )
   invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
-  df1 <- data.frame(a = 1, b = 2)
+  df1 <- data.frame(a = 1:4, b = c(2, 2, 2, 2))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
   rel2 <- duckdb:::rel_set_alias(rel1, "lhs")
-  rel3 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
+  df2 <- data.frame(a = 2:5, b = c(2, 2, 2, 2))
+
+  rel3 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
   rel4 <- duckdb:::rel_set_alias(rel3, "rhs")
   rel5 <- duckdb:::rel_project(
     rel2,
@@ -2566,7 +2572,7 @@ test_that("relational full_join(join_by(a)) order-preserving", {
   out <- duckdb:::rel_to_altrep(rel11)
   expect_equal(
     out,
-    data.frame(a = 1, b.x = 2, b.y = 2)
+    data.frame(a = 1:5, b.x = c(2, 2, 2, 2, NA), b.y = c(NA, 2, 2, 2, 2))
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
@@ -2584,11 +2590,13 @@ test_that("relational full_join(join_by(a)) order-enforcing", {
     )
   )
   invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
-  df1 <- data.frame(a = 1, b = 2)
+  df1 <- data.frame(a = 1:4, b = c(2, 2, 2, 2))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
   rel2 <- duckdb:::rel_set_alias(rel1, "lhs")
-  rel3 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
+  df2 <- data.frame(a = 2:5, b = c(2, 2, 2, 2))
+
+  rel3 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
   rel4 <- duckdb:::rel_set_alias(rel3, "rhs")
   rel5 <- duckdb:::rel_project(
     rel2,
@@ -2662,7 +2670,7 @@ test_that("relational full_join(join_by(a)) order-enforcing", {
   out <- duckdb:::rel_to_altrep(rel9)
   expect_equal(
     out,
-    data.frame(a = 1, b.x = 2, b.y = 2)
+    data.frame(a = 1:5, b.x = c(2, 2, 2, 2, NA), b.y = c(NA, 2, 2, 2, 2))
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
@@ -2679,11 +2687,13 @@ test_that("relational inner_join(join_by(a)) order-preserving", {
       "CREATE MACRO \"___eq_na_matches_na\"(a, b) AS ((a IS NULL AND b IS NULL) OR (a = b))"
     )
   )
-  df1 <- data.frame(a = 1, b = 2)
+  df1 <- data.frame(a = 1:4, b = c(2, 2, 2, 2))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
   rel2 <- duckdb:::rel_set_alias(rel1, "lhs")
-  rel3 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
+  df2 <- data.frame(a = 2:5, b = c(2, 2, 2, 2))
+
+  rel3 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
   rel4 <- duckdb:::rel_set_alias(rel3, "rhs")
   rel5 <- duckdb:::rel_project(
     rel2,
@@ -2794,7 +2804,7 @@ test_that("relational inner_join(join_by(a)) order-preserving", {
   out <- duckdb:::rel_to_altrep(rel11)
   expect_equal(
     out,
-    data.frame(a = 1, b.x = 2, b.y = 2)
+    data.frame(a = 2:4, b.x = c(2, 2, 2), b.y = c(2, 2, 2))
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
@@ -2811,11 +2821,13 @@ test_that("relational inner_join(join_by(a)) order-enforcing", {
       "CREATE MACRO \"___eq_na_matches_na\"(a, b) AS ((a IS NULL AND b IS NULL) OR (a = b))"
     )
   )
-  df1 <- data.frame(a = 1, b = 2)
+  df1 <- data.frame(a = 1:4, b = c(2, 2, 2, 2))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
   rel2 <- duckdb:::rel_set_alias(rel1, "lhs")
-  rel3 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
+  df2 <- data.frame(a = 2:5, b = c(2, 2, 2, 2))
+
+  rel3 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
   rel4 <- duckdb:::rel_set_alias(rel3, "rhs")
   rel5 <- duckdb:::rel_project(
     rel2,
@@ -2886,7 +2898,7 @@ test_that("relational inner_join(join_by(a)) order-enforcing", {
   out <- duckdb:::rel_to_altrep(rel9)
   expect_equal(
     out,
-    data.frame(a = 1, b.x = 2, b.y = 2)
+    data.frame(a = 2:4, b.x = c(2, 2, 2), b.y = c(2, 2, 2))
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
@@ -2897,16 +2909,18 @@ test_that("relational intersect() order-preserving", {
   # Autogenerated
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  df1 <- data.frame(a = 1, b = 2)
+  df1 <- data.frame(a = 1:4, b = c(2, 2, 2, 2))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
-  rel2 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
+  df2 <- data.frame(a = 2:5, b = c(2, 2, 2, 2))
+
+  rel2 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
   rel3 <- duckdb:::rel_set_intersect(rel1, rel2)
   rel3
   out <- duckdb:::rel_to_altrep(rel3)
   expect_equal(
     out,
-    data.frame(a = 1, b = 2)
+    data.frame(a = 2:4, b = c(2, 2, 2))
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
@@ -2917,17 +2931,19 @@ test_that("relational intersect() order-enforcing", {
   # Autogenerated
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  df1 <- data.frame(a = 1, b = 2)
+  df1 <- data.frame(a = 1:4, b = c(2, 2, 2, 2))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
-  rel2 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
+  df2 <- data.frame(a = 2:5, b = c(2, 2, 2, 2))
+
+  rel2 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
   rel3 <- duckdb:::rel_set_intersect(rel1, rel2)
   rel4 <- duckdb:::rel_order(rel3, list(duckdb:::expr_reference("a"), duckdb:::expr_reference("b")))
   rel4
   out <- duckdb:::rel_to_altrep(rel4)
   expect_equal(
     out,
-    data.frame(a = 1, b = 2)
+    data.frame(a = 2:4, b = c(2, 2, 2))
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
@@ -2944,11 +2960,13 @@ test_that("relational left_join(join_by(a)) order-preserving", {
       "CREATE MACRO \"___eq_na_matches_na\"(a, b) AS ((a IS NULL AND b IS NULL) OR (a = b))"
     )
   )
-  df1 <- data.frame(a = 1, b = 2)
+  df1 <- data.frame(a = 1:4, b = c(2, 2, 2, 2))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
   rel2 <- duckdb:::rel_set_alias(rel1, "lhs")
-  rel3 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
+  df2 <- data.frame(a = 2:5, b = c(2, 2, 2, 2))
+
+  rel3 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
   rel4 <- duckdb:::rel_set_alias(rel3, "rhs")
   rel5 <- duckdb:::rel_project(
     rel2,
@@ -3059,7 +3077,7 @@ test_that("relational left_join(join_by(a)) order-preserving", {
   out <- duckdb:::rel_to_altrep(rel11)
   expect_equal(
     out,
-    data.frame(a = 1, b.x = 2, b.y = 2)
+    data.frame(a = 1:4, b.x = c(2, 2, 2, 2), b.y = c(NA, 2, 2, 2))
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
@@ -3076,11 +3094,13 @@ test_that("relational left_join(join_by(a)) order-enforcing", {
       "CREATE MACRO \"___eq_na_matches_na\"(a, b) AS ((a IS NULL AND b IS NULL) OR (a = b))"
     )
   )
-  df1 <- data.frame(a = 1, b = 2)
+  df1 <- data.frame(a = 1:4, b = c(2, 2, 2, 2))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
   rel2 <- duckdb:::rel_set_alias(rel1, "lhs")
-  rel3 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
+  df2 <- data.frame(a = 2:5, b = c(2, 2, 2, 2))
+
+  rel3 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
   rel4 <- duckdb:::rel_set_alias(rel3, "rhs")
   rel5 <- duckdb:::rel_project(
     rel2,
@@ -3151,7 +3171,7 @@ test_that("relational left_join(join_by(a)) order-enforcing", {
   out <- duckdb:::rel_to_altrep(rel9)
   expect_equal(
     out,
-    data.frame(a = 1, b.x = 2, b.y = 2)
+    data.frame(a = 1:4, b.x = c(2, 2, 2, 2), b.y = c(NA, 2, 2, 2))
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
@@ -8652,11 +8672,13 @@ test_that("relational right_join(join_by(a)) order-preserving", {
       "CREATE MACRO \"___eq_na_matches_na\"(a, b) AS ((a IS NULL AND b IS NULL) OR (a = b))"
     )
   )
-  df1 <- data.frame(a = 1, b = 2)
+  df1 <- data.frame(a = 1:4, b = c(2, 2, 2, 2))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
   rel2 <- duckdb:::rel_set_alias(rel1, "lhs")
-  rel3 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
+  df2 <- data.frame(a = 2:5, b = c(2, 2, 2, 2))
+
+  rel3 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
   rel4 <- duckdb:::rel_set_alias(rel3, "rhs")
   rel5 <- duckdb:::rel_project(
     rel2,
@@ -8767,7 +8789,7 @@ test_that("relational right_join(join_by(a)) order-preserving", {
   out <- duckdb:::rel_to_altrep(rel11)
   expect_equal(
     out,
-    data.frame(a = 1, b.x = 2, b.y = 2)
+    data.frame(a = 2:5, b.x = c(2, 2, 2, NA), b.y = c(2, 2, 2, 2))
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
@@ -8784,11 +8806,13 @@ test_that("relational right_join(join_by(a)) order-enforcing", {
       "CREATE MACRO \"___eq_na_matches_na\"(a, b) AS ((a IS NULL AND b IS NULL) OR (a = b))"
     )
   )
-  df1 <- data.frame(a = 1, b = 2)
+  df1 <- data.frame(a = 1:4, b = c(2, 2, 2, 2))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
   rel2 <- duckdb:::rel_set_alias(rel1, "lhs")
-  rel3 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
+  df2 <- data.frame(a = 2:5, b = c(2, 2, 2, 2))
+
+  rel3 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
   rel4 <- duckdb:::rel_set_alias(rel3, "rhs")
   rel5 <- duckdb:::rel_project(
     rel2,
@@ -8859,7 +8883,7 @@ test_that("relational right_join(join_by(a)) order-enforcing", {
   out <- duckdb:::rel_to_altrep(rel9)
   expect_equal(
     out,
-    data.frame(a = 1, b.x = 2, b.y = 2)
+    data.frame(a = 2:5, b.x = c(2, 2, 2, NA), b.y = c(2, 2, 2, 2))
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
@@ -9068,11 +9092,13 @@ test_that("relational semi_join(join_by(a)) order-preserving", {
       "CREATE MACRO \"___eq_na_matches_na\"(a, b) AS ((a IS NULL AND b IS NULL) OR (a = b))"
     )
   )
-  df1 <- data.frame(a = 1, b = 2)
+  df1 <- data.frame(a = 1:4, b = c(2, 2, 2, 2))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
   rel2 <- duckdb:::rel_set_alias(rel1, "lhs")
-  rel3 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
+  df2 <- data.frame(a = 2:5, b = c(2, 2, 2, 2))
+
+  rel3 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
   rel4 <- duckdb:::rel_set_alias(rel3, "rhs")
   rel5 <- duckdb:::rel_project(
     rel2,
@@ -9122,7 +9148,7 @@ test_that("relational semi_join(join_by(a)) order-preserving", {
   out <- duckdb:::rel_to_altrep(rel8)
   expect_equal(
     out,
-    data.frame(a = 1, b = 2)
+    data.frame(a = 2:4, b = c(2, 2, 2))
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
@@ -9139,11 +9165,13 @@ test_that("relational semi_join(join_by(a)) order-enforcing", {
       "CREATE MACRO \"___eq_na_matches_na\"(a, b) AS ((a IS NULL AND b IS NULL) OR (a = b))"
     )
   )
-  df1 <- data.frame(a = 1, b = 2)
+  df1 <- data.frame(a = 1:4, b = c(2, 2, 2, 2))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
   rel2 <- duckdb:::rel_set_alias(rel1, "lhs")
-  rel3 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
+  df2 <- data.frame(a = 2:5, b = c(2, 2, 2, 2))
+
+  rel3 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
   rel4 <- duckdb:::rel_set_alias(rel3, "rhs")
   rel5 <- duckdb:::rel_join(
     rel2,
@@ -9158,7 +9186,7 @@ test_that("relational semi_join(join_by(a)) order-enforcing", {
   out <- duckdb:::rel_to_altrep(rel6)
   expect_equal(
     out,
-    data.frame(a = 1, b = 2)
+    data.frame(a = 2:4, b = c(2, 2, 2))
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
@@ -9169,16 +9197,18 @@ test_that("relational setdiff() order-preserving", {
   # Autogenerated
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  df1 <- data.frame(a = 1, b = 2)
+  df1 <- data.frame(a = 1:4, b = c(2, 2, 2, 2))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
-  rel2 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
+  df2 <- data.frame(a = 2:5, b = c(2, 2, 2, 2))
+
+  rel2 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
   rel3 <- duckdb:::rel_set_diff(rel1, rel2)
   rel3
   out <- duckdb:::rel_to_altrep(rel3)
   expect_equal(
     out,
-    data.frame(a = numeric(0), b = numeric(0))
+    data.frame(a = 1L, b = 2)
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
@@ -9189,17 +9219,19 @@ test_that("relational setdiff() order-enforcing", {
   # Autogenerated
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  df1 <- data.frame(a = 1, b = 2)
+  df1 <- data.frame(a = 1:4, b = c(2, 2, 2, 2))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
-  rel2 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
+  df2 <- data.frame(a = 2:5, b = c(2, 2, 2, 2))
+
+  rel2 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
   rel3 <- duckdb:::rel_set_diff(rel1, rel2)
   rel4 <- duckdb:::rel_order(rel3, list(duckdb:::expr_reference("a"), duckdb:::expr_reference("b")))
   rel4
   out <- duckdb:::rel_to_altrep(rel4)
   expect_equal(
     out,
-    data.frame(a = numeric(0), b = numeric(0))
+    data.frame(a = 1L, b = 2)
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
@@ -9367,16 +9399,18 @@ test_that("relational symdiff() order-preserving", {
   # Autogenerated
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  df1 <- data.frame(a = 1, b = 2)
+  df1 <- data.frame(a = 1:4, b = c(2, 2, 2, 2))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
-  rel2 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
+  df2 <- data.frame(a = 2:5, b = c(2, 2, 2, 2))
+
+  rel2 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
   rel3 <- duckdb:::rel_set_symdiff(rel1, rel2)
   rel3
   out <- duckdb:::rel_to_altrep(rel3)
   expect_equal(
     out,
-    data.frame(a = numeric(0), b = numeric(0))
+    data.frame(a = c(1L, 5L), b = c(2, 2))
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
@@ -9387,17 +9421,19 @@ test_that("relational symdiff() order-enforcing", {
   # Autogenerated
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  df1 <- data.frame(a = 1, b = 2)
+  df1 <- data.frame(a = 1:4, b = c(2, 2, 2, 2))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
-  rel2 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
+  df2 <- data.frame(a = 2:5, b = c(2, 2, 2, 2))
+
+  rel2 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
   rel3 <- duckdb:::rel_set_symdiff(rel1, rel2)
   rel4 <- duckdb:::rel_order(rel3, list(duckdb:::expr_reference("a"), duckdb:::expr_reference("b")))
   rel4
   out <- duckdb:::rel_to_altrep(rel4)
   expect_equal(
     out,
-    data.frame(a = numeric(0), b = numeric(0))
+    data.frame(a = c(1L, 5L), b = c(2, 2))
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
@@ -9542,17 +9578,11 @@ test_that("relational union() order-preserving", {
   # Autogenerated
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  df1 <- data.frame(a = 1, b = 2)
-
-  rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
-  rel2 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
-  rel3 <- duckdb:::rel_union_all(rel1, rel2)
-  rel4 <- duckdb:::rel_distinct(rel3)
-  rel4
-  out <- duckdb:::rel_to_altrep(rel4)
+  rel0
+  out <- duckdb:::rel_to_altrep(rel0)
   expect_equal(
     out,
-    data.frame(a = 1, b = 2)
+    data.frame(a = 1:5, b = c(2, 2, 2, 2, 2))
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
@@ -9563,18 +9593,15 @@ test_that("relational union() order-enforcing", {
   # Autogenerated
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  df1 <- data.frame(a = 1, b = 2)
+  df1 <- data.frame(a = 1:5, b = c(2, 2, 2, 2, 2))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
-  rel2 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
-  rel3 <- duckdb:::rel_union_all(rel1, rel2)
-  rel4 <- duckdb:::rel_distinct(rel3)
-  rel5 <- duckdb:::rel_order(rel4, list(duckdb:::expr_reference("a"), duckdb:::expr_reference("b")))
-  rel5
-  out <- duckdb:::rel_to_altrep(rel5)
+  rel2 <- duckdb:::rel_order(rel1, list(duckdb:::expr_reference("a"), duckdb:::expr_reference("b")))
+  rel2
+  out <- duckdb:::rel_to_altrep(rel2)
   expect_equal(
     out,
-    data.frame(a = 1, b = 2)
+    data.frame(a = 1:5, b = c(2, 2, 2, 2, 2))
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
@@ -9585,16 +9612,18 @@ test_that("relational union_all() order-preserving", {
   # Autogenerated
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  df1 <- data.frame(a = 1, b = 2)
+  df1 <- data.frame(a = 1:4, b = c(2, 2, 2, 2))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
-  rel2 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
+  df2 <- data.frame(a = 2:5, b = c(2, 2, 2, 2))
+
+  rel2 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
   rel3 <- duckdb:::rel_union_all(rel1, rel2)
   rel3
   out <- duckdb:::rel_to_altrep(rel3)
   expect_equal(
     out,
-    data.frame(a = c(1, 1), b = c(2, 2))
+    data.frame(a = c(1L, 2L, 3L, 4L, 2L, 3L, 4L, 5L), b = c(2, 2, 2, 2, 2, 2, 2, 2))
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
@@ -9605,17 +9634,19 @@ test_that("relational union_all() order-enforcing", {
   # Autogenerated
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  df1 <- data.frame(a = 1, b = 2)
+  df1 <- data.frame(a = 1:4, b = c(2, 2, 2, 2))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
-  rel2 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
+  df2 <- data.frame(a = 2:5, b = c(2, 2, 2, 2))
+
+  rel2 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
   rel3 <- duckdb:::rel_union_all(rel1, rel2)
   rel4 <- duckdb:::rel_order(rel3, list(duckdb:::expr_reference("a"), duckdb:::expr_reference("b")))
   rel4
   out <- duckdb:::rel_to_altrep(rel4)
   expect_equal(
     out,
-    data.frame(a = c(1, 1), b = c(2, 2))
+    data.frame(a = c(1L, 2L, 2L, 3L, 3L, 4L, 4L, 5L), b = c(2, 2, 2, 2, 2, 2, 2, 2))
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
