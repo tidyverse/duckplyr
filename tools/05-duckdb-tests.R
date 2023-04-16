@@ -62,18 +62,17 @@ get_test_code_one <- function(extra_arg, pre_step, name, two_tables, force = "",
 
     test_fun_code <- c(
       "function(duck) {",
-      "  test_df_x <- data.frame(a = 1, b = 2)",
-      "  test_df_y <- data.frame(a = 1, b = 2)",
+      test_df_xy_code,
       "  if (duck) test_df_x <- as_duckplyr_df(test_df_x)",
-      "  test_df_x %>% {{{name}}}(test_df_y{{{extra_arg}}})",
+      paste0("  test_df_x %>% ", test_df_xy_op_code),
       "}"
     )
   } else {
     test_fun_code <- c(
       "function(duck) {",
-      "  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))",
+      test_df_code,
       "  if (duck) test_df <- as_duckplyr_df(test_df)",
-      "  test_df %>% {{{pre_step}}}{{{name}}}({{{extra_arg}}})",
+      paste0("  test_df %>% ", test_df_op_code),
       "}"
     )
   }

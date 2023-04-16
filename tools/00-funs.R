@@ -311,3 +311,12 @@ test_force_override <- c(
   tally = TRUE,
   NULL
 )
+
+test_df_code <- "  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))"
+test_df_op_code <- "{{{pre_step}}}{{{name}}}({{{extra_arg}}})"
+
+test_df_xy_code <- c(
+  "  test_df_x <- data.frame(a = 1, b = 2)",
+  "  test_df_y <- data.frame(a = 1, b = 2)"
+)
+test_df_xy_op_code <- "{{{name}}}(test_df_y{{{extra_arg}}})"
