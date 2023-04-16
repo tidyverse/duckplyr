@@ -1,5 +1,5 @@
 diff --git b/R/distinct.R a/R/distinct.R
-index 92656b4..4948af0 100644
+index 92656b4..f68a67c 100644
 --- b/R/distinct.R
 +++ a/R/distinct.R
 @@ -4,8 +4,62 @@
@@ -43,7 +43,7 @@ index 92656b4..4948af0 100644
 +          )
 +        ))
 +
-+        rel <- rel_project(rel, proj_exprs)
++        rel <- rel_project(rel, unname(proj_exprs))
 +
 +        expr_filter <- rel_translate(
 +          quo(`___row_number_by` == 1L),
