@@ -44,6 +44,58 @@ test_that("as_duckplyr_df() and arrange()", {
   expect_equal(pre, post)
 })
 
+
+test_that("as_duckplyr_df() and arrange(a)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% arrange(a) %>% as.data.frame()
+  post <- test_df %>% arrange(a)
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and arrange(g)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% arrange(g) %>% as.data.frame()
+  post <- test_df %>% arrange(g)
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and arrange(g, a)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% arrange(g, a) %>% as.data.frame()
+  post <- test_df %>% arrange(g, a)
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and arrange(a, g)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% arrange(a, g) %>% as.data.frame()
+  post <- test_df %>% arrange(a, g)
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 test_that("as_duckplyr_df() and auto_copy()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
@@ -108,6 +160,71 @@ test_that("as_duckplyr_df() and count()", {
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% count() %>% as.data.frame()
   post <- test_df %>% count()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and count(a)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% count(a) %>% as.data.frame()
+  post <- test_df %>% count(a)
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and count(b)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% count(b) %>% as.data.frame()
+  post <- test_df %>% count(b)
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and count(g)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% count(g) %>% as.data.frame()
+  post <- test_df %>% count(g)
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and count(g, a)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% count(g, a) %>% as.data.frame()
+  post <- test_df %>% count(g, a)
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and count(b, g)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% count(b, g) %>% as.data.frame()
+  post <- test_df %>% count(b, g)
 
   # Compare
   expect_equal(pre, post)
@@ -307,6 +424,32 @@ test_that("as_duckplyr_df() and filter(a == 1)", {
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% filter(a == 1) %>% as.data.frame()
   post <- test_df %>% filter(a == 1)
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and filter(a %in% 2:3, g == 2)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% filter(a %in% 2:3, g == 2) %>% as.data.frame()
+  post <- test_df %>% filter(a %in% 2:3, g == 2)
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and filter(a %in% 2:3 & g == 2)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% filter(a %in% 2:3 & g == 2) %>% as.data.frame()
+  post <- test_df %>% filter(a %in% 2:3 & g == 2)
 
   # Compare
   expect_equal(pre, post)
@@ -915,13 +1058,52 @@ test_that("as_duckplyr_df() and reframe()", {
   expect_equal(pre, post)
 })
 
-test_that("as_duckplyr_df() and relocate()", {
+test_that("as_duckplyr_df() and relocate(g)", {
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
-  pre <- test_df %>% as_duckplyr_df() %>% relocate() %>% as.data.frame()
-  post <- test_df %>% relocate()
+  pre <- test_df %>% as_duckplyr_df() %>% relocate(g) %>% as.data.frame()
+  post <- test_df %>% relocate(g)
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and relocate(a)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% relocate(a) %>% as.data.frame()
+  post <- test_df %>% relocate(a)
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and relocate(g, .before = b)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% relocate(g, .before = b) %>% as.data.frame()
+  post <- test_df %>% relocate(g, .before = b)
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and relocate(a:b, .after = g)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% relocate(a:b, .after = g) %>% as.data.frame()
+  post <- test_df %>% relocate(a:b, .after = g)
 
   # Compare
   expect_equal(pre, post)
@@ -1114,6 +1296,19 @@ test_that("as_duckplyr_df() and select(a)", {
 })
 
 
+test_that("as_duckplyr_df() and select(-g)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% select(-g) %>% as.data.frame()
+  post <- test_df %>% select(-g)
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
 test_that("as_duckplyr_df() and select(everything())", {
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
@@ -1281,6 +1476,19 @@ test_that("as_duckplyr_df() and summarise(c = mean(a), .by = b)", {
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% summarise(c = mean(a), .by = b) %>% as.data.frame()
   post <- test_df %>% summarise(c = mean(a), .by = b)
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and summarise(c = mean(a), .by = g)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% summarise(c = mean(a), .by = g) %>% as.data.frame()
+  post <- test_df %>% summarise(c = mean(a), .by = g)
 
   # Compare
   expect_equal(pre, post)

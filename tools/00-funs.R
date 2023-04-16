@@ -176,6 +176,24 @@ dplyr_only_tests <- head(n = -1, list(
 
 test_extra_arg_map <- list(
   anti_join = "join_by(a)",
+  arrange = c(
+    "",
+    "a",
+    "g",
+    "g, a",
+    "a, g",
+    # "desc(g)"
+    NULL
+  ),
+  count = c(
+    "",
+    "a",
+    "b",
+    "g",
+    "g, a",
+    "b, g",
+    NULL
+  ),
   distinct = c(
     "",
     "a",
@@ -195,7 +213,13 @@ test_extra_arg_map <- list(
   ),
   do = "data.frame(c = 1)",
   dplyr_reconstruct = "test_df",
-  filter = "a == 1",
+  filter = c(
+    "a == 1",
+    "a %in% 2:3, g == 2",
+    "a %in% 2:3 & g == 2",
+    # "lag(a) == 1, .by = g",
+    NULL
+  ),
   full_join = "join_by(a)",
   group_map = "~ .x",
   group_modify = "~ .x",
@@ -261,7 +285,18 @@ test_extra_arg_map <- list(
     NULL
   ),
   nest_join = "join_by(a)",
-  rename = c("", "c = a"),
+  relocate = c(
+    "g",
+    "a",
+    "g, .before = b",
+    "a:b, .after = g",
+    NULL
+  ),
+  rename = c(
+    "",
+    "c = a",
+    NULL
+  ),
   rename_with = "identity",
   right_join = "join_by(a)",
   rows_delete = 'by = c("a", "b")',
@@ -270,12 +305,36 @@ test_extra_arg_map <- list(
   rows_update = 'by = "a"',
   rows_upsert = 'by = "a"',
   sample_n = "size = 1",
-  select = c("a", "everything()"),
+  select = c(
+    "a",
+    "-g",
+    "everything()",
+    NULL
+  ),
   semi_join = "join_by(a)",
   slice_max = 'a',
   slice_min = 'a',
-  summarise = c("c = mean(a)", "c = mean(a), .by = b"),
-  transmute = "c = a + 1",
+  summarise = c(
+    "c = mean(a)",
+    "c = mean(a), .by = b",
+    "c = mean(a), .by = g",
+    # "sum(a < 3)",
+    # "sum(a < 3, .by = g)",
+    NULL
+  ),
+  tally = c(
+    "",
+    # "a",
+    # "b",
+    # "g",
+    # "g, a",
+    # "b, g",
+    NULL
+  ),
+  transmute = c(
+    "c = a + 1",
+    NULL
+  ),
   NULL
 )
 
