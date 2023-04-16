@@ -19,15 +19,27 @@ get_test_code <- function(name, code, oo) {
       return("")
     }
 
-    get_test_code_one(extra_args, pre_step = "", oo, name, two_tables, force, skip)
+    out <- get_test_code_one(extra_args, pre_step = "", oo, name, two_tables, force, skip)
   } else {
-    paste(pmap_chr(
+    out <- paste(pmap_chr(
       list(extra_args, names2(extra_args), oo),
       get_test_code_one,
       name,
       two_tables
-    ), collapse = "\n\n")
+    ), collapse = "\n")
   }
+
+  if (oo) {
+    oo_desc <- "order-preserving"
+  } else {
+    oo_desc <- "order-enforcing"
+  }
+
+  desc <- paste0(name, " ", oo_desc)
+
+  paste0(
+    "# ", desc, " ", strrep("-", 85 - nchar(desc)), "\n\n", out
+  )
 }
 
 get_test_code_one <- function(extra_arg, pre_step, oo, name, two_tables, force = "", skip = "") {
@@ -114,7 +126,7 @@ fs::file_delete(old$path)
 tests <-
   df_methods %>%
   filter(is_tbl_return) %>%
-  expand_grid(oo = c(TRUE, FALSE)) |>
+  expand_grid(oo = c(TRUE, FALSE)) %>%
   mutate(test_code = pmap_chr(list(name, code, oo), get_test_code, .progress = TRUE)) %>%
   filter(test_code != "")
 
