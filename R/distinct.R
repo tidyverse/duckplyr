@@ -16,7 +16,7 @@ distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
 
       if (oo) {
         # Push row number as separate projection
-        rel <- oo_prep(rel)
+        rel <- oo_prep(rel, force = TRUE)
 
         exprs <- rel_translate_dots(dots, .data)
         all_exprs <- NULL
@@ -48,8 +48,8 @@ distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
         )
         out_rel <- rel_filter(rel, list(expr_filter))
 
-        out_rel <- oo_restore_order(out_rel)
-        out_rel <- oo_restore_cols(out_rel, extra = "___row_number_by")
+        out_rel <- oo_restore_order(out_rel, force = TRUE)
+        out_rel <- oo_restore_cols(out_rel, extra = "___row_number_by", force = TRUE)
       } else {
         exprs <- rel_translate_dots(dots, .data)
         if (length(exprs) > 0) {
