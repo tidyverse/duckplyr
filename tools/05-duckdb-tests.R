@@ -131,8 +131,11 @@ tests <-
   df_methods %>%
   filter(is_tbl_return) %>%
   expand_grid(oo = c(TRUE, FALSE)) %>%
+  mutate(sort = lengths(test_extra_arg_map[name])) %>%
+  arrange(desc(sort)) %>%
   mutate(test_code = pmap_chr(list(name, code, oo), get_test_code, .progress = TRUE)) %>%
-  filter(test_code != "")
+  filter(test_code != "") %>%
+  arrange(name)
 
 all_tests <-
   paste0(
