@@ -87,7 +87,7 @@ tests <- head(n = -1, list(
     "mutating joins trigger many-to-many warning",
     "mutating joins compute common columns",
 
-    # https://github.com/duckdb/duckdb/issues/6356
+    # https://github.com/duckdb/duckdb/issues/7451
     "keys are coerced to symmetric type",
     NULL
   ),
