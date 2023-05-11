@@ -109,9 +109,6 @@ tests <- head(n = -1, list(
     NULL
   ),
   "test-sets.R" = c(
-    # https://github.com/duckdb/duckdb/issues/6368
-    "x used as basis of output (#3839)",
-
     # FIXME: oo
     "set operations (apart from union_all) remove duplicates",
 
