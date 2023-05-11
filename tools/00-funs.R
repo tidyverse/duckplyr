@@ -88,6 +88,7 @@ tests <- head(n = -1, list(
     "mutating joins compute common columns",
 
     # https://github.com/duckdb/duckdb/issues/7451
+    # https://github.com/tidyverse/dplyr/pull/6846
     "keys are coerced to symmetric type",
     NULL
   ),
