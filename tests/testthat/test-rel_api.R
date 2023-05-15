@@ -2779,6 +2779,7 @@ test_that("relational inner_join(join_by(a)) order-preserving", {
       "CREATE MACRO \"___eq_na_matches_na\"(a, b) AS ((a IS NULL AND b IS NULL) OR (a = b))"
     )
   )
+  invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
   df1 <- data.frame(a = 1:4, b = rep(2, 4L))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
@@ -2876,7 +2877,10 @@ test_that("relational inner_join(join_by(a)) order-preserving", {
     rel10,
     list(
       {
-        tmp_expr <- duckdb:::expr_reference("a_x")
+        tmp_expr <- duckdb:::expr_function(
+          "___coalesce",
+          list(duckdb:::expr_reference("a_x", rel7), duckdb:::expr_reference("a_y", rel8))
+        )
         duckdb:::expr_set_alias(tmp_expr, "a")
         tmp_expr
       },
@@ -2913,6 +2917,7 @@ test_that("relational inner_join(join_by(a)) order-enforcing", {
       "CREATE MACRO \"___eq_na_matches_na\"(a, b) AS ((a IS NULL AND b IS NULL) OR (a = b))"
     )
   )
+  invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
   df1 <- data.frame(a = 1:4, b = rep(2, 4L))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
@@ -2966,7 +2971,10 @@ test_that("relational inner_join(join_by(a)) order-enforcing", {
     rel7,
     list(
       {
-        tmp_expr <- duckdb:::expr_reference("a_x")
+        tmp_expr <- duckdb:::expr_function(
+          "___coalesce",
+          list(duckdb:::expr_reference("a_x", rel5), duckdb:::expr_reference("a_y", rel6))
+        )
         duckdb:::expr_set_alias(tmp_expr, "a")
         tmp_expr
       },
@@ -3052,6 +3060,7 @@ test_that("relational left_join(join_by(a)) order-preserving", {
       "CREATE MACRO \"___eq_na_matches_na\"(a, b) AS ((a IS NULL AND b IS NULL) OR (a = b))"
     )
   )
+  invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
   df1 <- data.frame(a = 1:4, b = rep(2, 4L))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
@@ -3149,7 +3158,10 @@ test_that("relational left_join(join_by(a)) order-preserving", {
     rel10,
     list(
       {
-        tmp_expr <- duckdb:::expr_reference("a_x")
+        tmp_expr <- duckdb:::expr_function(
+          "___coalesce",
+          list(duckdb:::expr_reference("a_x", rel7), duckdb:::expr_reference("a_y", rel8))
+        )
         duckdb:::expr_set_alias(tmp_expr, "a")
         tmp_expr
       },
@@ -3186,6 +3198,7 @@ test_that("relational left_join(join_by(a)) order-enforcing", {
       "CREATE MACRO \"___eq_na_matches_na\"(a, b) AS ((a IS NULL AND b IS NULL) OR (a = b))"
     )
   )
+  invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
   df1 <- data.frame(a = 1:4, b = rep(2, 4L))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
@@ -3239,7 +3252,10 @@ test_that("relational left_join(join_by(a)) order-enforcing", {
     rel7,
     list(
       {
-        tmp_expr <- duckdb:::expr_reference("a_x")
+        tmp_expr <- duckdb:::expr_function(
+          "___coalesce",
+          list(duckdb:::expr_reference("a_x", rel5), duckdb:::expr_reference("a_y", rel6))
+        )
         duckdb:::expr_set_alias(tmp_expr, "a")
         tmp_expr
       },
