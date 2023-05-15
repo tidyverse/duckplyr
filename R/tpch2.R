@@ -86,7 +86,7 @@ tpch_14 <- function() {
     inner_join(na_matches = TPCH_NA_MATCHES, part, by = c("l_partkey" = "p_partkey")) |>
     summarise(
       promo_revenue = 100 * sum(
-        ifelse(prefix(p_type, "PROMO"), l_extendedprice * (1 - l_discount), 0)
+        ifelse(grepl("^PROMO", p_type), l_extendedprice * (1 - l_discount), 0)
       ) / sum(l_extendedprice * (1 - l_discount))
     )
 }
@@ -122,7 +122,7 @@ tpch_16 <- function() {
   part_filtered <- part |>
     filter(
       p_brand != "Brand#45",
-      !prefix(p_type, "MEDIUM POLISHED"),
+      !grepl("^MEDIUM POLISHED", p_type),
       p_size %in% c(49, 14, 23, 45, 19, 3, 36, 9)
     )
 
@@ -232,7 +232,7 @@ tpch_20 <- function() {
     select(s_suppkey, s_name, s_address)
 
   part_forest <- part |>
-    filter(prefix(p_name, "forest"))
+    filter(grepl("^forest", p_name))
 
   partsupp_forest_ca <- partsupp |>
     semi_join(na_matches = TPCH_NA_MATCHES, supplier_ca, c("ps_suppkey" = "s_suppkey")) |>

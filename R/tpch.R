@@ -27,7 +27,7 @@ tpch_02 <- function() {
 
   p <- part |>
     select_opt(p_partkey, p_type, p_size, p_mfgr) |>
-    filter(p_size == 15, suffix(p_type, "BRASS")) |>
+    filter(p_size == 15, grepl("BRASS$", p_type)) |>
     select_opt(p_partkey, p_mfgr)
 
   psp <- inner_join(na_matches = TPCH_NA_MATCHES, p, ps, by = c("p_partkey" = "ps_partkey"))
