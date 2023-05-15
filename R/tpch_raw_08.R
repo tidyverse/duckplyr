@@ -687,7 +687,22 @@ tpch_raw_08 <- function(con, experimental) {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb:::expr_function("year", list(duckdb:::expr_reference("o_orderdate")))
+        tmp_expr <- duckdb:::expr_function(
+          "as.integer",
+          list(
+            duckdb:::expr_function(
+              "strftime",
+              list(
+                duckdb:::expr_reference("o_orderdate"),
+                if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                  duckdb:::expr_constant("%Y", experimental = experimental)
+                } else {
+                  duckdb:::expr_constant("%Y")
+                }
+              )
+            )
+          )
+        )
         duckdb:::expr_set_alias(tmp_expr, "o_year")
         tmp_expr
       }

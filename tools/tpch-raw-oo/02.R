@@ -2,6 +2,9 @@ load("tools/tpch/001.rda")
 con <- DBI::dbConnect(duckdb::duckdb())
 experimental <- FALSE
 invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
+invisible(
+  DBI::dbExecute(con, "CREATE MACRO \"grepl\"(pattern, x) AS regexp_matches(x, pattern)")
+)
 invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
 invisible(
   DBI::dbExecute(
@@ -74,14 +77,14 @@ rel5 <- duckdb:::rel_filter(
       )
     ),
     duckdb:::expr_function(
-      "suffix",
+      "grepl",
       list(
-        duckdb:::expr_reference("p_type"),
         if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-          duckdb:::expr_constant("BRASS", experimental = experimental)
+          duckdb:::expr_constant("BRASS$", experimental = experimental)
         } else {
-          duckdb:::expr_constant("BRASS")
-        }
+          duckdb:::expr_constant("BRASS$")
+        },
+        duckdb:::expr_reference("p_type")
       )
     )
   )
