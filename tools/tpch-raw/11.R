@@ -2,6 +2,7 @@ load("tools/tpch/001.rda")
 con <- DBI::dbConnect(duckdb::duckdb())
 experimental <- FALSE
 invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \">\"(a, b) AS a > b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"desc\"(x) AS (-x)"))
 df1 <- nation
@@ -48,7 +49,10 @@ rel8 <- duckdb:::rel_project(
       tmp_expr
     },
     {
-      tmp_expr <- duckdb:::expr_reference("ps_suppkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("ps_suppkey", rel4), duckdb:::expr_reference("s_suppkey", rel6))
+      )
       duckdb:::expr_set_alias(tmp_expr, "ps_suppkey")
       tmp_expr
     },
@@ -151,7 +155,10 @@ rel12 <- duckdb:::rel_project(
       tmp_expr
     },
     {
-      tmp_expr <- duckdb:::expr_reference("s_nationkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("s_nationkey", rel9), duckdb:::expr_reference("n_nationkey", rel10))
+      )
       duckdb:::expr_set_alias(tmp_expr, "s_nationkey")
       tmp_expr
     },
@@ -214,8 +221,9 @@ rel13 <- duckdb:::rel_aggregate(
     tmp_expr
   })
 )
-rel14 <- duckdb:::rel_project(
-  rel13,
+rel14 <- duckdb:::rel_distinct(rel13)
+rel15 <- duckdb:::rel_project(
+  rel14,
   list(
     {
       tmp_expr <- duckdb:::expr_reference("global_value")
@@ -233,7 +241,7 @@ rel14 <- duckdb:::rel_project(
     }
   )
 )
-rel15 <- duckdb:::rel_aggregate(
+rel16 <- duckdb:::rel_aggregate(
   rel12,
   groups = list(duckdb:::expr_reference("ps_partkey")),
   aggregates = list({
@@ -250,8 +258,8 @@ rel15 <- duckdb:::rel_aggregate(
     tmp_expr
   })
 )
-rel16 <- duckdb:::rel_project(
-  rel15,
+rel17 <- duckdb:::rel_project(
+  rel16,
   list(
     {
       tmp_expr <- duckdb:::expr_reference("ps_partkey")
@@ -274,10 +282,10 @@ rel16 <- duckdb:::rel_project(
     }
   )
 )
-rel17 <- duckdb:::rel_set_alias(rel16, "lhs")
-rel18 <- duckdb:::rel_set_alias(rel14, "rhs")
-rel19 <- duckdb:::rel_project(
-  rel17,
+rel18 <- duckdb:::rel_set_alias(rel17, "lhs")
+rel19 <- duckdb:::rel_set_alias(rel15, "rhs")
+rel20 <- duckdb:::rel_project(
+  rel18,
   list(
     {
       tmp_expr <- duckdb:::expr_reference("ps_partkey")
@@ -296,8 +304,8 @@ rel19 <- duckdb:::rel_project(
     }
   )
 )
-rel20 <- duckdb:::rel_project(
-  rel18,
+rel21 <- duckdb:::rel_project(
+  rel19,
   list(
     {
       tmp_expr <- duckdb:::expr_reference("global_value")
@@ -311,19 +319,19 @@ rel20 <- duckdb:::rel_project(
     }
   )
 )
-rel21 <- duckdb:::rel_join(
-  rel19,
+rel22 <- duckdb:::rel_join(
   rel20,
+  rel21,
   list(
     duckdb:::expr_function(
       "==",
-      list(duckdb:::expr_reference("global_agr_key_x", rel19), duckdb:::expr_reference("global_agr_key_y", rel20))
+      list(duckdb:::expr_reference("global_agr_key_x", rel20), duckdb:::expr_reference("global_agr_key_y", rel21))
     )
   ),
   "inner"
 )
-rel22 <- duckdb:::rel_project(
-  rel21,
+rel23 <- duckdb:::rel_project(
+  rel22,
   list(
     {
       tmp_expr <- duckdb:::expr_reference("ps_partkey_x")
@@ -336,7 +344,10 @@ rel22 <- duckdb:::rel_project(
       tmp_expr
     },
     {
-      tmp_expr <- duckdb:::expr_reference("global_agr_key_x")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("global_agr_key_x", rel20), duckdb:::expr_reference("global_agr_key_y", rel21))
+      )
       duckdb:::expr_set_alias(tmp_expr, "global_agr_key")
       tmp_expr
     },
@@ -347,15 +358,15 @@ rel22 <- duckdb:::rel_project(
     }
   )
 )
-rel23 <- duckdb:::rel_filter(
-  rel22,
+rel24 <- duckdb:::rel_filter(
+  rel23,
   list(
     duckdb:::expr_function(">", list(duckdb:::expr_reference("value"), duckdb:::expr_reference("global_value")))
   )
 )
-rel24 <- duckdb:::rel_order(rel23, list(duckdb:::expr_function("desc", list(duckdb:::expr_reference("value")))))
-rel25 <- duckdb:::rel_project(
-  rel24,
+rel25 <- duckdb:::rel_order(rel24, list(duckdb:::expr_function("desc", list(duckdb:::expr_reference("value")))))
+rel26 <- duckdb:::rel_project(
+  rel25,
   list(
     {
       tmp_expr <- duckdb:::expr_reference("ps_partkey")
@@ -369,5 +380,5 @@ rel25 <- duckdb:::rel_project(
     }
   )
 )
-rel25
-duckdb:::rel_to_altrep(rel25)
+rel26
+duckdb:::rel_to_altrep(rel26)

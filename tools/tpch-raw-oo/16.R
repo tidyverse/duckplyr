@@ -8,6 +8,7 @@ invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
 invisible(
   DBI::dbExecute(con, "CREATE MACRO \"grepl\"(pattern, x) AS regexp_matches(x, pattern)")
 )
+invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"n_distinct\"(x) AS (COUNT(DISTINCT x))"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"desc\"(x) AS (-x)"))
 df1 <- part
@@ -298,7 +299,10 @@ rel12 <- duckdb:::rel_project(
       tmp_expr
     },
     {
-      tmp_expr <- duckdb:::expr_reference("ps_suppkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("ps_suppkey", rel8), duckdb:::expr_reference("s_suppkey", rel9))
+      )
       duckdb:::expr_set_alias(tmp_expr, "ps_suppkey")
       tmp_expr
     },
@@ -460,7 +464,10 @@ rel20 <- duckdb:::rel_project(
   rel19,
   list(
     {
-      tmp_expr <- duckdb:::expr_reference("p_partkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("p_partkey", rel16), duckdb:::expr_reference("ps_partkey", rel17))
+      )
       duckdb:::expr_set_alias(tmp_expr, "p_partkey")
       tmp_expr
     },

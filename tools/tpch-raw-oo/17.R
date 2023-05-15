@@ -2,6 +2,7 @@ load("tools/tpch/001.rda")
 con <- DBI::dbConnect(duckdb::duckdb())
 experimental <- FALSE
 invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"<\"(a, b) AS a < b"))
 df1 <- part
 rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
@@ -205,7 +206,10 @@ rel10 <- duckdb:::rel_project(
       tmp_expr
     },
     {
-      tmp_expr <- duckdb:::expr_reference("l_partkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("l_partkey", rel6), duckdb:::expr_reference("p_partkey", rel7))
+      )
       duckdb:::expr_set_alias(tmp_expr, "l_partkey")
       tmp_expr
     },
@@ -656,7 +660,10 @@ rel20 <- duckdb:::rel_project(
       tmp_expr
     },
     {
-      tmp_expr <- duckdb:::expr_reference("l_partkey_x")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("l_partkey_x", rel16), duckdb:::expr_reference("l_partkey_y", rel17))
+      )
       duckdb:::expr_set_alias(tmp_expr, "l_partkey")
       tmp_expr
     },
@@ -805,5 +812,6 @@ rel22 <- duckdb:::rel_aggregate(
     tmp_expr
   })
 )
-rel22
-duckdb:::rel_to_altrep(rel22)
+rel23 <- duckdb:::rel_distinct(rel22)
+rel23
+duckdb:::rel_to_altrep(rel23)

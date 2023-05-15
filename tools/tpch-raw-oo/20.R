@@ -2,6 +2,7 @@ load("tools/tpch/001.rda")
 con <- DBI::dbConnect(duckdb::duckdb())
 experimental <- FALSE
 invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \">=\"(a, b) AS a >= b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"as.Date\"(x) AS strptime(x, '%Y-%m-%d')"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"<\"(a, b) AS a < b"))
@@ -137,7 +138,10 @@ rel10 <- duckdb:::rel_project(
       tmp_expr
     },
     {
-      tmp_expr <- duckdb:::expr_reference("s_nationkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("s_nationkey", rel6), duckdb:::expr_reference("n_nationkey", rel7))
+      )
       duckdb:::expr_set_alias(tmp_expr, "s_nationkey")
       tmp_expr
     },
@@ -703,7 +707,10 @@ rel42 <- duckdb:::rel_project(
       tmp_expr
     },
     {
-      tmp_expr <- duckdb:::expr_reference("ps_suppkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("ps_suppkey", rel38), duckdb:::expr_reference("l_suppkey", rel39))
+      )
       duckdb:::expr_set_alias(tmp_expr, "ps_suppkey")
       tmp_expr
     },

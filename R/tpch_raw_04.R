@@ -130,7 +130,10 @@ tpch_raw_04 <- function(con, experimental) {
     rel11,
     list(
       {
-        tmp_expr <- duckdb:::expr_reference("l_orderkey")
+        tmp_expr <- duckdb:::expr_function(
+          "___coalesce",
+          list(duckdb:::expr_reference("l_orderkey", rel9), duckdb:::expr_reference("o_orderkey", rel10))
+        )
         duckdb:::expr_set_alias(tmp_expr, "l_orderkey")
         tmp_expr
       },

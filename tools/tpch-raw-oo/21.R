@@ -4,6 +4,7 @@ experimental <- FALSE
 invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS (COUNT(*))"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \">\"(a, b) AS a > b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"any\"(x) AS (bool_or(x))"))
 invisible(
   DBI::dbExecute(
@@ -407,7 +408,10 @@ rel19 <- duckdb:::rel_project(
   rel18,
   list(
     {
-      tmp_expr <- duckdb:::expr_reference("l_orderkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("l_orderkey", rel15), duckdb:::expr_reference("o_orderkey", rel16))
+      )
       duckdb:::expr_set_alias(tmp_expr, "l_orderkey")
       tmp_expr
     },
@@ -977,7 +981,10 @@ rel38 <- duckdb:::rel_project(
   rel37,
   list(
     {
-      tmp_expr <- duckdb:::expr_reference("s_suppkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("s_suppkey", rel34), duckdb:::expr_reference("l_suppkey", rel35))
+      )
       duckdb:::expr_set_alias(tmp_expr, "s_suppkey")
       tmp_expr
     },
@@ -1285,7 +1292,10 @@ rel47 <- duckdb:::rel_project(
       tmp_expr
     },
     {
-      tmp_expr <- duckdb:::expr_reference("s_nationkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("s_nationkey", rel43), duckdb:::expr_reference("n_nationkey", rel44))
+      )
       duckdb:::expr_set_alias(tmp_expr, "s_nationkey")
       tmp_expr
     },

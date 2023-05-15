@@ -237,7 +237,10 @@ tpch_raw_oo_15 <- function(con, experimental) {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb:::expr_reference("global_agr_key_x")
+        tmp_expr <- duckdb:::expr_function(
+          "___coalesce",
+          list(duckdb:::expr_reference("global_agr_key_x", rel11), duckdb:::expr_reference("global_agr_key_y", rel12))
+        )
         duckdb:::expr_set_alias(tmp_expr, "global_agr_key")
         tmp_expr
       },
@@ -370,7 +373,10 @@ tpch_raw_oo_15 <- function(con, experimental) {
     rel23,
     list(
       {
-        tmp_expr <- duckdb:::expr_reference("l_suppkey")
+        tmp_expr <- duckdb:::expr_function(
+          "___coalesce",
+          list(duckdb:::expr_reference("l_suppkey", rel20), duckdb:::expr_reference("s_suppkey", rel21))
+        )
         duckdb:::expr_set_alias(tmp_expr, "l_suppkey")
         tmp_expr
       },

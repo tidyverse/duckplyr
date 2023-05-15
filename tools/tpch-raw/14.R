@@ -5,6 +5,7 @@ invisible(DBI::dbExecute(con, "CREATE MACRO \">=\"(a, b) AS a >= b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"as.Date\"(x) AS strptime(x, '%Y-%m-%d')"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"<\"(a, b) AS a < b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
 invisible(
   DBI::dbExecute(
     con,
@@ -74,7 +75,10 @@ rel7 <- duckdb:::rel_project(
       tmp_expr
     },
     {
-      tmp_expr <- duckdb:::expr_reference("l_partkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("l_partkey", rel3), duckdb:::expr_reference("p_partkey", rel5))
+      )
       duckdb:::expr_set_alias(tmp_expr, "l_partkey")
       tmp_expr
     },
@@ -278,5 +282,6 @@ rel8 <- duckdb:::rel_aggregate(
     tmp_expr
   })
 )
-rel8
-duckdb:::rel_to_altrep(rel8)
+rel9 <- duckdb:::rel_distinct(rel8)
+rel9
+duckdb:::rel_to_altrep(rel9)

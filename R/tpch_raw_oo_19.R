@@ -175,7 +175,10 @@ tpch_raw_oo_19 <- function(con, experimental) {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb:::expr_reference("l_partkey")
+        tmp_expr <- duckdb:::expr_function(
+          "___coalesce",
+          list(duckdb:::expr_reference("l_partkey", rel5), duckdb:::expr_reference("p_partkey", rel6))
+        )
         duckdb:::expr_set_alias(tmp_expr, "l_partkey")
         tmp_expr
       },
@@ -927,6 +930,7 @@ tpch_raw_oo_19 <- function(con, experimental) {
       tmp_expr
     })
   )
-  rel11
-  duckdb:::rel_to_altrep(rel11)
+  rel12 <- duckdb:::rel_distinct(rel11)
+  rel12
+  duckdb:::rel_to_altrep(rel12)
 }

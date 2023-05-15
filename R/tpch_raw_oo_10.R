@@ -203,7 +203,10 @@ tpch_raw_oo_10 <- function(con, experimental) {
     rel14,
     list(
       {
-        tmp_expr <- duckdb:::expr_reference("l_orderkey")
+        tmp_expr <- duckdb:::expr_function(
+          "___coalesce",
+          list(duckdb:::expr_reference("l_orderkey", rel11), duckdb:::expr_reference("o_orderkey", rel12))
+        )
         duckdb:::expr_set_alias(tmp_expr, "l_orderkey")
         tmp_expr
       },
@@ -422,7 +425,10 @@ tpch_raw_oo_10 <- function(con, experimental) {
     rel26,
     list(
       {
-        tmp_expr <- duckdb:::expr_reference("c_custkey")
+        tmp_expr <- duckdb:::expr_function(
+          "___coalesce",
+          list(duckdb:::expr_reference("c_custkey", rel23), duckdb:::expr_reference("o_custkey", rel24))
+        )
         duckdb:::expr_set_alias(tmp_expr, "c_custkey")
         tmp_expr
       },
@@ -576,7 +582,10 @@ tpch_raw_oo_10 <- function(con, experimental) {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb:::expr_reference("c_nationkey")
+        tmp_expr <- duckdb:::expr_function(
+          "___coalesce",
+          list(duckdb:::expr_reference("c_nationkey", rel32), duckdb:::expr_reference("n_nationkey", rel33))
+        )
         duckdb:::expr_set_alias(tmp_expr, "c_nationkey")
         tmp_expr
       },
