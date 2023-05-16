@@ -18,28 +18,28 @@ region <- as_duckplyr_df(region)
 supplier <- as_duckplyr_df(supplier)
 
 test_dplyr_q <- head(n = -1, list(
-  tpch_01 = tpch_01,
-  tpch_02 = tpch_02,
-  tpch_03 = tpch_03,
-  tpch_04 = tpch_04,
-  tpch_05 = tpch_05,
-  tpch_06 = tpch_06,
-  tpch_07 = tpch_07, # string error
-  tpch_08 = tpch_08, # string error
-  tpch_09 = tpch_09, # string error
-  tpch_10 = tpch_10,
-  tpch_11 = tpch_11,
-  tpch_12 = tpch_12,
-  tpch_13 = tpch_13, # takes prohibitively long time
-  tpch_14 = tpch_14,
-  tpch_15 = tpch_15,
-  tpch_16 = tpch_16,
-  tpch_17 = tpch_17,
-  tpch_18 = tpch_18,
-  tpch_19 = tpch_19,
-  tpch_20 = tpch_20,
-  tpch_21 = tpch_21, # string error
-  tpch_22 = tpch_22, # string error
+    q01 = tpch_01,
+    q02 = tpch_02,
+    q03 = tpch_03,
+    q04 = tpch_04,
+    q05 = tpch_05,
+    q06 = tpch_06,
+    q07 = tpch_07, # string error
+    q08 = tpch_08, # string error
+    q09 = tpch_09, # string error
+    q10 = tpch_10,
+    q11 = tpch_11,
+    q12 = tpch_12,
+    q13 = tpch_13, # takes prohibitively long time
+    q14 = tpch_14,
+    q15 = tpch_15,
+    q16 = tpch_16,
+    q17 = tpch_17,
+    q18 = tpch_18,
+    q19 = tpch_19,
+    q20 = tpch_20,
+    q21 = tpch_21, # string error
+    q22 = tpch_22, # string error
   NULL
 ))
 

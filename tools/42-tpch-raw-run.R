@@ -1,170 +1,62 @@
 pkgload::load_all()
-library(tictoc)
 
-load("tools/tpch/500.rda")
+Sys.setenv(DUCKPLYR_FORCE = TRUE)
+Sys.setenv(DUCKPLYR_EXPERIMENTAL = FALSE)
+Sys.setenv(DUCKPLYR_META_SKIP = TRUE)
+
+# Sys.setenv(DUCKPLYR_OUTPUT_ORDER = TRUE)
+
+load("tools/tpch/100.rda")
 
 con <- get_default_duckdb_connection()
 experimental <- FALSE
 
-run <- identity
-# run <- invisible
+customer <- as_duckplyr_df(customer)
+lineitem <- as_duckplyr_df(lineitem)
+nation <- as_duckplyr_df(nation)
+orders <- as_duckplyr_df(orders)
+part <- as_duckplyr_df(part)
+partsupp <- as_duckplyr_df(partsupp)
+region <- as_duckplyr_df(region)
+supplier <- as_duckplyr_df(supplier)
+
+test_dplyr_q <- head(n = -1, list(
+	q01 = tpch_raw_01,
+	q02 = tpch_raw_02,
+	q03 = tpch_raw_03,
+	q04 = tpch_raw_04,
+	q05 = tpch_raw_05,
+	q06 = tpch_raw_06,
+	q07 = tpch_raw_07, # string error
+	q08 = tpch_raw_08, # string error
+	q09 = tpch_raw_09, # string error
+	q10 = tpch_raw_10,
+	q11 = tpch_raw_11,
+	q12 = tpch_raw_12,
+	q13 = tpch_raw_13, # takes prohibitively long time
+	q14 = tpch_raw_14,
+	q15 = tpch_raw_15,
+	q16 = tpch_raw_16,
+	q17 = tpch_raw_17,
+	q18 = tpch_raw_18,
+	q19 = tpch_raw_19,
+	q20 = tpch_raw_20,
+	q21 = tpch_raw_21, # string error
+	q22 = tpch_raw_22, # string error
+  NULL
+))
 
 res <- list()
-pkg <- "raw-relational-force-parallelism"
+pkg <- "relational-duckdb"
 
-q =1 
-tic()
-tpch_raw_01(con, experimental)
-tmp = toc()
-time = tmp$toc - tmp$tic
-res[[q]] <- data.frame(pkg = pkg, q=q, time = time)
-
-q = 2
-tic()
-tpch_raw_02(con, experimental)
-tmp = toc()
-time = tmp$toc - tmp$tic
-res[[q]] <- data.frame(pkg = pkg, q=q, time = time)
-
-q = 3
-tic()
-tpch_raw_03(con, experimental)
-tmp = toc()
-time = tmp$toc - tmp$tic
-res[[q]] <- data.frame(pkg = pkg, q=q, time = time)
-
-q = 4
-tic()
-tpch_raw_04(con, experimental)
-tmp <- toc()
-time = tmp$toc - tmp$tic
-res[[q]] <- data.frame(pkg = pkg, q=q, time = time)
-
-q = 5
-tic()
-tpch_raw_05(con, experimental)
-tmp <- toc()
-time = tmp$toc - tmp$tic
-res[[q]] <- data.frame(pkg = pkg, q=q, time = time)
-
-q = 6
-tic()
-tpch_raw_06(con, experimental)
-tmp <- toc()
-time = tmp$toc - tmp$tic
-res[[q]] <- data.frame(pkg = pkg, q=q, time = time)
-
-q = 7
-tic()
-tpch_raw_07(con, experimental)
-tmp <- toc()
-time = tmp$toc - tmp$tic
-res[[q]] <- data.frame(pkg = pkg, q=q, time = time)
-
-q = 8
-tic()
-tpch_raw_08(con, experimental)
-tmp <- toc()
-time = tmp$toc - tmp$tic
-res[[q]] <- data.frame(pkg = pkg, q=q, time = time)
-
-q = 9
-tic()
-tpch_raw_09(con, experimental)
-tmp <- toc()
-time = tmp$toc - tmp$tic
-res[[q]] <- data.frame(pkg = pkg, q=q, time = time)
-
-q = 10
-tic()
-tpch_raw_10(con, experimental)
-tmp <- toc()
-time = tmp$toc - tmp$tic
-res[[q]] <- data.frame(pkg = pkg, q=q, time = time)
-
-q = 11
-tic()
-tpch_raw_11(con, experimental)
-tmp <- toc()
-time = tmp$toc - tmp$tic
-res[[q]] <- data.frame(pkg = pkg, q=q, time = time)
-
-q = 12
-tic()
-tpch_raw_12(con, experimental)
-tmp <- toc()
-time = tmp$toc - tmp$tic
-res[[q]] <- data.frame(pkg = pkg, q=q, time = time)
-
-q = 13
-tic()
-tpch_raw_13(con, experimental)
-tmp <- toc()
-time = tmp$toc - tmp$tic
-res[[q]] <- data.frame(pkg = pkg, q=q, time = time)
-
-q = 14
-tic()
-tpch_raw_14(con, experimental)
-tmp <- toc()
-time = tmp$toc - tmp$tic
-res[[q]] <- data.frame(pkg = pkg, q=q, time = time)
-
-q = 15
-tic()
-tpch_raw_15(con, experimental)
-tmp <- toc()
-time = tmp$toc - tmp$tic
-res[[q]] <- data.frame(pkg = pkg, q=q, time = time)
-
-q = 16
-tic()
-tpch_raw_16(con, experimental)
-tmp <- toc()
-time = tmp$toc - tmp$tic
-res[[q]] <- data.frame(pkg = pkg, q=q, time = time)
-
-q = 17
-tic()
-tpch_raw_17(con, experimental)
-tmp <- toc()
-time = tmp$toc - tmp$tic
-res[[q]] <- data.frame(pkg = pkg, q=q, time = time)
-
-q = 18
-tic()
-tpch_raw_18(con, experimental)
-tmp <- toc()
-time = tmp$toc - tmp$tic
-res[[q]] <- data.frame(pkg = pkg, q=q, time = time)
-
-q = 19
-tic()
-tpch_raw_19(con, experimental)
-tmp <- toc()
-time = tmp$toc - tmp$tic
-res[[q]] <- data.frame(pkg = pkg, q=q, time = time)
-
-q = 20
-tic()
-tpch_raw_20(con, experimental)
-tmp <- toc()
-time = tmp$toc - tmp$tic
-res[[q]] <- data.frame(pkg = pkg, q=q, time = time)
-
-q = 21
-tic()
-tpch_raw_21(con, experimental)
-tmp <- toc()
-time = tmp$toc - tmp$tic
-res[[q]] <- data.frame(pkg = pkg, q=q, time = time)
-
-q = 22
-tic()
-tpch_raw_22(con, experimental)
-tmp <- toc()
-time = tmp$toc - tmp$tic
-res[[q]] <- data.frame(pkg = pkg, q=q, time = time)
+for (q in names(test_dplyr_q)) {
+  f <- test_dplyr_q[[q]]
+  cold <- collect(f(con, experimental))
+  time <- system.time(collect(f(con, experimental)))[[3]]
+  print(q)
+  print(time)
+  res[[q]] <- data.frame(pkg = pkg, q = q, time = time)
+}
 
 df <- do.call(rbind, res)
 write.csv(df, paste0("res-", pkg, ".csv"))

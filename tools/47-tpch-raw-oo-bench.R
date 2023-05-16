@@ -6,33 +6,33 @@ con <- get_default_duckdb_connection()
 experimental <- FALSE
 
 test_dplyr_q <- head(n = -1, list(
-  tpch_01 = tpch_raw_oo_01,
-  tpch_02 = tpch_raw_oo_02,
-  tpch_03 = tpch_raw_oo_03,
-  tpch_04 = tpch_raw_oo_04,
-  tpch_05 = tpch_raw_oo_05,
-  tpch_06 = tpch_raw_oo_06,
-  # tpch_07 = tpch_raw_oo_07, # string error
-  # tpch_08 = tpch_raw_oo_08, # string error
-  # tpch_09 = tpch_raw_oo_09, # string error
-  tpch_10 = tpch_raw_oo_10,
-  tpch_11 = tpch_raw_oo_11,
-  tpch_12 = tpch_raw_oo_12,
-  # tpch_13 = tpch_raw_oo_13, # takes prohibitively long time
-  tpch_14 = tpch_raw_oo_14,
-  tpch_15 = tpch_raw_oo_15,
-  tpch_16 = tpch_raw_oo_16,
-  tpch_17 = tpch_raw_oo_17,
-  tpch_18 = tpch_raw_oo_18,
-  tpch_19 = tpch_raw_oo_19,
-  tpch_20 = tpch_raw_oo_20,
-  # tpch_21 = tpch_raw_oo_21, # string error
-  # tpch_22 = tpch_raw_oo_22, # string error
+    q01 = tpch_raw_oo_01,
+    q02 = tpch_raw_oo_02,
+    q03 = tpch_raw_oo_03,
+    q04 = tpch_raw_oo_04,
+    q05 = tpch_raw_oo_05,
+    q06 = tpch_raw_oo_06,
+    q07 = tpch_raw_oo_07, # string error
+    q08 = tpch_raw_oo_08, # string error
+    q09 = tpch_raw_oo_09, # string error
+    q10 = tpch_raw_oo_10,
+    q11 = tpch_raw_oo_11,
+    q12 = tpch_raw_oo_12,
+    q13 = tpch_raw_oo_13, # takes prohibitively long time
+    q14 = tpch_raw_oo_14,
+    q15 = tpch_raw_oo_15,
+    q16 = tpch_raw_oo_16,
+    q17 = tpch_raw_oo_17,
+    q18 = tpch_raw_oo_18,
+    q19 = tpch_raw_oo_19,
+    q20 = tpch_raw_oo_20,
+    q21 = tpch_raw_oo_21, # string error
+    q22 = tpch_raw_oo_22, # string error
   NULL
 ))
 
 res <- list()
-pkg <- "duckdb"
+pkg <- "duckplyr-raw-oo"
 
 for (q in names(test_dplyr_q)) {
   f <- test_dplyr_q[[q]]
