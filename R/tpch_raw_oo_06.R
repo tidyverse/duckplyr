@@ -129,6 +129,7 @@ tpch_raw_oo_06 <- function(con, experimental) {
       tmp_expr
     })
   )
-  rel5
-  duckdb:::rel_to_altrep(rel5)
+  rel6 <- duckdb:::rel_distinct(rel5)
+  rel6
+  duckdb:::rel_to_altrep(rel6)
 }

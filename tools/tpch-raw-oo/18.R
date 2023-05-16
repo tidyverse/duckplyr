@@ -3,6 +3,7 @@ con <- DBI::dbConnect(duckdb::duckdb())
 experimental <- FALSE
 invisible(DBI::dbExecute(con, "CREATE MACRO \">\"(a, b) AS a > b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"desc\"(x) AS (-x)"))
 df1 <- lineitem
 rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
@@ -129,7 +130,10 @@ rel11 <- duckdb:::rel_project(
   rel10,
   list(
     {
-      tmp_expr <- duckdb:::expr_reference("o_orderkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("o_orderkey", rel7), duckdb:::expr_reference("l_orderkey", rel8))
+      )
       duckdb:::expr_set_alias(tmp_expr, "o_orderkey")
       tmp_expr
     },
@@ -318,7 +322,10 @@ rel19 <- duckdb:::rel_project(
       tmp_expr
     },
     {
-      tmp_expr <- duckdb:::expr_reference("o_custkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("o_custkey", rel15), duckdb:::expr_reference("c_custkey", rel16))
+      )
       duckdb:::expr_set_alias(tmp_expr, "o_custkey")
       tmp_expr
     },

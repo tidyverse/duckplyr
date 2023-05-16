@@ -10,6 +10,7 @@ invisible(
     "CREATE MACRO \"___eq_na_matches_na\"(a, b) AS ((a IS NULL AND b IS NULL) OR (a = b))"
   )
 )
+invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \">\"(a, b) AS a > b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"desc\"(x) AS (-x)"))
 df1 <- orders
@@ -169,7 +170,10 @@ rel13 <- duckdb:::rel_project(
       tmp_expr
     },
     {
-      tmp_expr <- duckdb:::expr_reference("o_custkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("o_custkey", rel9), duckdb:::expr_reference("c_custkey", rel10))
+      )
       duckdb:::expr_set_alias(tmp_expr, "o_custkey")
       tmp_expr
     },
@@ -349,7 +353,10 @@ rel25 <- duckdb:::rel_project(
   rel24,
   list(
     {
-      tmp_expr <- duckdb:::expr_reference("l_orderkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("l_orderkey", rel21), duckdb:::expr_reference("o_orderkey", rel22))
+      )
       duckdb:::expr_set_alias(tmp_expr, "l_orderkey")
       tmp_expr
     },

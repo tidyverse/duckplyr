@@ -255,9 +255,10 @@ tpch_raw_oo_22 <- function(con, experimental) {
       }
     )
   )
-  rel4 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
-  rel5 <- duckdb:::rel_project(
-    rel4,
+  rel4 <- duckdb:::rel_distinct(rel3)
+  rel5 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
+  rel6 <- duckdb:::rel_project(
+    rel5,
     list(
       {
         tmp_expr <- duckdb:::expr_reference("c_custkey")
@@ -321,8 +322,8 @@ tpch_raw_oo_22 <- function(con, experimental) {
       }
     )
   )
-  rel6 <- duckdb:::rel_project(
-    rel5,
+  rel7 <- duckdb:::rel_project(
+    rel6,
     list(
       {
         tmp_expr <- duckdb:::expr_reference("c_custkey")
@@ -380,10 +381,10 @@ tpch_raw_oo_22 <- function(con, experimental) {
       }
     )
   )
-  rel7 <- duckdb:::rel_set_alias(rel6, "lhs")
-  rel8 <- duckdb:::rel_set_alias(rel3, "rhs")
-  rel9 <- duckdb:::rel_project(
-    rel7,
+  rel8 <- duckdb:::rel_set_alias(rel7, "lhs")
+  rel9 <- duckdb:::rel_set_alias(rel4, "rhs")
+  rel10 <- duckdb:::rel_project(
+    rel8,
     list(
       {
         tmp_expr <- duckdb:::expr_reference("c_custkey")
@@ -437,8 +438,8 @@ tpch_raw_oo_22 <- function(con, experimental) {
       }
     )
   )
-  rel10 <- duckdb:::rel_project(
-    rel8,
+  rel11 <- duckdb:::rel_project(
+    rel9,
     list(
       {
         tmp_expr <- duckdb:::expr_reference("acctbal_min")
@@ -452,8 +453,8 @@ tpch_raw_oo_22 <- function(con, experimental) {
       }
     )
   )
-  rel11 <- duckdb:::rel_project(
-    rel9,
+  rel12 <- duckdb:::rel_project(
+    rel10,
     list(
       {
         tmp_expr <- duckdb:::expr_reference("c_custkey_x")
@@ -512,8 +513,8 @@ tpch_raw_oo_22 <- function(con, experimental) {
       }
     )
   )
-  rel12 <- duckdb:::rel_project(
-    rel10,
+  rel13 <- duckdb:::rel_project(
+    rel11,
     list(
       {
         tmp_expr <- duckdb:::expr_reference("acctbal_min_y")
@@ -532,23 +533,23 @@ tpch_raw_oo_22 <- function(con, experimental) {
       }
     )
   )
-  rel13 <- duckdb:::rel_join(
-    rel11,
+  rel14 <- duckdb:::rel_join(
     rel12,
+    rel13,
     list(
       duckdb:::expr_function(
         "==",
-        list(duckdb:::expr_reference("join_id_x", rel11), duckdb:::expr_reference("join_id_y", rel12))
+        list(duckdb:::expr_reference("join_id_x", rel12), duckdb:::expr_reference("join_id_y", rel13))
       )
     ),
     "left"
   )
-  rel14 <- duckdb:::rel_order(
-    rel13,
-    list(duckdb:::expr_reference("___row_number_x", rel11), duckdb:::expr_reference("___row_number_y", rel12))
-  )
-  rel15 <- duckdb:::rel_project(
+  rel15 <- duckdb:::rel_order(
     rel14,
+    list(duckdb:::expr_reference("___row_number_x", rel12), duckdb:::expr_reference("___row_number_y", rel13))
+  )
+  rel16 <- duckdb:::rel_project(
+    rel15,
     list(
       {
         tmp_expr <- duckdb:::expr_reference("c_custkey_x")
@@ -596,7 +597,10 @@ tpch_raw_oo_22 <- function(con, experimental) {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb:::expr_reference("join_id_x")
+        tmp_expr <- duckdb:::expr_function(
+          "___coalesce",
+          list(duckdb:::expr_reference("join_id_x", rel12), duckdb:::expr_reference("join_id_y", rel13))
+        )
         duckdb:::expr_set_alias(tmp_expr, "join_id")
         tmp_expr
       },
@@ -607,8 +611,8 @@ tpch_raw_oo_22 <- function(con, experimental) {
       }
     )
   )
-  rel16 <- duckdb:::rel_filter(
-    rel15,
+  rel17 <- duckdb:::rel_filter(
+    rel16,
     list(
       duckdb:::expr_function(
         "&",
@@ -728,12 +732,12 @@ tpch_raw_oo_22 <- function(con, experimental) {
       )
     )
   )
-  rel17 <- duckdb:::rel_set_alias(rel16, "lhs")
+  rel18 <- duckdb:::rel_set_alias(rel17, "lhs")
   df2 <- orders
-  rel18 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
-  rel19 <- duckdb:::rel_set_alias(rel18, "rhs")
-  rel20 <- duckdb:::rel_project(
-    rel17,
+  rel19 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
+  rel20 <- duckdb:::rel_set_alias(rel19, "rhs")
+  rel21 <- duckdb:::rel_project(
+    rel18,
     list(
       {
         tmp_expr <- duckdb:::expr_reference("c_custkey")
@@ -797,20 +801,20 @@ tpch_raw_oo_22 <- function(con, experimental) {
       }
     )
   )
-  rel21 <- duckdb:::rel_join(
+  rel22 <- duckdb:::rel_join(
+    rel21,
     rel20,
-    rel19,
     list(
       duckdb:::expr_function(
         "==",
-        list(duckdb:::expr_reference("c_custkey", rel20), duckdb:::expr_reference("o_custkey", rel19))
+        list(duckdb:::expr_reference("c_custkey", rel21), duckdb:::expr_reference("o_custkey", rel20))
       )
     ),
     "anti"
   )
-  rel22 <- duckdb:::rel_order(rel21, list(duckdb:::expr_reference("___row_number_x", rel20)))
-  rel23 <- duckdb:::rel_project(
-    rel22,
+  rel23 <- duckdb:::rel_order(rel22, list(duckdb:::expr_reference("___row_number_x", rel21)))
+  rel24 <- duckdb:::rel_project(
+    rel23,
     list(
       {
         tmp_expr <- duckdb:::expr_reference("c_custkey")
@@ -869,8 +873,8 @@ tpch_raw_oo_22 <- function(con, experimental) {
       }
     )
   )
-  rel24 <- duckdb:::rel_project(
-    rel23,
+  rel25 <- duckdb:::rel_project(
+    rel24,
     list(
       {
         tmp_expr <- duckdb:::expr_reference("cntrycode")
@@ -884,8 +888,8 @@ tpch_raw_oo_22 <- function(con, experimental) {
       }
     )
   )
-  rel25 <- duckdb:::rel_aggregate(
-    rel24,
+  rel26 <- duckdb:::rel_aggregate(
+    rel25,
     groups = list(duckdb:::expr_reference("cntrycode")),
     aggregates = list(
       {
@@ -900,7 +904,7 @@ tpch_raw_oo_22 <- function(con, experimental) {
       }
     )
   )
-  rel26 <- duckdb:::rel_order(rel25, list(duckdb:::expr_reference("cntrycode")))
-  rel26
-  duckdb:::rel_to_altrep(rel26)
+  rel27 <- duckdb:::rel_order(rel26, list(duckdb:::expr_reference("cntrycode")))
+  rel27
+  duckdb:::rel_to_altrep(rel27)
 }

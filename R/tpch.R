@@ -27,7 +27,7 @@ tpch_02 <- function() {
 
   p <- part |>
     select_opt(p_partkey, p_type, p_size, p_mfgr) |>
-    filter(p_size == 15, suffix(p_type, "BRASS")) |>
+    filter(p_size == 15, grepl("BRASS$", p_type)) |>
     select_opt(p_partkey, p_mfgr)
 
   psp <- inner_join(na_matches = TPCH_NA_MATCHES, p, ps, by = c("p_partkey" = "ps_partkey"))
@@ -243,7 +243,7 @@ tpch_07 <- function() {
     mutate(
       supp_nation = n1_name,
       cust_nation = n2_name,
-      l_year = year(l_shipdate),
+      l_year = as.integer(strftime(l_shipdate, "%Y")),
       volume = l_extendedprice * (1 - l_discount)
     ) |>
     select_opt(supp_nation, cust_nation, l_year, volume) |>
@@ -315,7 +315,7 @@ tpch_08 <- function() {
 
   aggr <- all |>
     mutate(
-      o_year = year(o_orderdate),
+      o_year =  as.integer(strftime(o_orderdate, "%Y")),
       volume = l_extendedprice * (1 - l_discount),
       nation = n2_name
     ) |>
@@ -371,7 +371,7 @@ tpch_09 <- function() {
   aggr <- all |>
     mutate(
       nation = n_name,
-      o_year = year(o_orderdate),
+      o_year = as.integer(strftime(o_orderdate, "%Y")),
       amount = l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity
     ) |>
     select_opt(nation, o_year, amount) |>

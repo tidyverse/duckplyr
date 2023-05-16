@@ -127,7 +127,10 @@ tpch_raw_oo_07 <- function(con, experimental) {
     rel11,
     list(
       {
-        tmp_expr <- duckdb:::expr_reference("s_nationkey")
+        tmp_expr <- duckdb:::expr_function(
+          "___coalesce",
+          list(duckdb:::expr_reference("s_nationkey", rel8), duckdb:::expr_reference("n1_nationkey", rel9))
+        )
         duckdb:::expr_set_alias(tmp_expr, "s_nationkey")
         tmp_expr
       },
@@ -289,7 +292,10 @@ tpch_raw_oo_07 <- function(con, experimental) {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb:::expr_reference("c_nationkey")
+        tmp_expr <- duckdb:::expr_function(
+          "___coalesce",
+          list(duckdb:::expr_reference("c_nationkey", rel21), duckdb:::expr_reference("n2_nationkey", rel22))
+        )
         duckdb:::expr_set_alias(tmp_expr, "c_nationkey")
         tmp_expr
       },
@@ -393,7 +399,10 @@ tpch_raw_oo_07 <- function(con, experimental) {
     rel34,
     list(
       {
-        tmp_expr <- duckdb:::expr_reference("o_custkey")
+        tmp_expr <- duckdb:::expr_function(
+          "___coalesce",
+          list(duckdb:::expr_reference("o_custkey", rel31), duckdb:::expr_reference("c_custkey", rel32))
+        )
         duckdb:::expr_set_alias(tmp_expr, "o_custkey")
         tmp_expr
       },
@@ -569,7 +578,10 @@ tpch_raw_oo_07 <- function(con, experimental) {
     rel45,
     list(
       {
-        tmp_expr <- duckdb:::expr_reference("l_orderkey")
+        tmp_expr <- duckdb:::expr_function(
+          "___coalesce",
+          list(duckdb:::expr_reference("l_orderkey", rel42), duckdb:::expr_reference("o_orderkey", rel43))
+        )
         duckdb:::expr_set_alias(tmp_expr, "l_orderkey")
         tmp_expr
       },
@@ -706,7 +718,10 @@ tpch_raw_oo_07 <- function(con, experimental) {
     rel53,
     list(
       {
-        tmp_expr <- duckdb:::expr_reference("l_suppkey")
+        tmp_expr <- duckdb:::expr_function(
+          "___coalesce",
+          list(duckdb:::expr_reference("l_suppkey", rel50), duckdb:::expr_reference("s_suppkey", rel51))
+        )
         duckdb:::expr_set_alias(tmp_expr, "l_suppkey")
         tmp_expr
       },

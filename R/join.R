@@ -82,12 +82,12 @@ rel_join_impl <- function(x, y, by, join, na_matches, suffix, keep, error_call =
 
     remap <- (is.null(keep) || is_false(keep))
 
-    if (remap && join %in% c("right", "full")) {
+    if (remap) {
       by_pos <- match(names(vars$x$key), x_names)
 
       if (join == "right") {
         exprs[by_pos] <- map2(y_by, names(vars$x$key), relexpr_set_alias)
-      } else if (join == "full") {
+      } else {
         exprs[by_pos] <- pmap(
           list(x_by, y_by, names(vars$x$key)),
           ~ relexpr_function("___coalesce", list(..1, ..2), alias = ..3)
@@ -98,7 +98,7 @@ rel_join_impl <- function(x, y, by, join, na_matches, suffix, keep, error_call =
     out <- rel_project(joined, exprs)
   } else {
     out <- oo_restore(joined, "___row_number_x", list(x_rel))
-  }
+  } # if (mutating)
 
   out <- rel_to_df(out)
   out <- dplyr_reconstruct(out, x)

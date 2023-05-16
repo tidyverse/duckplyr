@@ -42,7 +42,10 @@ tpch_raw_13 <- function(con, experimental) {
     rel6,
     list(
       {
-        tmp_expr <- duckdb:::expr_reference("c_custkey")
+        tmp_expr <- duckdb:::expr_function(
+          "___coalesce",
+          list(duckdb:::expr_reference("c_custkey", rel4), duckdb:::expr_reference("o_custkey", rel5))
+        )
         duckdb:::expr_set_alias(tmp_expr, "c_custkey")
         tmp_expr
       },

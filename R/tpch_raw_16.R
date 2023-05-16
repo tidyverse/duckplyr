@@ -204,7 +204,10 @@ tpch_raw_16 <- function(con, experimental) {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb:::expr_reference("ps_suppkey")
+        tmp_expr <- duckdb:::expr_function(
+          "___coalesce",
+          list(duckdb:::expr_reference("ps_suppkey", rel6), duckdb:::expr_reference("s_suppkey", rel7))
+        )
         duckdb:::expr_set_alias(tmp_expr, "ps_suppkey")
         tmp_expr
       },
@@ -287,7 +290,10 @@ tpch_raw_16 <- function(con, experimental) {
     rel13,
     list(
       {
-        tmp_expr <- duckdb:::expr_reference("p_partkey")
+        tmp_expr <- duckdb:::expr_function(
+          "___coalesce",
+          list(duckdb:::expr_reference("p_partkey", rel11), duckdb:::expr_reference("ps_partkey", rel12))
+        )
         duckdb:::expr_set_alias(tmp_expr, "p_partkey")
         tmp_expr
       },

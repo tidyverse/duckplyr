@@ -1,5 +1,4 @@
 test_that("x used as basis of output (#3839)", {
-  skip("TODO duckdb")
   df1 <- tibble(x = 1:4, y = 1)
   df2 <- tibble(y = 1, x = c(4, 2))
 

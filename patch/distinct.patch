@@ -1,5 +1,5 @@
 diff --git b/R/distinct.R a/R/distinct.R
-index 92656b4..f68a67c 100644
+index 92656b4..8e096fe 100644
 --- b/R/distinct.R
 +++ a/R/distinct.R
 @@ -4,8 +4,62 @@
@@ -19,7 +19,7 @@ index 92656b4..f68a67c 100644
 +
 +      if (oo) {
 +        # Push row number as separate projection
-+        rel <- oo_prep(rel)
++        rel <- oo_prep(rel, force = TRUE)
 +
 +        exprs <- rel_translate_dots(dots, .data)
 +        all_exprs <- NULL
@@ -51,8 +51,8 @@ index 92656b4..f68a67c 100644
 +        )
 +        out_rel <- rel_filter(rel, list(expr_filter))
 +
-+        out_rel <- oo_restore_order(out_rel)
-+        out_rel <- oo_restore_cols(out_rel, extra = "___row_number_by")
++        out_rel <- oo_restore_order(out_rel, force = TRUE)
++        out_rel <- oo_restore_cols(out_rel, extra = "___row_number_by", force = TRUE)
 +      } else {
 +        exprs <- rel_translate_dots(dots, .data)
 +        if (length(exprs) > 0) {

@@ -5,6 +5,7 @@ invisible(DBI::dbExecute(con, "CREATE MACRO \">=\"(a, b) AS a >= b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"as.Date\"(x) AS strptime(x, '%Y-%m-%d')"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"<\"(a, b) AS a < b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
 df1 <- lineitem
 rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb:::rel_filter(
@@ -193,7 +194,10 @@ rel12 <- duckdb:::rel_project(
       tmp_expr
     },
     {
-      tmp_expr <- duckdb:::expr_reference("global_agr_key_x")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("global_agr_key_x", rel9), duckdb:::expr_reference("global_agr_key_y", rel10))
+      )
       duckdb:::expr_set_alias(tmp_expr, "global_agr_key")
       tmp_expr
     },
@@ -247,7 +251,10 @@ rel18 <- duckdb:::rel_project(
   rel17,
   list(
     {
-      tmp_expr <- duckdb:::expr_reference("l_suppkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("l_suppkey", rel14), duckdb:::expr_reference("s_suppkey", rel16))
+      )
       duckdb:::expr_set_alias(tmp_expr, "l_suppkey")
       tmp_expr
     },

@@ -5,6 +5,7 @@ invisible(DBI::dbExecute(con, "CREATE MACRO \"&\"(x, y) AS (x AND y)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"|\"(x, y) AS (x OR y)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \">\"(a, b) AS a > b"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS (COUNT(*))"))
 df1 <- customer
 rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
@@ -261,9 +262,10 @@ rel3 <- duckdb:::rel_aggregate(
     }
   )
 )
-rel4 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
-rel5 <- duckdb:::rel_project(
-  rel4,
+rel4 <- duckdb:::rel_distinct(rel3)
+rel5 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
+rel6 <- duckdb:::rel_project(
+  rel5,
   list(
     {
       tmp_expr <- duckdb:::expr_reference("c_custkey")
@@ -327,8 +329,8 @@ rel5 <- duckdb:::rel_project(
     }
   )
 )
-rel6 <- duckdb:::rel_project(
-  rel5,
+rel7 <- duckdb:::rel_project(
+  rel6,
   list(
     {
       tmp_expr <- duckdb:::expr_reference("c_custkey")
@@ -386,10 +388,10 @@ rel6 <- duckdb:::rel_project(
     }
   )
 )
-rel7 <- duckdb:::rel_set_alias(rel6, "lhs")
-rel8 <- duckdb:::rel_set_alias(rel3, "rhs")
-rel9 <- duckdb:::rel_project(
-  rel7,
+rel8 <- duckdb:::rel_set_alias(rel7, "lhs")
+rel9 <- duckdb:::rel_set_alias(rel4, "rhs")
+rel10 <- duckdb:::rel_project(
+  rel8,
   list(
     {
       tmp_expr <- duckdb:::expr_reference("c_custkey")
@@ -443,8 +445,8 @@ rel9 <- duckdb:::rel_project(
     }
   )
 )
-rel10 <- duckdb:::rel_project(
-  rel8,
+rel11 <- duckdb:::rel_project(
+  rel9,
   list(
     {
       tmp_expr <- duckdb:::expr_reference("acctbal_min")
@@ -458,19 +460,19 @@ rel10 <- duckdb:::rel_project(
     }
   )
 )
-rel11 <- duckdb:::rel_join(
-  rel9,
+rel12 <- duckdb:::rel_join(
   rel10,
+  rel11,
   list(
     duckdb:::expr_function(
       "==",
-      list(duckdb:::expr_reference("join_id_x", rel9), duckdb:::expr_reference("join_id_y", rel10))
+      list(duckdb:::expr_reference("join_id_x", rel10), duckdb:::expr_reference("join_id_y", rel11))
     )
   ),
   "left"
 )
-rel12 <- duckdb:::rel_project(
-  rel11,
+rel13 <- duckdb:::rel_project(
+  rel12,
   list(
     {
       tmp_expr <- duckdb:::expr_reference("c_custkey_x")
@@ -518,7 +520,10 @@ rel12 <- duckdb:::rel_project(
       tmp_expr
     },
     {
-      tmp_expr <- duckdb:::expr_reference("join_id_x")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("join_id_x", rel10), duckdb:::expr_reference("join_id_y", rel11))
+      )
       duckdb:::expr_set_alias(tmp_expr, "join_id")
       tmp_expr
     },
@@ -529,8 +534,8 @@ rel12 <- duckdb:::rel_project(
     }
   )
 )
-rel13 <- duckdb:::rel_filter(
-  rel12,
+rel14 <- duckdb:::rel_filter(
+  rel13,
   list(
     duckdb:::expr_function(
       "&",
@@ -650,23 +655,23 @@ rel13 <- duckdb:::rel_filter(
     )
   )
 )
-rel14 <- duckdb:::rel_set_alias(rel13, "lhs")
+rel15 <- duckdb:::rel_set_alias(rel14, "lhs")
 df2 <- orders
-rel15 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
-rel16 <- duckdb:::rel_set_alias(rel15, "rhs")
-rel17 <- duckdb:::rel_join(
-  rel14,
-  rel16,
+rel16 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
+rel17 <- duckdb:::rel_set_alias(rel16, "rhs")
+rel18 <- duckdb:::rel_join(
+  rel15,
+  rel17,
   list(
     duckdb:::expr_function(
       "==",
-      list(duckdb:::expr_reference("c_custkey", rel14), duckdb:::expr_reference("o_custkey", rel16))
+      list(duckdb:::expr_reference("c_custkey", rel15), duckdb:::expr_reference("o_custkey", rel17))
     )
   ),
   "anti"
 )
-rel18 <- duckdb:::rel_project(
-  rel17,
+rel19 <- duckdb:::rel_project(
+  rel18,
   list(
     {
       tmp_expr <- duckdb:::expr_reference("cntrycode")
@@ -680,8 +685,8 @@ rel18 <- duckdb:::rel_project(
     }
   )
 )
-rel19 <- duckdb:::rel_aggregate(
-  rel18,
+rel20 <- duckdb:::rel_aggregate(
+  rel19,
   groups = list(duckdb:::expr_reference("cntrycode")),
   aggregates = list(
     {
@@ -696,6 +701,6 @@ rel19 <- duckdb:::rel_aggregate(
     }
   )
 )
-rel20 <- duckdb:::rel_order(rel19, list(duckdb:::expr_reference("cntrycode")))
-rel20
-duckdb:::rel_to_altrep(rel20)
+rel21 <- duckdb:::rel_order(rel20, list(duckdb:::expr_reference("cntrycode")))
+rel21
+duckdb:::rel_to_altrep(rel21)

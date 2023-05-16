@@ -2,6 +2,7 @@ load("tools/tpch/001.rda")
 con <- DBI::dbConnect(duckdb::duckdb())
 experimental <- FALSE
 invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \">=\"(a, b) AS a >= b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"as.Date\"(x) AS strptime(x, '%Y-%m-%d')"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"<=\"(a, b) AS a <= b"))
@@ -91,7 +92,10 @@ rel10 <- duckdb:::rel_project(
       tmp_expr
     },
     {
-      tmp_expr <- duckdb:::expr_reference("n1_regionkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("n1_regionkey", rel7), duckdb:::expr_reference("r_regionkey", rel8))
+      )
       duckdb:::expr_set_alias(tmp_expr, "n1_regionkey")
       tmp_expr
     }
@@ -144,7 +148,10 @@ rel17 <- duckdb:::rel_project(
       tmp_expr
     },
     {
-      tmp_expr <- duckdb:::expr_reference("c_nationkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("c_nationkey", rel14), duckdb:::expr_reference("n1_nationkey", rel15))
+      )
       duckdb:::expr_set_alias(tmp_expr, "c_nationkey")
       tmp_expr
     }
@@ -239,7 +246,10 @@ rel25 <- duckdb:::rel_project(
       tmp_expr
     },
     {
-      tmp_expr <- duckdb:::expr_reference("o_custkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("o_custkey", rel22), duckdb:::expr_reference("c_custkey", rel23))
+      )
       duckdb:::expr_set_alias(tmp_expr, "o_custkey")
       tmp_expr
     },
@@ -314,7 +324,10 @@ rel32 <- duckdb:::rel_project(
   rel31,
   list(
     {
-      tmp_expr <- duckdb:::expr_reference("l_orderkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("l_orderkey", rel29), duckdb:::expr_reference("o_orderkey", rel30))
+      )
       duckdb:::expr_set_alias(tmp_expr, "l_orderkey")
       tmp_expr
     },
@@ -433,7 +446,10 @@ rel41 <- duckdb:::rel_project(
   rel40,
   list(
     {
-      tmp_expr <- duckdb:::expr_reference("l_partkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("l_partkey", rel38), duckdb:::expr_reference("p_partkey", rel39))
+      )
       duckdb:::expr_set_alias(tmp_expr, "l_partkey")
       tmp_expr
     },
@@ -518,7 +534,10 @@ rel48 <- duckdb:::rel_project(
   rel47,
   list(
     {
-      tmp_expr <- duckdb:::expr_reference("l_suppkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("l_suppkey", rel45), duckdb:::expr_reference("s_suppkey", rel46))
+      )
       duckdb:::expr_set_alias(tmp_expr, "l_suppkey")
       tmp_expr
     },
@@ -617,7 +636,10 @@ rel55 <- duckdb:::rel_project(
       tmp_expr
     },
     {
-      tmp_expr <- duckdb:::expr_reference("s_nationkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("s_nationkey", rel52), duckdb:::expr_reference("n2_nationkey", rel53))
+      )
       duckdb:::expr_set_alias(tmp_expr, "s_nationkey")
       tmp_expr
     },

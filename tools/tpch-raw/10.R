@@ -5,6 +5,7 @@ invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \">=\"(a, b) AS a >= b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"as.Date\"(x) AS strptime(x, '%Y-%m-%d')"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"<\"(a, b) AS a < b"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"desc\"(x) AS (-x)"))
 df1 <- lineitem
 rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
@@ -160,7 +161,10 @@ rel12 <- duckdb:::rel_project(
   rel11,
   list(
     {
-      tmp_expr <- duckdb:::expr_reference("l_orderkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("l_orderkey", rel9), duckdb:::expr_reference("o_orderkey", rel10))
+      )
       duckdb:::expr_set_alias(tmp_expr, "l_orderkey")
       tmp_expr
     },
@@ -310,7 +314,10 @@ rel21 <- duckdb:::rel_project(
   rel20,
   list(
     {
-      tmp_expr <- duckdb:::expr_reference("c_custkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("c_custkey", rel18), duckdb:::expr_reference("o_custkey", rel19))
+      )
       duckdb:::expr_set_alias(tmp_expr, "c_custkey")
       tmp_expr
     },
@@ -390,7 +397,10 @@ rel27 <- duckdb:::rel_project(
       tmp_expr
     },
     {
-      tmp_expr <- duckdb:::expr_reference("c_nationkey")
+      tmp_expr <- duckdb:::expr_function(
+        "___coalesce",
+        list(duckdb:::expr_reference("c_nationkey", rel24), duckdb:::expr_reference("n_nationkey", rel25))
+      )
       duckdb:::expr_set_alias(tmp_expr, "c_nationkey")
       tmp_expr
     },

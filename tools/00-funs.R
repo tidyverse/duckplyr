@@ -87,7 +87,8 @@ tests <- head(n = -1, list(
     "mutating joins trigger many-to-many warning",
     "mutating joins compute common columns",
 
-    # https://github.com/duckdb/duckdb/issues/6356
+    # https://github.com/duckdb/duckdb/issues/7451
+    # https://github.com/tidyverse/dplyr/pull/6846
     "keys are coerced to symmetric type",
     NULL
   ),
@@ -109,9 +110,6 @@ tests <- head(n = -1, list(
     NULL
   ),
   "test-sets.R" = c(
-    # https://github.com/duckdb/duckdb/issues/6368
-    "x used as basis of output (#3839)",
-
     # FIXME: oo
     "set operations (apart from union_all) remove duplicates",
 
