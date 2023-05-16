@@ -17,7 +17,7 @@ Depends:
     R (>= 4.0.0)
 Imports: 
     collections,
-    dplyr (>= 1.1.1),
+    dplyr (>= 1.1.2),
     duckdb (>= 0.6.0),
     glue,
     lifecycle,
