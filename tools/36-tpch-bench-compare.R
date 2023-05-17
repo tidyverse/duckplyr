@@ -29,8 +29,6 @@ graph <- all |> filter(...1 != "q21") |>
 
 ggsave('tpch-stacked-results.pdf', plot = last_plot(), scale = 1, width = 5, height = 6, dpi=300)
 
-
-
 graph <- all |> filter(...1 != "q21") |>  summarise(total_time=sum(time), .by=pkg) |>
   ggplot(aes(x = pkg, y = total_time, fill = pkg)) +
   geom_col(position = "dodge") + 
@@ -40,15 +38,3 @@ graph <- all |> filter(...1 != "q21") |>  summarise(total_time=sum(time), .by=pk
   labs(y = "time (seconds)")
 
 ggsave('tpch-aggregate-results.pdf', plot = last_plot(), scale = 1, width = 5, height = 6, dpi=300)
-
-
-
-
-
-
-# for_stacked <- all |> filter(...1 != "q21")
-
-# ggplot(for_stacked, aes(fill=pkg, y=time, x=...1)) + 
-#     geom_bar(position="stack", stat="identity")
-
-# ggsave('tpch-results-stacked.pdf', plot = last_plot(), scale = 1, width = 5, height = 6, dpi=300)

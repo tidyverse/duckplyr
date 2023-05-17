@@ -1,3 +1,5 @@
+library(arrow)
+
 tables <- c("lineitem", "partsupp", "part", "supplier", "nation", "orders", "customer", "region")
 
 lapply(tables, function(t) {
