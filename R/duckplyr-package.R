@@ -68,6 +68,7 @@
 #' @importFrom vctrs list_of
 #' @importFrom vctrs new_data_frame
 #' @importFrom vctrs new_rcrd
+#' @importFrom vctrs unspecified
 #' @importFrom vctrs vec_c
 #' @importFrom vctrs vec_cbind
 #' @importFrom vctrs vec_rbind

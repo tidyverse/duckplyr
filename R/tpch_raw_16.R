@@ -20,14 +20,14 @@ tpch_raw_16 <- function(con, experimental) {
         "!",
         list(
           duckdb:::expr_function(
-            "prefix",
+            "grepl",
             list(
-              duckdb:::expr_reference("p_type"),
               if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                duckdb:::expr_constant("MEDIUM POLISHED", experimental = experimental)
+                duckdb:::expr_constant("^MEDIUM POLISHED", experimental = experimental)
               } else {
-                duckdb:::expr_constant("MEDIUM POLISHED")
-              }
+                duckdb:::expr_constant("^MEDIUM POLISHED")
+              },
+              duckdb:::expr_reference("p_type")
             )
           )
         )

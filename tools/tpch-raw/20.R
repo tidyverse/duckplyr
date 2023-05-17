@@ -3,6 +3,9 @@ con <- DBI::dbConnect(duckdb::duckdb())
 experimental <- FALSE
 invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
+invisible(
+  DBI::dbExecute(con, "CREATE MACRO \"grepl\"(pattern, x) AS regexp_matches(x, pattern)")
+)
 invisible(DBI::dbExecute(con, "CREATE MACRO \">=\"(a, b) AS a >= b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"as.Date\"(x) AS strptime(x, '%Y-%m-%d')"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"<\"(a, b) AS a < b"))
@@ -124,14 +127,14 @@ rel10 <- duckdb:::rel_filter(
   rel9,
   list(
     duckdb:::expr_function(
-      "prefix",
+      "grepl",
       list(
-        duckdb:::expr_reference("p_name"),
         if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-          duckdb:::expr_constant("forest", experimental = experimental)
+          duckdb:::expr_constant("^forest", experimental = experimental)
         } else {
-          duckdb:::expr_constant("forest")
-        }
+          duckdb:::expr_constant("^forest")
+        },
+        duckdb:::expr_reference("p_name")
       )
     )
   )

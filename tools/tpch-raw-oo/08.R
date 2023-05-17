@@ -6,6 +6,7 @@ invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a,
 invisible(DBI::dbExecute(con, "CREATE MACRO \">=\"(a, b) AS a >= b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"as.Date\"(x) AS strptime(x, '%Y-%m-%d')"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"<=\"(a, b) AS a <= b"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"as.integer\"(x) AS CAST(x AS int32)"))
 invisible(
   DBI::dbExecute(
     con,
@@ -1042,7 +1043,22 @@ rel78 <- duckdb:::rel_project(
       tmp_expr
     },
     {
-      tmp_expr <- duckdb:::expr_function("year", list(duckdb:::expr_reference("o_orderdate")))
+      tmp_expr <- duckdb:::expr_function(
+        "as.integer",
+        list(
+          duckdb:::expr_function(
+            "strftime",
+            list(
+              duckdb:::expr_reference("o_orderdate"),
+              if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                duckdb:::expr_constant("%Y", experimental = experimental)
+              } else {
+                duckdb:::expr_constant("%Y")
+              }
+            )
+          )
+        )
+      )
       duckdb:::expr_set_alias(tmp_expr, "o_year")
       tmp_expr
     }

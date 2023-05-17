@@ -3,11 +3,11 @@ con <- DBI::dbConnect(duckdb::duckdb())
 experimental <- FALSE
 invisible(DBI::dbExecute(con, "CREATE MACRO \"!=\"(a, b) AS a <> b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"!\"(x) AS (NOT x)"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"|\"(x, y) AS (x OR y)"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
 invisible(
   DBI::dbExecute(con, "CREATE MACRO \"grepl\"(pattern, x) AS regexp_matches(x, pattern)")
 )
+invisible(DBI::dbExecute(con, "CREATE MACRO \"|\"(x, y) AS (x OR y)"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"n_distinct\"(x) AS (COUNT(DISTINCT x))"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"desc\"(x) AS (-x)"))
@@ -31,14 +31,14 @@ rel2 <- duckdb:::rel_filter(
       "!",
       list(
         duckdb:::expr_function(
-          "prefix",
+          "grepl",
           list(
-            duckdb:::expr_reference("p_type"),
             if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-              duckdb:::expr_constant("MEDIUM POLISHED", experimental = experimental)
+              duckdb:::expr_constant("^MEDIUM POLISHED", experimental = experimental)
             } else {
-              duckdb:::expr_constant("MEDIUM POLISHED")
-            }
+              duckdb:::expr_constant("^MEDIUM POLISHED")
+            },
+            duckdb:::expr_reference("p_type")
           )
         )
       )

@@ -90,6 +90,8 @@ tests <- head(n = -1, list(
     # https://github.com/duckdb/duckdb/issues/7451
     # https://github.com/tidyverse/dplyr/pull/6846
     "keys are coerced to symmetric type",
+
+    "filtering joins finalize unspecified columns (#6804)",
     NULL
   ),
   "test-mutate.R" = c(

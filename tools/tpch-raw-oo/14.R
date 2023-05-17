@@ -12,6 +12,9 @@ invisible(
     "CREATE MACRO \"ifelse\"(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)"
   )
 )
+invisible(
+  DBI::dbExecute(con, "CREATE MACRO \"grepl\"(pattern, x) AS regexp_matches(x, pattern)")
+)
 df1 <- lineitem
 rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb:::rel_filter(
@@ -365,14 +368,14 @@ rel11 <- duckdb:::rel_aggregate(
                   "ifelse",
                   list(
                     duckdb:::expr_function(
-                      "prefix",
+                      "grepl",
                       list(
-                        duckdb:::expr_reference("p_type"),
                         if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                          duckdb:::expr_constant("PROMO", experimental = experimental)
+                          duckdb:::expr_constant("^PROMO", experimental = experimental)
                         } else {
-                          duckdb:::expr_constant("PROMO")
-                        }
+                          duckdb:::expr_constant("^PROMO")
+                        },
+                        duckdb:::expr_reference("p_type")
                       )
                     ),
                     duckdb:::expr_function(

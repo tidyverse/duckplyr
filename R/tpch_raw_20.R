@@ -117,14 +117,14 @@ tpch_raw_20 <- function(con, experimental) {
     rel9,
     list(
       duckdb:::expr_function(
-        "prefix",
+        "grepl",
         list(
-          duckdb:::expr_reference("p_name"),
           if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-            duckdb:::expr_constant("forest", experimental = experimental)
+            duckdb:::expr_constant("^forest", experimental = experimental)
           } else {
-            duckdb:::expr_constant("forest")
-          }
+            duckdb:::expr_constant("^forest")
+          },
+          duckdb:::expr_reference("p_name")
         )
       )
     )
