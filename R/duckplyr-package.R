@@ -67,14 +67,7 @@
 #' @importFrom tibble tibble
 #' @importFrom tidyselect everything
 #' @importFrom utils head
-#' @importFrom vctrs list_of
-#' @importFrom vctrs new_data_frame
-#' @importFrom vctrs new_rcrd
-#' @importFrom vctrs unspecified
-#' @importFrom vctrs vec_c
-#' @importFrom vctrs vec_cbind
-#' @importFrom vctrs vec_rbind
-#' @importFrom vctrs vec_slice
+#' @rawNamespace import(vctrs, except = data_frame)
 #' @useDynLib duckplyr, .registration = TRUE
 ## usethis namespace: end
 NULL
