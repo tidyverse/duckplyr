@@ -34,6 +34,7 @@ Imports:
     vctrs
 Suggests: 
     constructive,
+    hms,
     lobstr,
     palmerpenguins,
     prettycode,
