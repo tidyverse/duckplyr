@@ -10,7 +10,7 @@ Authors@R: c(
     person("Posit", role = c("cph", "fnd"))
   )
 Description: Implements a subset of dplyr using DuckDB
-License: MIT
+License: MIT + file LICENSE
 URL: https://github.com/duckdblabs/duckplyr
 BugReports: https://github.com/duckdblabs/duckplyr
 Depends: 
