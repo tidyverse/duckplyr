@@ -16,13 +16,18 @@ BugReports: https://github.com/duckdblabs/duckplyr
 Depends: 
     R (>= 4.0.0)
 Imports: 
+    brio,
+    cli,
     collections,
+    DBI,
     dplyr (>= 1.1.2),
     duckdb (>= 0.6.0),
     glue,
     lifecycle,
     purrr,
+    reprex,
     rlang (>= 1.0.6),
+    rstudioapi,
     tibble,
     tidyselect,
     utils,
