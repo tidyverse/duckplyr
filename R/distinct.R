@@ -35,7 +35,7 @@ distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
           relexpr_reference("___row_number"),
           relexpr_window(
             relexpr_function("row_number", list()),
-            part = exprs,
+            partitions = exprs,
             alias = "___row_number_by"
           )
         ))

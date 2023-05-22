@@ -12,7 +12,7 @@ oo_prep <- function(rel, colname = "___row_number", force = FALSE) {
   proj_exprs <- imap(set_names(names), relexpr_reference, rel = NULL)
   proj_exprs <- c(proj_exprs, list(relexpr_window(
     relexpr_function("row_number", list()),
-    part = list(),
+    partitions = list(),
     alias = colname
   )))
 
