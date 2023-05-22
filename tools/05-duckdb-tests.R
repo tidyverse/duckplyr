@@ -99,13 +99,13 @@ get_test_code_one <- function(extra_arg, pre_step, oo, name, two_tables, force =
   meta_clear()
   test_fun(TRUE)
 
-  meta_code <- capture.output(meta_replay(add_pre_code = TRUE))
+  meta_code <- utils::capture.output(meta_replay(add_pre_code = TRUE))
   meta_code[[length(meta_code)]] <- paste0("out <- ", meta_code[[length(meta_code)]])
   meta_code <- c(
     meta_code,
     "expect_equal(",
     "  out,",
-    paste0("  ", capture.output(constructive::construct(post))),
+    paste0("  ", utils::capture.output(constructive::construct(post))),
     ")",
     "DBI::dbDisconnect(con, shutdown = TRUE)"
   )
