@@ -3,6 +3,8 @@
 
 ## usethis namespace: start
 #' @import rlang
+#' @importFrom collections queue
+#' @importFrom collections dict
 #' @importFrom dplyr across
 #' @importFrom dplyr add_tally
 #' @importFrom dplyr case_when
