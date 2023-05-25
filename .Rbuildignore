@@ -7,3 +7,4 @@
 ^LICENSE\.md$
 ^res-dplyr\.csv$
 ^res-duckdb\.csv$
+^\.github$
