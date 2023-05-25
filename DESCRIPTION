@@ -18,7 +18,7 @@ Depends:
 Imports: 
     collections,
     dplyr (>= 1.1.2),
-    duckdb (>= 0.6.0),
+    duckdb (>= 0.8.0),
     glue,
     lifecycle,
     purrr,
