@@ -1,4 +1,4 @@
-library(arrow)
+requireNamespace("arrow")
 
 tables <- c("lineitem", "partsupp", "part", "supplier", "nation", "orders", "customer", "region")
 
