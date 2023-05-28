@@ -1,4 +1,5 @@
 qloadm <- function(file, envir = caller_env()) {
   data <- qs::qread(file)
-  mapply(FUN = assign, names(data), data, MoreArgs = list(pos = envir))
+  .mapply(assign, list(names(data), data), list(pos = envir))
+  invisible()
 }
