@@ -1,6 +1,6 @@
 pkgload::load_all()
 
-load("tools/tpch/100.rda")
+qloadm("tools/tpch/100.qs")
 
 test_dplyr_q <- head(n = -1, list(
   tpch_01 = tpch_01,

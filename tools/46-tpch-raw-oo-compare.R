@@ -1,9 +1,9 @@
 pkgload::load_all()
 
-load("tools/tpch/001.rda")
+qloadm("tools/tpch/001.qs")
 answer <- "tpch-sf0.01"
 
-# load("tools/tpch/100.rda")
+# load("tools/tpch/100.qs")
 # answer <- "tpch-sf1"
 
 con <- get_default_duckdb_connection()

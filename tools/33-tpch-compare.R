@@ -6,10 +6,10 @@ Sys.setenv(DUCKPLYR_META_GLOBAL = TRUE)
 
 # Sys.setenv(DUCKPLYR_OUTPUT_ORDER = TRUE)
 
-load("tools/tpch/001.rda")
+qloadm("tools/tpch/001.qs")
 answer <- "tpch-sf0.01"
 
-# load("tools/tpch/100.rda")
+# load("tools/tpch/100.qs")
 # answer <- "tpch-sf1"
 
 customer <- as_duckplyr_df(customer)

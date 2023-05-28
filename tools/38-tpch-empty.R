@@ -6,7 +6,7 @@ Sys.setenv(DUCKPLYR_META_SKIP = FALSE)
 
 # Sys.setenv(DUCKPLYR_OUTPUT_ORDER = TRUE)
 
-load("tools/tpch/001.rda")
+qloadm("tools/tpch/001.qs")
 
 # prep_fun <- function(x) as_duckplyr_df(x)
 prep_fun <- function(x) as_duckplyr_df(x[0, ])
