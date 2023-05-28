@@ -6,7 +6,7 @@ Sys.setenv(DUCKPLYR_META_SKIP = TRUE)
 
 # Sys.setenv(DUCKPLYR_OUTPUT_ORDER = TRUE)
 
-load("tools/tpch/100.rda")
+qloadm("tools/tpch/100.qs")
 
 customer <- as_duckplyr_df(customer)
 lineitem <- as_duckplyr_df(lineitem)

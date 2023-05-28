@@ -5,3 +5,4 @@
 ^patch$
 ^README\.Rmd$
 ^\.github$
+^R/qs\.R$

@@ -1,6 +1,6 @@
 pkgload::load_all()
 
-load("tools/tpch/100.rda")
+qloadm("tools/tpch/100.qs")
 
 con <- get_default_duckdb_connection()
 experimental <- FALSE
