@@ -12,13 +12,13 @@ Authors@R: c(
 Description: Implements a subset of dplyr using DuckDB
 License: MIT
 URL: https://github.com/duckdblabs/duckplyr
-BugReports: https://github.com/duckdblabs/duckplyr
+BugReports: https://github.com/duckdblabs/duckplyr/issues
 Depends: 
     R (>= 4.0.0)
 Imports: 
     collections,
     dplyr (>= 1.1.2),
-    duckdb (>= 0.6.0),
+    duckdb (>= 0.8.0),
     glue,
     lifecycle,
     purrr,

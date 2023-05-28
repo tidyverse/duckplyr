@@ -4,3 +4,4 @@
 ^dplyr-methods$
 ^patch$
 ^README\.Rmd$
+^\.github$
