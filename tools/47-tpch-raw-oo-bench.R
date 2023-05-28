@@ -35,6 +35,7 @@ res <- list()
 pkg <- "duckplyr-raw-oo"
 
 for (q in names(test_dplyr_q)) {
+  gc()
   f <- test_dplyr_q[[q]]
   cold <- nrow(f(con, experimental))
   time <- system.time(nrow(f(con, experimental)))[[3]]

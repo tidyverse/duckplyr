@@ -35,6 +35,7 @@ res <- list()
 pkg <- "duckplyr-raw"
 
 for (q in names(test_dplyr_q)) {
+  gc()
   f <- test_dplyr_q[[q]]
   # Use nrow() to collect
   cold <- nrow(f(con, experimental))

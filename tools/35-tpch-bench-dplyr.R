@@ -32,6 +32,7 @@ res <- list()
 pkg <- "dplyr"
 
 for (q in names(test_dplyr_q)) {
+  gc()
   f <- test_dplyr_q[[q]]
   cold <- nrow(f())
   time <- system.time(nrow(f()))[[3]]
