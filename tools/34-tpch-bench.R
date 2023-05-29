@@ -17,6 +17,8 @@ partsupp <- as_duckplyr_df(partsupp)
 region <- as_duckplyr_df(region)
 supplier <- as_duckplyr_df(supplier)
 
+compiler::enableJIT(0)
+
 test_dplyr_q <- head(n = -1, list(
   tpch_01 = tpch_01,
   tpch_02 = tpch_02,
@@ -47,9 +49,11 @@ res <- list()
 pkg <- "duckplyr"
 
 for (q in names(test_dplyr_q)) {
+  gc()
   f <- test_dplyr_q[[q]]
-  cold <- collect(f())
-  time <- system.time(collect(f()))[[3]]
+  cold <- nrow(f())
+  cold <- nrow(f())
+  time <- system.time(nrow(f()))[[3]]
   print(q)
   print(time)
   res[[q]] <- data.frame(pkg = pkg, q = q, time = time)
