@@ -128,6 +128,7 @@ rel_order <- function(rel, orders, ...) {
 #' @return a new relation object resulting from the join
 #' @export
 #' @examples
+#' \dontrun{
 #' left <- rel_from_df(mtcars)
 #' right <- rel_from_df(mtcars)
 #' cond <- list(
@@ -137,6 +138,7 @@ rel_order <- function(rel, orders, ...) {
 #'   )
 #' )
 #' rel2 <- rel_join(left, right, cond)
+#' }
 rel_join <- function(left, right, conds, join, ...) {
   rel_stats_env$rel_join <- (rel_stats_env$rel_join %||% 0L) + 1L
   UseMethod("rel_join")
