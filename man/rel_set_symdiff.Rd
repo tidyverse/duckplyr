@@ -7,6 +7,10 @@
 rel_set_symdiff(rel_a, rel_b, ...)
 }
 \arguments{
+\item{rel_a}{a DuckDB relation object}
+
+\item{rel_b}{a DuckDB relation object}
+
 \item{...}{Reserved for future extensions, must be empty.}
 }
 \value{

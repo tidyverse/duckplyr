@@ -110,6 +110,7 @@ rel_order <- function(rel, orders, ...) {
 #' @param left the left-hand-side relation object
 #' @param right the right-hand-side relation object
 #' @param conds a list of DuckDB expressions to use for the join
+#' @param join type of join
 #' @return a new relation object resulting from the join
 #' @export
 #' @examples
@@ -117,7 +118,8 @@ rel_order <- function(rel, orders, ...) {
 #' right <- rel_from_df(mtcars)
 #' cond <- list(relexpr_function("eq", list(relexpr_reference("cyl", left), relexpr_reference("cyl", right))))
 #' rel2 <- rel_join(left, right, cond)
-rel_join <- function(left, right, conds, join, ...) {
+rel_join <- function(left, right, conds, join = c("inner", "left", "right",
+    "outer", "cross", "semi", "anti"), ...) {
   rel_stats_env$rel_join <- (rel_stats_env$rel_join %||% 0L) + 1L
   UseMethod("rel_join")
 }
@@ -154,6 +156,7 @@ rel_distinct <- function(rel, ...) {
 #' TBD.
 #'
 #' @inheritParams rel_to_df
+#' @inheritParams rel_set_diff
 #' @return a new relation object with the result
 #' @export
 #' @examples
@@ -169,6 +172,8 @@ rel_set_intersect <- function(rel_a, rel_b, ...) {
 #' TBD.
 #'
 #' @inheritParams rel_to_df
+#' @param rel_a a DuckDB relation object
+#' @param rel_b a DuckDB relation object
 #' @return a new relation object with the result
 #' @export
 #' @examples
@@ -184,6 +189,7 @@ rel_set_diff <- function(rel_a, rel_b, ...) {
 #' TBD.
 #'
 #' @inheritParams rel_to_df
+#' @inheritParams rel_set_diff
 #' @return a new relation object with the result
 #' @export
 #' @examples
@@ -199,6 +205,7 @@ rel_set_symdiff <- function(rel_a, rel_b, ...) {
 #' TBD.
 #'
 #' @inheritParams rel_to_df
+#' @inheritParams rel_set_diff
 #' @return a new relation object with the result
 #' @export
 #' @examples
