@@ -23,7 +23,7 @@ test_dplyr_q <- head(n = -1, list(
   tpch_18 = tpch_18,
   tpch_19 = tpch_19,
   tpch_20 = tpch_20,
-  # tpch_21 = tpch_21, # prohibitive
+  tpch_21 = tpch_21, # prohibitive
   tpch_22 = tpch_22,
   NULL
 ))
