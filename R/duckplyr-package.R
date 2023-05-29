@@ -67,7 +67,28 @@
 #' @importFrom tibble tibble
 #' @importFrom tidyselect everything
 #' @importFrom utils head
-#' @rawNamespace import(vctrs, except = data_frame)
+#' @importFrom vctrs new_data_frame
+#' @importFrom vctrs new_rcrd
+#' @importFrom vctrs unspecified
+#' @importFrom vctrs vec_as_names
+#' @importFrom vctrs vec_assign
+#' @importFrom vctrs vec_c
+#' @importFrom vctrs vec_cast
+#' @importFrom vctrs vec_cast_common
+#' @importFrom vctrs vec_cbind
+#' @importFrom vctrs vec_in
+#' @importFrom vctrs vec_match
+#' @importFrom vctrs vec_rbind
+#' @importFrom vctrs vec_rep
+#' @importFrom vctrs vec_rep_each
+#' @importFrom vctrs vec_set_difference
+#' @importFrom vctrs vec_set_intersect
+#' @importFrom vctrs vec_set_symmetric_difference
+#' @importFrom vctrs vec_set_union
+#' @importFrom vctrs vec_size
+#' @importFrom vctrs vec_slice
+#' @importFrom vctrs vec_split
+#' @importFrom vctrs vec_unique_loc
 #' @useDynLib duckplyr, .registration = TRUE
 ## usethis namespace: end
 NULL
