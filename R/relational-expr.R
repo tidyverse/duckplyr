@@ -42,7 +42,7 @@ relexpr_function <- function(name, args, alias = NULL) {
   new_relexpr(list(name = name, args = args, alias = alias), class = "relational_relexpr_function")
 }
 
-#' @param partition Partitions, a list of `expr` objects.
+#' @param partitions Partitions, a list of `expr` objects.
 #' @rdname expr
 #' @export
 relexpr_window <- function(

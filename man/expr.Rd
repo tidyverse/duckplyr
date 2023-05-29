@@ -18,7 +18,14 @@ relexpr_constant(val, alias = NULL)
 
 relexpr_function(name, args, alias = NULL)
 
-relexpr_window(expr, part, alias = NULL)
+relexpr_window(
+  expr,
+  partitions,
+  order_bys = list(),
+  offset_expr = NULL,
+  default_expr = NULL,
+  alias = NULL
+)
 
 relexpr_set_alias(expr, alias = NULL)
 }
@@ -39,7 +46,7 @@ relexpr_set_alias(expr, alias = NULL)
 
 \item{expr}{An `expr` object.}
 
-\item{partition}{Partitions, a list of `expr` objects.}
+\item{partitions}{Partitions, a list of `expr` objects.}
 }
 \description{
 TBD.
