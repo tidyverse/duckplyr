@@ -47,6 +47,12 @@ relexpr_set_alias(expr, alias = NULL)
 \item{expr}{An `expr` object.}
 
 \item{partitions}{Partitions, a list of `expr` objects.}
+
+\item{order_bys}{which variables to order results by (list).}
+
+\item{offset_expr}{offset relational expression.}
+
+\item{default_expr}{default relational expression.}
 }
 \description{
 TBD.
