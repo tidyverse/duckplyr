@@ -5,6 +5,8 @@ qloadm("tools/tpch/100.qs")
 con <- get_default_duckdb_connection()
 experimental <- FALSE
 
+compiler::enableJIT(0)
+
 test_dplyr_q <- head(n = -1, list(
   tpch_01 = tpch_raw_01,
   tpch_02 = tpch_raw_02,
@@ -38,6 +40,7 @@ for (q in names(test_dplyr_q)) {
   gc()
   f <- test_dplyr_q[[q]]
   # Use nrow() to collect
+  cold <- nrow(f(con, experimental))
   cold <- nrow(f(con, experimental))
   time <- system.time(nrow(f(con, experimental)))[[3]]
   print(q)
