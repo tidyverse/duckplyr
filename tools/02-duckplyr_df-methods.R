@@ -177,6 +177,10 @@ duckplyr_df_methods <-
   mutate(decl_chr = func_decl_chr(name, code, new_fun, new_code_chr, is_tbl_return, skip_impl)) %>%
   ungroup()
 
+# If this fires, we need to install dplyr from source:
+# system("R CMD INSTALL --with-keep.source ../dplyr")
+stopifnot(!is.null(attr(duckplyr_df_methods$code[[1]], "srcref")))
+
 old <-
   tibble(path = fs::dir_ls("R")) %>%
   mutate(first_line = map_chr(path, brio::read_lines, 1)) %>%
