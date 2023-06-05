@@ -28,10 +28,12 @@ Imports:
     utils,
     vctrs
 Suggests: 
+    arrow,
     constructive,
     lobstr,
     palmerpenguins,
     prettycode,
+    qs,
     testthat (>= 3.1.5)
 Encoding: UTF-8
 LazyData: true
