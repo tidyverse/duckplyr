@@ -18,7 +18,14 @@ relexpr_constant(val, alias = NULL)
 
 relexpr_function(name, args, alias = NULL)
 
-relexpr_window(expr, part, alias = NULL)
+relexpr_window(
+  expr,
+  partitions,
+  order_bys = list(),
+  offset_expr = NULL,
+  default_expr = NULL,
+  alias = NULL
+)
 
 relexpr_set_alias(expr, alias = NULL)
 }

@@ -53,7 +53,7 @@ meta_replay <- function(add_pre_code = TRUE) {
 }
 
 meta_replay_to_fun_code <- function() {
-  code <- capture.output(meta_replay(add_pre_code = FALSE))
+  code <- utils::capture.output(meta_replay(add_pre_code = FALSE))
   code <- c(
     paste0("function(con, experimental) {"),
     paste0("  ", code),
@@ -80,22 +80,22 @@ meta_replay_to_fun_file <- function(name) {
 }
 
 meta_replay_to_file <- function(path, extra = character()) {
-  code <- capture.output(meta_replay())
+  code <- utils::capture.output(meta_replay())
   writeLines(c(extra, code), path)
 }
 
 meta_replay_to_new_doc <- function() {
-  code <- capture.output(meta_replay())
+  code <- utils::capture.output(meta_replay())
   rstudioapi::documentNew(code, execute = TRUE)
 }
 
 meta_replay_to_reprex <- function(...) {
-  code <- capture.output(meta_replay())
+  code <- utils::capture.output(meta_replay())
   reprex::reprex(input = code, ...)
 }
 
 meta_eval <- function() {
-  code <- capture.output(meta_replay())
+  code <- utils::capture.output(meta_replay())
   eval(parse(text = code))
 }
 
@@ -194,7 +194,7 @@ meta_rel_get <- function(rel) {
       c(
         "duckplyr: internal: hash not found",
         i = paste0("hash: ", hash),
-        i = paste0("relation: ", paste(capture.output(print(rel), type = "message"), collapse = "\n"))
+        i = paste0("relation: ", paste(utils::capture.output(print(rel), type = "message"), collapse = "\n"))
       )
     )
   }

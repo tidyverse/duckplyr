@@ -57,7 +57,7 @@ rows_upsert.duckplyr_df <- function(x, y, by = NULL, ..., copy = FALSE, in_place
 
   # Insert
   y_size <- vec_size(y_key)
-  y_extra <- vec_as_location_invert(y_loc, y_size)
+  y_extra <- dplyr:::vec_as_location_invert(y_loc, y_size)
 
   y <- dplyr_row_slice(y, y_extra)
   y <- rows_cast_y(y, x)

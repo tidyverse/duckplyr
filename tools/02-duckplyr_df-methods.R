@@ -79,7 +79,7 @@ func_decl_chr <- function(generic, code, name, new_code_chr, is_tbl_return, skip
   if (skip_impl) {
     method_code <- ""
   } else {
-    new_code_chr <- paste(capture.output(print(new_code_chr)), collapse = "\n")
+    new_code_chr <- paste(utils::capture.output(print(new_code_chr)), collapse = "\n")
 
     rel_try_chr <- paste0(
       "  # Our implementation\n",

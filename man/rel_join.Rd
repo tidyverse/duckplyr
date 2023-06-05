@@ -22,8 +22,15 @@ a new relation object resulting from the join
 TBD.
 }
 \examples{
+\dontrun{
 left <- rel_from_df(mtcars)
 right <- rel_from_df(mtcars)
-cond <- list(relexpr_function("eq", list(relexpr_reference("cyl", left), relexpr_reference("cyl", right))))
+cond <- list(
+  relexpr_function(
+    "eq",
+    list(relexpr_reference("cyl", left), relexpr_reference("cyl", right))
+  )
+)
 rel2 <- rel_join(left, right, cond)
+}
 }
