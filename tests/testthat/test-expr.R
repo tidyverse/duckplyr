@@ -1,5 +1,5 @@
 test_that("can construct expressions", {
-  local_options(styler.cache_name = NULL)
+  styler::cache_deactivate()
 
   expect_snapshot({
     relexpr_reference("column")
