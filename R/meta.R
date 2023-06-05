@@ -165,6 +165,19 @@ meta_rel_register_df <- function(rel, df) {
   meta_rel_register(rel, rel_expr)
 }
 
+meta_rel_register_csv <- function(rel, path) {
+  if (Sys.getenv("DUCKPLYR_META_SKIP") == "TRUE") {
+    return(invisible())
+  }
+
+  # FIXME
+
+  df_name <- meta_df_register(df)
+  # Expect experimental argument from outside
+  rel_expr <- expr(duckdb:::rel_from_df(con, !!df_name, experimental = experimental))
+  meta_rel_register(rel, rel_expr)
+}
+
 meta_rel_register <- function(rel, rel_expr) {
   if (Sys.getenv("DUCKPLYR_META_SKIP") == "TRUE") {
     return(invisible())
