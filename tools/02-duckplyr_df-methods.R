@@ -177,7 +177,7 @@ duckplyr_df_methods <-
   mutate(decl_chr = func_decl_chr(name, code, new_fun, new_code_chr, is_tbl_return, skip_impl)) %>%
   ungroup()
 
-# If this fires, we need to install dplyr from source:
+# If this fails, we need to install dplyr from source:
 # system("git clone tidyverse/dplyr ../dplyr")
 # system("git -C ../dplyr switch v1.1.2")
 # system("R CMD INSTALL --with-keep.source ../dplyr")
