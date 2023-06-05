@@ -12,7 +12,7 @@ Implements a subset of dplyr using DuckDB
 Useful links:
 \itemize{
   \item \url{https://github.com/duckdblabs/duckplyr}
-  \item Report bugs at \url{https://github.com/duckdblabs/duckplyr}
+  \item Report bugs at \url{https://github.com/duckdblabs/duckplyr/issues}
 }
 
 }
