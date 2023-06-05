@@ -12,7 +12,7 @@ Authors@R: c(
 Description: Implements a subset of dplyr using DuckDB
 License: MIT + file LICENSE
 URL: https://github.com/duckdblabs/duckplyr
-BugReports: https://github.com/duckdblabs/duckplyr
+BugReports: https://github.com/duckdblabs/duckplyr/issues
 Depends: 
     R (>= 4.0.0)
 Imports: 
@@ -33,12 +33,14 @@ Imports:
     utils,
     vctrs
 Suggests: 
-    dbplyr,
+    arrow,
     constructive,
+    dbplyr,
     hms,
     lobstr,
     palmerpenguins,
     prettycode,
+    qs,
     testthat (>= 3.1.5),
     withr
 Encoding: UTF-8

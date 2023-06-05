@@ -1,6 +1,6 @@
 pkgload::load_all()
 
-load("tools/tpch/100.rda")
+qloadm("tools/tpch/100.qs")
 
 test_dplyr_q <- head(n = -1, list(
   tpch_01 = tpch_01,
@@ -23,7 +23,7 @@ test_dplyr_q <- head(n = -1, list(
   tpch_18 = tpch_18,
   tpch_19 = tpch_19,
   tpch_20 = tpch_20,
-  # tpch_21 = tpch_21, # prohibitive
+  tpch_21 = tpch_21, # prohibitive
   tpch_22 = tpch_22,
   NULL
 ))
@@ -32,9 +32,10 @@ res <- list()
 pkg <- "dplyr"
 
 for (q in names(test_dplyr_q)) {
+  gc()
   f <- test_dplyr_q[[q]]
-  cold <- collect(f())
-  time <- system.time(collect(f()))[[3]]
+  cold <- nrow(f())
+  time <- system.time(nrow(f()))[[3]]
   print(q)
   print(time)
   res[[q]] <- data.frame(pkg = pkg, q = q, time = time)
