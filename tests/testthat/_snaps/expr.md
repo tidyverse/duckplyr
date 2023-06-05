@@ -2,13 +2,6 @@
 
     Code
       relexpr_reference("column")
-    Condition
-      Warning in `normalizePath()`:
-      path[1]="": No such file or directory
-      Warning in `normalizePath()`:
-      path[1]="": No such file or directory
-      Warning in `normalizePath()`:
-      path[1]="": No such file or directory
     Output
       list(name = "column", rel = NULL, alias = NULL) |>
         structure(class = c("relational_relexpr_reference", "relational_relexpr"))
