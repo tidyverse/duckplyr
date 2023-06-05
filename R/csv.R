@@ -14,3 +14,9 @@ duckdb_from_csv <- function(path) {
 
   duckdb:::rel_to_altrep(out)
 }
+
+#' @export
+duckplyr_df_from_csv <- function(path) {
+  out <- duckdb_from_csv(path)
+  as_duckplyr_df(out)
+}
