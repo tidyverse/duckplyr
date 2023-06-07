@@ -31,7 +31,7 @@ Imports:
     tibble,
     tidyselect,
     utils,
-    vctrs
+    vctrs (>= 0.6.2.9000)
 Suggests: 
     arrow,
     constructive,
@@ -49,3 +49,5 @@ RoxygenNote: 7.2.3
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Config/testthat/start-first: as_duckplyr_df, mutate, filter, count-tally
+Remotes: 
+    r-lib/vctrs#1847
