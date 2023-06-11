@@ -3,9 +3,9 @@ Package: duckplyr
 Title: A DuckDB-backed version of dplyr
 Version: 0.0.1
 Authors@R: c(
-    person("Hannes", "Mühleisen", , "hannes@duckdblabs.com", role = c("aut", "cre"),
+    person("Hannes", "Mühleisen", role = "aut",
            comment = c(ORCID = "0000-0001-8552-0029")),
-    person("Kirill", "Müller", role = "aut",
+    person("Kirill", "Müller", , "kirill@cynkra.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-1416-3412")),
     person("Posit", role = c("cph", "fnd"))
   )
