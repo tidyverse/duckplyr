@@ -4,10 +4,6 @@ rel_stats_clean <- function() {
   rm(list = ls(rel_stats_env, all.names = TRUE), pos = rel_stats_env)
 }
 
-rel_stats_get <- function() {
-  arrange(tibble::enframe(unlist(as.list(rel_stats_env)), "fun", "count"), desc(count))
-}
-
 #' Relational API
 #'
 #' TBD.
