@@ -1,8 +1,0 @@
-union.data.frame <- function(x, y, ...) {
-  check_dots_empty()
-  check_compatible(x, y)
-
-  out <- vec_set_union(x, y, error_call = current_env())
-
-  dplyr_reconstruct(out, x)
-}

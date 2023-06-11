@@ -1,8 +1,0 @@
-symdiff.data.frame <- function(x, y, ...) {
-  check_dots_empty()
-  check_compatible(x, y)
-
-  out <- vec_set_symmetric_difference(x, y, error_call = current_env())
-
-  dplyr_reconstruct(out, x)
-}
