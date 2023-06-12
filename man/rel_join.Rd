@@ -4,7 +4,13 @@
 \alias{rel_join}
 \title{Lazily INNER join two relation objects}
 \usage{
-rel_join(left, right, conds, join, ...)
+rel_join(
+  left,
+  right,
+  conds,
+  join = c("inner", "left", "right", "outer", "cross", "semi", "anti"),
+  ...
+)
 }
 \arguments{
 \item{left}{the left-hand-side relation object}
@@ -12,6 +18,8 @@ rel_join(left, right, conds, join, ...)
 \item{right}{the right-hand-side relation object}
 
 \item{conds}{a list of DuckDB expressions to use for the join}
+
+\item{join}{type of join}
 
 \item{...}{Reserved for future extensions, must be empty.}
 }
