@@ -1,7 +1,7 @@
 source("tools/00-funs.R", echo = TRUE)
 
 func_decl <- function(name, code) {
-  code <- capture.output(print(constructive::construct(code, check = FALSE, constructive::opts_function(environment = FALSE))))
+  code <- utils::capture.output(print(constructive::construct(code, check = FALSE, constructive::opts_function(environment = FALSE))))
   code <- paste0(code, "\n", collapse = "")
   code <- paste0(name, " <- ", code)
   code

@@ -30,7 +30,15 @@ new_relational <- function(..., class = NULL) {
 #' @export
 #' @examples
 #' rel <- rel_from_df(mtcars)
-#' rel2 <- rel_filter(rel, list(relexpr_function("gt", list(relexpr_reference("cyl"), relexpr_constant("6")))))
+#' rel2 <- rel_filter(
+#'   rel,
+#'   list(
+#'     relexpr_function(
+#'       "gt",
+#'       list(relexpr_reference("cyl"), relexpr_constant("6"))
+#'    )
+#'   )
+#'  )
 rel_to_df <- function(rel, ...) {
   rel_stats_env$rel_to_df <- (rel_stats_env$rel_to_df %||% 0L) + 1L
   UseMethod("rel_to_df")
@@ -46,7 +54,14 @@ rel_to_df <- function(rel, ...) {
 #' @export
 #' @examples
 #' rel <- rel_from_df(mtcars)
-#' rel2 <- rel_filter(rel, list(relexpr_function("gt", list(relexpr_reference("cyl"), relexpr_constant("6")))))
+#' rel2 <- rel_filter(
+#'   rel,
+#'   list(
+#'     relexpr_function(
+#'       "gt",
+#'       list(relexpr_reference("cyl"), relexpr_constant("6")))
+#'   )
+#' )
 rel_filter <- function(rel, exprs, ...) {
   rel_stats_env$rel_filter <- (rel_stats_env$rel_filter %||% 0L) + 1L
   UseMethod("rel_filter")
@@ -114,9 +129,15 @@ rel_order <- function(rel, orders, ...) {
 #' @return a new relation object resulting from the join
 #' @export
 #' @examples
+#' \dontrun{
 #' left <- rel_from_df(mtcars)
 #' right <- rel_from_df(mtcars)
-#' cond <- list(relexpr_function("eq", list(relexpr_reference("cyl", left), relexpr_reference("cyl", right))))
+#' cond <- list(
+#'   relexpr_function(
+#'     "eq",
+#'     list(relexpr_reference("cyl", left), relexpr_reference("cyl", right))
+#'   )
+#' )
 #' rel2 <- rel_join(left, right, cond)
 rel_join <- function(left, right, conds, join = c("inner", "left", "right",
     "outer", "cross", "semi", "anti"), ...) {

@@ -93,7 +93,7 @@ rel_translate <- function(
           "%in%" = {
             tryCatch(
               {
-                values <- eval(expr[[3]], env = baseenv())
+                values <- eval(expr[[3]], envir = baseenv())
                 consts <- map(values, do_translate, in_window = in_window)
                 ops <- map(consts, list, do_translate(expr[[2]]))
                 cmp <- map(ops, relexpr_function, name = "==")

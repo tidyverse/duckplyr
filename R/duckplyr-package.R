@@ -3,6 +3,8 @@
 
 ## usethis namespace: start
 #' @import rlang
+#' @importFrom collections queue
+#' @importFrom collections dict
 #' @importFrom dplyr across
 #' @importFrom dplyr add_tally
 #' @importFrom dplyr case_when
@@ -65,14 +67,31 @@
 #' @importFrom tibble tibble
 #' @importFrom tidyselect everything
 #' @importFrom utils head
-#' @importFrom vctrs list_of
+# an alternative for importing nearly everything from vctrs
+# https://github.com/tidyverse/dplyr/blob/16b472fb2afc50a87502c2b4ed803e2f5f82b9d6/R/dplyr.R#L7
+# @rawNamespace import(vctrs, except = data_frame)
 #' @importFrom vctrs new_data_frame
 #' @importFrom vctrs new_rcrd
 #' @importFrom vctrs unspecified
+#' @importFrom vctrs vec_as_names
+#' @importFrom vctrs vec_assign
 #' @importFrom vctrs vec_c
+#' @importFrom vctrs vec_cast
+#' @importFrom vctrs vec_cast_common
 #' @importFrom vctrs vec_cbind
+#' @importFrom vctrs vec_in
+#' @importFrom vctrs vec_match
 #' @importFrom vctrs vec_rbind
+#' @importFrom vctrs vec_rep
+#' @importFrom vctrs vec_rep_each
+#' @importFrom vctrs vec_set_difference
+#' @importFrom vctrs vec_set_intersect
+#' @importFrom vctrs vec_set_symmetric_difference
+#' @importFrom vctrs vec_set_union
+#' @importFrom vctrs vec_size
 #' @importFrom vctrs vec_slice
+#' @importFrom vctrs vec_split
+#' @importFrom vctrs vec_unique_loc
 #' @useDynLib duckplyr, .registration = TRUE
 ## usethis namespace: end
 NULL

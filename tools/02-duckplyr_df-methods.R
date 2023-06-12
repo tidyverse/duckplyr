@@ -79,7 +79,7 @@ func_decl_chr <- function(generic, code, name, new_code_chr, is_tbl_return, skip
   if (skip_impl) {
     method_code <- ""
   } else {
-    new_code_chr <- paste(capture.output(print(new_code_chr)), collapse = "\n")
+    new_code_chr <- paste(utils::capture.output(print(new_code_chr)), collapse = "\n")
 
     rel_try_chr <- paste0(
       "  # Our implementation\n",
@@ -176,6 +176,12 @@ duckplyr_df_methods <-
   rowwise() %>%
   mutate(decl_chr = func_decl_chr(name, code, new_fun, new_code_chr, is_tbl_return, skip_impl)) %>%
   ungroup()
+
+# If this fails, we need to install dplyr from source:
+# system("git clone tidyverse/dplyr ../dplyr")
+# system("git -C ../dplyr switch v1.1.2")
+# system("R CMD INSTALL --with-keep.source ../dplyr")
+stopifnot(!is.null(attr(duckplyr_df_methods$code[[1]], "srcref")))
 
 old <-
   tibble(path = fs::dir_ls("R")) %>%

@@ -10,29 +10,39 @@ Authors@R: c(
     person("Posit", role = c("cph", "fnd"))
   )
 Description: Implements a subset of dplyr using DuckDB
-License: MIT
+License: MIT + file LICENSE
 URL: https://github.com/duckdblabs/duckplyr
 BugReports: https://github.com/duckdblabs/duckplyr/issues
 Depends: 
     R (>= 4.0.0)
 Imports: 
+    brio,
+    cli,
     collections,
+    DBI,
     dplyr (>= 1.1.2),
     duckdb (>= 0.8.0),
     glue,
     lifecycle,
     purrr,
+    reprex,
     rlang (>= 1.0.6),
+    rstudioapi,
     tibble,
     tidyselect,
     utils,
-    vctrs
+    vctrs (>= 0.6.2.9000)
 Suggests: 
+    arrow,
     constructive,
+    dbplyr,
+    hms,
     lobstr,
     palmerpenguins,
     prettycode,
-    testthat (>= 3.1.5)
+    qs,
+    testthat (>= 3.1.5),
+    withr
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3
@@ -40,4 +50,4 @@ Config/testthat/edition: 3
 Config/testthat/parallel: false
 Config/testthat/start-first: as_duckplyr_df, mutate, filter, count-tally
 Remotes: 
-    cynkra/constructive
+    r-lib/vctrs#1847

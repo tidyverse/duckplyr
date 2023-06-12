@@ -4,5 +4,8 @@
 ^dplyr-methods$
 ^patch$
 ^README\.Rmd$
+^LICENSE\.md$
+^res-dplyr\.csv$
+^res-duckdb\.csv$
 ^\.github$
 ^R/qs\.R$

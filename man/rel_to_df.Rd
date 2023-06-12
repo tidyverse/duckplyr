@@ -19,5 +19,13 @@ TBD.
 }
 \examples{
 rel <- rel_from_df(mtcars)
-rel2 <- rel_filter(rel, list(relexpr_function("gt", list(relexpr_reference("cyl"), relexpr_constant("6")))))
+rel2 <- rel_filter(
+  rel,
+  list(
+    relexpr_function(
+      "gt",
+      list(relexpr_reference("cyl"), relexpr_constant("6"))
+   )
+  )
+ )
 }
