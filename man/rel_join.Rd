@@ -13,6 +13,8 @@ rel_join(left, right, conds, join, ...)
 
 \item{conds}{a list of DuckDB expressions to use for the join}
 
+\item{join}{type of join}
+
 \item{...}{Reserved for future extensions, must be empty.}
 }
 \value{
