@@ -9,3 +9,6 @@
 ^res-duckdb\.csv$
 ^\.github$
 ^R/qs\.R$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
