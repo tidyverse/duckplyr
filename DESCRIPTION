@@ -12,7 +12,7 @@ Authors@R: c(
 Description: Defines a set of generics that provide a low-level
     implementer's interface for dplyr's high-level API.
 License: MIT + file LICENSE
-URL: https://github.com/krlmlr/duckplyr
+URL: https://github.com/krlmlr/duckplyr, https://krlmlr.github.io/duckplyr/
 BugReports: https://github.com/krlmlr/duckplyr/issues
 Encoding: UTF-8
 LazyData: true
