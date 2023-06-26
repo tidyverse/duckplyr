@@ -1,6 +1,6 @@
 Type: Package
 Package: duckplyr
-Title: Relational API for alternative dplyr implementations
+Title: Relational API for Alternative 'dplyr' Implementations
 Version: 0.0.1
 Authors@R: c(
     person("Hannes", "Mühleisen", role = "aut",
