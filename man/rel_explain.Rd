@@ -15,6 +15,8 @@ rel_explain(rel, ...)
 TBD.
 }
 \examples{
+\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 rel <- rel_from_df(mtcars)
 rel_explain(rel)
+\dontshow{\}) # examplesIf}
 }

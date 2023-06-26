@@ -20,6 +20,8 @@ a new relation object with the result
 TBD.
 }
 \examples{
+\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 rel <- rel_from_df(mtcars)
 rel2 <- rel_union_all(rel)
+\dontshow{\}) # examplesIf}
 }

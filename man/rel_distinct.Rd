@@ -18,6 +18,8 @@ a new relation object with distinct rows
 TBD.
 }
 \examples{
+\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 rel <- rel_from_df(mtcars)
 rel2 <- rel_distinct(rel)
+\dontshow{\}) # examplesIf}
 }

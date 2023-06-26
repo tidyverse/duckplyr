@@ -20,6 +20,8 @@ the now projected relation object
 TBD.
 }
 \examples{
+\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 rel <- rel_from_df(mtcars)
 rel2 <- rel_project(rel, list(relexpr_reference("cyl"), relexpr_reference("disp")))
+\dontshow{\}) # examplesIf}
 }

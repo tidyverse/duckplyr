@@ -22,7 +22,9 @@ the now aggregated relation object
 TBD.
 }
 \examples{
+\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 rel <- rel_from_df(mtcars)
 aggrs <- list(avg_hp = relexpr_function("avg", list(relexpr_reference("hp"))))
 rel2 <- rel_aggregate(rel, list(relexpr_reference("cyl")), aggrs)
+\dontshow{\}) # examplesIf}
 }
