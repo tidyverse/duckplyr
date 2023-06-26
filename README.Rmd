@@ -1,0 +1,63 @@
+---
+output: downlit::readme_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+
+pkgload::load_all()
+```
+
+# duckplyr
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of duckplyr is to ...
+
+## Installation
+
+You can install the development version of duckplyr from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak", repos = sprintf("https://r-lib.github.io/p/pak/stable/%s/%s/%s", .Platform$pkgType, R.Version()$os, R.Version()$arch))
+pak::pak("duckdblabs/duckplyr")
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
+library(duckdb)
+library(duckplyr)
+
+# Use `as_duckplyr_df()` to enable processing with duckdb:
+out <-
+  palmerpenguins::penguins %>%
+  as_duckplyr_df() %>%
+  transmute(bill_area = bill_length_mm * bill_depth_mm, bill_length_mm, species, sex) %>%
+  filter(bill_length_mm < 40) %>%
+  select(-bill_length_mm)
+
+# The result is a data frame or tibble, with its own class.
+class(out)
+names(out)
+
+# duckdb is responsible for eventually carrying out the operations:
+out %>%
+  explain()
+
+# The contents of this data frame are computed only upon request:
+out
+
+# Once computed, the results remain available as a data frame:
+out
+```
