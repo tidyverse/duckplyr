@@ -25,17 +25,13 @@ new_relational <- function(..., class = NULL) {
 #' @param ... Reserved for future extensions, must be empty.
 #' @return A data frame.
 #' @export
-#' @examplesIf FALSE
-#' rel <- rel_from_df(mtcars)
-#' rel2 <- rel_filter(
-#'   rel,
-#'   list(
-#'     relexpr_function(
-#'       "gt",
-#'       list(relexpr_reference("cyl"), relexpr_constant("6"))
-#'    )
-#'   )
-#'  )
+#' @examples
+#' mtcars_rel <- new_relational(mtcars)
+#' rel_to_df.relational <- function(rel,...) {
+#'   class(rel) <- setdiff(class(rel), "relational")
+#'   as.data.frame(rel)
+#' }
+#' rel_to_df(mtcars_rel)
 rel_to_df <- function(rel, ...) {
   rel_stats_env$rel_to_df <- (rel_stats_env$rel_to_df %||% 0L) + 1L
   UseMethod("rel_to_df")
@@ -304,9 +300,14 @@ rel_alias <- function(rel, ...) {
 #' @param alias the new alias
 #' @return A (new/modified) relational object.
 #' @export
-#' @examplesIf FALSE
-#' rel <- rel_from_df(mtcars)
-#' rel_set_alias(rel, "my_new_alias")
+#' @examples
+#' mtcars_rel <- new_relational(mtcars)
+#' rel_set_alias.relational <- function(rel, alias,...) {
+#'   attr(rel, "alias") <- alias
+#'   rel
+#' }
+#' mtcars_rel <- rel_set_alias(mtcars_rel, "blop")
+#' attr(mtcars_rel, "alias")
 rel_set_alias <- function(rel, alias, ...) {
   rel_stats_env$rel_set_alias <- (rel_stats_env$rel_set_alias %||% 0L) + 1L
   UseMethod("rel_set_alias")

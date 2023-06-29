@@ -20,8 +20,11 @@ A (new/modified) relational object.
 TBD.
 }
 \examples{
-\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-rel <- rel_from_df(mtcars)
-rel_set_alias(rel, "my_new_alias")
-\dontshow{\}) # examplesIf}
+mtcars_rel <- new_relational(mtcars)
+rel_set_alias.relational <- function(rel, alias,...) {
+  attr(rel, "alias") <- alias
+  rel
+}
+mtcars_rel <- rel_set_alias(mtcars_rel, "blop")
+attr(mtcars_rel, "alias")
 }
