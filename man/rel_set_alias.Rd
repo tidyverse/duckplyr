@@ -13,6 +13,9 @@ rel_set_alias(rel, alias, ...)
 
 \item{...}{Reserved for future extensions, must be empty.}
 }
+\value{
+A (new/modified) relational object.
+}
 \description{
 TBD.
 }

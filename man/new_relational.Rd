@@ -11,6 +11,9 @@ new_relational(..., class = NULL)
 
 \item{class}{Classes added in front of the `"relational"` base class}
 }
+\value{
+A (new/modified) relational object.
+}
 \description{
 TBD.
 }

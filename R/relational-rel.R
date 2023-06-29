@@ -11,6 +11,7 @@ rel_stats_clean <- function() {
 #' @param ... Passed on to [structure()]
 #' @param class Classes added in front of the `"relational"` base class
 #'
+#' @return A (new/modified) relational object.
 #' @export
 new_relational <- function(..., class = NULL) {
   structure(..., class = unique(c(class, "relational")))
@@ -147,6 +148,7 @@ rel_join <- function(left, right, conds, join, ...) {
 #'
 #' @inheritParams rel_to_df
 #' @param n The number of rows.
+#' @return A (new/modified) relational object.
 #' @export
 rel_limit <- function(rel, n, ...) {
   rel_stats_env$rel_limit <- (rel_stats_env$rel_limit %||% 0L) + 1L
@@ -239,6 +241,7 @@ rel_union_all <- function(rel_a, rel_b, ...) {
 #'
 #' @inheritParams rel_to_df
 #' @rdname rel
+#' @return A (new/modified) relational object.
 #' @export
 rel_tostring <- function(rel, ...) {
   rel_stats_env$rel_tostring <- (rel_stats_env$rel_tostring %||% 0L) + 1L
@@ -250,6 +253,7 @@ rel_tostring <- function(rel, ...) {
 #' TBD.
 #'
 #' @inheritParams rel_to_df
+#' @return A (new/modified) relational object.
 #' @export
 #' @examplesIf FALSE
 #' rel <- rel_from_df(mtcars)
@@ -264,6 +268,7 @@ rel_explain <- function(rel, ...) {
 #' TBD.
 #'
 #' @inheritParams rel_to_df
+#' @return A (new/modified) relational object.
 #' @export
 #' @examplesIf FALSE
 #' rel <- rel_from_df(mtcars)
@@ -279,6 +284,7 @@ rel_alias <- function(rel, ...) {
 #'
 #' @inheritParams rel_to_df
 #' @param alias the new alias
+#' @return A (new/modified) relational object.
 #' @export
 #' @examplesIf FALSE
 #' rel <- rel_from_df(mtcars)
@@ -289,6 +295,7 @@ rel_set_alias <- function(rel, alias, ...) {
 }
 
 #' @rdname rel
+#' @return A (new/modified) relational object.
 #' @export
 rel_names <- function(rel, ...) {
   rel_stats_env$rel_names <- (rel_stats_env$rel_names %||% 0L) + 1L

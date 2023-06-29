@@ -11,6 +11,9 @@ rel_explain(rel, ...)
 
 \item{...}{Reserved for future extensions, must be empty.}
 }
+\value{
+A (new/modified) relational object.
+}
 \description{
 TBD.
 }

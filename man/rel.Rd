@@ -14,6 +14,11 @@ rel_names(rel, ...)
 
 \item{...}{Reserved for future extensions, must be empty.}
 }
+\value{
+A (new/modified) relational object.
+
+A (new/modified) relational object.
+}
 \description{
 TBD.
 }
