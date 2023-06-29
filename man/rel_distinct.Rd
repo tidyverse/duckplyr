@@ -18,8 +18,8 @@ a new relation object with distinct rows
 TBD.
 }
 \examples{
-rel <- new_relational(c("a", "a", "b"))
-rel_distinct.relational <- function(rel, ...) {
+rel <- new_relational(c("a", "a", "b"), class = "vecrel")
+rel_distinct.vecrel <- function(rel, ...) {
   class(rel) <- setdiff(class(rel), "relational")
   new_relational(unique(rel))
 }

@@ -18,8 +18,8 @@ A data frame.
 TBD.
 }
 \examples{
-mtcars_rel <- new_relational(mtcars)
-rel_to_df.relational <- function(rel,...) {
+mtcars_rel <- new_relational(mtcars, class = "dfrel")
+rel_to_df.dfrel <- function(rel,...) {
   class(rel) <- setdiff(class(rel), "relational")
   as.data.frame(rel)
 }

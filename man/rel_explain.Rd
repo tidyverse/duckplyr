@@ -18,8 +18,8 @@ A (new/modified) relational object.
 TBD.
 }
 \examples{
-mtcars_rel <- new_relational(mtcars)
-rel_explain.relational <- function(rel, ...) {
+mtcars_rel <- new_relational(mtcars, class = "dfrel")
+rel_explain.dfrel <- function(rel, ...) {
   cat("A relational object")
   print(rel)
   invisible(rel)

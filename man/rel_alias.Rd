@@ -18,7 +18,7 @@ An alias (character).
 TBD.
 }
 \examples{
-mtcars_rel <- new_relational(mtcars)
-rel_alias.relational <- function(rel, ...) tracemem(rel)
+mtcars_rel <- new_relational(mtcars, class = "dfrel")
+rel_alias.dfrel <- function(rel, ...) tracemem(rel)
 rel_alias(mtcars_rel)
 }

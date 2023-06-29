@@ -26,8 +26,8 @@ new_relational <- function(..., class = NULL) {
 #' @return A data frame.
 #' @export
 #' @examples
-#' mtcars_rel <- new_relational(mtcars)
-#' rel_to_df.relational <- function(rel,...) {
+#' mtcars_rel <- new_relational(mtcars, class = "dfrel")
+#' rel_to_df.dfrel <- function(rel,...) {
 #'   class(rel) <- setdiff(class(rel), "relational")
 #'   as.data.frame(rel)
 #' }
@@ -159,8 +159,8 @@ rel_limit <- function(rel, n, ...) {
 #' @return a new relation object with distinct rows
 #' @export
 #' @examples
-#' rel <- new_relational(c("a", "a", "b"))
-#' rel_distinct.relational <- function(rel, ...) {
+#' rel <- new_relational(c("a", "a", "b"), class = "vecrel")
+#' rel_distinct.vecrel <- function(rel, ...) {
 #'   class(rel) <- setdiff(class(rel), "relational")
 #'   new_relational(unique(rel))
 #' }
@@ -180,9 +180,9 @@ rel_distinct <- function(rel, ...) {
 #' @return a new relation object with the result
 #' @export
 #' @examples
-#' rel_a <- new_relational(c(1, 1, 2))
-#' rel_b <- new_relational(c(1, 3, 2))
-#' rel_set_intersect.relational <- function(rel_a, rel_b, ...) new_relational(intersect(rel_a, rel_b))
+#' rel_a <- new_relational(c(1, 1, 2), class = "vecrel")
+#' rel_b <- new_relational(c(1, 3, 2), class = "vecrel")
+#' rel_set_intersect.vecrel <- function(rel_a, rel_b, ...) new_relational(intersect(rel_a, rel_b))
 #' rel_set_intersect(rel_a, rel_b)
 rel_set_intersect <- function(rel_a, rel_b, ...) {
   rel_stats_env$rel_set_intersect <- (rel_stats_env$rel_set_intersect %||% 0L) + 1L
@@ -198,9 +198,9 @@ rel_set_intersect <- function(rel_a, rel_b, ...) {
 #' @return a new relation object with the result
 #' @export
 #' @examples
-#' rel_a <- new_relational(c(1, 1, 2))
-#' rel_b <- new_relational(c(1, 3, 2))
-#' rel_set_diff.relational <- function(rel_a, rel_b, ...) new_relational(setdiff(rel_a, rel_b))
+#' rel_a <- new_relational(c(1, 1, 2), class = "vecrel")
+#' rel_b <- new_relational(c(1, 3, 2), class = "vecrel")
+#' rel_set_diff.vecrel <- function(rel_a, rel_b, ...) new_relational(setdiff(rel_a, rel_b))
 #' rel_set_diff(rel_a, rel_b)
 rel_set_diff <- function(rel_a, rel_b, ...) {
   rel_stats_env$rel_set_diff <- (rel_stats_env$rel_set_diff %||% 0L) + 1L
@@ -217,9 +217,9 @@ rel_set_diff <- function(rel_a, rel_b, ...) {
 #' @export
 
 #' @examples
-#' rel_a <- new_relational(c(1, 1, 2))
-#' rel_b <- new_relational(c(1, 3, 2))
-#' rel_set_symdiff.relational <- function(rel_a, rel_b, ...) {
+#' rel_a <- new_relational(c(1, 1, 2), class = "vecrel")
+#' rel_b <- new_relational(c(1, 3, 2), class = "vecrel")
+#' rel_set_symdiff.vecrel <- function(rel_a, rel_b, ...) {
 #' class(rel_a) <- setdiff(class(rel_a), "relational")
 #' class(rel_b) <- setdiff(class(rel_b), "relational")
 #' new_relational(unique(c(setdiff(rel_a, rel_b), setdiff(rel_b, rel_a))))
@@ -239,9 +239,9 @@ rel_set_symdiff <- function(rel_a, rel_b, ...) {
 #' @return a new relation object with the result
 #' @export
 #' @examples
-#' rel_a <- new_relational(c(1, 1, 2))
-#' rel_b <- new_relational(c(1, 3, 2))
-#' rel_union_all.relational <- function(rel_a, rel_b, ...) new_relational(union(rel_a, rel_b))
+#' rel_a <- new_relational(c(1, 1, 2), class = "vecrel")
+#' rel_b <- new_relational(c(1, 3, 2), class = "vecrel")
+#' rel_union_all.vecrel <- function(rel_a, rel_b, ...) new_relational(union(rel_a, rel_b))
 #' rel_union_all(rel_a, rel_b)
 rel_union_all <- function(rel_a, rel_b, ...) {
   rel_stats_env$rel_union_all <- (rel_stats_env$rel_union_all %||% 0L) + 1L
@@ -269,8 +269,8 @@ rel_tostring <- function(rel, ...) {
 #' @return A (new/modified) relational object.
 #' @export
 #' @examples
-#' mtcars_rel <- new_relational(mtcars)
-#' rel_explain.relational <- function(rel, ...) {
+#' mtcars_rel <- new_relational(mtcars, class = "dfrel")
+#' rel_explain.dfrel <- function(rel, ...) {
 #'   cat("A relational object")
 #'   print(rel)
 #'   invisible(rel)
@@ -289,8 +289,8 @@ rel_explain <- function(rel, ...) {
 #' @return An alias (character).
 #' @export
 #' @examples
-#' mtcars_rel <- new_relational(mtcars)
-#' rel_alias.relational <- function(rel, ...) tracemem(rel)
+#' mtcars_rel <- new_relational(mtcars, class = "dfrel")
+#' rel_alias.dfrel <- function(rel, ...) tracemem(rel)
 #' rel_alias(mtcars_rel)
 rel_alias <- function(rel, ...) {
   rel_stats_env$rel_alias <- (rel_stats_env$rel_alias %||% 0L) + 1L
@@ -306,8 +306,8 @@ rel_alias <- function(rel, ...) {
 #' @return A (new/modified) relational object.
 #' @export
 #' @examples
-#' mtcars_rel <- new_relational(mtcars)
-#' rel_set_alias.relational <- function(rel, alias,...) {
+#' mtcars_rel <- new_relational(mtcars, class = "dfrel")
+#' rel_set_alias.dfrel <- function(rel, alias,...) {
 #'   attr(rel, "alias") <- alias
 #'   rel
 #' }

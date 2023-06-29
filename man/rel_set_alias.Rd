@@ -20,8 +20,8 @@ A (new/modified) relational object.
 TBD.
 }
 \examples{
-mtcars_rel <- new_relational(mtcars)
-rel_set_alias.relational <- function(rel, alias,...) {
+mtcars_rel <- new_relational(mtcars, class = "dfrel")
+rel_set_alias.dfrel <- function(rel, alias,...) {
   attr(rel, "alias") <- alias
   rel
 }

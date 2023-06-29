@@ -20,8 +20,8 @@ a new relation object with the result
 TBD.
 }
 \examples{
-rel_a <- new_relational(c(1, 1, 2))
-rel_b <- new_relational(c(1, 3, 2))
-rel_set_intersect.relational <- function(rel_a, rel_b, ...) new_relational(intersect(rel_a, rel_b))
+rel_a <- new_relational(c(1, 1, 2), class = "vecrel")
+rel_b <- new_relational(c(1, 3, 2), class = "vecrel")
+rel_set_intersect.vecrel <- function(rel_a, rel_b, ...) new_relational(intersect(rel_a, rel_b))
 rel_set_intersect(rel_a, rel_b)
 }
