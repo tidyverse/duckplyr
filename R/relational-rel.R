@@ -285,11 +285,12 @@ rel_explain <- function(rel, ...) {
 #' TBD.
 #'
 #' @inheritParams rel_to_df
-#' @return A (new/modified) relational object.
+#' @return An alias (character).
 #' @export
-#' @examplesIf FALSE
-#' rel <- rel_from_df(mtcars)
-#' rel_alias(rel)
+#' @examples
+#' mtcars_rel <- new_relational(mtcars)
+#' rel_alias.relational <- function(rel, ...) tracemem(rel)
+#' rel_alias(mtcars_rel)
 rel_alias <- function(rel, ...) {
   rel_stats_env$rel_alias <- (rel_stats_env$rel_alias %||% 0L) + 1L
   UseMethod("rel_alias")
