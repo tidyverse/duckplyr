@@ -159,9 +159,9 @@ rel_limit <- function(rel, n, ...) {
 #' @return a new relation object with distinct rows
 #' @export
 #' @examples
-#' mtcars_rel <- new_relational(mtcars)
+#' rel <- new_relational(c("a", "a", "b"))
 #' rel_distinct.relational <- function(rel, ...) new_relational(unique(df))
-#' rel_distinct(mtcars_rel)
+#' rel_distinct(rel)
 rel_distinct <- function(rel, ...) {
   rel_stats_env$rel_distinct <- (rel_stats_env$rel_distinct %||% 0L) + 1L
   UseMethod("rel_distinct")

@@ -18,7 +18,7 @@ a new relation object with distinct rows
 TBD.
 }
 \examples{
-mtcars_rel <- new_relational(mtcars)
+rel <- new_relational(c("a", "a", "b"))
 rel_distinct.relational <- function(rel, ...) new_relational(unique(df))
-rel_distinct(mtcars_rel)
+rel_distinct(rel)
 }
