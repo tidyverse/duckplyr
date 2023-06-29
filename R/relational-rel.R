@@ -28,7 +28,7 @@ new_relational <- function(..., class = NULL) {
 #' @examples
 #' mtcars_rel <- new_relational(mtcars, class = "dfrel")
 #' rel_to_df.dfrel <- function(rel,...) {
-#'   class(rel) <- setdiff(class(rel), "relational")
+#'   class(rel) <- "list"
 #'   as.data.frame(rel)
 #' }
 #' rel_to_df(mtcars_rel)
@@ -162,7 +162,7 @@ rel_limit <- function(rel, n, ...) {
 #' rel <- new_relational(c("a", "a", "b"), class = "vecrel")
 #' rel_distinct.vecrel <- function(rel, ...) {
 #'   class(rel) <- setdiff(class(rel), "relational")
-#'   new_relational(unique(rel))
+#'   new_relational(unique(rel), class = class(rel))
 #' }
 #' rel_distinct(rel)
 rel_distinct <- function(rel, ...) {
@@ -182,7 +182,9 @@ rel_distinct <- function(rel, ...) {
 #' @examples
 #' rel_a <- new_relational(c(1, 1, 2), class = "vecrel")
 #' rel_b <- new_relational(c(1, 3, 2), class = "vecrel")
-#' rel_set_intersect.vecrel <- function(rel_a, rel_b, ...) new_relational(intersect(rel_a, rel_b))
+#' rel_set_intersect.vecrel <- function(rel_a, rel_b, ...) {
+#'   new_relational(intersect(rel_a, rel_b), class = class(rel_a))
+#' }
 #' rel_set_intersect(rel_a, rel_b)
 rel_set_intersect <- function(rel_a, rel_b, ...) {
   rel_stats_env$rel_set_intersect <- (rel_stats_env$rel_set_intersect %||% 0L) + 1L
@@ -200,7 +202,9 @@ rel_set_intersect <- function(rel_a, rel_b, ...) {
 #' @examples
 #' rel_a <- new_relational(c(1, 1, 2), class = "vecrel")
 #' rel_b <- new_relational(c(1, 3, 2), class = "vecrel")
-#' rel_set_diff.vecrel <- function(rel_a, rel_b, ...) new_relational(setdiff(rel_a, rel_b))
+#' rel_set_diff.vecrel <- function(rel_a, rel_b, ...) {
+#'   new_relational(setdiff(rel_a, rel_b), class = class(rel_a))
+#' }
 #' rel_set_diff(rel_a, rel_b)
 rel_set_diff <- function(rel_a, rel_b, ...) {
   rel_stats_env$rel_set_diff <- (rel_stats_env$rel_set_diff %||% 0L) + 1L
@@ -220,9 +224,12 @@ rel_set_diff <- function(rel_a, rel_b, ...) {
 #' rel_a <- new_relational(c(1, 1, 2), class = "vecrel")
 #' rel_b <- new_relational(c(1, 3, 2), class = "vecrel")
 #' rel_set_symdiff.vecrel <- function(rel_a, rel_b, ...) {
-#' class(rel_a) <- setdiff(class(rel_a), "relational")
-#' class(rel_b) <- setdiff(class(rel_b), "relational")
-#' new_relational(unique(c(setdiff(rel_a, rel_b), setdiff(rel_b, rel_a))))
+#'   class(rel_a) <- setdiff(class(rel_a), "relational")
+#'   class(rel_b) <- setdiff(class(rel_b), "relational")
+#'   new_relational(
+#'     unique(c(setdiff(rel_a, rel_b), setdiff(rel_b, rel_a))),
+#'     class = class(rel_a)
+#'   )
 #' }
 #' rel_set_symdiff(rel_a, rel_b)
 rel_set_symdiff <- function(rel_a, rel_b, ...) {
@@ -241,7 +248,9 @@ rel_set_symdiff <- function(rel_a, rel_b, ...) {
 #' @examples
 #' rel_a <- new_relational(c(1, 1, 2), class = "vecrel")
 #' rel_b <- new_relational(c(1, 3, 2), class = "vecrel")
-#' rel_union_all.vecrel <- function(rel_a, rel_b, ...) new_relational(union(rel_a, rel_b))
+#' rel_union_all.vecrel <- function(rel_a, rel_b, ...) {
+#'   new_relational(union(rel_a, rel_b), class = class(rel_a))
+#' }
 #' rel_union_all(rel_a, rel_b)
 rel_union_all <- function(rel_a, rel_b, ...) {
   rel_stats_env$rel_union_all <- (rel_stats_env$rel_union_all %||% 0L) + 1L

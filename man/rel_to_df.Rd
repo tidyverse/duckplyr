@@ -20,7 +20,7 @@ TBD.
 \examples{
 mtcars_rel <- new_relational(mtcars, class = "dfrel")
 rel_to_df.dfrel <- function(rel,...) {
-  class(rel) <- setdiff(class(rel), "relational")
+  class(rel) <- "list"
   as.data.frame(rel)
 }
 rel_to_df(mtcars_rel)

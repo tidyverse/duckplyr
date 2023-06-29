@@ -21,7 +21,7 @@ TBD.
 rel <- new_relational(c("a", "a", "b"), class = "vecrel")
 rel_distinct.vecrel <- function(rel, ...) {
   class(rel) <- setdiff(class(rel), "relational")
-  new_relational(unique(rel))
+  new_relational(unique(rel), class = class(rel))
 }
 rel_distinct(rel)
 }

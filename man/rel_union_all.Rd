@@ -22,6 +22,8 @@ TBD.
 \examples{
 rel_a <- new_relational(c(1, 1, 2), class = "vecrel")
 rel_b <- new_relational(c(1, 3, 2), class = "vecrel")
-rel_union_all.vecrel <- function(rel_a, rel_b, ...) new_relational(union(rel_a, rel_b))
+rel_union_all.vecrel <- function(rel_a, rel_b, ...) {
+  new_relational(union(rel_a, rel_b), class = class(rel_a))
+}
 rel_union_all(rel_a, rel_b)
 }

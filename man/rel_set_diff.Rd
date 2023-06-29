@@ -22,6 +22,8 @@ TBD.
 \examples{
 rel_a <- new_relational(c(1, 1, 2), class = "vecrel")
 rel_b <- new_relational(c(1, 3, 2), class = "vecrel")
-rel_set_diff.vecrel <- function(rel_a, rel_b, ...) new_relational(setdiff(rel_a, rel_b))
+rel_set_diff.vecrel <- function(rel_a, rel_b, ...) {
+  new_relational(setdiff(rel_a, rel_b), class = class(rel_a))
+}
 rel_set_diff(rel_a, rel_b)
 }

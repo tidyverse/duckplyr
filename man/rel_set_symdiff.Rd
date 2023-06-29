@@ -23,9 +23,12 @@ TBD.
 rel_a <- new_relational(c(1, 1, 2), class = "vecrel")
 rel_b <- new_relational(c(1, 3, 2), class = "vecrel")
 rel_set_symdiff.vecrel <- function(rel_a, rel_b, ...) {
-class(rel_a) <- setdiff(class(rel_a), "relational")
-class(rel_b) <- setdiff(class(rel_b), "relational")
-new_relational(unique(c(setdiff(rel_a, rel_b), setdiff(rel_b, rel_a))))
+  class(rel_a) <- setdiff(class(rel_a), "relational")
+  class(rel_b) <- setdiff(class(rel_b), "relational")
+  new_relational(
+    unique(c(setdiff(rel_a, rel_b), setdiff(rel_b, rel_a))),
+    class = class(rel_a)
+  )
 }
 rel_set_symdiff(rel_a, rel_b)
 }
