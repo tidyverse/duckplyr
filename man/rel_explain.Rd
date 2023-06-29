@@ -18,8 +18,11 @@ A (new/modified) relational object.
 TBD.
 }
 \examples{
-\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-rel <- rel_from_df(mtcars)
-rel_explain(rel)
-\dontshow{\}) # examplesIf}
+mtcars_rel <- new_relational(mtcars)
+rel_explain.relational <- function(rel, ...) {
+  cat("A relational object")
+  print(rel)
+  invisible(rel)
+}
+rel_explain(mtcars_rel)
 }

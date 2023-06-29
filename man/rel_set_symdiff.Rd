@@ -20,8 +20,10 @@ a new relation object with the result
 TBD.
 }
 \examples{
-\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-rel <- rel_from_df(mtcars)
-rel2 <- rel_set_symdiff(rel)
-\dontshow{\}) # examplesIf}
+rel_a <- new_relational(c(1, 1, 2))
+rel_b <- new_relational(c(1, 3, 2))
+rel_set_symdiff.relational <- function(rel_a, rel_b, ...) {
+new_relational(unique(c(setdiff(rel_a, rel_b), setdiff(rel_b, rel_a))))
+}
+rel_set_symdiff(rel_a, rel_b)
 }

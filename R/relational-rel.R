@@ -164,7 +164,7 @@ rel_limit <- function(rel, n, ...) {
 #' @export
 #' @examples
 #' mtcars_rel <- new_relational(mtcars)
-#' rel_distinct.relational <- function(df) unique(df)
+#' rel_distinct.relational <- function(rel, ...) new_relational(unique(df))
 #' rel_distinct(mtcars_rel)
 rel_distinct <- function(rel, ...) {
   rel_stats_env$rel_distinct <- (rel_stats_env$rel_distinct %||% 0L) + 1L
@@ -180,9 +180,11 @@ rel_distinct <- function(rel, ...) {
 #' @param rel_b a DuckDB relation object
 #' @return a new relation object with the result
 #' @export
-#' @examplesIf FALSE
-#' rel <- rel_from_df(mtcars)
-#' rel2 <- rel_set_intersect(rel)
+#' @examples
+#' rel_a <- new_relational(c(1, 1, 2))
+#' rel_b <- new_relational(c(1, 3, 2))
+#' rel_set_intersect.relational <- function(rel_a, rel_b, ...) new_relational(intersect(rel_a, rel_b))
+#' rel_set_intersect(rel_a, rel_b)
 rel_set_intersect <- function(rel_a, rel_b, ...) {
   rel_stats_env$rel_set_intersect <- (rel_stats_env$rel_set_intersect %||% 0L) + 1L
   UseMethod("rel_set_intersect")
@@ -196,9 +198,11 @@ rel_set_intersect <- function(rel_a, rel_b, ...) {
 #' @inheritParams rel_set_intersect
 #' @return a new relation object with the result
 #' @export
-#' @examplesIf FALSE
-#' rel <- rel_from_df(mtcars)
-#' rel2 <- rel_set_diff(rel)
+#' @examples
+#' rel_a <- new_relational(c(1, 1, 2))
+#' rel_b <- new_relational(c(1, 3, 2))
+#' rel_set_diff.relational <- function(rel_a, rel_b, ...) new_relational(setdiff(rel_a, rel_b))
+#' rel_set_intersect(rel_a, rel_b)
 rel_set_diff <- function(rel_a, rel_b, ...) {
   rel_stats_env$rel_set_diff <- (rel_stats_env$rel_set_diff %||% 0L) + 1L
   UseMethod("rel_set_diff")
@@ -212,9 +216,14 @@ rel_set_diff <- function(rel_a, rel_b, ...) {
 #' @inheritParams rel_set_intersect
 #' @return a new relation object with the result
 #' @export
-#' @examplesIf FALSE
-#' rel <- rel_from_df(mtcars)
-#' rel2 <- rel_set_symdiff(rel)
+
+#' @examples
+#' rel_a <- new_relational(c(1, 1, 2))
+#' rel_b <- new_relational(c(1, 3, 2))
+#' rel_set_symdiff.relational <- function(rel_a, rel_b, ...) {
+#' new_relational(unique(c(setdiff(rel_a, rel_b), setdiff(rel_b, rel_a))))
+#' }
+#' rel_set_symdiff(rel_a, rel_b)
 rel_set_symdiff <- function(rel_a, rel_b, ...) {
   rel_stats_env$rel_set_symdiff <- (rel_stats_env$rel_set_symdiff %||% 0L) + 1L
   UseMethod("rel_set_symdiff")
@@ -228,9 +237,11 @@ rel_set_symdiff <- function(rel_a, rel_b, ...) {
 #' @inheritParams rel_set_intersect
 #' @return a new relation object with the result
 #' @export
-#' @examplesIf FALSE
-#' rel <- rel_from_df(mtcars)
-#' rel2 <- rel_union_all(rel)
+#' @examples
+#' rel_a <- new_relational(c(1, 1, 2))
+#' rel_b <- new_relational(c(1, 3, 2))
+#' rel_union_all.relational <- function(rel_a, rel_b, ...) new_relational(union(rel_a, rel_b))
+#' rel_union_all(rel_a, rel_b)
 rel_union_all <- function(rel_a, rel_b, ...) {
   rel_stats_env$rel_union_all <- (rel_stats_env$rel_union_all %||% 0L) + 1L
   UseMethod("rel_union_all")
@@ -256,9 +267,14 @@ rel_tostring <- function(rel, ...) {
 #' @inheritParams rel_to_df
 #' @return A (new/modified) relational object.
 #' @export
-#' @examplesIf FALSE
-#' rel <- rel_from_df(mtcars)
-#' rel_explain(rel)
+#' @examples
+#' mtcars_rel <- new_relational(mtcars)
+#' rel_explain.relational <- function(rel, ...) {
+#'   cat("A relational object")
+#'   print(rel)
+#'   invisible(rel)
+#' }
+#' rel_explain(mtcars_rel)
 rel_explain <- function(rel, ...) {
   rel_stats_env$rel_explain <- (rel_stats_env$rel_explain %||% 0L) + 1L
   UseMethod("rel_explain")

@@ -19,6 +19,6 @@ TBD.
 }
 \examples{
 mtcars_rel <- new_relational(mtcars)
-rel_distinct.relational <- function(df) unique(df)
+rel_distinct.relational <- function(rel, ...) new_relational(unique(df))
 rel_distinct(mtcars_rel)
 }
