@@ -19,6 +19,9 @@ TBD.
 }
 \examples{
 rel <- new_relational(c("a", "a", "b"))
-rel_distinct.relational <- function(rel, ...) new_relational(unique(df))
+rel_distinct.relational <- function(rel, ...) {
+  class(rel) <- setdiff(class(rel), "relational")
+  new_relational(unique(rel))
+}
 rel_distinct(rel)
 }

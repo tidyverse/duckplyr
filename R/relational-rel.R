@@ -160,7 +160,10 @@ rel_limit <- function(rel, n, ...) {
 #' @export
 #' @examples
 #' rel <- new_relational(c("a", "a", "b"))
-#' rel_distinct.relational <- function(rel, ...) new_relational(unique(df))
+#' rel_distinct.relational <- function(rel, ...) {
+#'   class(rel) <- setdiff(class(rel), "relational")
+#'   new_relational(unique(rel))
+#' }
 #' rel_distinct(rel)
 rel_distinct <- function(rel, ...) {
   rel_stats_env$rel_distinct <- (rel_stats_env$rel_distinct %||% 0L) + 1L
@@ -198,7 +201,7 @@ rel_set_intersect <- function(rel_a, rel_b, ...) {
 #' rel_a <- new_relational(c(1, 1, 2))
 #' rel_b <- new_relational(c(1, 3, 2))
 #' rel_set_diff.relational <- function(rel_a, rel_b, ...) new_relational(setdiff(rel_a, rel_b))
-#' rel_set_intersect(rel_a, rel_b)
+#' rel_set_diff(rel_a, rel_b)
 rel_set_diff <- function(rel_a, rel_b, ...) {
   rel_stats_env$rel_set_diff <- (rel_stats_env$rel_set_diff %||% 0L) + 1L
   UseMethod("rel_set_diff")
@@ -217,6 +220,8 @@ rel_set_diff <- function(rel_a, rel_b, ...) {
 #' rel_a <- new_relational(c(1, 1, 2))
 #' rel_b <- new_relational(c(1, 3, 2))
 #' rel_set_symdiff.relational <- function(rel_a, rel_b, ...) {
+#' class(rel_a) <- setdiff(class(rel_a), "relational")
+#' class(rel_b) <- setdiff(class(rel_b), "relational")
 #' new_relational(unique(c(setdiff(rel_a, rel_b), setdiff(rel_b, rel_a))))
 #' }
 #' rel_set_symdiff(rel_a, rel_b)
