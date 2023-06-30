@@ -28,36 +28,29 @@ You can install the development version of duckplyr from [GitHub](https://github
 
 ``` r
 # install.packages("pak", repos = sprintf("https://r-lib.github.io/p/pak/stable/%s/%s/%s", .Platform$pkgType, R.Version()$os, R.Version()$arch))
-pak::pak("duckdblabs/duckplyr")
+pak::pak("krlmlr/duckplyr")
 ```
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This package only provides generics, for which other packages may then implement methods.
 
 ```{r example}
-library(duckdb)
 library(duckplyr)
 
-# Use `as_duckplyr_df()` to enable processing with duckdb:
-out <-
-  palmerpenguins::penguins %>%
-  as_duckplyr_df() %>%
-  transmute(bill_area = bill_length_mm * bill_depth_mm, bill_length_mm, species, sex) %>%
-  filter(bill_length_mm < 40) %>%
-  select(-bill_length_mm)
+rel_to_df.dfrel <- function(rel, ...) {
+ unclass(rel)[[1]]
+}
 
-# The result is a data frame or tibble, with its own class.
-class(out)
-names(out)
+rel_limit.dfrel <- function(rel, n, ...) {
+  new_relational(
+    list(head(unclass(rel)[[1]], n)),
+    class = "dfrel"
+  )
+}
 
-# duckdb is responsible for eventually carrying out the operations:
-out %>%
-  explain()
-
-# The contents of this data frame are computed only upon request:
-out
-
-# Once computed, the results remain available as a data frame:
-out
+mtcars_rel <- new_relational(list(mtcars), class = "dfrel")
+mtcars_rel |>
+  rel_limit(5) |>
+  rel_to_df()
 ```
