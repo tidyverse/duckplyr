@@ -19,4 +19,5 @@ LazyData: true
 RoxygenNote: 7.2.3
 Config/testthat/edition: 3
 Suggests: 
+    dplyr,
     testthat (>= 3.0.0)

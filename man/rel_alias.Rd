@@ -2,12 +2,12 @@
 % Please edit documentation in R/relational-rel.R
 \name{rel_alias}
 \alias{rel_alias}
-\title{Get the internal alias for a relation object}
+\title{Get the internal alias for a relational object}
 \usage{
 rel_alias(rel, ...)
 }
 \arguments{
-\item{rel}{The relation object.}
+\item{rel}{The relational object.}
 
 \item{...}{Reserved for future extensions, must be empty.}
 }

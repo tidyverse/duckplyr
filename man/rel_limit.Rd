@@ -2,12 +2,12 @@
 % Please edit documentation in R/relational-rel.R
 \name{rel_limit}
 \alias{rel_limit}
-\title{Lazily limit the rows in a relation object}
+\title{Lazily limit the rows in a relational object}
 \usage{
 rel_limit(rel, n, ...)
 }
 \arguments{
-\item{rel}{The relation object.}
+\item{rel}{The relational object.}
 
 \item{n}{The number of rows.}
 

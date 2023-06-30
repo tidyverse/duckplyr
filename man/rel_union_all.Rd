@@ -2,19 +2,19 @@
 % Please edit documentation in R/relational-rel.R
 \name{rel_union_all}
 \alias{rel_union_all}
-\title{Lazily compute a set_union_all result on a relation object}
+\title{Lazily compute a set_union_all result on a relational object}
 \usage{
 rel_union_all(rel_a, rel_b, ...)
 }
 \arguments{
-\item{rel_a}{a DuckDB relation object}
+\item{rel_a}{a DuckDB relational object}
 
-\item{rel_b}{a DuckDB relation object}
+\item{rel_b}{a DuckDB relational object}
 
 \item{...}{Reserved for future extensions, must be empty.}
 }
 \value{
-a new relation object with the result
+a new relational object with the result
 }
 \description{
 TBD.

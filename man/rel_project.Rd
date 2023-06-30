@@ -2,19 +2,19 @@
 % Please edit documentation in R/relational-rel.R
 \name{rel_project}
 \alias{rel_project}
-\title{Lazily project a relation object}
+\title{Lazily project a relational object}
 \usage{
 rel_project(rel, exprs, ...)
 }
 \arguments{
-\item{rel}{The relation object.}
+\item{rel}{The relational object.}
 
 \item{exprs}{a list of DuckDB expressions to project}
 
 \item{...}{Reserved for future extensions, must be empty.}
 }
 \value{
-the now projected relation object
+the now projected relational object
 }
 \description{
 TBD.

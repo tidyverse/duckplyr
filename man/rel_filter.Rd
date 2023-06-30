@@ -2,22 +2,22 @@
 % Please edit documentation in R/relational-rel.R
 \name{rel_filter}
 \alias{rel_filter}
-\title{Lazily filter a relation object}
+\title{rel_filter}
 \usage{
 rel_filter(rel, exprs, ...)
 }
 \arguments{
-\item{rel}{The relation object.}
+\item{rel}{The relational object.}
 
-\item{exprs}{a list of DuckDB expressions to filter by}
+\item{exprs}{a list of expressions to filter by}
 
 \item{...}{Reserved for future extensions, must be empty.}
 }
 \value{
-the now filtered relation object
+the now filtered relational object
 }
 \description{
-TBD.
+`rel_filter()` keeps rows that match a predicate, to be used by `dplyr::filter()`.
 }
 \examples{
 \dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

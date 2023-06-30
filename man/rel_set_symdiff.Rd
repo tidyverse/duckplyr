@@ -2,19 +2,19 @@
 % Please edit documentation in R/relational-rel.R
 \name{rel_set_symdiff}
 \alias{rel_set_symdiff}
-\title{Lazily compute a set_symdiff result on a relation object}
+\title{Lazily compute a set_symdiff result on a relational object}
 \usage{
 rel_set_symdiff(rel_a, rel_b, ...)
 }
 \arguments{
-\item{rel_a}{a DuckDB relation object}
+\item{rel_a}{a DuckDB relational object}
 
-\item{rel_b}{a DuckDB relation object}
+\item{rel_b}{a DuckDB relational object}
 
 \item{...}{Reserved for future extensions, must be empty.}
 }
 \value{
-a new relation object with the result
+a new relational object with the result
 }
 \description{
 TBD.

@@ -2,12 +2,12 @@
 % Please edit documentation in R/relational-rel.R
 \name{rel_explain}
 \alias{rel_explain}
-\title{Print the EXPLAIN output for a relation object}
+\title{Print the EXPLAIN output for a relational object}
 \usage{
 rel_explain(rel, ...)
 }
 \arguments{
-\item{rel}{The relation object.}
+\item{rel}{The relational object.}
 
 \item{...}{Reserved for future extensions, must be empty.}
 }

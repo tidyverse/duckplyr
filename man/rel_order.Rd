@@ -2,19 +2,19 @@
 % Please edit documentation in R/relational-rel.R
 \name{rel_order}
 \alias{rel_order}
-\title{Lazily reorder a relation object}
+\title{Lazily reorder a relational object}
 \usage{
 rel_order(rel, orders, ...)
 }
 \arguments{
-\item{rel}{The relation object.}
+\item{rel}{The relational object.}
 
 \item{orders}{a list of DuckDB expressions to order by}
 
 \item{...}{Reserved for future extensions, must be empty.}
 }
 \value{
-the now aggregated relation object
+the now aggregated relational object
 }
 \description{
 TBD.

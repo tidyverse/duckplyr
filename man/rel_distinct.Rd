@@ -2,17 +2,17 @@
 % Please edit documentation in R/relational-rel.R
 \name{rel_distinct}
 \alias{rel_distinct}
-\title{Lazily compute a distinct result on a relation object}
+\title{Lazily compute a distinct result on a relational object}
 \usage{
 rel_distinct(rel, ...)
 }
 \arguments{
-\item{rel}{The relation object.}
+\item{rel}{The relational object.}
 
 \item{...}{Reserved for future extensions, must be empty.}
 }
 \value{
-a new relation object with distinct rows
+a new relational object with distinct rows
 }
 \description{
 TBD.

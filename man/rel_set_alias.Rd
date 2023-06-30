@@ -2,12 +2,12 @@
 % Please edit documentation in R/relational-rel.R
 \name{rel_set_alias}
 \alias{rel_set_alias}
-\title{Set the internal alias for a relation object}
+\title{Set the internal alias for a relational object}
 \usage{
 rel_set_alias(rel, alias, ...)
 }
 \arguments{
-\item{rel}{The relation object.}
+\item{rel}{The relational object.}
 
 \item{alias}{the new alias}
 

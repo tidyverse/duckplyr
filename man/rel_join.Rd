@@ -2,14 +2,14 @@
 % Please edit documentation in R/relational-rel.R
 \name{rel_join}
 \alias{rel_join}
-\title{Lazily INNER join two relation objects}
+\title{Lazily INNER join two relational objects}
 \usage{
 rel_join(left, right, conds, join, ...)
 }
 \arguments{
-\item{left}{the left-hand-side relation object}
+\item{left}{the left-hand-side relational object}
 
-\item{right}{the right-hand-side relation object}
+\item{right}{the right-hand-side relational object}
 
 \item{conds}{a list of DuckDB expressions to use for the join}
 
@@ -18,7 +18,7 @@ rel_join(left, right, conds, join, ...)
 \item{...}{Reserved for future extensions, must be empty.}
 }
 \value{
-a new relation object resulting from the join
+a new relational object resulting from the join
 }
 \description{
 TBD.

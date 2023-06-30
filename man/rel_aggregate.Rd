@@ -2,12 +2,12 @@
 % Please edit documentation in R/relational-rel.R
 \name{rel_aggregate}
 \alias{rel_aggregate}
-\title{Lazily aggregate a relation object}
+\title{Lazily aggregate a relational object}
 \usage{
 rel_aggregate(rel, groups, aggregates, ...)
 }
 \arguments{
-\item{rel}{The relation object.}
+\item{rel}{The relational object.}
 
 \item{groups}{a list of DuckDB expressions to group by}
 
@@ -16,7 +16,7 @@ rel_aggregate(rel, groups, aggregates, ...)
 \item{...}{Reserved for future extensions, must be empty.}
 }
 \value{
-the now aggregated relation object
+the now aggregated relational object
 }
 \description{
 TBD.

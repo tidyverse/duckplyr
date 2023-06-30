@@ -10,7 +10,7 @@ rel_tostring(rel, ...)
 rel_names(rel, ...)
 }
 \arguments{
-\item{rel}{The relation object.}
+\item{rel}{The relational object.}
 
 \item{...}{Reserved for future extensions, must be empty.}
 }

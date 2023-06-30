@@ -4,31 +4,48 @@ rel_stats_clean <- function() {
   rm(list = ls(rel_stats_env, all.names = TRUE), pos = rel_stats_env)
 }
 
-#' Relational API
+#' Relational implementer's interface
 #'
-#' TBD.
+#' @description
+#' The constructor and generics described here define a class
+#' that helps separating dplyr's user interface from the actual underlying operations.
+#' In the longer term, this will help packages that implement the dplyr interface
+#' (such as \pkg{dbplyr}, \pkg{dtplyr}, \pkg{arrow} and similar)
+#' to focus on the core details of their functionality,
+#' rather than on the intricacies of dplyr's user interface.
 #'
-#' @param ... Passed on to [structure()]
-#' @param class Classes added in front of the `"relational"` base class
+#' `new_relational()` constructs an object of class `"relational"`.
+#' Users are encouraged to provide the `class` argument.
+#' The typical use case will be to create a wrapper function.
+#'
+#' @param ... Passed on to [structure()].
+#' @param class Classes added in front of the `"relational"` base class.
 #'
 #' @return A (new/modified) relational object.
+#' @name relational
 #' @export
 #' @examples
-#' mtcars_rel <- new_relational(list(mtcars), class = "dfrel")
+#' new_dfrel <- function(x) {
+#'   stopifnot(is.data.frame(x))
+#'   new_relational(list(x), class = "dfrel")
+#' }
+#' mtcars_rel <- new_dfrel(mtcars)
 new_relational <- function(..., class = NULL) {
   structure(..., class = unique(c(class, "relational")))
 }
 
-#' Convert a relation object to a data frame
+#' rel_to_df()
 #'
-#' TBD.
+#' `rel_to_df()` extracts a data frame representation from a relational object,
+#' to be used by `dplyr::collect()`.
 #'
-#' @param rel The relation object.
+#' @param rel The relational object.
 #' @param ... Reserved for future extensions, must be empty.
 #' @return A data frame.
+#' @rdname relational
 #' @export
 #' @examples
-#' mtcars_rel <- new_relational(list(mtcars), class = "dfrel")
+#'
 #' rel_to_df.dfrel <- function(rel, ...) {
 #'   unclass(rel)[[1]]
 #' }
@@ -38,13 +55,13 @@ rel_to_df <- function(rel, ...) {
   UseMethod("rel_to_df")
 }
 
-#' Lazily filter a relation object
+#' rel_filter
 #'
-#' TBD.
+#' `rel_filter()` keeps rows that match a predicate, to be used by `dplyr::filter()`.
 #'
 #' @inheritParams rel_to_df
-#' @param exprs a list of DuckDB expressions to filter by
-#' @return the now filtered relation object
+#' @param exprs a list of expressions to filter by
+#' @return the now filtered relational object
 #' @export
 #' @examplesIf FALSE
 #' rel <- rel_from_df(mtcars)
@@ -61,13 +78,13 @@ rel_filter <- function(rel, exprs, ...) {
   UseMethod("rel_filter")
 }
 
-#' Lazily project a relation object
+#' Lazily project a relational object
 #'
 #' TBD.
 #'
 #' @inheritParams rel_to_df
 #' @param exprs a list of DuckDB expressions to project
-#' @return the now projected relation object
+#' @return the now projected relational object
 #' @export
 #' @examplesIf FALSE
 #' rel <- rel_from_df(mtcars)
@@ -77,14 +94,14 @@ rel_project <- function(rel, exprs, ...) {
   UseMethod("rel_project")
 }
 
-#' Lazily aggregate a relation object
+#' Lazily aggregate a relational object
 #'
 #' TBD.
 #'
 #' @inheritParams rel_to_df
 #' @param groups a list of DuckDB expressions to group by
 #' @param aggregates a (optionally named) list of DuckDB expressions with aggregates to compute
-#' @return the now aggregated relation object
+#' @return the now aggregated relational object
 #' @export
 #' @examplesIf FALSE
 #' rel <- rel_from_df(mtcars)
@@ -95,13 +112,13 @@ rel_aggregate <- function(rel, groups, aggregates, ...) {
   UseMethod("rel_aggregate")
 }
 
-#' Lazily reorder a relation object
+#' Lazily reorder a relational object
 #'
 #' TBD.
 #'
 #' @inheritParams rel_to_df
 #' @param orders a list of DuckDB expressions to order by
-#' @return the now aggregated relation object
+#' @return the now aggregated relational object
 #' @export
 #' @examplesIf FALSE
 #' rel <- rel_from_df(mtcars)
@@ -111,16 +128,16 @@ rel_order <- function(rel, orders, ...) {
   UseMethod("rel_order")
 }
 
-#' Lazily INNER join two relation objects
+#' Lazily INNER join two relational objects
 #'
 #' TBD.
 #'
 #' @inheritParams rel_to_df
-#' @param left the left-hand-side relation object
-#' @param right the right-hand-side relation object
+#' @param left the left-hand-side relational object
+#' @param right the right-hand-side relational object
 #' @param conds a list of DuckDB expressions to use for the join
 #' @param join type of join
-#' @return a new relation object resulting from the join
+#' @return a new relational object resulting from the join
 #' @export
 #' @examplesIf FALSE
 #' left <- rel_from_df(mtcars)
@@ -137,7 +154,7 @@ rel_join <- function(left, right, conds, join, ...) {
   UseMethod("rel_join")
 }
 
-#' Lazily limit the rows in a relation object
+#' Lazily limit the rows in a relational object
 #'
 #' TBD.
 #'
@@ -159,12 +176,12 @@ rel_limit <- function(rel, n, ...) {
   UseMethod("rel_limit")
 }
 
-#' Lazily compute a distinct result on a relation object
+#' Lazily compute a distinct result on a relational object
 #'
 #' TBD.
 #'
 #' @inheritParams rel_to_df
-#' @return a new relation object with distinct rows
+#' @return a new relational object with distinct rows
 #' @export
 #' @examples
 #' rel <- new_relational(c("a", "a", "b"), class = "vecrel")
@@ -178,14 +195,14 @@ rel_distinct <- function(rel, ...) {
   UseMethod("rel_distinct")
 }
 
-#' Lazily compute a set_intersect result on a relation object
+#' Lazily compute a set_intersect result on a relational object
 #'
 #' TBD.
 #'
 #' @inheritParams rel_to_df
-#' @param rel_a a DuckDB relation object
-#' @param rel_b a DuckDB relation object
-#' @return a new relation object with the result
+#' @param rel_a a DuckDB relational object
+#' @param rel_b a DuckDB relational object
+#' @return a new relational object with the result
 #' @export
 #' @examples
 #' rel_a <- new_relational(c(1, 1, 2), class = "vecrel")
@@ -199,13 +216,13 @@ rel_set_intersect <- function(rel_a, rel_b, ...) {
   UseMethod("rel_set_intersect")
 }
 
-#' Lazily compute a set_diff result on a relation object
+#' Lazily compute a set_diff result on a relational object
 #'
 #' TBD.
 #'
 #' @inheritParams rel_to_df
 #' @inheritParams rel_set_intersect
-#' @return a new relation object with the result
+#' @return a new relational object with the result
 #' @export
 #' @examples
 #' rel_a <- new_relational(c(1, 1, 2), class = "vecrel")
@@ -219,13 +236,13 @@ rel_set_diff <- function(rel_a, rel_b, ...) {
   UseMethod("rel_set_diff")
 }
 
-#' Lazily compute a set_symdiff result on a relation object
+#' Lazily compute a set_symdiff result on a relational object
 #'
 #' TBD.
 #'
 #' @inheritParams rel_to_df
 #' @inheritParams rel_set_intersect
-#' @return a new relation object with the result
+#' @return a new relational object with the result
 #' @export
 
 #' @examples
@@ -245,13 +262,13 @@ rel_set_symdiff <- function(rel_a, rel_b, ...) {
   UseMethod("rel_set_symdiff")
 }
 
-#' Lazily compute a set_union_all result on a relation object
+#' Lazily compute a set_union_all result on a relational object
 #'
 #' TBD.
 #'
 #' @inheritParams rel_to_df
 #' @inheritParams rel_set_intersect
-#' @return a new relation object with the result
+#' @return a new relational object with the result
 #' @export
 #' @examples
 #' rel_a <- new_relational(c(1, 1, 2), class = "vecrel")
@@ -278,7 +295,7 @@ rel_tostring <- function(rel, ...) {
   UseMethod("rel_tostring")
 }
 
-#' Print the EXPLAIN output for a relation object
+#' Print the EXPLAIN output for a relational object
 #'
 #' TBD.
 #'
@@ -298,7 +315,7 @@ rel_explain <- function(rel, ...) {
   UseMethod("rel_explain")
 }
 
-#' Get the internal alias for a relation object
+#' Get the internal alias for a relational object
 #'
 #' TBD.
 #'
@@ -314,7 +331,7 @@ rel_alias <- function(rel, ...) {
   UseMethod("rel_alias")
 }
 
-#' Set the internal alias for a relation object
+#' Set the internal alias for a relational object
 #'
 #' TBD.
 #'
