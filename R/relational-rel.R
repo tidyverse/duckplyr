@@ -13,6 +13,8 @@ rel_stats_clean <- function() {
 #'
 #' @return A (new/modified) relational object.
 #' @export
+#' @examples
+#' mtcars_rel <- new_relational(list(mtcars), class = "dfrel")
 new_relational <- function(..., class = NULL) {
   structure(..., class = unique(c(class, "relational")))
 }
@@ -26,10 +28,9 @@ new_relational <- function(..., class = NULL) {
 #' @return A data frame.
 #' @export
 #' @examples
-#' mtcars_rel <- new_relational(mtcars, class = "dfrel")
-#' rel_to_df.dfrel <- function(rel,...) {
-#'   class(rel) <- "list"
-#'   as.data.frame(rel)
+#' mtcars_rel <- new_relational(list(mtcars), class = "dfrel")
+#' rel_to_df.dfrel <- function(rel, ...) {
+#'   unclass(rel)[[1]]
 #' }
 #' rel_to_df(mtcars_rel)
 rel_to_df <- function(rel, ...) {
@@ -122,7 +123,6 @@ rel_order <- function(rel, orders, ...) {
 #' @return a new relation object resulting from the join
 #' @export
 #' @examplesIf FALSE
-#' \dontrun{
 #' left <- rel_from_df(mtcars)
 #' right <- rel_from_df(mtcars)
 #' cond <- list(
@@ -132,7 +132,6 @@ rel_order <- function(rel, orders, ...) {
 #'   )
 #' )
 #' rel2 <- rel_join(left, right, cond)
-#' }
 rel_join <- function(left, right, conds, join, ...) {
   rel_stats_env$rel_join <- (rel_stats_env$rel_join %||% 0L) + 1L
   UseMethod("rel_join")
@@ -146,6 +145,15 @@ rel_join <- function(left, right, conds, join, ...) {
 #' @param n The number of rows.
 #' @return A (new/modified) relational object.
 #' @export
+#' @examples
+#' mtcars_rel <- new_relational(list(mtcars), class = "dfrel")
+#' rel_limit.dfrel <- function(rel, n, ...) {
+#'   new_relational(
+#'     head(unclass(rel)[[1]], n),
+#'     class = "dfrel"
+#'   )
+#' }
+#'
 rel_limit <- function(rel, n, ...) {
   rel_stats_env$rel_limit <- (rel_stats_env$rel_limit %||% 0L) + 1L
   UseMethod("rel_limit")

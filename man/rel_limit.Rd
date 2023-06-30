@@ -19,3 +19,13 @@ A (new/modified) relational object.
 \description{
 TBD.
 }
+\examples{
+mtcars_rel <- new_relational(list(mtcars), class = "dfrel")
+rel_limit.dfrel <- function(rel, n, ...) {
+  new_relational(
+    head(unclass(rel)[[1]], n),
+    class = "dfrel"
+  )
+}
+
+}

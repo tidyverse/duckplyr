@@ -18,10 +18,9 @@ A data frame.
 TBD.
 }
 \examples{
-mtcars_rel <- new_relational(mtcars, class = "dfrel")
-rel_to_df.dfrel <- function(rel,...) {
-  class(rel) <- "list"
-  as.data.frame(rel)
+mtcars_rel <- new_relational(list(mtcars), class = "dfrel")
+rel_to_df.dfrel <- function(rel, ...) {
+  unclass(rel)[[1]]
 }
 rel_to_df(mtcars_rel)
 }

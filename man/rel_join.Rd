@@ -25,7 +25,6 @@ TBD.
 }
 \examples{
 \dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-\dontrun{
 left <- rel_from_df(mtcars)
 right <- rel_from_df(mtcars)
 cond <- list(
@@ -35,6 +34,5 @@ cond <- list(
   )
 )
 rel2 <- rel_join(left, right, cond)
-}
 \dontshow{\}) # examplesIf}
 }

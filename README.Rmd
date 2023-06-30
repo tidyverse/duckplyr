@@ -20,7 +20,7 @@ pkgload::load_all()
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of duckplyr is to define a set of generics that provide a low-level implementer's interface for dplyr's high-level API.
+The goal of duckplyr is to define a set of generics that provide a low-level implementer's interface for dplyr's high-level user interface.
 
 ## Installation
 

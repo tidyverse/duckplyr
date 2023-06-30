@@ -17,3 +17,6 @@ A (new/modified) relational object.
 \description{
 TBD.
 }
+\examples{
+mtcars_rel <- new_relational(list(mtcars), class = "dfrel")
+}
