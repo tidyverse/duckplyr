@@ -20,8 +20,10 @@ a new relation object with the result
 TBD.
 }
 \examples{
-\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-rel <- rel_from_df(mtcars)
-rel2 <- rel_set_intersect(rel)
-\dontshow{\}) # examplesIf}
+rel_a <- new_relational(c(1, 1, 2), class = "vecrel")
+rel_b <- new_relational(c(1, 3, 2), class = "vecrel")
+rel_set_intersect.vecrel <- function(rel_a, rel_b, ...) {
+  new_relational(intersect(rel_a, rel_b), class = class(rel_a))
+}
+rel_set_intersect(rel_a, rel_b)
 }

@@ -12,14 +12,13 @@ rel_alias(rel, ...)
 \item{...}{Reserved for future extensions, must be empty.}
 }
 \value{
-A (new/modified) relational object.
+An alias (character).
 }
 \description{
 TBD.
 }
 \examples{
-\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-rel <- rel_from_df(mtcars)
-rel_alias(rel)
-\dontshow{\}) # examplesIf}
+mtcars_rel <- new_relational(mtcars, class = "dfrel")
+rel_alias.dfrel <- function(rel, ...) tracemem(rel)
+rel_alias(mtcars_rel)
 }

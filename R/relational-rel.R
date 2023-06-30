@@ -25,17 +25,13 @@ new_relational <- function(..., class = NULL) {
 #' @param ... Reserved for future extensions, must be empty.
 #' @return A data frame.
 #' @export
-#' @examplesIf FALSE
-#' rel <- rel_from_df(mtcars)
-#' rel2 <- rel_filter(
-#'   rel,
-#'   list(
-#'     relexpr_function(
-#'       "gt",
-#'       list(relexpr_reference("cyl"), relexpr_constant("6"))
-#'    )
-#'   )
-#'  )
+#' @examples
+#' mtcars_rel <- new_relational(mtcars, class = "dfrel")
+#' rel_to_df.dfrel <- function(rel,...) {
+#'   class(rel) <- "list"
+#'   as.data.frame(rel)
+#' }
+#' rel_to_df(mtcars_rel)
 rel_to_df <- function(rel, ...) {
   rel_stats_env$rel_to_df <- (rel_stats_env$rel_to_df %||% 0L) + 1L
   UseMethod("rel_to_df")
@@ -162,9 +158,13 @@ rel_limit <- function(rel, n, ...) {
 #' @inheritParams rel_to_df
 #' @return a new relation object with distinct rows
 #' @export
-#' @examplesIf FALSE
-#' rel <- rel_from_df(mtcars)
-#' rel2 <- rel_distinct(rel)
+#' @examples
+#' rel <- new_relational(c("a", "a", "b"), class = "vecrel")
+#' rel_distinct.vecrel <- function(rel, ...) {
+#'   class(rel) <- setdiff(class(rel), "relational")
+#'   new_relational(unique(rel), class = class(rel))
+#' }
+#' rel_distinct(rel)
 rel_distinct <- function(rel, ...) {
   rel_stats_env$rel_distinct <- (rel_stats_env$rel_distinct %||% 0L) + 1L
   UseMethod("rel_distinct")
@@ -179,9 +179,13 @@ rel_distinct <- function(rel, ...) {
 #' @param rel_b a DuckDB relation object
 #' @return a new relation object with the result
 #' @export
-#' @examplesIf FALSE
-#' rel <- rel_from_df(mtcars)
-#' rel2 <- rel_set_intersect(rel)
+#' @examples
+#' rel_a <- new_relational(c(1, 1, 2), class = "vecrel")
+#' rel_b <- new_relational(c(1, 3, 2), class = "vecrel")
+#' rel_set_intersect.vecrel <- function(rel_a, rel_b, ...) {
+#'   new_relational(intersect(rel_a, rel_b), class = class(rel_a))
+#' }
+#' rel_set_intersect(rel_a, rel_b)
 rel_set_intersect <- function(rel_a, rel_b, ...) {
   rel_stats_env$rel_set_intersect <- (rel_stats_env$rel_set_intersect %||% 0L) + 1L
   UseMethod("rel_set_intersect")
@@ -195,9 +199,13 @@ rel_set_intersect <- function(rel_a, rel_b, ...) {
 #' @inheritParams rel_set_intersect
 #' @return a new relation object with the result
 #' @export
-#' @examplesIf FALSE
-#' rel <- rel_from_df(mtcars)
-#' rel2 <- rel_set_diff(rel)
+#' @examples
+#' rel_a <- new_relational(c(1, 1, 2), class = "vecrel")
+#' rel_b <- new_relational(c(1, 3, 2), class = "vecrel")
+#' rel_set_diff.vecrel <- function(rel_a, rel_b, ...) {
+#'   new_relational(setdiff(rel_a, rel_b), class = class(rel_a))
+#' }
+#' rel_set_diff(rel_a, rel_b)
 rel_set_diff <- function(rel_a, rel_b, ...) {
   rel_stats_env$rel_set_diff <- (rel_stats_env$rel_set_diff %||% 0L) + 1L
   UseMethod("rel_set_diff")
@@ -211,9 +219,19 @@ rel_set_diff <- function(rel_a, rel_b, ...) {
 #' @inheritParams rel_set_intersect
 #' @return a new relation object with the result
 #' @export
-#' @examplesIf FALSE
-#' rel <- rel_from_df(mtcars)
-#' rel2 <- rel_set_symdiff(rel)
+
+#' @examples
+#' rel_a <- new_relational(c(1, 1, 2), class = "vecrel")
+#' rel_b <- new_relational(c(1, 3, 2), class = "vecrel")
+#' rel_set_symdiff.vecrel <- function(rel_a, rel_b, ...) {
+#'   class(rel_a) <- setdiff(class(rel_a), "relational")
+#'   class(rel_b) <- setdiff(class(rel_b), "relational")
+#'   new_relational(
+#'     unique(c(setdiff(rel_a, rel_b), setdiff(rel_b, rel_a))),
+#'     class = class(rel_a)
+#'   )
+#' }
+#' rel_set_symdiff(rel_a, rel_b)
 rel_set_symdiff <- function(rel_a, rel_b, ...) {
   rel_stats_env$rel_set_symdiff <- (rel_stats_env$rel_set_symdiff %||% 0L) + 1L
   UseMethod("rel_set_symdiff")
@@ -227,9 +245,13 @@ rel_set_symdiff <- function(rel_a, rel_b, ...) {
 #' @inheritParams rel_set_intersect
 #' @return a new relation object with the result
 #' @export
-#' @examplesIf FALSE
-#' rel <- rel_from_df(mtcars)
-#' rel2 <- rel_union_all(rel)
+#' @examples
+#' rel_a <- new_relational(c(1, 1, 2), class = "vecrel")
+#' rel_b <- new_relational(c(1, 3, 2), class = "vecrel")
+#' rel_union_all.vecrel <- function(rel_a, rel_b, ...) {
+#'   new_relational(union(rel_a, rel_b), class = class(rel_a))
+#' }
+#' rel_union_all(rel_a, rel_b)
 rel_union_all <- function(rel_a, rel_b, ...) {
   rel_stats_env$rel_union_all <- (rel_stats_env$rel_union_all %||% 0L) + 1L
   UseMethod("rel_union_all")
@@ -255,9 +277,14 @@ rel_tostring <- function(rel, ...) {
 #' @inheritParams rel_to_df
 #' @return A (new/modified) relational object.
 #' @export
-#' @examplesIf FALSE
-#' rel <- rel_from_df(mtcars)
-#' rel_explain(rel)
+#' @examples
+#' mtcars_rel <- new_relational(mtcars, class = "dfrel")
+#' rel_explain.dfrel <- function(rel, ...) {
+#'   cat("A relational object")
+#'   print(rel)
+#'   invisible(rel)
+#' }
+#' rel_explain(mtcars_rel)
 rel_explain <- function(rel, ...) {
   rel_stats_env$rel_explain <- (rel_stats_env$rel_explain %||% 0L) + 1L
   UseMethod("rel_explain")
@@ -268,11 +295,12 @@ rel_explain <- function(rel, ...) {
 #' TBD.
 #'
 #' @inheritParams rel_to_df
-#' @return A (new/modified) relational object.
+#' @return An alias (character).
 #' @export
-#' @examplesIf FALSE
-#' rel <- rel_from_df(mtcars)
-#' rel_alias(rel)
+#' @examples
+#' mtcars_rel <- new_relational(mtcars, class = "dfrel")
+#' rel_alias.dfrel <- function(rel, ...) tracemem(rel)
+#' rel_alias(mtcars_rel)
 rel_alias <- function(rel, ...) {
   rel_stats_env$rel_alias <- (rel_stats_env$rel_alias %||% 0L) + 1L
   UseMethod("rel_alias")
@@ -286,9 +314,14 @@ rel_alias <- function(rel, ...) {
 #' @param alias the new alias
 #' @return A (new/modified) relational object.
 #' @export
-#' @examplesIf FALSE
-#' rel <- rel_from_df(mtcars)
-#' rel_set_alias(rel, "my_new_alias")
+#' @examples
+#' mtcars_rel <- new_relational(mtcars, class = "dfrel")
+#' rel_set_alias.dfrel <- function(rel, alias,...) {
+#'   attr(rel, "alias") <- alias
+#'   rel
+#' }
+#' mtcars_rel <- rel_set_alias(mtcars_rel, "blop")
+#' attr(mtcars_rel, "alias")
 rel_set_alias <- function(rel, alias, ...) {
   rel_stats_env$rel_set_alias <- (rel_stats_env$rel_set_alias %||% 0L) + 1L
   UseMethod("rel_set_alias")

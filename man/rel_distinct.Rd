@@ -18,8 +18,10 @@ a new relation object with distinct rows
 TBD.
 }
 \examples{
-\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-rel <- rel_from_df(mtcars)
-rel2 <- rel_distinct(rel)
-\dontshow{\}) # examplesIf}
+rel <- new_relational(c("a", "a", "b"), class = "vecrel")
+rel_distinct.vecrel <- function(rel, ...) {
+  class(rel) <- setdiff(class(rel), "relational")
+  new_relational(unique(rel), class = class(rel))
+}
+rel_distinct(rel)
 }

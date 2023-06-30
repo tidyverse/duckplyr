@@ -18,16 +18,10 @@ A data frame.
 TBD.
 }
 \examples{
-\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-rel <- rel_from_df(mtcars)
-rel2 <- rel_filter(
-  rel,
-  list(
-    relexpr_function(
-      "gt",
-      list(relexpr_reference("cyl"), relexpr_constant("6"))
-   )
-  )
- )
-\dontshow{\}) # examplesIf}
+mtcars_rel <- new_relational(mtcars, class = "dfrel")
+rel_to_df.dfrel <- function(rel,...) {
+  class(rel) <- "list"
+  as.data.frame(rel)
+}
+rel_to_df(mtcars_rel)
 }
