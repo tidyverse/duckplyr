@@ -10,7 +10,7 @@ Authors@R: c(
     person("Posit Software, PBC", role = c("cph", "fnd"))
   )
 Description: Defines a set of generics that provide a low-level
-    implementer's interface for dplyr's high-level API.
+    implementer's interface for dplyr's high-level user interface.
 License: MIT + file LICENSE
 URL: https://github.com/krlmlr/duckplyr, https://krlmlr.github.io/duckplyr/
 BugReports: https://github.com/krlmlr/duckplyr/issues
