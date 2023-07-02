@@ -38,19 +38,94 @@ This package only provides generics, for which other packages may then implement
 ```{r example}
 library(duckplyr)
 
-rel_to_df.dfrel <- function(rel, ...) {
- unclass(rel)[[1]]
+new_dfrel <- function(x) {
+  stopifnot(is.data.frame(x))
+  new_relational(list(x), class = "dfrel")
 }
+mtcars_rel <- new_dfrel(mtcars[1:5, 1:4])
+
+rel_to_df.dfrel <- function(rel, ...) {
+  unclass(rel)[[1]]
+}
+rel_to_df(mtcars_rel)
+
+rel_filter.dfrel <- function(rel, exprs, ...) {
+  df <- unclass(rel)[[1]]
+
+  # A real implementation would evaluate the predicates defined
+  # by the exprs argument
+  new_dfrel(df[sample.int(nrow(df), 3, replace = TRUE), ])
+}
+
+rel_filter(
+  mtcars_rel,
+  list(
+    relexpr_function(
+      "gt",
+      list(relexpr_reference("cyl"), relexpr_constant("6"))
+    )
+  )
+)
+
+rel_project.dfrel <- function(rel, exprs, ...) {
+  df <- unclass(rel)[[1]]
+
+  # A real implementation would evaluate the expressions defined
+  # by the exprs argument
+  new_dfrel(df[seq_len(min(3, ncol(df)))])
+}
+
+rel_project(
+  mtcars_rel,
+  list(relexpr_reference("cyl"), relexpr_reference("disp"))
+)
+
+rel_order.dfrel <- function(rel, exprs, ...) {
+  df <- unclass(rel)[[1]]
+
+  # A real implementation would evaluate the expressions defined
+  # by the exprs argument
+  new_dfrel(df[order(df[[1]]), ])
+}
+
+rel_order(
+  mtcars_rel,
+  list(relexpr_reference("mpg"))
+)
+rel_join.dfrel <- function(left, right, conds, join, ...) {
+  left_df <- unclass(left)[[1]]
+  right_df <- unclass(right)[[1]]
+
+  # A real implementation would evaluate the expressions
+  # defined by the conds argument,
+  # use different join types based on the join argument,
+  # and implement the join itself instead of relaying to left_join().
+  new_dfrel(dplyr::left_join(left_df, right_df))
+}
+
+rel_join(new_dfrel(data.frame(mpg = 21)), mtcars_rel)
 
 rel_limit.dfrel <- function(rel, n, ...) {
-  new_relational(
-    list(head(unclass(rel)[[1]], n)),
-    class = "dfrel"
-  )
+  df <- unclass(rel)[[1]]
+
+  new_dfrel(df[seq_len(n), ])
 }
 
-mtcars_rel <- new_relational(list(mtcars), class = "dfrel")
-mtcars_rel |>
-  rel_limit(5) |>
-  rel_to_df()
+rel_limit(mtcars_rel, 3)
+
+rel_distinct.dfrel <- function(rel, ...) {
+  df <- unclass(rel)[[1]]
+
+  new_dfrel(df[!duplicated(df), ])
+}
+
+rel_distinct(new_dfrel(mtcars[1:3, 1:4]))
+
+rel_names.dfrel <- function(rel, ...) {
+  df <- unclass(rel)[[1]]
+
+  names(df)
+}
+
+rel_names(mtcars_rel)
 ```
