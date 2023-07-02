@@ -57,36 +57,29 @@ rel_names(rel, ...)
 
 \item{class}{Classes added in front of the \code{"relational"} base class.}
 
-\item{rel}{The relational object.}
+\item{rel, rel_a, rel_b, left, right}{A relational object.}
 
 \item{exprs}{A list of \link{expr} objects to filter by.}
 
-\item{groups}{a list of expressions to group by}
+\item{groups}{A list of expressions to group by.}
 
-\item{aggregates}{a (optionally named) list of expressions with aggregates to compute}
+\item{aggregates}{A list of expressions with aggregates to compute.}
 
-\item{orders}{a list of expressions to order by}
-
-\item{left}{The left-hand-side relational object.}
-
-\item{right}{The right-hand-side relational object.}
+\item{orders}{A list of expressions to order by.}
 
 \item{conds}{A list of expressions to use for the join.}
 
-\item{join}{Type of join.}
+\item{join}{The type of join.}
 
 \item{n}{The number of rows.}
-
-\item{rel_a, rel_b}{Relational objects.}
 }
 \value{
 \itemize{
-\item \code{new_relational()} returns a relational object.
+\item \code{new_relational()} returns a new relational object.
 \item \code{rel_to_df()} returns a data frame.
+\item \code{rel_names()} returns a character vector.
 \item All other generics return a modified relational object.
 }
-
-A data frame.
 }
 \description{
 The constructor and generics described here define a class

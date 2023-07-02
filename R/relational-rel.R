@@ -16,8 +16,9 @@
 #' @param class Classes added in front of the `"relational"` base class.
 #'
 #' @return
-#' - `new_relational()` returns a relational object.
+#' - `new_relational()` returns a new relational object.
 #' - `rel_to_df()` returns a data frame.
+#' - `rel_names()` returns a character vector.
 #' - All other generics return a modified relational object.
 #' @name relational
 #' @export
@@ -36,9 +37,8 @@ new_relational <- function(..., class = NULL) {
 #' `rel_to_df()` extracts a data frame representation from a relational object,
 #' to be used by [dplyr::collect()].
 #'
-#' @param rel The relational object.
+#' @param rel,rel_a,rel_b,left,right A relational object.
 #' @param ... Reserved for future extensions, must be empty.
-#' @return A data frame.
 #' @rdname relational
 #' @export
 #' @examples
@@ -116,8 +116,8 @@ rel_project <- function(rel, exprs, ...) {
 #' `rel_aggregate()` combines several rows into one,
 #' to be used by [dplyr::summarize()].
 #'
-#' @param groups a list of expressions to group by
-#' @param aggregates a (optionally named) list of expressions with aggregates to compute
+#' @param groups A list of expressions to group by.
+#' @param aggregates A list of expressions with aggregates to compute.
 #' @rdname relational
 #' @export
 rel_aggregate <- function(rel, groups, aggregates, ...) {
@@ -130,7 +130,7 @@ rel_aggregate <- function(rel, groups, aggregates, ...) {
 #' `rel_order()` reorders rows by columns or expressions,
 #' to be used by [dplyr::arrange()].
 #'
-#' @param orders a list of expressions to order by
+#' @param orders A list of expressions to order by.
 #' @rdname relational
 #' @export
 #' @examples
@@ -159,10 +159,8 @@ rel_order <- function(rel, orders, ...) {
 #' [dplyr::inner_join()], [dplyr::full_join()], [dplyr::cross_join()],
 #' [dplyr::semi_join()], and [dplyr::anti_join()].
 #'
-#' @param left The left-hand-side relational object.
-#' @param right The right-hand-side relational object.
 #' @param conds A list of expressions to use for the join.
-#' @param join Type of join.
+#' @param join The type of join.
 #' @rdname relational
 #' @export
 #' @examplesIf requireNamespace("dplyr", quietly = TRUE)
@@ -235,7 +233,6 @@ rel_distinct <- function(rel, ...) {
 #' `rel_set_intersect()` returns rows present in both tables,
 #' to be used by [intersect()].
 #'
-#' @param rel_a,rel_b Relational objects.
 #' @rdname relational
 #' @export
 rel_set_intersect <- function(rel_a, rel_b, ...) {
