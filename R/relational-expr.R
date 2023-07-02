@@ -18,10 +18,7 @@
 #' relexpr_set_alias(alias = "my_predicate",
 #'   relexpr_function("<",
 #'     list(
-#'       relexpr_window(
-#'         relexpr_function("first", list(relexpr_reference("my_number"))),
-#'         partitions = list(relexpr_reference("my_grouping"))
-#'       ),
+#'       relexpr_reference("my_number"),
 #'       relexpr_constant(42)
 #'     )
 #'   )
