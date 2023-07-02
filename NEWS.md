@@ -1,5 +1,28 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.0.99.9002 (2023-07-02)
+
+## Bug fixes
+
+- Fix examples.
+
+## Chore
+
+- Add CRAN install instructions.
+
+- Satisfy `R CMD check`.
+
+- Document argument.
+
+- Error on NOTE.
+
+- Remove `relexpr_window()` for now.
+
+## Documentation
+
+- Clean up reference.
+
+
 # duckplyr 0.0.99.9001 (2023-07-02)
 
 Initial version, exporting:
