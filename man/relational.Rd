@@ -55,11 +55,11 @@ rel_names(rel, ...)
 \arguments{
 \item{...}{Reserved for future extensions, must be empty.}
 
-\item{class}{Classes added in front of the `"relational"` base class.}
+\item{class}{Classes added in front of the \code{"relational"} base class.}
 
 \item{rel}{The relational object.}
 
-\item{exprs}{A list of [expr] objects to filter by.}
+\item{exprs}{A list of \link{expr} objects to filter by.}
 
 \item{groups}{a list of expressions to group by}
 
@@ -80,9 +80,11 @@ rel_names(rel, ...)
 \item{rel_a, rel_b}{Relational objects.}
 }
 \value{
-- `new_relational()` returns a relational object.
-- `rel_to_df()` returns a data frame.
-- All other generics return a modified relational object.
+\itemize{
+\item \code{new_relational()} returns a relational object.
+\item \code{rel_to_df()} returns a data frame.
+\item All other generics return a modified relational object.
+}
 
 A data frame.
 }
@@ -94,51 +96,51 @@ In the longer term, this will help packages that implement the dplyr interface
 to focus on the core details of their functionality,
 rather than on the intricacies of dplyr's user interface.
 
-`new_relational()` constructs an object of class `"relational"`.
-Users are encouraged to provide the `class` argument.
+\code{new_relational()} constructs an object of class \code{"relational"}.
+Users are encouraged to provide the \code{class} argument.
 The typical use case will be to create a wrapper function.
 
-`rel_to_df()` extracts a data frame representation from a relational object,
-to be used by [dplyr::collect()].
+\code{rel_to_df()} extracts a data frame representation from a relational object,
+to be used by \code{\link[dplyr:compute]{dplyr::collect()}}.
 
-`rel_filter()` keeps rows that match a predicate,
- to be used by [dplyr::filter()].
+\code{rel_filter()} keeps rows that match a predicate,
+to be used by \code{\link[dplyr:filter]{dplyr::filter()}}.
 
-`rel_project()` selects columns or creates new columns,
-to be used by [dplyr::select()], [dplyr::rename()],
-[dplyr::mutate()], [dplyr::relocate()], and others.
+\code{rel_project()} selects columns or creates new columns,
+to be used by \code{\link[dplyr:select]{dplyr::select()}}, \code{\link[dplyr:rename]{dplyr::rename()}},
+\code{\link[dplyr:mutate]{dplyr::mutate()}}, \code{\link[dplyr:relocate]{dplyr::relocate()}}, and others.
 
-`rel_aggregate()` combines several rows into one,
-to be used by [dplyr::summarize()].
+\code{rel_aggregate()} combines several rows into one,
+to be used by \code{\link[dplyr:summarise]{dplyr::summarize()}}.
 
-`rel_order()` reorders rows by columns or expressions,
-to be used by [dplyr::arrange()].
+\code{rel_order()} reorders rows by columns or expressions,
+to be used by \code{\link[dplyr:arrange]{dplyr::arrange()}}.
 
-`rel_join()` joins or merges two tables,
-to be used by [dplyr::left_join()], [dplyr::right_join()],
-[dplyr::inner_join()], [dplyr::full_join()], [dplyr::cross_join()],
-[dplyr::semi_join()], and [dplyr::anti_join()].
+\code{rel_join()} joins or merges two tables,
+to be used by \code{\link[dplyr:mutate-joins]{dplyr::left_join()}}, \code{\link[dplyr:mutate-joins]{dplyr::right_join()}},
+\code{\link[dplyr:mutate-joins]{dplyr::inner_join()}}, \code{\link[dplyr:mutate-joins]{dplyr::full_join()}}, \code{\link[dplyr:cross_join]{dplyr::cross_join()}},
+\code{\link[dplyr:filter-joins]{dplyr::semi_join()}}, and \code{\link[dplyr:filter-joins]{dplyr::anti_join()}}.
 
-`rel_limit()` limits the number of rows in a table,
-to be used by [utils::head()].
+\code{rel_limit()} limits the number of rows in a table,
+to be used by \code{\link[utils:head]{utils::head()}}.
 
-`rel_distinct()` only keeps the distinct rows in a table,
-to be used by [dplyr::distinct()].
+\code{rel_distinct()} only keeps the distinct rows in a table,
+to be used by \code{\link[dplyr:distinct]{dplyr::distinct()}}.
 
-`rel_set_intersect()` returns rows present in both tables,
-to be used by [intersect()].
+\code{rel_set_intersect()} returns rows present in both tables,
+to be used by \code{\link[=intersect]{intersect()}}.
 
-`rel_set_diff()` returns rows present in any of both tables,
-to be used by [setdiff()].
+\code{rel_set_diff()} returns rows present in any of both tables,
+to be used by \code{\link[=setdiff]{setdiff()}}.
 
-`rel_set_symdiff()` returns rows present in any of both tables,
-to be used by [dplyr::symdiff()].
+\code{rel_set_symdiff()} returns rows present in any of both tables,
+to be used by \code{\link[dplyr:setops]{dplyr::symdiff()}}.
 
-`rel_union_all()` returns rows present in any of both tables,
-to be used by [dplyr::union_all()].
+\code{rel_union_all()} returns rows present in any of both tables,
+to be used by \code{\link[dplyr:setops]{dplyr::union_all()}}.
 
-`rel_names()` returns the column names as character vector,
-to be used by [colnames()].
+\code{rel_names()} returns the column names as character vector,
+to be used by \code{\link[=colnames]{colnames()}}.
 }
 \examples{
 new_dfrel <- function(x) {

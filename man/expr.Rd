@@ -32,7 +32,7 @@ relexpr_set_alias(expr, alias = NULL)
 \arguments{
 \item{x}{An object.}
 
-\item{class}{Classes added in front of the `"relational_relexpr"` base class.}
+\item{class}{Classes added in front of the \code{"relational_relexpr"} base class.}
 
 \item{name}{The name of the column or function to reference.}
 
@@ -42,9 +42,9 @@ relexpr_set_alias(expr, alias = NULL)
 
 \item{val}{The value to use in the constant expression.}
 
-\item{args}{Function arguments, a list of `expr` objects.}
+\item{args}{Function arguments, a list of \code{expr} objects.}
 
-\item{partitions}{Partitions, a list of `expr` objects.}
+\item{partitions}{Partitions, a list of \code{expr} objects.}
 
 \item{order_bys}{which variables to order results by (list).}
 
@@ -57,21 +57,21 @@ These functions provide a backend-agnostic way to construct expression trees
 built of column references, constants, and functions.
 All subexpressions in an expression tree can have an alias.
 
-`new_relexpr()` constructs an object of class `"relational_relexpr"`.
+\code{new_relexpr()} constructs an object of class \code{"relational_relexpr"}.
 It is used by the higher-level constructors,
 users should rarely need to call it directly.
 
-`relexpr_reference()` constructs a reference to a column.
+\code{relexpr_reference()} constructs a reference to a column.
 
-`relexpr_constant()` wraps a constant value.
+\code{relexpr_constant()} wraps a constant value.
 
-`relexpr_function()` applies a function.
+\code{relexpr_function()} applies a function.
 The arguments to this function are a list of other expression objects.
 
-`relexpr_window()` marks an expression as a window operation,
+\code{relexpr_window()} marks an expression as a window operation,
 with user-defined partitioning, order, offset, and default expressions.
 
-`relexpr_set_alias()` updates the alias of a relational expression.
+\code{relexpr_set_alias()} updates the alias of a relational expression.
 }
 \examples{
 relexpr_set_alias(alias = "my_predicate",
