@@ -74,44 +74,6 @@ relexpr_function <- function(name, args, alias = NULL) {
   new_relexpr(list(name = name, args = args, alias = alias), class = "relational_relexpr_function")
 }
 
-#' relexpr_window
-#'
-#' `relexpr_window()` marks an expression as a window operation,
-#' with user-defined partitioning, order, offset, and default expressions.
-#'
-#' @param partitions Partitions, a list of `expr` objects.
-#' @param order_bys which variables to order results by (list).
-#' @param offset_expr offset relational expression.
-#' @param default_expr default relational expression.
-#' @rdname expr
-#' @export
-relexpr_window <- function(
-    expr,
-    partitions,
-    order_bys = list(),
-    offset_expr = NULL,
-    default_expr = NULL,
-    alias = NULL
-) {
-  stopifnot(inherits(expr, "relational_relexpr"))
-  stopifnot(is.list(partitions))
-  stopifnot(is.list(order_bys))
-  stopifnot(is.null(offset_expr) || inherits(offset_expr, "relational_relexpr"))
-  stopifnot(is.null(default_expr) || inherits(default_expr, "relational_relexpr"))
-  stopifnot(is.null(alias) || is_string(alias))
-  new_relexpr(
-    list(
-      expr = expr,
-      partitions = partitions,
-      order_bys = order_bys,
-      offset_expr = offset_expr,
-      default_expr = default_expr,
-      alias = alias
-    ),
-    class = "relational_relexpr_window"
-  )
-}
-
 #' relexpr_set_alias
 #'
 #' `relexpr_set_alias()` updates the alias of a relational expression.
