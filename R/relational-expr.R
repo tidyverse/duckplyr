@@ -75,6 +75,7 @@ relexpr_function <- function(name, args, alias = NULL) {
 #'
 #' `relexpr_set_alias()` updates the alias of a relational expression.
 #'
+#' @param expr An `expr` object.
 #' @rdname expr
 #' @export
 relexpr_set_alias <- function(expr, alias = NULL) {
