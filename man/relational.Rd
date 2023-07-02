@@ -4,11 +4,53 @@
 \alias{relational}
 \alias{new_relational}
 \alias{rel_to_df}
+\alias{rel_filter}
+\alias{rel_project}
+\alias{rel_aggregate}
+\alias{rel_order}
+\alias{rel_join}
+\alias{rel_limit}
+\alias{rel_distinct}
+\alias{rel_set_intersect}
+\alias{rel_set_diff}
+\alias{rel_set_symdiff}
+\alias{rel_union_all}
+\alias{rel_names}
 \title{Relational implementer's interface}
 \usage{
 new_relational(..., class = NULL)
 
 rel_to_df(rel, ...)
+
+rel_filter(rel, exprs, ...)
+
+rel_project(rel, exprs, ...)
+
+rel_aggregate(rel, groups, aggregates, ...)
+
+rel_order(rel, orders, ...)
+
+rel_join(
+  left,
+  right,
+  conds,
+  join = c("inner", "left", "right", "outer", "cross", "semi", "anti"),
+  ...
+)
+
+rel_limit(rel, n, ...)
+
+rel_distinct(rel, ...)
+
+rel_set_intersect(rel_a, rel_b, ...)
+
+rel_set_diff(rel_a, rel_b, ...)
+
+rel_set_symdiff(rel_a, rel_b, ...)
+
+rel_union_all(rel_a, rel_b, ...)
+
+rel_names(rel, ...)
 }
 \arguments{
 \item{...}{Reserved for future extensions, must be empty.}
@@ -16,9 +58,31 @@ rel_to_df(rel, ...)
 \item{class}{Classes added in front of the `"relational"` base class.}
 
 \item{rel}{The relational object.}
+
+\item{exprs}{A list of [expr] objects to filter by.}
+
+\item{groups}{a list of expressions to group by}
+
+\item{aggregates}{a (optionally named) list of expressions with aggregates to compute}
+
+\item{orders}{a list of expressions to order by}
+
+\item{left}{The left-hand-side relational object.}
+
+\item{right}{The right-hand-side relational object.}
+
+\item{conds}{A list of expressions to use for the join.}
+
+\item{join}{Type of join.}
+
+\item{n}{The number of rows.}
+
+\item{rel_a, rel_b}{Relational objects.}
 }
 \value{
-A (new/modified) relational object.
+- `new_relational()` returns a relational object.
+- `rel_to_df()` returns a data frame.
+- All other generics return a modified relational object.
 
 A data frame.
 }
@@ -35,17 +99,140 @@ Users are encouraged to provide the `class` argument.
 The typical use case will be to create a wrapper function.
 
 `rel_to_df()` extracts a data frame representation from a relational object,
-to be used by `dplyr::collect()`.
+to be used by [dplyr::collect()].
+
+`rel_filter()` keeps rows that match a predicate,
+ to be used by [dplyr::filter()].
+
+`rel_project()` selects columns or creates new columns,
+to be used by [dplyr::select()], [dplyr::rename()],
+[dplyr::mutate()], [dplyr::relocate()], and others.
+
+`rel_aggregate()` combines several rows into one,
+to be used by [dplyr::summarize()].
+
+`rel_order()` reorders rows by columns or expressions,
+to be used by [dplyr::arrange()].
+
+`rel_join()` joins or merges two tables,
+to be used by [dplyr::left_join()], [dplyr::right_join()],
+[dplyr::inner_join()], [dplyr::full_join()], [dplyr::cross_join()],
+[dplyr::semi_join()], and [dplyr::anti_join()].
+
+`rel_limit()` limits the number of rows in a table,
+to be used by [utils::head()].
+
+`rel_distinct()` only keeps the distinct rows in a table,
+to be used by [dplyr::distinct()].
+
+`rel_set_intersect()` returns rows present in both tables,
+to be used by [intersect()].
+
+`rel_set_diff()` returns rows present in any of both tables,
+to be used by [setdiff()].
+
+`rel_set_symdiff()` returns rows present in any of both tables,
+to be used by [dplyr::symdiff()].
+
+`rel_union_all()` returns rows present in any of both tables,
+to be used by [dplyr::union_all()].
+
+`rel_names()` returns the column names as character vector,
+to be used by [colnames()].
 }
 \examples{
 new_dfrel <- function(x) {
   stopifnot(is.data.frame(x))
   new_relational(list(x), class = "dfrel")
 }
-mtcars_rel <- new_dfrel(mtcars)
+mtcars_rel <- new_dfrel(mtcars[1:5, 1:4])
 
 rel_to_df.dfrel <- function(rel, ...) {
   unclass(rel)[[1]]
 }
 rel_to_df(mtcars_rel)
+\dontshow{if ({ set.seed(20230630); TRUE }) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+
+rel_filter.dfrel <- function(rel, exprs, ...) {
+  df <- unclass(rel)[[1]]
+
+  # A real implementation would evaluate the predicates defined
+  # by the exprs argument
+  new_dfrel(df[sample.int(nrow(df), 3, replace = TRUE), ])
+}
+
+rel_filter(
+  mtcars_rel,
+  list(
+    relexpr_function(
+      "gt",
+      list(relexpr_reference("cyl"), relexpr_constant("6"))
+    )
+  )
+)
+\dontshow{\}) # examplesIf}
+
+rel_project.dfrel <- function(rel, exprs, ...) {
+  df <- unclass(rel)[[1]]
+
+  # A real implementation would evaluate the expressions defined
+  # by the exprs argument
+  new_dfrel(df[seq_len(min(3, ncol(df)))])
+}
+
+rel_project(
+  mtcars_rel,
+  list(relexpr_reference("cyl"), relexpr_reference("disp"))
+)
+
+rel_order.dfrel <- function(rel, exprs, ...) {
+  df <- unclass(rel)[[1]]
+
+  # A real implementation would evaluate the expressions defined
+  # by the exprs argument
+  new_dfrel(df[order(df[[1]]), ])
+}
+
+rel_order(
+  mtcars_rel,
+  list(relexpr_reference("mpg"))
+)
+\dontshow{if (requireNamespace("dplyr", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+rel_join.dfrel <- function(left, right, conds, join, ...) {
+  left_df <- unclass(left)[[1]]
+  right_df <- unclass(right)[[1]]
+
+  # A real implementation would evaluate the expressions
+  # defined by the conds argument,
+  # use different join types based on the join argument,
+  # and implement the join itself instead of relaying to left_join().
+  new_dfrel(dplyr::left_join(left_df, right_df))
+}
+
+rel_join(new_dfrel(data.frame(mpg = 21)), mtcars_rel)
+\dontshow{\}) # examplesIf}
+
+rel_limit.dfrel <- function(rel, n, ...) {
+  df <- unclass(rel)[[1]]
+
+  new_dfrel(df[seq_len(n), ])
+}
+
+rel_limit(mtcars_rel, 3)
+
+rel_distinct.dfrel <- function(rel, ...) {
+  df <- unclass(rel)[[1]]
+
+  new_dfrel(df[!duplicated(df), ])
+}
+
+rel_distinct(new_dfrel(mtcars[1:3, 1:4]))
+
+rel_names.dfrel <- function(rel, ...) {
+  df <- unclass(rel)[[1]]
+
+  names(df)
+}
+
+rel_names(mtcars_rel)
 }

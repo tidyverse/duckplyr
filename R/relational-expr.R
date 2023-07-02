@@ -130,3 +130,7 @@ print.relational_relexpr <- function(x, ...) {
   str(x)
   invisible(x)
 }
+
+is_string <- function(x) {
+  is.character(x) && length(x) == 1
+}
