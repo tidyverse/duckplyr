@@ -87,7 +87,7 @@ relexpr_set_alias <- function(expr, alias = NULL) {
 
 #' @export
 print.relational_relexpr <- function(x, ...) {
-  str(x)
+  utils::str(x)
   invisible(x)
 }
 
