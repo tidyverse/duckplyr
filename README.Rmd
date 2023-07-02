@@ -13,6 +13,8 @@ knitr::opts_chunk$set(
 )
 
 pkgload::load_all()
+
+set.seed(20230702)
 ```
 
 # duckplyr
@@ -24,7 +26,13 @@ The goal of duckplyr is to define a set of generics that provide a low-level imp
 
 ## Installation
 
-You can install the development version of duckplyr from [GitHub](https://github.com/) with:
+Once on CRAN, you can install duckplyr with:
+
+``` r
+install.packages("duckplyr")
+```
+
+You can also install the development version of duckplyr from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("pak", repos = sprintf("https://r-lib.github.io/p/pak/stable/%s/%s/%s", .Platform$pkgType, R.Version()$os, R.Version()$arch))

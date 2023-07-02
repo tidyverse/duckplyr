@@ -10,7 +10,12 @@ The goal of duckplyr is to define a set of generics that provide a low-level imp
 
 ## Installation
 
-You can install the development version of duckplyr from [GitHub](https://github.com/) with:
+Once on CRAN, you can install duckplyr with:
+
+<pre class='chroma'>
+<span><span class='nf'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='o'>(</span><span class='s'>"duckplyr"</span><span class='o'>)</span></span></pre>
+
+You can also install the development version of duckplyr from [GitHub](https://github.com/) with:
 
 <pre class='chroma'>
 <span><span class='c'># install.packages("pak", repos = sprintf("https://r-lib.github.io/p/pak/stable/%s/%s/%s", .Platform$pkgType, R.Version()$os, R.Version()$arch))</span></span>
@@ -58,10 +63,10 @@ This package only provides generics, for which other packages may then implement
 <span>  <span class='o'>)</span></span>
 <span><span class='o'>)</span></span>
 <span><span class='c'>#&gt; [[1]]</span></span>
-<span><span class='c'>#&gt;                    mpg cyl disp  hp</span></span>
-<span><span class='c'>#&gt; Hornet Sportabout 18.7   8  360 175</span></span>
-<span><span class='c'>#&gt; Hornet 4 Drive    21.4   6  258 110</span></span>
-<span><span class='c'>#&gt; Mazda RX4 Wag     21.0   6  160 110</span></span>
+<span><span class='c'>#&gt;                  mpg cyl disp  hp</span></span>
+<span><span class='c'>#&gt; Mazda RX4 Wag   21.0   6  160 110</span></span>
+<span><span class='c'>#&gt; Mazda RX4 Wag.1 21.0   6  160 110</span></span>
+<span><span class='c'>#&gt; Datsun 710      22.8   4  108  93</span></span>
 <span><span class='c'>#&gt; </span></span>
 <span><span class='c'>#&gt; attr(,"class")</span></span>
 <span><span class='c'>#&gt; [1] "dfrel"      "relational"</span></span>
