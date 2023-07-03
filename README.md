@@ -19,7 +19,7 @@ You can also install the development version of duckplyr from [GitHub](https://g
 
 <pre class='chroma'>
 <span><span class='c'># install.packages("pak", repos = sprintf("https://r-lib.github.io/p/pak/stable/%s/%s/%s", .Platform$pkgType, R.Version()$os, R.Version()$arch))</span></span>
-<span><span class='nf'>pak</span><span class='nf'>::</span><span class='nf'><a href='http://pak.r-lib.org/reference/pak.html'>pak</a></span><span class='o'>(</span><span class='s'>"krlmlr/duckplyr"</span><span class='o'>)</span></span></pre>
+<span><span class='nf'>pak</span><span class='nf'>::</span><span class='nf'><a href='https://pak.r-lib.org/reference/pak.html'>pak</a></span><span class='o'>(</span><span class='s'>"krlmlr/duckplyr"</span><span class='o'>)</span></span></pre>
 
 ## Example
 

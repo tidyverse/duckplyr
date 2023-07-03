@@ -1,7 +1,7 @@
 Type: Package
 Package: duckplyr
 Title: Alternative Implementations of the Grammar of Data Manipulations
-Version: 0.0.99.9002
+Version: 0.1.0
 Authors@R: c(
     person("Hannes", "Mühleisen", role = "aut",
            comment = c(ORCID = "0000-0001-8552-0029")),
