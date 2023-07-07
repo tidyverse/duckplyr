@@ -36,6 +36,17 @@ relexpr_set_alias(expr, alias = NULL)
 
 \item{expr}{An \code{expr} object.}
 }
+\value{
+an object of class \code{"relational_relexpr"}
+
+an object of class \code{"relational_relexpr"}
+
+an object of class \code{"relational_relexpr"}
+
+an object of class \code{"relational_relexpr"}
+
+an object of class \code{"relational_relexpr"}
+}
 \description{
 These functions provide a backend-agnostic way to construct expression trees
 built of column references, constants, and functions.
