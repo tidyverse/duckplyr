@@ -13,6 +13,7 @@
 #' @param class Classes added in front of the `"relational_relexpr"` base class.
 #'
 #' @name expr
+#' @return an object of class `"relational_relexpr"`
 #' @export
 #' @examples
 #' relexpr_set_alias(alias = "my_predicate",
@@ -35,6 +36,7 @@ new_relexpr <- function(x, class = NULL) {
 #' @param rel The name of the relation to reference.
 #' @param alias An alias for the new expression.
 #' @rdname expr
+#' @return an object of class `"relational_relexpr"`
 #' @export
 relexpr_reference <- function(name, rel = NULL, alias = NULL) {
   stopifnot(is_string(name))
@@ -49,6 +51,7 @@ relexpr_reference <- function(name, rel = NULL, alias = NULL) {
 #'
 #' @param val The value to use in the constant expression.
 #' @rdname expr
+#' @return an object of class `"relational_relexpr"`
 #' @export
 relexpr_constant <- function(val, alias = NULL) {
   stopifnot(length(val) == 1)
@@ -63,6 +66,7 @@ relexpr_constant <- function(val, alias = NULL) {
 #'
 #' @param args Function arguments, a list of `expr` objects.
 #' @rdname expr
+#' @return an object of class `"relational_relexpr"`
 #' @export
 relexpr_function <- function(name, args, alias = NULL) {
   stopifnot(is_string(name))
@@ -77,6 +81,7 @@ relexpr_function <- function(name, args, alias = NULL) {
 #'
 #' @param expr An `expr` object.
 #' @rdname expr
+#' @return an object of class `"relational_relexpr"`
 #' @export
 relexpr_set_alias <- function(expr, alias = NULL) {
   stopifnot(inherits(expr, "relational_relexpr"))
