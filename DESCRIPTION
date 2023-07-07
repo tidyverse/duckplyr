@@ -21,7 +21,7 @@ Imports:
     collections,
     DBI,
     dplyr (>= 1.1.2),
-    duckdb (>= 0.8.0),
+    duckdb (>= 0.8.1),
     glue,
     lifecycle,
     purrr,
@@ -31,7 +31,7 @@ Imports:
     tibble,
     tidyselect,
     utils,
-    vctrs (>= 0.6.2.9000)
+    vctrs (>= 0.6.3)
 Suggests: 
     arrow,
     constructive,
@@ -49,5 +49,3 @@ RoxygenNote: 7.2.3
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Config/testthat/start-first: as_duckplyr_df, mutate, filter, count-tally
-Remotes: 
-    r-lib/vctrs#1847
