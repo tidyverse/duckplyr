@@ -1,7 +1,7 @@
 arrange.data.frame <- function(.data,
-         ...,
-         .by_group = FALSE,
-         .locale = NULL) {
+                               ...,
+                               .by_group = FALSE,
+                               .locale = NULL) {
   dots <- enquos(...)
 
   if (.by_group) {

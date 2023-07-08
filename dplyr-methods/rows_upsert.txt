@@ -1,9 +1,9 @@
 rows_upsert.data.frame <- function(x,
-         y,
-         by = NULL,
-         ...,
-         copy = FALSE,
-         in_place = FALSE) {
+                                   y,
+                                   by = NULL,
+                                   ...,
+                                   copy = FALSE,
+                                   in_place = FALSE) {
   check_dots_empty()
   rows_df_in_place(in_place)
 
@@ -45,7 +45,7 @@ rows_upsert.data.frame <- function(x,
 
   # Insert
   y_size <- vec_size(y_key)
-  y_extra <- dplyr:::vec_as_location_invert(y_loc, y_size)
+  y_extra <- vec_as_location_invert(y_loc, y_size)
 
   y <- dplyr_row_slice(y, y_extra)
   y <- rows_cast_y(y, x)

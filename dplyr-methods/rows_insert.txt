@@ -1,10 +1,10 @@
 rows_insert.data.frame <- function(x,
-         y,
-         by = NULL,
-         ...,
-         conflict = c("error", "ignore"),
-         copy = FALSE,
-         in_place = FALSE) {
+                                   y,
+                                   by = NULL,
+                                   ...,
+                                   conflict = c("error", "ignore"),
+                                   copy = FALSE,
+                                   in_place = FALSE) {
   check_dots_empty()
   rows_df_in_place(in_place)
 

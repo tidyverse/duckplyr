@@ -1,12 +1,12 @@
 nest_join.data.frame <- function(x,
-         y,
-         by = NULL,
-         copy = FALSE,
-         keep = NULL,
-         name = NULL,
-         ...,
-         na_matches = c("na", "never"),
-         unmatched = "drop") {
+                                 y,
+                                 by = NULL,
+                                 copy = FALSE,
+                                 keep = NULL,
+                                 name = NULL,
+                                 ...,
+                                 na_matches = c("na", "never"),
+                                 unmatched = "drop") {
   check_dots_empty0(...)
   check_keep(keep)
   na_matches <- check_na_matches(na_matches)
