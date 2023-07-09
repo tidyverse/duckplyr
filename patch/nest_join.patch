@@ -1,5 +1,5 @@
 diff --git b/R/nest_join.R a/R/nest_join.R
-index 385b36e..af89734 100644
+index 8c4c1f1..e7ce24b 100644
 --- b/R/nest_join.R
 +++ a/R/nest_join.R
 @@ -2,6 +2,16 @@
@@ -34,7 +34,7 @@ index 385b36e..af89734 100644
    return(out)
  
    # dplyr implementation
-@@ -94,7 +109,13 @@ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, na
+@@ -99,7 +114,13 @@ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, na
    dplyr_reconstruct(out, x)
  }
  
@@ -49,7 +49,7 @@ index 385b36e..af89734 100644
    try_fetch(
      {
        x <- as_duckplyr_df(x)
-@@ -104,7 +125,7 @@ duckplyr_nest_join <- function(x, y, ...) {
+@@ -109,7 +130,7 @@ duckplyr_nest_join <- function(x, y, ...) {
        testthat::skip(conditionMessage(e))
      }
    )
