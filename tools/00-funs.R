@@ -366,6 +366,8 @@ test_force_override <- c(
   dplyr_reconstruct = FALSE,
   group_vars = FALSE,
   nest_join = FALSE,
+  rows_upsert = FALSE,
+  sample_n = FALSE,
   tally = TRUE,
   NULL
 )
