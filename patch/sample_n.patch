@@ -1,0 +1,12 @@
+diff --git b/R/sample_n.R a/R/sample_n.R
+index c54708f..13d48c4 100644
+--- b/R/sample_n.R
++++ a/R/sample_n.R
+@@ -28,7 +28,6 @@ sample_n.duckplyr_df <- function(tbl, size, replace = FALSE, weight = NULL, .env
+     size <- check_size(!!size, n(), replace = replace)
+     sample.int(n(), size, replace = replace, prob = !!weight)
+   }))
+-
+ }
+ 
+ duckplyr_sample_n <- function(tbl, ...) {
