@@ -4028,7 +4028,7 @@ test_that("relational mutate(sd(a), .by = g) order-preserving", {
       a = seq(1, 6, by = 1),
       b = rep(2, 6L),
       g = c(1L, 2L, 2L, 3L, 3L, 3L),
-      `sd(a)` = c(NA, 0.7071067811865475727373, 0.7071067811865475727373, 1, 1, 1),
+      `sd(a)` = c(NA, 0.7071067811865476, 0.7071067811865476, 1, 1, 1),
       check.names = FALSE
     )
   )
@@ -6757,7 +6757,7 @@ test_that("relational mutate(sd(a), .by = g) order-enforcing", {
       a = seq(1, 6, by = 1),
       b = rep(2, 6L),
       g = c(1L, 2L, 2L, 3L, 3L, 3L),
-      `sd(a)` = c(NA, 0.7071067811865475727373, 0.7071067811865475727373, 1, 1, 1),
+      `sd(a)` = c(NA, 0.7071067811865476, 0.7071067811865476, 1, 1, 1),
       check.names = FALSE
     )
   )
