@@ -533,11 +533,13 @@ rel40 <- duckdb:::rel_project(
 rel41 <- duckdb:::rel_aggregate(
   rel40,
   groups = list(duckdb:::expr_reference("n_name")),
-  aggregates = list({
-    tmp_expr <- duckdb:::expr_function("sum", list(duckdb:::expr_reference("volume")))
-    duckdb:::expr_set_alias(tmp_expr, "revenue")
-    tmp_expr
-  })
+  aggregates = list(
+    {
+      tmp_expr <- duckdb:::expr_function("sum", list(duckdb:::expr_reference("volume")))
+      duckdb:::expr_set_alias(tmp_expr, "revenue")
+      tmp_expr
+    }
+  )
 )
 rel42 <- duckdb:::rel_order(rel41, list(duckdb:::expr_function("desc", list(duckdb:::expr_reference("revenue")))))
 rel42

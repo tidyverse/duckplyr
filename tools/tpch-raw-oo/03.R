@@ -436,11 +436,13 @@ rel26 <- duckdb:::rel_project(
 rel27 <- duckdb:::rel_aggregate(
   rel26,
   groups = list(duckdb:::expr_reference("l_orderkey"), duckdb:::expr_reference("o_orderdate"), duckdb:::expr_reference("o_shippriority")),
-  aggregates = list({
-    tmp_expr <- duckdb:::expr_function("sum", list(duckdb:::expr_reference("volume")))
-    duckdb:::expr_set_alias(tmp_expr, "revenue")
-    tmp_expr
-  })
+  aggregates = list(
+    {
+      tmp_expr <- duckdb:::expr_function("sum", list(duckdb:::expr_reference("volume")))
+      duckdb:::expr_set_alias(tmp_expr, "revenue")
+      tmp_expr
+    }
+  )
 )
 rel28 <- duckdb:::rel_project(
   rel27,

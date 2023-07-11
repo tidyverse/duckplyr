@@ -5,20 +5,24 @@ tpch_raw_oo_21 <- function(con, experimental) {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(duckdb:::expr_reference("l_orderkey"), duckdb:::expr_reference("l_suppkey")),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("n", list())
-      duckdb:::expr_set_alias(tmp_expr, "n")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("n", list())
+        duckdb:::expr_set_alias(tmp_expr, "n")
+        tmp_expr
+      }
+    )
   )
   rel3 <- duckdb:::rel_aggregate(
     rel2,
     groups = list(duckdb:::expr_reference("l_orderkey")),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("n", list())
-      duckdb:::expr_set_alias(tmp_expr, "n_supplier")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("n", list())
+        duckdb:::expr_set_alias(tmp_expr, "n_supplier")
+        tmp_expr
+      }
+    )
   )
   rel4 <- duckdb:::rel_filter(
     rel3,
@@ -537,19 +541,21 @@ tpch_raw_oo_21 <- function(con, experimental) {
   rel21 <- duckdb:::rel_aggregate(
     rel20,
     groups = list(duckdb:::expr_reference("l_orderkey"), duckdb:::expr_reference("l_suppkey")),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function(
-        "any",
-        list(
-          duckdb:::expr_function(
-            ">",
-            list(duckdb:::expr_reference("l_receiptdate"), duckdb:::expr_reference("l_commitdate"))
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function(
+          "any",
+          list(
+            duckdb:::expr_function(
+              ">",
+              list(duckdb:::expr_reference("l_receiptdate"), duckdb:::expr_reference("l_commitdate"))
+            )
           )
         )
-      )
-      duckdb:::expr_set_alias(tmp_expr, "failed_delivery_commit")
-      tmp_expr
-    })
+        duckdb:::expr_set_alias(tmp_expr, "failed_delivery_commit")
+        tmp_expr
+      }
+    )
   )
   rel22 <- duckdb:::rel_aggregate(
     rel21,
@@ -1411,11 +1417,13 @@ tpch_raw_oo_21 <- function(con, experimental) {
   rel49 <- duckdb:::rel_aggregate(
     rel48,
     groups = list(duckdb:::expr_reference("s_name")),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("n", list())
-      duckdb:::expr_set_alias(tmp_expr, "numwait")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("n", list())
+        duckdb:::expr_set_alias(tmp_expr, "numwait")
+        tmp_expr
+      }
+    )
   )
   rel50 <- duckdb:::rel_order(
     rel49,

@@ -317,11 +317,13 @@ test_that("relational count() order-preserving", {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("n", list())
-      duckdb:::expr_set_alias(tmp_expr, "n")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("n", list())
+        duckdb:::expr_set_alias(tmp_expr, "n")
+        tmp_expr
+      }
+    )
   )
   rel3 <- duckdb:::rel_distinct(rel2)
   rel3
@@ -344,11 +346,13 @@ test_that("relational count(a) order-preserving", {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(duckdb:::expr_reference("a")),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("n", list())
-      duckdb:::expr_set_alias(tmp_expr, "n")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("n", list())
+        duckdb:::expr_set_alias(tmp_expr, "n")
+        tmp_expr
+      }
+    )
   )
   rel2
   out <- duckdb:::rel_to_altrep(rel2)
@@ -370,11 +374,13 @@ test_that("relational count(b) order-preserving", {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(duckdb:::expr_reference("b")),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("n", list())
-      duckdb:::expr_set_alias(tmp_expr, "n")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("n", list())
+        duckdb:::expr_set_alias(tmp_expr, "n")
+        tmp_expr
+      }
+    )
   )
   rel2
   out <- duckdb:::rel_to_altrep(rel2)
@@ -396,11 +402,13 @@ test_that("relational count(g) order-preserving", {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(duckdb:::expr_reference("g")),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("n", list())
-      duckdb:::expr_set_alias(tmp_expr, "n")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("n", list())
+        duckdb:::expr_set_alias(tmp_expr, "n")
+        tmp_expr
+      }
+    )
   )
   rel2
   out <- duckdb:::rel_to_altrep(rel2)
@@ -422,11 +430,13 @@ test_that("relational count(g, a) order-preserving", {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(duckdb:::expr_reference("g"), duckdb:::expr_reference("a")),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("n", list())
-      duckdb:::expr_set_alias(tmp_expr, "n")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("n", list())
+        duckdb:::expr_set_alias(tmp_expr, "n")
+        tmp_expr
+      }
+    )
   )
   rel2
   out <- duckdb:::rel_to_altrep(rel2)
@@ -448,11 +458,13 @@ test_that("relational count(b, g) order-preserving", {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(duckdb:::expr_reference("b"), duckdb:::expr_reference("g")),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("n", list())
-      duckdb:::expr_set_alias(tmp_expr, "n")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("n", list())
+        duckdb:::expr_set_alias(tmp_expr, "n")
+        tmp_expr
+      }
+    )
   )
   rel2
   out <- duckdb:::rel_to_altrep(rel2)
@@ -476,11 +488,13 @@ test_that("relational count() order-enforcing", {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("n", list())
-      duckdb:::expr_set_alias(tmp_expr, "n")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("n", list())
+        duckdb:::expr_set_alias(tmp_expr, "n")
+        tmp_expr
+      }
+    )
   )
   rel3 <- duckdb:::rel_distinct(rel2)
   rel4 <- duckdb:::rel_order(rel3, list(duckdb:::expr_reference("n")))
@@ -504,11 +518,13 @@ test_that("relational count(a) order-enforcing", {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(duckdb:::expr_reference("a")),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("n", list())
-      duckdb:::expr_set_alias(tmp_expr, "n")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("n", list())
+        duckdb:::expr_set_alias(tmp_expr, "n")
+        tmp_expr
+      }
+    )
   )
   rel3 <- duckdb:::rel_order(rel2, list(duckdb:::expr_reference("a"), duckdb:::expr_reference("n")))
   rel3
@@ -531,11 +547,13 @@ test_that("relational count(b) order-enforcing", {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(duckdb:::expr_reference("b")),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("n", list())
-      duckdb:::expr_set_alias(tmp_expr, "n")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("n", list())
+        duckdb:::expr_set_alias(tmp_expr, "n")
+        tmp_expr
+      }
+    )
   )
   rel3 <- duckdb:::rel_order(rel2, list(duckdb:::expr_reference("b"), duckdb:::expr_reference("n")))
   rel3
@@ -558,11 +576,13 @@ test_that("relational count(g) order-enforcing", {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(duckdb:::expr_reference("g")),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("n", list())
-      duckdb:::expr_set_alias(tmp_expr, "n")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("n", list())
+        duckdb:::expr_set_alias(tmp_expr, "n")
+        tmp_expr
+      }
+    )
   )
   rel3 <- duckdb:::rel_order(rel2, list(duckdb:::expr_reference("g"), duckdb:::expr_reference("n")))
   rel3
@@ -585,11 +605,13 @@ test_that("relational count(g, a) order-enforcing", {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(duckdb:::expr_reference("g"), duckdb:::expr_reference("a")),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("n", list())
-      duckdb:::expr_set_alias(tmp_expr, "n")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("n", list())
+        duckdb:::expr_set_alias(tmp_expr, "n")
+        tmp_expr
+      }
+    )
   )
   rel3 <- duckdb:::rel_order(
     rel2,
@@ -615,11 +637,13 @@ test_that("relational count(b, g) order-enforcing", {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(duckdb:::expr_reference("b"), duckdb:::expr_reference("g")),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("n", list())
-      duckdb:::expr_set_alias(tmp_expr, "n")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("n", list())
+        duckdb:::expr_set_alias(tmp_expr, "n")
+        tmp_expr
+      }
+    )
   )
   rel3 <- duckdb:::rel_order(
     rel2,
@@ -843,11 +867,13 @@ test_that("relational distinct(a) order-preserving", {
   rel5 <- duckdb:::rel_order(rel4, list(duckdb:::expr_reference("___row_number")))
   rel6 <- duckdb:::rel_project(
     rel5,
-    list({
-      tmp_expr <- duckdb:::expr_reference("a")
-      duckdb:::expr_set_alias(tmp_expr, "a")
-      tmp_expr
-    })
+    list(
+      {
+        tmp_expr <- duckdb:::expr_reference("a")
+        duckdb:::expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      }
+    )
   )
   rel6
   out <- duckdb:::rel_to_altrep(rel6)
@@ -1050,11 +1076,13 @@ test_that("relational distinct(b, b) order-preserving", {
   rel5 <- duckdb:::rel_order(rel4, list(duckdb:::expr_reference("___row_number")))
   rel6 <- duckdb:::rel_project(
     rel5,
-    list({
-      tmp_expr <- duckdb:::expr_reference("b")
-      duckdb:::expr_set_alias(tmp_expr, "b")
-      tmp_expr
-    })
+    list(
+      {
+        tmp_expr <- duckdb:::expr_reference("b")
+        duckdb:::expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      }
+    )
   )
   rel6
   out <- duckdb:::rel_to_altrep(rel6)
@@ -1145,11 +1173,13 @@ test_that("relational distinct(g) order-preserving", {
   rel5 <- duckdb:::rel_order(rel4, list(duckdb:::expr_reference("___row_number")))
   rel6 <- duckdb:::rel_project(
     rel5,
-    list({
-      tmp_expr <- duckdb:::expr_reference("g")
-      duckdb:::expr_set_alias(tmp_expr, "g")
-      tmp_expr
-    })
+    list(
+      {
+        tmp_expr <- duckdb:::expr_reference("g")
+        duckdb:::expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      }
+    )
   )
   rel6
   out <- duckdb:::rel_to_altrep(rel6)
@@ -1244,11 +1274,13 @@ test_that("relational union_all(data.frame(a = 1L, b = 3, g = 2L)) %>% distinct(
   rel7 <- duckdb:::rel_order(rel6, list(duckdb:::expr_reference("___row_number")))
   rel8 <- duckdb:::rel_project(
     rel7,
-    list({
-      tmp_expr <- duckdb:::expr_reference("g")
-      duckdb:::expr_set_alias(tmp_expr, "g")
-      tmp_expr
-    })
+    list(
+      {
+        tmp_expr <- duckdb:::expr_reference("g")
+        duckdb:::expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      }
+    )
   )
   rel8
   out <- duckdb:::rel_to_altrep(rel8)
@@ -1343,11 +1375,13 @@ test_that("relational union_all(data.frame(a = 1L, b = 4, g = 2L)) %>% distinct(
   rel7 <- duckdb:::rel_order(rel6, list(duckdb:::expr_reference("___row_number")))
   rel8 <- duckdb:::rel_project(
     rel7,
-    list({
-      tmp_expr <- duckdb:::expr_reference("g")
-      duckdb:::expr_set_alias(tmp_expr, "g")
-      tmp_expr
-    })
+    list(
+      {
+        tmp_expr <- duckdb:::expr_reference("g")
+        duckdb:::expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      }
+    )
   )
   rel8
   out <- duckdb:::rel_to_altrep(rel8)
@@ -1442,11 +1476,13 @@ test_that("relational union_all(data.frame(a = 1L, b = 5, g = 2L)) %>% distinct(
   rel7 <- duckdb:::rel_order(rel6, list(duckdb:::expr_reference("___row_number")))
   rel8 <- duckdb:::rel_project(
     rel7,
-    list({
-      tmp_expr <- duckdb:::expr_reference("g")
-      duckdb:::expr_set_alias(tmp_expr, "g")
-      tmp_expr
-    })
+    list(
+      {
+        tmp_expr <- duckdb:::expr_reference("g")
+        duckdb:::expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      }
+    )
   )
   rel8
   out <- duckdb:::rel_to_altrep(rel8)
@@ -1541,11 +1577,13 @@ test_that("relational union_all(data.frame(a = 1L, b = 6, g = 2L)) %>% distinct(
   rel7 <- duckdb:::rel_order(rel6, list(duckdb:::expr_reference("___row_number")))
   rel8 <- duckdb:::rel_project(
     rel7,
-    list({
-      tmp_expr <- duckdb:::expr_reference("g")
-      duckdb:::expr_set_alias(tmp_expr, "g")
-      tmp_expr
-    })
+    list(
+      {
+        tmp_expr <- duckdb:::expr_reference("g")
+        duckdb:::expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      }
+    )
   )
   rel8
   out <- duckdb:::rel_to_altrep(rel8)
@@ -1640,11 +1678,13 @@ test_that("relational union_all(data.frame(a = 1L, b = 7, g = 2L)) %>% distinct(
   rel7 <- duckdb:::rel_order(rel6, list(duckdb:::expr_reference("___row_number")))
   rel8 <- duckdb:::rel_project(
     rel7,
-    list({
-      tmp_expr <- duckdb:::expr_reference("g")
-      duckdb:::expr_set_alias(tmp_expr, "g")
-      tmp_expr
-    })
+    list(
+      {
+        tmp_expr <- duckdb:::expr_reference("g")
+        duckdb:::expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      }
+    )
   )
   rel8
   out <- duckdb:::rel_to_altrep(rel8)
@@ -9001,11 +9041,13 @@ test_that("relational select(a) order-preserving", {
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
   rel2 <- duckdb:::rel_project(
     rel1,
-    list({
-      tmp_expr <- duckdb:::expr_reference("a")
-      duckdb:::expr_set_alias(tmp_expr, "a")
-      tmp_expr
-    })
+    list(
+      {
+        tmp_expr <- duckdb:::expr_reference("a")
+        duckdb:::expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      }
+    )
   )
   rel2
   out <- duckdb:::rel_to_altrep(rel2)
@@ -9094,11 +9136,13 @@ test_that("relational select(a) order-enforcing", {
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
   rel2 <- duckdb:::rel_project(
     rel1,
-    list({
-      tmp_expr <- duckdb:::expr_reference("a")
-      duckdb:::expr_set_alias(tmp_expr, "a")
-      tmp_expr
-    })
+    list(
+      {
+        tmp_expr <- duckdb:::expr_reference("a")
+        duckdb:::expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      }
+    )
   )
   rel3 <- duckdb:::rel_order(rel2, list(duckdb:::expr_reference("a")))
   rel3
@@ -9350,11 +9394,13 @@ test_that("relational summarise(c = mean(a)) order-preserving", {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("mean", list(duckdb:::expr_reference("a")))
-      duckdb:::expr_set_alias(tmp_expr, "c")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("mean", list(duckdb:::expr_reference("a")))
+        duckdb:::expr_set_alias(tmp_expr, "c")
+        tmp_expr
+      }
+    )
   )
   rel3 <- duckdb:::rel_distinct(rel2)
   rel3
@@ -9376,11 +9422,13 @@ test_that("relational summarise(c = mean(a), .by = b) order-preserving", {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(duckdb:::expr_reference("b")),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("mean", list(duckdb:::expr_reference("a")))
-      duckdb:::expr_set_alias(tmp_expr, "c")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("mean", list(duckdb:::expr_reference("a")))
+        duckdb:::expr_set_alias(tmp_expr, "c")
+        tmp_expr
+      }
+    )
   )
   rel2
   out <- duckdb:::rel_to_altrep(rel2)
@@ -9401,11 +9449,13 @@ test_that("relational summarise(c = mean(a), .by = g) order-preserving", {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(duckdb:::expr_reference("g")),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("mean", list(duckdb:::expr_reference("a")))
-      duckdb:::expr_set_alias(tmp_expr, "c")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("mean", list(duckdb:::expr_reference("a")))
+        duckdb:::expr_set_alias(tmp_expr, "c")
+        tmp_expr
+      }
+    )
   )
   rel2
   out <- duckdb:::rel_to_altrep(rel2)
@@ -9426,15 +9476,17 @@ test_that("relational summarise(c = 1) order-preserving", {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(),
-    aggregates = list({
-      tmp_expr <- if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-        duckdb:::expr_constant(1, experimental = experimental)
-      } else {
-        duckdb:::expr_constant(1)
+    aggregates = list(
+      {
+        tmp_expr <- if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+          duckdb:::expr_constant(1, experimental = experimental)
+        } else {
+          duckdb:::expr_constant(1)
+        }
+        duckdb:::expr_set_alias(tmp_expr, "c")
+        tmp_expr
       }
-      duckdb:::expr_set_alias(tmp_expr, "c")
-      tmp_expr
-    })
+    )
   )
   rel3 <- duckdb:::rel_distinct(rel2)
   rel3
@@ -9456,15 +9508,17 @@ test_that("relational summarise(c = 1, .by = g) order-preserving", {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(duckdb:::expr_reference("g")),
-    aggregates = list({
-      tmp_expr <- if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-        duckdb:::expr_constant(1, experimental = experimental)
-      } else {
-        duckdb:::expr_constant(1)
+    aggregates = list(
+      {
+        tmp_expr <- if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+          duckdb:::expr_constant(1, experimental = experimental)
+        } else {
+          duckdb:::expr_constant(1)
+        }
+        duckdb:::expr_set_alias(tmp_expr, "c")
+        tmp_expr
       }
-      duckdb:::expr_set_alias(tmp_expr, "c")
-      tmp_expr
-    })
+    )
   )
   rel2
   out <- duckdb:::rel_to_altrep(rel2)
@@ -9487,11 +9541,13 @@ test_that("relational summarise(c = mean(a)) order-enforcing", {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("mean", list(duckdb:::expr_reference("a")))
-      duckdb:::expr_set_alias(tmp_expr, "c")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("mean", list(duckdb:::expr_reference("a")))
+        duckdb:::expr_set_alias(tmp_expr, "c")
+        tmp_expr
+      }
+    )
   )
   rel3 <- duckdb:::rel_distinct(rel2)
   rel4 <- duckdb:::rel_order(rel3, list(duckdb:::expr_reference("c")))
@@ -9514,11 +9570,13 @@ test_that("relational summarise(c = mean(a), .by = b) order-enforcing", {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(duckdb:::expr_reference("b")),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("mean", list(duckdb:::expr_reference("a")))
-      duckdb:::expr_set_alias(tmp_expr, "c")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("mean", list(duckdb:::expr_reference("a")))
+        duckdb:::expr_set_alias(tmp_expr, "c")
+        tmp_expr
+      }
+    )
   )
   rel3 <- duckdb:::rel_order(rel2, list(duckdb:::expr_reference("b"), duckdb:::expr_reference("c")))
   rel3
@@ -9540,11 +9598,13 @@ test_that("relational summarise(c = mean(a), .by = g) order-enforcing", {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(duckdb:::expr_reference("g")),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("mean", list(duckdb:::expr_reference("a")))
-      duckdb:::expr_set_alias(tmp_expr, "c")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("mean", list(duckdb:::expr_reference("a")))
+        duckdb:::expr_set_alias(tmp_expr, "c")
+        tmp_expr
+      }
+    )
   )
   rel3 <- duckdb:::rel_order(rel2, list(duckdb:::expr_reference("g"), duckdb:::expr_reference("c")))
   rel3
@@ -9566,15 +9626,17 @@ test_that("relational summarise(c = 1) order-enforcing", {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(),
-    aggregates = list({
-      tmp_expr <- if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-        duckdb:::expr_constant(1, experimental = experimental)
-      } else {
-        duckdb:::expr_constant(1)
+    aggregates = list(
+      {
+        tmp_expr <- if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+          duckdb:::expr_constant(1, experimental = experimental)
+        } else {
+          duckdb:::expr_constant(1)
+        }
+        duckdb:::expr_set_alias(tmp_expr, "c")
+        tmp_expr
       }
-      duckdb:::expr_set_alias(tmp_expr, "c")
-      tmp_expr
-    })
+    )
   )
   rel3 <- duckdb:::rel_distinct(rel2)
   rel4 <- duckdb:::rel_order(rel3, list(duckdb:::expr_reference("c")))
@@ -9597,15 +9659,17 @@ test_that("relational summarise(c = 1, .by = g) order-enforcing", {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(duckdb:::expr_reference("g")),
-    aggregates = list({
-      tmp_expr <- if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-        duckdb:::expr_constant(1, experimental = experimental)
-      } else {
-        duckdb:::expr_constant(1)
+    aggregates = list(
+      {
+        tmp_expr <- if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+          duckdb:::expr_constant(1, experimental = experimental)
+        } else {
+          duckdb:::expr_constant(1)
+        }
+        duckdb:::expr_set_alias(tmp_expr, "c")
+        tmp_expr
       }
-      duckdb:::expr_set_alias(tmp_expr, "c")
-      tmp_expr
-    })
+    )
   )
   rel3 <- duckdb:::rel_order(rel2, list(duckdb:::expr_reference("g"), duckdb:::expr_reference("c")))
   rel3
@@ -9675,11 +9739,13 @@ test_that("relational tally() order-preserving", {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("n", list())
-      duckdb:::expr_set_alias(tmp_expr, "n")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("n", list())
+        duckdb:::expr_set_alias(tmp_expr, "n")
+        tmp_expr
+      }
+    )
   )
   rel3 <- duckdb:::rel_distinct(rel2)
   rel3
@@ -9704,11 +9770,13 @@ test_that("relational tally() order-enforcing", {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("n", list())
-      duckdb:::expr_set_alias(tmp_expr, "n")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("n", list())
+        duckdb:::expr_set_alias(tmp_expr, "n")
+        tmp_expr
+      }
+    )
   )
   rel3 <- duckdb:::rel_distinct(rel2)
   rel4 <- duckdb:::rel_order(rel3, list(duckdb:::expr_reference("n")))

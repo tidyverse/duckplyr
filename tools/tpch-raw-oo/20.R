@@ -613,21 +613,23 @@ rel34 <- duckdb:::rel_project(
 rel35 <- duckdb:::rel_aggregate(
   rel34,
   groups = list(duckdb:::expr_reference("l_suppkey")),
-  aggregates = list({
-    tmp_expr <- duckdb:::expr_function(
-      "*",
-      list(
-        if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-          duckdb:::expr_constant(0.5, experimental = experimental)
-        } else {
-          duckdb:::expr_constant(0.5)
-        },
-        duckdb:::expr_function("sum", list(duckdb:::expr_reference("l_quantity")))
+  aggregates = list(
+    {
+      tmp_expr <- duckdb:::expr_function(
+        "*",
+        list(
+          if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+            duckdb:::expr_constant(0.5, experimental = experimental)
+          } else {
+            duckdb:::expr_constant(0.5)
+          },
+          duckdb:::expr_function("sum", list(duckdb:::expr_reference("l_quantity")))
+        )
       )
-    )
-    duckdb:::expr_set_alias(tmp_expr, "qty_threshold")
-    tmp_expr
-  })
+      duckdb:::expr_set_alias(tmp_expr, "qty_threshold")
+      tmp_expr
+    }
+  )
 )
 rel36 <- duckdb:::rel_set_alias(rel26, "lhs")
 rel37 <- duckdb:::rel_set_alias(rel35, "rhs")

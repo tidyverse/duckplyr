@@ -505,11 +505,13 @@ tpch_raw_02 <- function(con, experimental) {
   rel31 <- duckdb:::rel_aggregate(
     rel30,
     groups = list(duckdb:::expr_reference("p_partkey")),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("min", list(duckdb:::expr_reference("ps_supplycost")))
-      duckdb:::expr_set_alias(tmp_expr, "min_ps_supplycost")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("min", list(duckdb:::expr_reference("ps_supplycost")))
+        duckdb:::expr_set_alias(tmp_expr, "min_ps_supplycost")
+        tmp_expr
+      }
+    )
   )
   rel32 <- duckdb:::rel_set_alias(rel30, "lhs")
   rel33 <- duckdb:::rel_set_alias(rel31, "rhs")

@@ -120,19 +120,21 @@ rel4 <- duckdb:::rel_project(
 rel5 <- duckdb:::rel_aggregate(
   rel4,
   groups = list(),
-  aggregates = list({
-    tmp_expr <- duckdb:::expr_function(
-      "sum",
-      list(
-        duckdb:::expr_function(
-          "*",
-          list(duckdb:::expr_reference("l_extendedprice"), duckdb:::expr_reference("l_discount"))
+  aggregates = list(
+    {
+      tmp_expr <- duckdb:::expr_function(
+        "sum",
+        list(
+          duckdb:::expr_function(
+            "*",
+            list(duckdb:::expr_reference("l_extendedprice"), duckdb:::expr_reference("l_discount"))
+          )
         )
       )
-    )
-    duckdb:::expr_set_alias(tmp_expr, "revenue")
-    tmp_expr
-  })
+      duckdb:::expr_set_alias(tmp_expr, "revenue")
+      tmp_expr
+    }
+  )
 )
 rel6 <- duckdb:::rel_distinct(rel5)
 rel6

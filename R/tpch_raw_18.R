@@ -5,11 +5,13 @@ tpch_raw_18 <- function(con, experimental) {
   rel2 <- duckdb:::rel_aggregate(
     rel1,
     groups = list(duckdb:::expr_reference("l_orderkey")),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("sum", list(duckdb:::expr_reference("l_quantity")))
-      duckdb:::expr_set_alias(tmp_expr, "sum")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("sum", list(duckdb:::expr_reference("l_quantity")))
+        duckdb:::expr_set_alias(tmp_expr, "sum")
+        tmp_expr
+      }
+    )
   )
   rel3 <- duckdb:::rel_filter(
     rel2,

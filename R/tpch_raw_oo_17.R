@@ -324,21 +324,23 @@ tpch_raw_oo_17 <- function(con, experimental) {
   rel11 <- duckdb:::rel_aggregate(
     rel10,
     groups = list(duckdb:::expr_reference("l_partkey")),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function(
-        "*",
-        list(
-          if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-            duckdb:::expr_constant(0.2, experimental = experimental)
-          } else {
-            duckdb:::expr_constant(0.2)
-          },
-          duckdb:::expr_function("mean", list(duckdb:::expr_reference("l_quantity")))
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function(
+          "*",
+          list(
+            if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+              duckdb:::expr_constant(0.2, experimental = experimental)
+            } else {
+              duckdb:::expr_constant(0.2)
+            },
+            duckdb:::expr_function("mean", list(duckdb:::expr_reference("l_quantity")))
+          )
         )
-      )
-      duckdb:::expr_set_alias(tmp_expr, "quantity_threshold")
-      tmp_expr
-    })
+        duckdb:::expr_set_alias(tmp_expr, "quantity_threshold")
+        tmp_expr
+      }
+    )
   )
   rel12 <- duckdb:::rel_set_alias(rel10, "lhs")
   rel13 <- duckdb:::rel_set_alias(rel11, "rhs")
@@ -792,21 +794,23 @@ tpch_raw_oo_17 <- function(con, experimental) {
   rel22 <- duckdb:::rel_aggregate(
     rel21,
     groups = list(),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function(
-        "/",
-        list(
-          duckdb:::expr_function("sum", list(duckdb:::expr_reference("l_extendedprice"))),
-          if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-            duckdb:::expr_constant(7, experimental = experimental)
-          } else {
-            duckdb:::expr_constant(7)
-          }
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function(
+          "/",
+          list(
+            duckdb:::expr_function("sum", list(duckdb:::expr_reference("l_extendedprice"))),
+            if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+              duckdb:::expr_constant(7, experimental = experimental)
+            } else {
+              duckdb:::expr_constant(7)
+            }
+          )
         )
-      )
-      duckdb:::expr_set_alias(tmp_expr, "avg_yearly")
-      tmp_expr
-    })
+        duckdb:::expr_set_alias(tmp_expr, "avg_yearly")
+        tmp_expr
+      }
+    )
   )
   rel23 <- duckdb:::rel_distinct(rel22)
   rel23

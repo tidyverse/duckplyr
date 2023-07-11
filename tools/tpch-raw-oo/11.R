@@ -380,29 +380,31 @@ rel18 <- duckdb:::rel_project(
 rel19 <- duckdb:::rel_aggregate(
   rel18,
   groups = list(),
-  aggregates = list({
-    tmp_expr <- duckdb:::expr_function(
-      "*",
-      list(
-        duckdb:::expr_function(
-          "sum",
-          list(
-            duckdb:::expr_function(
-              "*",
-              list(duckdb:::expr_reference("ps_supplycost"), duckdb:::expr_reference("ps_availqty"))
+  aggregates = list(
+    {
+      tmp_expr <- duckdb:::expr_function(
+        "*",
+        list(
+          duckdb:::expr_function(
+            "sum",
+            list(
+              duckdb:::expr_function(
+                "*",
+                list(duckdb:::expr_reference("ps_supplycost"), duckdb:::expr_reference("ps_availqty"))
+              )
             )
-          )
-        ),
-        if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-          duckdb:::expr_constant(1e-04, experimental = experimental)
-        } else {
-          duckdb:::expr_constant(1e-04)
-        }
+          ),
+          if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+            duckdb:::expr_constant(1e-04, experimental = experimental)
+          } else {
+            duckdb:::expr_constant(1e-04)
+          }
+        )
       )
-    )
-    duckdb:::expr_set_alias(tmp_expr, "global_value")
-    tmp_expr
-  })
+      duckdb:::expr_set_alias(tmp_expr, "global_value")
+      tmp_expr
+    }
+  )
 )
 rel20 <- duckdb:::rel_distinct(rel19)
 rel21 <- duckdb:::rel_project(
@@ -427,19 +429,21 @@ rel21 <- duckdb:::rel_project(
 rel22 <- duckdb:::rel_aggregate(
   rel18,
   groups = list(duckdb:::expr_reference("ps_partkey")),
-  aggregates = list({
-    tmp_expr <- duckdb:::expr_function(
-      "sum",
-      list(
-        duckdb:::expr_function(
-          "*",
-          list(duckdb:::expr_reference("ps_supplycost"), duckdb:::expr_reference("ps_availqty"))
+  aggregates = list(
+    {
+      tmp_expr <- duckdb:::expr_function(
+        "sum",
+        list(
+          duckdb:::expr_function(
+            "*",
+            list(duckdb:::expr_reference("ps_supplycost"), duckdb:::expr_reference("ps_availqty"))
+          )
         )
       )
-    )
-    duckdb:::expr_set_alias(tmp_expr, "value")
-    tmp_expr
-  })
+      duckdb:::expr_set_alias(tmp_expr, "value")
+      tmp_expr
+    }
+  )
 )
 rel23 <- duckdb:::rel_project(
   rel22,

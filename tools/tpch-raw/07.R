@@ -824,11 +824,13 @@ rel45 <- duckdb:::rel_project(
 rel46 <- duckdb:::rel_aggregate(
   rel45,
   groups = list(duckdb:::expr_reference("supp_nation"), duckdb:::expr_reference("cust_nation"), duckdb:::expr_reference("l_year")),
-  aggregates = list({
-    tmp_expr <- duckdb:::expr_function("sum", list(duckdb:::expr_reference("volume")))
-    duckdb:::expr_set_alias(tmp_expr, "revenue")
-    tmp_expr
-  })
+  aggregates = list(
+    {
+      tmp_expr <- duckdb:::expr_function("sum", list(duckdb:::expr_reference("volume")))
+      duckdb:::expr_set_alias(tmp_expr, "revenue")
+      tmp_expr
+    }
+  )
 )
 rel47 <- duckdb:::rel_order(
   rel46,

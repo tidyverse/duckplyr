@@ -185,79 +185,81 @@ tpch_raw_14 <- function(con, experimental) {
   rel8 <- duckdb:::rel_aggregate(
     rel7,
     groups = list(),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function(
-        "/",
-        list(
-          duckdb:::expr_function(
-            "*",
-            list(
-              if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                duckdb:::expr_constant(100, experimental = experimental)
-              } else {
-                duckdb:::expr_constant(100)
-              },
-              duckdb:::expr_function(
-                "sum",
-                list(
-                  duckdb:::expr_function(
-                    "ifelse",
-                    list(
-                      duckdb:::expr_function(
-                        "grepl",
-                        list(
-                          if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                            duckdb:::expr_constant("^PROMO", experimental = experimental)
-                          } else {
-                            duckdb:::expr_constant("^PROMO")
-                          },
-                          duckdb:::expr_reference("p_type")
-                        )
-                      ),
-                      duckdb:::expr_function(
-                        "*",
-                        list(
-                          duckdb:::expr_reference("l_extendedprice"),
-                          duckdb:::expr_function(
-                            "-",
-                            list(
-                              if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                                duckdb:::expr_constant(1, experimental = experimental)
-                              } else {
-                                duckdb:::expr_constant(1)
-                              },
-                              duckdb:::expr_reference("l_discount")
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function(
+          "/",
+          list(
+            duckdb:::expr_function(
+              "*",
+              list(
+                if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                  duckdb:::expr_constant(100, experimental = experimental)
+                } else {
+                  duckdb:::expr_constant(100)
+                },
+                duckdb:::expr_function(
+                  "sum",
+                  list(
+                    duckdb:::expr_function(
+                      "ifelse",
+                      list(
+                        duckdb:::expr_function(
+                          "grepl",
+                          list(
+                            if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                              duckdb:::expr_constant("^PROMO", experimental = experimental)
+                            } else {
+                              duckdb:::expr_constant("^PROMO")
+                            },
+                            duckdb:::expr_reference("p_type")
+                          )
+                        ),
+                        duckdb:::expr_function(
+                          "*",
+                          list(
+                            duckdb:::expr_reference("l_extendedprice"),
+                            duckdb:::expr_function(
+                              "-",
+                              list(
+                                if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                                  duckdb:::expr_constant(1, experimental = experimental)
+                                } else {
+                                  duckdb:::expr_constant(1)
+                                },
+                                duckdb:::expr_reference("l_discount")
+                              )
                             )
                           )
-                        )
-                      ),
-                      if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                        duckdb:::expr_constant(0, experimental = experimental)
-                      } else {
-                        duckdb:::expr_constant(0)
-                      }
+                        ),
+                        if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                          duckdb:::expr_constant(0, experimental = experimental)
+                        } else {
+                          duckdb:::expr_constant(0)
+                        }
+                      )
                     )
                   )
                 )
               )
-            )
-          ),
-          duckdb:::expr_function(
-            "sum",
-            list(
-              duckdb:::expr_function(
-                "*",
-                list(
-                  duckdb:::expr_reference("l_extendedprice"),
-                  duckdb:::expr_function(
-                    "-",
-                    list(
-                      if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                        duckdb:::expr_constant(1, experimental = experimental)
-                      } else {
-                        duckdb:::expr_constant(1)
-                      },
-                      duckdb:::expr_reference("l_discount")
+            ),
+            duckdb:::expr_function(
+              "sum",
+              list(
+                duckdb:::expr_function(
+                  "*",
+                  list(
+                    duckdb:::expr_reference("l_extendedprice"),
+                    duckdb:::expr_function(
+                      "-",
+                      list(
+                        if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                          duckdb:::expr_constant(1, experimental = experimental)
+                        } else {
+                          duckdb:::expr_constant(1)
+                        },
+                        duckdb:::expr_reference("l_discount")
+                      )
                     )
                   )
                 )
@@ -265,10 +267,10 @@ tpch_raw_14 <- function(con, experimental) {
             )
           )
         )
-      )
-      duckdb:::expr_set_alias(tmp_expr, "promo_revenue")
-      tmp_expr
-    })
+        duckdb:::expr_set_alias(tmp_expr, "promo_revenue")
+        tmp_expr
+      }
+    )
   )
   rel9 <- duckdb:::rel_distinct(rel8)
   rel9

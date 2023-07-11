@@ -910,32 +910,34 @@ rel10 <- duckdb:::rel_filter(
 rel11 <- duckdb:::rel_aggregate(
   rel10,
   groups = list(),
-  aggregates = list({
-    tmp_expr <- duckdb:::expr_function(
-      "sum",
-      list(
-        duckdb:::expr_function(
-          "*",
-          list(
-            duckdb:::expr_reference("l_extendedprice"),
-            duckdb:::expr_function(
-              "-",
-              list(
-                if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                  duckdb:::expr_constant(1, experimental = experimental)
-                } else {
-                  duckdb:::expr_constant(1)
-                },
-                duckdb:::expr_reference("l_discount")
+  aggregates = list(
+    {
+      tmp_expr <- duckdb:::expr_function(
+        "sum",
+        list(
+          duckdb:::expr_function(
+            "*",
+            list(
+              duckdb:::expr_reference("l_extendedprice"),
+              duckdb:::expr_function(
+                "-",
+                list(
+                  if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                    duckdb:::expr_constant(1, experimental = experimental)
+                  } else {
+                    duckdb:::expr_constant(1)
+                  },
+                  duckdb:::expr_reference("l_discount")
+                )
               )
             )
           )
         )
       )
-    )
-    duckdb:::expr_set_alias(tmp_expr, "revenue")
-    tmp_expr
-  })
+      duckdb:::expr_set_alias(tmp_expr, "revenue")
+      tmp_expr
+    }
+  )
 )
 rel12 <- duckdb:::rel_distinct(rel11)
 rel12

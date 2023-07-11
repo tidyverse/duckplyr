@@ -358,11 +358,13 @@ rel14 <- duckdb:::rel_project(
 rel15 <- duckdb:::rel_aggregate(
   rel14,
   groups = list(duckdb:::expr_reference("p_brand"), duckdb:::expr_reference("p_type"), duckdb:::expr_reference("p_size")),
-  aggregates = list({
-    tmp_expr <- duckdb:::expr_function("n_distinct", list(duckdb:::expr_reference("ps_suppkey")))
-    duckdb:::expr_set_alias(tmp_expr, "supplier_cnt")
-    tmp_expr
-  })
+  aggregates = list(
+    {
+      tmp_expr <- duckdb:::expr_function("n_distinct", list(duckdb:::expr_reference("ps_suppkey")))
+      duckdb:::expr_set_alias(tmp_expr, "supplier_cnt")
+      tmp_expr
+    }
+  )
 )
 rel16 <- duckdb:::rel_project(
   rel15,

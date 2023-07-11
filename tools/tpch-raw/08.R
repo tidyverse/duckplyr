@@ -65,11 +65,13 @@ rel5 <- duckdb:::rel_filter(
 )
 rel6 <- duckdb:::rel_project(
   rel5,
-  list({
-    tmp_expr <- duckdb:::expr_reference("r_regionkey")
-    duckdb:::expr_set_alias(tmp_expr, "r_regionkey")
-    tmp_expr
-  })
+  list(
+    {
+      tmp_expr <- duckdb:::expr_reference("r_regionkey")
+      duckdb:::expr_set_alias(tmp_expr, "r_regionkey")
+      tmp_expr
+    }
+  )
 )
 rel7 <- duckdb:::rel_set_alias(rel2, "lhs")
 rel8 <- duckdb:::rel_set_alias(rel6, "rhs")
@@ -104,11 +106,13 @@ rel10 <- duckdb:::rel_project(
 )
 rel11 <- duckdb:::rel_project(
   rel10,
-  list({
-    tmp_expr <- duckdb:::expr_reference("n1_nationkey")
-    duckdb:::expr_set_alias(tmp_expr, "n1_nationkey")
-    tmp_expr
-  })
+  list(
+    {
+      tmp_expr <- duckdb:::expr_reference("n1_nationkey")
+      duckdb:::expr_set_alias(tmp_expr, "n1_nationkey")
+      tmp_expr
+    }
+  )
 )
 df3 <- customer
 rel12 <- duckdb:::rel_from_df(con, df3, experimental = experimental)
@@ -160,11 +164,13 @@ rel17 <- duckdb:::rel_project(
 )
 rel18 <- duckdb:::rel_project(
   rel17,
-  list({
-    tmp_expr <- duckdb:::expr_reference("c_custkey")
-    duckdb:::expr_set_alias(tmp_expr, "c_custkey")
-    tmp_expr
-  })
+  list(
+    {
+      tmp_expr <- duckdb:::expr_reference("c_custkey")
+      duckdb:::expr_set_alias(tmp_expr, "c_custkey")
+      tmp_expr
+    }
+  )
 )
 df4 <- orders
 rel19 <- duckdb:::rel_from_df(con, df4, experimental = experimental)
@@ -424,11 +430,13 @@ rel36 <- duckdb:::rel_filter(
 )
 rel37 <- duckdb:::rel_project(
   rel36,
-  list({
-    tmp_expr <- duckdb:::expr_reference("p_partkey")
-    duckdb:::expr_set_alias(tmp_expr, "p_partkey")
-    tmp_expr
-  })
+  list(
+    {
+      tmp_expr <- duckdb:::expr_reference("p_partkey")
+      duckdb:::expr_set_alias(tmp_expr, "p_partkey")
+      tmp_expr
+    }
+  )
 )
 rel38 <- duckdb:::rel_set_alias(rel33, "lhs")
 rel39 <- duckdb:::rel_set_alias(rel37, "rhs")
@@ -835,43 +843,45 @@ rel60 <- duckdb:::rel_project(
 rel61 <- duckdb:::rel_aggregate(
   rel60,
   groups = list(duckdb:::expr_reference("o_year")),
-  aggregates = list({
-    tmp_expr <- duckdb:::expr_function(
-      "/",
-      list(
-        duckdb:::expr_function(
-          "sum",
-          list(
-            duckdb:::expr_function(
-              "ifelse",
-              list(
-                duckdb:::expr_function(
-                  "==",
-                  list(
-                    duckdb:::expr_reference("nation"),
-                    if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                      duckdb:::expr_constant("BRAZIL", experimental = experimental)
-                    } else {
-                      duckdb:::expr_constant("BRAZIL")
-                    }
-                  )
-                ),
-                duckdb:::expr_reference("volume"),
-                if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                  duckdb:::expr_constant(0, experimental = experimental)
-                } else {
-                  duckdb:::expr_constant(0)
-                }
+  aggregates = list(
+    {
+      tmp_expr <- duckdb:::expr_function(
+        "/",
+        list(
+          duckdb:::expr_function(
+            "sum",
+            list(
+              duckdb:::expr_function(
+                "ifelse",
+                list(
+                  duckdb:::expr_function(
+                    "==",
+                    list(
+                      duckdb:::expr_reference("nation"),
+                      if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                        duckdb:::expr_constant("BRAZIL", experimental = experimental)
+                      } else {
+                        duckdb:::expr_constant("BRAZIL")
+                      }
+                    )
+                  ),
+                  duckdb:::expr_reference("volume"),
+                  if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                    duckdb:::expr_constant(0, experimental = experimental)
+                  } else {
+                    duckdb:::expr_constant(0)
+                  }
+                )
               )
             )
-          )
-        ),
-        duckdb:::expr_function("sum", list(duckdb:::expr_reference("volume")))
+          ),
+          duckdb:::expr_function("sum", list(duckdb:::expr_reference("volume")))
+        )
       )
-    )
-    duckdb:::expr_set_alias(tmp_expr, "mkt_share")
-    tmp_expr
-  })
+      duckdb:::expr_set_alias(tmp_expr, "mkt_share")
+      tmp_expr
+    }
+  )
 )
 rel62 <- duckdb:::rel_order(rel61, list(duckdb:::expr_reference("o_year")))
 rel62

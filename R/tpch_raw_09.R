@@ -35,11 +35,13 @@ tpch_raw_09 <- function(con, experimental) {
   )
   rel4 <- duckdb:::rel_project(
     rel3,
-    list({
-      tmp_expr <- duckdb:::expr_reference("p_partkey")
-      duckdb:::expr_set_alias(tmp_expr, "p_partkey")
-      tmp_expr
-    })
+    list(
+      {
+        tmp_expr <- duckdb:::expr_reference("p_partkey")
+        duckdb:::expr_set_alias(tmp_expr, "p_partkey")
+        tmp_expr
+      }
+    )
   )
   df2 <- partsupp
   rel5 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
@@ -671,11 +673,13 @@ tpch_raw_09 <- function(con, experimental) {
   rel42 <- duckdb:::rel_aggregate(
     rel41,
     groups = list(duckdb:::expr_reference("nation"), duckdb:::expr_reference("o_year")),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("sum", list(duckdb:::expr_reference("amount")))
-      duckdb:::expr_set_alias(tmp_expr, "sum_profit")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("sum", list(duckdb:::expr_reference("amount")))
+        duckdb:::expr_set_alias(tmp_expr, "sum_profit")
+        tmp_expr
+      }
+    )
   )
   rel43 <- duckdb:::rel_order(
     rel42,

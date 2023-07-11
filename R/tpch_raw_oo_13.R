@@ -238,40 +238,44 @@ tpch_raw_oo_13 <- function(con, experimental) {
   rel11 <- duckdb:::rel_aggregate(
     rel10,
     groups = list(duckdb:::expr_reference("c_custkey")),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function(
-        "sum",
-        list(
-          duckdb:::expr_function(
-            "ifelse",
-            list(
-              duckdb:::expr_function("is.na", list(duckdb:::expr_reference("o_orderkey"))),
-              if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                duckdb:::expr_constant(0L, experimental = experimental)
-              } else {
-                duckdb:::expr_constant(0L)
-              },
-              if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                duckdb:::expr_constant(1L, experimental = experimental)
-              } else {
-                duckdb:::expr_constant(1L)
-              }
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function(
+          "sum",
+          list(
+            duckdb:::expr_function(
+              "ifelse",
+              list(
+                duckdb:::expr_function("is.na", list(duckdb:::expr_reference("o_orderkey"))),
+                if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                  duckdb:::expr_constant(0L, experimental = experimental)
+                } else {
+                  duckdb:::expr_constant(0L)
+                },
+                if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+                  duckdb:::expr_constant(1L, experimental = experimental)
+                } else {
+                  duckdb:::expr_constant(1L)
+                }
+              )
             )
           )
         )
-      )
-      duckdb:::expr_set_alias(tmp_expr, "c_count")
-      tmp_expr
-    })
+        duckdb:::expr_set_alias(tmp_expr, "c_count")
+        tmp_expr
+      }
+    )
   )
   rel12 <- duckdb:::rel_aggregate(
     rel11,
     groups = list(duckdb:::expr_reference("c_count")),
-    aggregates = list({
-      tmp_expr <- duckdb:::expr_function("n", list())
-      duckdb:::expr_set_alias(tmp_expr, "custdist")
-      tmp_expr
-    })
+    aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("n", list())
+        duckdb:::expr_set_alias(tmp_expr, "custdist")
+        tmp_expr
+      }
+    )
   )
   rel13 <- duckdb:::rel_order(
     rel12,

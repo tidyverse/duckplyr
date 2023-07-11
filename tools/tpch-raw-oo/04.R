@@ -40,11 +40,13 @@ rel3 <- duckdb:::rel_filter(
 )
 rel4 <- duckdb:::rel_project(
   rel3,
-  list({
-    tmp_expr <- duckdb:::expr_reference("l_orderkey")
-    duckdb:::expr_set_alias(tmp_expr, "l_orderkey")
-    tmp_expr
-  })
+  list(
+    {
+      tmp_expr <- duckdb:::expr_reference("l_orderkey")
+      duckdb:::expr_set_alias(tmp_expr, "l_orderkey")
+      tmp_expr
+    }
+  )
 )
 df2 <- orders
 rel5 <- duckdb:::rel_from_df(con, df2, experimental = experimental)
@@ -282,20 +284,24 @@ rel20 <- duckdb:::rel_project(
 )
 rel21 <- duckdb:::rel_project(
   rel20,
-  list({
-    tmp_expr <- duckdb:::expr_reference("o_orderpriority")
-    duckdb:::expr_set_alias(tmp_expr, "o_orderpriority")
-    tmp_expr
-  })
+  list(
+    {
+      tmp_expr <- duckdb:::expr_reference("o_orderpriority")
+      duckdb:::expr_set_alias(tmp_expr, "o_orderpriority")
+      tmp_expr
+    }
+  )
 )
 rel22 <- duckdb:::rel_aggregate(
   rel21,
   groups = list(duckdb:::expr_reference("o_orderpriority")),
-  aggregates = list({
-    tmp_expr <- duckdb:::expr_function("n", list())
-    duckdb:::expr_set_alias(tmp_expr, "order_count")
-    tmp_expr
-  })
+  aggregates = list(
+    {
+      tmp_expr <- duckdb:::expr_function("n", list())
+      duckdb:::expr_set_alias(tmp_expr, "order_count")
+      tmp_expr
+    }
+  )
 )
 rel23 <- duckdb:::rel_order(rel22, list(duckdb:::expr_reference("o_orderpriority")))
 rel23
