@@ -139,8 +139,12 @@ rel_order <- function(rel, orders, ...) {
 #'   )
 #' )
 #' rel2 <- rel_join(left, right, cond)
-rel_join <- function(left, right, conds, join = c("inner", "left", "right",
-    "outer", "cross", "semi", "anti"), ...) {
+rel_join <- function(left,
+                     right,
+                     conds,
+                     join = c("inner", "left", "right", "outer", "cross", "semi", "anti"),
+                     join_ref_type = c("regular", "natural", "cross", "positional", "asof"),
+                     ...) {
   rel_stats_env$rel_join <- (rel_stats_env$rel_join %||% 0L) + 1L
   UseMethod("rel_join")
 }

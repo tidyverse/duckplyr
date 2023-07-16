@@ -57,7 +57,13 @@ rel_join_impl <- function(x, y, by, join, na_matches, suffix, keep, error_call =
 
   conds <- pmap(list(cond_by, x_by, y_by), ~ relexpr_function(..1, list(..2, ..3)))
 
-  joined <- rel_join(x_rel, y_rel, conds, join)
+  if (any(by$filter != "none")) {
+    join_ref_type <- "asof"
+  } else {
+    join_ref_type <- "regular"
+  }
+
+  joined <- rel_join(x_rel, y_rel, conds, join, join_ref_type)
 
   if (mutating) {
     joined <- oo_restore_order(

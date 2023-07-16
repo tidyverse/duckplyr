@@ -201,6 +201,90 @@ test_that("joins don't match NA when na_matches = 'never' (#2033)", {
   )
 })
 
+test_that("`duckplyr_left_join(by = join_by(closest(...)))` works as expected", {
+  df1 <- tibble(x = 1:5)
+  df2 <- tibble(y = c(1, 2, 4))
+
+  out <- duckplyr_left_join(df1, df2, by = join_by(closest(x <= y)))
+  expect_identical(out$x, 1:5)
+  expect_identical(out$y, c(1, 2, 4, 4, NA))
+
+  out <- duckplyr_left_join(df1, df2, by = join_by(closest(x < y)))
+  expect_identical(out$x, 1:5)
+  expect_identical(out$y, c(2, 4, 4, NA, NA))
+
+  out <- duckplyr_left_join(df1, df2, by = join_by(closest(x >= y)))
+  expect_identical(out$x, 1:5)
+  expect_identical(out$y, c(1, 2, 2, 4, 4))
+
+  out <- duckplyr_left_join(df1, df2, by = join_by(closest(x > y)))
+  expect_identical(out$x, 1:5)
+  expect_identical(out$y, c(NA, 1, 2, 2, 4))
+})
+
+test_that("`duckplyr_full_join(by = join_by(closest(...)))` works as expected", {
+  df1 <- tibble(x = 1:5)
+  df2 <- tibble(y = c(1, 2, 4))
+
+  out <- duckplyr_full_join(df1, df2, by = join_by(closest(x <= y)))
+  expect_identical(out$x, 1:5)
+  expect_identical(out$y, c(1, 2, 4, 4, NA))
+
+  out <- duckplyr_full_join(df1, df2, by = join_by(closest(x < y)))
+  expect_identical(out$x, c(1:5, NA))
+  expect_identical(out$y, c(2, 4, 4, NA, NA, 1))
+
+  out <- duckplyr_full_join(df1, df2, by = join_by(closest(x >= y)))
+  expect_identical(out$x, 1:5)
+  expect_identical(out$y, c(1, 2, 2, 4, 4))
+
+  out <- duckplyr_full_join(df1, df2, by = join_by(closest(x > y)))
+  expect_identical(out$x, 1:5)
+  expect_identical(out$y, c(NA, 1, 2, 2, 4))
+})
+
+test_that("`duckplyr_right_join(by = join_by(closest(...)))` works as expected", {
+  df1 <- tibble(x = 1:5)
+  df2 <- tibble(y = c(1, 2, 4))
+
+  out <- duckplyr_right_join(df1, df2, by = join_by(closest(x <= y)))
+  expect_identical(out$x, 1:4)
+  expect_identical(out$y, c(1, 2, 4, 4))
+
+  out <- duckplyr_right_join(df1, df2, by = join_by(closest(x < y)))
+  expect_identical(out$x, c(1:3, NA))
+  expect_identical(out$y, c(2, 4, 4, 1))
+
+  out <- duckplyr_right_join(df1, df2, by = join_by(closest(x >= y)))
+  expect_identical(out$x, 1:5)
+  expect_identical(out$y, c(1, 2, 2, 4, 4))
+
+  out <- duckplyr_right_join(df1, df2, by = join_by(closest(x > y)))
+  expect_identical(out$x, 2:5)
+  expect_identical(out$y, c(1, 2, 2, 4))
+})
+
+test_that("`duckplyr_inner_join(by = join_by(closest(...)))` works as expected", {
+  df1 <- tibble(x = 1:5)
+  df2 <- tibble(y = c(1, 2, 4))
+
+  out <- duckplyr_inner_join(df1, df2, by = join_by(closest(x <= y)))
+  expect_identical(out$x, 1:4)
+  expect_identical(out$y, c(1, 2, 4, 4))
+
+  out <- duckplyr_inner_join(df1, df2, by = join_by(closest(x < y)))
+  expect_identical(out$x, 1:3)
+  expect_identical(out$y, c(2, 4, 4))
+
+  out <- duckplyr_inner_join(df1, df2, by = join_by(closest(x >= y)))
+  expect_identical(out$x, 1:5)
+  expect_identical(out$y, c(1, 2, 2, 4, 4))
+
+  out <- duckplyr_inner_join(df1, df2, by = join_by(closest(x > y)))
+  expect_identical(out$x, 2:5)
+  expect_identical(out$y, c(1, 2, 2, 4))
+})
+
 test_that("joins using `between(bounds =)` work as expected (#6488)", {
   df1 <- tibble(x = 1:5)
   df2 <- tibble(lower = 2, upper = 4)

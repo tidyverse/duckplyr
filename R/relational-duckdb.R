@@ -181,19 +181,20 @@ rel_order.duckdb_relation <- function(rel, orders, ...) {
 }
 
 #' @export
-rel_join.duckdb_relation <- function(left, right, conds, join, ...) {
+rel_join.duckdb_relation <- function(left, right, conds, join, join_ref_type, ...) {
   duckdb_conds <- to_duckdb_exprs(conds)
   if (join == "full") {
     join <- "outer"
   }
 
-  out <- duckdb:::rel_join(left, right, duckdb_conds, join)
+  out <- duckdb:::rel_join(left, right, duckdb_conds, join, join_ref_type)
 
   meta_rel_register(out, expr(duckdb:::rel_join(
     !!meta_rel_get(left)$name,
     !!meta_rel_get(right)$name,
     list(!!!to_duckdb_exprs_meta(conds)),
-    !!join
+    !!join,
+    !!join_ref_type
   )))
 
   out
