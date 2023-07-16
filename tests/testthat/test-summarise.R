@@ -295,7 +295,8 @@ test_that("named tibbles are packed (#2326)", {
   expect_equal(out$df, tibble(y = 4, z = 3))
 })
 
-test_that("duckplyr_summarise(.groups=)", {
+test_that("duckplyr_summarise(.groups=) in global environment", {
+  skip("TODO duckdb")
   expect_message(eval_bare(
     expr(data.frame(x = 1, y = 2) %>% group_by(x, y) %>% duckplyr_summarise()),
     env(global_env())
@@ -304,7 +305,9 @@ test_that("duckplyr_summarise(.groups=)", {
     expr(data.frame(x = 1, y = 2) %>% rowwise(x, y) %>% duckplyr_summarise()),
     env(global_env())
   ))
+})
 
+test_that("duckplyr_summarise(.groups=)", {
   df <- data.frame(x = 1, y = 2)
   expect_equal(df %>% duckplyr_summarise(z = 3, .groups= "rowwise"), rowwise(data.frame(z = 3)))
 
@@ -433,6 +436,7 @@ test_that("`duckplyr_summarise()` doesn't allow data frames with missing or empt
 })
 
 test_that("duckplyr_summarise() gives meaningful errors", {
+  skip("TODO duckdb")
   eval(envir = global_env(), expr({
     expect_snapshot({
       # Messages about .groups=

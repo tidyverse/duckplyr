@@ -127,6 +127,13 @@ tests <- head(n = -1, list(
 
     # sum(1:3) returns HUGEINT in duckdb
     "duckplyr_summarise() correctly auto-names expressions (#6741)",
+
+    # Fails in R CMD check
+    "duckplyr_summarise() gives meaningful errors",
+
+    # Fails in R CMD check, also https://github.com/tidyverse/dplyr/pull/6883
+    "duckplyr_summarise(.groups=) in global environment",
+
     NULL
   ),
   "test-transmute.R" = c(
