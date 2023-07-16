@@ -9,8 +9,6 @@ test_that("no homonyms", {
   names_duckplyr <- ls(duckplyr)
 
   names_common <- intersect(names_dplyr, names_duckplyr)
-  # Allow overwriting
-  names_common <- setdiff(names_common, c("dplyr_reconstruct", "dplyr_reconstruct.data.frame"))
   names_common
 
   objs_dplyr <- mget(names_common, dplyr)
