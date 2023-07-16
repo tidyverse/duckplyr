@@ -16,8 +16,5 @@ test_that("no homonyms", {
   objs_dplyr <- mget(names_common, dplyr)
   objs_duckplyr <- mget(names_common, duckplyr)
 
-  same <- purrr::map2_lgl(objs_dplyr, objs_duckplyr, identical)
-  expect_snapshot({
-    names_common[!same]
-  })
+  expect_identical(objs_duckplyr, objs_dplyr[names(objs_duckplyr)])
 })
