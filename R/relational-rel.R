@@ -139,6 +139,7 @@ rel_order <- function(rel, orders, ...) {
 #'   )
 #' )
 #' rel2 <- rel_join(left, right, cond)
+#' }
 rel_join <- function(left,
                      right,
                      conds,
