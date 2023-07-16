@@ -5,6 +5,7 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
   force(.data)
 
   rel_try(
+    'summarize(.groups = "rowwise") not supported' = identical(.groups, "rowwise"),
     {
       rel <- duckdb_rel_from_df(.data)
       dots <- dplyr_quosures(...)
