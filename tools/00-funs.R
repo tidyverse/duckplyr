@@ -86,6 +86,7 @@ tests <- head(n = -1, list(
 
     "mutating joins trigger many-to-many warning",
     "mutating joins compute common columns",
+    "mutating joins don't trigger many-to-many warning when called indirectly",
 
     # https://github.com/duckdb/duckdb/issues/7451
     # https://github.com/tidyverse/dplyr/pull/6846

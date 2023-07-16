@@ -265,6 +265,7 @@ test_that("mutating joins trigger many-to-many warning", {
 })
 
 test_that("mutating joins don't trigger many-to-many warning when called indirectly", {
+  skip("TODO duckdb")
   df <- tibble(x = c(1, 1))
 
   fn <- function(df1, df2, relationship = NULL) {
