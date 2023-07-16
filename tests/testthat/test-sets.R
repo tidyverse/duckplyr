@@ -117,9 +117,16 @@ test_that("setequal uses coercion rules (#6114)", {
 })
 
 test_that("setequal tibbles must have same rows and columns", {
-  expect_false(duckplyr_setequal(tibble(x = 1:2), tibble(y = 1:2)))
+  # Different rows are the definition of not equal
   expect_false(duckplyr_setequal(tibble(x = 1:2), tibble(x = 2:3)))
-  expect_false(duckplyr_setequal(tibble(x = 1:2), tibble(x = c("a", "b"))))
+
+  # Different or incompatible columns are an error, like the other set ops (#6786)
+  expect_snapshot(error = TRUE, {
+    duckplyr_setequal(tibble(x = 1:2), tibble(y = 1:2))
+  })
+  expect_snapshot(error = TRUE, {
+    duckplyr_setequal(tibble(x = 1:2), tibble(x = c("a", "b")))
+  })
 })
 
 test_that("setequal checks y is a data frame", {
