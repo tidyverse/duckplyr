@@ -49,13 +49,13 @@ rel_join_impl <- function(x, y, by, join, na_matches, suffix, keep, error_call =
   x_by <- map(x_by, relexpr_reference, rel = x_rel)
   y_by <- map(y_by, relexpr_reference, rel = y_rel)
 
+  cond_by <- by$condition
+
   if (na_matches == "na") {
-    cond <- "___eq_na_matches_na"
-  } else {
-    cond <- "=="
+    cond_by[cond_by == "=="] <- "___eq_na_matches_na"
   }
 
-  conds <- map2(x_by, y_by, ~ relexpr_function(cond, list(.x, .y)))
+  conds <- pmap(list(cond_by, x_by, y_by), ~ relexpr_function(..1, list(..2, ..3)))
 
   joined <- rel_join(x_rel, y_rel, conds, join)
 
@@ -84,12 +84,14 @@ rel_join_impl <- function(x, y, by, join, na_matches, suffix, keep, error_call =
 
     if (remap) {
       by_pos <- match(names(vars$x$key), x_names)
+      # Only coalesce for equi-joins
+      eq_idx <- (by$condition == "==")
 
       if (join == "right") {
-        exprs[by_pos] <- map2(y_by, names(vars$x$key), relexpr_set_alias)
+        exprs[by_pos[eq_idx]] <- map2(y_by[eq_idx], names(vars$x$key)[eq_idx], relexpr_set_alias)
       } else {
-        exprs[by_pos] <- pmap(
-          list(x_by, y_by, names(vars$x$key)),
+        exprs[by_pos[eq_idx]] <- pmap(
+          list(x_by[eq_idx], y_by[eq_idx], names(vars$x$key)[eq_idx]),
           ~ relexpr_function("___coalesce", list(..1, ..2), alias = ..3)
         )
       }

@@ -7,7 +7,6 @@ full_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
 
   # Our implementation
   rel_try(
-    "Only equi-joins for full_join()" = inherits(by, "dplyr_join_by") && any(by$condition != "=="),
     "No implicit cross joins for full_join()" = is_cross_by(by),
     "No relational implementation for full_join(copy = TRUE)" = copy,
     {
