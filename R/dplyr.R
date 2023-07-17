@@ -1,3 +1,4 @@
+as_across_fn_call <- dplyr:::as_across_fn_call
 as_fun_list <- dplyr:::as_fun_list
 as_join_by <- dplyr:::as_join_by
 check_filter <- dplyr:::check_filter
@@ -7,12 +8,19 @@ check_n_name <- dplyr:::check_n_name
 check_na_matches <- dplyr:::check_na_matches
 check_string <- dplyr:::check_string
 check_transmute_args <- dplyr:::check_transmute_args
+compute_by <- dplyr:::compute_by
+context_poke <- dplyr:::context_poke
 count_regroups <- dplyr:::count_regroups
+cur_column <- dplyr:::cur_column
+DataMask <- dplyr:::DataMask
 dplyr_error_call <- dplyr:::dplyr_error_call
 dplyr_local_error_call <- dplyr:::dplyr_local_error_call
 dplyr_quosures <- dplyr:::dplyr_quosures
 eval_relocate <- dplyr:::eval_relocate
 eval_select_by <- dplyr:::eval_select_by
+expand_across <- dplyr:::expand_across
+expand_if_across <- dplyr:::expand_if_across
+expr_substitute <- dplyr:::expr_substitute
 get_slice_size <- dplyr:::get_slice_size
 group_by_drop_default <- dplyr:::group_by_drop_default
 is_compatible <- dplyr:::is_compatible
@@ -22,6 +30,8 @@ join_cols <- dplyr:::join_cols
 # Need to reimplement mutate_keep() to avoid dplyr_col_select()
 # mutate_keep <- dplyr:::mutate_keep
 mutate_relocate <- dplyr:::mutate_relocate
+new_dplyr_quosure <- dplyr:::new_dplyr_quosure
 new_join_by <- dplyr:::new_join_by
+quo_eval_fns <- dplyr:::quo_eval_fns
 some <- dplyr:::some
 tally_n <- dplyr:::tally_n

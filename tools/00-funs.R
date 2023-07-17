@@ -48,6 +48,17 @@ tests <- head(n = -1, list(
   "helper-encoding.R" = c(
     NULL
   ),
+  "test-across.R" = c(
+    # Sort order
+    "if_any() and if_all() respect duckplyr_filter()-like NA handling",
+    "expanded if_any() finds local data",
+    NULL
+  ),
+  "test-all-equal.R" = c(
+    # No idea
+    "duckplyr_count() give meaningful errors",
+    NULL
+  ),
   "test-arrange.R" = c(
     NULL
   ),
@@ -55,6 +66,9 @@ tests <- head(n = -1, list(
     NULL
   ),
   "test-count-tally.R" = c(
+    NULL
+  ),
+  "test-deprec-do.R" = c(
     NULL
   ),
   "test-deprec-funs.R" = c(
@@ -72,6 +86,9 @@ tests <- head(n = -1, list(
     NULL
   ),
   "test-generics.R" = c(
+    NULL
+  ),
+  "test-group-map.R" = c(
     NULL
   ),
   "test-groups-with.R" = c(

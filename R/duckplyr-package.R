@@ -2,11 +2,16 @@
 "_PACKAGE"
 
 ## usethis namespace: start
+# @rawNamespace import(vctrs, except = data_frame)
+# an alternative for importing nearly everything from vctrs
+# https://github.com/tidyverse/dplyr/blob/16b472fb2afc50a87502c2b4ed803e2f5f82b9d6/R/dplyr.R#L7
 #' @import rlang
-#' @importFrom collections queue
 #' @importFrom collections dict
+#' @importFrom collections queue
 #' @importFrom dplyr across
 #' @importFrom dplyr add_tally
+#' @importFrom dplyr all_equal
+#' @importFrom dplyr c_across
 #' @importFrom dplyr case_when
 #' @importFrom dplyr collapse
 #' @importFrom dplyr collect
@@ -21,8 +26,13 @@
 #' @importFrom dplyr group_by
 #' @importFrom dplyr group_data
 #' @importFrom dplyr group_keys
+#' @importFrom dplyr group_map
+#' @importFrom dplyr group_modify
 #' @importFrom dplyr group_rows
 #' @importFrom dplyr group_size
+#' @importFrom dplyr group_walk
+#' @importFrom dplyr if_all
+#' @importFrom dplyr if_any
 #' @importFrom dplyr is_grouped_df
 #' @importFrom dplyr join_by
 #' @importFrom dplyr lag
@@ -48,6 +58,7 @@
 #' @importFrom dplyr slice_tail
 #' @importFrom dplyr summarise_all
 #' @importFrom dplyr summarise_at
+#' @importFrom dplyr summarize
 #' @importFrom dplyr tally
 #' @importFrom dplyr vars
 #' @importFrom dplyr with_groups
