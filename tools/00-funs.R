@@ -131,9 +131,6 @@ tests <- head(n = -1, list(
     NULL
   ),
   "test-sets.R" = c(
-    # FIXME: oo
-    "set operations (apart from union_all) remove duplicates",
-
     NULL
   ),
   "test-slice.R" = c(
