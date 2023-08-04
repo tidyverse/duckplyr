@@ -160,26 +160,15 @@ tests <- head(n = -1, list(
   NULL
 ))
 
+# dplyr_only_tests --------------------------------------------------------------------
+
 dplyr_only_tests <- head(n = -1, list(
-  "test-colwise-select.R" = c(
-    "can select/rename with predicate", "can take list, but only containing single function", "can select/rename with vars()",
-    NULL
-  ),
   "test-count-tally.R" = c(
     "ouput preserves grouping",
-    "output preserves class & attributes where possible",
     NULL
   ),
   "test-deprec-do.R" = c(
     "ungrouped data frame with unnamed argument returns data frame",
-    NULL
-  ),
-  "test-generics.R" = c(
-    "dplyr_reconstruct() strips attributes before dispatch",
-    NULL
-  ),
-  "test-groups-with.R" = c(
-    "restores original class",
     NULL
   ),
   "test-join.R" = c(
