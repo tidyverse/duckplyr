@@ -23,8 +23,16 @@ forbidden <- fs::path("R", c(
   "zzz.R",
   "duckplyr-package.R",
   "head.R",
+  "meta.R",
   "overwrite.R",
-  "restore.R"
+  "qs.R",
+  "relational-altrep-wrap.R",
+  "restore.R",
+  "tpch.R",
+  "tpch2.R",
+  sprintf("tpch_raw_%.2d.R", 1:22),
+  sprintf("tpch_raw_oo_%.2d.R", 1:22),
+  NULL
 ))
 duckplyr_files <- setdiff(fs::dir_ls("R"), forbidden)
 duckplyr_texts <- map_chr(duckplyr_files, brio::read_file)
