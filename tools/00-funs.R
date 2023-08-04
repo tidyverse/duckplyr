@@ -50,13 +50,13 @@ tests <- head(n = -1, list(
   ),
   "test-across.R" = c(
     # Sort order
-    "if_any() and if_all() respect duckplyr_filter()-like NA handling",
+    "if_any() and if_all() respect filter()-like NA handling",
     "expanded if_any() finds local data",
     NULL
   ),
   "test-all-equal.R" = c(
     # No idea
-    "duckplyr_count() give meaningful errors",
+    "count() give meaningful errors",
     NULL
   ),
   "test-arrange.R" = c(
@@ -114,7 +114,7 @@ tests <- head(n = -1, list(
   ),
   "test-mutate.R" = c(
     # FIXME: vector class?
-    "duckplyr_mutate() handles symbol expressions",
+    "mutate() handles symbol expressions",
     NULL
   ),
   "test-pull.R" = c(
@@ -143,13 +143,13 @@ tests <- head(n = -1, list(
     "works with empty data frames",
 
     # sum(1:3) returns HUGEINT in duckdb
-    "duckplyr_summarise() correctly auto-names expressions (#6741)",
+    "summarise() correctly auto-names expressions (#6741)",
 
     # Fails in R CMD check
-    "duckplyr_summarise() gives meaningful errors",
+    "summarise() gives meaningful errors",
 
     # Fails in R CMD check, also https://github.com/tidyverse/dplyr/pull/6883
-    "duckplyr_summarise(.groups=) in global environment",
+    "summarise(.groups=) in global environment",
 
     NULL
   ),
