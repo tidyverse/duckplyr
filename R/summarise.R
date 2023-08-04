@@ -7,18 +7,42 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
   rel_try(
     'summarize(.groups = "rowwise") not supported' = identical(.groups, "rowwise"),
     {
+      by <- eval_select_by(enquo(.by), .data)
+      oo <- (length(by) > 0) && (Sys.getenv("DUCKPLYR_OUTPUT_ORDER") == "TRUE")
+
       rel <- duckdb_rel_from_df(.data)
+
+      if (oo) {
+        rel <- oo_prep(rel, colname = "___row_number", force = TRUE)
+      }
+
       dots <- dplyr_quosures(...)
       dots <- fix_auto_name(dots)
+
       aggregates <- rel_translate_dots(dots, .data)
-      by <- eval_select_by(enquo(.by), .data)
       groups <- lapply(by, relexpr_reference)
+
+      if (oo) {
+        aggregates <- c(
+          list(rel_translate(
+            quo(min(`___row_number`)),
+            new_data_frame(list(`___row_number` = integer())),
+            alias = "___row_number"
+          )),
+          aggregates
+        )
+      }
 
       out_rel <- rel_aggregate(rel, groups, unname(aggregates))
       # https://github.com/duckdb/duckdb/issues/7095
       if (length(groups) == 0) {
         out_rel <- rel_distinct(out_rel)
       }
+
+      if (oo) {
+        out_rel <- oo_restore(out_rel, "___row_number")
+      }
+
       out <- rel_to_df(out_rel)
       class(out) <- class(.data)
 
