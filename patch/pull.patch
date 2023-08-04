@@ -1,5 +1,5 @@
 diff --git b/R/pull.R a/R/pull.R
-index d277c62..0e4c65c 100644
+index d277c62..e101d79 100644
 --- b/R/pull.R
 +++ a/R/pull.R
 @@ -1,10 +1,25 @@
@@ -8,14 +8,14 @@ index d277c62..0e4c65c 100644
  pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
 -  # Our implementation
 +  # dplyr implementation
-+  var <- tidyselect::vars_pull(names(.data), !!enquo(var))
-+  name <- enquo(name)
-+  if (!quo_is_null(name)) {
-+    name <- tidyselect::vars_pull(names(.data), !!name)
-+    var <- c(name, var)
++  my_var <- tidyselect::vars_pull(names(.data), !!enquo(var))
++  my_name <- enquo(name)
++  if (!quo_is_null(my_name)) {
++    my_name <- tidyselect::vars_pull(names(.data), !!my_name)
++    my_var <- c(my_name, my_var)
 +  }
 +
-+  loc <- set_names(match(var, names(.data)), var)
++  loc <- set_names(match(my_var, names(.data)), my_var)
 +
 +  exprs <- exprs_from_loc(.data, loc)
 +
