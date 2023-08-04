@@ -46,7 +46,8 @@ test_that("relational anti_join(join_by(a)) order-preserving", {
     list(
       duckdb:::expr_function("___eq_na_matches_na", list(duckdb:::expr_reference("a", rel5), duckdb:::expr_reference("a", rel4)))
     ),
-    "anti"
+    "anti",
+    "regular"
   )
   rel7 <- duckdb:::rel_order(rel6, list(duckdb:::expr_reference("___row_number_x", rel5)))
   rel8 <- duckdb:::rel_project(
@@ -99,7 +100,8 @@ test_that("relational anti_join(join_by(a)) order-enforcing", {
     list(
       duckdb:::expr_function("___eq_na_matches_na", list(duckdb:::expr_reference("a", rel2), duckdb:::expr_reference("a", rel4)))
     ),
-    "anti"
+    "anti",
+    "regular"
   )
   rel6 <- duckdb:::rel_order(rel5, list(duckdb:::expr_reference("a"), duckdb:::expr_reference("b")))
   rel6
@@ -2671,7 +2673,8 @@ test_that("relational full_join(join_by(a)) order-preserving", {
         list(duckdb:::expr_reference("a_x", rel7), duckdb:::expr_reference("a_y", rel8))
       )
     ),
-    "outer"
+    "outer",
+    "regular"
   )
   rel10 <- duckdb:::rel_order(
     rel9,
@@ -2769,7 +2772,8 @@ test_that("relational full_join(join_by(a)) order-enforcing", {
         list(duckdb:::expr_reference("a_x", rel5), duckdb:::expr_reference("a_y", rel6))
       )
     ),
-    "outer"
+    "outer",
+    "regular"
   )
   rel8 <- duckdb:::rel_project(
     rel7,
@@ -2907,7 +2911,8 @@ test_that("relational inner_join(join_by(a)) order-preserving", {
         list(duckdb:::expr_reference("a_x", rel7), duckdb:::expr_reference("a_y", rel8))
       )
     ),
-    "inner"
+    "inner",
+    "regular"
   )
   rel10 <- duckdb:::rel_order(
     rel9,
@@ -3005,7 +3010,8 @@ test_that("relational inner_join(join_by(a)) order-enforcing", {
         list(duckdb:::expr_reference("a_x", rel5), duckdb:::expr_reference("a_y", rel6))
       )
     ),
-    "inner"
+    "inner",
+    "regular"
   )
   rel8 <- duckdb:::rel_project(
     rel7,
@@ -3188,7 +3194,8 @@ test_that("relational left_join(join_by(a)) order-preserving", {
         list(duckdb:::expr_reference("a_x", rel7), duckdb:::expr_reference("a_y", rel8))
       )
     ),
-    "left"
+    "left",
+    "regular"
   )
   rel10 <- duckdb:::rel_order(
     rel9,
@@ -3286,7 +3293,8 @@ test_that("relational left_join(join_by(a)) order-enforcing", {
         list(duckdb:::expr_reference("a_x", rel5), duckdb:::expr_reference("a_y", rel6))
       )
     ),
-    "left"
+    "left",
+    "regular"
   )
   rel8 <- duckdb:::rel_project(
     rel7,
@@ -8901,7 +8909,8 @@ test_that("relational right_join(join_by(a)) order-preserving", {
         list(duckdb:::expr_reference("a_x", rel7), duckdb:::expr_reference("a_y", rel8))
       )
     ),
-    "right"
+    "right",
+    "regular"
   )
   rel10 <- duckdb:::rel_order(
     rel9,
@@ -8995,7 +9004,8 @@ test_that("relational right_join(join_by(a)) order-enforcing", {
         list(duckdb:::expr_reference("a_x", rel5), duckdb:::expr_reference("a_y", rel6))
       )
     ),
-    "right"
+    "right",
+    "regular"
   )
   rel8 <- duckdb:::rel_project(
     rel7,
@@ -9272,7 +9282,8 @@ test_that("relational semi_join(join_by(a)) order-preserving", {
     list(
       duckdb:::expr_function("___eq_na_matches_na", list(duckdb:::expr_reference("a", rel5), duckdb:::expr_reference("a", rel4)))
     ),
-    "semi"
+    "semi",
+    "regular"
   )
   rel7 <- duckdb:::rel_order(rel6, list(duckdb:::expr_reference("___row_number_x", rel5)))
   rel8 <- duckdb:::rel_project(
@@ -9325,7 +9336,8 @@ test_that("relational semi_join(join_by(a)) order-enforcing", {
     list(
       duckdb:::expr_function("___eq_na_matches_na", list(duckdb:::expr_reference("a", rel2), duckdb:::expr_reference("a", rel4)))
     ),
-    "semi"
+    "semi",
+    "regular"
   )
   rel6 <- duckdb:::rel_order(rel5, list(duckdb:::expr_reference("a"), duckdb:::expr_reference("b")))
   rel6
