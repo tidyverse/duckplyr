@@ -1,8 +1,8 @@
 diff --git b/R/symdiff.R a/R/symdiff.R
-index 4f6a8ff..b12c50a 100644
+index bea2b7d..90871b1 100644
 --- b/R/symdiff.R
 +++ a/R/symdiff.R
-@@ -3,9 +3,31 @@
+@@ -2,9 +2,31 @@
  #' @export
  symdiff.duckplyr_df <- function(x, y, ...) {
    # Our implementation

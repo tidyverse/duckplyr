@@ -1,8 +1,8 @@
 diff --git b/R/distinct.R a/R/distinct.R
-index 92656b4..893a0b8 100644
+index 1975ca6..3538b76 100644
 --- b/R/distinct.R
 +++ a/R/distinct.R
-@@ -4,8 +4,62 @@
+@@ -3,8 +3,62 @@
  distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
    # Our implementation
    rel_try(

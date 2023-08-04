@@ -104,9 +104,7 @@ func_decl_chr <- function(generic, code, name, new_code_chr, is_tbl_return, skip
     new_code_chr <- gsub("\n[}]", paste0("\n", dplyr_impl, collapse = ""), new_code_chr)
 
     method_code <- paste0(
-      "#' @importFrom dplyr ",
-      generic,
-      "\n#' @export\n",
+      "#' @export\n",
       name,
       " <- ",
       new_code_chr,

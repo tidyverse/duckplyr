@@ -1,8 +1,8 @@
 diff --git b/R/rows_upsert.R a/R/rows_upsert.R
-index 5e0d798..b7605cf 100644
+index ec4fa3c..0fa57c8 100644
 --- b/R/rows_upsert.R
 +++ a/R/rows_upsert.R
-@@ -57,7 +57,7 @@ rows_upsert.duckplyr_df <- function(x, y, by = NULL, ..., copy = FALSE, in_place
+@@ -56,7 +56,7 @@ rows_upsert.duckplyr_df <- function(x, y, by = NULL, ..., copy = FALSE, in_place
  
    # Insert
    y_size <- vec_size(y_key)

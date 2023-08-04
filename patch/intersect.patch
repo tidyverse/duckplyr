@@ -1,8 +1,8 @@
 diff --git b/R/intersect.R a/R/intersect.R
-index 7208000..ba2cf2d 100644
+index bb207b1..e0aee4e 100644
 --- b/R/intersect.R
 +++ a/R/intersect.R
-@@ -3,9 +3,31 @@
+@@ -2,9 +2,31 @@
  #' @export
  intersect.duckplyr_df <- function(x, y, ...) {
    # Our implementation

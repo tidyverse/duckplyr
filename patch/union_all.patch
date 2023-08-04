@@ -1,8 +1,8 @@
 diff --git b/R/union_all.R a/R/union_all.R
-index 37abe3d..b47c107 100644
+index 4323f21..653f4d8 100644
 --- b/R/union_all.R
 +++ a/R/union_all.R
-@@ -3,9 +3,31 @@
+@@ -2,9 +2,31 @@
  #' @export
  union_all.duckplyr_df <- function(x, y, ...) {
    # Our implementation
