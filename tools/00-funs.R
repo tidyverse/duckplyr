@@ -170,6 +170,10 @@ dplyr_only_tests <- head(n = -1, list(
     "output preserves class & attributes where possible",
     NULL
   ),
+  "test-deprec-do.R" = c(
+    "ungrouped data frame with unnamed argument returns data frame",
+    NULL
+  ),
   "test-generics.R" = c(
     "dplyr_reconstruct() strips attributes before dispatch",
     NULL
