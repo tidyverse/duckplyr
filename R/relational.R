@@ -10,13 +10,14 @@ rel_try <- function(rel, ...) {
   dots <- list(...)
   for (i in seq_along(dots)) {
     if (dots[[i]]) {
-      # FIXME: enable always
-      if (!identical(Sys.getenv("TESTTHAT"), "true")) {
-        inform(message = c("Requested fallback for relational:", i = names(dots)[[i]]))
-      }
       stats$fallback <- stats$fallback + 1L
-      if (Sys.getenv("DUCKPLYR_FORCE") == "TRUE") {
-        abort("Fallback requested with DUCKPLYR_FORCE")
+      if (!dplyr_mode) {
+        if (!identical(Sys.getenv("TESTTHAT"), "true")) {
+          inform(message = c("Requested fallback for relational:", i = names(dots)[[i]]))
+        }
+        if (Sys.getenv("DUCKPLYR_FORCE") == "TRUE") {
+          abort("Fallback not available with DUCKPLYR_FORCE")
+        }
       }
 
       return()
@@ -30,7 +31,7 @@ rel_try <- function(rel, ...) {
   out <- rlang::try_fetch(rel, error = identity)
   if (inherits(out, "error")) {
     # FIXME: enable always
-    if (!identical(Sys.getenv("TESTTHAT"), "true")) {
+    if (!dplyr_mode && !identical(Sys.getenv("TESTTHAT"), "true")) {
       rlang::cnd_signal(rlang::message_cnd(message = "Error processing with relational.", parent = out))
     }
     stats$fallback <- stats$fallback + 1L
