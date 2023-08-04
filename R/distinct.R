@@ -12,7 +12,7 @@ distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
 
       rel <- duckdb_rel_from_df(.data)
 
-      oo <- .keep_all || (Sys.getenv("DUCKPLYR_OUTPUT_ORDER") == "TRUE")
+      oo <- .keep_all || oo_force()
 
       if (oo) {
         # Push row number as separate projection

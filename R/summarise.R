@@ -8,7 +8,7 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
     'summarize(.groups = "rowwise") not supported' = identical(.groups, "rowwise"),
     {
       by <- eval_select_by(enquo(.by), .data)
-      oo <- (length(by) > 0) && (Sys.getenv("DUCKPLYR_OUTPUT_ORDER") == "TRUE")
+      oo <- (length(by) > 0) && oo_force()
 
       rel <- duckdb_rel_from_df(.data)
 

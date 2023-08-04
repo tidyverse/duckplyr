@@ -106,3 +106,6 @@
 #' @useDynLib duckplyr, .registration = TRUE
 ## usethis namespace: end
 NULL
+
+# Only in this package
+dplyr_mode <- FALSE

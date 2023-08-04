@@ -1,5 +1,17 @@
-oo_prep <- function(rel, colname = "___row_number", force = FALSE) {
-  if (!force && Sys.getenv("DUCKPLYR_OUTPUT_ORDER") != "TRUE") {
+oo_force <- function() {
+  if (dplyr_mode) {
+    return(TRUE)
+  }
+
+  if (Sys.getenv("DUCKPLYR_OUTPUT_ORDER") == "TRUE") {
+    return(TRUE)
+  }
+
+  return(FALSE)
+}
+
+oo_prep <- function(rel, colname = "___row_number", force = oo_force()) {
+  if (!force) {
     return(rel)
   }
 
@@ -24,8 +36,8 @@ oo_restore <- function(rel, colname = "___row_number", column_rels = list(NULL))
   oo_restore_cols(rel, colname)
 }
 
-oo_restore_order <- function(rel, colname = "___row_number", column_rels = list(NULL), force = FALSE) {
-  if (!force && Sys.getenv("DUCKPLYR_OUTPUT_ORDER") != "TRUE") {
+oo_restore_order <- function(rel, colname = "___row_number", column_rels = list(NULL), force = oo_force()) {
+  if (!force) {
     return(rel)
   }
 
@@ -33,8 +45,8 @@ oo_restore_order <- function(rel, colname = "___row_number", column_rels = list(
   rel_order(rel, order_exprs)
 }
 
-oo_restore_cols <- function(rel, colname = "___row_number", extra = NULL, force = FALSE) {
-  if (!force && Sys.getenv("DUCKPLYR_OUTPUT_ORDER") != "TRUE") {
+oo_restore_cols <- function(rel, colname = "___row_number", extra = NULL, force = oo_force()) {
+  if (!force) {
     if (!is.null(extra)) {
       names <- setdiff(rel_names(rel), extra)
       proj_exprs <- imap(set_names(names), relexpr_reference, rel = NULL)
