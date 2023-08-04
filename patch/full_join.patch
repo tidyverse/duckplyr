@@ -1,8 +1,8 @@
 diff --git b/R/full_join.R a/R/full_join.R
-index 9f3a400..30ebd3f 100644
+index 9f3a400..8170bc4 100644
 --- b/R/full_join.R
 +++ a/R/full_join.R
-@@ -2,10 +2,16 @@
+@@ -2,10 +2,15 @@
  #' @importFrom dplyr full_join
  #' @export
  full_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ..., keep = NULL, na_matches = c("na", "never"), multiple = "all", relationship = NULL) {
@@ -12,7 +12,6 @@ index 9f3a400..30ebd3f 100644
    # Our implementation
    rel_try(
 -    "No relational implementation for full_join()" = TRUE,
-+    "Only equi-joins for full_join()" = inherits(by, "dplyr_join_by") && any(by$condition != "=="),
 +    "No implicit cross joins for full_join()" = is_cross_by(by),
 +    "No relational implementation for full_join(copy = TRUE)" = copy,
      {

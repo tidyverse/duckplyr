@@ -1,7 +1,16 @@
 diff --git b/R/sample_n.R a/R/sample_n.R
-index c54708f..13d48c4 100644
+index a6788a2..13d48c4 100644
 --- b/R/sample_n.R
 +++ a/R/sample_n.R
+@@ -17,7 +17,7 @@ sample_n.duckplyr_df <- function(tbl, size, replace = FALSE, weight = NULL, .env
+ 
+   # dplyr implementation
+   if (!is_null(.env)) {
+-    inform("`sample_n()` argument `.env` is deprecated and no longer has any effect.")
++    inform("`sample_n() argument `.env` is deprecated and no longer has any effect.")
+   }
+ 
+   size <- enquo(size)
 @@ -28,7 +28,6 @@ sample_n.duckplyr_df <- function(tbl, size, replace = FALSE, weight = NULL, .env
      size <- check_size(!!size, n(), replace = replace)
      sample.int(n(), size, replace = replace, prob = !!weight)

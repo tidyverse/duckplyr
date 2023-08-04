@@ -1,5 +1,5 @@
 diff --git b/R/count.R a/R/count.R
-index 2d3783d..ecabe9f 100644
+index 2d3783d..6b1b7a7 100644
 --- b/R/count.R
 +++ a/R/count.R
 @@ -2,13 +2,30 @@
@@ -19,7 +19,7 @@ index 2d3783d..ecabe9f 100644
 +  is_name <- map_lgl(exprs, is_symbol)
 +
 +  # FIXME: Use rel_try() for accurate stats
-+  if (all(is_name) && .drop && !sort) {
++  if (!is_grouped_df(x) && all(is_name) && .drop && !sort) {
 +    by_chr <- map_chr(exprs, as_string)
 +    name <- check_n_name(name, by_chr)
 +

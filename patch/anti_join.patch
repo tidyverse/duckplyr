@@ -1,8 +1,8 @@
 diff --git b/R/anti_join.R a/R/anti_join.R
-index b1cad94..2a0ab1d 100644
+index b1cad94..f4df7db 100644
 --- b/R/anti_join.R
 +++ a/R/anti_join.R
-@@ -2,10 +2,18 @@
+@@ -2,10 +2,17 @@
  #' @importFrom dplyr anti_join
  #' @export
  anti_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches = c("na", "never")) {
@@ -15,7 +15,6 @@ index b1cad94..2a0ab1d 100644
    # Our implementation
    rel_try(
 -    "No relational implementation for anti_join()" = TRUE,
-+    "Only equi-joins for anti_join()" = inherits(by, "dplyr_join_by") && any(by$condition != "=="),
 +    "No relational implementation for anti_join(copy = TRUE)" = copy,
      {
 +      out <- rel_join_impl(x, y, by, "anti", na_matches, error_call = error_call)
