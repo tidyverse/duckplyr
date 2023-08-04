@@ -109,3 +109,9 @@ NULL
 
 # Only in this package
 dplyr_mode <- FALSE
+
+on_load({
+  if (!identical(Sys.getenv("TESTTHAT"), "true")) {
+    options(duckdb.materialize_message = TRUE)
+  }
+})

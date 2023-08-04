@@ -180,9 +180,3 @@ rel_translate <- function(
 
   structure(out, used = used)
 }
-
-on_load({
-  if (!identical(Sys.getenv("TESTTHAT"), "true")) {
-    options(duckdb.materialize_message = TRUE)
-  }
-})
