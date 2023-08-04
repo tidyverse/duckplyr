@@ -89,6 +89,7 @@ tests <- head(n = -1, list(
     NULL
   ),
   "test-group-map.R" = c(
+    "group_modify() works on ungrouped data frames (#4067)",
     NULL
   ),
   "test-groups-with.R" = c(
