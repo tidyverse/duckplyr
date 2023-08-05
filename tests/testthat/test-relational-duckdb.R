@@ -22,10 +22,23 @@ test_that("duckdb_rel_from_df()", {
 
   expect_silent(duckdb_rel_from_df(df))
 
+  # If this is no longer an eror, we need to make sure that subsetting
+  # forwards to the vector class
   expect_snapshot(error = TRUE, {
     data.frame(a = vctrs::new_vctr(1:3)) %>%
       duckdb_rel_from_df()
   })
+})
+
+test_that("duckdb_rel_from_df() and changing column names", {
+  withr::local_envvar(DUCKPLYR_FORCE = TRUE)
+
+  x <-
+    data.frame(a = 1) %>%
+    duckplyr_select(a)
+
+  names(x) <- "b"
+  expect_equal(x %>% duckplyr_filter(b == 1), data.frame(b = 1))
 })
 
 test_that("rel_aggregate()", {
