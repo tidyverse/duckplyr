@@ -106,6 +106,15 @@ duckdb_rel_from_df <- function(df) {
   experimental <- (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE")
   out <- duckdb:::rel_from_df(con, df, experimental = experimental)
 
+  roundtrip <- duckdb:::rapi_rel_to_altrep(out)
+  df_attribs <- lapply(df, attributes)
+  roundtrip_attribs <- lapply(roundtrip, attributes)
+  for (i in seq_along(df_attribs)) {
+    if (!identical(df_attribs[[i]], roundtrip_attribs[[i]])) {
+      stop("Attributes are lost during conversion. Affected column: `", names(df)[[i]], "`.")
+    }
+  }
+
   meta_rel_register_df(out, df)
 
   out
