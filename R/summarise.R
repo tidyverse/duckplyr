@@ -6,20 +6,20 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
   rel_try(
     'summarize(.groups = "rowwise") not supported' = identical(.groups, "rowwise"),
     {
-      by <- eval_select_by(enquo(.by), .data)
-      oo <- (length(by) > 0) && oo_force()
-
       rel <- duckdb_rel_from_df(.data)
 
-      if (oo) {
-        rel <- oo_prep(rel, colname = "___row_number", force = TRUE)
-      }
+      by <- eval_select_by(enquo(.by), .data)
 
       dots <- dplyr_quosures(...)
       dots <- fix_auto_name(dots)
 
-      aggregates <- rel_translate_dots(dots, .data)
+      oo <- (length(by) > 0) && oo_force()
+      if (oo) {
+        rel <- oo_prep(rel, colname = "___row_number", force = TRUE)
+      }
+
       groups <- lapply(by, relexpr_reference)
+      aggregates <- rel_translate_dots(dots, .data)
 
       if (oo) {
         aggregates <- c(
