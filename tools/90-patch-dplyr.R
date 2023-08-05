@@ -2,6 +2,8 @@ library(tidyverse)
 
 source("tools/00-funs.R", echo = TRUE)
 
+stopifnot(gert::git_branch(repo = "../dplyr") == "f-revdep-duckplyr")
+
 status <- gert::git_status(repo = "../dplyr")
 stopifnot(nrow(status) == 0)
 
