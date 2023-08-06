@@ -22,7 +22,7 @@ duckplyr_macros <- c(
   "==" = '(a, b) AS a = b',
   "!=" = '(a, b) AS a <> b',
   "is.na" = '(a) AS (a IS NULL)',
-  "n" = '() AS (COUNT(*))',
+  "n" = '() AS CAST(COUNT(*) AS int32)',
 
   "log10" = '(x) AS log(x)',
   "log" = '(x) AS ln(x)',
