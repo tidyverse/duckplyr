@@ -27,7 +27,9 @@ df_methods <-
   # methods we don't need to implement but can test
   mutate(skip_impl = name %in% c(
     "collapse", "tally",
-    "slice_min", "slice_max", "slice_sample"
+    "slice_min", "slice_max", "slice_sample",
+    "tbl_vars",
+    NULL
   )) %>%
   mutate(is_tbl_return = !(name %in% c(
     # Special case: forward to `NextMethod()`, don't change output
