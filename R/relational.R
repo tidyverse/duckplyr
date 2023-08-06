@@ -9,7 +9,7 @@ rel_try <- function(rel, ...) {
 
   dots <- list(...)
   for (i in seq_along(dots)) {
-    if (dots[[i]]) {
+    if (isTRUE(dots[[i]])) {
       stats$fallback <- stats$fallback + 1L
       if (!dplyr_mode) {
         if (!identical(Sys.getenv("TESTTHAT"), "true")) {
