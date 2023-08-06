@@ -327,9 +327,8 @@ test_that("relational count() order-preserving", {
       }
     )
   )
-  rel3 <- duckdb:::rel_distinct(rel2)
-  rel3
-  out <- duckdb:::rel_to_altrep(rel3)
+  rel2
+  out <- duckdb:::rel_to_altrep(rel2)
   expect_equal(
     out,
     data.frame(n = 6L)
@@ -345,40 +344,16 @@ test_that("relational count(a) order-preserving", {
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
-  rel2 <- duckdb:::rel_project(
+  rel2 <- duckdb:::rel_aggregate(
     rel1,
-    list(
-      {
+    groups = list(
+      a = {
         tmp_expr <- duckdb:::expr_reference("a")
         duckdb:::expr_set_alias(tmp_expr, "a")
         tmp_expr
-      },
-      {
-        tmp_expr <- duckdb:::expr_reference("b")
-        duckdb:::expr_set_alias(tmp_expr, "b")
-        tmp_expr
-      },
-      {
-        tmp_expr <- duckdb:::expr_reference("g")
-        duckdb:::expr_set_alias(tmp_expr, "g")
-        tmp_expr
-      },
-      {
-        tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
-        duckdb:::expr_set_alias(tmp_expr, "___row_number")
-        tmp_expr
       }
-    )
-  )
-  rel3 <- duckdb:::rel_aggregate(
-    rel2,
-    groups = list(duckdb:::expr_reference("a")),
+    ),
     aggregates = list(
-      {
-        tmp_expr <- duckdb:::expr_function("min", list(duckdb:::expr_reference("___row_number")))
-        duckdb:::expr_set_alias(tmp_expr, "___row_number")
-        tmp_expr
-      },
       {
         tmp_expr <- duckdb:::expr_function("n", list())
         duckdb:::expr_set_alias(tmp_expr, "n")
@@ -386,24 +361,18 @@ test_that("relational count(a) order-preserving", {
       }
     )
   )
-  rel4 <- duckdb:::rel_order(rel3, list(duckdb:::expr_reference("___row_number")))
-  rel5 <- duckdb:::rel_project(
-    rel4,
+  rel3 <- duckdb:::rel_order(
+    rel2,
     list(
       {
         tmp_expr <- duckdb:::expr_reference("a")
         duckdb:::expr_set_alias(tmp_expr, "a")
         tmp_expr
-      },
-      {
-        tmp_expr <- duckdb:::expr_reference("n")
-        duckdb:::expr_set_alias(tmp_expr, "n")
-        tmp_expr
       }
     )
   )
-  rel5
-  out <- duckdb:::rel_to_altrep(rel5)
+  rel3
+  out <- duckdb:::rel_to_altrep(rel3)
   expect_equal(
     out,
     data.frame(a = seq(1, 6, by = 1), n = rep(1L, 6L))
@@ -419,40 +388,16 @@ test_that("relational count(b) order-preserving", {
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
-  rel2 <- duckdb:::rel_project(
+  rel2 <- duckdb:::rel_aggregate(
     rel1,
-    list(
-      {
-        tmp_expr <- duckdb:::expr_reference("a")
-        duckdb:::expr_set_alias(tmp_expr, "a")
-        tmp_expr
-      },
-      {
+    groups = list(
+      b = {
         tmp_expr <- duckdb:::expr_reference("b")
         duckdb:::expr_set_alias(tmp_expr, "b")
         tmp_expr
-      },
-      {
-        tmp_expr <- duckdb:::expr_reference("g")
-        duckdb:::expr_set_alias(tmp_expr, "g")
-        tmp_expr
-      },
-      {
-        tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
-        duckdb:::expr_set_alias(tmp_expr, "___row_number")
-        tmp_expr
       }
-    )
-  )
-  rel3 <- duckdb:::rel_aggregate(
-    rel2,
-    groups = list(duckdb:::expr_reference("b")),
+    ),
     aggregates = list(
-      {
-        tmp_expr <- duckdb:::expr_function("min", list(duckdb:::expr_reference("___row_number")))
-        duckdb:::expr_set_alias(tmp_expr, "___row_number")
-        tmp_expr
-      },
       {
         tmp_expr <- duckdb:::expr_function("n", list())
         duckdb:::expr_set_alias(tmp_expr, "n")
@@ -460,24 +405,18 @@ test_that("relational count(b) order-preserving", {
       }
     )
   )
-  rel4 <- duckdb:::rel_order(rel3, list(duckdb:::expr_reference("___row_number")))
-  rel5 <- duckdb:::rel_project(
-    rel4,
+  rel3 <- duckdb:::rel_order(
+    rel2,
     list(
       {
         tmp_expr <- duckdb:::expr_reference("b")
         duckdb:::expr_set_alias(tmp_expr, "b")
         tmp_expr
-      },
-      {
-        tmp_expr <- duckdb:::expr_reference("n")
-        duckdb:::expr_set_alias(tmp_expr, "n")
-        tmp_expr
       }
     )
   )
-  rel5
-  out <- duckdb:::rel_to_altrep(rel5)
+  rel3
+  out <- duckdb:::rel_to_altrep(rel3)
   expect_equal(
     out,
     data.frame(b = 2, n = 6L)
@@ -493,40 +432,16 @@ test_that("relational count(g) order-preserving", {
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
-  rel2 <- duckdb:::rel_project(
+  rel2 <- duckdb:::rel_aggregate(
     rel1,
-    list(
-      {
-        tmp_expr <- duckdb:::expr_reference("a")
-        duckdb:::expr_set_alias(tmp_expr, "a")
-        tmp_expr
-      },
-      {
-        tmp_expr <- duckdb:::expr_reference("b")
-        duckdb:::expr_set_alias(tmp_expr, "b")
-        tmp_expr
-      },
-      {
+    groups = list(
+      g = {
         tmp_expr <- duckdb:::expr_reference("g")
         duckdb:::expr_set_alias(tmp_expr, "g")
         tmp_expr
-      },
-      {
-        tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
-        duckdb:::expr_set_alias(tmp_expr, "___row_number")
-        tmp_expr
       }
-    )
-  )
-  rel3 <- duckdb:::rel_aggregate(
-    rel2,
-    groups = list(duckdb:::expr_reference("g")),
+    ),
     aggregates = list(
-      {
-        tmp_expr <- duckdb:::expr_function("min", list(duckdb:::expr_reference("___row_number")))
-        duckdb:::expr_set_alias(tmp_expr, "___row_number")
-        tmp_expr
-      },
       {
         tmp_expr <- duckdb:::expr_function("n", list())
         duckdb:::expr_set_alias(tmp_expr, "n")
@@ -534,24 +449,18 @@ test_that("relational count(g) order-preserving", {
       }
     )
   )
-  rel4 <- duckdb:::rel_order(rel3, list(duckdb:::expr_reference("___row_number")))
-  rel5 <- duckdb:::rel_project(
-    rel4,
+  rel3 <- duckdb:::rel_order(
+    rel2,
     list(
       {
         tmp_expr <- duckdb:::expr_reference("g")
         duckdb:::expr_set_alias(tmp_expr, "g")
         tmp_expr
-      },
-      {
-        tmp_expr <- duckdb:::expr_reference("n")
-        duckdb:::expr_set_alias(tmp_expr, "n")
-        tmp_expr
       }
     )
   )
-  rel5
-  out <- duckdb:::rel_to_altrep(rel5)
+  rel3
+  out <- duckdb:::rel_to_altrep(rel3)
   expect_equal(
     out,
     data.frame(g = 1:3, n = 1:3)
@@ -567,40 +476,21 @@ test_that("relational count(g, a) order-preserving", {
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
-  rel2 <- duckdb:::rel_project(
+  rel2 <- duckdb:::rel_aggregate(
     rel1,
-    list(
-      {
-        tmp_expr <- duckdb:::expr_reference("a")
-        duckdb:::expr_set_alias(tmp_expr, "a")
-        tmp_expr
-      },
-      {
-        tmp_expr <- duckdb:::expr_reference("b")
-        duckdb:::expr_set_alias(tmp_expr, "b")
-        tmp_expr
-      },
-      {
+    groups = list(
+      g = {
         tmp_expr <- duckdb:::expr_reference("g")
         duckdb:::expr_set_alias(tmp_expr, "g")
         tmp_expr
       },
-      {
-        tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
-        duckdb:::expr_set_alias(tmp_expr, "___row_number")
+      a = {
+        tmp_expr <- duckdb:::expr_reference("a")
+        duckdb:::expr_set_alias(tmp_expr, "a")
         tmp_expr
       }
-    )
-  )
-  rel3 <- duckdb:::rel_aggregate(
-    rel2,
-    groups = list(duckdb:::expr_reference("g"), duckdb:::expr_reference("a")),
+    ),
     aggregates = list(
-      {
-        tmp_expr <- duckdb:::expr_function("min", list(duckdb:::expr_reference("___row_number")))
-        duckdb:::expr_set_alias(tmp_expr, "___row_number")
-        tmp_expr
-      },
       {
         tmp_expr <- duckdb:::expr_function("n", list())
         duckdb:::expr_set_alias(tmp_expr, "n")
@@ -608,9 +498,8 @@ test_that("relational count(g, a) order-preserving", {
       }
     )
   )
-  rel4 <- duckdb:::rel_order(rel3, list(duckdb:::expr_reference("___row_number")))
-  rel5 <- duckdb:::rel_project(
-    rel4,
+  rel3 <- duckdb:::rel_order(
+    rel2,
     list(
       {
         tmp_expr <- duckdb:::expr_reference("g")
@@ -621,16 +510,11 @@ test_that("relational count(g, a) order-preserving", {
         tmp_expr <- duckdb:::expr_reference("a")
         duckdb:::expr_set_alias(tmp_expr, "a")
         tmp_expr
-      },
-      {
-        tmp_expr <- duckdb:::expr_reference("n")
-        duckdb:::expr_set_alias(tmp_expr, "n")
-        tmp_expr
       }
     )
   )
-  rel5
-  out <- duckdb:::rel_to_altrep(rel5)
+  rel3
+  out <- duckdb:::rel_to_altrep(rel3)
   expect_equal(
     out,
     data.frame(g = c(1L, 2L, 2L, 3L, 3L, 3L), a = seq(1, 6, by = 1), n = rep(1L, 6L))
@@ -646,40 +530,21 @@ test_that("relational count(b, g) order-preserving", {
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
-  rel2 <- duckdb:::rel_project(
+  rel2 <- duckdb:::rel_aggregate(
     rel1,
-    list(
-      {
-        tmp_expr <- duckdb:::expr_reference("a")
-        duckdb:::expr_set_alias(tmp_expr, "a")
-        tmp_expr
-      },
-      {
+    groups = list(
+      b = {
         tmp_expr <- duckdb:::expr_reference("b")
         duckdb:::expr_set_alias(tmp_expr, "b")
         tmp_expr
       },
-      {
+      g = {
         tmp_expr <- duckdb:::expr_reference("g")
         duckdb:::expr_set_alias(tmp_expr, "g")
         tmp_expr
-      },
-      {
-        tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
-        duckdb:::expr_set_alias(tmp_expr, "___row_number")
-        tmp_expr
       }
-    )
-  )
-  rel3 <- duckdb:::rel_aggregate(
-    rel2,
-    groups = list(duckdb:::expr_reference("b"), duckdb:::expr_reference("g")),
+    ),
     aggregates = list(
-      {
-        tmp_expr <- duckdb:::expr_function("min", list(duckdb:::expr_reference("___row_number")))
-        duckdb:::expr_set_alias(tmp_expr, "___row_number")
-        tmp_expr
-      },
       {
         tmp_expr <- duckdb:::expr_function("n", list())
         duckdb:::expr_set_alias(tmp_expr, "n")
@@ -687,9 +552,8 @@ test_that("relational count(b, g) order-preserving", {
       }
     )
   )
-  rel4 <- duckdb:::rel_order(rel3, list(duckdb:::expr_reference("___row_number")))
-  rel5 <- duckdb:::rel_project(
-    rel4,
+  rel3 <- duckdb:::rel_order(
+    rel2,
     list(
       {
         tmp_expr <- duckdb:::expr_reference("b")
@@ -700,16 +564,11 @@ test_that("relational count(b, g) order-preserving", {
         tmp_expr <- duckdb:::expr_reference("g")
         duckdb:::expr_set_alias(tmp_expr, "g")
         tmp_expr
-      },
-      {
-        tmp_expr <- duckdb:::expr_reference("n")
-        duckdb:::expr_set_alias(tmp_expr, "n")
-        tmp_expr
       }
     )
   )
-  rel5
-  out <- duckdb:::rel_to_altrep(rel5)
+  rel3
+  out <- duckdb:::rel_to_altrep(rel3)
   expect_equal(
     out,
     data.frame(b = rep(2, 3L), g = 1:3, n = 1:3)
@@ -738,10 +597,9 @@ test_that("relational count() order-enforcing", {
       }
     )
   )
-  rel3 <- duckdb:::rel_distinct(rel2)
-  rel4 <- duckdb:::rel_order(rel3, list(duckdb:::expr_reference("n")))
-  rel4
-  out <- duckdb:::rel_to_altrep(rel4)
+  rel3 <- duckdb:::rel_order(rel2, list(duckdb:::expr_reference("n")))
+  rel3
+  out <- duckdb:::rel_to_altrep(rel3)
   expect_equal(
     out,
     data.frame(n = 6L)
@@ -759,7 +617,13 @@ test_that("relational count(a) order-enforcing", {
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
   rel2 <- duckdb:::rel_aggregate(
     rel1,
-    groups = list(duckdb:::expr_reference("a")),
+    groups = list(
+      a = {
+        tmp_expr <- duckdb:::expr_reference("a")
+        duckdb:::expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      }
+    ),
     aggregates = list(
       {
         tmp_expr <- duckdb:::expr_function("n", list())
@@ -768,9 +632,19 @@ test_that("relational count(a) order-enforcing", {
       }
     )
   )
-  rel3 <- duckdb:::rel_order(rel2, list(duckdb:::expr_reference("a"), duckdb:::expr_reference("n")))
-  rel3
-  out <- duckdb:::rel_to_altrep(rel3)
+  rel3 <- duckdb:::rel_order(
+    rel2,
+    list(
+      {
+        tmp_expr <- duckdb:::expr_reference("a")
+        duckdb:::expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      }
+    )
+  )
+  rel4 <- duckdb:::rel_order(rel3, list(duckdb:::expr_reference("a"), duckdb:::expr_reference("n")))
+  rel4
+  out <- duckdb:::rel_to_altrep(rel4)
   expect_equal(
     out,
     data.frame(a = seq(1, 6, by = 1), n = rep(1L, 6L))
@@ -788,7 +662,13 @@ test_that("relational count(b) order-enforcing", {
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
   rel2 <- duckdb:::rel_aggregate(
     rel1,
-    groups = list(duckdb:::expr_reference("b")),
+    groups = list(
+      b = {
+        tmp_expr <- duckdb:::expr_reference("b")
+        duckdb:::expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      }
+    ),
     aggregates = list(
       {
         tmp_expr <- duckdb:::expr_function("n", list())
@@ -797,9 +677,19 @@ test_that("relational count(b) order-enforcing", {
       }
     )
   )
-  rel3 <- duckdb:::rel_order(rel2, list(duckdb:::expr_reference("b"), duckdb:::expr_reference("n")))
-  rel3
-  out <- duckdb:::rel_to_altrep(rel3)
+  rel3 <- duckdb:::rel_order(
+    rel2,
+    list(
+      {
+        tmp_expr <- duckdb:::expr_reference("b")
+        duckdb:::expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      }
+    )
+  )
+  rel4 <- duckdb:::rel_order(rel3, list(duckdb:::expr_reference("b"), duckdb:::expr_reference("n")))
+  rel4
+  out <- duckdb:::rel_to_altrep(rel4)
   expect_equal(
     out,
     data.frame(b = 2, n = 6L)
@@ -817,7 +707,13 @@ test_that("relational count(g) order-enforcing", {
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
   rel2 <- duckdb:::rel_aggregate(
     rel1,
-    groups = list(duckdb:::expr_reference("g")),
+    groups = list(
+      g = {
+        tmp_expr <- duckdb:::expr_reference("g")
+        duckdb:::expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      }
+    ),
     aggregates = list(
       {
         tmp_expr <- duckdb:::expr_function("n", list())
@@ -826,9 +722,19 @@ test_that("relational count(g) order-enforcing", {
       }
     )
   )
-  rel3 <- duckdb:::rel_order(rel2, list(duckdb:::expr_reference("g"), duckdb:::expr_reference("n")))
-  rel3
-  out <- duckdb:::rel_to_altrep(rel3)
+  rel3 <- duckdb:::rel_order(
+    rel2,
+    list(
+      {
+        tmp_expr <- duckdb:::expr_reference("g")
+        duckdb:::expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      }
+    )
+  )
+  rel4 <- duckdb:::rel_order(rel3, list(duckdb:::expr_reference("g"), duckdb:::expr_reference("n")))
+  rel4
+  out <- duckdb:::rel_to_altrep(rel4)
   expect_equal(
     out,
     data.frame(g = 1:3, n = 1:3)
@@ -846,7 +752,18 @@ test_that("relational count(g, a) order-enforcing", {
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
   rel2 <- duckdb:::rel_aggregate(
     rel1,
-    groups = list(duckdb:::expr_reference("g"), duckdb:::expr_reference("a")),
+    groups = list(
+      g = {
+        tmp_expr <- duckdb:::expr_reference("g")
+        duckdb:::expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      },
+      a = {
+        tmp_expr <- duckdb:::expr_reference("a")
+        duckdb:::expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      }
+    ),
     aggregates = list(
       {
         tmp_expr <- duckdb:::expr_function("n", list())
@@ -857,10 +774,25 @@ test_that("relational count(g, a) order-enforcing", {
   )
   rel3 <- duckdb:::rel_order(
     rel2,
+    list(
+      {
+        tmp_expr <- duckdb:::expr_reference("g")
+        duckdb:::expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb:::expr_reference("a")
+        duckdb:::expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      }
+    )
+  )
+  rel4 <- duckdb:::rel_order(
+    rel3,
     list(duckdb:::expr_reference("g"), duckdb:::expr_reference("a"), duckdb:::expr_reference("n"))
   )
-  rel3
-  out <- duckdb:::rel_to_altrep(rel3)
+  rel4
+  out <- duckdb:::rel_to_altrep(rel4)
   expect_equal(
     out,
     data.frame(g = c(1L, 2L, 2L, 3L, 3L, 3L), a = seq(1, 6, by = 1), n = rep(1L, 6L))
@@ -878,7 +810,18 @@ test_that("relational count(b, g) order-enforcing", {
   rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
   rel2 <- duckdb:::rel_aggregate(
     rel1,
-    groups = list(duckdb:::expr_reference("b"), duckdb:::expr_reference("g")),
+    groups = list(
+      b = {
+        tmp_expr <- duckdb:::expr_reference("b")
+        duckdb:::expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      g = {
+        tmp_expr <- duckdb:::expr_reference("g")
+        duckdb:::expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      }
+    ),
     aggregates = list(
       {
         tmp_expr <- duckdb:::expr_function("n", list())
@@ -889,10 +832,25 @@ test_that("relational count(b, g) order-enforcing", {
   )
   rel3 <- duckdb:::rel_order(
     rel2,
+    list(
+      {
+        tmp_expr <- duckdb:::expr_reference("b")
+        duckdb:::expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb:::expr_reference("g")
+        duckdb:::expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      }
+    )
+  )
+  rel4 <- duckdb:::rel_order(
+    rel3,
     list(duckdb:::expr_reference("b"), duckdb:::expr_reference("g"), duckdb:::expr_reference("n"))
   )
-  rel3
-  out <- duckdb:::rel_to_altrep(rel3)
+  rel4
+  out <- duckdb:::rel_to_altrep(rel4)
   expect_equal(
     out,
     data.frame(b = rep(2, 3L), g = 1:3, n = 1:3)
