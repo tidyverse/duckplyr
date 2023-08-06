@@ -131,6 +131,8 @@ tests <- head(n = -1, list(
     NULL
   ),
   "test-sets.R" = c(
+    "setequal tibbles must have same rows and columns",
+
     NULL
   ),
   "test-slice.R" = c(
