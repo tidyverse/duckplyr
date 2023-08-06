@@ -28,11 +28,12 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
       rel <- duckdb_rel_from_df(x)
 
       groups <- rel_translate_dots(by, x)
-      aggregates <- list(rel_translate(as_quosure(n, baseenv()), x, alias = name))
+      aggregates <- list(rel_translate(n, x, alias = name))
 
       out_rel <- rel_aggregate(rel, groups, unname(aggregates))
       if (length(groups) > 0) {
-        out_rel <- rel_order(out_rel, groups)
+        sort_cols <- nexprs(names(groups))
+        out_rel <- rel_order(out_rel, sort_cols)
       }
 
       out <- rel_to_df(out_rel)

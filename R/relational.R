@@ -57,7 +57,13 @@ rel_translate <- function(
     need_window = FALSE,
     names_data = names(data)
 ) {
-  env <- quo_get_env(quo)
+  if (is_expression(quo)) {
+    expr <- quo
+    env <- baseenv()
+  } else {
+    expr <- quo_get_expr(quo)
+    env <- quo_get_env(quo)
+  }
 
   used <- character()
 
@@ -173,7 +179,7 @@ rel_translate <- function(
     )
   }
 
-  out <- do_translate(quo_get_expr(quo))
+  out <- do_translate(expr)
 
   if (!is.null(alias) && !identical(alias, "")) {
     out <- relexpr_set_alias(out, alias)
