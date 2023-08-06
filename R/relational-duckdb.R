@@ -421,7 +421,7 @@ to_duckdb_expr_meta <- function(x) {
       out <- expr(
         # FIXME: always pass experimental flag once it's merged
         if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-          experimental <- (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE")
+          # experimental is set at the top
           duckdb:::expr_constant(!!x$val, experimental = experimental)
         } else {
           duckdb:::expr_constant(!!x$val)
