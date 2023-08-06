@@ -203,15 +203,27 @@ rel_join.duckdb_relation <- function(left, right, conds, join, join_ref_type, ..
     join <- "outer"
   }
 
-  out <- duckdb:::rel_join(left, right, duckdb_conds, join, join_ref_type)
+  if (join_ref_type == "regular") {
+    # Compatibility with older duckdb versions
+    out <- duckdb:::rel_join(left, right, duckdb_conds, join)
 
-  meta_rel_register(out, expr(duckdb:::rel_join(
-    !!meta_rel_get(left)$name,
-    !!meta_rel_get(right)$name,
-    list(!!!to_duckdb_exprs_meta(conds)),
-    !!join,
-    !!join_ref_type
-  )))
+    meta_rel_register(out, expr(duckdb:::rel_join(
+      !!meta_rel_get(left)$name,
+      !!meta_rel_get(right)$name,
+      list(!!!to_duckdb_exprs_meta(conds)),
+      !!join
+    )))
+  } else {
+    out <- duckdb:::rel_join(left, right, duckdb_conds, join, join_ref_type)
+
+    meta_rel_register(out, expr(duckdb:::rel_join(
+      !!meta_rel_get(left)$name,
+      !!meta_rel_get(right)$name,
+      list(!!!to_duckdb_exprs_meta(conds)),
+      !!join,
+      !!join_ref_type
+    )))
+  }
 
   out
 }
