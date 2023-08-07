@@ -122,12 +122,7 @@ rel_translate <- function(
           NULL
         )
 
-        if (name %in% names(aliases)) {
-          name <- aliases[[name]]
-        }
-        # name <- aliases[name] %|% name
-
-        window <- need_window && (name %in% c(
+        known_window <- c(
           # Window functions
           "rank", "rank_dense", "dense_rank", "percent_rank",
           "row_number", "first_value", "last_value", "nth_value",
@@ -137,7 +132,22 @@ rel_translate <- function(
           "sum", "mean", "stddev", "min", "max",
 
           NULL
-        ))
+        )
+
+        known_ops <- c("+", "-", "*", "/")
+
+        known <- c(names(duckplyr_macros), names(aliases), known_window, known_ops)
+
+        if (!(name %in% known)) {
+          abort(paste0("Unknown function: ", name))
+        }
+
+        if (name %in% names(aliases)) {
+          name <- aliases[[name]]
+        }
+        # name <- aliases[name] %|% name
+
+        window <- need_window && (name %in% known_window)
 
         order_bys <- list()
         offset_expr <- NULL
