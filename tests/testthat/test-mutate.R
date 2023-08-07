@@ -41,6 +41,7 @@ test_that("length-1 vectors are recycled (#152)", {
 })
 
 test_that("can remove variables with NULL (#462)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:3, y = 1:3)
   gf <- group_by(df, x)
 
@@ -60,11 +61,13 @@ test_that("can remove variables with NULL (#462)", {
 })
 
 test_that("duckplyr_mutate() names pronouns correctly (#2686)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_named(duckplyr_mutate(tibble(x = 1), .data$x), "x")
   expect_named(duckplyr_mutate(tibble(x = 1), .data[["x"]]), "x")
 })
 
 test_that("duckplyr_mutate() supports unquoted values", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = c(1, 1, 2, 2, 2), x = 1:5)
   expect_identical(duckplyr_mutate(df, out = !!1), duckplyr_mutate(df, out = 1))
   expect_identical(duckplyr_mutate(df, out = !!(1:5)), duckplyr_mutate(df, out = 1:5))
@@ -75,12 +78,14 @@ test_that("duckplyr_mutate() supports unquoted values", {
 })
 
 test_that("assignments don't overwrite variables (#315)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1, y = 2)
   out <- df %>% duckplyr_mutate(z = {x <- 10; x})
   expect_equal(out, tibble(x = 1, y = 2, z = 10))
 })
 
 test_that("can mutate a data frame with zero columns", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- new_data_frame(n = 2L)
   expect_equal(duckplyr_mutate(df, x = 1), data.frame(x = c(1, 1)))
 })
@@ -122,6 +127,7 @@ test_that("duckplyr_mutate() supports constants (#6056, #6305)", {
 })
 
 test_that("can't overwrite column active bindings (#6666)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   skip_if(getRversion() < "3.6.3", message = "Active binding error changed")
 
   df <- tibble(g = 1:2, x = 3:4)
@@ -150,6 +156,7 @@ test_that("can't overwrite column active bindings (#6666)", {
 })
 
 test_that("assigning with `<-` doesn't affect the mask (#6666)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = 1:2, x = 3:4)
   gdf <- group_by(df, g)
 
@@ -169,6 +176,7 @@ test_that("assigning with `<-` doesn't affect the mask (#6666)", {
 })
 
 test_that("`across()` inline expansions that use `<-` don't affect the mask (#6666)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = 1:2, x = 3:4)
 
   out <- df %>%
@@ -184,6 +192,7 @@ test_that("`across()` inline expansions that use `<-` don't affect the mask (#66
 })
 
 test_that("can't share local variables across expressions (#6666)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:2, y = 3:4)
 
   expect_snapshot(error = TRUE, {
@@ -203,6 +212,7 @@ test_that("can't share local variables across expressions (#6666)", {
 # column types ------------------------------------------------------------
 
 test_that("glue() is supported", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_equal(
     tibble(x = 1) %>% duckplyr_mutate(y = glue("")),
     tibble(x = 1, y = glue(""))
@@ -216,6 +226,7 @@ test_that("mutate disambiguates NA and NaN (#1448)", {
 })
 
 test_that("mutate preserves names (#1689, #2675)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(a = 1:3)
   out1 <- df %>% duckplyr_mutate(b = setNames(1:3, letters[1:3]))
   out2 <- df %>% duckplyr_mutate(b = setNames(as.list(1:3), letters[1:3]))
@@ -225,6 +236,7 @@ test_that("mutate preserves names (#1689, #2675)", {
 })
 
 test_that("mutate handles matrix columns", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- data.frame(a = rep(1:3, each = 2), b = 1:6)
 
   df_regular <- duckplyr_mutate(df, b = scale(b))
@@ -237,6 +249,7 @@ test_that("mutate handles matrix columns", {
 })
 
 test_that("mutate handles data frame columns", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- data.frame("a" = c(1, 2, 3), "b" = c(2, 3, 4), "base_col" = c(3, 4, 5))
   res <- duckplyr_mutate(df, new_col = data.frame(x = 1:3))
   expect_equal(res$new_col, data.frame(x = 1:3))
@@ -249,6 +262,7 @@ test_that("mutate handles data frame columns", {
 })
 
 test_that("unnamed data frames are automatically unspliced  (#2326, #3630)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_identical(
     tibble(a = 1) %>% duckplyr_mutate(tibble(b = 2)),
     tibble(a = 1, b = 2)
@@ -264,12 +278,14 @@ test_that("unnamed data frames are automatically unspliced  (#2326, #3630)", {
 })
 
 test_that("named data frames are packed (#2326, #3630)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1)
   out <- df %>% duckplyr_mutate(y = tibble(a = x))
   expect_equal(out, tibble(x = 1, y = tibble(a = 1)))
 })
 
 test_that("unchop only called for when multiple groups", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- data.frame(g = 1, x = 1:5)
   out <- duckplyr_mutate(df, x = ts(x, start = c(1971, 1), frequency = 52))
   expect_s3_class(out$x, "ts")
@@ -329,6 +345,7 @@ test_that("mutate preserves class of zero-row rowwise (#4224, #6303)", {
 })
 
 test_that("mutate works on empty data frames (#1142)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- data.frame()
   res <- df %>% duckplyr_mutate()
   expect_equal(nrow(res), 0L)
@@ -480,6 +497,7 @@ test_that("DataMask$add() forces chunks (#4677)", {
 })
 
 test_that("DataMask uses fresh copies of group id / size variables (#6762)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:2)
 
   fn <- function() {
@@ -545,6 +563,7 @@ test_that("transient grouping retains data frame attributes (#6100)", {
 })
 
 test_that("can `NULL` out the `.by` column", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:3)
 
   expect_identical(
@@ -580,6 +599,7 @@ test_that(".keep = 'unused' keeps variables explicitly mentioned", {
 })
 
 test_that(".keep = 'used' not affected by across() or pick()", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1, y = 2, z = 3, a = "a", b = "b", c = "c")
 
   # This must evaluate every column in order to figure out if should

@@ -1,5 +1,5 @@
 test_that("rel_try() with reason", {
-  withr::local_envvar(TESTTHAT = "")
+  withr::local_envvar(TESTTHAT = "", DUCKPLYR_FORCE = FALSE)
 
   expect_snapshot({
     rel_try(

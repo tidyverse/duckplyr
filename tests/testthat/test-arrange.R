@@ -25,6 +25,7 @@ test_that("local arrange sorts missing values to end", {
 })
 
 test_that("duckplyr_arrange() gives meaningful errors", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_snapshot({
     # duplicated column name
     (expect_error(
@@ -45,6 +46,7 @@ test_that("duckplyr_arrange() gives meaningful errors", {
 # column types ----------------------------------------------------------
 
 test_that("arrange handles list columns (#282)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   # no intrinsic ordering
   df <- tibble(x = 1:3, y = list(3, 2, 1))
   expect_equal(duckplyr_arrange(df, y), df)
@@ -54,26 +56,31 @@ test_that("arrange handles list columns (#282)", {
 })
 
 test_that("arrange handles raw columns (#1803)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:3, y = as.raw(3:1))
   expect_equal(duckplyr_arrange(df, y), df[3:1, ])
 })
 
 test_that("arrange handles matrix columns", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:3, y = matrix(6:1, ncol = 2))
   expect_equal(duckplyr_arrange(df, y), df[3:1, ])
 })
 
 test_that("arrange handles data.frame columns (#3153)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:3, y = data.frame(z = 3:1))
   expect_equal(duckplyr_arrange(df, y), tibble(x = 3:1, y = data.frame(z = 1:3)))
 })
 
 test_that("arrange handles complex columns", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:3, y = 3:1 + 2i)
   expect_equal(duckplyr_arrange(df, y), df[3:1, ])
 })
 
 test_that("arrange handles S4 classes (#1105)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   TestS4 <- suppressWarnings(setClass("TestS4", contains = "integer"))
   setMethod('[', 'TestS4', function(x, i, ...){ TestS4(unclass(x)[i, ...])  })
   on.exit(removeClass("TestS4"), add = TRUE)
@@ -83,6 +90,7 @@ test_that("arrange handles S4 classes (#1105)", {
 })
 
 test_that("arrange works with two columns when the first has a data frame proxy (#6268)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   # `id1` has a data frame proxy for `vec_proxy_order()`
   df <- tibble(
     id1 = new_rcrd(list(x = 1, y = 1)),
@@ -95,6 +103,7 @@ test_that("arrange works with two columns when the first has a data frame proxy 
 })
 
 test_that("arrange ignores NULLs (#6193)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:2)
   y <- NULL
 
@@ -106,6 +115,7 @@ test_that("arrange ignores NULLs (#6193)", {
 })
 
 test_that("`duckplyr_arrange()` works with `numeric_version` (#6680)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   x <- numeric_version(c("1.11", "1.2.3", "1.2.2"))
   df <- tibble(x = x)
 
@@ -117,6 +127,7 @@ test_that("`duckplyr_arrange()` works with `numeric_version` (#6680)", {
 # locale --------------------------------------------------------------
 
 test_that("arrange defaults to the C locale", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   x <- c("A", "a", "b", "B")
   df <- tibble(x = x)
 
@@ -128,6 +139,7 @@ test_that("arrange defaults to the C locale", {
 })
 
 test_that("locale can be set to an English locale", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   skip_if_not_installed("stringi", "1.5.3")
 
   x <- c("A", "a", "b", "B")
@@ -138,6 +150,7 @@ test_that("locale can be set to an English locale", {
 })
 
 test_that("non-English locales can be used", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   skip_if_not_installed("stringi", "1.5.3")
 
   # Danish `o` with `/` through it sorts after `z` in Danish locale
@@ -159,6 +172,7 @@ test_that("arrange errors if stringi is not installed and a locale identifier is
 })
 
 test_that("arrange validates `.locale`", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble()
 
   expect_snapshot(error = TRUE, {
@@ -170,6 +184,7 @@ test_that("arrange validates `.locale`", {
 })
 
 test_that("arrange validates that `.locale` must be one from stringi", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   skip_if_not_installed("stringi", "1.5.3")
 
   df <- tibble()
@@ -207,6 +222,7 @@ test_that("arrange updates the grouping structure (#605)", {
 })
 
 test_that("duckplyr_arrange() supports across() and pick() (#4679)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = c(1, 3, 2, 1), y = c(4, 3, 2, 1))
 
   expect_identical(
@@ -228,6 +244,7 @@ test_that("duckplyr_arrange() supports across() and pick() (#4679)", {
 })
 
 test_that("duckplyr_arrange() works with across() and pick() cols that return multiple columns (#6490)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(
     a = c(1, 1, 1),
     b = c(2, 2, 2),
@@ -246,6 +263,7 @@ test_that("duckplyr_arrange() works with across() and pick() cols that return mu
 })
 
 test_that("duckplyr_arrange() evaluates each pick() call on the original data (#6495)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 2:1)
 
   out <- duckplyr_arrange(df, TRUE, pick(everything()))
@@ -299,6 +317,7 @@ test_that("duckplyr_arrange() preserves the call stack on error (#5308)", {
 })
 
 test_that("desc() inside duckplyr_arrange() checks the number of arguments (#5921)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_snapshot({
     df <- data.frame(x = 1, y = 2)
 
@@ -322,6 +341,7 @@ test_that("arrange keeps zero length groups",{
 # legacy --------------------------------------------------------------
 
 test_that("legacy - using the global option `dplyr.legacy_locale` forces the system locale", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   skip_if_not(has_collate_locale("en_US"), message = "Can't use 'en_US' locale")
 
   local_options(dplyr.legacy_locale = TRUE)
@@ -333,6 +353,7 @@ test_that("legacy - using the global option `dplyr.legacy_locale` forces the sys
 })
 
 test_that("legacy - usage of `.locale` overrides `dplyr.legacy_locale`", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   skip_if_not_installed("stringi", "1.5.3")
 
   local_options(dplyr.legacy_locale = TRUE)
@@ -350,6 +371,7 @@ test_that("legacy - usage of `.locale` overrides `dplyr.legacy_locale`", {
 })
 
 test_that("legacy - empty duckplyr_arrange() returns input", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   local_options(dplyr.legacy_locale = TRUE)
 
   df <- tibble(x = 1:10, y = 1:10)
@@ -363,6 +385,7 @@ test_that("legacy - empty duckplyr_arrange() returns input", {
 })
 
 test_that("legacy - can sort empty data frame", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   local_options(dplyr.legacy_locale = TRUE)
 
   df <- tibble(a = numeric(0))
@@ -379,6 +402,7 @@ test_that("legacy - local arrange sorts missing values to end", {
 })
 
 test_that("legacy - arrange handles list columns (#282)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   local_options(dplyr.legacy_locale = TRUE)
 
   # no intrinsic ordering
@@ -390,6 +414,7 @@ test_that("legacy - arrange handles list columns (#282)", {
 })
 
 test_that("legacy - arrange handles raw columns (#1803)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   local_options(dplyr.legacy_locale = TRUE)
 
   df <- tibble(x = 1:3, y = as.raw(3:1))
@@ -397,6 +422,7 @@ test_that("legacy - arrange handles raw columns (#1803)", {
 })
 
 test_that("legacy - arrange handles matrix columns", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   local_options(dplyr.legacy_locale = TRUE)
 
   df <- tibble(x = 1:3, y = matrix(6:1, ncol = 2))
@@ -404,6 +430,7 @@ test_that("legacy - arrange handles matrix columns", {
 })
 
 test_that("legacy - arrange handles data.frame columns (#3153)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   local_options(dplyr.legacy_locale = TRUE)
 
   df <- tibble(x = 1:3, y = data.frame(z = 3:1))
@@ -411,6 +438,7 @@ test_that("legacy - arrange handles data.frame columns (#3153)", {
 })
 
 test_that("legacy - arrange handles complex columns", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   local_options(dplyr.legacy_locale = TRUE)
 
   df <- tibble(x = 1:3, y = 3:1 + 2i)
@@ -418,6 +446,7 @@ test_that("legacy - arrange handles complex columns", {
 })
 
 test_that("legacy - arrange handles S4 classes (#1105)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   local_options(dplyr.legacy_locale = TRUE)
 
   TestS4 <- suppressWarnings(setClass("TestS4", contains = "integer"))
@@ -429,6 +458,7 @@ test_that("legacy - arrange handles S4 classes (#1105)", {
 })
 
 test_that("legacy - `duckplyr_arrange()` works with `numeric_version` (#6680)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   local_options(dplyr.legacy_locale = TRUE)
 
   x <- numeric_version(c("1.11", "1.2.3", "1.2.2"))
@@ -440,6 +470,7 @@ test_that("legacy - `duckplyr_arrange()` works with `numeric_version` (#6680)", 
 })
 
 test_that("legacy - arrange works with two columns when the first has a data frame proxy (#6268)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   local_options(dplyr.legacy_locale = TRUE)
 
   # `id1` has a data frame proxy for `vec_proxy_order()`
@@ -454,6 +485,7 @@ test_that("legacy - arrange works with two columns when the first has a data fra
 })
 
 test_that("legacy - duckplyr_arrange() supports across() and pick() (#4679)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   local_options(dplyr.legacy_locale = TRUE)
 
   df <- tibble(x = c(1, 3, 2, 1), y = c(4, 3, 2, 1))
@@ -477,6 +509,7 @@ test_that("legacy - duckplyr_arrange() supports across() and pick() (#4679)", {
 })
 
 test_that("legacy - duckplyr_arrange() works with across() and pick() cols that return multiple columns (#6490)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   local_options(dplyr.legacy_locale = TRUE)
 
   df <- tibble(
@@ -497,6 +530,7 @@ test_that("legacy - duckplyr_arrange() works with across() and pick() cols that 
 })
 
 test_that("legacy - arrange sorts missings in df-cols correctly", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   local_options(dplyr.legacy_locale = TRUE)
 
   col <- tibble(a = c(1, 1, 1), b = c(3, NA, 1))
@@ -507,6 +541,7 @@ test_that("legacy - arrange sorts missings in df-cols correctly", {
 })
 
 test_that("legacy - arrange with duplicates in a df-col uses a stable sort", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   local_options(dplyr.legacy_locale = TRUE)
 
   col <- tibble(a = c(1, 1, 1, 1, 1), b = c(3, NA, 2, 3, NA))
@@ -517,6 +552,7 @@ test_that("legacy - arrange with duplicates in a df-col uses a stable sort", {
 })
 
 test_that("legacy - arrange with doubly nested df-col doesn't infloop", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   local_options(dplyr.legacy_locale = TRUE)
 
   one <- tibble(a = c(1, 1, 1, 1, 1), b = c(1, 1, 2, 2, 2))

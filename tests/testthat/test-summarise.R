@@ -1,4 +1,5 @@
 test_that("can use freshly create variables (#138)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:10)
   out <- duckplyr_summarise(df, y = mean(x), z = y + 1)
   expect_equal(out$y, 5.5)
@@ -6,6 +7,7 @@ test_that("can use freshly create variables (#138)", {
 })
 
 test_that("inputs are recycled (deprecated in 1.1.0)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   local_options(lifecycle_verbosity = "quiet")
 
   expect_equal(
@@ -51,6 +53,7 @@ test_that("works with grouped empty data frames", {
 })
 
 test_that("no expressions yields grouping data", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:2, y = 1:2)
   gf <- group_by(df, x)
 
@@ -109,6 +112,7 @@ test_that("unnamed data frame results with 0 columns are ignored (#5084)", {
 })
 
 test_that("named data frame results with 0 columns participate in recycling (#6509)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   local_options(lifecycle_verbosity = "quiet")
 
   df <- tibble(x = 1:3)
@@ -143,6 +147,7 @@ test_that("named data frame results with 0 columns participate in recycling (#65
 })
 
 test_that("can't overwrite column active bindings (#6666)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   skip_if(getRversion() < "3.6.3", message = "Active binding error changed")
 
   df <- tibble(g = c(1, 1, 2, 2), x = 1:4)
@@ -171,6 +176,7 @@ test_that("can't overwrite column active bindings (#6666)", {
 })
 
 test_that("assigning with `<-` doesn't affect the mask (#6666)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = c(1, 1, 2, 2), x = 1:4)
   gdf <- group_by(df, g)
 
@@ -243,6 +249,7 @@ test_that("summarise respects zero-length groups (#341)", {
 # vector types ----------------------------------------------------------
 
 test_that("summarise allows names (#2675)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   data <- tibble(a = 1:3) %>% duckplyr_summarise(b = c("1" = a[[1]]))
   expect_equal(names(data$b), "1")
 
@@ -283,6 +290,7 @@ test_that("summarise coerces types across groups", {
 })
 
 test_that("unnamed tibbles are unpacked (#2326)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 2)
   out <- duckplyr_summarise(df, tibble(y = x * 2, z = 3))
   expect_equal(out$y, 4)
@@ -290,6 +298,7 @@ test_that("unnamed tibbles are unpacked (#2326)", {
 })
 
 test_that("named tibbles are packed (#2326)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 2)
   out <- duckplyr_summarise(df, df = tibble(y = x * 2, z = 3))
   expect_equal(out$df, tibble(y = 4, z = 3))
@@ -308,6 +317,7 @@ test_that("duckplyr_summarise(.groups=) in global environment", {
 })
 
 test_that("duckplyr_summarise(.groups=)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- data.frame(x = 1, y = 2)
   expect_equal(df %>% duckplyr_summarise(z = 3, .groups= "rowwise"), rowwise(data.frame(z = 3)))
 
@@ -520,6 +530,7 @@ test_that("duckplyr_summarise() gives meaningful errors", {
 })
 
 test_that("non-summary results are deprecated in favor of `duckplyr_reframe()` (#6382)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   local_options(lifecycle_verbosity = "warning")
 
   df <- tibble(g = c(1, 1, 2), x = 1:3)

@@ -1,6 +1,7 @@
 # across ------------------------------------------------------------------
 
 test_that("across() works on one column data.frame", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- data.frame(x = 1)
 
   out <- df %>% duckplyr_mutate(across(everything(), identity))
@@ -56,6 +57,7 @@ test_that("across() correctly names output columns", {
 })
 
 test_that("across(.unpack =) can unpack data frame columns", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   fn1 <- function(x) {
     tibble(a = x, b = x + 1)
   }
@@ -84,6 +86,7 @@ test_that("across(.unpack =) can unpack data frame columns", {
 })
 
 test_that("across(.unpack =) allows a glue specification for `.unpack`", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   fn <- function(x) {
     tibble(a = x, b = x + 1)
   }
@@ -101,6 +104,7 @@ test_that("across(.unpack =) allows a glue specification for `.unpack`", {
 })
 
 test_that("across(.unpack =) skips unpacking non-df-cols", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   fn <- function(x) {
     tibble(a = x, b = x + 1)
   }
@@ -115,6 +119,7 @@ test_that("across(.unpack =) skips unpacking non-df-cols", {
 })
 
 test_that("across(.unpack =) uses the result of `.names` as `{outer}`", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   fn <- function(x) {
     tibble(a = x, b = x + 1)
   }
@@ -129,6 +134,7 @@ test_that("across(.unpack =) uses the result of `.names` as `{outer}`", {
 })
 
 test_that("across(.unpack =) errors if the unpacked data frame has non-unique names", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   fn <- function(x) {
     tibble(a = x, b = x)
   }
@@ -141,6 +147,7 @@ test_that("across(.unpack =) errors if the unpacked data frame has non-unique na
 })
 
 test_that("`.unpack` is validated", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1)
 
   expect_snapshot(error = TRUE, {
@@ -155,6 +162,7 @@ test_that("`.unpack` is validated", {
 })
 
 test_that("across() result locations are aligned with column names (#4967)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:2, y = c("a", "b"))
   expect <- tibble(x_cls = "integer", x_type = TRUE, y_cls = "character", y_type = FALSE)
 
@@ -165,6 +173,7 @@ test_that("across() result locations are aligned with column names (#4967)", {
 
 
 test_that("across() works sequentially (#4907)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(a = 1)
   expect_equal(
     duckplyr_mutate(df, x = ncol(across(where(is.numeric), identity)), y = ncol(across(where(is.numeric), identity))),
@@ -181,11 +190,13 @@ test_that("across() works sequentially (#4907)", {
 })
 
 test_that("across() retains original ordering", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(a = 1, b = 2)
   expect_named(duckplyr_mutate(df, a = 2, x = across(everything(), identity))$x, c("a", "b"))
 })
 
 test_that("across() throws meaningful error with failure during expansion (#6534)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = 1, x = 1, y = 2, z = 3)
   gdf <- group_by(df, g)
 
@@ -207,6 +218,7 @@ test_that("across() throws meaningful error with failure during expansion (#6534
 })
 
 test_that("across() gives meaningful messages", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_snapshot({
     # expanding
     (expect_error(
@@ -280,6 +292,7 @@ test_that("across() gives meaningful messages", {
 })
 
 test_that("monitoring cache - across() can be used twice in the same expression", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(a = 1, b = 2)
   expect_equal(
     duckplyr_mutate(df, x = ncol(across(where(is.numeric), identity)) + ncol(across(a, identity))),
@@ -288,6 +301,7 @@ test_that("monitoring cache - across() can be used twice in the same expression"
 })
 
 test_that("monitoring cache - across() can be used in separate expressions", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(a = 1, b = 2)
   expect_equal(
     duckplyr_mutate(df, x = ncol(across(where(is.numeric), identity)), y = ncol(across(a, identity))),
@@ -329,6 +343,7 @@ test_that("across() rejects non vectors", {
 })
 
 test_that("across() uses tidy recycling rules", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_equal(
     data.frame(x = 1, y = 2) %>% duckplyr_reframe(across(everything(), ~rep(42, .))),
     data.frame(x = rep(42, 2), y = rep(42, 2))
@@ -340,6 +355,7 @@ test_that("across() uses tidy recycling rules", {
 })
 
 test_that("across(<empty set>) returns a data frame with 1 row (#5204)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:42)
   expect_equal(
     duckplyr_mutate(df, across(c(), as.factor)),
@@ -357,6 +373,7 @@ test_that("across(<empty set>) returns a data frame with 1 row (#5204)", {
 })
 
 test_that("across(.names=) can use local variables in addition to {col} and {fn}", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   res <- local({
     prefix <- "MEAN"
     data.frame(x = 42) %>%
@@ -366,6 +383,7 @@ test_that("across(.names=) can use local variables in addition to {col} and {fn}
 })
 
 test_that("across(.unpack=) can use local variables in addition to {outer} and {inner}", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   fn <- function(x) {
     tibble(x = x, y = x + 1)
   }
@@ -386,6 +404,7 @@ test_that("across(.unpack=) can use local variables in addition to {outer} and {
 })
 
 test_that("across() uses environment from the current quosure (#5460)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   # If the data frame `y` is selected, causes a subscript conversion
   # error since it is fractional
   df <- data.frame(x = 1, y = 2.4)
@@ -404,6 +423,7 @@ test_that("across() uses environment from the current quosure (#5460)", {
 })
 
 test_that("across() sees columns in the recursive case (#5498)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   skip_if_not_installed("purrr")
   df <- tibble(
     vars = list("foo"),
@@ -433,6 +453,7 @@ test_that("across() sees columns in the recursive case (#5498)", {
 })
 
 test_that("across() works with empty data frames (#5523)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
    expect_equal(
      duckplyr_mutate(tibble(), across(everything(), identity)),
      tibble()
@@ -440,6 +461,7 @@ test_that("across() works with empty data frames (#5523)", {
 })
 
 test_that("lambdas in duckplyr_mutate() + across() can use columns", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 2, y = 4, z = 8)
   expect_identical(
     df %>% duckplyr_mutate(data.frame(x = x / y, y = y / y, z = z / y)),
@@ -461,6 +483,7 @@ test_that("lambdas in duckplyr_mutate() + across() can use columns", {
 })
 
 test_that("lambdas in duckplyr_summarise() + across() can use columns", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 2, y = 4, z = 8)
   expect_identical(
     df %>% duckplyr_summarise(data.frame(x = x / y, y = y / y, z = z / y)),
@@ -482,6 +505,7 @@ test_that("lambdas in duckplyr_summarise() + across() can use columns", {
 })
 
 test_that("lambdas in duckplyr_mutate() + across() can use columns in follow up expressions (#5717)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 2, y = 4, z = 8)
   expect_identical(
     df %>% duckplyr_mutate(a = 2, data.frame(x = x / y, y = y / y, z = z / y)),
@@ -503,6 +527,7 @@ test_that("lambdas in duckplyr_mutate() + across() can use columns in follow up 
 })
 
 test_that("lambdas in duckplyr_summarise() + across() can use columns in follow up expressions (#5717)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 2, y = 4, z = 8)
   expect_identical(
     df %>% duckplyr_summarise(a = 2, data.frame(x = x / y, y = y / y, z = z / y)),
@@ -532,6 +557,7 @@ test_that("functions defined inline can use columns (#5734)", {
 })
 
 test_that("if_any() and if_all() do not enforce logical", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   # We used to coerce to logical using vctrs. Now we use base
   # semantics because we expand `if_all(x:y)` to `x & y`.
   d <- data.frame(x = 10, y = 10)
@@ -549,6 +575,7 @@ test_that("if_any() and if_all() do not enforce logical", {
 })
 
 test_that("if_any() and if_all() can be used in duckplyr_mutate() (#5709)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   d <- data.frame(x = c(1, 5, 10, 10), y = c(0, 0, 0, 10), z = c(10, 5, 1, 10))
   res <- d %>%
     duckplyr_mutate(
@@ -560,6 +587,7 @@ test_that("if_any() and if_all() can be used in duckplyr_mutate() (#5709)", {
 })
 
 test_that("across() caching not confused when used from if_any() and if_all() (#5782)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   res <- data.frame(x = 1:3) %>%
     duckplyr_mutate(
       any = if_any(x, ~ . >= 2) + if_any(x, ~ . >= 3),
@@ -585,6 +613,7 @@ test_that("if_any() and if_all() respect duckplyr_filter()-like NA handling", {
 })
 
 test_that("if_any() and if_all() aborts when predicate mistakingly used in .cols= (#5732)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- data.frame(x = 1:10, y = 1:10)
   expect_snapshot({
     # expanded case
@@ -598,6 +627,7 @@ test_that("if_any() and if_all() aborts when predicate mistakingly used in .cols
 })
 
 test_that("across() correctly reset column", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_error(cur_column())
   res <- data.frame(x = 1) %>%
     duckplyr_summarise(
@@ -623,6 +653,7 @@ test_that("across() correctly reset column", {
 })
 
 test_that("across() can omit dots", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = tibble(foo = 1), y = tibble(foo = 2))
 
   # top
@@ -719,6 +750,7 @@ test_that("across() inlines formulas", {
 })
 
 test_that("inlined and non inlined lambdas work", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- data.frame(foo = 1:2, bar = 100:101)
   exp <- data.frame(foo = c(101.5, 102.5), bar = c(200.5, 201.5))
 
@@ -740,6 +772,7 @@ test_that("inlined and non inlined lambdas work", {
 })
 
 test_that("list of lambdas work", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- data.frame(foo = 1:2, bar = 100:101)
   exp <- cbind(
     df,
@@ -754,6 +787,7 @@ test_that("list of lambdas work", {
 })
 
 test_that("anonymous function `.fns` can access the `.data` pronoun even when not inlined", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:2, y = 3:4)
 
   # Can't access it here, `fn()`'s environment doesn't know about `.data`
@@ -778,6 +812,7 @@ test_that("anonymous function `.fns` can access the `.data` pronoun even when no
 })
 
 test_that("across() uses local formula environment (#5881)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   f <- local({
     prefix <- "foo"
     ~ paste(prefix, .x)
@@ -828,6 +863,7 @@ test_that("unevaluated formulas (currently) fail", {
 })
 
 test_that("across() can access lexical scope (#5862)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   f_across <- function(data, cols, fn) {
     data %>%
       duckplyr_summarise(
@@ -843,6 +879,7 @@ test_that("across() can access lexical scope (#5862)", {
 })
 
 test_that("if_any() and if_all() expansions deal with no inputs or single inputs", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   d <- data.frame(x = 1)
 
   # No inputs
@@ -867,6 +904,7 @@ test_that("if_any() and if_all() expansions deal with no inputs or single inputs
 })
 
 test_that("if_any() and if_all() wrapped deal with no inputs or single inputs", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   d <- data.frame(x = 1)
 
   # No inputs
@@ -902,6 +940,7 @@ test_that("expanded if_any() finds local data", {
 })
 
 test_that("across() can use named selections", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- data.frame(x = 1, y = 2)
 
   # no fns
@@ -989,6 +1028,7 @@ test_that("expr_subtitute() keeps at double-sided formula (#5894)", {
 })
 
 test_that("across() predicates operate on whole data", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(
     x = c(1, 1, 2),
     g = c(1, 1, 2)
@@ -1078,12 +1118,14 @@ test_that("rowwise() preserves list-cols iff no `.fns` (#5951, #6264)", {
 # c_across ----------------------------------------------------------------
 
 test_that("selects and combines columns", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- data.frame(x = 1:2, y = 3:4)
   out <- df %>% duckplyr_summarise(z = list(c_across(x:y)))
   expect_equal(out$z, list(1:4))
 })
 
 test_that("can't rename during selection (#6522)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1)
 
   expect_snapshot(error = TRUE, {
@@ -1102,6 +1144,7 @@ test_that("can't explicitly select grouping columns (#6522)", {
 })
 
 test_that("`all_of()` is evaluated in the correct environment (#6522)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   # Related to removing the mask layer from the quosure environments
   df <- tibble(x = 1, y = 2)
 
@@ -1120,6 +1163,7 @@ test_that("`all_of()` is evaluated in the correct environment (#6522)", {
 # cols deprecation --------------------------------------------------------
 
 test_that("across() applies old `.cols = everything()` default with a warning", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   local_options(lifecycle_verbosity = "warning")
 
   df <- tibble(g = c(1, 2), x = c(1, 2), y = c(3, 4))
@@ -1149,6 +1193,7 @@ test_that("across() applies old `.cols = everything()` default with a warning", 
 })
 
 test_that("if_any() and if_all() apply old `.cols = everything()` default with a warning", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   local_options(lifecycle_verbosity = "warning")
 
   df <- tibble(x = c(TRUE, FALSE, TRUE), y = c(FALSE, FALSE, TRUE))
@@ -1192,6 +1237,7 @@ test_that("c_across() applies old `cols = everything()` default with a warning",
 # fns deprecation ---------------------------------------------------------
 
 test_that("across() applies old `.fns = NULL` default", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1, y = 2)
 
   # Expansion path
@@ -1204,6 +1250,7 @@ test_that("across() applies old `.fns = NULL` default", {
 })
 
 test_that("if_any() and if_all() apply old `.fns = NULL` default", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = c(TRUE, FALSE, TRUE), y = c(FALSE, FALSE, TRUE))
 
   # Expansion path
@@ -1216,6 +1263,7 @@ test_that("if_any() and if_all() apply old `.fns = NULL` default", {
 })
 
 test_that("across errors with non-empty dots and no `.fns` supplied (#6638)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1)
 
   expect_snapshot(
@@ -1227,6 +1275,7 @@ test_that("across errors with non-empty dots and no `.fns` supplied (#6638)", {
 # dots --------------------------------------------------------------------
 
 test_that("across(...) is deprecated", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
 
   df <- tibble(x = c(1, NA))
   expect_snapshot(duckplyr_summarise(df, across(everything(), mean, na.rm = TRUE)))
@@ -1234,6 +1283,7 @@ test_that("across(...) is deprecated", {
 })
 
 test_that("across() passes ... to functions", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   options(lifecycle_verbosity = "quiet")
 
   df <- tibble(x = c(1, NA))
@@ -1248,6 +1298,7 @@ test_that("across() passes ... to functions", {
 })
 
 test_that("across() passes unnamed arguments following .fns as ... (#4965)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   options(lifecycle_verbosity = "quiet")
 
   df <- tibble(x = 1)
@@ -1263,6 +1314,7 @@ test_that("across() avoids simple argument name collisions with ... (#4965)", {
 
 
 test_that("across() evaluates ... with promise semantics (#5813)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   options(lifecycle_verbosity = "quiet")
 
   df <- tibble(x = tibble(foo = 1), y = tibble(foo = 2))
@@ -1329,6 +1381,7 @@ test_that("group variables are in scope when passed in dots (#5832)", {
 })
 
 test_that("symbols are looked up as list or functions (#6545)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(mean = 1:5)
   exp <- duckplyr_summarise(df, across(everything(), function(x) mean(x)))
 
@@ -1354,6 +1407,7 @@ test_that("symbols are looked up as list or functions (#6545)", {
 })
 
 test_that("non-inlinable but maskable lambdas give precedence to function arguments", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- data.frame(
     foo = 1,
     bar = "a"
@@ -1363,6 +1417,7 @@ test_that("non-inlinable but maskable lambdas give precedence to function argume
 })
 
 test_that("maskable lambdas can refer to their lexical environment", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   foo <- "OK"
   df <- tibble(bar = "a")
 

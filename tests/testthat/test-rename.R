@@ -34,6 +34,7 @@ test_that("rename preserves grouping", {
 })
 
 test_that("can rename with duplicate columns", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1, x = 2, y = 1, .name_repair = "minimal")
   expect_named(df %>% duckplyr_rename(x2 = 2), c("x", "x2", "y"))
 })
@@ -46,6 +47,7 @@ test_that("duckplyr_rename() ignores duplicates", {
 # rename_with -------------------------------------------------------------
 
 test_that("can select columns", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1, y = 2)
   expect_named(df %>% duckplyr_rename_with(toupper, 1), c("X", "y"))
 
@@ -54,16 +56,19 @@ test_that("can select columns", {
 })
 
 test_that("passes ... along", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1, y = 2)
   expect_named(df %>% duckplyr_rename_with(gsub, 1, pattern = "x", replacement = "X"), c("X", "y"))
 })
 
 test_that("can't create duplicated names", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1, y = 2)
   expect_error(df %>% duckplyr_rename_with(~ rep_along(.x, "X")), class = "vctrs_error_names")
 })
 
 test_that("`.fn` result type is checked (#6561)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1)
   fn <- function(x) 1L
 
@@ -73,6 +78,7 @@ test_that("`.fn` result type is checked (#6561)", {
 })
 
 test_that("`.fn` result size is checked (#6561)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1, y = 2)
   fn <- function(x) c("a", "b", "c")
 
@@ -82,6 +88,7 @@ test_that("`.fn` result size is checked (#6561)", {
 })
 
 test_that("can't rename in `.cols`", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1)
 
   expect_snapshot(error = TRUE, {

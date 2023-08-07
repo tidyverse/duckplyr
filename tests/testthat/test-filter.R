@@ -1,4 +1,5 @@
 test_that("filter handles passing ...", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- data.frame(x = 1:4)
 
   f <- function(...) {
@@ -54,6 +55,7 @@ test_that("filter handlers scalar results", {
 })
 
 test_that("filter propagates attributes", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   date.start <- ISOdate(2010, 01, 01, 0)
   test <- data.frame(Date = ISOdate(2010, 01, 01, 1:10))
   test2 <- test %>% duckplyr_filter(Date < ISOdate(2010, 01, 01, 5))
@@ -101,6 +103,7 @@ test_that("duckplyr_filter() returns the input data if no parameters are given",
 })
 
 test_that("$ does not end call traversing. #502", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   # Suppose some analysis options are set much earlier in the script
   analysis_opts <- list(min_outcome = 0.25)
 
@@ -122,6 +125,7 @@ test_that("$ does not end call traversing. #502", {
 })
 
 test_that("filter handles POSIXlt", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   datesDF <- read.csv(stringsAsFactors = FALSE, text = "
 X
 2014-03-13 16:08:19
@@ -138,6 +142,7 @@ X
 })
 
 test_that("filter handles complex vectors (#436)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   d <- data.frame(x = 1:10, y = 1:10 + 2i)
   expect_equal(duckplyr_filter(d, x < 4)$y, 1:3 + 2i)
   expect_equal(duckplyr_filter(d, Re(y) < 4)$y, 1:3 + 2i)
@@ -154,6 +159,7 @@ test_that("%in% works as expected (#126)", {
 })
 
 test_that("row_number does not segfault with example from #781", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   z <- data.frame(a = c(1, 2, 3))
   b <- "a"
   res <- z %>% duckplyr_filter(row_number(b) == 2)
@@ -161,6 +167,7 @@ test_that("row_number does not segfault with example from #781", {
 })
 
 test_that("row_number works on 0 length columns (#3454)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_identical(
     duckplyr_mutate(tibble(), a = row_number()),
     tibble(a = integer())
@@ -179,6 +186,7 @@ test_that("hybrid evaluation handles $ correctly (#1134)", {
 })
 
 test_that("filter correctly handles empty data frames (#782)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   res <- tibble() %>% duckplyr_filter(F)
   expect_equal(nrow(res), 0L)
   expect_equal(length(names(res)), 0L)
@@ -191,6 +199,7 @@ test_that("duckplyr_filter(.,TRUE,TRUE) works (#1210)", {
 })
 
 test_that("filter, slice and arrange preserves attributes (#1064)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- structure(
     data.frame(x = 1:10, g1 = rep(1:2, each = 5), g2 = rep(1:5, 2)),
     meta = "this is important"
@@ -238,6 +247,7 @@ test_that("duckplyr_filter(FALSE) handles indices", {
 })
 
 test_that("filter handles S4 objects (#1366)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   env <- environment()
   Numbers <- suppressWarnings(setClass(
     "Numbers",
@@ -273,6 +283,7 @@ test_that("hybrid lag and default value for string columns work (#1403)", {
 # .data and .env tests now in test-hybrid-traverse.R
 
 test_that("filter handles raw vectors (#1803)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(a = 1:3, b = as.raw(1:3))
   expect_identical(duckplyr_filter(df, a == 1), tibble(a = 1L, b = as.raw(1)))
   expect_identical(duckplyr_filter(df, b == 1), tibble(a = 1L, b = as.raw(1)))
@@ -334,6 +345,7 @@ test_that("duckplyr_filter() with two conditions does not freeze (#4049)", {
 })
 
 test_that("duckplyr_filter() handles matrix and data frame columns (#3630)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(
     x = 1:2,
     y = matrix(1:4, ncol = 2),
@@ -360,6 +372,7 @@ test_that("duckplyr_filter() handles matrix and data frame columns (#3630)", {
 })
 
 test_that("duckplyr_filter() handles named logical (#4638)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   tbl <- tibble(a = c(a = TRUE))
   expect_equal(duckplyr_filter(tbl, a), tbl)
 })
@@ -378,11 +391,13 @@ test_that("duckplyr_filter() allows named constants that resolve to logical vect
 })
 
 test_that("duckplyr_filter() allows 1 dimension arrays", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = array(c(TRUE, FALSE, TRUE)))
   expect_identical(duckplyr_filter(df, x), df[c(1, 3),])
 })
 
 test_that("duckplyr_filter() allows matrices with 1 column with a deprecation warning (#6091)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:2)
   expect_snapshot({
     out <- duckplyr_filter(df, matrix(c(TRUE, FALSE), nrow = 2))
@@ -399,6 +414,7 @@ test_that("duckplyr_filter() allows matrices with 1 column with a deprecation wa
 })
 
 test_that("duckplyr_filter() disallows matrices with >1 column", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:3)
 
   expect_snapshot({
@@ -407,6 +423,7 @@ test_that("duckplyr_filter() disallows matrices with >1 column", {
 })
 
 test_that("duckplyr_filter() disallows arrays with >2 dimensions", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:3)
 
   expect_snapshot({
@@ -637,6 +654,7 @@ test_that("`duckplyr_filter()` doesn't allow data frames with missing or empty n
 # .by -------------------------------------------------------------------------
 
 test_that("can group transiently using `.by`", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = c(1, 1, 2, 1, 2), x = c(5, 10, 1, 2, 3))
 
   out <- duckplyr_filter(df, x > mean(x), .by = g)
@@ -647,12 +665,14 @@ test_that("can group transiently using `.by`", {
 })
 
 test_that("transient grouping retains bare data.frame class", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = c(1, 1, 2, 1, 2), x = c(5, 10, 1, 2, 3))
   out <- duckplyr_filter(df, x > mean(x), .by = g)
   expect_s3_class(out, class(df), exact = TRUE)
 })
 
 test_that("transient grouping retains data frame attributes", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   # With data.frames or tibbles
   df <- data.frame(g = c(1, 1, 2), x = c(1, 2, 1))
   tbl <- as_tibble(df)

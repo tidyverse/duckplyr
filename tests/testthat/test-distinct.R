@@ -20,6 +20,7 @@ test_that("distinct for single column works as expected (#1937)", {
 })
 
 test_that("distinct works for 0-sized columns (#1437)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:10) %>% duckplyr_select(-x)
   ddf <- duckplyr_distinct(df)
   expect_equal(ncol(ddf), 0L)
@@ -84,6 +85,7 @@ test_that("distinct on a new, copied variable is equivalent to mutate followed b
 })
 
 test_that("distinct on a dataframe or tibble with columns of type list throws an error", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(
     a = c("1", "1", "2", "2", "3", "3"),
     b = list("A")
@@ -95,6 +97,7 @@ test_that("distinct on a dataframe or tibble with columns of type list throws an
 })
 
 test_that("distinct handles 0 columns edge case (#2954)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   d <- duckplyr_select(data.frame(x= c(1, 1)), one_of(character(0)))
   res <- duckplyr_distinct(d)
   expect_equal(nrow(res), 1L)
@@ -130,6 +133,7 @@ test_that("duckplyr_distinct() understands both NA variants (#4516)", {
 })
 
 test_that("duckplyr_distinct() handles auto splicing", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_equal(
     iris %>% duckplyr_distinct(Species),
     iris %>% duckplyr_distinct(data.frame(Species=Species))
@@ -172,6 +176,7 @@ test_that("duckplyr_distinct() preserves attributes on bare data frames (#6318)"
 # Errors ------------------------------------------------------------------
 
 test_that("distinct errors when selecting an unknown column (#3140)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_snapshot({
     df <- tibble(g = c(1, 2), x = c(1, 2))
 

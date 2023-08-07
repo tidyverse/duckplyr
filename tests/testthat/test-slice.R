@@ -1,4 +1,5 @@
 test_that("empty slice drops all rows (#6573)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = c(1, 1, 2), x = 1:3)
   gdf <- group_by(df, g)
   rdf <- rowwise(df)
@@ -9,6 +10,7 @@ test_that("empty slice drops all rows (#6573)", {
 })
 
 test_that("slicing data.frame yields data.frame", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- data.frame(x = 1:3)
   expect_equal(duckplyr_slice(df, 1), data.frame(x = 1L))
 })
@@ -34,6 +36,7 @@ test_that("slice drops negative indices, ignoring out of range (#3073)", {
 })
 
 test_that("slice errors if positive and negative indices mixed", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_snapshot(error = TRUE, {
     duckplyr_slice(tibble(), 1, -1)
   })
@@ -54,6 +57,7 @@ test_that("slice ignores 0 and NA (#3313, #1235)", {
 })
 
 test_that("slicing with one-column matrix is deprecated", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = c(1, 2, 2, 3, 3, 3), id = 1:6)
 
   expect_snapshot({
@@ -63,6 +67,7 @@ test_that("slicing with one-column matrix is deprecated", {
 })
 
 test_that("slice errors if index is not numeric", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_snapshot(error = TRUE, {
     duckplyr_slice(tibble(), "a")
   })
@@ -81,6 +86,7 @@ test_that("slice preserves groups iff requested", {
 })
 
 test_that("slice handles zero-row and zero-column inputs (#1219, #2490)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = numeric())
   expect_equal(duckplyr_slice(df, 1), df)
 
@@ -97,6 +103,7 @@ test_that("user errors are correctly labelled", {
 })
 
 test_that("`...` can't be named (#6554)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = 1, x = 1)
 
   expect_snapshot(error = TRUE, {
@@ -137,6 +144,7 @@ test_that("slicing retains labels for zero length groups", {
 })
 
 test_that("can group transiently using `.by`", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = c(1, 1, 2), x = c(1, 2, 3))
 
   out <- duckplyr_slice(df, n(), .by = g)
@@ -147,12 +155,14 @@ test_that("can group transiently using `.by`", {
 })
 
 test_that("transient grouping retains bare data.frame class", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = c(1, 1, 2), x = c(1, 2, 3))
   out <- duckplyr_slice(df, n(), .by = g)
   expect_s3_class(out, class(df), exact = TRUE)
 })
 
 test_that("transient grouping retains data frame attributes", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   # With data.frames or tibbles
   df <- data.frame(g = c(1, 1, 2), x = c(1, 2, 3))
   tbl <- as_tibble(df)
@@ -168,6 +178,7 @@ test_that("transient grouping retains data frame attributes", {
 })
 
 test_that("transient grouping orders by first appearance", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = c(2, 1, 2, 0), x = c(4, 2, 8, 5))
 
   out <- duckplyr_slice(df, which(x == max(x)), .by = g)
@@ -213,6 +224,7 @@ test_that("catches `by` typo (#6647)", {
 # Slice variants ----------------------------------------------------------
 
 test_that("slice_helpers() call get_slice_size()", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1)
 
   expect_snapshot(error = TRUE, {
@@ -282,11 +294,13 @@ test_that("get_slice_size() rounds prop in the right direction", {
 })
 
 test_that("n must be an integer", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:5)
   expect_snapshot(duckplyr_slice_head(df, n = 1.1), error = TRUE)
 })
 
 test_that("functions silently truncate results", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   # only test positive n because get_slice_size() converts all others
 
   df <- tibble(x = 1:5)
@@ -298,6 +312,7 @@ test_that("functions silently truncate results", {
 })
 
 test_that("slice helpers with n = 0 return no rows", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:5)
   expect_equal(nrow(duckplyr_slice_head(df, n = 0)), 0)
   expect_equal(nrow(duckplyr_slice_tail(df, n = 0)), 0)
@@ -307,6 +322,7 @@ test_that("slice helpers with n = 0 return no rows", {
 })
 
 test_that("slice_*() doesn't look for `n` in data (#6089)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- data.frame(x = 1:10, n = 10:1, g = rep(1:2, each = 5))
   expect_error(duckplyr_slice_max(df, order_by = n), NA)
   expect_error(duckplyr_slice_min(df, order_by = n), NA)
@@ -319,6 +335,7 @@ test_that("slice_*() doesn't look for `n` in data (#6089)", {
 })
 
 test_that("slice_*() checks that `n=` is explicitly named and ... is empty", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   # i.e. that every function calls check_slice_dots()
 
   df <- data.frame(x = 1:10)
@@ -388,6 +405,7 @@ test_that("slice_helper catches `.by` typo (#6647)", {
 # slice_min/slice_max -----------------------------------------------------
 
 test_that("min and max return ties by default", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(id = 1:5, x = c(1, 1, 1, 2, 2))
   expect_equal(duckplyr_slice_min(df, x)$id, c(1, 2, 3))
   expect_equal(duckplyr_slice_max(df, x)$id, c(4, 5))
@@ -397,6 +415,7 @@ test_that("min and max return ties by default", {
 })
 
 test_that("min and max reorder results", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- data.frame(id = 1:4, x = c(2, 3, 1, 2))
 
   expect_equal(duckplyr_slice_min(df, x, n = 2)$id, c(3, 1, 4))
@@ -407,6 +426,7 @@ test_that("min and max reorder results", {
 })
 
 test_that("min and max include NAs when appropriate", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(id = 1:3, x = c(1, NA, NA))
   expect_equal(duckplyr_slice_min(df, x, n = 1)$id, 1)
   expect_equal(duckplyr_slice_max(df, x, n = 1)$id, 1)
@@ -420,6 +440,7 @@ test_that("min and max include NAs when appropriate", {
 })
 
 test_that("min and max ignore NA's when requested (#4826)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(id = 1:4, x = c(2, NA, 1, 2))
   expect_equal(duckplyr_slice_min(df, x, n = 2, na_rm = TRUE)$id, c(3, 1, 4))
   expect_equal(duckplyr_slice_max(df, x, n = 2, na_rm = TRUE)$id, c(1, 4))
@@ -436,6 +457,7 @@ test_that("min and max ignore NA's when requested (#4826)", {
 })
 
 test_that("slice_min/max() count from back with negative n/prop", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(id = 1:4, x = c(2, 3, 1, 4))
   expect_equal(duckplyr_slice_min(df, x, n = -1), duckplyr_slice_min(df, x, n = 3))
   expect_equal(duckplyr_slice_max(df, x, n = -1), duckplyr_slice_max(df, x, n = 3))
@@ -446,12 +468,14 @@ test_that("slice_min/max() count from back with negative n/prop", {
 })
 
 test_that("slice_min/max() can order by multiple variables (#6176)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(id = 1:4, x = 1, y = c(1, 4, 2, 3))
   expect_equal(duckplyr_slice_min(df, tibble(x, y), n = 1)$id, 1)
   expect_equal(duckplyr_slice_max(df, tibble(x, y), n = 1)$id, 2)
 })
 
 test_that("slice_min/max() work with `by`", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = c(2, 2, 1, 1), x = c(1, 2, 3, 1))
 
   expect_identical(duckplyr_slice_min(df, x, by = g), df[c(1, 4),])
@@ -459,6 +483,7 @@ test_that("slice_min/max() work with `by`", {
 })
 
 test_that("slice_min/max() inject `with_ties` and `na_rm` (#6725)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   # So columns named `with_ties` and `na_rm` don't mask those arguments
 
   df <- tibble(x = c(1, 1, 2, 2), with_ties = 1:4)
@@ -479,6 +504,7 @@ test_that("slice_min/max() inject `with_ties` and `na_rm` (#6725)", {
 })
 
 test_that("slice_min/max() check size of `order_by=` (#5922)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_snapshot(error = TRUE, {
     duckplyr_slice_min(data.frame(x = 1:10), 1:6)
     duckplyr_slice_max(data.frame(x = 1:10), 1:6)
@@ -501,6 +527,7 @@ test_that("slice_min/max() validate simple arguments", {
 # slice_sample ------------------------------------------------------------
 
 test_that("duckplyr_slice_sample() respects weight_by and replaces", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:100, wt = c(1, rep(0, 99)))
 
   out <- duckplyr_slice_sample(df, n = 1, weight_by = wt)
@@ -511,17 +538,20 @@ test_that("duckplyr_slice_sample() respects weight_by and replaces", {
 })
 
 test_that("duckplyr_slice_sample() can increase rows iff replace = TRUE", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:10)
   expect_equal(nrow(duckplyr_slice_sample(df, n = 20, replace = FALSE)), 10)
   expect_equal(nrow(duckplyr_slice_sample(df, n = 20, replace = TRUE)), 20)
 })
 
 test_that("duckplyr_slice_sample() checks size of `weight_by=` (#5922)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:10)
   expect_snapshot(duckplyr_slice_sample(df, n = 2, weight_by = 1:6), error = TRUE)
 })
 
 test_that("duckplyr_slice_sample() works with zero-row data frame (#5729)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = character(), w = numeric())
   out <- duckplyr_slice_sample(df, prop = 0.5, weight_by = w)
   expect_equal(out, df)
@@ -536,6 +566,7 @@ test_that("`duckplyr_slice_sample()` validates `replace`", {
 })
 
 test_that("duckplyr_slice_sample() injects `replace` (#6725)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   # So a column named `replace` doesn't mask that argument
   df <- tibble(replace = 1)
   expect_identical(duckplyr_slice_sample(df, n = 2), df)
@@ -549,6 +580,7 @@ test_that("duckplyr_slice_sample() handles positive n= and prop=", {
 })
 
 test_that("duckplyr_slice_sample() handles negative n= and prop= (#6402)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(a = 1:2)
   expect_equal(nrow(duckplyr_slice_sample(df, n = -1)), 1)
   expect_equal(nrow(duckplyr_slice_sample(df, prop = -0.5)), 1)
@@ -559,6 +591,7 @@ test_that("duckplyr_slice_sample() handles negative n= and prop= (#6402)", {
 })
 
 test_that("duckplyr_slice_sample() works with `by`", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = c(2, 2, 2, 1), x = c(1, 2, 3, 1))
   expect_identical(duckplyr_slice_sample(df, n = 2, by = g)$g, c(2, 2, 1))
 })
@@ -576,6 +609,7 @@ test_that("slice_head/slice_tail keep positive values", {
 })
 
 test_that("slice_head/tail() count from back with negative n/prop", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(id = 1:4, x = c(2, 3, 1, 4))
   expect_equal(duckplyr_slice_head(df, n = -1), duckplyr_slice_head(df, n = 3))
   expect_equal(duckplyr_slice_tail(df, n = -1), duckplyr_slice_tail(df, n = 3))
@@ -596,6 +630,7 @@ test_that("slice_head/slice_tail drop from opposite end when n/prop negative", {
 })
 
 test_that("slice_head/slice_tail handle infinite n/prop", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1)
   expect_identical(duckplyr_slice_head(df, n = Inf), df)
   expect_identical(duckplyr_slice_tail(df, n = Inf), df)
@@ -609,6 +644,7 @@ test_that("slice_head/slice_tail handle infinite n/prop", {
 })
 
 test_that("slice_head/slice_tail work with `by`", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = c(2, 2, 2, 1), x = c(1, 2, 3, 1))
   expect_identical(duckplyr_slice_head(df, n = 2, by = g), df[c(1, 2, 4),])
   expect_identical(duckplyr_slice_tail(df, n = 2, by = g), df[c(2, 3, 4),])

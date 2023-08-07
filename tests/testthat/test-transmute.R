@@ -19,6 +19,7 @@ test_that("transmute preserves grouping", {
 # Empty transmutes -------------------------------------------------
 
 test_that("transmute with no args returns grouping vars", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1, y = 2)
   gf <- group_by(df, x)
 
@@ -29,6 +30,7 @@ test_that("transmute with no args returns grouping vars", {
 # transmute variables -----------------------------------------------
 
 test_that("transmute succeeds in presence of raw columns (#1803)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(a = 1:3, b = as.raw(1:3))
   expect_identical(duckplyr_transmute(df, a), df["a"])
   expect_identical(duckplyr_transmute(df, b), df["b"])
@@ -54,11 +56,13 @@ test_that("can duckplyr_transmute() with .data pronoun (#2715)", {
 })
 
 test_that("duckplyr_transmute() does not warn when a variable is removed with = NULL (#4609)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- data.frame(x=1)
   expect_warning(duckplyr_transmute(df, y =x+1, z=y*2, y = NULL), NA)
 })
 
 test_that("duckplyr_transmute() can handle auto splicing", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_equal(
     iris %>% duckplyr_transmute(tibble(Sepal.Length, Sepal.Width)),
     iris %>% duckplyr_select(Sepal.Length, Sepal.Width)

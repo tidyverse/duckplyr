@@ -66,6 +66,7 @@ test_that("extra arguments in ... error (#5891)", {
 })
 
 test_that("incompatible data frames error (#903)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df1 <- tibble(x = 1)
   df2 <- tibble(x = 1, y = 1)
 
@@ -92,6 +93,7 @@ test_that("is_compatible generates useful messages for different cases", {
 # setequal ----------------------------------------------------------------
 
 test_that("setequal ignores column and row order", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df1 <- tibble(x = 1:2, y = 3:4)
   df2 <- df1[2:1, 2:1]
 
@@ -100,6 +102,7 @@ test_that("setequal ignores column and row order", {
 })
 
 test_that("setequal ignores duplicated rows (#6057)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df1 <- tibble(x = 1)
   df2 <- df1[c(1, 1, 1), ]
 
@@ -108,6 +111,7 @@ test_that("setequal ignores duplicated rows (#6057)", {
 })
 
 test_that("setequal uses coercion rules (#6114)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df1 <- tibble(x = 1)
   df2 <- tibble(x = 1L)
 

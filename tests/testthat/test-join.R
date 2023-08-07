@@ -142,6 +142,7 @@ test_that("when keep = TRUE, duckplyr_inner_join() preserves both sets of keys (
 })
 
 test_that("can't use `keep = FALSE` with non-equi conditions (#6499)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df1 <- tibble(xl = c(1, 3), xu = c(4, 7))
   df2 <- tibble(yl = c(2, 5, 8), yu = c(6, 8, 9))
 
@@ -168,6 +169,7 @@ test_that("joins matches NAs by default (#892, #2033)", {
 })
 
 test_that("joins don't match NA when na_matches = 'never' (#2033)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df1 <- tibble(a = c(1, NA))
   df2 <- tibble(a = c(1, NA), b = 1:2)
 
@@ -388,6 +390,7 @@ test_that("filtering joins compute common columns", {
 })
 
 test_that("mutating joins finalize unspecified columns (#6804)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df1 <- tibble(x = NA)
   df2 <- tibble(x = NA)
 
@@ -458,6 +461,7 @@ test_that("filtering joins reference original column in `y` when there are type 
 })
 
 test_that("error if passed additional arguments", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df1 <- data.frame(a = 1:3)
   df2 <- data.frame(a = 1)
 
@@ -475,6 +479,7 @@ test_that("error if passed additional arguments", {
 # nest_join ---------------------------------------------------------------
 
 test_that("nest_join returns list of tibbles (#3570)",{
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df1 <- tibble(x = c(1, 2), y = c(2, 3))
   df2 <- tibble(x = c(1, 1), z = c(2, 3))
   out <- duckplyr_nest_join(df1, df2, by = "x")
@@ -493,6 +498,7 @@ test_that("nest_join respects types of y (#6295)",{
 })
 
 test_that("nest_join preserves data frame attributes on `x` and `y` (#6295)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df1 <- data.frame(x = c(1, 2), y = c(3, 4))
   attr(df1, "foo") <- 1
   df2 <- data.frame(x = c(1, 2), z = c(3, 4))
@@ -504,12 +510,14 @@ test_that("nest_join preserves data frame attributes on `x` and `y` (#6295)", {
 })
 
 test_that("nest_join computes common columns", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df1 <- tibble(x = c(1, 2), y = c(2, 3))
   df2 <- tibble(x = c(1, 3), z = c(2, 3))
   expect_snapshot(out <- duckplyr_nest_join(df1, df2))
 })
 
 test_that("nest_join finalizes unspecified columns (#6804)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df1 <- tibble(x = NA)
   df2 <- tibble(x = NA)
 
@@ -538,6 +546,7 @@ test_that("nest_join finalizes unspecified columns (#6804)", {
 })
 
 test_that("nest_join references original column in `y` when there are type errors (#6465)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   x <- tibble(a = 1)
   y <- tibble(b = "1")
 
@@ -547,6 +556,7 @@ test_that("nest_join references original column in `y` when there are type error
 })
 
 test_that("nest_join handles multiple matches in x (#3642)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df1 <- tibble(x = c(1, 1))
   df2 <- tibble(x = 1, y = 1:2)
 
@@ -555,6 +565,7 @@ test_that("nest_join handles multiple matches in x (#3642)", {
 })
 
 test_that("nest_join forces `multiple = 'all'` internally (#6392)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df1 <- tibble(x = 1)
   df2 <- tibble(x = 1, y = 1:2)
 
@@ -563,6 +574,7 @@ test_that("nest_join forces `multiple = 'all'` internally (#6392)", {
 })
 
 test_that("y keys dropped by default for equi conditions", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df1 <- tibble(x = c(1, 2), y = c(2, 3))
   df2 <- tibble(x = c(1, 3), z = c(2, 3))
   out <- duckplyr_nest_join(df1, df2, by = "x")
@@ -574,6 +586,7 @@ test_that("y keys dropped by default for equi conditions", {
 })
 
 test_that("y keys kept by default for non-equi conditions", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df1 <- tibble(x = c(1, 2), y = c(2, 3))
   df2 <- tibble(x = c(1, 3), z = c(2, 3))
 
@@ -583,6 +596,7 @@ test_that("y keys kept by default for non-equi conditions", {
 })
 
 test_that("validates inputs", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df1 <- tibble(x = c(1, 2), y = c(2, 3))
   df2 <- tibble(x = c(1, 3), z = c(2, 3))
 
@@ -672,6 +686,7 @@ test_that("rowwise group structure is updated after a join (#5227)", {
 # deprecated ----------------------------------------------------------------
 
 test_that("by = character() generates cross (#4206)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   local_options(lifecycle_verbosity = "quiet")
 
   df1 <- tibble(x = 1:2)
@@ -683,6 +698,7 @@ test_that("by = character() generates cross (#4206)", {
 })
 
 test_that("`by = character()` technically respects `unmatched`", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   local_options(lifecycle_verbosity = "quiet")
 
   df1 <- tibble()
@@ -694,6 +710,7 @@ test_that("`by = character()` technically respects `unmatched`", {
 })
 
 test_that("`by = character()` technically respects `relationship`", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   local_options(lifecycle_verbosity = "quiet")
 
   df <- tibble(x = 1:2)
@@ -704,6 +721,7 @@ test_that("`by = character()` technically respects `relationship`", {
 })
 
 test_that("`by = character()` for a cross join is deprecated (#6604)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df1 <- tibble(x = 1:2)
   df2 <- tibble(y = 1:2)
 
@@ -724,6 +742,7 @@ test_that("`by = character()` for a cross join is deprecated (#6604)", {
 })
 
 test_that("`by = named character()` for a cross join works", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   # Used by the sift package
   df1 <- tibble(x = 1:2)
   df2 <- tibble(y = 1:2)
@@ -740,6 +759,7 @@ test_that("`by = named character()` for a cross join works", {
 })
 
 test_that("`by = list(x = character(), y = character())` for a cross join is deprecated (#6604)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df1 <- tibble(x = 1:2)
   df2 <- tibble(y = 1:2)
 

@@ -66,6 +66,7 @@ test_that("negating empty match returns everything", {
 })
 
 test_that("can select with duplicate columns", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1, x = 2, y = 1, .name_repair = "minimal")
 
   # can extract duplicate cols by position
@@ -92,6 +93,7 @@ test_that("select can be before group_by (#309)", {
 
 
 test_that("select succeeds in presence of raw columns (#1803)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(a = 1:3, b = as.raw(1:3))
   expect_identical(duckplyr_select(df, a), df["a"])
   expect_identical(duckplyr_select(df, b), df["b"])

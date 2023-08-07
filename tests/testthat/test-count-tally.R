@@ -7,6 +7,7 @@ test_that("count sorts output by default", {
 })
 
 test_that("count can sort output", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = c(1, 1, 2, 2, 2))
   out <- duckplyr_count(df, x, sort = TRUE)
   expect_equal(out, tibble(x = c(2, 1), n = c(3, 2)))
@@ -19,6 +20,7 @@ test_that("count can rename grouping columns", {
 })
 
 test_that("informs if n column already present, unless overridden", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df1 <- tibble(n = c(1, 1, 2, 2, 2))
   expect_message(out <- duckplyr_count(df1, n), "already present")
   expect_named(out, c("n", "nn"))
@@ -39,12 +41,14 @@ test_that("informs if n column already present, unless overridden", {
 })
 
 test_that("name must be string", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = c(1, 2))
   expect_snapshot(error = TRUE, duckplyr_count(df, x, name = 1))
   expect_snapshot(error = TRUE, duckplyr_count(df, x, name = letters))
 })
 
 test_that("output includes empty levels with .drop = FALSE", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(f = factor("b", levels = c("a", "b", "c")))
   out <- duckplyr_count(df, f, .drop = FALSE)
   expect_equal(out$n, c(0, 1, 0))
@@ -54,6 +58,7 @@ test_that("output includes empty levels with .drop = FALSE", {
 })
 
 test_that("output preserves grouping", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = c(1, 2, 2, 2))
   exp <- tibble(g = c(1, 2), n = c(1, 3))
 
@@ -142,6 +147,7 @@ test_that("tally can sort output", {
 })
 
 test_that("weighted tally drops NAs (#1145)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = c(1, 1, NA))
   expect_equal(duckplyr_tally(df, x)$n, 2)
 })
@@ -162,6 +168,7 @@ test_that("duckplyr_tally() owns errors (#6139)", {
 # add_count ---------------------------------------------------------------
 
 test_that("output preserves grouping", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = c(1, 2, 2, 2))
   exp <- tibble(g = c(1, 2, 2, 2), n = c(1, 3, 3, 3))
 
@@ -170,6 +177,7 @@ test_that("output preserves grouping", {
 })
 
 test_that(".drop is deprecated",  {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   local_options(lifecycle_verbosity = "warning")
 
   df <- tibble(f = factor("b", levels = c("a", "b", "c")))
