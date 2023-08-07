@@ -2,10 +2,12 @@ library(tidyverse)
 
 source("tools/00-funs.R", echo = TRUE)
 
-stopifnot(gert::git_branch(repo = "../dplyr") == "f-revdep-duckplyr")
+stopifnot(gert::git_branch(repo = ".sync/dplyr-revdep") == "f-revdep-duckplyr")
 
-status <- gert::git_status(repo = "../dplyr")
+status <- gert::git_status(repo = ".sync/dplyr-revdep")
 stopifnot(nrow(status) == 0)
+
+gert::git_pull(repo = ".sync/dplyr-revdep")
 
 names <- df_methods$name[!df_methods$skip_impl]
 call_rx <- rex::rex(
@@ -14,7 +16,7 @@ call_rx <- rex::rex(
   capture(" <- function(")
 )
 
-dplyr_files <- fs::dir_ls("../dplyr/R")
+dplyr_files <- fs::dir_ls(".sync/dplyr-revdep/R")
 
 dplyr_texts <- map_chr(dplyr_files, brio::read_file)
 dplyr_texts <- str_replace_all(dplyr_texts, call_rx, "\\1_data_frame\\2")
@@ -41,7 +43,7 @@ duckplyr_texts <- map_chr(duckplyr_files, brio::read_file)
 duckplyr_texts <- str_replace_all(duckplyr_texts, "dplyr:::([a-z_]+)[.]data[.]frame", "\\1_data_frame")
 duckplyr_texts <- str_replace_all(duckplyr_texts, fixed(".duckplyr_df <- function("), ".data.frame <- function(")
 # Write as single file
-brio::write_lines(duckplyr_texts, "../dplyr/R/zzz-duckplyr.R")
+brio::write_lines(duckplyr_texts, ".sync/dplyr-revdep/R/zzz-duckplyr.R")
 
 patch_dplyr_test <- function(file) {
   base <- basename(file)
@@ -63,5 +65,9 @@ patch_dplyr_test <- function(file) {
   brio::write_lines(text, file)
 }
 
-dplyr_test_files <- fs::dir_ls("../dplyr/tests/testthat/", type = "file", glob = "*.R")
+dplyr_test_files <- fs::dir_ls(".sync/dplyr-revdep/tests/testthat/", type = "file", glob = "*.R")
 walk(dplyr_test_files, patch_dplyr_test)
+
+gert::git_add(".", repo = ".sync/dplyr-revdep")
+gert::git_commit("Sync", repo = ".sync/dplyr-revdep")
+gert::git_push(repo = ".sync/dplyr-revdep")
