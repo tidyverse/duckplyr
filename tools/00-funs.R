@@ -191,6 +191,31 @@ dplyr_only_tests <- head(n = -1, list(
   NULL
 ))
 
+# non_force_only_tests --------------------------------------------------------------------
+
+non_force_only_tests <- head(n = -1, list(
+  "test-count-tally.R" = c(
+    NULL
+  ),
+  "test-deprec-do.R" = c(
+    NULL
+  ),
+  "test-join.R" = c(
+    NULL
+  ),
+  "test-join-rows.R" = c(
+    NULL
+  ),
+  "test-mutate.R" = c(
+    "setting a new column to `NULL` works with `.before` and `.after` (#6563)",
+    NULL
+  ),
+  "test-summarise.R" = c(
+    NULL
+  ),
+  NULL
+))
+
 test_extra_arg_map <- list(
   anti_join = "join_by(a)",
   arrange = c(

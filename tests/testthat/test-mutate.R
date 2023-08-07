@@ -659,6 +659,7 @@ test_that("dropping column with `NULL` then readding it retains original locatio
 })
 
 test_that("setting a new column to `NULL` works with `.before` and `.after` (#6563)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1, y = 2, z = 3, a = 4)
 
   expect_named(duckplyr_mutate(df, b = NULL, .before = 1), names(df))
