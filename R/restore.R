@@ -43,7 +43,6 @@ methods_restore <- function() {
   vctrs::s3_register("dplyr::slice_tail", "data.frame", dplyr:::slice_tail.data.frame)
   vctrs::s3_register("dplyr::summarise", "data.frame", dplyr:::summarise.data.frame)
   vctrs::s3_register("dplyr::symdiff", "data.frame", dplyr:::symdiff.data.frame)
-  vctrs::s3_register("dplyr::tbl_vars", "data.frame", dplyr:::tbl_vars.data.frame)
   vctrs::s3_register("dplyr::transmute", "data.frame", dplyr:::transmute.data.frame)
   vctrs::s3_register("dplyr::ungroup", "data.frame", dplyr:::ungroup.data.frame)
   vctrs::s3_register("dplyr::union", "data.frame", dplyr:::union.data.frame)

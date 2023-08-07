@@ -43,7 +43,6 @@ methods_overwrite <- function() {
   vctrs::s3_register("dplyr::slice_tail", "data.frame", duckplyr:::slice_tail.duckplyr_df)
   vctrs::s3_register("dplyr::summarise", "data.frame", duckplyr:::summarise.duckplyr_df)
   vctrs::s3_register("dplyr::symdiff", "data.frame", duckplyr:::symdiff.duckplyr_df)
-  vctrs::s3_register("dplyr::tbl_vars", "data.frame", duckplyr:::tbl_vars.duckplyr_df)
   vctrs::s3_register("dplyr::transmute", "data.frame", duckplyr:::transmute.duckplyr_df)
   vctrs::s3_register("dplyr::ungroup", "data.frame", duckplyr:::ungroup.duckplyr_df)
   vctrs::s3_register("dplyr::union", "data.frame", duckplyr:::union.duckplyr_df)
