@@ -52,13 +52,13 @@ patch_dplyr_test <- function(file) {
     return()
   }
 
-  skip <- unlist(all_tests[names(all_tests) == base])
+  skip_todo <- unlist(all_tests[names(all_tests) == base])
 
   text <- brio::read_lines(file)
   text <- text[grep('skip("TODO duckdb")', text, invert = TRUE, fixed = TRUE)]
-  if (!is.null(skip)) {
-    skip_lines <- unique(unlist(map(paste0('"', skip, '"'), grep, text, fixed = TRUE)))
-    text[skip_lines] <- paste0(text[skip_lines], '\n  skip("TODO duckdb")')
+  if (!is.null(skip_todo)) {
+    skip_todo_lines <- unique(unlist(map(paste0('"', skip_todo, '"'), grep, text, fixed = TRUE)))
+    text[skip_todo_lines] <- paste0(text[skip_lines], '\n  skip("TODO duckdb")')
   }
   brio::write_lines(text, file)
 }
