@@ -93,7 +93,9 @@ rel_translate <- function(
       },
       #
       language = {
-        switch(as.character(expr[[1]]),
+        name <- as.character(expr[[1]])
+
+        switch(name,
           "(" = {
             return(do_translate(expr[[2]], in_window = in_window))
           },
@@ -111,8 +113,6 @@ rel_translate <- function(
             )
           }
         )
-
-        name <- as.character(expr[[1]])
 
         aliases <- c(
           sd = "stddev",
