@@ -43,7 +43,7 @@ df_methods <-
   ))) %>%
   mutate(code = unname(mget(fun, dplyr)))
 
-duckdb_tests <- head(n = -1, list(
+duckplyr_tests <- head(n = -1, list(
   "helper-s3.R" = c(
     NULL
   ),

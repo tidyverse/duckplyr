@@ -48,7 +48,7 @@ brio::write_lines(duckplyr_texts, ".sync/dplyr-revdep/R/zzz-duckplyr.R")
 patch_dplyr_test <- function(file) {
   base <- basename(file)
 
-  all_tests <- c(tests, dplyr_only_tests)
+  all_tests <- c(duckplyr_tests, dplyr_only_tests)
 
   if (!(base %in% names(all_tests))) {
     return()

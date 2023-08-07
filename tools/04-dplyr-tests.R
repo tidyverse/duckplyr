@@ -17,7 +17,7 @@ copy_dplyr_test <- function(test_name) {
   text <- text[grep('skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")', text, invert = TRUE, fixed = TRUE)]
   text <- text[grep('skip("TODO duckdb")', text, invert = TRUE, fixed = TRUE)]
 
-  skip_todo <- duckdb_tests[[test_name]]
+  skip_todo <- duckplyr_tests[[test_name]]
   if (!is.null(skip_todo)) {
     skip_todo <- gsub(rx, "duckplyr_\\1", skip_todo, perl = TRUE)
     skip_todo_lines <- unique(unlist(map(paste0('"', skip_todo, '"'), grep, text, fixed = TRUE)))
@@ -35,6 +35,6 @@ copy_dplyr_test <- function(test_name) {
 }
 
 walk(
-  names(duckdb_tests),
+  names(duckplyr_tests),
   copy_dplyr_test
 )
