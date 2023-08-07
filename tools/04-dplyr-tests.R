@@ -1,5 +1,7 @@
 source("tools/00-funs.R", echo = TRUE)
 
+gert::git_pull(repo = ".sync/dplyr-main")
+
 copy_dplyr_test <- function(target, source, skip) {
   rx <- paste0(
     "((?<![a-z_])(?:",
@@ -20,9 +22,9 @@ copy_dplyr_test <- function(target, source, skip) {
 
 pwalk(
   list(
-    fs::path("tests/testthat", names(tests)),
-    fs::path("../dplyr/tests/testthat", names(tests)),
-    tests
+    fs::path("tests/testthat", names(duckdb_tests)),
+    fs::path(".sync/dplyr-main/tests/testthat", names(duckdb_tests)),
+    duckdb_tests
   ),
   copy_dplyr_test
 )
