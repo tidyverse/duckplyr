@@ -10,7 +10,7 @@ duckdb_from_file <- function(path, table_function, options=list()) {
     options
   )
 
-  meta_rel_register_csv(out, path)
+  meta_rel_register_file(out, path, table_function, options)
 
   duckdb:::rel_to_altrep(out)
 }
