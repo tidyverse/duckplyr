@@ -38,6 +38,8 @@ duckplyr_macros <- c(
   "desc" = '(x) AS (-x)',
   "n_distinct" = '(x) AS (COUNT(DISTINCT x))',
 
+  "wday" = "(x) AS CAST(weekday(CAST (x AS DATE)) + 1 AS int32)",
+
   "___eq_na_matches_na" = '(a, b) AS ((a IS NULL AND b IS NULL) OR (a = b))',
   "___coalesce" = '(a, b) AS COALESCE(a, b)',
 

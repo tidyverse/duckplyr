@@ -99,6 +99,27 @@ rel_translate <- function(
           "(" = {
             return(do_translate(expr[[2]], in_window = in_window))
           },
+          # Hack
+          "wday" = {
+            def <- lubridate::wday
+            call <- match.call(def, expr, envir = env)
+            args <- as.list(call[-1])
+            if (!is.null(args$label)) {
+              abort("wday(label = ) not supported")
+            }
+            if (!is.null(args$abbr)) {
+              abort("wday(abbr = ) not supported")
+            }
+            if (!is.null(args$locale)) {
+              abort("wday(locale = ) not supported")
+            }
+            if (!is.null(args$week_start)) {
+              abort("wday(week_start = ) not supported")
+            }
+            if (!is.null(getOption("lubridate.week.start"))) {
+              abort('wday() with option("lubridate.week.start") not supported')
+            }
+          },
           "%in%" = {
             tryCatch(
               {
@@ -129,14 +150,23 @@ rel_translate <- function(
           "cume_dist", "lead", "lag", "ntile",
 
           # Aggregates
-          "sum", "mean", "stddev", "min", "max",
+          "sum", "mean", "stddev", "min", "max", "median",
 
           NULL
         )
 
         known_ops <- c("+", "-", "*", "/")
 
-        known <- c(names(duckplyr_macros), names(aliases), known_window, known_ops)
+        known_funs <- c(
+          # FIXME: How to indicate these are from lubridate?
+          "hour",
+          "minute",
+          "second",
+
+          NULL
+        )
+
+        known <- c(names(duckplyr_macros), names(aliases), known_window, known_ops, known_funs)
 
         if (!(name %in% known)) {
           abort(paste0("Unknown function: ", name))
