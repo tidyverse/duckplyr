@@ -105,6 +105,10 @@ duckdb_rel_from_df <- function(df) {
     if (isS4(col)) {
       stop("Can't convert S4 columns to relational. Affected column: `", names(df)[[i]], "`.")
     }
+    # https://github.com/duckdb/duckdb/issues/8561
+    if (is.factor(col)) {
+      stop("Can't convert factor columns to relational. Affected column: `", names(df)[[i]], "`.")
+    }
   }
 
   # FIXME: For some reason, it's important to create an alias here
