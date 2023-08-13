@@ -285,6 +285,11 @@ non_force_only_tests <- head(n = -1, list(
     "legacy - arrange with doubly nested df-col doesn't infloop",
     NULL
   ),
+  `test-colwise-select.R` = c(
+    # https://github.com/duckdb/duckdb/issues/8561
+    "select_if() and rename_if() handles logical (#4213)",
+    NULL
+  ),
   `test-count-tally.R` = c(
     "count can sort output",
     "informs if n column already present, unless overridden",
@@ -328,6 +333,10 @@ non_force_only_tests <- head(n = -1, list(
     "can group transiently using `.by`",
     "transient grouping retains bare data.frame class",
     "transient grouping retains data frame attributes",
+
+    # https://github.com/duckdb/duckdb/issues/8561
+    "duckplyr_filter() with two conditions does not freeze (#4049)",
+
     NULL
   ),
   `test-join.R` = c(
@@ -351,6 +360,11 @@ non_force_only_tests <- head(n = -1, list(
     "`by = character()` for a cross join is deprecated (#6604)",
     "`by = named character()` for a cross join works",
     "`by = list(x = character(), y = character())` for a cross join is deprecated (#6604)",
+
+    # https://github.com/duckdb/duckdb/issues/8561
+    "keys are coerced to symmetric type",
+    "keys of non-equi conditions are not coerced if `keep = NULL`",
+
     NULL
   ),
   `test-mutate.R` = c(

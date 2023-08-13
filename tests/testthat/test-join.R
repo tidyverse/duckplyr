@@ -43,6 +43,7 @@ test_that("filtering joins preserve row and column order of x (#2964)", {
 })
 
 test_that("keys are coerced to symmetric type", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   foo <- tibble(id = 1:2, var1 = "foo")
   bar <- tibble(id = as.numeric(1:2), var2 = "bar")
   expect_type(duckplyr_inner_join(foo, bar, by = "id")$id, "double")
@@ -63,6 +64,7 @@ test_that("factor keys are coerced to the union factor type", {
 })
 
 test_that("keys of non-equi conditions are not coerced if `keep = NULL`", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   foo <- tibble(id = factor(c("a", "b")), col1 = c(1, 2), var1 = "foo")
   bar <- tibble(id = c("a", "b"), col2 = c(1L, 2L), var2 = "bar")
 

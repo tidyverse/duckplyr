@@ -338,6 +338,7 @@ test_that("duckplyr_filter() preserve order across groups (#3989)", {
 })
 
 test_that("duckplyr_filter() with two conditions does not freeze (#4049)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_identical(
     iris %>% duckplyr_filter(Sepal.Length > 7, Petal.Length < 6),
     iris %>% duckplyr_filter(Sepal.Length > 7 & Petal.Length < 6)

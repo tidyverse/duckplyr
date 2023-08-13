@@ -131,6 +131,7 @@ test_that("mutate_all does not change the order of columns (#3351)", {
 })
 
 test_that("select_if() and rename_if() handles logical (#4213)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   ids <- "Sepal.Length"
   expect_identical(
     iris %>% select_if(!names(.) %in% ids),
