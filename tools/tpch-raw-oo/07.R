@@ -1071,10 +1071,45 @@ rel60 <- duckdb:::rel_project(
     }
   )
 )
-rel61 <- duckdb:::rel_aggregate(
+rel61 <- duckdb:::rel_project(
   rel60,
+  list(
+    {
+      tmp_expr <- duckdb:::expr_reference("supp_nation")
+      duckdb:::expr_set_alias(tmp_expr, "supp_nation")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_reference("cust_nation")
+      duckdb:::expr_set_alias(tmp_expr, "cust_nation")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_reference("l_year")
+      duckdb:::expr_set_alias(tmp_expr, "l_year")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_reference("volume")
+      duckdb:::expr_set_alias(tmp_expr, "volume")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+      duckdb:::expr_set_alias(tmp_expr, "___row_number")
+      tmp_expr
+    }
+  )
+)
+rel62 <- duckdb:::rel_aggregate(
+  rel61,
   groups = list(duckdb:::expr_reference("supp_nation"), duckdb:::expr_reference("cust_nation"), duckdb:::expr_reference("l_year")),
   aggregates = list(
+    {
+      tmp_expr <- duckdb:::expr_function("min", list(duckdb:::expr_reference("___row_number")))
+      duckdb:::expr_set_alias(tmp_expr, "___row_number")
+      tmp_expr
+    },
     {
       tmp_expr <- duckdb:::expr_function("sum", list(duckdb:::expr_reference("volume")))
       duckdb:::expr_set_alias(tmp_expr, "revenue")
@@ -1082,9 +1117,35 @@ rel61 <- duckdb:::rel_aggregate(
     }
   )
 )
-rel62 <- duckdb:::rel_order(
-  rel61,
+rel63 <- duckdb:::rel_order(rel62, list(duckdb:::expr_reference("___row_number")))
+rel64 <- duckdb:::rel_project(
+  rel63,
+  list(
+    {
+      tmp_expr <- duckdb:::expr_reference("supp_nation")
+      duckdb:::expr_set_alias(tmp_expr, "supp_nation")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_reference("cust_nation")
+      duckdb:::expr_set_alias(tmp_expr, "cust_nation")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_reference("l_year")
+      duckdb:::expr_set_alias(tmp_expr, "l_year")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_reference("revenue")
+      duckdb:::expr_set_alias(tmp_expr, "revenue")
+      tmp_expr
+    }
+  )
+)
+rel65 <- duckdb:::rel_order(
+  rel64,
   list(duckdb:::expr_reference("supp_nation"), duckdb:::expr_reference("cust_nation"), duckdb:::expr_reference("l_year"))
 )
-rel62
-duckdb:::rel_to_altrep(rel62)
+rel65
+duckdb:::rel_to_altrep(rel65)

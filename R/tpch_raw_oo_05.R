@@ -783,10 +783,45 @@ tpch_raw_oo_05 <- function(con, experimental) {
       }
     )
   )
-  rel56 <- duckdb:::rel_aggregate(
+  rel56 <- duckdb:::rel_project(
     rel55,
+    list(
+      {
+        tmp_expr <- duckdb:::expr_reference("l_extendedprice")
+        duckdb:::expr_set_alias(tmp_expr, "l_extendedprice")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb:::expr_reference("l_discount")
+        duckdb:::expr_set_alias(tmp_expr, "l_discount")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb:::expr_reference("n_name")
+        duckdb:::expr_set_alias(tmp_expr, "n_name")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb:::expr_reference("volume")
+        duckdb:::expr_set_alias(tmp_expr, "volume")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb:::expr_set_alias(tmp_expr, "___row_number")
+        tmp_expr
+      }
+    )
+  )
+  rel57 <- duckdb:::rel_aggregate(
+    rel56,
     groups = list(duckdb:::expr_reference("n_name")),
     aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("min", list(duckdb:::expr_reference("___row_number")))
+        duckdb:::expr_set_alias(tmp_expr, "___row_number")
+        tmp_expr
+      },
       {
         tmp_expr <- duckdb:::expr_function("sum", list(duckdb:::expr_reference("volume")))
         duckdb:::expr_set_alias(tmp_expr, "revenue")
@@ -794,7 +829,23 @@ tpch_raw_oo_05 <- function(con, experimental) {
       }
     )
   )
-  rel57 <- duckdb:::rel_order(rel56, list(duckdb:::expr_function("desc", list(duckdb:::expr_reference("revenue")))))
-  rel57
-  duckdb:::rel_to_altrep(rel57)
+  rel58 <- duckdb:::rel_order(rel57, list(duckdb:::expr_reference("___row_number")))
+  rel59 <- duckdb:::rel_project(
+    rel58,
+    list(
+      {
+        tmp_expr <- duckdb:::expr_reference("n_name")
+        duckdb:::expr_set_alias(tmp_expr, "n_name")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb:::expr_reference("revenue")
+        duckdb:::expr_set_alias(tmp_expr, "revenue")
+        tmp_expr
+      }
+    )
+  )
+  rel60 <- duckdb:::rel_order(rel59, list(duckdb:::expr_function("desc", list(duckdb:::expr_reference("revenue")))))
+  rel60
+  duckdb:::rel_to_altrep(rel60)
 }

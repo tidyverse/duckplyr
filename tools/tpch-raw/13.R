@@ -14,7 +14,7 @@ invisible(
   )
 )
 invisible(DBI::dbExecute(con, "CREATE MACRO \"is.na\"(a) AS (a IS NULL)"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS (COUNT(*))"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS CAST(COUNT(*) AS int32)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"desc\"(x) AS (-x)"))
 df1 <- orders
 rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)

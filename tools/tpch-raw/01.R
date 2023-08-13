@@ -3,7 +3,7 @@ con <- DBI::dbConnect(duckdb::duckdb())
 experimental <- FALSE
 invisible(DBI::dbExecute(con, "CREATE MACRO \"<=\"(a, b) AS a <= b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"as.Date\"(x) AS strptime(x, '%Y-%m-%d')"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS (COUNT(*))"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS CAST(COUNT(*) AS int32)"))
 df1 <- lineitem
 rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb:::rel_project(

@@ -285,10 +285,30 @@ tpch_raw_oo_04 <- function(con, experimental) {
       }
     )
   )
-  rel22 <- duckdb:::rel_aggregate(
+  rel22 <- duckdb:::rel_project(
     rel21,
+    list(
+      {
+        tmp_expr <- duckdb:::expr_reference("o_orderpriority")
+        duckdb:::expr_set_alias(tmp_expr, "o_orderpriority")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb:::expr_set_alias(tmp_expr, "___row_number")
+        tmp_expr
+      }
+    )
+  )
+  rel23 <- duckdb:::rel_aggregate(
+    rel22,
     groups = list(duckdb:::expr_reference("o_orderpriority")),
     aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("min", list(duckdb:::expr_reference("___row_number")))
+        duckdb:::expr_set_alias(tmp_expr, "___row_number")
+        tmp_expr
+      },
       {
         tmp_expr <- duckdb:::expr_function("n", list())
         duckdb:::expr_set_alias(tmp_expr, "order_count")
@@ -296,7 +316,23 @@ tpch_raw_oo_04 <- function(con, experimental) {
       }
     )
   )
-  rel23 <- duckdb:::rel_order(rel22, list(duckdb:::expr_reference("o_orderpriority")))
-  rel23
-  duckdb:::rel_to_altrep(rel23)
+  rel24 <- duckdb:::rel_order(rel23, list(duckdb:::expr_reference("___row_number")))
+  rel25 <- duckdb:::rel_project(
+    rel24,
+    list(
+      {
+        tmp_expr <- duckdb:::expr_reference("o_orderpriority")
+        duckdb:::expr_set_alias(tmp_expr, "o_orderpriority")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb:::expr_reference("order_count")
+        duckdb:::expr_set_alias(tmp_expr, "order_count")
+        tmp_expr
+      }
+    )
+  )
+  rel26 <- duckdb:::rel_order(rel25, list(duckdb:::expr_reference("o_orderpriority")))
+  rel26
+  duckdb:::rel_to_altrep(rel26)
 }

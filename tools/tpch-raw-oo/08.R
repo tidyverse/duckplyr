@@ -1183,10 +1183,40 @@ rel81 <- duckdb:::rel_project(
     }
   )
 )
-rel82 <- duckdb:::rel_aggregate(
+rel82 <- duckdb:::rel_project(
   rel81,
+  list(
+    {
+      tmp_expr <- duckdb:::expr_reference("o_year")
+      duckdb:::expr_set_alias(tmp_expr, "o_year")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_reference("volume")
+      duckdb:::expr_set_alias(tmp_expr, "volume")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_reference("nation")
+      duckdb:::expr_set_alias(tmp_expr, "nation")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+      duckdb:::expr_set_alias(tmp_expr, "___row_number")
+      tmp_expr
+    }
+  )
+)
+rel83 <- duckdb:::rel_aggregate(
+  rel82,
   groups = list(duckdb:::expr_reference("o_year")),
   aggregates = list(
+    {
+      tmp_expr <- duckdb:::expr_function("min", list(duckdb:::expr_reference("___row_number")))
+      duckdb:::expr_set_alias(tmp_expr, "___row_number")
+      tmp_expr
+    },
     {
       tmp_expr <- duckdb:::expr_function(
         "/",
@@ -1226,6 +1256,22 @@ rel82 <- duckdb:::rel_aggregate(
     }
   )
 )
-rel83 <- duckdb:::rel_order(rel82, list(duckdb:::expr_reference("o_year")))
-rel83
-duckdb:::rel_to_altrep(rel83)
+rel84 <- duckdb:::rel_order(rel83, list(duckdb:::expr_reference("___row_number")))
+rel85 <- duckdb:::rel_project(
+  rel84,
+  list(
+    {
+      tmp_expr <- duckdb:::expr_reference("o_year")
+      duckdb:::expr_set_alias(tmp_expr, "o_year")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_reference("mkt_share")
+      duckdb:::expr_set_alias(tmp_expr, "mkt_share")
+      tmp_expr
+    }
+  )
+)
+rel86 <- duckdb:::rel_order(rel85, list(duckdb:::expr_reference("o_year")))
+rel86
+duckdb:::rel_to_altrep(rel86)

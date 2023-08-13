@@ -6,7 +6,7 @@ invisible(DBI::dbExecute(con, "CREATE MACRO \"|\"(x, y) AS (x OR y)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \">\"(a, b) AS a > b"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS (COUNT(*))"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS CAST(COUNT(*) AS int32)"))
 df1 <- customer
 rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb:::rel_filter(
@@ -895,10 +895,35 @@ rel25 <- duckdb:::rel_project(
     }
   )
 )
-rel26 <- duckdb:::rel_aggregate(
+rel26 <- duckdb:::rel_project(
   rel25,
+  list(
+    {
+      tmp_expr <- duckdb:::expr_reference("cntrycode")
+      duckdb:::expr_set_alias(tmp_expr, "cntrycode")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_reference("c_acctbal")
+      duckdb:::expr_set_alias(tmp_expr, "c_acctbal")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+      duckdb:::expr_set_alias(tmp_expr, "___row_number")
+      tmp_expr
+    }
+  )
+)
+rel27 <- duckdb:::rel_aggregate(
+  rel26,
   groups = list(duckdb:::expr_reference("cntrycode")),
   aggregates = list(
+    {
+      tmp_expr <- duckdb:::expr_function("min", list(duckdb:::expr_reference("___row_number")))
+      duckdb:::expr_set_alias(tmp_expr, "___row_number")
+      tmp_expr
+    },
     {
       tmp_expr <- duckdb:::expr_function("n", list())
       duckdb:::expr_set_alias(tmp_expr, "numcust")
@@ -911,6 +936,27 @@ rel26 <- duckdb:::rel_aggregate(
     }
   )
 )
-rel27 <- duckdb:::rel_order(rel26, list(duckdb:::expr_reference("cntrycode")))
-rel27
-duckdb:::rel_to_altrep(rel27)
+rel28 <- duckdb:::rel_order(rel27, list(duckdb:::expr_reference("___row_number")))
+rel29 <- duckdb:::rel_project(
+  rel28,
+  list(
+    {
+      tmp_expr <- duckdb:::expr_reference("cntrycode")
+      duckdb:::expr_set_alias(tmp_expr, "cntrycode")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_reference("numcust")
+      duckdb:::expr_set_alias(tmp_expr, "numcust")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_reference("totacctbal")
+      duckdb:::expr_set_alias(tmp_expr, "totacctbal")
+      tmp_expr
+    }
+  )
+)
+rel30 <- duckdb:::rel_order(rel29, list(duckdb:::expr_reference("cntrycode")))
+rel30
+duckdb:::rel_to_altrep(rel30)

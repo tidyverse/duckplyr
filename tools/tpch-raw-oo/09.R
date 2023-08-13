@@ -953,10 +953,40 @@ rel56 <- duckdb:::rel_project(
     }
   )
 )
-rel57 <- duckdb:::rel_aggregate(
+rel57 <- duckdb:::rel_project(
   rel56,
+  list(
+    {
+      tmp_expr <- duckdb:::expr_reference("nation")
+      duckdb:::expr_set_alias(tmp_expr, "nation")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_reference("o_year")
+      duckdb:::expr_set_alias(tmp_expr, "o_year")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_reference("amount")
+      duckdb:::expr_set_alias(tmp_expr, "amount")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+      duckdb:::expr_set_alias(tmp_expr, "___row_number")
+      tmp_expr
+    }
+  )
+)
+rel58 <- duckdb:::rel_aggregate(
+  rel57,
   groups = list(duckdb:::expr_reference("nation"), duckdb:::expr_reference("o_year")),
   aggregates = list(
+    {
+      tmp_expr <- duckdb:::expr_function("min", list(duckdb:::expr_reference("___row_number")))
+      duckdb:::expr_set_alias(tmp_expr, "___row_number")
+      tmp_expr
+    },
     {
       tmp_expr <- duckdb:::expr_function("sum", list(duckdb:::expr_reference("amount")))
       duckdb:::expr_set_alias(tmp_expr, "sum_profit")
@@ -964,9 +994,30 @@ rel57 <- duckdb:::rel_aggregate(
     }
   )
 )
-rel58 <- duckdb:::rel_order(
-  rel57,
+rel59 <- duckdb:::rel_order(rel58, list(duckdb:::expr_reference("___row_number")))
+rel60 <- duckdb:::rel_project(
+  rel59,
+  list(
+    {
+      tmp_expr <- duckdb:::expr_reference("nation")
+      duckdb:::expr_set_alias(tmp_expr, "nation")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_reference("o_year")
+      duckdb:::expr_set_alias(tmp_expr, "o_year")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb:::expr_reference("sum_profit")
+      duckdb:::expr_set_alias(tmp_expr, "sum_profit")
+      tmp_expr
+    }
+  )
+)
+rel61 <- duckdb:::rel_order(
+  rel60,
   list(duckdb:::expr_reference("nation"), duckdb:::expr_function("desc", list(duckdb:::expr_reference("o_year"))))
 )
-rel58
-duckdb:::rel_to_altrep(rel58)
+rel61
+duckdb:::rel_to_altrep(rel61)

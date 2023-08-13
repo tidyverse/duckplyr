@@ -420,10 +420,55 @@ tpch_raw_oo_03 <- function(con, experimental) {
       }
     )
   )
-  rel27 <- duckdb:::rel_aggregate(
+  rel27 <- duckdb:::rel_project(
     rel26,
+    list(
+      {
+        tmp_expr <- duckdb:::expr_reference("l_orderkey")
+        duckdb:::expr_set_alias(tmp_expr, "l_orderkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb:::expr_reference("l_extendedprice")
+        duckdb:::expr_set_alias(tmp_expr, "l_extendedprice")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb:::expr_reference("l_discount")
+        duckdb:::expr_set_alias(tmp_expr, "l_discount")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb:::expr_reference("o_orderdate")
+        duckdb:::expr_set_alias(tmp_expr, "o_orderdate")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb:::expr_reference("o_shippriority")
+        duckdb:::expr_set_alias(tmp_expr, "o_shippriority")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb:::expr_reference("volume")
+        duckdb:::expr_set_alias(tmp_expr, "volume")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb:::expr_window(duckdb:::expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb:::expr_set_alias(tmp_expr, "___row_number")
+        tmp_expr
+      }
+    )
+  )
+  rel28 <- duckdb:::rel_aggregate(
+    rel27,
     groups = list(duckdb:::expr_reference("l_orderkey"), duckdb:::expr_reference("o_orderdate"), duckdb:::expr_reference("o_shippriority")),
     aggregates = list(
+      {
+        tmp_expr <- duckdb:::expr_function("min", list(duckdb:::expr_reference("___row_number")))
+        duckdb:::expr_set_alias(tmp_expr, "___row_number")
+        tmp_expr
+      },
       {
         tmp_expr <- duckdb:::expr_function("sum", list(duckdb:::expr_reference("volume")))
         duckdb:::expr_set_alias(tmp_expr, "revenue")
@@ -431,8 +476,34 @@ tpch_raw_oo_03 <- function(con, experimental) {
       }
     )
   )
-  rel28 <- duckdb:::rel_project(
-    rel27,
+  rel29 <- duckdb:::rel_order(rel28, list(duckdb:::expr_reference("___row_number")))
+  rel30 <- duckdb:::rel_project(
+    rel29,
+    list(
+      {
+        tmp_expr <- duckdb:::expr_reference("l_orderkey")
+        duckdb:::expr_set_alias(tmp_expr, "l_orderkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb:::expr_reference("o_orderdate")
+        duckdb:::expr_set_alias(tmp_expr, "o_orderdate")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb:::expr_reference("o_shippriority")
+        duckdb:::expr_set_alias(tmp_expr, "o_shippriority")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb:::expr_reference("revenue")
+        duckdb:::expr_set_alias(tmp_expr, "revenue")
+        tmp_expr
+      }
+    )
+  )
+  rel31 <- duckdb:::rel_project(
+    rel30,
     list(
       {
         tmp_expr <- duckdb:::expr_reference("l_orderkey")
@@ -456,11 +527,11 @@ tpch_raw_oo_03 <- function(con, experimental) {
       }
     )
   )
-  rel29 <- duckdb:::rel_order(
-    rel28,
+  rel32 <- duckdb:::rel_order(
+    rel31,
     list(duckdb:::expr_function("desc", list(duckdb:::expr_reference("revenue"))), duckdb:::expr_reference("o_orderdate"))
   )
-  rel30 <- duckdb:::rel_limit(rel29, 10)
-  rel30
-  duckdb:::rel_to_altrep(rel30)
+  rel33 <- duckdb:::rel_limit(rel32, 10)
+  rel33
+  duckdb:::rel_to_altrep(rel33)
 }
