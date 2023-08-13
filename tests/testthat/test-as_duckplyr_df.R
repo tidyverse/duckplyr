@@ -1546,6 +1546,8 @@ test_that("as_duckplyr_df() and tally()", {
 })
 
 test_that("as_duckplyr_df() and tbl_vars()", {
+  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
