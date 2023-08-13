@@ -12,7 +12,7 @@ rel_try <- function(rel, ...) {
     if (isTRUE(dots[[i]])) {
       stats$fallback <- stats$fallback + 1L
       if (!dplyr_mode) {
-        if (!identical(Sys.getenv("TESTTHAT"), "true")) {
+        if (Sys.getenv("DUCKPLYR_FALLBACK_INFO") == "TRUE") {
           inform(message = c("Requested fallback for relational:", i = names(dots)[[i]]))
         }
         if (Sys.getenv("DUCKPLYR_FORCE") == "TRUE") {
@@ -31,7 +31,7 @@ rel_try <- function(rel, ...) {
   out <- rlang::try_fetch(rel, error = identity)
   if (inherits(out, "error")) {
     # FIXME: enable always
-    if (!dplyr_mode && !identical(Sys.getenv("TESTTHAT"), "true")) {
+    if (Sys.getenv("DUCKPLYR_FALLBACK_INFO") == "TRUE") {
       rlang::cnd_signal(rlang::message_cnd(message = "Error processing with relational.", parent = out))
     }
     stats$fallback <- stats$fallback + 1L
