@@ -104,20 +104,21 @@ rel_translate <- function(
             def <- lubridate::wday
             call <- match.call(def, expr, envir = env)
             args <- as.list(call[-1])
-            if (!is.null(args$label)) {
-              abort("wday(label = ) not supported")
-            }
-            if (!is.null(args$abbr)) {
-              abort("wday(abbr = ) not supported")
-            }
-            if (!is.null(args$locale)) {
-              abort("wday(locale = ) not supported")
-            }
-            if (!is.null(args$week_start)) {
-              abort("wday(week_start = ) not supported")
+            bad <- !(names(args) %in% c("x"))
+            if (any(bad)) {
+              abort(paste0(name, "(", names(args)[which(bad)[[1]]], " = ) not supported"))
             }
             if (!is.null(getOption("lubridate.week.start"))) {
               abort('wday() with option("lubridate.week.start") not supported')
+            }
+          },
+          "strftime" = {
+            def <- strftime
+            call <- match.call(def, expr, envir = env)
+            args <- as.list(call[-1])
+            bad <- !(names(args) %in% c("x", "format"))
+            if (any(bad)) {
+              abort(paste0(name, "(", names(args)[which(bad)[[1]]], " = ) not supported"))
             }
           },
           "%in%" = {
@@ -162,6 +163,10 @@ rel_translate <- function(
           "hour",
           "minute",
           "second",
+          "strftime",
+          "abs",
+          "%in%",
+          "substr",
 
           NULL
         )
