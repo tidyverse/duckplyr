@@ -71,15 +71,19 @@ duckdb_rel_from_df <- function(df) {
 
   tryCatch(
     {
-      # duckdb:::df_is_materialized() is broken and unneeded
       rel <- duckdb:::rel_from_altrep_df(df)
-      rel_names <- duckdb:::rapi_rel_names(rel)
-      if (!identical(rel_names, names(df))) {
-        # This can happen when column names change for an existing relational data frame
-        exprs <- nexprs_from_loc(rel_names, set_names(seq_along(df), names(df)))
-        rel <- rel_project.duckdb_relation(rel, exprs)
+      # Once we're here, we know it's an ALTREP data frame
+      # We don't do anything if it's already materialized
+
+      if (!duckdb:::df_is_materialized(df)) {
+        rel_names <- duckdb:::rapi_rel_names(rel)
+        if (!identical(rel_names, names(df))) {
+          # This can happen when column names change for an existing relational data frame
+          exprs <- nexprs_from_loc(rel_names, set_names(seq_along(df), names(df)))
+          rel <- rel_project.duckdb_relation(rel, exprs)
+        }
+        return(rel)
       }
-      return(rel)
     },
     error = function(e) {}
   )

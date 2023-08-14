@@ -75,3 +75,18 @@ test_that("rel_aggregate()", {
       rel_to_df()
   })
 })
+
+test_that("duckdb_rel_from_df() uses materialized results", {
+  withr::local_envvar(DUCKPLYR_FORCE = TRUE)
+  withr::local_options(duckdb.materialize_message = TRUE)
+
+  df <-
+    data.frame(a = 1) %>%
+    duckplyr_filter(a == 1)
+
+  expect_snapshot(transform = function(x) gsub("0x[0-9a-f]+", "0xdeadbeef", x), {
+    duckdb_rel_from_df(df)
+    nrow(df)
+    duckdb_rel_from_df(df)
+  })
+})

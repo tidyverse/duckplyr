@@ -21,3 +21,51 @@
         mean_bill_length_mm
       1            43.92193
 
+# duckdb_rel_from_df() uses materialized results
+
+    Code
+      duckdb_rel_from_df(df)
+    Message
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      Filter [==(a, 1.0)]
+        r_dataframe_scan(0xdeadbeef)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - a (DOUBLE)
+      
+    Code
+      nrow(df)
+    Output
+      materializing:
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      Filter [==(a, 1.0)]
+        r_dataframe_scan(0xdeadbeef)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - a (DOUBLE)
+      
+      [1] 1
+    Code
+      duckdb_rel_from_df(df)
+    Message
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      r_dataframe_scan(0xdeadbeef)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - a (DOUBLE)
+      
+
