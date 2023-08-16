@@ -18,3 +18,11 @@ test_that("inline parens (3)", {
     rel_translate(quo((a * b)), df),
   )
 })
+
+test_that("division by zero", {
+  df <- data.frame(a = 0, b = 0)
+  expect_identical(
+    duckplyr_mutate(df, c = a / b),
+    mutate(df, c = a / b),
+  )
+})

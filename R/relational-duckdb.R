@@ -21,6 +21,9 @@ duckplyr_macros <- c(
   ">=" = '(a, b) AS a >= b',
   "==" = '(a, b) AS a = b',
   "!=" = '(a, b) AS a <> b',
+
+  "/" = "(x, y) AS CASE WHEN x = 0 AND y = 0 THEN CAST('NaN' AS double) ELSE x / y END",
+
   "is.na" = '(a) AS (a IS NULL)',
   "n" = '() AS CAST(COUNT(*) AS int32)',
 
