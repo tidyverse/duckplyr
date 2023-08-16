@@ -124,11 +124,21 @@ duckdb_rel_from_df <- function(df) {
   out <- duckdb:::rel_from_df(con, df, experimental = experimental)
 
   roundtrip <- duckdb:::rapi_rel_to_altrep(out)
-  df_attribs <- lapply(df, attributes)
-  roundtrip_attribs <- lapply(roundtrip, attributes)
-  for (i in seq_along(df_attribs)) {
-    if (!identical(df_attribs[[i]], roundtrip_attribs[[i]])) {
-      stop("Attributes are lost during conversion. Affected column: `", names(df)[[i]], "`.")
+  if (Sys.getenv("DUCKPLYR_CHECK_ROUNDTRIP") == "TRUE") {
+    rlang::with_options(duckdb.materialize_message = FALSE, {
+      for (i in seq_along(df)) {
+        if (!identical(df[[i]], roundtrip[[i]])) {
+          stop("Imperfect roundtrip. Affected column: `", names(df)[[i]], "`.")
+        }
+      }
+    })
+  } else {
+    for (i in seq_along(df)) {
+      df_attrib <- attributes(df[[i]])
+      roundtrip_attrib <- attributes(roundtrip[[i]])
+      if (!identical(df_attrib, roundtrip_attrib)) {
+        stop("Attributes are lost during conversion. Affected column: `", names(df)[[i]], "`.")
+      }
     }
   }
 

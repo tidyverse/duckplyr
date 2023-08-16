@@ -20,7 +20,17 @@ test_that("duckdb_rel_from_df()", {
     `NA` = NA,
   )
 
+  if (Sys.getenv("DUCKPLYR_CHECK_ROUNDTRIP") == "TRUE") {
+    # Ingestion only
+    df$DATE_INTEGER <- NULL
+    df$TIME_SECONDS_INTEGER <- NULL
+    # duckdb issue
+    df$TIMESTAMP[] <- round(as.numeric(df$TIMESTAMP))
+  }
+
   expect_silent(duckdb_rel_from_df(df))
+
+  skip_if(Sys.getenv("DUCKPLYR_CHECK_ROUNDTRIP") == "TRUE")
 
   # If this is no longer an eror, we need to make sure that subsetting
   # forwards to the vector class
