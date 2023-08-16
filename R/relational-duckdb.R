@@ -15,16 +15,16 @@ get_default_duckdb_connection <- function() {
 }
 
 duckplyr_macros <- c(
-  "<" = '(a, b) AS a < b',
-  "<=" = '(a, b) AS a <= b',
-  ">" = '(a, b) AS a > b',
-  ">=" = '(a, b) AS a >= b',
-  "==" = '(a, b) AS a = b',
-  "!=" = '(a, b) AS a <> b',
+  "<" = '(x, y) AS x < y',
+  "<=" = '(x, y) AS x <= y',
+  ">" = '(x, y) AS x > y',
+  ">=" = '(x, y) AS x >= y',
+  "==" = '(x, y) AS x = y',
+  "!=" = '(x, y) AS x <> y',
 
   "/" = "(x, y) AS CASE WHEN x = 0 AND y = 0 THEN CAST('NaN' AS double) ELSE x / y END",
 
-  "is.na" = '(a) AS (a IS NULL)',
+  "is.na" = '(x) AS (x IS NULL)',
   "n" = '() AS CAST(COUNT(*) AS int32)',
 
   "log10" = '(x) AS log(x)',
@@ -43,8 +43,8 @@ duckplyr_macros <- c(
 
   "wday" = "(x) AS CAST(weekday(CAST (x AS DATE)) + 1 AS int32)",
 
-  "___eq_na_matches_na" = '(a, b) AS ((a IS NULL AND b IS NULL) OR (a = b))',
-  "___coalesce" = '(a, b) AS COALESCE(a, b)',
+  "___eq_na_matches_na" = '(x, y) AS ((x IS NULL AND y IS NULL) OR (x = y))',
+  "___coalesce" = '(x, y) AS COALESCE(x, y)',
 
   NULL
 )
