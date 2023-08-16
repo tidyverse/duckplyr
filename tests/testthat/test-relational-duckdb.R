@@ -24,7 +24,7 @@ test_that("duckdb_rel_from_df()", {
     # Ingestion only
     df$DATE_INTEGER <- NULL
     df$TIME_SECONDS_INTEGER <- NULL
-    # duckdb issue
+    # https://github.com/duckdb/duckdb/issues/8585
     df$TIMESTAMP[] <- round(as.numeric(df$TIMESTAMP))
   }
 
