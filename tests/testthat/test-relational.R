@@ -26,3 +26,11 @@ test_that("division by zero", {
     mutate(df, c = a / b),
   )
 })
+
+test_that("transmute() with special column names", {
+  df <- data.frame(row = 1)
+  expect_identical(
+    duckplyr_transmute(df, row),
+    transmute(df, row),
+  )
+})

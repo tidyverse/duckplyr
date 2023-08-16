@@ -5,6 +5,7 @@ transmute.duckplyr_df <- function(.data, ...) {
 
   dots <- check_transmute_args(...)
   dots <- dplyr_quosures(!!!dots)
+  dots <- fix_auto_name(dots)
 
   rel_try(
     "Can't use relational with zero-column result set." = (length(dots) == 0),
