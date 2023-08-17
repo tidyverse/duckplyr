@@ -3,9 +3,9 @@ con <- DBI::dbConnect(duckdb::duckdb())
 experimental <- FALSE
 invisible(DBI::dbExecute(con, "CREATE MACRO \"&\"(x, y) AS (x AND y)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"|\"(x, y) AS (x OR y)"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \">\"(a, b) AS a > b"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \">\"(x, y) AS x > y"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(x, y) AS COALESCE(x, y)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS CAST(COUNT(*) AS int32)"))
 df1 <- customer
 rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)

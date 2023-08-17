@@ -9,32 +9,22 @@ tpch_raw_14 <- function(con, experimental) {
         ">=",
         list(
           duckdb:::expr_reference("l_shipdate"),
-          duckdb:::expr_function(
-            "as.Date",
-            list(
-              if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                duckdb:::expr_constant("1995-09-01", experimental = experimental)
-              } else {
-                duckdb:::expr_constant("1995-09-01")
-              }
-            )
-          )
+          if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+            duckdb:::expr_constant(as.Date("1995-09-01"), experimental = experimental)
+          } else {
+            duckdb:::expr_constant(as.Date("1995-09-01"))
+          }
         )
       ),
       duckdb:::expr_function(
         "<",
         list(
           duckdb:::expr_reference("l_shipdate"),
-          duckdb:::expr_function(
-            "as.Date",
-            list(
-              if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                duckdb:::expr_constant("1995-10-01", experimental = experimental)
-              } else {
-                duckdb:::expr_constant("1995-10-01")
-              }
-            )
-          )
+          if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+            duckdb:::expr_constant(as.Date("1995-10-01"), experimental = experimental)
+          } else {
+            duckdb:::expr_constant(as.Date("1995-10-01"))
+          }
         )
       )
     )
@@ -188,7 +178,7 @@ tpch_raw_14 <- function(con, experimental) {
     aggregates = list(
       {
         tmp_expr <- duckdb:::expr_function(
-          "/",
+          "___divide",
           list(
             duckdb:::expr_function(
               "*",

@@ -92,32 +92,22 @@ tpch_raw_10 <- function(con, experimental) {
         ">=",
         list(
           duckdb:::expr_reference("o_orderdate"),
-          duckdb:::expr_function(
-            "as.Date",
-            list(
-              if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                duckdb:::expr_constant("1993-10-01", experimental = experimental)
-              } else {
-                duckdb:::expr_constant("1993-10-01")
-              }
-            )
-          )
+          if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+            duckdb:::expr_constant(as.Date("1993-10-01"), experimental = experimental)
+          } else {
+            duckdb:::expr_constant(as.Date("1993-10-01"))
+          }
         )
       ),
       duckdb:::expr_function(
         "<",
         list(
           duckdb:::expr_reference("o_orderdate"),
-          duckdb:::expr_function(
-            "as.Date",
-            list(
-              if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                duckdb:::expr_constant("1994-01-01", experimental = experimental)
-              } else {
-                duckdb:::expr_constant("1994-01-01")
-              }
-            )
-          )
+          if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+            duckdb:::expr_constant(as.Date("1994-01-01"), experimental = experimental)
+          } else {
+            duckdb:::expr_constant(as.Date("1994-01-01"))
+          }
         )
       )
     )

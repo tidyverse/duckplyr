@@ -1,11 +1,10 @@
 qloadm("tools/tpch/001.qs")
 con <- DBI::dbConnect(duckdb::duckdb())
 experimental <- FALSE
-invisible(DBI::dbExecute(con, "CREATE MACRO \"<\"(a, b) AS a < b"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \">=\"(a, b) AS a >= b"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"as.Date\"(x) AS strptime(x, '%Y-%m-%d')"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"<\"(x, y) AS x < y"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \">=\"(x, y) AS x >= y"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(x, y) AS COALESCE(x, y)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS CAST(COUNT(*) AS int32)"))
 df1 <- lineitem
 rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
@@ -77,32 +76,22 @@ rel7 <- duckdb:::rel_filter(
       ">=",
       list(
         duckdb:::expr_reference("o_orderdate"),
-        duckdb:::expr_function(
-          "as.Date",
-          list(
-            if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-              duckdb:::expr_constant("1993-07-01", experimental = experimental)
-            } else {
-              duckdb:::expr_constant("1993-07-01")
-            }
-          )
-        )
+        if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+          duckdb:::expr_constant(as.Date("1993-07-01"), experimental = experimental)
+        } else {
+          duckdb:::expr_constant(as.Date("1993-07-01"))
+        }
       )
     ),
     duckdb:::expr_function(
       "<",
       list(
         duckdb:::expr_reference("o_orderdate"),
-        duckdb:::expr_function(
-          "as.Date",
-          list(
-            if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-              duckdb:::expr_constant("1993-10-01", experimental = experimental)
-            } else {
-              duckdb:::expr_constant("1993-10-01")
-            }
-          )
-        )
+        if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+          duckdb:::expr_constant(as.Date("1993-10-01"), experimental = experimental)
+        } else {
+          duckdb:::expr_constant(as.Date("1993-10-01"))
+        }
       )
     )
   )

@@ -494,7 +494,7 @@ tpch_raw_17 <- function(con, experimental) {
     aggregates = list(
       {
         tmp_expr <- duckdb:::expr_function(
-          "/",
+          "___divide",
           list(
             duckdb:::expr_function("sum", list(duckdb:::expr_reference("l_extendedprice"))),
             if ("experimental" %in% names(formals(duckdb:::expr_constant))) {

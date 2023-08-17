@@ -49,16 +49,11 @@ tpch_raw_01 <- function(con, experimental) {
         "<=",
         list(
           duckdb:::expr_reference("l_shipdate"),
-          duckdb:::expr_function(
-            "as.Date",
-            list(
-              if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                duckdb:::expr_constant("1998-09-02", experimental = experimental)
-              } else {
-                duckdb:::expr_constant("1998-09-02")
-              }
-            )
-          )
+          if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+            duckdb:::expr_constant(as.Date("1998-09-02"), experimental = experimental)
+          } else {
+            duckdb:::expr_constant(as.Date("1998-09-02"))
+          }
         )
       )
     )

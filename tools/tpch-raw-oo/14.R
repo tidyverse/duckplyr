@@ -1,11 +1,16 @@
 qloadm("tools/tpch/001.qs")
 con <- DBI::dbConnect(duckdb::duckdb())
 experimental <- FALSE
-invisible(DBI::dbExecute(con, "CREATE MACRO \">=\"(a, b) AS a >= b"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"as.Date\"(x) AS strptime(x, '%Y-%m-%d')"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"<\"(a, b) AS a < b"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \">=\"(x, y) AS x >= y"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"<\"(x, y) AS x < y"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(x, y) AS COALESCE(x, y)"))
+invisible(
+  DBI::dbExecute(
+    con,
+    "CREATE MACRO \"___divide\"(x, y) AS CASE WHEN x = 0 AND y = 0 THEN CAST('NaN' AS double) ELSE CAST(x AS double) / y END"
+  )
+)
 invisible(
   DBI::dbExecute(
     con,
@@ -24,32 +29,22 @@ rel2 <- duckdb:::rel_filter(
       ">=",
       list(
         duckdb:::expr_reference("l_shipdate"),
-        duckdb:::expr_function(
-          "as.Date",
-          list(
-            if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-              duckdb:::expr_constant("1995-09-01", experimental = experimental)
-            } else {
-              duckdb:::expr_constant("1995-09-01")
-            }
-          )
-        )
+        if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+          duckdb:::expr_constant(as.Date("1995-09-01"), experimental = experimental)
+        } else {
+          duckdb:::expr_constant(as.Date("1995-09-01"))
+        }
       )
     ),
     duckdb:::expr_function(
       "<",
       list(
         duckdb:::expr_reference("l_shipdate"),
-        duckdb:::expr_function(
-          "as.Date",
-          list(
-            if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-              duckdb:::expr_constant("1995-10-01", experimental = experimental)
-            } else {
-              duckdb:::expr_constant("1995-10-01")
-            }
-          )
-        )
+        if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+          duckdb:::expr_constant(as.Date("1995-10-01"), experimental = experimental)
+        } else {
+          duckdb:::expr_constant(as.Date("1995-10-01"))
+        }
       )
     )
   )
@@ -352,7 +347,7 @@ rel11 <- duckdb:::rel_aggregate(
   aggregates = list(
     {
       tmp_expr <- duckdb:::expr_function(
-        "/",
+        "___divide",
         list(
           duckdb:::expr_function(
             "*",

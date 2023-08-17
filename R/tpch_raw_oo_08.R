@@ -266,32 +266,22 @@ tpch_raw_oo_08 <- function(con, experimental) {
         ">=",
         list(
           duckdb:::expr_reference("o_orderdate"),
-          duckdb:::expr_function(
-            "as.Date",
-            list(
-              if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                duckdb:::expr_constant("1995-01-01", experimental = experimental)
-              } else {
-                duckdb:::expr_constant("1995-01-01")
-              }
-            )
-          )
+          if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+            duckdb:::expr_constant(as.Date("1995-01-01"), experimental = experimental)
+          } else {
+            duckdb:::expr_constant(as.Date("1995-01-01"))
+          }
         )
       ),
       duckdb:::expr_function(
         "<=",
         list(
           duckdb:::expr_reference("o_orderdate"),
-          duckdb:::expr_function(
-            "as.Date",
-            list(
-              if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
-                duckdb:::expr_constant("1996-12-31", experimental = experimental)
-              } else {
-                duckdb:::expr_constant("1996-12-31")
-              }
-            )
-          )
+          if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
+            duckdb:::expr_constant(as.Date("1996-12-31"), experimental = experimental)
+          } else {
+            duckdb:::expr_constant(as.Date("1996-12-31"))
+          }
         )
       )
     )
@@ -1206,7 +1196,7 @@ tpch_raw_oo_08 <- function(con, experimental) {
       },
       {
         tmp_expr <- duckdb:::expr_function(
-          "/",
+          "___divide",
           list(
             duckdb:::expr_function(
               "sum",

@@ -1,9 +1,15 @@
 qloadm("tools/tpch/001.qs")
 con <- DBI::dbConnect(duckdb::duckdb())
 experimental <- FALSE
-invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(a, b) AS a = b"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(a, b) AS COALESCE(a, b)"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"<\"(a, b) AS a < b"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(x, y) AS COALESCE(x, y)"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"<\"(x, y) AS x < y"))
+invisible(
+  DBI::dbExecute(
+    con,
+    "CREATE MACRO \"___divide\"(x, y) AS CASE WHEN x = 0 AND y = 0 THEN CAST('NaN' AS double) ELSE CAST(x AS double) / y END"
+  )
+)
 df1 <- part
 rel1 <- duckdb:::rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb:::rel_filter(
@@ -498,7 +504,7 @@ rel16 <- duckdb:::rel_aggregate(
   aggregates = list(
     {
       tmp_expr <- duckdb:::expr_function(
-        "/",
+        "___divide",
         list(
           duckdb:::expr_function("sum", list(duckdb:::expr_reference("l_extendedprice"))),
           if ("experimental" %in% names(formals(duckdb:::expr_constant))) {
