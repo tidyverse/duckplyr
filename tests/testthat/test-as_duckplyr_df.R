@@ -1001,6 +1001,32 @@ test_that("as_duckplyr_df() and mutate(nth(a, 2), .by = g)", {
   expect_equal(pre, post)
 })
 
+
+test_that("as_duckplyr_df() and mutate(a / b)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(a / b) %>% as.data.frame()
+  post <- test_df %>% mutate(a / b)
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and mutate(c = 0, d = 0, e = c / d)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(c = 0, d = 0, e = c / d) %>% as.data.frame()
+  post <- test_df %>% mutate(c = 0, d = 0, e = c / d)
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 test_that("as_duckplyr_df() and nest_by()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
@@ -1566,6 +1592,19 @@ test_that("as_duckplyr_df() and transmute(c = a + 1)", {
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% transmute(c = a + 1) %>% as.data.frame()
   post <- test_df %>% transmute(c = a + 1)
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and transmute(row = a)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% transmute(row = a) %>% as.data.frame()
+  post <- test_df %>% transmute(row = a)
 
   # Compare
   expect_equal(pre, post)
