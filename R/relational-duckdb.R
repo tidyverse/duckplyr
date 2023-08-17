@@ -30,7 +30,10 @@ duckplyr_macros <- c(
   "log10" = '(x) AS log(x)',
   "log" = '(x) AS ln(x)',
   # TPCH
-  "as.Date" = '(x) AS strptime(x, \'%Y-%m-%d\')',
+
+  # https://github.com/duckdb/duckdb/discussions/8599
+  # "as.Date" = '(x) AS strptime(x, \'%Y-%m-%d\')',
+
   "grepl" = '(pattern, x) AS regexp_matches(x, pattern)',
   "as.integer" = '(x) AS CAST(x AS int32)',
   "ifelse" = '(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)',

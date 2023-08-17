@@ -6,7 +6,7 @@ TPCH_NA_MATCHES <- "never"
 tpch_01 <- function() {
   lineitem |>
     select_opt(l_shipdate, l_returnflag, l_linestatus, l_quantity, l_extendedprice, l_discount, l_tax) |>
-    filter(l_shipdate <= as.Date("1998-09-02")) |>
+    filter(l_shipdate <= !!as.Date("1998-09-02")) |>
     select_opt(l_returnflag, l_linestatus, l_quantity, l_extendedprice, l_discount, l_tax) |>
     summarise(
       sum_qty = sum(l_quantity),
@@ -84,7 +84,7 @@ tpch_03 <- function() {
   oc <- inner_join(
     orders |>
       select_opt(o_orderkey, o_custkey, o_orderdate, o_shippriority) |>
-      filter(o_orderdate < as.Date("1995-03-15")),
+      filter(o_orderdate < !!as.Date("1995-03-15")),
     customer |>
       select_opt(c_custkey, c_mktsegment) |>
       filter(c_mktsegment == "BUILDING"),
@@ -95,7 +95,7 @@ tpch_03 <- function() {
   loc <- inner_join(
     lineitem |>
       select_opt(l_orderkey, l_shipdate, l_extendedprice, l_discount) |>
-      filter(l_shipdate > as.Date("1995-03-15")) |>
+      filter(l_shipdate > !!as.Date("1995-03-15")) |>
       select_opt(l_orderkey, l_extendedprice, l_discount),
     oc,
     by = c("l_orderkey" = "o_orderkey")
@@ -118,7 +118,7 @@ tpch_04 <- function() {
 
   o <- orders |>
     select_opt(o_orderkey, o_orderdate, o_orderpriority) |>
-    filter(o_orderdate >= as.Date("1993-07-01"), o_orderdate < as.Date("1993-10-01")) |>
+    filter(o_orderdate >= !!as.Date("1993-07-01"), o_orderdate < !!as.Date("1993-10-01")) |>
     select(o_orderkey, o_orderpriority)
 
   # distinct after join, tested and indeed faster
@@ -160,7 +160,7 @@ tpch_05 <- function() {
 
   o <- orders |>
     select_opt(o_orderdate, o_orderkey, o_custkey) |>
-    filter(o_orderdate >= as.Date("1994-01-01"), o_orderdate < as.Date("1995-01-01")) |>
+    filter(o_orderdate >= !!as.Date("1994-01-01"), o_orderdate < !!as.Date("1995-01-01")) |>
     select_opt(o_orderkey, o_custkey)
 
   oc <- inner_join(na_matches = TPCH_NA_MATCHES, o, customer |> select_opt(c_custkey, c_nationkey),
@@ -185,8 +185,8 @@ tpch_06 <- function() {
   lineitem |>
     select_opt(l_shipdate, l_extendedprice, l_discount, l_quantity) |>
     filter(
-      l_shipdate >= as.Date("1994-01-01"),
-      l_shipdate < as.Date("1995-01-01"),
+      l_shipdate >= !!as.Date("1994-01-01"),
+      l_shipdate < !!as.Date("1995-01-01"),
       l_discount >= 0.05,
       l_discount <= 0.07,
       l_quantity < 24
@@ -229,7 +229,7 @@ tpch_07 <- function() {
   cnol <- inner_join(na_matches = TPCH_NA_MATCHES,
     lineitem |>
       select_opt(l_orderkey, l_suppkey, l_shipdate, l_extendedprice, l_discount) |>
-      filter(l_shipdate >= as.Date("1995-01-01"), l_shipdate <= as.Date("1996-12-31")),
+      filter(l_shipdate >= !!as.Date("1995-01-01"), l_shipdate <= !!as.Date("1996-12-31")),
     cno,
     by = c("l_orderkey" = "o_orderkey")
   ) |>
@@ -276,7 +276,7 @@ tpch_08 <- function() {
   ocnr <- inner_join(na_matches = TPCH_NA_MATCHES,
     orders |>
       select_opt(o_orderkey, o_custkey, o_orderdate) |>
-      filter(o_orderdate >= as.Date("1995-01-01"), o_orderdate <= as.Date("1996-12-31")),
+      filter(o_orderdate >= !!as.Date("1995-01-01"), o_orderdate <= !!as.Date("1996-12-31")),
     cnr,
     by = c("o_custkey" = "c_custkey")
   ) |>
@@ -389,7 +389,7 @@ tpch_10 <- function() {
 
   o <- orders |>
     select_opt(o_orderkey, o_custkey, o_orderdate) |>
-    filter(o_orderdate >= as.Date("1993-10-01"), o_orderdate < as.Date("1994-01-01")) |>
+    filter(o_orderdate >= !!as.Date("1993-10-01"), o_orderdate < !!as.Date("1994-01-01")) |>
     select_opt(o_orderkey, o_custkey)
 
   lo <- inner_join(na_matches = TPCH_NA_MATCHES, l, o,

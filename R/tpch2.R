@@ -32,8 +32,8 @@ tpch_12 <- function() {
       l_shipmode %in% c("MAIL", "SHIP"),
       l_commitdate < l_receiptdate,
       l_shipdate < l_commitdate,
-      l_receiptdate >= as.Date("1994-01-01"),
-      l_receiptdate < as.Date("1995-01-01")
+      l_receiptdate >= !!as.Date("1994-01-01"),
+      l_receiptdate < !!as.Date("1995-01-01")
     ) |>
     inner_join(na_matches = TPCH_NA_MATCHES,
       orders,
@@ -80,8 +80,8 @@ tpch_13 <- function() {
 tpch_14 <- function() {
   lineitem |>
     filter(
-      l_shipdate >= as.Date("1995-09-01"),
-      l_shipdate < as.Date("1995-10-01")
+      l_shipdate >= !!as.Date("1995-09-01"),
+      l_shipdate < !!as.Date("1995-10-01")
     ) |>
     inner_join(na_matches = TPCH_NA_MATCHES, part, by = c("l_partkey" = "p_partkey")) |>
     summarise(
@@ -94,8 +94,8 @@ tpch_14 <- function() {
 tpch_15 <- function() {
   revenue_by_supplier <- lineitem |>
     filter(
-      l_shipdate >= as.Date("1996-01-01"),
-      l_shipdate < as.Date("1996-04-01")
+      l_shipdate >= !!as.Date("1996-01-01"),
+      l_shipdate < !!as.Date("1996-04-01")
     ) |>
     summarise(
       total_revenue = sum(l_extendedprice * (1 - l_discount)),
@@ -240,8 +240,8 @@ tpch_20 <- function() {
 
   qty_threshold <- lineitem |>
     filter(
-      l_shipdate >= as.Date("1994-01-01"),
-      l_shipdate < as.Date("1995-01-01")
+      l_shipdate >= !!as.Date("1994-01-01"),
+      l_shipdate < !!as.Date("1995-01-01")
     ) |>
     semi_join(na_matches = TPCH_NA_MATCHES, partsupp_forest_ca, by = c("l_partkey" = "ps_partkey", "l_suppkey" = "ps_suppkey")) |>
     summarise(qty_threshold = 0.5 * sum(l_quantity), .by = l_suppkey)
