@@ -141,6 +141,7 @@ rel_translate <- function(
           first = "first_value",
           last = "last_value",
           nth = "nth_value",
+          "/" = "___divide",
           NULL
         )
 

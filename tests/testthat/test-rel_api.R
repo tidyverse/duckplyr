@@ -6438,7 +6438,7 @@ test_that("relational mutate(a / b) order-preserving", {
   invisible(
     DBI::dbExecute(
       con,
-      "CREATE MACRO \"/\"(x, y) AS CASE WHEN x = 0 AND y = 0 THEN CAST('NaN' AS double) ELSE x / y END"
+      "CREATE MACRO \"___divide\"(x, y) AS CASE WHEN x = 0 AND y = 0 THEN CAST('NaN' AS double) ELSE CAST(x AS double) / y END"
     )
   )
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
@@ -6463,7 +6463,7 @@ test_that("relational mutate(a / b) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb:::expr_function("/", list(duckdb:::expr_reference("a"), duckdb:::expr_reference("b")))
+        tmp_expr <- duckdb:::expr_function("___divide", list(duckdb:::expr_reference("a"), duckdb:::expr_reference("b")))
         duckdb:::expr_set_alias(tmp_expr, "a/b")
         tmp_expr
       }
@@ -6491,7 +6491,7 @@ test_that("relational mutate(c = 0, d = 0, e = c / d) order-preserving", {
   invisible(
     DBI::dbExecute(
       con,
-      "CREATE MACRO \"/\"(x, y) AS CASE WHEN x = 0 AND y = 0 THEN CAST('NaN' AS double) ELSE x / y END"
+      "CREATE MACRO \"___divide\"(x, y) AS CASE WHEN x = 0 AND y = 0 THEN CAST('NaN' AS double) ELSE CAST(x AS double) / y END"
     )
   )
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
@@ -6589,7 +6589,7 @@ test_that("relational mutate(c = 0, d = 0, e = c / d) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb:::expr_function("/", list(duckdb:::expr_reference("c"), duckdb:::expr_reference("d")))
+        tmp_expr <- duckdb:::expr_function("___divide", list(duckdb:::expr_reference("c"), duckdb:::expr_reference("d")))
         duckdb:::expr_set_alias(tmp_expr, "e")
         tmp_expr
       }
@@ -8723,7 +8723,7 @@ test_that("relational mutate(a / b) order-enforcing", {
   invisible(
     DBI::dbExecute(
       con,
-      "CREATE MACRO \"/\"(x, y) AS CASE WHEN x = 0 AND y = 0 THEN CAST('NaN' AS double) ELSE x / y END"
+      "CREATE MACRO \"___divide\"(x, y) AS CASE WHEN x = 0 AND y = 0 THEN CAST('NaN' AS double) ELSE CAST(x AS double) / y END"
     )
   )
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
@@ -8748,7 +8748,7 @@ test_that("relational mutate(a / b) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb:::expr_function("/", list(duckdb:::expr_reference("a"), duckdb:::expr_reference("b")))
+        tmp_expr <- duckdb:::expr_function("___divide", list(duckdb:::expr_reference("a"), duckdb:::expr_reference("b")))
         duckdb:::expr_set_alias(tmp_expr, "a/b")
         tmp_expr
       }
@@ -8780,7 +8780,7 @@ test_that("relational mutate(c = 0, d = 0, e = c / d) order-enforcing", {
   invisible(
     DBI::dbExecute(
       con,
-      "CREATE MACRO \"/\"(x, y) AS CASE WHEN x = 0 AND y = 0 THEN CAST('NaN' AS double) ELSE x / y END"
+      "CREATE MACRO \"___divide\"(x, y) AS CASE WHEN x = 0 AND y = 0 THEN CAST('NaN' AS double) ELSE CAST(x AS double) / y END"
     )
   )
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
@@ -8878,7 +8878,7 @@ test_that("relational mutate(c = 0, d = 0, e = c / d) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb:::expr_function("/", list(duckdb:::expr_reference("c"), duckdb:::expr_reference("d")))
+        tmp_expr <- duckdb:::expr_function("___divide", list(duckdb:::expr_reference("c"), duckdb:::expr_reference("d")))
         duckdb:::expr_set_alias(tmp_expr, "e")
         tmp_expr
       }
