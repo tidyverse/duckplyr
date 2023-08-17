@@ -337,6 +337,9 @@ non_force_only_tests <- head(n = -1, list(
     # https://github.com/duckdb/duckdb/issues/8561
     "duckplyr_filter() with two conditions does not freeze (#4049)",
 
+    # as.Date() no longer defined
+    "date class remains on filter (#273)",
+
     NULL
   ),
   `test-join.R` = c(

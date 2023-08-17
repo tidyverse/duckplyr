@@ -72,6 +72,7 @@ test_that("filter discards NA", {
 })
 
 test_that("date class remains on filter (#273)", {
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   x1 <- x2 <- data.frame(
     date = seq.Date(as.Date("2013-01-01"), by = "1 days", length.out = 2),
     var = c(5, 8)
