@@ -44,6 +44,8 @@ duckplyr_macros <- c(
   "wday" = "(x) AS CAST(weekday(CAST (x AS DATE)) + 1 AS int32)",
 
   "___eq_na_matches_na" = '(x, y) AS ((x IS NULL AND y IS NULL) OR (x = y))',
+  # https://github.com/duckdb/duckdb/issues/8605
+  # "___eq_na_matches_na" = '(x, y) AS (x IS DISTINCT FROM y)',
   "___coalesce" = '(x, y) AS COALESCE(x, y)',
 
   NULL
