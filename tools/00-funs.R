@@ -531,6 +531,8 @@ test_extra_arg_map <- list(
   group_modify = "~ .x",
   inner_join = "join_by(a)",
   left_join = "join_by(a)",
+
+  # This includes all tests for operations we care about
   mutate = c(
     "",
     "a + 1",
@@ -588,6 +590,10 @@ test_extra_arg_map <- list(
     # "nth(a, -2)",
     # "nth(a, -2), .by = g",
 
+    "a / b",
+    # Division by zero
+    "c = 0, d = 0, e = c / d",
+
     NULL
   ),
   nest_join = "join_by(a)",
@@ -641,6 +647,9 @@ test_extra_arg_map <- list(
   ),
   transmute = c(
     "c = a + 1",
+    # special column name
+    "row = a",
+
     NULL
   ),
   NULL
