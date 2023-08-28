@@ -9,3 +9,4 @@
 ^res-duckdb\.csv$
 ^\.github$
 ^R/qs\.R$
+^\.sync$
