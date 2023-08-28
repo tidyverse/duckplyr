@@ -22,6 +22,8 @@ rel_join(
 
 \item{join}{type of join}
 
+\item{join_ref_type}{ref type of join}
+
 \item{...}{Reserved for future extensions, must be empty.}
 }
 \value{

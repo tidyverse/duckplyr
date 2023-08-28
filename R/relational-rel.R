@@ -126,6 +126,7 @@ rel_order <- function(rel, orders, ...) {
 #' @param right the right-hand-side relation object
 #' @param conds a list of DuckDB expressions to use for the join
 #' @param join type of join
+#' @param join_ref_type ref type of join
 #' @return a new relation object resulting from the join
 #' @export
 #' @examples
