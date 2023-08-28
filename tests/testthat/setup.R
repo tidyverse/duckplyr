@@ -12,3 +12,5 @@ withr::defer(envir = testthat::teardown_env(), {
   writeLines("")
   writeLines(format(hms::as_hms(Sys.time() - start)))
 })
+
+styler::cache_deactivate()
