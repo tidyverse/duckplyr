@@ -1,3 +1,7 @@
+#' Convert to a duckplyr data frame
+#'
+#' @param .data data frame or tibble to transform
+#'
 #' @export
 as_duckplyr_df <- function(.data) {
   if (inherits(.data, "duckplyr_df")) {

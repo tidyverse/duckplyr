@@ -1,5 +1,7 @@
 stats <- new_environment(list(attempts = 0L, fallback = 0L, calls = character()))
 
+#' Show stats
+#'
 #' @export
 stats_show <- function() {
   writeLines(paste0(

@@ -1,8 +1,16 @@
+#' TODO
+#'
+#' @param x TODO row
+#'
 #' @export
 wrap_integer <- function(x) {
   .Call(chunkrep_wrap, x)
 }
 
+#' TODO
+#'
+#' @param df data frame
+#'
 #' @export
 wrap_df <- function(df) {
   stopifnot(is.data.frame(df))

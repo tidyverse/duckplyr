@@ -1,3 +1,5 @@
+#' Methods overwriting
+#'
 #' @export
 methods_overwrite <- function() {
   vctrs::s3_register("dplyr::add_count", "data.frame", duckplyr:::add_count.duckplyr_df)
