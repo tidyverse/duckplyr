@@ -10,3 +10,6 @@
 ^\.github$
 ^R/qs\.R$
 ^\.sync$
+^res-duckplyr-raw\.csv$
+^res-duckplyr\.csv$
+^res-relational-duckdb\.csv$
