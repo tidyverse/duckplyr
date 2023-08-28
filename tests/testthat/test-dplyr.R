@@ -6,7 +6,7 @@ test_that("no homonyms", {
   names_duckplyr <- ls(duckplyr)
 
   names_common <- intersect(names_dplyr, names_duckplyr)
-  names_common <- setdiff(names_common, "DataMask")
+  names_common <- setdiff(names_common, c("DataMask", "the"))
 
   objs_dplyr <- mget(names_common, dplyr)
   objs_duckplyr <- mget(names_common, duckplyr)
