@@ -13,3 +13,4 @@
 ^res-duckplyr-raw\.csv$
 ^res-duckplyr\.csv$
 ^res-relational-duckdb\.csv$
+^R/meta\.R$
