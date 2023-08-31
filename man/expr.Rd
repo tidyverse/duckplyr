@@ -32,7 +32,7 @@ relexpr_set_alias(expr, alias = NULL)
 \arguments{
 \item{x}{An object.}
 
-\item{class}{Classes added in front of the `"relational_relexpr"` base class.}
+\item{class}{Classes added in front of the \code{"relational_relexpr"} base class.}
 
 \item{name}{The name of the column or function to reference.}
 
@@ -42,11 +42,11 @@ relexpr_set_alias(expr, alias = NULL)
 
 \item{val}{The value to use in the constant expression.}
 
-\item{args}{Function arguments, a list of `expr` objects.}
+\item{args}{Function arguments, a list of \code{expr} objects.}
 
-\item{expr}{An `expr` object.}
+\item{expr}{An \code{expr} object.}
 
-\item{partitions}{Partitions, a list of `expr` objects.}
+\item{partitions}{Partitions, a list of \code{expr} objects.}
 
 \item{order_bys}{which variables to order results by (list).}
 

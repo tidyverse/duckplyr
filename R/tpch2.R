@@ -1,3 +1,4 @@
+#' @autoglobal
 tpch_11 <- function() {
   nation <- nation |>
     filter(n_name == "GERMANY")
@@ -26,6 +27,7 @@ tpch_11 <- function() {
     select(ps_partkey, value)
 }
 
+#' @autoglobal
 tpch_12 <- function() {
   lineitem |>
     filter(
@@ -59,6 +61,7 @@ tpch_12 <- function() {
     arrange(l_shipmode)
 }
 
+#' @autoglobal
 tpch_13 <- function() {
   c_orders <- customer |>
     left_join(na_matches = TPCH_NA_MATCHES,
@@ -77,6 +80,7 @@ tpch_13 <- function() {
     arrange(desc(custdist), desc(c_count))
 }
 
+#' @autoglobal
 tpch_14 <- function() {
   lineitem |>
     filter(
@@ -91,6 +95,7 @@ tpch_14 <- function() {
     )
 }
 
+#' @autoglobal
 tpch_15 <- function() {
   revenue_by_supplier <- lineitem |>
     filter(
@@ -118,6 +123,7 @@ tpch_15 <- function() {
 }
 
 
+#' @autoglobal
 tpch_16 <- function() {
   part_filtered <- part |>
     filter(
@@ -143,6 +149,7 @@ tpch_16 <- function() {
     arrange(desc(supplier_cnt), p_brand, p_type, p_size)
 }
 
+#' @autoglobal
 tpch_17 <- function() {
   parts_filtered <- part |>
     filter(
@@ -162,6 +169,7 @@ tpch_17 <- function() {
     summarise(avg_yearly = sum(l_extendedprice) / 7.0)
 }
 
+#' @autoglobal
 tpch_18 <- function() {
   big_orders <- lineitem |>
     summarise(sum = sum(l_quantity), .by = l_orderkey) |>
@@ -179,6 +187,7 @@ tpch_18 <- function() {
     head(100)
 }
 
+#' @autoglobal
 tpch_19 <- function() {
   joined <- lineitem |>
     inner_join(na_matches = TPCH_NA_MATCHES, part, by = c("l_partkey" = "p_partkey"))
@@ -223,6 +232,7 @@ tpch_19 <- function() {
     )
 }
 
+#' @autoglobal
 tpch_20 <- function() {
   supplier_ca <- supplier |>
     inner_join(na_matches = TPCH_NA_MATCHES,
@@ -259,6 +269,7 @@ tpch_20 <- function() {
     arrange(s_name)
 }
 
+#' @autoglobal
 tpch_21 <- function() {
   orders_with_more_than_one_supplier <- lineitem |>
     count(l_orderkey, l_suppkey) |>
@@ -293,6 +304,7 @@ tpch_21 <- function() {
     head(100)
 }
 
+#' @autoglobal
 tpch_22 <- function() {
   acctbal_mins <- customer |>
     filter(
