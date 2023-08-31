@@ -77,26 +77,19 @@ duckdb_rel_from_df <- function(df) {
   # FIXME: make generic
   stopifnot(is.data.frame(df))
 
-  tryCatch(
-    {
-      rel <- duckdb:::rel_from_altrep_df(df)
-      # Once we're here, we know it's an ALTREP data frame
-      # We don't do anything if it's already materialized
+  rel <- duckdb:::rel_from_altrep_df(df, strict = FALSE, allow_materialized = FALSE)
+  if (!is.null(rel)) {
+    # Once we're here, we know it's an ALTREP data frame
+    # We don't get here if it's already materialized
 
-      if (!duckdb:::df_is_materialized(df)) {
-        rel_names <- duckdb:::rapi_rel_names(rel)
-        if (!identical(rel_names, names(df))) {
-          # This can happen when column names change for an existing relational data frame
-          exprs <- nexprs_from_loc(rel_names, set_names(seq_along(df), names(df)))
-          rel <- rel_project.duckdb_relation(rel, exprs)
-        }
-        return(rel)
-      }
-    },
-    error = function(e) {}
-  )
-
-  # FIXME: Move to duckdb:::rel_from_df()
+    rel_names <- duckdb:::rapi_rel_names(rel)
+    if (!identical(rel_names, names(df))) {
+      # This can happen when column names change for an existing relational data frame
+      exprs <- nexprs_from_loc(rel_names, set_names(seq_along(df), names(df)))
+      rel <- rel_project.duckdb_relation(rel, exprs)
+    }
+    return(rel)
+  }
 
   if (!is_duckplyr_df(df)) {
     df <- as_duckplyr_df(df)

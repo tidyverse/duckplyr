@@ -21,7 +21,7 @@ Imports:
     collections,
     DBI,
     dplyr,
-    duckdb (>= 0.8.1),
+    duckdb (>= 0.8.1-3),
     glue,
     lifecycle,
     purrr,
