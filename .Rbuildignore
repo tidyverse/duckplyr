@@ -14,3 +14,4 @@
 ^res-duckplyr\.csv$
 ^res-relational-duckdb\.csv$
 ^R/meta\.R$
+^R/tpch_raw_(?:oo_)?[0-9]+\.R$
