@@ -16,7 +16,6 @@ BugReports: https://github.com/duckdblabs/duckplyr/issues
 Depends: 
     R (>= 4.0.0)
 Imports: 
-    brio,
     cli,
     collections,
     DBI,
@@ -25,15 +24,14 @@ Imports:
     glue,
     lifecycle,
     purrr,
-    reprex,
     rlang (>= 1.0.6),
-    rstudioapi,
     tibble,
     tidyselect,
     utils,
     vctrs (>= 0.6.3)
 Suggests: 
     arrow,
+    brio,
     constructive,
     dbplyr,
     hms,
@@ -43,16 +41,16 @@ Suggests:
     pillar,
     prettycode,
     qs,
+    reprex,
+    rstudioapi,
     styler,
     testthat (>= 3.1.5),
     withr
-Encoding: UTF-8
-LazyData: true
-Roxygen: list(
-      markdown = TRUE,
-      roclets = c("collate", "namespace", "rd", "roxyglobals::global_roclet")
-    )
-RoxygenNote: 7.2.3
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Config/testthat/start-first: as_duckplyr_df, mutate, filter, count-tally
+Encoding: UTF-8
+LazyData: true
+Roxygen: list( markdown = TRUE, roclets = c("collate", "namespace", "rd",
+    "roxyglobals::global_roclet") )
+RoxygenNote: 7.2.3
