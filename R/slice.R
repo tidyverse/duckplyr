@@ -10,7 +10,7 @@ slice.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
   )
 
   # dplyr forward
-  slice <- dplyr:::slice.data.frame
+  slice <- dplyr$slice.data.frame
   out <- slice(.data, ..., .by = {{ .by }}, .preserve = .preserve)
   return(out)
 

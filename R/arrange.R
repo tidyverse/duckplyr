@@ -28,7 +28,7 @@ arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
   )
 
   # dplyr forward
-  arrange <- dplyr:::arrange.data.frame
+  arrange <- dplyr$arrange.data.frame
   out <- arrange(.data, ..., .by_group = .by_group, .locale = .locale)
   return(out)
 

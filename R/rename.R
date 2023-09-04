@@ -21,7 +21,7 @@ rename.duckplyr_df <- function(.data, ...) {
   )
 
   # dplyr forward
-  rename <- dplyr:::rename.data.frame
+  rename <- dplyr$rename.data.frame
   out <- rename(.data, ...)
   return(out)
 

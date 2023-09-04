@@ -23,7 +23,7 @@ relocate.duckplyr_df <- function(.data, ..., .before = NULL, .after = NULL) {
   )
 
   # dplyr forward
-  relocate <- dplyr:::relocate.data.frame
+  relocate <- dplyr$relocate.data.frame
   out <- relocate(.data, ..., .before = {{ .before }}, .after = {{ .after }})
   return(out)
 

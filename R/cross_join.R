@@ -10,7 +10,7 @@ cross_join.duckplyr_df <- function(x, y, ..., copy = FALSE, suffix = c(".x", ".y
   )
 
   # dplyr forward
-  cross_join <- dplyr:::cross_join.data.frame
+  cross_join <- dplyr$cross_join.data.frame
   out <- cross_join(x, y, ..., copy = copy, suffix = suffix)
   return(out)
 

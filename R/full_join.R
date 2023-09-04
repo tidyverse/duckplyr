@@ -15,7 +15,7 @@ full_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
   )
 
   # dplyr forward
-  full_join <- dplyr:::full_join.data.frame
+  full_join <- dplyr$full_join.data.frame
   out <- full_join(x, y, by, copy, suffix, ..., keep = keep, na_matches = na_matches, multiple = multiple, relationship = relationship)
   return(out)
 

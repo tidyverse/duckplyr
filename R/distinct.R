@@ -66,7 +66,7 @@ distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
   )
 
   # dplyr forward
-  distinct <- dplyr:::distinct.data.frame
+  distinct <- dplyr$distinct.data.frame
   out <- distinct(.data, ..., .keep_all = .keep_all)
   return(out)
 

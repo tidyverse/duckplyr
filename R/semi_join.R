@@ -17,7 +17,7 @@ semi_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches
   )
 
   # dplyr forward
-  semi_join <- dplyr:::semi_join.data.frame
+  semi_join <- dplyr$semi_join.data.frame
   out <- semi_join(x, y, by, copy, ..., na_matches = na_matches)
   return(out)
 

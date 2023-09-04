@@ -10,7 +10,7 @@ rows_patch.duckplyr_df <- function(x, y, by = NULL, ..., unmatched = c("error", 
   )
 
   # dplyr forward
-  rows_patch <- dplyr:::rows_patch.data.frame
+  rows_patch <- dplyr$rows_patch.data.frame
   out <- rows_patch(x, y, by, ..., unmatched = unmatched, copy = copy, in_place = in_place)
   return(out)
 

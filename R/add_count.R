@@ -10,7 +10,7 @@ add_count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, 
   )
 
   # dplyr forward
-  add_count <- dplyr:::add_count.data.frame
+  add_count <- dplyr$add_count.data.frame
   out <- add_count(x, ..., wt = {{ wt }}, sort = sort, name = name, .drop = .drop)
   return(out)
 
