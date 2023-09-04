@@ -24,7 +24,7 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
       if (oo) {
         aggregates <- c(
           list(rel_translate(
-            quo(min(`___row_number`)),
+            quo(min(.data$`___row_number`)),
             new_data_frame(list(`___row_number` = integer())),
             alias = "___row_number"
           )),

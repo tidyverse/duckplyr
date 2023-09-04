@@ -42,7 +42,7 @@ distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
         rel <- rel_project(rel, unname(proj_exprs))
 
         expr_filter <- rel_translate(
-          quo(`___row_number_by` == 1L),
+          quo(.data$`___row_number_by` == 1L),
           names_data = "___row_number_by"
         )
         out_rel <- rel_filter(rel, list(expr_filter))
