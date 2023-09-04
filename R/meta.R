@@ -40,7 +40,7 @@ meta_replay <- function(add_pre_code = TRUE) {
   # HACK
   count <- rel_cache$size()
   res_name <- sym(paste0("rel", count))
-  res_mat_expr <- expr(duckdb:::rel_to_altrep(!!res_name))
+  res_mat_expr <- expr(duckdb$rel_to_altrep(!!res_name))
   res_code <- map(list(res_name, res_mat_expr), constructive::deparse_call)
 
   all_code <- c(
@@ -162,7 +162,7 @@ meta_rel_register_df <- function(rel, df) {
 
   df_name <- meta_df_register(df)
   # Expect experimental argument from outside
-  rel_expr <- expr(duckdb:::rel_from_df(con, !!df_name, experimental = experimental))
+  rel_expr <- expr(duckdb$rel_from_df(con, !!df_name, experimental = experimental))
   meta_rel_register(rel, rel_expr)
 }
 
