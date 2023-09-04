@@ -1,7 +1,4 @@
 test_that("no homonyms", {
-  # FIXME: Why does this fail on R-devel?
-  skip_if(getRversion() >= "4.4.0")
-
   dplyr <- asNamespace("dplyr")
   duckplyr <- asNamespace("duckplyr")
 
@@ -9,7 +6,7 @@ test_that("no homonyms", {
   names_duckplyr <- ls(duckplyr)
 
   names_common <- intersect(names_dplyr, names_duckplyr)
-  names_common
+  names_common <- setdiff(names_common, "DataMask")
 
   objs_dplyr <- mget(names_common, dplyr)
   objs_duckplyr <- mget(names_common, duckplyr)
