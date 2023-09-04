@@ -20,7 +20,7 @@ Imports:
     cli,
     collections,
     DBI,
-    dplyr,
+    dplyr (>= 1.1.3),
     duckdb (>= 0.8.1-3),
     glue,
     lifecycle,
@@ -50,5 +50,3 @@ RoxygenNote: 7.2.3
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Config/testthat/start-first: as_duckplyr_df, mutate, filter, count-tally
-Remotes: 
-    tidyverse/dplyr
