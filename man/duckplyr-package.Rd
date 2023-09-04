@@ -6,7 +6,7 @@
 \alias{duckplyr-package}
 \title{duckplyr: A DuckDB-backed version of dplyr}
 \description{
-Implements a subset of dplyr using DuckDB
+Implements a subset of dplyr using DuckDB.
 }
 \seealso{
 Useful links:

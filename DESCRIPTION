@@ -9,7 +9,7 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-1416-3412")),
     person("Posit", role = c("cph", "fnd"))
   )
-Description: Implements a subset of dplyr using DuckDB
+Description: Implements a subset of dplyr using DuckDB.
 License: MIT + file LICENSE
 URL: https://github.com/duckdblabs/duckplyr
 BugReports: https://github.com/duckdblabs/duckplyr/issues
