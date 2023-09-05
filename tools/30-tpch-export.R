@@ -1,37 +1,17 @@
-pkgload::load_all()
-con <- get_default_duckdb_connection()
-DBI::dbExecute(con, "INSTALL tpch")
-DBI::dbExecute(con, "LOAD tpch")
+DBI::dbExecute(duckdb:::default_connection(), "INSTALL tpch")
 
-DBI::dbExecute(con, "call dbgen(sf=0.01)")
-tables <- DBI::dbListTables(con)
-
-fs::dir_create("tools/tpch/001")
-
-for (table in tables) {
-  arrow <- DBI::dbGetQuery(con, paste0("SELECT * FROM ", table), arrow = TRUE)
-  arrow::write_parquet(arrow, fs::path("tools/tpch/001", paste0(table, ".parquet")))
-  DBI::dbRemoveTable(con, table)
+generate_tpch <- function(sf, target_dir) {
+  fs::dir_create(target_dir)
+  con <- DBI::dbConnect(duckdb::duckdb())
+  DBI::dbExecute(con, "LOAD tpch")
+  DBI::dbExecute(con, "CALL dbgen(sf=?)", list(sf))
+  for (table in DBI::dbListTables(con)) {
+      DBI::dbExecute(con, sprintf("COPY (FROM %s) TO '%s/%s.parquet'", table, target_dir, table))
+  }
+  DBI::dbDisconnect(con, shutdown=TRUE)
 }
 
-DBI::dbExecute(con, "call dbgen(sf=0.1)")
-tables <- DBI::dbListTables(con)
+generate_tpch(0.01, 'tools/tpch/001')
+generate_tpch(0.1, 'tools/tpch/010')
+generate_tpch(1, 'tools/tpch/100')
 
-fs::dir_create("tools/tpch/010")
-
-for (table in tables) {
-  arrow <- DBI::dbGetQuery(con, paste0("SELECT * FROM ", table), arrow = TRUE)
-  arrow::write_parquet(arrow, fs::path("tools/tpch/010", paste0(table, ".parquet")))
-  DBI::dbRemoveTable(con, table)
-}
-
-DBI::dbExecute(con, "call dbgen(sf=1)")
-tables <- DBI::dbListTables(con)
-
-fs::dir_create("tools/tpch/100")
-
-for (table in tables) {
-  arrow <- DBI::dbGetQuery(con, paste0("SELECT * FROM ", table), arrow = TRUE)
-  arrow::write_parquet(arrow, fs::path("tools/tpch/100", paste0(table, ".parquet")))
-  DBI::dbRemoveTable(con, table)
-}
