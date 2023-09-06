@@ -17,7 +17,7 @@ restore_body <-
   df_methods |>
   filter(!skip_impl) |>
   summarize(body = paste0(
-    '  vctrs::s3_register("dplyr::', name, '", "data.frame", dplyr:::', name, ".data.frame)",
+    '  vctrs::s3_register("dplyr::', name, '", "data.frame", dplyr$', name, ".data.frame)",
     collapse = "\n"
   )) |>
   pull()
