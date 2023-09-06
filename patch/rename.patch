@@ -1,5 +1,5 @@
 diff --git b/R/rename.R a/R/rename.R
-index a7d6205..c92c0b5 100644
+index e429ebb..dc82004 100644
 --- b/R/rename.R
 +++ a/R/rename.R
 @@ -1,10 +1,21 @@

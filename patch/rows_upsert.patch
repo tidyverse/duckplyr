@@ -1,5 +1,5 @@
 diff --git b/R/rows_upsert.R a/R/rows_upsert.R
-index ec4fa3c..0fa57c8 100644
+index fff23fa..3977dcf 100644
 --- b/R/rows_upsert.R
 +++ a/R/rows_upsert.R
 @@ -56,7 +56,7 @@ rows_upsert.duckplyr_df <- function(x, y, by = NULL, ..., copy = FALSE, in_place
@@ -7,7 +7,7 @@ index ec4fa3c..0fa57c8 100644
    # Insert
    y_size <- vec_size(y_key)
 -  y_extra <- vec_as_location_invert(y_loc, y_size)
-+  y_extra <- dplyr:::vec_as_location_invert(y_loc, y_size)
++  y_extra <- dplyr$vec_as_location_invert(y_loc, y_size)
  
    y <- dplyr_row_slice(y, y_extra)
    y <- rows_cast_y(y, x)

@@ -1,5 +1,5 @@
 diff --git b/R/select.R a/R/select.R
-index ff1ce64..cc292f4 100644
+index ac22895..586ade4 100644
 --- b/R/select.R
 +++ a/R/select.R
 @@ -1,14 +1,28 @@
@@ -31,5 +31,5 @@ index ff1ce64..cc292f4 100644
  
 +
    # dplyr forward
-   select <- dplyr:::select.data.frame
+   select <- dplyr$select.data.frame
    out <- select(.data, ...)

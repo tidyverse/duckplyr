@@ -1,5 +1,5 @@
 diff --git b/R/transmute.R a/R/transmute.R
-index 10568c8..e27d3bd 100644
+index b0257fd..3690230 100644
 --- b/R/transmute.R
 +++ a/R/transmute.R
 @@ -1,10 +1,20 @@

@@ -1,5 +1,5 @@
 diff --git b/R/group_vars.R a/R/group_vars.R
-index 4494204..7752674 100644
+index 92246f9..10a150b 100644
 --- b/R/group_vars.R
 +++ a/R/group_vars.R
 @@ -1,21 +1,12 @@
@@ -15,11 +15,11 @@ index 4494204..7752674 100644
 -  )
 -
 -  # dplyr forward
--  group_vars <- dplyr:::group_vars.data.frame
+-  group_vars <- dplyr$group_vars.data.frame
 -  out <- group_vars(x)
 -  return(out)
 +  if (inherits(x, c("grouped_df", "rowwise_df"))) {
-+    return(dplyr:::group_vars.data.frame(x))
++    return(dplyr$group_vars.data.frame(x))
 +  }
  
 -  # dplyr implementation

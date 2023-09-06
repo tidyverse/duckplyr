@@ -1,5 +1,5 @@
 diff --git b/R/union.R a/R/union.R
-index b762724..88b9011 100644
+index 94e7bc2..05657d3 100644
 --- b/R/union.R
 +++ a/R/union.R
 @@ -2,12 +2,10 @@
@@ -18,4 +18,4 @@ index b762724..88b9011 100644
 +  return(distinct(union_all(x, y)))
  
    # dplyr forward
-   union <- dplyr:::union.data.frame
+   union <- dplyr$union.data.frame
