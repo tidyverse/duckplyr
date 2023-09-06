@@ -201,14 +201,18 @@ walk(patches, ~ system(paste0("patch -p1 < ", .x)))
 
 # Stop here to overwrite files if the code generation is updated
 
+
 system(paste0("git clean -f -- R"))
 
 
 # Collect new patches -----------------------------------------------------------------
 
-r_status <- gert::git_status(pathspec = "R/*.R")
+r_status <- gert::git_status(pathspec = "R/*.R")$file
 
-walk(r_status$file, function(file) {
+# Use this to refresh all patches
+# r_status <- fs::dir_ls("R", glob = "*.R")
+
+walk(r_status, function(file) {
   patch_path <- gsub("R/(.*)[.]R", "patch/\\1.patch", file)
   if (fs::file_exists(patch_path)) {
     system(paste0("patch -p1 -R < ", patch_path))
