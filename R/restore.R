@@ -1,5 +1,3 @@
-#' Methods restoring
-#'
 #' @export
 methods_restore <- function() {
   vctrs::s3_register("dplyr::add_count", "data.frame", dplyr:::add_count.data.frame)
