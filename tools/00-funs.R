@@ -43,6 +43,7 @@ df_methods <-
   ))) %>%
   mutate(code = unname(mget(fun, dplyr)))
 
+# FIXME: c(a = list(...), NULL) instead of head(...)
 duckplyr_tests <- head(n = -1, list(
   "helper-s3.R" = c(
     NULL

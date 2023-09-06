@@ -10,7 +10,13 @@ oo_force <- function() {
   return(FALSE)
 }
 
-oo_prep <- function(rel, colname = "___row_number", ..., force = oo_force()) {
+oo_prep <- function(
+    rel,
+    colname = "___row_number",
+    ...,
+    extra_cols_pre = character(),
+    extra_cols_post = character(),
+    force = oo_force()) {
   check_dots_empty0(...)
 
   if (!force) {
@@ -24,11 +30,17 @@ oo_prep <- function(rel, colname = "___row_number", ..., force = oo_force()) {
   }
 
   proj_exprs <- imap(set_names(names), relexpr_reference, rel = NULL)
-  proj_exprs <- c(proj_exprs, list(relexpr_window(
-    relexpr_function("row_number", list()),
-    partitions = list(),
-    alias = colname
-  )))
+  proj_exprs <- c(
+    proj_exprs,
+    if (length(extra_cols_pre)) map(extra_cols_pre, relexpr_constant, val = NA_integer_),
+    list(relexpr_window(
+      relexpr_function("row_number", list()),
+      partitions = list(),
+      alias = colname
+    )),
+    if (length(extra_cols_post)) map(extra_cols_post, relexpr_constant, val = NA_integer_),
+    NULL
+  )
 
   rel_project(rel, unname(proj_exprs))
 }
