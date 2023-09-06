@@ -10,7 +10,7 @@ reframe.duckplyr_df <- function(.data, ..., .by = NULL) {
   )
 
   # dplyr forward
-  reframe <- dplyr:::reframe.data.frame
+  reframe <- dplyr$reframe.data.frame
   out <- reframe(.data, ..., .by = {{ .by }})
   return(out)
 

@@ -10,7 +10,7 @@ compute.duckplyr_df <- function(x, ...) {
   )
 
   # dplyr forward
-  compute <- dplyr:::compute.data.frame
+  compute <- dplyr$compute.data.frame
   out <- compute(x, ...)
   return(out)
 

@@ -10,7 +10,7 @@ rename_with.duckplyr_df <- function(.data, .fn, .cols = everything(), ...) {
   )
 
   # dplyr forward
-  rename_with <- dplyr:::rename_with.data.frame
+  rename_with <- dplyr$rename_with.data.frame
   out <- rename_with(.data, .fn, {{ .cols }}, ...)
   return(out)
 

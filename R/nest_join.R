@@ -24,7 +24,7 @@ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, na
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")
   y_df <- y
   class(y_df) <- setdiff(class(y_df), "duckplyr_df")
-  nest_join <- dplyr:::nest_join.data.frame
+  nest_join <- dplyr$nest_join.data.frame
   out <- nest_join(x_df, y_df, by, copy, keep, name, ..., na_matches = na_matches, unmatched = unmatched)
   out <- dplyr_reconstruct(out, x)
   return(out)

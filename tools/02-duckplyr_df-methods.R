@@ -57,7 +57,7 @@ func_decl <- function(name, formals) {
   reassign_call <- rlang::call2(
     "<-",
     rlang::sym(name),
-    rlang::call2(":::", rlang::sym("dplyr"), rlang::sym(paste0(name, ".data.frame")))
+    rlang::call2("$", rlang::sym("dplyr"), rlang::sym(paste0(name, ".data.frame")))
   )
 
   forward_call <- rlang::call2(name, !!!forward_formals)

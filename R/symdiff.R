@@ -32,7 +32,7 @@ symdiff.duckplyr_df <- function(x, y, ...) {
   )
 
   # dplyr forward
-  symdiff <- dplyr:::symdiff.data.frame
+  symdiff <- dplyr$symdiff.data.frame
   out <- symdiff(x, y, ...)
   return(out)
 

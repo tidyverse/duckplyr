@@ -10,7 +10,7 @@ sample_n.duckplyr_df <- function(tbl, size, replace = FALSE, weight = NULL, .env
   )
 
   # dplyr forward
-  sample_n <- dplyr:::sample_n.data.frame
+  sample_n <- dplyr$sample_n.data.frame
   out <- sample_n(tbl, {{ size }}, replace, {{ weight }}, .env, ...)
   return(out)
 

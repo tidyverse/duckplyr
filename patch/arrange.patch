@@ -1,5 +1,5 @@
 diff --git b/R/arrange.R a/R/arrange.R
-index 2c0c763..da6e17a 100644
+index 5576a435..7c6af81 100644
 --- b/R/arrange.R
 +++ a/R/arrange.R
 @@ -1,10 +1,28 @@

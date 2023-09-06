@@ -10,7 +10,7 @@ ungroup.duckplyr_df <- function(x, ...) {
   )
 
   # dplyr forward
-  ungroup <- dplyr:::ungroup.data.frame
+  ungroup <- dplyr$ungroup.data.frame
   out <- ungroup(x, ...)
   return(out)
 

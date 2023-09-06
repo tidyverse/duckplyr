@@ -10,7 +10,7 @@ slice_head.duckplyr_df <- function(.data, ..., n, prop, by = NULL) {
   )
 
   # dplyr forward
-  slice_head <- dplyr:::slice_head.data.frame
+  slice_head <- dplyr$slice_head.data.frame
   out <- slice_head(.data, ..., n = n, prop = prop, by = {{ by }})
   return(out)
 

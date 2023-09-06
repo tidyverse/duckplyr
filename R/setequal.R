@@ -10,7 +10,7 @@ setequal.duckplyr_df <- function(x, y, ...) {
   )
 
   # dplyr forward
-  setequal <- dplyr:::setequal.data.frame
+  setequal <- dplyr$setequal.data.frame
   out <- setequal(x, y, ...)
   return(out)
 

@@ -10,7 +10,7 @@ rows_update.duckplyr_df <- function(x, y, by = NULL, ..., unmatched = c("error",
   )
 
   # dplyr forward
-  rows_update <- dplyr:::rows_update.data.frame
+  rows_update <- dplyr$rows_update.data.frame
   out <- rows_update(x, y, by, ..., unmatched = unmatched, copy = copy, in_place = in_place)
   return(out)
 

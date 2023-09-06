@@ -32,7 +32,7 @@ intersect.duckplyr_df <- function(x, y, ...) {
   )
 
   # dplyr forward
-  intersect <- dplyr:::intersect.data.frame
+  intersect <- dplyr$intersect.data.frame
   out <- intersect(x, y, ...)
   return(out)
 

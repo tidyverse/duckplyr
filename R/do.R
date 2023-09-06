@@ -10,7 +10,7 @@ do.duckplyr_df <- function(.data, ...) {
   )
 
   # dplyr forward
-  do <- dplyr:::do.data.frame
+  do <- dplyr$do.data.frame
   out <- do(.data, ...)
   return(out)
 

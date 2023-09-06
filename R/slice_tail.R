@@ -10,7 +10,7 @@ slice_tail.duckplyr_df <- function(.data, ..., n, prop, by = NULL) {
   )
 
   # dplyr forward
-  slice_tail <- dplyr:::slice_tail.data.frame
+  slice_tail <- dplyr$slice_tail.data.frame
   out <- slice_tail(.data, ..., n = n, prop = prop, by = {{ by }})
   return(out)
 

@@ -8,7 +8,7 @@ dplyr_reconstruct.duckplyr_df <- function(data, template) {
   return(data)
 
   # dplyr forward
-  dplyr_reconstruct <- dplyr:::dplyr_reconstruct.data.frame
+  dplyr_reconstruct <- dplyr$dplyr_reconstruct.data.frame
   out <- dplyr_reconstruct(data, template)
   return(out)
 

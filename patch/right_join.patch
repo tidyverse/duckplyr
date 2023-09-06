@@ -1,5 +1,5 @@
 diff --git b/R/right_join.R a/R/right_join.R
-index 0c4ac49..1c8acea 100644
+index b3c5399..13918d3 100644
 --- b/R/right_join.R
 +++ a/R/right_join.R
 @@ -1,10 +1,15 @@

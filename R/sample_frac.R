@@ -10,7 +10,7 @@ sample_frac.duckplyr_df <- function(tbl, size = 1, replace = FALSE, weight = NUL
   )
 
   # dplyr forward
-  sample_frac <- dplyr:::sample_frac.data.frame
+  sample_frac <- dplyr$sample_frac.data.frame
   out <- sample_frac(tbl, {{ size }}, replace, {{ weight }}, .env, ...)
   return(out)
 

@@ -10,7 +10,7 @@ nest_by.duckplyr_df <- function(.data, ..., .key = "data", .keep = FALSE) {
   )
 
   # dplyr forward
-  nest_by <- dplyr:::nest_by.data.frame
+  nest_by <- dplyr$nest_by.data.frame
   out <- nest_by(.data, ..., .key = .key, .keep = .keep)
   return(out)
 

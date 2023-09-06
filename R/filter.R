@@ -28,7 +28,7 @@ filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
   )
 
   # dplyr forward
-  filter <- dplyr:::filter.data.frame
+  filter <- dplyr$filter.data.frame
   out <- filter(.data, ..., .by = {{ .by }}, .preserve = .preserve)
   return(out)
 

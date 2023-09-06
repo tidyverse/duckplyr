@@ -2,7 +2,7 @@
 #' @export
 group_vars.duckplyr_df <- function(x) {
   if (inherits(x, c("grouped_df", "rowwise_df"))) {
-    return(dplyr:::group_vars.data.frame(x))
+    return(dplyr$group_vars.data.frame(x))
   }
 
   # Avoid calling group_data()

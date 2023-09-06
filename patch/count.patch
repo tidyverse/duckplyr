@@ -1,5 +1,5 @@
 diff --git b/R/count.R a/R/count.R
-index 9120a9d..4cac5b1 100644
+index 0b85569..ea3d310 100644
 --- b/R/count.R
 +++ a/R/count.R
 @@ -1,14 +1,51 @@
@@ -54,5 +54,5 @@ index 9120a9d..4cac5b1 100644
 +  # out <- count(x_df, !!!quos, wt = {{ wt }}, sort = sort, name = name, .drop = .drop)
 +
    # dplyr forward
-   count <- dplyr:::count.data.frame
+   count <- dplyr$count.data.frame
    out <- count(x, ..., wt = {{ wt }}, sort = sort, name = name, .drop = .drop)

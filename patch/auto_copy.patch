@@ -1,5 +1,5 @@
 diff --git b/R/auto_copy.R a/R/auto_copy.R
-index 304497f..045b224 100644
+index a93014d..045b224 100644
 --- b/R/auto_copy.R
 +++ a/R/auto_copy.R
 @@ -1,18 +1,7 @@
@@ -15,7 +15,7 @@ index 304497f..045b224 100644
 -  )
 -
 -  # dplyr forward
--  auto_copy <- dplyr:::auto_copy.data.frame
+-  auto_copy <- dplyr$auto_copy.data.frame
 -  out <- auto_copy(x, y, copy, ...)
 -  return(out)
 +  return(as_duckplyr_df(y))

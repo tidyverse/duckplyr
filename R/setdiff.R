@@ -32,7 +32,7 @@ setdiff.duckplyr_df <- function(x, y, ...) {
   )
 
   # dplyr forward
-  setdiff <- dplyr:::setdiff.data.frame
+  setdiff <- dplyr$setdiff.data.frame
   out <- setdiff(x, y, ...)
   return(out)
 

@@ -52,7 +52,7 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
   )
 
   # dplyr forward
-  summarise <- dplyr:::summarise.data.frame
+  summarise <- dplyr$summarise.data.frame
   out <- summarise(.data, ..., .by = {{ .by }}, .groups = .groups)
   return(out)
 

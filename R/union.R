@@ -8,7 +8,7 @@ union.duckplyr_df <- function(x, y, ...) {
   return(distinct(union_all(x, y)))
 
   # dplyr forward
-  union <- dplyr:::union.data.frame
+  union <- dplyr$union.data.frame
   out <- union(x, y, ...)
   return(out)
 
