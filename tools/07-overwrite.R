@@ -4,7 +4,7 @@ overwrite_body <-
   df_methods |>
   filter(!skip_impl) |>
   summarize(body = paste0(
-    '  vctrs::s3_register("dplyr::', name, '", "data.frame", duckplyr:::', name, ".duckplyr_df)",
+    '  vctrs::s3_register("dplyr::', name, '", "data.frame", ', name, ".duckplyr_df)",
     collapse = "\n"
   )) |>
   pull()

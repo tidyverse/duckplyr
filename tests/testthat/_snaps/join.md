@@ -19,36 +19,36 @@
     Code
       join_mutate(df, df, by = 1, type = "left")
     Condition
-      Error in `join_mutate()`:
-      ! could not find function "join_mutate"
+      Error:
+      ! `by` must be a (named) character vector, list, `join_by()` result, or NULL, not the number 1.
     Code
       join_mutate(df, df, by = "x", type = "left", suffix = 1)
     Condition
-      Error in `join_mutate()`:
-      ! could not find function "join_mutate"
+      Error:
+      ! `suffix` must be a character vector of length 2, not the number 1 of length 1.
     Code
       join_mutate(df, df, by = "x", type = "left", na_matches = "foo")
     Condition
-      Error in `join_mutate()`:
-      ! could not find function "join_mutate"
+      Error:
+      ! `na_matches` must be one of "na" or "never", not "foo".
     Code
       join_mutate(df, df, by = "x", type = "left", keep = 1)
     Condition
-      Error in `join_mutate()`:
-      ! could not find function "join_mutate"
+      Error:
+      ! `keep` must be `TRUE`, `FALSE`, or `NULL`, not the number 1.
 
 # join_filter() validates arguments
 
     Code
       join_filter(df, df, by = 1, type = "semi")
     Condition
-      Error in `join_filter()`:
-      ! could not find function "join_filter"
+      Error:
+      ! `by` must be a (named) character vector, list, `join_by()` result, or NULL, not the number 1.
     Code
       join_filter(df, df, by = "x", type = "semi", na_matches = "foo")
     Condition
-      Error in `join_filter()`:
-      ! could not find function "join_filter"
+      Error:
+      ! `na_matches` must be one of "na" or "never", not "foo".
 
 # filtering joins compute common columns
 

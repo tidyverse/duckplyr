@@ -3,6 +3,7 @@ select_opt <- select
 
 TPCH_NA_MATCHES <- "never"
 
+#' @autoglobal
 tpch_01 <- function() {
   lineitem |>
     select_opt(l_shipdate, l_returnflag, l_linestatus, l_quantity, l_extendedprice, l_discount, l_tax) |>
@@ -22,6 +23,7 @@ tpch_01 <- function() {
     arrange(l_returnflag, l_linestatus)
 }
 
+#' @autoglobal
 tpch_02 <- function() {
   ps <- partsupp |> select_opt(ps_partkey, ps_suppkey, ps_supplycost)
 
@@ -80,6 +82,7 @@ tpch_02 <- function() {
   res
 }
 
+#' @autoglobal
 tpch_03 <- function() {
   oc <- inner_join(
     orders |>
@@ -110,6 +113,7 @@ tpch_03 <- function() {
   aggr
 }
 
+#' @autoglobal
 tpch_04 <- function() {
   l <- lineitem |>
     select_opt(l_orderkey, l_commitdate, l_receiptdate) |>
@@ -133,6 +137,7 @@ tpch_04 <- function() {
   aggr
 }
 
+#' @autoglobal
 tpch_05 <- function() {
   nr <- inner_join(na_matches = TPCH_NA_MATCHES,
     nation |>
@@ -181,6 +186,7 @@ tpch_05 <- function() {
   aggr
 }
 
+#' @autoglobal
 tpch_06 <- function() {
   lineitem |>
     select_opt(l_shipdate, l_extendedprice, l_discount, l_quantity) |>
@@ -195,6 +201,7 @@ tpch_06 <- function() {
     summarise(revenue = sum(l_extendedprice * l_discount))
 }
 
+#' @autoglobal
 tpch_07 <- function() {
   sn <- inner_join(na_matches = TPCH_NA_MATCHES,
     supplier |>
@@ -253,6 +260,7 @@ tpch_07 <- function() {
   aggr
 }
 
+#' @autoglobal
 tpch_08 <- function() {
   nr <- inner_join(na_matches = TPCH_NA_MATCHES,
     nation |>
@@ -328,6 +336,7 @@ tpch_08 <- function() {
   aggr
 }
 
+#' @autoglobal
 tpch_09 <- function() {
   p <- part |>
     select_opt(p_name, p_partkey) |>
@@ -381,6 +390,7 @@ tpch_09 <- function() {
   aggr
 }
 
+#' @autoglobal
 tpch_10 <- function() {
   l <- lineitem |>
     select_opt(l_orderkey, l_returnflag, l_extendedprice, l_discount) |>

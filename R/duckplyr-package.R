@@ -117,6 +117,7 @@
 #' @importFrom purrr walk
 #' @importFrom tibble as_tibble
 #' @importFrom tibble deframe
+#' @importFrom tibble is_tibble
 #' @importFrom tibble new_tibble
 #' @importFrom tibble tibble
 #' @importFrom tidyselect everything

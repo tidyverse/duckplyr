@@ -7,9 +7,9 @@
 new_relational(..., class = NULL)
 }
 \arguments{
-\item{...}{Passed on to [structure()]}
+\item{...}{Passed on to \code{\link[=structure]{structure()}}}
 
-\item{class}{Classes added in front of the `"relational"` base class}
+\item{class}{Classes added in front of the \code{"relational"} base class}
 }
 \description{
 TBD.
