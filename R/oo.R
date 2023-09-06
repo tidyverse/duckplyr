@@ -10,7 +10,9 @@ oo_force <- function() {
   return(FALSE)
 }
 
-oo_prep <- function(rel, colname = "___row_number", force = oo_force()) {
+oo_prep <- function(rel, colname = "___row_number", ..., force = oo_force()) {
+  check_dots_empty0(...)
+
   if (!force) {
     return(rel)
   }
