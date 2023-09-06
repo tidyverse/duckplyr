@@ -40,8 +40,10 @@ Suggests:
     lobstr,
     lubridate,
     palmerpenguins,
+    pillar,
     prettycode,
     qs,
+    styler,
     testthat (>= 3.1.5),
     withr
 Encoding: UTF-8
