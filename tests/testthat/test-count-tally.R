@@ -1,19 +1,20 @@
 # count -------------------------------------------------------------------
 
-test_that("count sorts output by default", {
+test_that("count sorts output by keys by default", {
+  # Due to usage of `duckplyr_summarise()` internally
   df <- tibble(x = c(2, 1, 1, 2, 1))
   out <- duckplyr_count(df, x)
   expect_equal(out, tibble(x = c(1, 2), n = c(3, 2)))
 })
 
-test_that("count can sort output", {
-  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
+test_that("count can sort output by `n`", {
   df <- tibble(x = c(1, 1, 2, 2, 2))
   out <- duckplyr_count(df, x, sort = TRUE)
   expect_equal(out, tibble(x = c(2, 1), n = c(3, 2)))
 })
 
 test_that("count can rename grouping columns", {
+  # But should it really allow this?
   df <- tibble(x = c(2, 1, 1, 2, 1))
   out <- duckplyr_count(df, y = x)
   expect_equal(out, tibble(y = c(1, 2), n = c(3, 2)))
@@ -57,8 +58,7 @@ test_that("output includes empty levels with .drop = FALSE", {
   expect_equal(out$n, c(0, 1, 0))
 })
 
-test_that("output preserves grouping", {
-  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
+test_that("count preserves grouping", {
   df <- tibble(g = c(1, 2, 2, 2))
   exp <- tibble(g = c(1, 2), n = c(1, 3))
 
@@ -167,8 +167,7 @@ test_that("duckplyr_tally() owns errors (#6139)", {
 
 # add_count ---------------------------------------------------------------
 
-test_that("output preserves grouping", {
-  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
+test_that("add_count preserves grouping", {
   df <- tibble(g = c(1, 2, 2, 2))
   exp <- tibble(g = c(1, 2, 2, 2), n = c(1, 3, 3, 3))
 
