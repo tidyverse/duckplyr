@@ -1399,9 +1399,101 @@ test_that("relational union_all(data.frame(a = 1L, b = 3, g = 2L)) %>% distinct(
   df2 <- data.frame(a = 1L, b = 3, g = 2L)
 
   rel2 <- duckdb$rel_from_df(con, df2, experimental = experimental)
-  rel3 <- duckdb$rel_union_all(rel1, rel2)
+  rel3 <- duckdb$rel_project(
+    rel1,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("g")
+        duckdb$expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number_x")
+        tmp_expr
+      },
+      {
+        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+          duckdb$expr_constant(NA_integer_, experimental = experimental)
+        } else {
+          duckdb$expr_constant(NA_integer_)
+        }
+        duckdb$expr_set_alias(tmp_expr, "___row_number_y")
+        tmp_expr
+      }
+    )
+  )
   rel4 <- duckdb$rel_project(
-    rel3,
+    rel2,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("g")
+        duckdb$expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      },
+      {
+        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+          duckdb$expr_constant(NA_integer_, experimental = experimental)
+        } else {
+          duckdb$expr_constant(NA_integer_)
+        }
+        duckdb$expr_set_alias(tmp_expr, "___row_number_x")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number_y")
+        tmp_expr
+      }
+    )
+  )
+  rel5 <- duckdb$rel_union_all(rel3, rel4)
+  rel6 <- duckdb$rel_order(
+    rel5,
+    list(duckdb$expr_reference("___row_number_x"), duckdb$expr_reference("___row_number_y"))
+  )
+  rel7 <- duckdb$rel_project(
+    rel6,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("g")
+        duckdb$expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      }
+    )
+  )
+  rel8 <- duckdb$rel_project(
+    rel7,
     list(
       {
         tmp_expr <- duckdb$expr_reference("a")
@@ -1425,8 +1517,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 3, g = 2L)) %>% distinct(
       }
     )
   )
-  rel5 <- duckdb$rel_project(
-    rel4,
+  rel9 <- duckdb$rel_project(
+    rel8,
     list(
       {
         tmp_expr <- duckdb$expr_reference("g")
@@ -1453,8 +1545,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 3, g = 2L)) %>% distinct(
       }
     )
   )
-  rel6 <- duckdb$rel_filter(
-    rel5,
+  rel10 <- duckdb$rel_filter(
+    rel9,
     list(
       duckdb$expr_function(
         "==",
@@ -1469,9 +1561,9 @@ test_that("relational union_all(data.frame(a = 1L, b = 3, g = 2L)) %>% distinct(
       )
     )
   )
-  rel7 <- duckdb$rel_order(rel6, list(duckdb$expr_reference("___row_number")))
-  rel8 <- duckdb$rel_project(
-    rel7,
+  rel11 <- duckdb$rel_order(rel10, list(duckdb$expr_reference("___row_number")))
+  rel12 <- duckdb$rel_project(
+    rel11,
     list(
       {
         tmp_expr <- duckdb$expr_reference("g")
@@ -1480,8 +1572,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 3, g = 2L)) %>% distinct(
       }
     )
   )
-  rel8
-  out <- duckdb$rel_to_altrep(rel8)
+  rel12
+  out <- duckdb$rel_to_altrep(rel12)
   expect_equal(
     out,
     data.frame(g = 1:3)
@@ -1500,9 +1592,101 @@ test_that("relational union_all(data.frame(a = 1L, b = 4, g = 2L)) %>% distinct(
   df2 <- data.frame(a = 1L, b = 4, g = 2L)
 
   rel2 <- duckdb$rel_from_df(con, df2, experimental = experimental)
-  rel3 <- duckdb$rel_union_all(rel1, rel2)
+  rel3 <- duckdb$rel_project(
+    rel1,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("g")
+        duckdb$expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number_x")
+        tmp_expr
+      },
+      {
+        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+          duckdb$expr_constant(NA_integer_, experimental = experimental)
+        } else {
+          duckdb$expr_constant(NA_integer_)
+        }
+        duckdb$expr_set_alias(tmp_expr, "___row_number_y")
+        tmp_expr
+      }
+    )
+  )
   rel4 <- duckdb$rel_project(
-    rel3,
+    rel2,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("g")
+        duckdb$expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      },
+      {
+        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+          duckdb$expr_constant(NA_integer_, experimental = experimental)
+        } else {
+          duckdb$expr_constant(NA_integer_)
+        }
+        duckdb$expr_set_alias(tmp_expr, "___row_number_x")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number_y")
+        tmp_expr
+      }
+    )
+  )
+  rel5 <- duckdb$rel_union_all(rel3, rel4)
+  rel6 <- duckdb$rel_order(
+    rel5,
+    list(duckdb$expr_reference("___row_number_x"), duckdb$expr_reference("___row_number_y"))
+  )
+  rel7 <- duckdb$rel_project(
+    rel6,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("g")
+        duckdb$expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      }
+    )
+  )
+  rel8 <- duckdb$rel_project(
+    rel7,
     list(
       {
         tmp_expr <- duckdb$expr_reference("a")
@@ -1526,8 +1710,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 4, g = 2L)) %>% distinct(
       }
     )
   )
-  rel5 <- duckdb$rel_project(
-    rel4,
+  rel9 <- duckdb$rel_project(
+    rel8,
     list(
       {
         tmp_expr <- duckdb$expr_reference("g")
@@ -1554,8 +1738,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 4, g = 2L)) %>% distinct(
       }
     )
   )
-  rel6 <- duckdb$rel_filter(
-    rel5,
+  rel10 <- duckdb$rel_filter(
+    rel9,
     list(
       duckdb$expr_function(
         "==",
@@ -1570,9 +1754,9 @@ test_that("relational union_all(data.frame(a = 1L, b = 4, g = 2L)) %>% distinct(
       )
     )
   )
-  rel7 <- duckdb$rel_order(rel6, list(duckdb$expr_reference("___row_number")))
-  rel8 <- duckdb$rel_project(
-    rel7,
+  rel11 <- duckdb$rel_order(rel10, list(duckdb$expr_reference("___row_number")))
+  rel12 <- duckdb$rel_project(
+    rel11,
     list(
       {
         tmp_expr <- duckdb$expr_reference("g")
@@ -1581,8 +1765,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 4, g = 2L)) %>% distinct(
       }
     )
   )
-  rel8
-  out <- duckdb$rel_to_altrep(rel8)
+  rel12
+  out <- duckdb$rel_to_altrep(rel12)
   expect_equal(
     out,
     data.frame(g = 1:3)
@@ -1601,9 +1785,101 @@ test_that("relational union_all(data.frame(a = 1L, b = 5, g = 2L)) %>% distinct(
   df2 <- data.frame(a = 1L, b = 5, g = 2L)
 
   rel2 <- duckdb$rel_from_df(con, df2, experimental = experimental)
-  rel3 <- duckdb$rel_union_all(rel1, rel2)
+  rel3 <- duckdb$rel_project(
+    rel1,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("g")
+        duckdb$expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number_x")
+        tmp_expr
+      },
+      {
+        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+          duckdb$expr_constant(NA_integer_, experimental = experimental)
+        } else {
+          duckdb$expr_constant(NA_integer_)
+        }
+        duckdb$expr_set_alias(tmp_expr, "___row_number_y")
+        tmp_expr
+      }
+    )
+  )
   rel4 <- duckdb$rel_project(
-    rel3,
+    rel2,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("g")
+        duckdb$expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      },
+      {
+        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+          duckdb$expr_constant(NA_integer_, experimental = experimental)
+        } else {
+          duckdb$expr_constant(NA_integer_)
+        }
+        duckdb$expr_set_alias(tmp_expr, "___row_number_x")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number_y")
+        tmp_expr
+      }
+    )
+  )
+  rel5 <- duckdb$rel_union_all(rel3, rel4)
+  rel6 <- duckdb$rel_order(
+    rel5,
+    list(duckdb$expr_reference("___row_number_x"), duckdb$expr_reference("___row_number_y"))
+  )
+  rel7 <- duckdb$rel_project(
+    rel6,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("g")
+        duckdb$expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      }
+    )
+  )
+  rel8 <- duckdb$rel_project(
+    rel7,
     list(
       {
         tmp_expr <- duckdb$expr_reference("a")
@@ -1627,8 +1903,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 5, g = 2L)) %>% distinct(
       }
     )
   )
-  rel5 <- duckdb$rel_project(
-    rel4,
+  rel9 <- duckdb$rel_project(
+    rel8,
     list(
       {
         tmp_expr <- duckdb$expr_reference("g")
@@ -1655,8 +1931,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 5, g = 2L)) %>% distinct(
       }
     )
   )
-  rel6 <- duckdb$rel_filter(
-    rel5,
+  rel10 <- duckdb$rel_filter(
+    rel9,
     list(
       duckdb$expr_function(
         "==",
@@ -1671,9 +1947,9 @@ test_that("relational union_all(data.frame(a = 1L, b = 5, g = 2L)) %>% distinct(
       )
     )
   )
-  rel7 <- duckdb$rel_order(rel6, list(duckdb$expr_reference("___row_number")))
-  rel8 <- duckdb$rel_project(
-    rel7,
+  rel11 <- duckdb$rel_order(rel10, list(duckdb$expr_reference("___row_number")))
+  rel12 <- duckdb$rel_project(
+    rel11,
     list(
       {
         tmp_expr <- duckdb$expr_reference("g")
@@ -1682,8 +1958,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 5, g = 2L)) %>% distinct(
       }
     )
   )
-  rel8
-  out <- duckdb$rel_to_altrep(rel8)
+  rel12
+  out <- duckdb$rel_to_altrep(rel12)
   expect_equal(
     out,
     data.frame(g = 1:3)
@@ -1702,9 +1978,101 @@ test_that("relational union_all(data.frame(a = 1L, b = 6, g = 2L)) %>% distinct(
   df2 <- data.frame(a = 1L, b = 6, g = 2L)
 
   rel2 <- duckdb$rel_from_df(con, df2, experimental = experimental)
-  rel3 <- duckdb$rel_union_all(rel1, rel2)
+  rel3 <- duckdb$rel_project(
+    rel1,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("g")
+        duckdb$expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number_x")
+        tmp_expr
+      },
+      {
+        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+          duckdb$expr_constant(NA_integer_, experimental = experimental)
+        } else {
+          duckdb$expr_constant(NA_integer_)
+        }
+        duckdb$expr_set_alias(tmp_expr, "___row_number_y")
+        tmp_expr
+      }
+    )
+  )
   rel4 <- duckdb$rel_project(
-    rel3,
+    rel2,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("g")
+        duckdb$expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      },
+      {
+        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+          duckdb$expr_constant(NA_integer_, experimental = experimental)
+        } else {
+          duckdb$expr_constant(NA_integer_)
+        }
+        duckdb$expr_set_alias(tmp_expr, "___row_number_x")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number_y")
+        tmp_expr
+      }
+    )
+  )
+  rel5 <- duckdb$rel_union_all(rel3, rel4)
+  rel6 <- duckdb$rel_order(
+    rel5,
+    list(duckdb$expr_reference("___row_number_x"), duckdb$expr_reference("___row_number_y"))
+  )
+  rel7 <- duckdb$rel_project(
+    rel6,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("g")
+        duckdb$expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      }
+    )
+  )
+  rel8 <- duckdb$rel_project(
+    rel7,
     list(
       {
         tmp_expr <- duckdb$expr_reference("a")
@@ -1728,8 +2096,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 6, g = 2L)) %>% distinct(
       }
     )
   )
-  rel5 <- duckdb$rel_project(
-    rel4,
+  rel9 <- duckdb$rel_project(
+    rel8,
     list(
       {
         tmp_expr <- duckdb$expr_reference("g")
@@ -1756,8 +2124,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 6, g = 2L)) %>% distinct(
       }
     )
   )
-  rel6 <- duckdb$rel_filter(
-    rel5,
+  rel10 <- duckdb$rel_filter(
+    rel9,
     list(
       duckdb$expr_function(
         "==",
@@ -1772,9 +2140,9 @@ test_that("relational union_all(data.frame(a = 1L, b = 6, g = 2L)) %>% distinct(
       )
     )
   )
-  rel7 <- duckdb$rel_order(rel6, list(duckdb$expr_reference("___row_number")))
-  rel8 <- duckdb$rel_project(
-    rel7,
+  rel11 <- duckdb$rel_order(rel10, list(duckdb$expr_reference("___row_number")))
+  rel12 <- duckdb$rel_project(
+    rel11,
     list(
       {
         tmp_expr <- duckdb$expr_reference("g")
@@ -1783,8 +2151,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 6, g = 2L)) %>% distinct(
       }
     )
   )
-  rel8
-  out <- duckdb$rel_to_altrep(rel8)
+  rel12
+  out <- duckdb$rel_to_altrep(rel12)
   expect_equal(
     out,
     data.frame(g = 1:3)
@@ -1803,9 +2171,101 @@ test_that("relational union_all(data.frame(a = 1L, b = 7, g = 2L)) %>% distinct(
   df2 <- data.frame(a = 1L, b = 7, g = 2L)
 
   rel2 <- duckdb$rel_from_df(con, df2, experimental = experimental)
-  rel3 <- duckdb$rel_union_all(rel1, rel2)
+  rel3 <- duckdb$rel_project(
+    rel1,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("g")
+        duckdb$expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number_x")
+        tmp_expr
+      },
+      {
+        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+          duckdb$expr_constant(NA_integer_, experimental = experimental)
+        } else {
+          duckdb$expr_constant(NA_integer_)
+        }
+        duckdb$expr_set_alias(tmp_expr, "___row_number_y")
+        tmp_expr
+      }
+    )
+  )
   rel4 <- duckdb$rel_project(
-    rel3,
+    rel2,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("g")
+        duckdb$expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      },
+      {
+        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+          duckdb$expr_constant(NA_integer_, experimental = experimental)
+        } else {
+          duckdb$expr_constant(NA_integer_)
+        }
+        duckdb$expr_set_alias(tmp_expr, "___row_number_x")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number_y")
+        tmp_expr
+      }
+    )
+  )
+  rel5 <- duckdb$rel_union_all(rel3, rel4)
+  rel6 <- duckdb$rel_order(
+    rel5,
+    list(duckdb$expr_reference("___row_number_x"), duckdb$expr_reference("___row_number_y"))
+  )
+  rel7 <- duckdb$rel_project(
+    rel6,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("g")
+        duckdb$expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      }
+    )
+  )
+  rel8 <- duckdb$rel_project(
+    rel7,
     list(
       {
         tmp_expr <- duckdb$expr_reference("a")
@@ -1829,8 +2289,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 7, g = 2L)) %>% distinct(
       }
     )
   )
-  rel5 <- duckdb$rel_project(
-    rel4,
+  rel9 <- duckdb$rel_project(
+    rel8,
     list(
       {
         tmp_expr <- duckdb$expr_reference("g")
@@ -1857,8 +2317,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 7, g = 2L)) %>% distinct(
       }
     )
   )
-  rel6 <- duckdb$rel_filter(
-    rel5,
+  rel10 <- duckdb$rel_filter(
+    rel9,
     list(
       duckdb$expr_function(
         "==",
@@ -1873,9 +2333,9 @@ test_that("relational union_all(data.frame(a = 1L, b = 7, g = 2L)) %>% distinct(
       )
     )
   )
-  rel7 <- duckdb$rel_order(rel6, list(duckdb$expr_reference("___row_number")))
-  rel8 <- duckdb$rel_project(
-    rel7,
+  rel11 <- duckdb$rel_order(rel10, list(duckdb$expr_reference("___row_number")))
+  rel12 <- duckdb$rel_project(
+    rel11,
     list(
       {
         tmp_expr <- duckdb$expr_reference("g")
@@ -1884,8 +2344,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 7, g = 2L)) %>% distinct(
       }
     )
   )
-  rel8
-  out <- duckdb$rel_to_altrep(rel8)
+  rel12
+  out <- duckdb$rel_to_altrep(rel12)
   expect_equal(
     out,
     data.frame(g = 1:3)
@@ -10594,9 +11054,86 @@ test_that("relational union() order-preserving", {
   df2 <- data.frame(a = 2:5, b = rep(2, 4L))
 
   rel2 <- duckdb$rel_from_df(con, df2, experimental = experimental)
-  rel3 <- duckdb$rel_union_all(rel1, rel2)
+  rel3 <- duckdb$rel_project(
+    rel1,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number_x")
+        tmp_expr
+      },
+      {
+        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+          duckdb$expr_constant(NA_integer_, experimental = experimental)
+        } else {
+          duckdb$expr_constant(NA_integer_)
+        }
+        duckdb$expr_set_alias(tmp_expr, "___row_number_y")
+        tmp_expr
+      }
+    )
+  )
   rel4 <- duckdb$rel_project(
-    rel3,
+    rel2,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+          duckdb$expr_constant(NA_integer_, experimental = experimental)
+        } else {
+          duckdb$expr_constant(NA_integer_)
+        }
+        duckdb$expr_set_alias(tmp_expr, "___row_number_x")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number_y")
+        tmp_expr
+      }
+    )
+  )
+  rel5 <- duckdb$rel_union_all(rel3, rel4)
+  rel6 <- duckdb$rel_order(
+    rel5,
+    list(duckdb$expr_reference("___row_number_x"), duckdb$expr_reference("___row_number_y"))
+  )
+  rel7 <- duckdb$rel_project(
+    rel6,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      }
+    )
+  )
+  rel8 <- duckdb$rel_project(
+    rel7,
     list(
       {
         tmp_expr <- duckdb$expr_reference("a")
@@ -10615,8 +11152,8 @@ test_that("relational union() order-preserving", {
       }
     )
   )
-  rel5 <- duckdb$rel_project(
-    rel4,
+  rel9 <- duckdb$rel_project(
+    rel8,
     list(
       {
         tmp_expr <- duckdb$expr_reference("a")
@@ -10653,8 +11190,8 @@ test_that("relational union() order-preserving", {
       }
     )
   )
-  rel6 <- duckdb$rel_filter(
-    rel5,
+  rel10 <- duckdb$rel_filter(
+    rel9,
     list(
       duckdb$expr_function(
         "==",
@@ -10669,9 +11206,9 @@ test_that("relational union() order-preserving", {
       )
     )
   )
-  rel7 <- duckdb$rel_order(rel6, list(duckdb$expr_reference("___row_number")))
-  rel8 <- duckdb$rel_project(
-    rel7,
+  rel11 <- duckdb$rel_order(rel10, list(duckdb$expr_reference("___row_number")))
+  rel12 <- duckdb$rel_project(
+    rel11,
     list(
       {
         tmp_expr <- duckdb$expr_reference("a")
@@ -10685,8 +11222,8 @@ test_that("relational union() order-preserving", {
       }
     )
   )
-  rel8
-  out <- duckdb$rel_to_altrep(rel8)
+  rel12
+  out <- duckdb$rel_to_altrep(rel12)
   expect_equal(
     out,
     data.frame(a = 1:5, b = rep(2, 5L))
@@ -10730,9 +11267,86 @@ test_that("relational union_all() order-preserving", {
   df2 <- data.frame(a = 2:5, b = rep(2, 4L))
 
   rel2 <- duckdb$rel_from_df(con, df2, experimental = experimental)
-  rel3 <- duckdb$rel_union_all(rel1, rel2)
-  rel3
-  out <- duckdb$rel_to_altrep(rel3)
+  rel3 <- duckdb$rel_project(
+    rel1,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number_x")
+        tmp_expr
+      },
+      {
+        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+          duckdb$expr_constant(NA_integer_, experimental = experimental)
+        } else {
+          duckdb$expr_constant(NA_integer_)
+        }
+        duckdb$expr_set_alias(tmp_expr, "___row_number_y")
+        tmp_expr
+      }
+    )
+  )
+  rel4 <- duckdb$rel_project(
+    rel2,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+          duckdb$expr_constant(NA_integer_, experimental = experimental)
+        } else {
+          duckdb$expr_constant(NA_integer_)
+        }
+        duckdb$expr_set_alias(tmp_expr, "___row_number_x")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number_y")
+        tmp_expr
+      }
+    )
+  )
+  rel5 <- duckdb$rel_union_all(rel3, rel4)
+  rel6 <- duckdb$rel_order(
+    rel5,
+    list(duckdb$expr_reference("___row_number_x"), duckdb$expr_reference("___row_number_y"))
+  )
+  rel7 <- duckdb$rel_project(
+    rel6,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      }
+    )
+  )
+  rel7
+  out <- duckdb$rel_to_altrep(rel7)
   expect_equal(
     out,
     data.frame(a = c(1L, 2L, 3L, 4L, 2L, 3L, 4L, 5L), b = rep(2, 8L))

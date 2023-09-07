@@ -1,8 +1,8 @@
 diff --git b/R/union_all.R a/R/union_all.R
-index ed860f1..0279a26 100644
+index ed860f1..727b739 100644
 --- b/R/union_all.R
 +++ a/R/union_all.R
-@@ -2,9 +2,31 @@
+@@ -2,9 +2,38 @@
  #' @export
  union_all.duckplyr_df <- function(x, y, ...) {
    # Our implementation
@@ -29,7 +29,14 @@ index ed860f1..0279a26 100644
 +        y_rel <- rel_project(y_rel, exprs)
 +      }
 +
++      x_rel <- oo_prep(x_rel, "___row_number_x", extra_cols_post = "___row_number_y")
++      y_rel <- oo_prep(y_rel, "___row_number_y", extra_cols_pre = "___row_number_x")
++
 +      rel <- rel_union_all(x_rel, y_rel)
++
++      # NULLs sort first in duckdb!
++      rel <- oo_restore(rel, c("___row_number_x", "___row_number_y"))
++
 +      out <- rel_to_df(rel)
 +      out <- dplyr_reconstruct(out, x)
        return(out)

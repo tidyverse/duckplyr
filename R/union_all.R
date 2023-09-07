@@ -24,7 +24,14 @@ union_all.duckplyr_df <- function(x, y, ...) {
         y_rel <- rel_project(y_rel, exprs)
       }
 
+      x_rel <- oo_prep(x_rel, "___row_number_x", extra_cols_post = "___row_number_y")
+      y_rel <- oo_prep(y_rel, "___row_number_y", extra_cols_pre = "___row_number_x")
+
       rel <- rel_union_all(x_rel, y_rel)
+
+      # NULLs sort first in duckdb!
+      rel <- oo_restore(rel, c("___row_number_x", "___row_number_y"))
+
       out <- rel_to_df(rel)
       out <- dplyr_reconstruct(out, x)
       return(out)
