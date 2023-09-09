@@ -103,8 +103,11 @@ runs:
         echo 'MAKEFLAGS = -j2' >> ~/.R/Makevars
         cat ~/.R/Makevars
 
-        mkdir ../ccache
-        echo "CCACHE_DIR=$(realpath $(pwd)/../ccache)" | tee -a $GITHUB_ENV
+        # Why does ccache insist on creating .ccache in my working directory?
+        if ! grep -e '^/[.]ccache/$' .gitignore; then
+          echo /.ccache/ >> .gitignore
+        fi
+
         echo 'CCACHE_SLOPPINESS=locale,time_macros' | tee -a $GITHUB_ENV
 
         # echo 'CCACHE_DEBUG=true' | tee -a $GITHUB_ENV
