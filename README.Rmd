@@ -20,6 +20,7 @@ set.seed(20230702)
 # duckplyr
 
 <!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
 The goal of duckplyr is to provide a drop-in replacement for dplyr that uses DuckDB as a backend for fast operation.
