@@ -15,5 +15,8 @@
 ^res-relational-duckdb\.csv$
 ^R/meta\.R$
 ^R/tpch_raw_(?:oo_)?[0-9]+\.R$
-.ccache$
 ^.ccache$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^cran-comments\.md$
