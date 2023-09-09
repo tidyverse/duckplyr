@@ -103,7 +103,7 @@ runs:
         echo 'MAKEFLAGS = -j2' >> ~/.R/Makevars
         cat ~/.R/Makevars
 
-        echo 'CCACHE_DIR=$(realpath $(pwd)/../ccache)' | tee -a $GITHUB_ENV
+        echo "CCACHE_DIR=$(realpath $(pwd)/../ccache)" | tee -a $GITHUB_ENV
         echo 'CCACHE_SLOPPINESS=locale,time_macros' | tee -a $GITHUB_ENV
 
         # echo 'CCACHE_DEBUG=true' | tee -a $GITHUB_ENV
@@ -116,5 +116,4 @@ runs:
     - name: ccache configuration
       run: |
         ccache -p
-        false
       shell: bash
