@@ -112,3 +112,9 @@ runs:
 
         echo 'PKG_BUILD_EXTRA_FLAGS=false' | tee -a $GITHUB_ENV
       shell: bash
+
+    - name: ccache configuration
+      run: |
+        ccache -p
+        false
+      shell: bash
