@@ -6,7 +6,7 @@
 \alias{duckplyr-package}
 \title{duckplyr: A DuckDB-backed version of dplyr}
 \description{
-Implements a subset of dplyr using DuckDB.
+A drop-in replacement for dplyr, powered by DuckDB for performance. Also defines a set of generics that provide a low-level implementer's interface for the high-level user interface of dplyr.
 }
 \seealso{
 Useful links:
@@ -17,16 +17,16 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Hannes Mühleisen \email{hannes@duckdblabs.com} (\href{https://orcid.org/0000-0001-8552-0029}{ORCID})
+\strong{Maintainer}: Kirill Müller \email{kirill@cynkra.com} (\href{https://orcid.org/0000-0002-1416-3412}{ORCID})
 
 Authors:
 \itemize{
-  \item Kirill Müller (\href{https://orcid.org/0000-0002-1416-3412}{ORCID})
+  \item Hannes Mühleisen (\href{https://orcid.org/0000-0001-8552-0029}{ORCID})
 }
 
 Other contributors:
 \itemize{
-  \item Posit [copyright holder, funder]
+  \item Posit Software, PBC [copyright holder, funder]
 }
 
 }
