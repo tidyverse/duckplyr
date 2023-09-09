@@ -108,6 +108,10 @@ runs:
           echo /.ccache/ >> .gitignore
         fi
 
+        if ! grep -e '^[^][.]ccache[$]$' .Rbuildignore; then
+          echo '^.ccache$' >> .Rbuildignore
+        fi
+
         echo 'CCACHE_SLOPPINESS=locale,time_macros' | tee -a $GITHUB_ENV
 
         # echo 'CCACHE_DEBUG=true' | tee -a $GITHUB_ENV
