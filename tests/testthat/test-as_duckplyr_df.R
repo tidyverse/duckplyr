@@ -311,6 +311,8 @@ test_that("as_duckplyr_df() and distinct(g)", {
 
 
 test_that("as_duckplyr_df() and union_all(data.frame(a = 1L, b = 3, g = 2L)) %>% distinct(g)", {
+  skip_if_not_installed("duckdb", "0.8.1-9000")
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -324,6 +326,8 @@ test_that("as_duckplyr_df() and union_all(data.frame(a = 1L, b = 3, g = 2L)) %>%
 
 
 test_that("as_duckplyr_df() and union_all(data.frame(a = 1L, b = 4, g = 2L)) %>% distinct(g)", {
+  skip_if_not_installed("duckdb", "0.8.1-9000")
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -337,6 +341,8 @@ test_that("as_duckplyr_df() and union_all(data.frame(a = 1L, b = 4, g = 2L)) %>%
 
 
 test_that("as_duckplyr_df() and union_all(data.frame(a = 1L, b = 5, g = 2L)) %>% distinct(g)", {
+  skip_if_not_installed("duckdb", "0.8.1-9000")
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -350,6 +356,8 @@ test_that("as_duckplyr_df() and union_all(data.frame(a = 1L, b = 5, g = 2L)) %>%
 
 
 test_that("as_duckplyr_df() and union_all(data.frame(a = 1L, b = 6, g = 2L)) %>% distinct(g)", {
+  skip_if_not_installed("duckdb", "0.8.1-9000")
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -363,6 +371,8 @@ test_that("as_duckplyr_df() and union_all(data.frame(a = 1L, b = 6, g = 2L)) %>%
 
 
 test_that("as_duckplyr_df() and union_all(data.frame(a = 1L, b = 7, g = 2L)) %>% distinct(g)", {
+  skip_if_not_installed("duckdb", "0.8.1-9000")
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -376,6 +386,8 @@ test_that("as_duckplyr_df() and union_all(data.frame(a = 1L, b = 7, g = 2L)) %>%
 
 
 test_that("as_duckplyr_df() and distinct(g, .keep_all = TRUE)", {
+  skip_if_not_installed("duckdb", "0.8.1-9000")
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
