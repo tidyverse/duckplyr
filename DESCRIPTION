@@ -50,7 +50,6 @@ Config/testthat/edition: 3
 Config/testthat/parallel: false
 Config/testthat/start-first: as_duckplyr_df, mutate, filter, count-tally
 Encoding: UTF-8
-LazyData: true
 Roxygen: list( markdown = TRUE, roclets = c("collate", "namespace", "rd",
     "roxyglobals::global_roclet") )
 RoxygenNote: 7.2.3
