@@ -4,6 +4,8 @@
 
 <!-- badges: start -->
 
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
 <!-- badges: end -->
 
 The goal of duckplyr is to provide a drop-in replacement for dplyr that uses DuckDB as a backend for fast operation. It also defines a set of generics that provide a low-level implementer’s interface for dplyr’s high-level user interface.
