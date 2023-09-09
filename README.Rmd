@@ -45,8 +45,9 @@ pak::pak("duckdblabs/duckplyr")
 This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
-library(duckdb)
+library(conflicted)
 library(duckplyr)
+conflict_prefer("filter", "duckplyr")
 
 # Use `as_duckplyr_df()` to enable processing with duckdb:
 out <-
@@ -73,7 +74,7 @@ out
 
 ## Extensibility
 
-This package only provides generics, for which other packages may then implement methods.
+This package also provides generics, for which other packages may then implement methods.
 
 ```{r extensibility}
 library(duckplyr)

@@ -26,17 +26,19 @@ You can also install the development version of duckplyr from [GitHub](https://g
 This is a basic example which shows you how to solve a common problem:
 
 <pre class='chroma'>
-<span><span class='kr'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='o'>(</span><span class='nv'><a href='https://duckdb.org/'>duckdb</a></span><span class='o'>)</span></span>
-<span><span class='c'>#&gt; Loading required package: DBI</span></span>
+<span><span class='kr'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='o'>(</span><span class='nv'><a href='https://conflicted.r-lib.org/'>conflicted</a></span><span class='o'>)</span></span>
 <span><span class='kr'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='o'>(</span><span class='nv'><a href='https://github.com/duckdblabs/duckplyr'>duckplyr</a></span><span class='o'>)</span></span>
+<span><span class='nf'><a href='https://conflicted.r-lib.org/reference/conflict_prefer.html'>conflict_prefer</a></span><span class='o'>(</span><span class='s'>"filter"</span>, <span class='s'>"duckplyr"</span><span class='o'>)</span></span>
+<span><span class='c'>#&gt; <span style='color: #555555;'>[conflicted]</span> Will prefer <span style='color: #0000BB; font-weight: bold;'>duckplyr</span>::filter over</span></span>
+<span><span class='c'>#&gt; any other package.</span></span>
 <span></span>
 <span><span class='c'># Use `as_duckplyr_df()` to enable processing with duckdb:</span></span>
 <span><span class='nv'>out</span> <span class='o'>&lt;-</span></span>
 <span>  <span class='nf'>palmerpenguins</span><span class='nf'>::</span><span class='nv'><a href='https://allisonhorst.github.io/palmerpenguins/reference/penguins.html'>penguins</a></span> <span class='o'>%&gt;%</span></span>
 <span>  <span class='nf'><a href='https://rdrr.io/pkg/duckplyr/man/as_duckplyr_df.html'>as_duckplyr_df</a></span><span class='o'>(</span><span class='o'>)</span> <span class='o'>%&gt;%</span></span>
-<span>  <span class='nf'>transmute</span><span class='o'>(</span>bill_area <span class='o'>=</span> <span class='nv'>bill_length_mm</span> <span class='o'>*</span> <span class='nv'>bill_depth_mm</span>, <span class='nv'>bill_length_mm</span>, <span class='nv'>species</span>, <span class='nv'>sex</span><span class='o'>)</span> <span class='o'>%&gt;%</span></span>
-<span>  <span class='nf'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='o'>(</span><span class='nv'>bill_length_mm</span> <span class='o'>&lt;</span> <span class='m'>40</span><span class='o'>)</span> <span class='o'>%&gt;%</span></span>
-<span>  <span class='nf'>select</span><span class='o'>(</span><span class='o'>-</span><span class='nv'>bill_length_mm</span><span class='o'>)</span></span>
+<span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/transmute.html'>transmute</a></span><span class='o'>(</span>bill_area <span class='o'>=</span> <span class='nv'>bill_length_mm</span> <span class='o'>*</span> <span class='nv'>bill_depth_mm</span>, <span class='nv'>bill_length_mm</span>, <span class='nv'>species</span>, <span class='nv'>sex</span><span class='o'>)</span> <span class='o'>%&gt;%</span></span>
+<span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='o'>(</span><span class='nv'>bill_length_mm</span> <span class='o'>&lt;</span> <span class='m'>40</span><span class='o'>)</span> <span class='o'>%&gt;%</span></span>
+<span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='o'>(</span><span class='o'>-</span><span class='nv'>bill_length_mm</span><span class='o'>)</span></span>
 <span></span>
 <span><span class='c'># The result is a data frame or tibble, with its own class.</span></span>
 <span><span class='nf'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='o'>(</span><span class='nv'>out</span><span class='o'>)</span></span>
@@ -46,7 +48,7 @@ This is a basic example which shows you how to solve a common problem:
 <span></span>
 <span><span class='c'># duckdb is responsible for eventually carrying out the operations:</span></span>
 <span><span class='nv'>out</span> <span class='o'>%&gt;%</span></span>
-<span>  <span class='nf'>explain</span><span class='o'>(</span><span class='o'>)</span></span>
+<span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/explain.html'>explain</a></span><span class='o'>(</span><span class='o'>)</span></span>
 <span><span class='c'>#&gt; Can't convert to relational, fallback implementation will be used.</span></span>
 <span></span>
 <span><span class='c'># The contents of this data frame are computed only upon request:</span></span>
@@ -85,7 +87,7 @@ This is a basic example which shows you how to solve a common problem:
 
 ## Extensibility
 
-This package only provides generics, for which other packages may then implement methods.
+This package also provides generics, for which other packages may then implement methods.
 
 <pre class='chroma'>
 <span><span class='kr'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='o'>(</span><span class='nv'><a href='https://github.com/duckdblabs/duckplyr'>duckplyr</a></span><span class='o'>)</span></span>
