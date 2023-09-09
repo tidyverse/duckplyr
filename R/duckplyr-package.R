@@ -28,6 +28,7 @@
 #' @importFrom dplyr dplyr_col_modify
 #' @importFrom dplyr dplyr_reconstruct
 #' @importFrom dplyr dplyr_row_slice
+#' @importFrom dplyr explain
 #' @importFrom dplyr filter
 #' @importFrom dplyr first
 #' @importFrom dplyr full_join
