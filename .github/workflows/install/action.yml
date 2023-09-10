@@ -108,7 +108,7 @@ runs:
           echo /.ccache/ >> .gitignore
         fi
 
-        if ! grep -e '^[^-^][.]ccache[$]$' .Rbuildignore; then
+        if ! grep -e '^\^[.]ccache[$]$' .Rbuildignore; then
           echo '^.ccache$' >> .Rbuildignore
         fi
 
