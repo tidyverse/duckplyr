@@ -63,10 +63,6 @@ rel_union_all.relational_df <- function(rel_a, rel_b, ...) {
 
 
 #' @export
-rel_tostring.relational_df <- function(rel, ...) {
-}
-
-#' @export
 rel_explain.relational_df <- function(rel, ...) {
 }
 
