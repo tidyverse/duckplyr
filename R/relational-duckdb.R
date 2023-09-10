@@ -321,10 +321,6 @@ rel_union_all.duckdb_relation <- function(rel_a, rel_b, ...) {
 }
 
 #' @export
-rel_tostring.duckdb_relation <- function(rel, ...) {
-}
-
-#' @export
 rel_explain.duckdb_relation <- function(rel, ...) {
   duckdb$rel_explain(rel)
 }

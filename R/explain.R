@@ -1,4 +1,3 @@
-#' @importFrom dplyr explain
 #' @export
 explain.duckplyr_df <- function(x, ...) {
   rel_try({

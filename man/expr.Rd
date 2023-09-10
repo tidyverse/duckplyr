@@ -54,6 +54,45 @@ relexpr_set_alias(expr, alias = NULL)
 
 \item{default_expr}{default relational expression.}
 }
+\value{
+an object of class \code{"relational_relexpr"}
+
+an object of class \code{"relational_relexpr"}
+
+an object of class \code{"relational_relexpr"}
+
+an object of class \code{"relational_relexpr"}
+
+an object of class \code{"relational_relexpr"}
+}
 \description{
-TBD.
+These functions provide a backend-agnostic way to construct expression trees
+built of column references, constants, and functions.
+All subexpressions in an expression tree can have an alias.
+
+\code{new_relexpr()} constructs an object of class \code{"relational_relexpr"}.
+It is used by the higher-level constructors,
+users should rarely need to call it directly.
+
+\code{relexpr_reference()} constructs a reference to a column.
+
+\code{relexpr_constant()} wraps a constant value.
+
+\code{relexpr_function()} applies a function.
+The arguments to this function are a list of other expression objects.
+
+\code{relexpr_window()} applies a function over a window,
+similarly to the SQL \code{OVER} clause.
+
+\code{relexpr_set_alias()} assigns an alias to an expression.
+}
+\examples{
+relexpr_set_alias(alias = "my_predicate",
+  relexpr_function("<",
+    list(
+      relexpr_reference("my_number"),
+      relexpr_constant(42)
+    )
+  )
+)
 }
