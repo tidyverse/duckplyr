@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.2.0 (2023-09-10)
+
+- Implement relational API for DuckDB.
+
+
 # duckplyr 0.1.0 (2023-07-03)
 
 ## Bug fixes
