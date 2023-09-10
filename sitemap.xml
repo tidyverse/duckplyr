@@ -1,111 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://duckdblabs.github.io/duckplyr/404.html</loc>
   </url>
   <url>
-    <loc>/LICENSE-text.html</loc>
+    <loc>https://duckdblabs.github.io/duckplyr/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>/LICENSE.html</loc>
+    <loc>https://duckdblabs.github.io/duckplyr/LICENSE.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://duckdblabs.github.io/duckplyr/authors.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://duckdblabs.github.io/duckplyr/index.html</loc>
   </url>
   <url>
-    <loc>/reference/as_duckplyr_df.html</loc>
+    <loc>https://duckdblabs.github.io/duckplyr/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/duckdb_from_file.html</loc>
+    <loc>https://duckdblabs.github.io/duckplyr/reference/as_duckplyr_df.html</loc>
   </url>
   <url>
-    <loc>/reference/duckdb_rel_from_df.html</loc>
+    <loc>https://duckdblabs.github.io/duckplyr/reference/duckdb_from_file.html</loc>
   </url>
   <url>
-    <loc>/reference/duckplyr-package.html</loc>
+    <loc>https://duckdblabs.github.io/duckplyr/reference/duckdb_rel_from_df.html</loc>
   </url>
   <url>
-    <loc>/reference/duckplyr_df_from_file.html</loc>
+    <loc>https://duckdblabs.github.io/duckplyr/reference/duckplyr-package.html</loc>
   </url>
   <url>
-    <loc>/reference/expr.html</loc>
+    <loc>https://duckdblabs.github.io/duckplyr/reference/duckplyr_df_from_file.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://duckdblabs.github.io/duckplyr/reference/expr.html</loc>
   </url>
   <url>
-    <loc>/reference/is_duckplyr_df.html</loc>
+    <loc>https://duckdblabs.github.io/duckplyr/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/methods_overwrite.html</loc>
+    <loc>https://duckdblabs.github.io/duckplyr/reference/is_duckplyr_df.html</loc>
   </url>
   <url>
-    <loc>/reference/methods_restore.html</loc>
+    <loc>https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html</loc>
   </url>
   <url>
-    <loc>/reference/new_relational.html</loc>
+    <loc>https://duckdblabs.github.io/duckplyr/reference/reexports.html</loc>
   </url>
   <url>
-    <loc>/reference/rel.html</loc>
+    <loc>https://duckdblabs.github.io/duckplyr/reference/rel_from_df.html</loc>
   </url>
   <url>
-    <loc>/reference/rel_aggregate.html</loc>
+    <loc>https://duckdblabs.github.io/duckplyr/reference/relational.html</loc>
   </url>
   <url>
-    <loc>/reference/rel_alias.html</loc>
+    <loc>https://duckdblabs.github.io/duckplyr/reference/stats_show.html</loc>
   </url>
   <url>
-    <loc>/reference/rel_distinct.html</loc>
+    <loc>https://duckdblabs.github.io/duckplyr/reference/wrap_df.html</loc>
   </url>
   <url>
-    <loc>/reference/rel_explain.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rel_filter.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rel_from_df.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rel_join.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rel_limit.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rel_order.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rel_project.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rel_set_alias.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rel_set_diff.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rel_set_intersect.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rel_set_symdiff.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rel_to_df.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rel_union_all.html</loc>
-  </url>
-  <url>
-    <loc>/reference/stats_show.html</loc>
-  </url>
-  <url>
-    <loc>/reference/wrap_df.html</loc>
-  </url>
-  <url>
-    <loc>/reference/wrap_integer.html</loc>
+    <loc>https://duckdblabs.github.io/duckplyr/reference/wrap_integer.html</loc>
   </url>
 </urlset>
