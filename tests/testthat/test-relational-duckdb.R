@@ -87,6 +87,8 @@ test_that("rel_aggregate()", {
 })
 
 test_that("duckdb_rel_from_df() uses materialized results", {
+  skip_if(identical(Sys.getenv("R_COVR"), "true"))
+
   withr::local_envvar(DUCKPLYR_FORCE = TRUE)
   withr::local_options(duckdb.materialize_message = TRUE)
 

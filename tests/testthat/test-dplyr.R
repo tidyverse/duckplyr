@@ -1,4 +1,6 @@
 test_that("no homonyms", {
+  skip_if(identical(Sys.getenv("R_COVR"), "true"))
+
   dplyr <- asNamespace("dplyr")
   duckplyr <- asNamespace("duckplyr")
 
