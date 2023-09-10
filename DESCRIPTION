@@ -1,6 +1,6 @@
 Type: Package
 Package: duckplyr
-Title: A DuckDB-Backed Grammar of Data Manipulation
+Title: A 'DuckDB'-Backed Version of 'dplyr'
 Version: 0.2.0
 Authors@R: c(
     person("Hannes", "Mühleisen", role = "aut",
@@ -9,9 +9,9 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-1416-3412")),
     person("Posit Software, PBC", role = c("cph", "fnd"))
   )
-Description: A drop-in replacement for dplyr, powered by DuckDB for performance.
+Description: A drop-in replacement for 'dplyr', powered by 'DuckDB' for performance.
     Also defines a set of generics that provide a low-level
-    implementer's interface for the high-level user interface of dplyr.
+    implementer's interface for the high-level user interface of 'dplyr'.
 License: MIT + file LICENSE
 URL: https://github.com/duckdblabs/duckplyr
 BugReports: https://github.com/duckdblabs/duckplyr/issues
