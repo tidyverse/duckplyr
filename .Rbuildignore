@@ -17,3 +17,4 @@
 ^R/tpch_raw_(?:oo_)?[0-9]+\.R$
 ^.ccache$
 ^.ccache$
+^.ccache$
