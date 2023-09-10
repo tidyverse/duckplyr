@@ -15,6 +15,9 @@
 \alias{rel_set_diff}
 \alias{rel_set_symdiff}
 \alias{rel_union_all}
+\alias{rel_explain}
+\alias{rel_alias}
+\alias{rel_set_alias}
 \alias{rel_names}
 \title{Relational implementer's interface}
 \usage{
@@ -35,6 +38,7 @@ rel_join(
   right,
   conds,
   join = c("inner", "left", "right", "outer", "cross", "semi", "anti"),
+  join_ref_type = c("regular", "natural", "cross", "positional", "asof"),
   ...
 )
 
@@ -49,6 +53,12 @@ rel_set_diff(rel_a, rel_b, ...)
 rel_set_symdiff(rel_a, rel_b, ...)
 
 rel_union_all(rel_a, rel_b, ...)
+
+rel_explain(rel, ...)
+
+rel_alias(rel, ...)
+
+rel_set_alias(rel, alias, ...)
 
 rel_names(rel, ...)
 }
@@ -71,7 +81,11 @@ rel_names(rel, ...)
 
 \item{join}{The type of join.}
 
+\item{join_ref_type}{The ref type of join.}
+
 \item{n}{The number of rows.}
+
+\item{alias}{the new alias}
 }
 \value{
 \itemize{
@@ -131,6 +145,13 @@ to be used by \code{\link[dplyr:setops]{dplyr::symdiff()}}.
 
 \code{rel_union_all()} returns rows present in any of both tables,
 to be used by \code{\link[dplyr:setops]{dplyr::union_all()}}.
+
+\code{rel_explain()} prints an explanation of the plan
+executed by the relational object.
+
+\code{rel_alias()} returns the alias name for a relational object.
+
+\code{rel_set_alias()} sets the alias name for a relational object.
 
 \code{rel_names()} returns the column names as character vector,
 to be used by \code{\link[=colnames]{colnames()}}.
@@ -222,6 +243,13 @@ rel_distinct.dfrel <- function(rel, ...) {
 }
 
 rel_distinct(new_dfrel(mtcars[1:3, 1:4]))
+
+rel <- rel_from_df(mtcars)
+rel_explain(rel)
+
+rel <- rel_from_df(mtcars)
+rel_set_alias(rel, "my_new_alias")
+rel_alias(rel)
 
 rel_names.dfrel <- function(rel, ...) {
   df <- unclass(rel)[[1]]
