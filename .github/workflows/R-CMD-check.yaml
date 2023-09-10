@@ -9,12 +9,10 @@ on:
     branches:
       - main
       - master
-      - release
   pull_request:
     branches:
       - main
       - master
-      - release
   schedule:
     - cron: "10 0 * * *"
 
@@ -194,7 +192,6 @@ jobs:
           # End custom: R 3.6
 
           # Begin custom: R 3.5
-          - {os: ubuntu-22.04,   r: 'oldrel-3'}
           # End custom: R 3.5
 
           # Begin custom: R 3.4
