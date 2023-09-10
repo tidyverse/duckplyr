@@ -1,3 +1,3 @@
-duckplyr 0.1.0
+duckplyr 0.2.0
 
-Initial release.
+Release with DuckDB support.
