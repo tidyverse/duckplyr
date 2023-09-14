@@ -5,6 +5,7 @@ globalVariables("___row_number_by")
 distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
   # Our implementation
   rel_try(
+    "Implemented for all cases?" = FALSE,
     {
       dots <- enquos(..., .named = TRUE)
       # FIXME: avoid column duplication in a cleaner way
