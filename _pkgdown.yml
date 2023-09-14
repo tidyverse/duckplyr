@@ -12,7 +12,7 @@ reference:
   - methods_overwrite
 - title: Data ingestion
   contents:
-  - duckplyr_df_from_file
+  - df_from_file
 - title: Internals
   contents:
   - stats_show
