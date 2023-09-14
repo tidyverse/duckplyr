@@ -7,8 +7,20 @@
 is_duckplyr_df(.data)
 }
 \arguments{
-\item{.data}{Data}
+\item{.data}{The object to test}
+}
+\value{
+\code{TRUE} if the input object is of class \code{"duckplyr_df"},
+otherwise \code{FALSE}.
 }
 \description{
-Class predicate for duckplyr data frames
+Tests if the input object is of class \code{"duckplyr_df"}.
+}
+\examples{
+tibble(a = 1:3) \%>\%
+  is_duckplyr_df()
+
+tibble(a = 1:3) \%>\%
+  as_duckplyr_df() \%>\%
+  is_duckplyr_df()
 }
