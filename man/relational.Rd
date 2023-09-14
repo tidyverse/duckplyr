@@ -244,13 +244,6 @@ rel_distinct.dfrel <- function(rel, ...) {
 
 rel_distinct(new_dfrel(mtcars[1:3, 1:4]))
 
-rel <- rel_from_df(mtcars)
-rel_explain(rel)
-
-rel <- rel_from_df(mtcars)
-rel_set_alias(rel, "my_new_alias")
-rel_alias(rel)
-
 rel_names.dfrel <- function(rel, ...) {
   df <- unclass(rel)[[1]]
 

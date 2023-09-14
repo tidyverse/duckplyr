@@ -1,11 +1,3 @@
-#' TODO
-#'
-#' @param path Path to file TODO add what kind
-#'
-#' @param table_function TODO
-#' @param options TODO
-#'
-#' @export
 duckdb_from_file <- function(path, table_function, options=list()) {
   # FIXME: For some reason, it's important to create an alias here
   con <- get_default_duckdb_connection()

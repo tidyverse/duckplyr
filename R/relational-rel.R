@@ -295,10 +295,6 @@ rel_union_all <- function(rel_a, rel_b, ...) {
 #'
 #' @rdname relational
 #' @export
-#' @examples
-#'
-#' rel <- rel_from_df(mtcars)
-#' rel_explain(rel)
 rel_explain <- function(rel, ...) {
   rel_stats_env$rel_explain <- (rel_stats_env$rel_explain %||% 0L) + 1L
   UseMethod("rel_explain")
@@ -322,11 +318,6 @@ rel_alias <- function(rel, ...) {
 #' @rdname relational
 #' @param alias the new alias
 #' @export
-#' @examples
-#'
-#' rel <- rel_from_df(mtcars)
-#' rel_set_alias(rel, "my_new_alias")
-#' rel_alias(rel)
 rel_set_alias <- function(rel, alias, ...) {
   rel_stats_env$rel_set_alias <- (rel_stats_env$rel_set_alias %||% 0L) + 1L
   UseMethod("rel_set_alias")

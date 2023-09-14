@@ -1,11 +1,3 @@
-#' Data frame relational backend
-#'
-#' TBD.
-#'
-#' @param df A data frame.
-#' @return A relational object.
-#'
-#' @export
 rel_from_df <- function(df) {
   # FIXME: make generic
   stopifnot(is.data.frame(df))
