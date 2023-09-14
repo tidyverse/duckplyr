@@ -18,5 +18,5 @@ reference:
   - stats_show
 - title: Relational operations and expressions
   contents:
-  - relational
-  - expr
+  - new_relational
+  - new_relexpr

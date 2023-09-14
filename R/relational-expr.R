@@ -12,7 +12,7 @@
 #' @param x An object.
 #' @param class Classes added in front of the `"relational_relexpr"` base class.
 #'
-#' @name expr
+#' @name new_relexpr
 #' @return an object of class `"relational_relexpr"`
 #' @export
 #' @examples
@@ -35,7 +35,7 @@ new_relexpr <- function(x, class = NULL) {
 #' @param name The name of the column or function to reference.
 #' @param rel The name of the relation to reference.
 #' @param alias An alias for the new expression.
-#' @rdname expr
+#' @rdname new_relexpr
 #' @return an object of class `"relational_relexpr"`
 #' @export
 relexpr_reference <- function(name, rel = NULL, alias = NULL) {
@@ -50,7 +50,7 @@ relexpr_reference <- function(name, rel = NULL, alias = NULL) {
 #' `relexpr_constant()` wraps a constant value.
 #'
 #' @param val The value to use in the constant expression.
-#' @rdname expr
+#' @rdname new_relexpr
 #' @return an object of class `"relational_relexpr"`
 #' @export
 relexpr_constant <- function(val, alias = NULL) {
@@ -65,7 +65,7 @@ relexpr_constant <- function(val, alias = NULL) {
 #' The arguments to this function are a list of other expression objects.
 #'
 #' @param args Function arguments, a list of `expr` objects.
-#' @rdname expr
+#' @rdname new_relexpr
 #' @return an object of class `"relational_relexpr"`
 #' @export
 relexpr_function <- function(name, args, alias = NULL) {
@@ -84,7 +84,7 @@ relexpr_function <- function(name, args, alias = NULL) {
 #' @param order_bys which variables to order results by (list).
 #' @param offset_expr offset relational expression.
 #' @param default_expr default relational expression.
-#' @rdname expr
+#' @rdname new_relexpr
 #' @export
 relexpr_window <- function(
     expr,
@@ -118,7 +118,7 @@ relexpr_window <- function(
 #' `relexpr_set_alias()` assigns an alias to an expression.
 #'
 #' @param expr An `expr` object.
-#' @rdname expr
+#' @rdname new_relexpr
 #' @return an object of class `"relational_relexpr"`
 #' @export
 relexpr_set_alias <- function(expr, alias = NULL) {
