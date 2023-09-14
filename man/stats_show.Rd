@@ -6,6 +6,18 @@
 \usage{
 stats_show()
 }
+\value{
+Called for its side effect.
+}
 \description{
-Show stats
+Prints statistics on how many calls were handled by DuckDB.
+}
+\examples{
+stats_show()
+
+tibble(a = 1:3) \%>\%
+  as_duckplyr_df() \%>\%
+  mutate(b = a + 1)
+
+stats_show()
 }
