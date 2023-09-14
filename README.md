@@ -12,10 +12,17 @@ The goal of duckplyr is to provide a drop-in replacement for dplyr that uses Duc
 
 ## Example
 
+<pre class='chroma'>
+<span><span class='kr'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='o'>(</span><span class='nv'><a href='https://conflicted.r-lib.org/'>conflicted</a></span><span class='o'>)</span></span>
+<span><span class='kr'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='o'>(</span><span class='nv'><a href='https://github.com/duckdblabs/duckplyr'>duckplyr</a></span><span class='o'>)</span></span>
+<span><span class='nf'><a href='https://conflicted.r-lib.org/reference/conflict_prefer.html'>conflict_prefer</a></span><span class='o'>(</span><span class='s'>"filter"</span>, <span class='s'>"duckplyr"</span><span class='o'>)</span></span>
+<span><span class='c'>#&gt; <span style='color: #555555;'>[conflicted]</span> Will prefer <span style='color: #0000BB; font-weight: bold;'>duckplyr</span>::filter over</span></span>
+<span><span class='c'>#&gt; any other package.</span></span></pre>
+
 There are two ways to use duckplyr.
 
-1.  To enable for individual data frames, use `as_duckplyr_df()` as the first step in your pipe.
-2.  To enable for the entire session, use `methods_overwrite()`.
+1.  To enable for individual data frames, use [`as_duckplyr_df()`](https://rdrr.io/pkg/duckplyr/man/as_duckplyr_df.html) as the first step in your pipe.
+2.  To enable for the entire session, use [`methods_overwrite()`](https://rdrr.io/pkg/duckplyr/man/methods_overwrite.html).
 
 The examples below illustrate both methods. See also the companion [demo repository](https://github.com/Tmonster/duckplyr_demo) for a use case with a large dataset.
 
@@ -24,12 +31,6 @@ The examples below illustrate both methods. See also the companion [demo reposit
 This example illustrates usage of duckplyr for individual data frames.
 
 <pre class='chroma'>
-<span><span class='kr'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='o'>(</span><span class='nv'><a href='https://conflicted.r-lib.org/'>conflicted</a></span><span class='o'>)</span></span>
-<span><span class='kr'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='o'>(</span><span class='nv'><a href='https://github.com/duckdblabs/duckplyr'>duckplyr</a></span><span class='o'>)</span></span>
-<span><span class='nf'><a href='https://conflicted.r-lib.org/reference/conflict_prefer.html'>conflict_prefer</a></span><span class='o'>(</span><span class='s'>"filter"</span>, <span class='s'>"duckplyr"</span><span class='o'>)</span></span>
-<span><span class='c'>#&gt; <span style='color: #555555;'>[conflicted]</span> Will prefer <span style='color: #0000BB; font-weight: bold;'>duckplyr</span>::filter over</span></span>
-<span><span class='c'>#&gt; any other package.</span></span>
-<span></span>
 <span><span class='c'># Use `as_duckplyr_df()` to enable processing with duckdb:</span></span>
 <span><span class='nv'>out</span> <span class='o'>&lt;-</span></span>
 <span>  <span class='nf'>palmerpenguins</span><span class='nf'>::</span><span class='nv'><a href='https://allisonhorst.github.io/palmerpenguins/reference/penguins.html'>penguins</a></span> <span class='o'>%&gt;%</span></span>
@@ -101,7 +102,7 @@ This example illustrates usage of duckplyr for individual data frames.
 <span><span class='c'>#&gt; Filter [!=(species, 'Gentoo')]</span></span>
 <span><span class='c'>#&gt;   Aggregate [species, sex, mean(bill_area)]</span></span>
 <span><span class='c'>#&gt;     Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, *(bill_length_mm, bill_depth_mm) as bill_area]</span></span>
-<span><span class='c'>#&gt;       r_dataframe_scan(0x1359e4f88)</span></span>
+<span><span class='c'>#&gt;       r_dataframe_scan(0x11376a9c8)</span></span>
 <span><span class='c'>#&gt; </span></span>
 <span><span class='c'>#&gt; ---------------------</span></span>
 <span><span class='c'>#&gt; -- Result Columns  --</span></span>
@@ -129,12 +130,6 @@ This example illustrates usage of duckplyr for individual data frames.
 This example illustrates usage of duckplyr for all data frames in the R session.
 
 <pre class='chroma'>
-<span><span class='kr'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='o'>(</span><span class='nv'><a href='https://conflicted.r-lib.org/'>conflicted</a></span><span class='o'>)</span></span>
-<span><span class='kr'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='o'>(</span><span class='nv'><a href='https://github.com/duckdblabs/duckplyr'>duckplyr</a></span><span class='o'>)</span></span>
-<span><span class='nf'><a href='https://conflicted.r-lib.org/reference/conflict_prefer.html'>conflict_prefer</a></span><span class='o'>(</span><span class='s'>"filter"</span>, <span class='s'>"duckplyr"</span><span class='o'>)</span></span>
-<span><span class='c'>#&gt; <span style='color: #555555;'>[conflicted]</span> Removing existing preference.</span></span>
-<span><span class='c'>#&gt; <span style='color: #555555;'>[conflicted]</span> Will prefer <span style='color: #0000BB; font-weight: bold;'>duckplyr</span>::filter over any other package.</span></span>
-<span></span>
 <span><span class='c'># Use `methods_overwrite()` to enable processing with duckdb for all data frames:</span></span>
 <span><span class='nf'><a href='https://rdrr.io/pkg/duckplyr/man/methods_overwrite.html'>methods_overwrite</a></span><span class='o'>(</span><span class='o'>)</span></span>
 <span></span>
@@ -160,7 +155,7 @@ This example illustrates usage of duckplyr for all data frames in the R session.
 <span><span class='c'>#&gt; Filter [!=(species, 'Gentoo')]</span></span>
 <span><span class='c'>#&gt;   Aggregate [species, sex, mean(bill_area)]</span></span>
 <span><span class='c'>#&gt;     Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, *(bill_length_mm, bill_depth_mm) as bill_area]</span></span>
-<span><span class='c'>#&gt;       r_dataframe_scan(0x13444d758)</span></span>
+<span><span class='c'>#&gt;       r_dataframe_scan(0x107975d58)</span></span>
 <span><span class='c'>#&gt; </span></span>
 <span><span class='c'>#&gt; ---------------------</span></span>
 <span><span class='c'>#&gt; -- Result Columns  --</span></span>
