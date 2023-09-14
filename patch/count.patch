@@ -1,5 +1,5 @@
 diff --git b/R/count.R a/R/count.R
-index 0b85569..75e66b2 100644
+index 0b85569..1a74334 100644
 --- b/R/count.R
 +++ a/R/count.R
 @@ -1,14 +1,51 @@
@@ -56,12 +56,3 @@ index 0b85569..75e66b2 100644
    # dplyr forward
    count <- dplyr$count.data.frame
    out <- count(x, ..., wt = {{ wt }}, sort = sort, name = name, .drop = .drop)
-@@ -26,7 +63,7 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
-   out <- tally(out, wt = !!enquo(wt), sort = sort, name = name)
- 
-   # Ensure grouping is transient
--  out <- dplyr_reconstruct(out, x)
-+  out <- dplyr_reconstruct_dispatch(out, x)
- 
-   out
- }

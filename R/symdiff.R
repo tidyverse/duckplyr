@@ -42,7 +42,7 @@ symdiff.duckplyr_df <- function(x, y, ...) {
 
   out <- vec_set_symmetric_difference(x, y, error_call = current_env())
 
-  dplyr_reconstruct_dispatch(out, x)
+  dplyr_reconstruct(out, x)
 }
 
 duckplyr_symdiff <- function(x, y, ...) {

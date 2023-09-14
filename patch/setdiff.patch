@@ -1,5 +1,5 @@
 diff --git b/R/setdiff.R a/R/setdiff.R
-index 314dcd7..f360627 100644
+index 314dcd7..ecc473f 100644
 --- b/R/setdiff.R
 +++ a/R/setdiff.R
 @@ -2,9 +2,31 @@
@@ -35,12 +35,3 @@ index 314dcd7..f360627 100644
        return(out)
      }
    )
-@@ -20,7 +42,7 @@ setdiff.duckplyr_df <- function(x, y, ...) {
- 
-   out <- vec_set_difference(x, y, error_call = current_env())
- 
--  dplyr_reconstruct(out, x)
-+  dplyr_reconstruct_dispatch(out, x)
- }
- 
- duckplyr_setdiff <- function(x, y, ...) {

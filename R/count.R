@@ -63,7 +63,7 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
   out <- tally(out, wt = !!enquo(wt), sort = sort, name = name)
 
   # Ensure grouping is transient
-  out <- dplyr_reconstruct_dispatch(out, x)
+  out <- dplyr_reconstruct(out, x)
 
   out
 }
