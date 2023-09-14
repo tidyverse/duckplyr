@@ -15,7 +15,7 @@ The goal of duckplyr is to provide a drop-in replacement for dplyr that uses Duc
 There are two ways to use duckplyr.
 
 1.  To enable for individual data frames, use `as_duckplyr_df()` as the first step in your pipe.
-2.  To enable for the entire session, use `methods_override()`.
+2.  To enable for the entire session, use `methods_overwrite()`.
 
 The examples below illustrate both methods. See also the companion [demo repository](https://github.com/Tmonster/duckplyr_demo) for a use case with a large dataset.
 

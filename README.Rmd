@@ -31,7 +31,7 @@ It also defines a set of generics that provide a low-level implementer's interfa
 There are two ways to use duckplyr.
 
 1. To enable for individual data frames, use `as_duckplyr_df()` as the first step in your pipe.
-1. To enable for the entire session, use `methods_override()`.
+1. To enable for the entire session, use `methods_overwrite()`.
 
 The examples below illustrate both methods.
 See also the companion [demo repository](https://github.com/Tmonster/duckplyr_demo) for a use case with a large dataset.
