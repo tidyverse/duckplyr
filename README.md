@@ -35,7 +35,7 @@ This example illustrates usage of duckplyr for individual data frames.
 <span>  <span class='nf'>palmerpenguins</span><span class='nf'>::</span><span class='nv'><a href='https://allisonhorst.github.io/palmerpenguins/reference/penguins.html'>penguins</a></span> <span class='o'>%&gt;%</span></span>
 <span>  <span class='c'># CAVEAT: factor columns are not supported yet</span></span>
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='o'>(</span><span class='nf'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span><span class='o'>(</span><span class='nf'>where</span><span class='o'>(</span><span class='nv'>is.factor</span><span class='o'>)</span>, <span class='nv'>as.character</span><span class='o'>)</span><span class='o'>)</span> <span class='o'>%&gt;%</span></span>
-<span>  <span class='nf'>as_duckplyr_df</span><span class='o'>(</span><span class='o'>)</span> <span class='o'>%&gt;%</span></span>
+<span>  <span class='nf'><a href='https://rdrr.io/pkg/duckplyr/man/as_duckplyr_df.html'>as_duckplyr_df</a></span><span class='o'>(</span><span class='o'>)</span> <span class='o'>%&gt;%</span></span>
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='o'>(</span>bill_area <span class='o'>=</span> <span class='nv'>bill_length_mm</span> <span class='o'>*</span> <span class='nv'>bill_depth_mm</span><span class='o'>)</span> <span class='o'>%&gt;%</span></span>
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='o'>(</span>.by <span class='o'>=</span> <span class='nf'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='o'>(</span><span class='nv'>species</span>, <span class='nv'>sex</span><span class='o'>)</span>, mean_bill_area <span class='o'>=</span> <span class='nf'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='o'>(</span><span class='nv'>bill_area</span><span class='o'>)</span><span class='o'>)</span> <span class='o'>%&gt;%</span></span>
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='o'>(</span><span class='nv'>species</span> <span class='o'>!=</span> <span class='s'>"Gentoo"</span><span class='o'>)</span></span>
@@ -101,7 +101,7 @@ This example illustrates usage of duckplyr for individual data frames.
 <span><span class='c'>#&gt; Filter [!=(species, 'Gentoo')]</span></span>
 <span><span class='c'>#&gt;   Aggregate [species, sex, mean(bill_area)]</span></span>
 <span><span class='c'>#&gt;     Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, *(bill_length_mm, bill_depth_mm) as bill_area]</span></span>
-<span><span class='c'>#&gt;       r_dataframe_scan(0x12c262098)</span></span>
+<span><span class='c'>#&gt;       r_dataframe_scan(0x1359e4f88)</span></span>
 <span><span class='c'>#&gt; </span></span>
 <span><span class='c'>#&gt; ---------------------</span></span>
 <span><span class='c'>#&gt; -- Result Columns  --</span></span>
@@ -136,7 +136,7 @@ This example illustrates usage of duckplyr for all data frames in the R session.
 <span><span class='c'>#&gt; <span style='color: #555555;'>[conflicted]</span> Will prefer <span style='color: #0000BB; font-weight: bold;'>duckplyr</span>::filter over any other package.</span></span>
 <span></span>
 <span><span class='c'># Use `methods_overwrite()` to enable processing with duckdb for all data frames:</span></span>
-<span><span class='nf'>methods_overwrite</span><span class='o'>(</span><span class='o'>)</span></span>
+<span><span class='nf'><a href='https://rdrr.io/pkg/duckplyr/man/methods_overwrite.html'>methods_overwrite</a></span><span class='o'>(</span><span class='o'>)</span></span>
 <span></span>
 <span><span class='c'># This is the same query as above, without `as_duckplyr_df()`:</span></span>
 <span><span class='nv'>out</span> <span class='o'>&lt;-</span></span>
@@ -160,7 +160,7 @@ This example illustrates usage of duckplyr for all data frames in the R session.
 <span><span class='c'>#&gt; Filter [!=(species, 'Gentoo')]</span></span>
 <span><span class='c'>#&gt;   Aggregate [species, sex, mean(bill_area)]</span></span>
 <span><span class='c'>#&gt;     Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, *(bill_length_mm, bill_depth_mm) as bill_area]</span></span>
-<span><span class='c'>#&gt;       r_dataframe_scan(0x12b737008)</span></span>
+<span><span class='c'>#&gt;       r_dataframe_scan(0x13444d758)</span></span>
 <span><span class='c'>#&gt; </span></span>
 <span><span class='c'>#&gt; ---------------------</span></span>
 <span><span class='c'>#&gt; -- Result Columns  --</span></span>
@@ -171,7 +171,7 @@ This example illustrates usage of duckplyr for all data frames in the R session.
 <span><span class='c'>#&gt; [1] 5</span></span>
 <span></span>
 <span><span class='c'># Restart R, or call `methods_restore()` to revert to the default dplyr implementation.</span></span>
-<span><span class='nf'>methods_restore</span><span class='o'>(</span><span class='o'>)</span></span>
+<span><span class='nf'><a href='https://rdrr.io/pkg/duckplyr/man/methods_overwrite.html'>methods_restore</a></span><span class='o'>(</span><span class='o'>)</span></span>
 <span></span>
 <span><span class='c'># dplyr is active again:</span></span>
 <span><span class='nf'>palmerpenguins</span><span class='nf'>::</span><span class='nv'><a href='https://allisonhorst.github.io/palmerpenguins/reference/penguins.html'>penguins</a></span> <span class='o'>%&gt;%</span></span>
