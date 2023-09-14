@@ -1,5 +1,5 @@
 diff --git b/R/symdiff.R a/R/symdiff.R
-index dbd08df..1514319 100644
+index dbd08df..ae68190 100644
 --- b/R/symdiff.R
 +++ a/R/symdiff.R
 @@ -2,9 +2,31 @@
@@ -31,7 +31,16 @@ index dbd08df..1514319 100644
 +
 +      rel <- rel_set_symdiff(x_rel, y_rel)
 +      out <- rel_to_df(rel)
-+      out <- dplyr_reconstruct(out, x)
++      out <- dplyr_reconstruct_dispatch(out, x)
        return(out)
      }
    )
+@@ -20,7 +42,7 @@ symdiff.duckplyr_df <- function(x, y, ...) {
+ 
+   out <- vec_set_symmetric_difference(x, y, error_call = current_env())
+ 
+-  dplyr_reconstruct(out, x)
++  dplyr_reconstruct_dispatch(out, x)
+ }
+ 
+ duckplyr_symdiff <- function(x, y, ...) {

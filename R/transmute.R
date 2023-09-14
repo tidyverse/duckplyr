@@ -14,7 +14,7 @@ transmute.duckplyr_df <- function(.data, ...) {
       rel <- duckdb_rel_from_df(.data)
       out_rel <- rel_project(rel, exprs)
       out <- rel_to_df(out_rel)
-      out <- dplyr_reconstruct(out, .data)
+      out <- dplyr_reconstruct_dispatch(out, .data)
       return(out)
     }
   )
