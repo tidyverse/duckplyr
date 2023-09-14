@@ -153,7 +153,7 @@ rel_translate <- function(
 
           # Aggregates
           "sum", "mean", "stddev", "min", "max", "median",
-
+          #
           NULL
         )
 
@@ -168,7 +168,7 @@ rel_translate <- function(
           "abs",
           "%in%",
           "substr",
-
+          #
           NULL
         )
 
