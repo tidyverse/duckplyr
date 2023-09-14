@@ -4,5 +4,7 @@
 #' for the duraton of the session, or until a call to `methods_restore()`.
 #'
 #' @return Called for their side effects.
-#' @aliases methods_restore
-"methods_overwrite"
+methods_overwrite <- methods_overwrite
+
+#' @rdname methods_overwrite
+methods_restore <- methods_restore
