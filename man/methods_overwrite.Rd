@@ -11,7 +11,11 @@ An object of class \code{function} of length 1.
 \usage{
 methods_overwrite
 }
+\value{
+Called for their side effects.
+}
 \description{
-Calling this function
+After calling \code{methods_overwrite()}, all dplyr methods are redirected to duckplyr
+for the duraton of the session, or until a call to \code{methods_restore()}.
 }
 \keyword{datasets}
