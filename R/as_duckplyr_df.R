@@ -1,8 +1,22 @@
 #' Convert to a duckplyr data frame
 #'
+#' For an object of class `duckplyr_df`,
+#' dplyr verbs such as [mutate()], [select()] or [filter()]  will attempt to use DuckDB.
+#' If this is not possible for whatever reason, the original dplyr implementation is used.
+#'
 #' @param .data data frame or tibble to transform
 #'
+#' @return An object of class `"duckplyr_df"`, inheriting from the classes of the
+#'   `.data` argument.
+#'
 #' @export
+#' @examples
+#' tibble(a = 1:3) %>%
+#'   mutate(b = a + 1)
+#'
+#' tibble(a = 1:3) %>%
+#'   as_duckplyr_df() %>%
+#'   mutate(b = a + 1)
 as_duckplyr_df <- function(.data) {
   if (inherits(.data, "duckplyr_df")) {
     return(.data)

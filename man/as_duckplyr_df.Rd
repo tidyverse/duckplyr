@@ -9,6 +9,20 @@ as_duckplyr_df(.data)
 \arguments{
 \item{.data}{data frame or tibble to transform}
 }
+\value{
+An object of class \code{"duckplyr_df"}, inheriting from the classes of the
+\code{.data} argument.
+}
 \description{
-Convert to a duckplyr data frame
+For an object of class \code{duckplyr_df},
+dplyr verbs such as \code{\link[=mutate]{mutate()}}, \code{\link[=select]{select()}} or \code{\link[=filter]{filter()}}  will attempt to use DuckDB.
+If this is not possible for whatever reason, the original dplyr implementation is used.
+}
+\examples{
+tibble(a = 1:3) \%>\%
+  mutate(b = a + 1)
+
+tibble(a = 1:3) \%>\%
+  as_duckplyr_df() \%>\%
+  mutate(b = a + 1)
 }
