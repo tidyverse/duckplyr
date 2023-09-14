@@ -4,6 +4,19 @@
 #' for the duraton of the session, or until a call to `methods_restore()`.
 #'
 #' @return Called for their side effects.
+#' @examples
+#' tibble(a = 1:3) %>%
+#'   mutate(b = a + 1)
+#'
+#' methods_overwrite()
+#'
+#' tibble(a = 1:3) %>%
+#'   mutate(b = a + 1)
+#'
+#' methods_restore()
+#'
+#' tibble(a = 1:3) %>%
+#'   mutate(b = a + 1)
 methods_overwrite <- methods_overwrite
 
 #' @rdname methods_overwrite
