@@ -86,8 +86,10 @@ similarly to the SQL \code{OVER} clause.
 \code{relexpr_set_alias()} assigns an alias to an expression.
 }
 \examples{
-relexpr_set_alias(alias = "my_predicate",
-  relexpr_function("<",
+relexpr_set_alias(
+  alias = "my_predicate",
+  relexpr_function(
+    "<",
     list(
       relexpr_reference("my_number"),
       relexpr_constant(42)

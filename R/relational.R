@@ -55,8 +55,7 @@ rel_translate <- function(
     alias = NULL,
     partition = NULL,
     need_window = FALSE,
-    names_data = names(data)
-) {
+    names_data = names(data)) {
   if (is_expression(quo)) {
     expr <- quo
     env <- baseenv()
