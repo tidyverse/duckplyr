@@ -22,19 +22,10 @@
     <loc>https://duckdblabs.github.io/duckplyr/reference/as_duckplyr_df.html</loc>
   </url>
   <url>
-    <loc>https://duckdblabs.github.io/duckplyr/reference/duckdb_from_file.html</loc>
-  </url>
-  <url>
-    <loc>https://duckdblabs.github.io/duckplyr/reference/duckdb_rel_from_df.html</loc>
+    <loc>https://duckdblabs.github.io/duckplyr/reference/df_from_file.html</loc>
   </url>
   <url>
     <loc>https://duckdblabs.github.io/duckplyr/reference/duckplyr-package.html</loc>
-  </url>
-  <url>
-    <loc>https://duckdblabs.github.io/duckplyr/reference/duckplyr_df_from_file.html</loc>
-  </url>
-  <url>
-    <loc>https://duckdblabs.github.io/duckplyr/reference/expr.html</loc>
   </url>
   <url>
     <loc>https://duckdblabs.github.io/duckplyr/reference/index.html</loc>
@@ -46,21 +37,15 @@
     <loc>https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html</loc>
   </url>
   <url>
+    <loc>https://duckdblabs.github.io/duckplyr/reference/new_relational.html</loc>
+  </url>
+  <url>
+    <loc>https://duckdblabs.github.io/duckplyr/reference/new_relexpr.html</loc>
+  </url>
+  <url>
     <loc>https://duckdblabs.github.io/duckplyr/reference/reexports.html</loc>
   </url>
   <url>
-    <loc>https://duckdblabs.github.io/duckplyr/reference/rel_from_df.html</loc>
-  </url>
-  <url>
-    <loc>https://duckdblabs.github.io/duckplyr/reference/relational.html</loc>
-  </url>
-  <url>
     <loc>https://duckdblabs.github.io/duckplyr/reference/stats_show.html</loc>
-  </url>
-  <url>
-    <loc>https://duckdblabs.github.io/duckplyr/reference/wrap_df.html</loc>
-  </url>
-  <url>
-    <loc>https://duckdblabs.github.io/duckplyr/reference/wrap_integer.html</loc>
   </url>
 </urlset>
