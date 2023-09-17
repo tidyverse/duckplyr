@@ -25,6 +25,7 @@ walk2(dplyr_texts, dplyr_files, brio::write_file)
 forbidden <- fs::path("R", c(
   "dplyr.R",
   "zzz.R",
+  "zzz-methods.R",
   "duckplyr-package.R",
   "head.R",
   "meta.R",
