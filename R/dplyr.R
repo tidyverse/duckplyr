@@ -1,5 +1,3 @@
-dplyr <- asNamespace("dplyr")
-
 as_across_fn_call <- dplyr$as_across_fn_call
 as_fun_list <- dplyr$as_fun_list
 as_join_by <- dplyr$as_join_by
