@@ -21,6 +21,8 @@ set.seed(20230702)
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![CRAN status](https://www.r-pkg.org/badges/version/duckplyr)](https://CRAN.R-project.org/package=duckplyr)
+[![R-CMD-check](https://github.com/duckdblabs/duckplyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/duckdblabs/duckplyr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of duckplyr is to provide a drop-in replacement for dplyr that uses DuckDB as a backend for fast operation.
@@ -212,7 +214,7 @@ rel_names(mtcars_rel)
 
 ## Installation
 
-Once on CRAN, you can install duckplyr with:
+Install duckplyr from CRAN with:
 
 ``` r
 install.packages("duckplyr")
