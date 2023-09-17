@@ -1,5 +1,18 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.2.1 (2023-09-16)
+
+- Improve documentation.
+
+- Work around problem with `dplyr_reconstruct()` in R 4.3.
+
+- Rename `duckdb_from_file()` to `df_from_file()`.
+
+- Unexport private `duckdb_rel_from_df()`, `rel_from_df()`, `wrap_df()` and `wrap_integer()`.
+
+- Reexport `%>%` and `tibble()`.
+
+
 # duckplyr 0.2.0 (2023-09-10)
 
 - Implement relational API for DuckDB.
