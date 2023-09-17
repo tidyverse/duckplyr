@@ -125,7 +125,7 @@ Pass <code>class(tibble())</code> to create a tibble.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --- Relation Tree ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv_auto(/tmp/Rtmp8AdqY1/file1122769248f6.csv)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv_auto(/tmp/RtmpdcJvhK/file110446b93428.csv)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -136,8 +136,25 @@ Pass <code>class(tibble())</code> to create a tibble.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 2 3</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Return as tibble:</span></span></span>
-<span class="r-in"><span><span class="fu">df_from_file</span><span class="op">(</span><span class="va">path</span>, <span class="st">"read_csv_auto"</span>, class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="fu">tibble</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in tibble():</span> could not find function "tibble"</span>
+<span class="r-in"><span><span class="fu">df_from_file</span><span class="op">(</span><span class="va">path</span>, <span class="st">"read_csv_auto"</span>, class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> materializing:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> --- Relation Tree ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv_auto(/tmp/RtmpdcJvhK/file110446b93428.csv)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - a (BIGINT)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - b (VARCHAR)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       a b    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     1 d    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     2 e    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     3 f    </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></span></span>
 </code></pre></div>
