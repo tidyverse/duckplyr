@@ -13,7 +13,7 @@ Description: A drop-in replacement for 'dplyr', powered by 'DuckDB' for performa
     Also defines a set of generics that provide a low-level
     implementer's interface for the high-level user interface of 'dplyr'.
 License: MIT + file LICENSE
-URL: https://github.com/duckdblabs/duckplyr
+URL: https://duckdblabs.github.io/duckplyr, https://github.com/duckdblabs/duckplyr
 BugReports: https://github.com/duckdblabs/duckplyr/issues
 Depends: 
     R (>= 4.1.0)
