@@ -4,7 +4,7 @@
 
 <!-- badges: start -->
 
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) [![CRAN status](https://www.r-pkg.org/badges/version/duckplyr)](https://CRAN.R-project.org/package=duckplyr) [![R-CMD-check](https://github.com/duckdblabs/duckplyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/duckdblabs/duckplyr/actions/workflows/R-CMD-check.yaml)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) [![R-CMD-check](https://github.com/duckdblabs/duckplyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/duckdblabs/duckplyr/actions/workflows/R-CMD-check.yaml)
 
 <!-- badges: end -->
 
@@ -102,7 +102,7 @@ This example illustrates usage of duckplyr for individual data frames.
 <span><span class='c'>#&gt; Filter [!=(species, 'Gentoo')]</span></span>
 <span><span class='c'>#&gt;   Aggregate [species, sex, mean(bill_area)]</span></span>
 <span><span class='c'>#&gt;     Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, *(bill_length_mm, bill_depth_mm) as bill_area]</span></span>
-<span><span class='c'>#&gt;       r_dataframe_scan(0x1303367a8)</span></span>
+<span><span class='c'>#&gt;       r_dataframe_scan(0x107a45b78)</span></span>
 <span><span class='c'>#&gt; </span></span>
 <span><span class='c'>#&gt; ---------------------</span></span>
 <span><span class='c'>#&gt; -- Result Columns  --</span></span>
@@ -155,7 +155,7 @@ This example illustrates usage of duckplyr for all data frames in the R session.
 <span><span class='c'>#&gt; Filter [!=(species, 'Gentoo')]</span></span>
 <span><span class='c'>#&gt;   Aggregate [species, sex, mean(bill_area)]</span></span>
 <span><span class='c'>#&gt;     Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, *(bill_length_mm, bill_depth_mm) as bill_area]</span></span>
-<span><span class='c'>#&gt;       r_dataframe_scan(0x123a9e8a8)</span></span>
+<span><span class='c'>#&gt;       r_dataframe_scan(0x1254b4b58)</span></span>
 <span><span class='c'>#&gt; </span></span>
 <span><span class='c'>#&gt; ---------------------</span></span>
 <span><span class='c'>#&gt; -- Result Columns  --</span></span>
