@@ -418,16 +418,6 @@ to be used by <code><a href="https://rdrr.io/r/base/colnames.html" class="extern
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "dfrel"      "relational"</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">rel</span> <span class="op">&lt;-</span> <span class="fu">new_dfrel</span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">rel_explain</span><span class="op">(</span><span class="va">rel</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in UseMethod("rel_explain"):</span> no applicable method for 'rel_explain' applied to an object of class "c('dfrel', 'relational')"</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">rel</span> <span class="op">&lt;-</span> <span class="fu">new_dfrel</span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">rel_set_alias</span><span class="op">(</span><span class="va">rel</span>, <span class="st">"my_new_alias"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in UseMethod("rel_set_alias"):</span> no applicable method for 'rel_set_alias' applied to an object of class "c('dfrel', 'relational')"</span>
-<span class="r-in"><span><span class="fu">rel_alias</span><span class="op">(</span><span class="va">rel</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in UseMethod("rel_alias"):</span> no applicable method for 'rel_alias' applied to an object of class "c('dfrel', 'relational')"</span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">rel_names.dfrel</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rel</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="va">rel</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></span>
 <span class="r-in"><span></span></span>
