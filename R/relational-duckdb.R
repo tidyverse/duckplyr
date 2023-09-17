@@ -65,14 +65,6 @@ create_default_duckdb_connection <- function() {
   con
 }
 
-#' DuckDB relational backend
-#'
-#' TBD.
-#'
-#' @param df A data frame.
-#' @return A relational object.
-#'
-#' @export
 duckdb_rel_from_df <- function(df) {
   # FIXME: make generic
   stopifnot(is.data.frame(df))

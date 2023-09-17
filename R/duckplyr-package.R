@@ -10,6 +10,14 @@
 #' @importFrom collections queue
 NULL
 
+#' @importFrom dplyr %>%
+#' @export
+dplyr::"%>%"
+
+#' @importFrom dplyr tibble
+#' @export
+dplyr::tibble
+
 #' @importFrom dplyr across
 #' @export
 dplyr::across

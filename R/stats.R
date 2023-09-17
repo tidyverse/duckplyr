@@ -2,7 +2,20 @@ stats <- new_environment(list(attempts = 0L, fallback = 0L, calls = character())
 
 #' Show stats
 #'
+#' Prints statistics on how many calls were handled by DuckDB.
+#'
+#'
+#' @return Called for its side effect.
+#'
 #' @export
+#' @examples
+#' stats_show()
+#'
+#' tibble(a = 1:3) %>%
+#'   as_duckplyr_df() %>%
+#'   mutate(b = a + 1)
+#'
+#' stats_show()
 stats_show <- function() {
   writeLines(paste0(
     c("\U0001f6e0", "\U0001f528", "\U0001f986"),
@@ -11,4 +24,5 @@ stats_show <- function() {
   ))
   calls <- sort(gsub("[.]duckplyr_df", "", stats$calls))
   writeLines(paste(calls, collapse = ", "))
+  invisible()
 }
