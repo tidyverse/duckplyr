@@ -41,7 +41,7 @@ forbidden <- fs::path("R", c(
 ))
 duckplyr_files <- setdiff(fs::dir_ls("R"), forbidden)
 duckplyr_texts <- map_chr(duckplyr_files, brio::read_file)
-duckplyr_texts <- str_replace_all(duckplyr_texts, "dplyr:::([a-z_]+)[.]data[.]frame", "\\1_data_frame")
+duckplyr_texts <- str_replace_all(duckplyr_texts, "dplyr[$]([a-z_]+)[.]data[.]frame", "\\1_data_frame")
 duckplyr_texts <- str_replace_all(duckplyr_texts, fixed(".duckplyr_df <- function("), ".data.frame <- function(")
 # Write as single file
 brio::write_lines(duckplyr_texts, ".sync/dplyr-revdep/R/zzz-duckplyr.R")
