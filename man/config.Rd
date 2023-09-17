@@ -36,3 +36,49 @@ to certain duckdb functions.
 Currently unused.
 }
 
+\examples{
+# options(duckdb.materialize_message = FALSE)
+data.frame(a = 3:1) \%>\%
+  as_duckplyr_df() \%>\%
+  inner_join(data.frame(a = 1:4), by = "a")
+
+rlang::with_options(duckdb.materialize_message = FALSE, {
+  data.frame(a = 3:1) \%>\%
+    as_duckplyr_df() \%>\%
+    inner_join(data.frame(a = 1:4), by = "a") \%>\%
+    print()
+})
+
+# Sys.setenv(DUCKPLYR_OUTPUT_ORDER = TRUE)
+data.frame(a = 3:1) \%>\%
+  as_duckplyr_df() \%>\%
+  inner_join(data.frame(a = 1:4), by = "a")
+
+withr::with_envvar(c(DUCKPLYR_OUTPUT_ORDER = "TRUE"), {
+  data.frame(a = 3:1) \%>\%
+    as_duckplyr_df() \%>\%
+    inner_join(data.frame(a = 1:4), by = "a")
+})
+
+# Sys.setenv(DUCKPLYR_FORCE = TRUE)
+add_one <- function(x) {
+  x + 1
+}
+
+data.frame(a = 3:1) \%>\%
+  as_duckplyr_df() \%>\%
+  mutate(b = add_one(a))
+
+try(withr::with_envvar(c(DUCKPLYR_FORCE = "TRUE"), {
+  data.frame(a = 3:1) \%>\%
+    as_duckplyr_df() \%>\%
+    mutate(b = add_one(a))
+}))
+
+# Sys.setenv(DUCKPLYR_FALLBACK_INFO = TRUE)
+withr::with_envvar(c(DUCKPLYR_FALLBACK_INFO = "TRUE"), {
+  data.frame(a = 3:1) \%>\%
+    as_duckplyr_df() \%>\%
+    mutate(b = add_one(a))
+})
+}
