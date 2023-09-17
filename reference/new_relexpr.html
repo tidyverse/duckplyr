@@ -184,8 +184,10 @@ similarly to the SQL <code>OVER</code> clause.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">relexpr_set_alias</span><span class="op">(</span>alias <span class="op">=</span> <span class="st">"my_predicate"</span>,</span></span>
-<span class="r-in"><span>  <span class="fu">relexpr_function</span><span class="op">(</span><span class="st">"&lt;"</span>,</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">relexpr_set_alias</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  alias <span class="op">=</span> <span class="st">"my_predicate"</span>,</span></span>
+<span class="r-in"><span>  <span class="fu">relexpr_function</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"&lt;"</span>,</span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>      <span class="fu">relexpr_reference</span><span class="op">(</span><span class="st">"my_number"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>      <span class="fu">relexpr_constant</span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span></span>
