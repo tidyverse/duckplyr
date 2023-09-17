@@ -139,7 +139,8 @@ tpch_04 <- function() {
 
 #' @autoglobal
 tpch_05 <- function() {
-  nr <- inner_join(na_matches = TPCH_NA_MATCHES,
+  nr <- inner_join(
+    na_matches = TPCH_NA_MATCHES,
     nation |>
       select_opt(n_nationkey, n_regionkey, n_name),
     region |>
@@ -149,7 +150,8 @@ tpch_05 <- function() {
   ) |>
     select_opt(n_nationkey, n_name)
 
-  snr <- inner_join(na_matches = TPCH_NA_MATCHES,
+  snr <- inner_join(
+    na_matches = TPCH_NA_MATCHES,
     supplier |>
       select_opt(s_suppkey, s_nationkey),
     nr,
@@ -157,7 +159,8 @@ tpch_05 <- function() {
   ) |>
     select_opt(s_suppkey, s_nationkey, n_name)
 
-  lsnr <- inner_join(na_matches = TPCH_NA_MATCHES,
+  lsnr <- inner_join(
+    na_matches = TPCH_NA_MATCHES,
     lineitem |> select_opt(l_suppkey, l_orderkey, l_extendedprice, l_discount),
     snr,
     by = c("l_suppkey" = "s_suppkey")
@@ -168,12 +171,14 @@ tpch_05 <- function() {
     filter(o_orderdate >= !!as.Date("1994-01-01"), o_orderdate < !!as.Date("1995-01-01")) |>
     select_opt(o_orderkey, o_custkey)
 
-  oc <- inner_join(na_matches = TPCH_NA_MATCHES, o, customer |> select_opt(c_custkey, c_nationkey),
+  oc <- inner_join(
+    na_matches = TPCH_NA_MATCHES, o, customer |> select_opt(c_custkey, c_nationkey),
     by = c("o_custkey" = "c_custkey")
   ) |>
     select_opt(o_orderkey, c_nationkey)
 
-  lsnroc <- inner_join(na_matches = TPCH_NA_MATCHES, lsnr, oc,
+  lsnroc <- inner_join(
+    na_matches = TPCH_NA_MATCHES, lsnr, oc,
     by = c("l_orderkey" = "o_orderkey", "s_nationkey" = "c_nationkey")
   ) |>
     select_opt(l_extendedprice, l_discount, n_name)
@@ -203,7 +208,8 @@ tpch_06 <- function() {
 
 #' @autoglobal
 tpch_07 <- function() {
-  sn <- inner_join(na_matches = TPCH_NA_MATCHES,
+  sn <- inner_join(
+    na_matches = TPCH_NA_MATCHES,
     supplier |>
       select_opt(s_nationkey, s_suppkey),
     nation |>
@@ -214,7 +220,8 @@ tpch_07 <- function() {
   ) |>
     select_opt(s_suppkey, n1_name)
 
-  cn <- inner_join(na_matches = TPCH_NA_MATCHES,
+  cn <- inner_join(
+    na_matches = TPCH_NA_MATCHES,
     customer |>
       select_opt(c_custkey, c_nationkey),
     nation |>
@@ -225,7 +232,8 @@ tpch_07 <- function() {
   ) |>
     select_opt(c_custkey, n2_name)
 
-  cno <- inner_join(na_matches = TPCH_NA_MATCHES,
+  cno <- inner_join(
+    na_matches = TPCH_NA_MATCHES,
     orders |>
       select_opt(o_custkey, o_orderkey),
     cn,
@@ -233,7 +241,8 @@ tpch_07 <- function() {
   ) |>
     select_opt(o_orderkey, n2_name)
 
-  cnol <- inner_join(na_matches = TPCH_NA_MATCHES,
+  cnol <- inner_join(
+    na_matches = TPCH_NA_MATCHES,
     lineitem |>
       select_opt(l_orderkey, l_suppkey, l_shipdate, l_extendedprice, l_discount) |>
       filter(l_shipdate >= !!as.Date("1995-01-01"), l_shipdate <= !!as.Date("1996-12-31")),
@@ -262,7 +271,8 @@ tpch_07 <- function() {
 
 #' @autoglobal
 tpch_08 <- function() {
-  nr <- inner_join(na_matches = TPCH_NA_MATCHES,
+  nr <- inner_join(
+    na_matches = TPCH_NA_MATCHES,
     nation |>
       select(n1_nationkey = n_nationkey, n1_regionkey = n_regionkey),
     region |>
@@ -273,7 +283,8 @@ tpch_08 <- function() {
   ) |>
     select_opt(n1_nationkey)
 
-  cnr <- inner_join(na_matches = TPCH_NA_MATCHES,
+  cnr <- inner_join(
+    na_matches = TPCH_NA_MATCHES,
     customer |>
       select_opt(c_custkey, c_nationkey),
     nr,
@@ -281,7 +292,8 @@ tpch_08 <- function() {
   ) |>
     select_opt(c_custkey)
 
-  ocnr <- inner_join(na_matches = TPCH_NA_MATCHES,
+  ocnr <- inner_join(
+    na_matches = TPCH_NA_MATCHES,
     orders |>
       select_opt(o_orderkey, o_custkey, o_orderdate) |>
       filter(o_orderdate >= !!as.Date("1995-01-01"), o_orderdate <= !!as.Date("1996-12-31")),
@@ -290,7 +302,8 @@ tpch_08 <- function() {
   ) |>
     select_opt(o_orderkey, o_orderdate)
 
-  locnr <- inner_join(na_matches = TPCH_NA_MATCHES,
+  locnr <- inner_join(
+    na_matches = TPCH_NA_MATCHES,
     lineitem |>
       select_opt(l_orderkey, l_partkey, l_suppkey, l_extendedprice, l_discount),
     ocnr,
@@ -298,7 +311,8 @@ tpch_08 <- function() {
   ) |>
     select_opt(l_partkey, l_suppkey, l_extendedprice, l_discount, o_orderdate)
 
-  locnrp <- inner_join(na_matches = TPCH_NA_MATCHES, locnr,
+  locnrp <- inner_join(
+    na_matches = TPCH_NA_MATCHES, locnr,
     part |>
       select_opt(p_partkey, p_type) |>
       filter(p_type == "ECONOMY ANODIZED STEEL") |>
@@ -307,14 +321,16 @@ tpch_08 <- function() {
   ) |>
     select_opt(l_suppkey, l_extendedprice, l_discount, o_orderdate)
 
-  locnrps <- inner_join(na_matches = TPCH_NA_MATCHES, locnrp,
+  locnrps <- inner_join(
+    na_matches = TPCH_NA_MATCHES, locnrp,
     supplier |>
       select_opt(s_suppkey, s_nationkey),
     by = c("l_suppkey" = "s_suppkey")
   ) |>
     select_opt(l_extendedprice, l_discount, o_orderdate, s_nationkey)
 
-  all <- inner_join(na_matches = TPCH_NA_MATCHES, locnrps,
+  all <- inner_join(
+    na_matches = TPCH_NA_MATCHES, locnrps,
     nation |>
       select(n2_nationkey = n_nationkey, n2_name = n_name),
     by = c("s_nationkey" = "n2_nationkey")
@@ -343,14 +359,16 @@ tpch_09 <- function() {
     filter(grepl("green", p_name)) |>
     select_opt(p_partkey)
 
-  psp <- inner_join(na_matches = TPCH_NA_MATCHES,
+  psp <- inner_join(
+    na_matches = TPCH_NA_MATCHES,
     partsupp |>
       select_opt(ps_suppkey, ps_partkey, ps_supplycost),
     p,
     by = c("ps_partkey" = "p_partkey")
   )
 
-  sn <- inner_join(na_matches = TPCH_NA_MATCHES,
+  sn <- inner_join(
+    na_matches = TPCH_NA_MATCHES,
     supplier |>
       select_opt(s_suppkey, s_nationkey),
     nation |>
@@ -361,7 +379,8 @@ tpch_09 <- function() {
 
   pspsn <- inner_join(na_matches = TPCH_NA_MATCHES, psp, sn, by = c("ps_suppkey" = "s_suppkey"))
 
-  lpspsn <- inner_join(na_matches = TPCH_NA_MATCHES,
+  lpspsn <- inner_join(
+    na_matches = TPCH_NA_MATCHES,
     lineitem |>
       select_opt(l_suppkey, l_partkey, l_orderkey, l_extendedprice, l_discount, l_quantity),
     pspsn,
@@ -369,7 +388,8 @@ tpch_09 <- function() {
   ) |>
     select_opt(l_orderkey, l_extendedprice, l_discount, l_quantity, ps_supplycost, n_name)
 
-  all <- inner_join(na_matches = TPCH_NA_MATCHES,
+  all <- inner_join(
+    na_matches = TPCH_NA_MATCHES,
     orders |>
       select_opt(o_orderkey, o_orderdate),
     lpspsn,
@@ -402,7 +422,8 @@ tpch_10 <- function() {
     filter(o_orderdate >= !!as.Date("1993-10-01"), o_orderdate < !!as.Date("1994-01-01")) |>
     select_opt(o_orderkey, o_custkey)
 
-  lo <- inner_join(na_matches = TPCH_NA_MATCHES, l, o,
+  lo <- inner_join(
+    na_matches = TPCH_NA_MATCHES, l, o,
     by = c("l_orderkey" = "o_orderkey")
   ) |>
     select_opt(l_extendedprice, l_discount, o_custkey)
@@ -418,7 +439,8 @@ tpch_10 <- function() {
 
   loc <- inner_join(na_matches = TPCH_NA_MATCHES, c, lo_aggr, by = c("c_custkey" = "o_custkey"))
 
-  locn <- inner_join(na_matches = TPCH_NA_MATCHES, loc, nation |> select_opt(n_nationkey, n_name),
+  locn <- inner_join(
+    na_matches = TPCH_NA_MATCHES, loc, nation |> select_opt(n_nationkey, n_name),
     by = c("c_nationkey" = "n_nationkey")
   )
 

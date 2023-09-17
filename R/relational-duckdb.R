@@ -15,42 +15,42 @@ get_default_duckdb_connection <- function() {
 }
 
 duckplyr_macros <- c(
-  "<" = '(x, y) AS x < y',
-  "<=" = '(x, y) AS x <= y',
-  ">" = '(x, y) AS x > y',
-  ">=" = '(x, y) AS x >= y',
-  "==" = '(x, y) AS x = y',
-  "!=" = '(x, y) AS x <> y',
-
+  "<" = "(x, y) AS x < y",
+  "<=" = "(x, y) AS x <= y",
+  ">" = "(x, y) AS x > y",
+  ">=" = "(x, y) AS x >= y",
+  "==" = "(x, y) AS x = y",
+  "!=" = "(x, y) AS x <> y",
+  #
   "___divide" = "(x, y) AS CASE WHEN x = 0 AND y = 0 THEN CAST('NaN' AS double) ELSE CAST(x AS double) / y END",
-
-  "is.na" = '(x) AS (x IS NULL)',
-  "n" = '() AS CAST(COUNT(*) AS int32)',
-
-  "log10" = '(x) AS log(x)',
-  "log" = '(x) AS ln(x)',
+  #
+  "is.na" = "(x) AS (x IS NULL)",
+  "n" = "() AS CAST(COUNT(*) AS int32)",
+  #
+  "log10" = "(x) AS log(x)",
+  "log" = "(x) AS ln(x)",
   # TPCH
 
   # https://github.com/duckdb/duckdb/discussions/8599
   # "as.Date" = '(x) AS strptime(x, \'%Y-%m-%d\')',
 
-  "grepl" = '(pattern, x) AS regexp_matches(x, pattern)',
-  "as.integer" = '(x) AS CAST(x AS int32)',
-  "ifelse" = '(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)',
-  "|" = '(x, y) AS (x OR y)',
-  "&" = '(x, y) AS (x AND y)',
-  "!" = '(x) AS (NOT x)',
-  "any" = '(x) AS (bool_or(x))',
-  "desc" = '(x) AS (-x)',
-  "n_distinct" = '(x) AS (COUNT(DISTINCT x))',
-
+  "grepl" = "(pattern, x) AS regexp_matches(x, pattern)",
+  "as.integer" = "(x) AS CAST(x AS int32)",
+  "ifelse" = "(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)",
+  "|" = "(x, y) AS (x OR y)",
+  "&" = "(x, y) AS (x AND y)",
+  "!" = "(x) AS (NOT x)",
+  "any" = "(x) AS (bool_or(x))",
+  "desc" = "(x) AS (-x)",
+  "n_distinct" = "(x) AS (COUNT(DISTINCT x))",
+  #
   "wday" = "(x) AS CAST(weekday(CAST (x AS DATE)) + 1 AS int32)",
-
-  "___eq_na_matches_na" = '(x, y) AS ((x IS NULL AND y IS NULL) OR (x = y))',
+  #
+  "___eq_na_matches_na" = "(x, y) AS ((x IS NULL AND y IS NULL) OR (x = y))",
   # https://github.com/duckdb/duckdb/issues/8605
   # "___eq_na_matches_na" = '(x, y) AS (x IS DISTINCT FROM y)',
-  "___coalesce" = '(x, y) AS COALESCE(x, y)',
-
+  "___coalesce" = "(x, y) AS COALESCE(x, y)",
+  #
   NULL
 )
 

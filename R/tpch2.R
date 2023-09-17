@@ -37,7 +37,8 @@ tpch_12 <- function() {
       l_receiptdate >= !!as.Date("1994-01-01"),
       l_receiptdate < !!as.Date("1995-01-01")
     ) |>
-    inner_join(na_matches = TPCH_NA_MATCHES,
+    inner_join(
+      na_matches = TPCH_NA_MATCHES,
       orders,
       by = c("l_orderkey" = "o_orderkey")
     ) |>
@@ -64,7 +65,8 @@ tpch_12 <- function() {
 #' @autoglobal
 tpch_13 <- function() {
   c_orders <- customer |>
-    left_join(na_matches = TPCH_NA_MATCHES,
+    left_join(
+      na_matches = TPCH_NA_MATCHES,
       orders |>
         filter(!grepl("special.*?requests", o_comment)),
       by = c("c_custkey" = "o_custkey")
@@ -235,7 +237,8 @@ tpch_19 <- function() {
 #' @autoglobal
 tpch_20 <- function() {
   supplier_ca <- supplier |>
-    inner_join(na_matches = TPCH_NA_MATCHES,
+    inner_join(
+      na_matches = TPCH_NA_MATCHES,
       nation |> filter(n_name == "CANADA"),
       by = c("s_nationkey" = "n_nationkey")
     ) |>
@@ -257,7 +260,8 @@ tpch_20 <- function() {
     summarise(qty_threshold = 0.5 * sum(l_quantity), .by = l_suppkey)
 
   partsupp_forest_ca_filtered <- partsupp_forest_ca |>
-    inner_join(na_matches = TPCH_NA_MATCHES,
+    inner_join(
+      na_matches = TPCH_NA_MATCHES,
       qty_threshold,
       by = c("ps_suppkey" = "l_suppkey")
     ) |>

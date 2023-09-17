@@ -166,14 +166,13 @@ rel_to_df.dfrel <- function(rel, ...) {
   unclass(rel)[[1]]
 }
 rel_to_df(mtcars_rel)
-\dontshow{if ({ set.seed(20230630); TRUE }) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
 rel_filter.dfrel <- function(rel, exprs, ...) {
   df <- unclass(rel)[[1]]
 
   # A real implementation would evaluate the predicates defined
   # by the exprs argument
-  new_dfrel(df[sample.int(nrow(df), 3, replace = TRUE), ])
+  new_dfrel(df[seq_len(min(3, nrow(df))), ])
 }
 
 rel_filter(
@@ -185,7 +184,6 @@ rel_filter(
     )
   )
 )
-\dontshow{\}) # examplesIf}
 
 rel_project.dfrel <- function(rel, exprs, ...) {
   df <- unclass(rel)[[1]]

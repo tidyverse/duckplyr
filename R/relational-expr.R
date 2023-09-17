@@ -16,8 +16,10 @@
 #' @return an object of class `"relational_relexpr"`
 #' @export
 #' @examples
-#' relexpr_set_alias(alias = "my_predicate",
-#'   relexpr_function("<",
+#' relexpr_set_alias(
+#'   alias = "my_predicate",
+#'   relexpr_function(
+#'     "<",
 #'     list(
 #'       relexpr_reference("my_number"),
 #'       relexpr_constant(42)
@@ -92,8 +94,7 @@ relexpr_window <- function(
     order_bys = list(),
     offset_expr = NULL,
     default_expr = NULL,
-    alias = NULL
-) {
+    alias = NULL) {
   stopifnot(inherits(expr, "relational_relexpr"))
   stopifnot(is.list(partitions))
   stopifnot(is.list(order_bys))

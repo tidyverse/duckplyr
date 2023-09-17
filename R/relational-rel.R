@@ -70,14 +70,14 @@ rel_to_df <- function(rel, ...) {
 #' @param exprs A list of [expr] objects to filter by.
 #' @rdname new_relational
 #' @export
-#' @examplesIf { set.seed(20230630); TRUE }
+#' @examples
 #'
 #' rel_filter.dfrel <- function(rel, exprs, ...) {
 #'   df <- unclass(rel)[[1]]
 #'
 #'   # A real implementation would evaluate the predicates defined
 #'   # by the exprs argument
-#'   new_dfrel(df[sample.int(nrow(df), 3, replace = TRUE), ])
+#'   new_dfrel(df[seq_len(min(3, nrow(df))), ])
 #' }
 #'
 #' rel_filter(
