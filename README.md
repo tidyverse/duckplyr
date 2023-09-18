@@ -8,7 +8,9 @@
 
 <!-- badges: end -->
 
-The goal of duckplyr is to provide a drop-in replacement for dplyr that uses DuckDB as a backend for fast operation. It also defines a set of generics that provide a low-level implementer’s interface for dplyr’s high-level user interface.
+The goal of duckplyr is to provide a drop-in replacement for dplyr that uses [DuckDB](https://duckdb.org/) as a backend for fast operation. DuckDB is an in-process SQL OLAP database management system.
+
+duckplyr also defines a set of generics that provide a low-level implementer’s interface for dplyr’s high-level user interface.
 
 ## Installation
 
@@ -125,7 +127,7 @@ All data frame operations are supported. Computation happens upon the first requ
 <span><span class='c'>#&gt; Filter [!=(species, 'Gentoo')]</span></span>
 <span><span class='c'>#&gt;   Aggregate [species, sex, mean(bill_area)]</span></span>
 <span><span class='c'>#&gt;     Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, *(bill_length_mm, bill_depth_mm) as bill_area]</span></span>
-<span><span class='c'>#&gt;       r_dataframe_scan(0x55c8fe4b0d58)</span></span>
+<span><span class='c'>#&gt;       r_dataframe_scan(0x55947a45b378)</span></span>
 <span><span class='c'>#&gt; </span></span>
 <span><span class='c'>#&gt; ---------------------</span></span>
 <span><span class='c'>#&gt; -- Result Columns  --</span></span>
@@ -193,7 +195,7 @@ Querying the number of rows also starts the computation:
 <span><span class='c'>#&gt; Filter [!=(species, 'Gentoo')]</span></span>
 <span><span class='c'>#&gt;   Aggregate [species, sex, mean(bill_area)]</span></span>
 <span><span class='c'>#&gt;     Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, *(bill_length_mm, bill_depth_mm) as bill_area]</span></span>
-<span><span class='c'>#&gt;       r_dataframe_scan(0x55c8feccee98)</span></span>
+<span><span class='c'>#&gt;       r_dataframe_scan(0x55947ac6eda8)</span></span>
 <span><span class='c'>#&gt; </span></span>
 <span><span class='c'>#&gt; ---------------------</span></span>
 <span><span class='c'>#&gt; -- Result Columns  --</span></span>

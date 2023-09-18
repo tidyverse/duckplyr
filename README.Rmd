@@ -24,8 +24,10 @@ set.seed(20230702)
 [![R-CMD-check](https://github.com/duckdblabs/duckplyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/duckdblabs/duckplyr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of duckplyr is to provide a drop-in replacement for dplyr that uses DuckDB as a backend for fast operation.
-It also defines a set of generics that provide a low-level implementer's interface for dplyr's high-level user interface.
+The goal of duckplyr is to provide a drop-in replacement for dplyr that uses [DuckDB](https://duckdb.org/) as a backend for fast operation.
+DuckDB is an in-process SQL OLAP database management system.
+
+duckplyr also defines a set of generics that provide a low-level implementer's interface for dplyr's high-level user interface.
 
 ## Installation
 
