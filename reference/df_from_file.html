@@ -125,7 +125,7 @@ Pass <code>class(tibble())</code> to create a tibble.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --- Relation Tree ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv_auto(/tmp/RtmpIj5nfj/file118ecd4482.csv)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv_auto(/tmp/RtmpfxU6G0/file10fce7ce1eb.csv)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -136,12 +136,17 @@ Pass <code>class(tibble())</code> to create a tibble.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 2 3</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Return as tibble:</span></span></span>
-<span class="r-in"><span><span class="fu">df_from_file</span><span class="op">(</span><span class="va">path</span>, <span class="st">"read_csv_auto"</span>, class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">df_from_file</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">path</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"read_csv"</span>,</span></span>
+<span class="r-in"><span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delim <span class="op">=</span> <span class="st">","</span>, auto_detect <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> materializing:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --- Relation Tree ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv_auto(/tmp/RtmpIj5nfj/file118ecd4482.csv)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv(/tmp/RtmpfxU6G0/file10fce7ce1eb.csv)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>

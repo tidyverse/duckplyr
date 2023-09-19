@@ -68,7 +68,7 @@ Currenty set to <code>TRUE</code> when duckplyr is loaded.</p>
 
 
 <p><code>DUCKPLYR_OUTPUT_ORDER</code>: If <code>TRUE</code>, row output order is preserved.
-If <code>FALSE</code>,</p>
+The default may change the row order where dplyr would keep it stable.</p>
 <p><code>DUCKPLYR_FORCE</code>: If <code>TRUE</code>, fail if duckdb cannot handle a request.</p>
 <p><code>DUCKPLYR_FALLBACK_INFO</code>: If <code>TRUE</code>, print a message when a fallback to dplyr occurs
 because duckdb cannot handle a request.</p>
@@ -94,9 +94,9 @@ Currently unused.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projection [___coalesce(lhs.a_x, rhs.a_y) as a]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Join INNER ___eq_na_matches_na(lhs.a_x, rhs.a_y)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_x]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55e22c37fa28)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x56382d986de0)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_y]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55e22c267470)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x56382d96a778)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -130,9 +130,9 @@ Currently unused.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projection [___coalesce(lhs.a_x, rhs.a_y) as a]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Join INNER ___eq_na_matches_na(lhs.a_x, rhs.a_y)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_x]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55e22ae0d9a0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x56382b3d85e8)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_y]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55e22ae0b540)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x56382a85af38)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -158,10 +158,10 @@ Currently unused.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Join INNER ___eq_na_matches_na(lhs.a_x, rhs.a_y)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Projection [a_x as a_x, row_number() OVER () as ___row_number_x]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         Projection [a as a_x]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x55e227e40278)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x56382f53b800)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Projection [a_y as a_y, row_number() OVER () as ___row_number_y]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         Projection [a as a_y]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x55e22e1f4258)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x56382f53a878)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
