@@ -12,7 +12,7 @@
 #' @section Environment variables:
 #'
 #' `DUCKPLYR_OUTPUT_ORDER`: If `TRUE`, row output order is preserved.
-#' If `FALSE`,
+#' The default may change the row order where dplyr would keep it stable.
 #'
 #' `DUCKPLYR_FORCE`: If `TRUE`, fail if duckdb cannot handle a request.
 #'

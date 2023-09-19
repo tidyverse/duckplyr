@@ -11,6 +11,8 @@ Called for its side effect.
 }
 \description{
 Prints statistics on how many calls were handled by DuckDB.
+The output shows the total number of requests in the current session,
+split by fallbacks to dplyr and requests handled by duckdb.
 }
 \examples{
 stats_show()

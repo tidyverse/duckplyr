@@ -2,7 +2,10 @@
 #'
 #' For an object of class `duckplyr_df`,
 #' dplyr verbs such as [mutate()], [select()] or [filter()]  will attempt to use DuckDB.
-#' If this is not possible for whatever reason, the original dplyr implementation is used.
+#' If this is not possible, the original dplyr implementation is used.
+#'
+#' Set the `DUCKPLYR_FALLBACK_INFO` and `DUCKPLYR_FORCE` environment variables
+#' for more control over the behavior, see [config] for more details.
 #'
 #' @param .data data frame or tibble to transform
 #'

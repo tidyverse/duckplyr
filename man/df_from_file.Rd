@@ -51,7 +51,12 @@ names(df)
 df$a
 
 # Return as tibble:
-df_from_file(path, "read_csv_auto", class = class(tibble()))
+df_from_file(
+  path,
+  "read_csv",
+  options = list(delim = ",", auto_detect = TRUE),
+  class = class(tibble())
+)
 
 unlink(path)
 }

@@ -19,7 +19,7 @@ Currenty set to \code{TRUE} when duckplyr is loaded.
 
 
 \code{DUCKPLYR_OUTPUT_ORDER}: If \code{TRUE}, row output order is preserved.
-If \code{FALSE},
+The default may change the row order where dplyr would keep it stable.
 
 \code{DUCKPLYR_FORCE}: If \code{TRUE}, fail if duckdb cannot handle a request.
 

@@ -16,7 +16,11 @@ An object of class \code{"duckplyr_df"}, inheriting from the classes of the
 \description{
 For an object of class \code{duckplyr_df},
 dplyr verbs such as \code{\link[=mutate]{mutate()}}, \code{\link[=select]{select()}} or \code{\link[=filter]{filter()}}  will attempt to use DuckDB.
-If this is not possible for whatever reason, the original dplyr implementation is used.
+If this is not possible, the original dplyr implementation is used.
+}
+\details{
+Set the \code{DUCKPLYR_FALLBACK_INFO} and \code{DUCKPLYR_FORCE} environment variables
+for more control over the behavior, see \link{config} for more details.
 }
 \examples{
 tibble(a = 1:3) \%>\%
