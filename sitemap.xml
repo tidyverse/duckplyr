@@ -1,54 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://duckdblabs.github.io/duckplyr/404.html</loc>
+    <loc>https://krlmlr.github.io/duckplyr/404.html</loc>
   </url>
   <url>
-    <loc>https://duckdblabs.github.io/duckplyr/LICENSE-text.html</loc>
+    <loc>https://krlmlr.github.io/duckplyr/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://duckdblabs.github.io/duckplyr/LICENSE.html</loc>
+    <loc>https://krlmlr.github.io/duckplyr/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://duckdblabs.github.io/duckplyr/authors.html</loc>
+    <loc>https://krlmlr.github.io/duckplyr/authors.html</loc>
   </url>
   <url>
-    <loc>https://duckdblabs.github.io/duckplyr/index.html</loc>
+    <loc>https://krlmlr.github.io/duckplyr/index.html</loc>
   </url>
   <url>
-    <loc>https://duckdblabs.github.io/duckplyr/news/index.html</loc>
+    <loc>https://krlmlr.github.io/duckplyr/news/index.html</loc>
   </url>
   <url>
-    <loc>https://duckdblabs.github.io/duckplyr/reference/as_duckplyr_df.html</loc>
+    <loc>https://krlmlr.github.io/duckplyr/reference/expr.html</loc>
   </url>
   <url>
-    <loc>https://duckdblabs.github.io/duckplyr/reference/config.html</loc>
+    <loc>https://krlmlr.github.io/duckplyr/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://duckdblabs.github.io/duckplyr/reference/df_from_file.html</loc>
-  </url>
-  <url>
-    <loc>https://duckdblabs.github.io/duckplyr/reference/duckplyr-package.html</loc>
-  </url>
-  <url>
-    <loc>https://duckdblabs.github.io/duckplyr/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://duckdblabs.github.io/duckplyr/reference/is_duckplyr_df.html</loc>
-  </url>
-  <url>
-    <loc>https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html</loc>
-  </url>
-  <url>
-    <loc>https://duckdblabs.github.io/duckplyr/reference/new_relational.html</loc>
-  </url>
-  <url>
-    <loc>https://duckdblabs.github.io/duckplyr/reference/new_relexpr.html</loc>
-  </url>
-  <url>
-    <loc>https://duckdblabs.github.io/duckplyr/reference/reexports.html</loc>
-  </url>
-  <url>
-    <loc>https://duckdblabs.github.io/duckplyr/reference/stats_show.html</loc>
+    <loc>https://krlmlr.github.io/duckplyr/reference/relational.html</loc>
   </url>
 </urlset>
