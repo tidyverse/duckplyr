@@ -16,17 +16,22 @@ intersect.duckplyr_df <- function(x, y, ...) {
     "Tables of different width" = length(x_names) != length(y_names),
     "Name mismatch" = !identical(x_names, y_names) && !all(y_names %in% x_names),
     {
-      x_rel <- duckdb_rel_from_df(x)
-      y_rel <- duckdb_rel_from_df(y)
-      if (!identical(x_names, y_names)) {
-        # FIXME: Select by position
-        exprs <- nexprs_from_loc(x_names, set_names(seq_along(x_names), x_names))
-        y_rel <- rel_project(y_rel, exprs)
-      }
+      if (oo_force()) {
+        both <- semi_join(x, y, by = x_names)
+        out <- distinct(both)
+      } else {
+        x_rel <- duckdb_rel_from_df(x)
+        y_rel <- duckdb_rel_from_df(y)
+        if (!identical(x_names, y_names)) {
+          # FIXME: Select by position
+          exprs <- nexprs_from_loc(x_names, set_names(seq_along(x_names), x_names))
+          y_rel <- rel_project(y_rel, exprs)
+        }
 
-      rel <- rel_set_intersect(x_rel, y_rel)
-      out <- rel_to_df(rel)
-      out <- dplyr_reconstruct_dispatch(out, x)
+        rel <- rel_set_intersect(x_rel, y_rel)
+        out <- rel_to_df(rel)
+        out <- dplyr_reconstruct_dispatch(out, x)
+      }
       return(out)
     }
   )
