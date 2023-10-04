@@ -724,10 +724,7 @@ tpch_raw_oo_22 <- function(con, experimental) {
               )
             )
           ),
-          duckdb$expr_function(
-            ">",
-            list(duckdb$expr_reference("c_acctbal"), duckdb$expr_reference("acctbal_min"))
-          )
+          duckdb$expr_function(">", list(duckdb$expr_reference("c_acctbal"), duckdb$expr_reference("acctbal_min")))
         )
       )
     )

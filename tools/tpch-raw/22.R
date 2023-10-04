@@ -647,10 +647,7 @@ rel14 <- duckdb$rel_filter(
             )
           )
         ),
-        duckdb$expr_function(
-          ">",
-          list(duckdb$expr_reference("c_acctbal"), duckdb$expr_reference("acctbal_min"))
-        )
+        duckdb$expr_function(">", list(duckdb$expr_reference("c_acctbal"), duckdb$expr_reference("acctbal_min")))
       )
     )
   )
