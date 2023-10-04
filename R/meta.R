@@ -172,7 +172,7 @@ meta_rel_register_file <- function(rel, path, table_function, options) {
   }
 
   rel_expr <- expr(
-    duckdb:::rel_from_table_function(con, !!table_function, list(!!path), list(!!!options))
+    duckdb$rel_from_table_function(con, !!table_function, list(!!path), list(!!!options))
   )
   meta_rel_register(rel, rel_expr)
 }
