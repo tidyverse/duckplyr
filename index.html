@@ -5,18 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="Defines a set of generics that provide a low-level
-    implementers interface for the high-level user interface of
-    dplyr'.">
-<title>Alternative Implementations of the Grammar of Data Manipulations • duckplyr</title>
+<meta name="description" content="A drop-in replacement for dplyr, powered by DuckDB for performance. Also defines a set of generics that provide a low-level implementers interface for the high-level user interface of dplyr'.">
+<title>A DuckDB-Backed Version of dplyr • duckplyr</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Alternative Implementations of the Grammar of Data Manipulations">
-<meta property="og:description" content="Defines a set of generics that provide a low-level
-    implementers interface for the high-level user interface of
-    dplyr'.">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="A DuckDB-Backed Version of dplyr">
+<meta property="og:description" content="A drop-in replacement for dplyr, powered by DuckDB for performance. Also defines a set of generics that provide a low-level implementers interface for the high-level user interface of dplyr'.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -30,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="index.html">duckplyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,7 +48,7 @@
 
       <ul class="navbar-nav">
 <li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/krlmlr/duckplyr/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/duckdblabs/duckplyr/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -68,36 +64,200 @@
 <div class="page-header"><h1 id="duckplyr">duckplyr<a class="anchor" aria-label="anchor" href="#duckplyr"></a>
 </h1></div>
 <!-- badges: start -->
+
 <!-- badges: end -->
-<p>The goal of duckplyr is to define a set of generics that provide a low-level implementer’s interface for dplyr’s high-level user interface.</p>
-<div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
-</h2>
-<p>Once on CRAN, you can install duckplyr with:</p>
-<pre class="chroma">
-<span><span class="nf"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="o">(</span><span class="s">"duckplyr"</span><span class="o">)</span></span></pre>
-<p>You can also install the development version of duckplyr from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
-<pre class="chroma">
-<span><span class="c"># install.packages("pak", repos = sprintf("https://r-lib.github.io/p/pak/stable/%s/%s/%s", .Platform$pkgType, R.Version()$os, R.Version()$arch))</span></span>
-<span><span class="nf">pak</span><span class="nf">::</span><span class="nf"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="o">(</span><span class="s">"krlmlr/duckplyr"</span><span class="o">)</span></span></pre>
-</div>
+<p>The goal of duckplyr is to provide a drop-in replacement for dplyr that uses DuckDB as a backend for fast operation. It also defines a set of generics that provide a low-level implementer’s interface for dplyr’s high-level user interface.</p>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>This package only provides generics, for which other packages may then implement methods.</p>
 <pre class="chroma">
-<span><span class="kr"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="o">(</span><span class="nv"><a href="https://github.com/krlmlr/duckplyr" class="external-link">duckplyr</a></span><span class="o">)</span></span>
+<span><span class="kr"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="o">(</span><span class="nv"><a href="https://conflicted.r-lib.org/" class="external-link">conflicted</a></span><span class="o">)</span></span>
+<span><span class="kr"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="o">(</span><span class="nv"><a href="https://duckdblabs.github.io/duckplyr/">duckplyr</a></span><span class="o">)</span></span>
+<span><span class="nf"><a href="https://conflicted.r-lib.org/reference/conflict_prefer.html" class="external-link">conflict_prefer</a></span><span class="o">(</span><span class="s">"filter"</span>, <span class="s">"duckplyr"</span><span class="o">)</span></span>
+<span><span class="c">#&gt; <span style="color: #555555;">[conflicted]</span> Will prefer <span style="color: #0000BB; font-weight: bold;">duckplyr</span>::filter over</span></span>
+<span><span class="c">#&gt; any other package.</span></span></pre>
+<p>There are two ways to use duckplyr.</p>
+<ol style="list-style-type: decimal">
+<li>To enable for individual data frames, use <a href="https://duckdblabs.github.io/duckplyr/reference/as_duckplyr_df.html"><code>as_duckplyr_df()</code></a> as the first step in your pipe.</li>
+<li>To enable for the entire session, use <a href="https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html"><code>methods_overwrite()</code></a>.</li>
+</ol>
+<p>The examples below illustrate both methods. See also the companion <a href="https://github.com/Tmonster/duckplyr_demo" class="external-link">demo repository</a> for a use case with a large dataset.</p>
+<div class="section level3">
+<h3 id="individual">Individual<a class="anchor" aria-label="anchor" href="#individual"></a>
+</h3>
+<p>This example illustrates usage of duckplyr for individual data frames.</p>
+<pre class="chroma">
+<span><span class="c"># Use `as_duckplyr_df()` to enable processing with duckdb:</span></span>
+<span><span class="nv">out</span> <span class="o">&lt;-</span></span>
+<span>  <span class="nf">palmerpenguins</span><span class="nf">::</span><span class="nv"><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">penguins</a></span> <span class="o"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="c"># CAVEAT: factor columns are not supported yet</span></span>
+<span>  <span class="nf"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="o">(</span><span class="nf"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="o">(</span><span class="nf">where</span><span class="o">(</span><span class="nv">is.factor</span><span class="o">)</span>, <span class="nv">as.character</span><span class="o">)</span><span class="o">)</span> <span class="o"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="nf"><a href="https://duckdblabs.github.io/duckplyr/reference/as_duckplyr_df.html">as_duckplyr_df</a></span><span class="o">(</span><span class="o">)</span> <span class="o"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="nf"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="o">(</span>bill_area <span class="o">=</span> <span class="nv">bill_length_mm</span> <span class="o">*</span> <span class="nv">bill_depth_mm</span><span class="o">)</span> <span class="o"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="nf"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="o">(</span>.by <span class="o">=</span> <span class="nf"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="o">(</span><span class="nv">species</span>, <span class="nv">sex</span><span class="o">)</span>, mean_bill_area <span class="o">=</span> <span class="nf"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="o">(</span><span class="nv">bill_area</span><span class="o">)</span><span class="o">)</span> <span class="o"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="nf"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="o">(</span><span class="nv">species</span> <span class="o">!=</span> <span class="s">"Gentoo"</span><span class="o">)</span></span>
+<span></span>
+<span><span class="c"># The result is a data frame or tibble, with its own class.</span></span>
+<span><span class="nf"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="o">(</span><span class="nv">out</span><span class="o">)</span></span>
+<span><span class="c">#&gt; [1] "duckplyr_df" "tbl_df"      "tbl"         "data.frame"</span></span>
+<span><span class="nf"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="o">(</span><span class="nv">out</span><span class="o">)</span></span>
+<span><span class="c">#&gt; [1] "species"        "sex"            "mean_bill_area"</span></span>
+<span></span>
+<span><span class="c"># duckdb is responsible for eventually carrying out the operations.</span></span>
+<span><span class="c"># Despite the late filter, the summary is not computed for the Gentoo species.</span></span>
+<span><span class="nv">out</span> <span class="o"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="nf"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="o">(</span><span class="o">)</span></span>
+<span><span class="c">#&gt; ┌───────────────────────────┐</span></span>
+<span><span class="c">#&gt; │       HASH_GROUP_BY       │</span></span>
+<span><span class="c">#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class="c">#&gt; │             #0            │</span></span>
+<span><span class="c">#&gt; │             #1            │</span></span>
+<span><span class="c">#&gt; │          mean(#2)         │</span></span>
+<span><span class="c">#&gt; └─────────────┬─────────────┘                             </span></span>
+<span><span class="c">#&gt; ┌─────────────┴─────────────┐</span></span>
+<span><span class="c">#&gt; │         PROJECTION        │</span></span>
+<span><span class="c">#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class="c">#&gt; │          species          │</span></span>
+<span><span class="c">#&gt; │            sex            │</span></span>
+<span><span class="c">#&gt; │         bill_area         │</span></span>
+<span><span class="c">#&gt; └─────────────┬─────────────┘                             </span></span>
+<span><span class="c">#&gt; ┌─────────────┴─────────────┐</span></span>
+<span><span class="c">#&gt; │         PROJECTION        │</span></span>
+<span><span class="c">#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class="c">#&gt; │          species          │</span></span>
+<span><span class="c">#&gt; │            sex            │</span></span>
+<span><span class="c">#&gt; │         bill_area         │</span></span>
+<span><span class="c">#&gt; └─────────────┬─────────────┘                             </span></span>
+<span><span class="c">#&gt; ┌─────────────┴─────────────┐</span></span>
+<span><span class="c">#&gt; │           FILTER          │</span></span>
+<span><span class="c">#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class="c">#&gt; │   (species != 'Gentoo')   │</span></span>
+<span><span class="c">#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class="c">#&gt; │           EC: 0           │</span></span>
+<span><span class="c">#&gt; └─────────────┬─────────────┘                             </span></span>
+<span><span class="c">#&gt; ┌─────────────┴─────────────┐</span></span>
+<span><span class="c">#&gt; │     R_DATAFRAME_SCAN      │</span></span>
+<span><span class="c">#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class="c">#&gt; │         data.frame        │</span></span>
+<span><span class="c">#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class="c">#&gt; │          species          │</span></span>
+<span><span class="c">#&gt; │       bill_length_mm      │</span></span>
+<span><span class="c">#&gt; │       bill_depth_mm       │</span></span>
+<span><span class="c">#&gt; │            sex            │</span></span>
+<span><span class="c">#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class="c">#&gt; │           EC: 0           │</span></span>
+<span><span class="c">#&gt; └───────────────────────────┘</span></span>
+<span></span>
+<span><span class="c"># All data frame operations are supported.</span></span>
+<span><span class="c"># Computation happens upon the first request.</span></span>
+<span><span class="nv">out</span><span class="o">$</span><span class="nv">mean_bill_area</span></span>
+<span><span class="c">#&gt; materializing:</span></span>
+<span><span class="c">#&gt; ---------------------</span></span>
+<span><span class="c">#&gt; --- Relation Tree ---</span></span>
+<span><span class="c">#&gt; ---------------------</span></span>
+<span><span class="c">#&gt; Filter [!=(species, 'Gentoo')]</span></span>
+<span><span class="c">#&gt;   Aggregate [species, sex, mean(bill_area)]</span></span>
+<span><span class="c">#&gt;     Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, *(bill_length_mm, bill_depth_mm) as bill_area]</span></span>
+<span><span class="c">#&gt;       r_dataframe_scan(0x107a45b78)</span></span>
+<span><span class="c">#&gt; </span></span>
+<span><span class="c">#&gt; ---------------------</span></span>
+<span><span class="c">#&gt; -- Result Columns  --</span></span>
+<span><span class="c">#&gt; ---------------------</span></span>
+<span><span class="c">#&gt; - species (VARCHAR)</span></span>
+<span><span class="c">#&gt; - sex (VARCHAR)</span></span>
+<span><span class="c">#&gt; - mean_bill_area (DOUBLE)</span></span>
+<span><span class="c">#&gt; </span></span>
+<span><span class="c">#&gt; [1] 770.2627 656.8523 694.9360 819.7503 984.2279</span></span>
+<span></span>
+<span><span class="c"># After the computation has been carried out, the results are available</span></span>
+<span><span class="c"># immediately:</span></span>
+<span><span class="nv">out</span></span>
+<span><span class="c">#&gt; <span style="color: #555555;"># A tibble: 5 × 3</span></span></span>
+<span><span class="c">#&gt;   <span style="font-weight: bold;">species</span>   <span style="font-weight: bold;">sex</span>    <span style="font-weight: bold;">mean_bill_area</span></span></span>
+<span><span class="c">#&gt;   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="c">#&gt; <span style="color: #555555;">1</span> Adelie    male             770.</span></span>
+<span><span class="c">#&gt; <span style="color: #555555;">2</span> Adelie    female           657.</span></span>
+<span><span class="c">#&gt; <span style="color: #555555;">3</span> Adelie    <span style="color: #BB0000;">NA</span>               695.</span></span>
+<span><span class="c">#&gt; <span style="color: #555555;">4</span> Chinstrap female           820.</span></span>
+<span><span class="c">#&gt; <span style="color: #555555;">5</span> Chinstrap male             984.</span></span></pre>
+</div>
+<div class="section level3">
+<h3 id="session-wide">Session-wide<a class="anchor" aria-label="anchor" href="#session-wide"></a>
+</h3>
+<p>This example illustrates usage of duckplyr for all data frames in the R session.</p>
+<pre class="chroma">
+<span><span class="c"># Use `methods_overwrite()` to enable processing with duckdb for all data frames:</span></span>
+<span><span class="nf"><a href="https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html">methods_overwrite</a></span><span class="o">(</span><span class="o">)</span></span>
+<span></span>
+<span><span class="c"># This is the same query as above, without `as_duckplyr_df()`:</span></span>
+<span><span class="nv">out</span> <span class="o">&lt;-</span></span>
+<span>  <span class="nf">palmerpenguins</span><span class="nf">::</span><span class="nv"><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">penguins</a></span> <span class="o"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="c"># CAVEAT: factor columns are not supported yet</span></span>
+<span>  <span class="nf"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="o">(</span><span class="nf"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="o">(</span><span class="nf">where</span><span class="o">(</span><span class="nv">is.factor</span><span class="o">)</span>, <span class="nv">as.character</span><span class="o">)</span><span class="o">)</span> <span class="o"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="nf"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="o">(</span>bill_area <span class="o">=</span> <span class="nv">bill_length_mm</span> <span class="o">*</span> <span class="nv">bill_depth_mm</span><span class="o">)</span> <span class="o"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="nf"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="o">(</span>.by <span class="o">=</span> <span class="nf"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="o">(</span><span class="nv">species</span>, <span class="nv">sex</span><span class="o">)</span>, mean_bill_area <span class="o">=</span> <span class="nf"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="o">(</span><span class="nv">bill_area</span><span class="o">)</span><span class="o">)</span> <span class="o"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="nf"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="o">(</span><span class="nv">species</span> <span class="o">!=</span> <span class="s">"Gentoo"</span><span class="o">)</span></span>
+<span></span>
+<span><span class="c"># The result is a plain tibble now:</span></span>
+<span><span class="nf"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="o">(</span><span class="nv">out</span><span class="o">)</span></span>
+<span><span class="c">#&gt; [1] "tbl_df"     "tbl"        "data.frame"</span></span>
+<span></span>
+<span><span class="c"># Querying the number of rows also starts the computation:</span></span>
+<span><span class="nf"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="o">(</span><span class="nv">out</span><span class="o">)</span></span>
+<span><span class="c">#&gt; materializing:</span></span>
+<span><span class="c">#&gt; ---------------------</span></span>
+<span><span class="c">#&gt; --- Relation Tree ---</span></span>
+<span><span class="c">#&gt; ---------------------</span></span>
+<span><span class="c">#&gt; Filter [!=(species, 'Gentoo')]</span></span>
+<span><span class="c">#&gt;   Aggregate [species, sex, mean(bill_area)]</span></span>
+<span><span class="c">#&gt;     Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, *(bill_length_mm, bill_depth_mm) as bill_area]</span></span>
+<span><span class="c">#&gt;       r_dataframe_scan(0x1254b4b58)</span></span>
+<span><span class="c">#&gt; </span></span>
+<span><span class="c">#&gt; ---------------------</span></span>
+<span><span class="c">#&gt; -- Result Columns  --</span></span>
+<span><span class="c">#&gt; ---------------------</span></span>
+<span><span class="c">#&gt; - species (VARCHAR)</span></span>
+<span><span class="c">#&gt; - sex (VARCHAR)</span></span>
+<span><span class="c">#&gt; - mean_bill_area (DOUBLE)</span></span>
+<span><span class="c">#&gt; [1] 5</span></span>
+<span></span>
+<span><span class="c"># Restart R, or call `methods_restore()` to revert to the default dplyr implementation.</span></span>
+<span><span class="nf"><a href="https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html">methods_restore</a></span><span class="o">(</span><span class="o">)</span></span>
+<span></span>
+<span><span class="c"># dplyr is active again:</span></span>
+<span><span class="nf">palmerpenguins</span><span class="nf">::</span><span class="nv"><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">penguins</a></span> <span class="o"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="c"># CAVEAT: factor columns are not supported yet</span></span>
+<span>  <span class="nf"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="o">(</span><span class="nf"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="o">(</span><span class="nf">where</span><span class="o">(</span><span class="nv">is.factor</span><span class="o">)</span>, <span class="nv">as.character</span><span class="o">)</span><span class="o">)</span> <span class="o"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="nf"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="o">(</span>bill_area <span class="o">=</span> <span class="nv">bill_length_mm</span> <span class="o">*</span> <span class="nv">bill_depth_mm</span><span class="o">)</span> <span class="o"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="nf"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="o">(</span>.by <span class="o">=</span> <span class="nf"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="o">(</span><span class="nv">species</span>, <span class="nv">sex</span><span class="o">)</span>, mean_bill_area <span class="o">=</span> <span class="nf"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="o">(</span><span class="nv">bill_area</span><span class="o">)</span><span class="o">)</span> <span class="o"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="nf"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="o">(</span><span class="nv">species</span> <span class="o">!=</span> <span class="s">"Gentoo"</span><span class="o">)</span></span>
+<span><span class="c">#&gt; <span style="color: #555555;"># A tibble: 5 × 3</span></span></span>
+<span><span class="c">#&gt;   <span style="font-weight: bold;">species</span>   <span style="font-weight: bold;">sex</span>    <span style="font-weight: bold;">mean_bill_area</span></span></span>
+<span><span class="c">#&gt;   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="c">#&gt; <span style="color: #555555;">1</span> Adelie    male             770.</span></span>
+<span><span class="c">#&gt; <span style="color: #555555;">2</span> Adelie    female           657.</span></span>
+<span><span class="c">#&gt; <span style="color: #555555;">3</span> Adelie    <span style="color: #BB0000;">NA</span>                <span style="color: #BB0000;">NA</span> </span></span>
+<span><span class="c">#&gt; <span style="color: #555555;">4</span> Chinstrap female           820.</span></span>
+<span><span class="c">#&gt; <span style="color: #555555;">5</span> Chinstrap male             984.</span></span></pre>
+</div>
+</div>
+<div class="section level2">
+<h2 id="extensibility">Extensibility<a class="anchor" aria-label="anchor" href="#extensibility"></a>
+</h2>
+<p>This package also provides generics, for which other packages may then implement methods.</p>
+<pre class="chroma">
+<span><span class="kr"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="o">(</span><span class="nv"><a href="https://duckdblabs.github.io/duckplyr/">duckplyr</a></span><span class="o">)</span></span>
 <span></span>
 <span><span class="nv">new_dfrel</span> <span class="o">&lt;-</span> <span class="kr">function</span><span class="o">(</span><span class="nv">x</span><span class="o">)</span> <span class="o">{</span></span>
 <span>  <span class="nf"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="o">(</span><span class="nf"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">is.data.frame</a></span><span class="o">(</span><span class="nv">x</span><span class="o">)</span><span class="o">)</span></span>
-<span>  <span class="nf"><a href="https://krlmlr.github.io/duckplyr/reference/relational.html">new_relational</a></span><span class="o">(</span><span class="nf"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="o">(</span><span class="nv">x</span><span class="o">)</span>, class <span class="o">=</span> <span class="s">"dfrel"</span><span class="o">)</span></span>
+<span>  <span class="nf"><a href="https://duckdblabs.github.io/duckplyr/reference/new_relational.html">new_relational</a></span><span class="o">(</span><span class="nf"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="o">(</span><span class="nv">x</span><span class="o">)</span>, class <span class="o">=</span> <span class="s">"dfrel"</span><span class="o">)</span></span>
 <span><span class="o">}</span></span>
 <span><span class="nv">mtcars_rel</span> <span class="o">&lt;-</span> <span class="nf">new_dfrel</span><span class="o">(</span><span class="nv">mtcars</span><span class="o">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span>, <span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="o">]</span><span class="o">)</span></span>
 <span></span>
 <span><span class="nv">rel_to_df.dfrel</span> <span class="o">&lt;-</span> <span class="kr">function</span><span class="o">(</span><span class="nv">rel</span>, <span class="nv">...</span><span class="o">)</span> <span class="o">{</span></span>
 <span>  <span class="nf"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="o">(</span><span class="nv">rel</span><span class="o">)</span><span class="o">[[</span><span class="m">1</span><span class="o">]</span><span class="o">]</span></span>
 <span><span class="o">}</span></span>
-<span><span class="nf"><a href="https://krlmlr.github.io/duckplyr/reference/relational.html">rel_to_df</a></span><span class="o">(</span><span class="nv">mtcars_rel</span><span class="o">)</span></span>
+<span><span class="nf"><a href="https://duckdblabs.github.io/duckplyr/reference/new_relational.html">rel_to_df</a></span><span class="o">(</span><span class="nv">mtcars_rel</span><span class="o">)</span></span>
 <span><span class="c">#&gt;                    mpg cyl disp  hp</span></span>
 <span><span class="c">#&gt; Mazda RX4         21.0   6  160 110</span></span>
 <span><span class="c">#&gt; Mazda RX4 Wag     21.0   6  160 110</span></span>
@@ -113,12 +273,12 @@
 <span>  <span class="nf">new_dfrel</span><span class="o">(</span><span class="nv">df</span><span class="o">[</span><span class="nf"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample.int</a></span><span class="o">(</span><span class="nf"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="o">(</span><span class="nv">df</span><span class="o">)</span>, <span class="m">3</span>, replace <span class="o">=</span> <span class="kc">TRUE</span><span class="o">)</span>, <span class="o">]</span><span class="o">)</span></span>
 <span><span class="o">}</span></span>
 <span></span>
-<span><span class="nf"><a href="https://krlmlr.github.io/duckplyr/reference/relational.html">rel_filter</a></span><span class="o">(</span></span>
+<span><span class="nf"><a href="https://duckdblabs.github.io/duckplyr/reference/new_relational.html">rel_filter</a></span><span class="o">(</span></span>
 <span>  <span class="nv">mtcars_rel</span>,</span>
 <span>  <span class="nf"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="o">(</span></span>
-<span>    <span class="nf"><a href="https://krlmlr.github.io/duckplyr/reference/expr.html">relexpr_function</a></span><span class="o">(</span></span>
+<span>    <span class="nf"><a href="https://duckdblabs.github.io/duckplyr/reference/new_relexpr.html">relexpr_function</a></span><span class="o">(</span></span>
 <span>      <span class="s">"gt"</span>,</span>
-<span>      <span class="nf"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="o">(</span><span class="nf"><a href="https://krlmlr.github.io/duckplyr/reference/expr.html">relexpr_reference</a></span><span class="o">(</span><span class="s">"cyl"</span><span class="o">)</span>, <span class="nf"><a href="https://krlmlr.github.io/duckplyr/reference/expr.html">relexpr_constant</a></span><span class="o">(</span><span class="s">"6"</span><span class="o">)</span><span class="o">)</span></span>
+<span>      <span class="nf"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="o">(</span><span class="nf"><a href="https://duckdblabs.github.io/duckplyr/reference/new_relexpr.html">relexpr_reference</a></span><span class="o">(</span><span class="s">"cyl"</span><span class="o">)</span>, <span class="nf"><a href="https://duckdblabs.github.io/duckplyr/reference/new_relexpr.html">relexpr_constant</a></span><span class="o">(</span><span class="s">"6"</span><span class="o">)</span><span class="o">)</span></span>
 <span>    <span class="o">)</span></span>
 <span>  <span class="o">)</span></span>
 <span><span class="o">)</span></span>
@@ -139,9 +299,9 @@
 <span>  <span class="nf">new_dfrel</span><span class="o">(</span><span class="nv">df</span><span class="o">[</span><span class="nf"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="o">(</span><span class="nf"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="o">(</span><span class="m">3</span>, <span class="nf"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="o">(</span><span class="nv">df</span><span class="o">)</span><span class="o">)</span><span class="o">)</span><span class="o">]</span><span class="o">)</span></span>
 <span><span class="o">}</span></span>
 <span></span>
-<span><span class="nf"><a href="https://krlmlr.github.io/duckplyr/reference/relational.html">rel_project</a></span><span class="o">(</span></span>
+<span><span class="nf"><a href="https://duckdblabs.github.io/duckplyr/reference/new_relational.html">rel_project</a></span><span class="o">(</span></span>
 <span>  <span class="nv">mtcars_rel</span>,</span>
-<span>  <span class="nf"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="o">(</span><span class="nf"><a href="https://krlmlr.github.io/duckplyr/reference/expr.html">relexpr_reference</a></span><span class="o">(</span><span class="s">"cyl"</span><span class="o">)</span>, <span class="nf"><a href="https://krlmlr.github.io/duckplyr/reference/expr.html">relexpr_reference</a></span><span class="o">(</span><span class="s">"disp"</span><span class="o">)</span><span class="o">)</span></span>
+<span>  <span class="nf"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="o">(</span><span class="nf"><a href="https://duckdblabs.github.io/duckplyr/reference/new_relexpr.html">relexpr_reference</a></span><span class="o">(</span><span class="s">"cyl"</span><span class="o">)</span>, <span class="nf"><a href="https://duckdblabs.github.io/duckplyr/reference/new_relexpr.html">relexpr_reference</a></span><span class="o">(</span><span class="s">"disp"</span><span class="o">)</span><span class="o">)</span></span>
 <span><span class="o">)</span></span>
 <span><span class="c">#&gt; [[1]]</span></span>
 <span><span class="c">#&gt;                    mpg cyl disp</span></span>
@@ -162,9 +322,9 @@
 <span>  <span class="nf">new_dfrel</span><span class="o">(</span><span class="nv">df</span><span class="o">[</span><span class="nf"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="o">(</span><span class="nv">df</span><span class="o">[[</span><span class="m">1</span><span class="o">]</span><span class="o">]</span><span class="o">)</span>, <span class="o">]</span><span class="o">)</span></span>
 <span><span class="o">}</span></span>
 <span></span>
-<span><span class="nf"><a href="https://krlmlr.github.io/duckplyr/reference/relational.html">rel_order</a></span><span class="o">(</span></span>
+<span><span class="nf"><a href="https://duckdblabs.github.io/duckplyr/reference/new_relational.html">rel_order</a></span><span class="o">(</span></span>
 <span>  <span class="nv">mtcars_rel</span>,</span>
-<span>  <span class="nf"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="o">(</span><span class="nf"><a href="https://krlmlr.github.io/duckplyr/reference/expr.html">relexpr_reference</a></span><span class="o">(</span><span class="s">"mpg"</span><span class="o">)</span><span class="o">)</span></span>
+<span>  <span class="nf"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="o">(</span><span class="nf"><a href="https://duckdblabs.github.io/duckplyr/reference/new_relexpr.html">relexpr_reference</a></span><span class="o">(</span><span class="s">"mpg"</span><span class="o">)</span><span class="o">)</span></span>
 <span><span class="o">)</span></span>
 <span><span class="c">#&gt; [[1]]</span></span>
 <span><span class="c">#&gt;                    mpg cyl disp  hp</span></span>
@@ -187,7 +347,7 @@
 <span>  <span class="nf">new_dfrel</span><span class="o">(</span><span class="nf">dplyr</span><span class="nf">::</span><span class="nf"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="o">(</span><span class="nv">left_df</span>, <span class="nv">right_df</span><span class="o">)</span><span class="o">)</span></span>
 <span><span class="o">}</span></span>
 <span></span>
-<span><span class="nf"><a href="https://krlmlr.github.io/duckplyr/reference/relational.html">rel_join</a></span><span class="o">(</span><span class="nf">new_dfrel</span><span class="o">(</span><span class="nf"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="o">(</span>mpg <span class="o">=</span> <span class="m">21</span><span class="o">)</span><span class="o">)</span>, <span class="nv">mtcars_rel</span><span class="o">)</span></span>
+<span><span class="nf"><a href="https://duckdblabs.github.io/duckplyr/reference/new_relational.html">rel_join</a></span><span class="o">(</span><span class="nf">new_dfrel</span><span class="o">(</span><span class="nf"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="o">(</span>mpg <span class="o">=</span> <span class="m">21</span><span class="o">)</span><span class="o">)</span>, <span class="nv">mtcars_rel</span><span class="o">)</span></span>
 <span><span class="c">#&gt; Joining with `by = join_by(mpg)`</span></span>
 <span><span class="c">#&gt; [[1]]</span></span>
 <span><span class="c">#&gt;   mpg cyl disp  hp</span></span>
@@ -203,7 +363,7 @@
 <span>  <span class="nf">new_dfrel</span><span class="o">(</span><span class="nv">df</span><span class="o">[</span><span class="nf"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="o">(</span><span class="nv">n</span><span class="o">)</span>, <span class="o">]</span><span class="o">)</span></span>
 <span><span class="o">}</span></span>
 <span></span>
-<span><span class="nf"><a href="https://krlmlr.github.io/duckplyr/reference/relational.html">rel_limit</a></span><span class="o">(</span><span class="nv">mtcars_rel</span>, <span class="m">3</span><span class="o">)</span></span>
+<span><span class="nf"><a href="https://duckdblabs.github.io/duckplyr/reference/new_relational.html">rel_limit</a></span><span class="o">(</span><span class="nv">mtcars_rel</span>, <span class="m">3</span><span class="o">)</span></span>
 <span><span class="c">#&gt; [[1]]</span></span>
 <span><span class="c">#&gt;                mpg cyl disp  hp</span></span>
 <span><span class="c">#&gt; Mazda RX4     21.0   6  160 110</span></span>
@@ -219,7 +379,7 @@
 <span>  <span class="nf">new_dfrel</span><span class="o">(</span><span class="nv">df</span><span class="o">[</span><span class="o">!</span><span class="nf"><a href="https://rdrr.io/r/base/duplicated.html" class="external-link">duplicated</a></span><span class="o">(</span><span class="nv">df</span><span class="o">)</span>, <span class="o">]</span><span class="o">)</span></span>
 <span><span class="o">}</span></span>
 <span></span>
-<span><span class="nf"><a href="https://krlmlr.github.io/duckplyr/reference/relational.html">rel_distinct</a></span><span class="o">(</span><span class="nf">new_dfrel</span><span class="o">(</span><span class="nv">mtcars</span><span class="o">[</span><span class="m">1</span><span class="o">:</span><span class="m">3</span>, <span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="o">]</span><span class="o">)</span><span class="o">)</span></span>
+<span><span class="nf"><a href="https://duckdblabs.github.io/duckplyr/reference/new_relational.html">rel_distinct</a></span><span class="o">(</span><span class="nf">new_dfrel</span><span class="o">(</span><span class="nv">mtcars</span><span class="o">[</span><span class="m">1</span><span class="o">:</span><span class="m">3</span>, <span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="o">]</span><span class="o">)</span><span class="o">)</span></span>
 <span><span class="c">#&gt; [[1]]</span></span>
 <span><span class="c">#&gt;             mpg cyl disp  hp</span></span>
 <span><span class="c">#&gt; Mazda RX4  21.0   6  160 110</span></span>
@@ -234,16 +394,27 @@
 <span>  <span class="nf"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="o">(</span><span class="nv">df</span><span class="o">)</span></span>
 <span><span class="o">}</span></span>
 <span></span>
-<span><span class="nf"><a href="https://krlmlr.github.io/duckplyr/reference/relational.html">rel_names</a></span><span class="o">(</span><span class="nv">mtcars_rel</span><span class="o">)</span></span>
+<span><span class="nf"><a href="https://duckdblabs.github.io/duckplyr/reference/new_relational.html">rel_names</a></span><span class="o">(</span><span class="nv">mtcars_rel</span><span class="o">)</span></span>
 <span><span class="c">#&gt; [1] "mpg"  "cyl"  "disp" "hp"</span></span></pre>
+</div>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>Install duckplyr from CRAN with:</p>
+<pre class="chroma">
+<span><span class="nf"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="o">(</span><span class="s">"duckplyr"</span><span class="o">)</span></span></pre>
+<p>You can also install the development version of duckplyr from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<pre class="chroma">
+<span><span class="c"># install.packages("pak", repos = sprintf("https://r-lib.github.io/p/pak/stable/%s/%s/%s", .Platform$pkgType, R.Version()$os, R.Version()$arch))</span></span>
+<span><span class="nf">pak</span><span class="nf">::</span><span class="nf"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="o">(</span><span class="s">"duckdblabs/duckplyr"</span><span class="o">)</span></span></pre>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li><a href="https://cloud.r-project.org/package=duckplyr" class="external-link">View on CRAN</a></li>
-<li><a href="https://github.com/krlmlr/duckplyr/" class="external-link">Browse source code</a></li>
-<li><a href="https://github.com/krlmlr/duckplyr/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/duckdblabs/duckplyr/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/duckdblabs/duckplyr/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -267,12 +438,19 @@
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Hannes Mühleisen <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-8552-0029" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Kirill Müller <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-1416-3412" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>
+<a href="https://krlmlr.info" class="external-link">Kirill Müller</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-1416-3412" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Posit Software, PBC <br><small class="roles"> Copyright holder, funder </small>  </li>
 </ul>
 </div>
 
-
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://github.com/duckdblabs/duckplyr/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/duckdblabs/duckplyr/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+</ul>
+</div>
 
   </aside>
 </div>
@@ -280,12 +458,12 @@
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Hannes Mühleisen, Kirill Müller, Posit Software, PBC.</p>
+<p>Developed by Hannes Mühleisen, <a href="https://krlmlr.info" class="external-link">Kirill Müller</a>, Posit Software, PBC.</p>
 </div>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.9000.</p>
 </div>
 
     </footer>
