@@ -1,5 +1,36 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.2.1.9000 (2023-10-05)
+
+## Bug fixes
+
+  - Fix compatibility with duckdb \>= 0.9.0.
+
+## Chore
+
+  - Use fledge workflow.
+
+  - Adapt path.
+
+  - Code formatting.
+
+  - Replace last `:::` with `$`.
+
+  - Re-sync.
+
+  - `:::` -\> `$` for access of private functions.
+
+  - Sync.
+
+## Documentation
+
+  - Tweak (#56).
+    
+    Closes #56.
+
+  - Fix 301 in README.
+
+
 # duckplyr 0.2.1 (2023-09-16)
 
 - Improve documentation.
@@ -43,4 +74,3 @@ Initial version, exporting:
 - Generics `rel_aggregate()`, `rel_distinct()`, `rel_filter()`, `rel_join()`, `rel_limit()`, `rel_names()`, `rel_order()`, `rel_project()`, `rel_set_diff()`, `rel_set_intersect()`, `rel_set_symdiff()`, `rel_to_df()`, `rel_union_all()`
 - `new_relexpr()` to construct objects of class `"relational_relexpr"`
 - Expression builders `relexpr_constant()`, `relexpr_function()`, `relexpr_reference()`, `relexpr_set_alias()`, `relexpr_window()`
-
