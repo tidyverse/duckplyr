@@ -1,13 +1,54 @@
 #' @keywords internal
 "_PACKAGE"
 
-## usethis namespace: start
 # @rawNamespace import(vctrs, except = data_frame)
 # an alternative for importing nearly everything from vctrs
 # https://github.com/tidyverse/dplyr/blob/16b472fb2afc50a87502c2b4ed803e2f5f82b9d6/R/dplyr.R#L7
 #' @import rlang
+## usethis namespace: start
 #' @importFrom collections dict
 #' @importFrom collections queue
+#' @importFrom glue glue
+#' @importFrom lifecycle deprecated
+#' @importFrom purrr imap
+#' @importFrom purrr map
+#' @importFrom purrr map_chr
+#' @importFrom purrr map_lgl
+#' @importFrom purrr map2
+#' @importFrom purrr pmap
+#' @importFrom purrr reduce
+#' @importFrom purrr walk
+#' @importFrom tibble as_tibble
+#' @importFrom tibble deframe
+#' @importFrom tibble is_tibble
+#' @importFrom tibble new_tibble
+#' @importFrom tibble tibble
+#' @importFrom tidyselect everything
+#' @importFrom utils head
+#' @importFrom vctrs new_data_frame
+#' @importFrom vctrs new_rcrd
+#' @importFrom vctrs unspecified
+#' @importFrom vctrs vec_as_names
+#' @importFrom vctrs vec_assign
+#' @importFrom vctrs vec_c
+#' @importFrom vctrs vec_cast
+#' @importFrom vctrs vec_cast_common
+#' @importFrom vctrs vec_cbind
+#' @importFrom vctrs vec_in
+#' @importFrom vctrs vec_match
+#' @importFrom vctrs vec_rbind
+#' @importFrom vctrs vec_rep
+#' @importFrom vctrs vec_rep_each
+#' @importFrom vctrs vec_set_difference
+#' @importFrom vctrs vec_set_intersect
+#' @importFrom vctrs vec_set_symmetric_difference
+#' @importFrom vctrs vec_set_union
+#' @importFrom vctrs vec_size
+#' @importFrom vctrs vec_slice
+#' @importFrom vctrs vec_split
+#' @importFrom vctrs vec_unique_loc
+#' @useDynLib duckplyr, .registration = TRUE
+## usethis namespace: end
 NULL
 
 #' @importFrom dplyr %>%
@@ -409,52 +450,6 @@ dplyr::vars
 #' @importFrom dplyr with_groups
 #' @export
 dplyr::with_groups
-
-#' @importFrom glue glue
-#' @importFrom lifecycle deprecated
-#' @importFrom purrr imap
-#' @importFrom purrr map
-#' @importFrom purrr map_chr
-#' @importFrom purrr map_lgl
-#' @importFrom purrr map2
-#' @importFrom purrr pmap
-#' @importFrom purrr reduce
-#' @importFrom purrr walk
-#' @importFrom tibble as_tibble
-#' @importFrom tibble deframe
-#' @importFrom tibble is_tibble
-#' @importFrom tibble new_tibble
-#' @importFrom tibble tibble
-#' @importFrom tidyselect everything
-#' @importFrom utils head
-# an alternative for importing nearly everything from vctrs
-# https://github.com/tidyverse/dplyr/blob/16b472fb2afc50a87502c2b4ed803e2f5f82b9d6/R/dplyr.R#L7
-# @rawNamespace import(vctrs, except = data_frame)
-#' @importFrom vctrs new_data_frame
-#' @importFrom vctrs new_rcrd
-#' @importFrom vctrs unspecified
-#' @importFrom vctrs vec_as_names
-#' @importFrom vctrs vec_assign
-#' @importFrom vctrs vec_c
-#' @importFrom vctrs vec_cast
-#' @importFrom vctrs vec_cast_common
-#' @importFrom vctrs vec_cbind
-#' @importFrom vctrs vec_in
-#' @importFrom vctrs vec_match
-#' @importFrom vctrs vec_rbind
-#' @importFrom vctrs vec_rep
-#' @importFrom vctrs vec_rep_each
-#' @importFrom vctrs vec_set_difference
-#' @importFrom vctrs vec_set_intersect
-#' @importFrom vctrs vec_set_symmetric_difference
-#' @importFrom vctrs vec_set_union
-#' @importFrom vctrs vec_size
-#' @importFrom vctrs vec_slice
-#' @importFrom vctrs vec_split
-#' @importFrom vctrs vec_unique_loc
-#' @useDynLib duckplyr, .registration = TRUE
-## usethis namespace: end
-NULL
 
 # Only in this package
 dplyr_mode <- FALSE
