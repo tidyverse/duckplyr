@@ -24,12 +24,36 @@ set.seed(20230702)
 [![R-CMD-check](https://github.com/duckdblabs/duckplyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/duckdblabs/duckplyr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of duckplyr is to provide a drop-in replacement for dplyr that uses DuckDB as a backend for fast operation.
-It also defines a set of generics that provide a low-level implementer's interface for dplyr's high-level user interface.
+The goal of duckplyr is to provide a drop-in replacement for dplyr that uses [DuckDB](https://duckdb.org/) as a backend for fast operation.
+DuckDB is an in-process SQL OLAP database management system.
 
-## Example
+duckplyr also defines a set of generics that provide a low-level implementer's interface for dplyr's high-level user interface.
 
-```{r load}
+## Installation
+
+Install duckplyr from CRAN with:
+
+``` r
+install.packages("duckplyr")
+```
+
+You can also install the development version of duckplyr from R-universe:
+
+``` r
+install.packages('duckplyr', repos = c('https://duckdblabs.r-universe.dev', 'https://cloud.r-project.org'))
+```
+
+Or from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak", repos = sprintf("https://r-lib.github.io/p/pak/stable/%s/%s/%s", .Platform$pkgType, R.Version()$os, R.Version()$arch))
+pak::pak("duckdblabs/duckplyr")
+```
+
+
+## Examples
+
+```{r attach}
 library(conflicted)
 library(duckplyr)
 conflict_prefer("filter", "duckplyr")
@@ -37,18 +61,19 @@ conflict_prefer("filter", "duckplyr")
 
 There are two ways to use duckplyr.
 
-1. To enable for individual data frames, use `as_duckplyr_df()` as the first step in your pipe.
-1. To enable for the entire session, use `methods_overwrite()`.
+1. To enable duckplyr for individual data frames, use `as_duckplyr_df()` as the first step in your pipe.
+1. To enable duckplyr for the entire session, use `methods_overwrite()`.
 
 The examples below illustrate both methods.
 See also the companion [demo repository](https://github.com/Tmonster/duckplyr_demo) for a use case with a large dataset.
 
-### Individual
+### Usage for individual data frames
 
 This example illustrates usage of duckplyr for individual data frames.
 
-```{r individual}
-# Use `as_duckplyr_df()` to enable processing with duckdb:
+Use `as_duckplyr_df()` to enable processing with duckdb:
+
+```{r}
 out <-
   palmerpenguins::penguins %>%
   # CAVEAT: factor columns are not supported yet
@@ -57,35 +82,49 @@ out <-
   mutate(bill_area = bill_length_mm * bill_depth_mm) %>%
   summarize(.by = c(species, sex), mean_bill_area = mean(bill_area)) %>%
   filter(species != "Gentoo")
+```
 
-# The result is a data frame or tibble, with its own class.
+The result is a data frame or tibble, with its own class.
+
+```{r}
 class(out)
 names(out)
+```
 
-# duckdb is responsible for eventually carrying out the operations.
-# Despite the late filter, the summary is not computed for the Gentoo species.
+duckdb is responsible for eventually carrying out the operations.
+Despite the late filter, the summary is not computed for the Gentoo species.
+
+```{r}
 out %>%
   explain()
+```
 
-# All data frame operations are supported.
-# Computation happens upon the first request.
+All data frame operations are supported.
+Computation happens upon the first request.
+
+```{r}
 out$mean_bill_area
+```
 
-# After the computation has been carried out, the results are available
-# immediately:
+After the computation has been carried out, the results are available immediately:
+
+```{r}
 out
 ```
 
 
-### Session-wide
+### Session-wide usage
 
 This example illustrates usage of duckplyr for all data frames in the R session.
 
-```{r session}
-# Use `methods_overwrite()` to enable processing with duckdb for all data frames:
-methods_overwrite()
+Use `methods_overwrite()` to enable processing with duckdb for all data frames:
 
-# This is the same query as above, without `as_duckplyr_df()`:
+```{r}
+methods_overwrite()
+```
+This is the same query as above, without `as_duckplyr_df()`:
+
+```{r}
 out <-
   palmerpenguins::penguins %>%
   # CAVEAT: factor columns are not supported yet
@@ -93,17 +132,29 @@ out <-
   mutate(bill_area = bill_length_mm * bill_depth_mm) %>%
   summarize(.by = c(species, sex), mean_bill_area = mean(bill_area)) %>%
   filter(species != "Gentoo")
+```
 
-# The result is a plain tibble now:
+The result is a plain tibble now:
+
+```{r}
 class(out)
+```
 
-# Querying the number of rows also starts the computation:
+Querying the number of rows also starts the computation:
+
+```{r}
 nrow(out)
+```
 
-# Restart R, or call `methods_restore()` to revert to the default dplyr implementation.
+Restart R, or call `methods_restore()` to revert to the default dplyr implementation.
+
+```{r}
 methods_restore()
+```
 
-# dplyr is active again:
+dplyr is active again:
+
+```{r}
 palmerpenguins::penguins %>%
   # CAVEAT: factor columns are not supported yet
   mutate(across(where(is.factor), as.character)) %>%
@@ -211,17 +262,3 @@ rel_names.dfrel <- function(rel, ...) {
 rel_names(mtcars_rel)
 ```
 
-## Installation
-
-Install duckplyr from CRAN with:
-
-``` r
-install.packages("duckplyr")
-```
-
-You can also install the development version of duckplyr from [GitHub](https://github.com/) with:
-
-``` r
-# install.packages("pak", repos = sprintf("https://r-lib.github.io/p/pak/stable/%s/%s/%s", .Platform$pkgType, R.Version()$os, R.Version()$arch))
-pak::pak("duckdblabs/duckplyr")
-```
