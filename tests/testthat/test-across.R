@@ -218,6 +218,7 @@ test_that("across() throws meaningful error with failure during expansion (#6534
 })
 
 test_that("across() gives meaningful messages", {
+  skip("TODO duckdb")
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_snapshot({
     # expanding

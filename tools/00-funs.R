@@ -55,6 +55,8 @@ duckplyr_tests <- head(n = -1, list(
     # Sort order
     "if_any() and if_all() respect filter()-like NA handling",
     "expanded if_any() finds local data",
+    # needs tidyselect > 1.2.0 for stable snapshots
+    "across() gives meaningful messages",
     NULL
   ),
   "test-all-equal.R" = c(
