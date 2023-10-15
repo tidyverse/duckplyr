@@ -101,7 +101,7 @@ duckdb is responsible for eventually carrying out the operations. Despite the la
 <span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
 <span><span class='c'>#&gt; │   (species != 'Gentoo')   │</span></span>
 <span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
-<span><span class='c'>#&gt; │           EC: 0           │</span></span>
+<span><span class='c'>#&gt; │          EC: 344          │</span></span>
 <span><span class='c'>#&gt; └─────────────┬─────────────┘                             </span></span>
 <span><span class='c'>#&gt; ┌─────────────┴─────────────┐</span></span>
 <span><span class='c'>#&gt; │     R_DATAFRAME_SCAN      │</span></span>
@@ -113,7 +113,7 @@ duckdb is responsible for eventually carrying out the operations. Despite the la
 <span><span class='c'>#&gt; │       bill_depth_mm       │</span></span>
 <span><span class='c'>#&gt; │            sex            │</span></span>
 <span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
-<span><span class='c'>#&gt; │           EC: 0           │</span></span>
+<span><span class='c'>#&gt; │          EC: 344          │</span></span>
 <span><span class='c'>#&gt; └───────────────────────────┘</span></span></pre>
 
 All data frame operations are supported. Computation happens upon the first request.
@@ -127,7 +127,7 @@ All data frame operations are supported. Computation happens upon the first requ
 <span><span class='c'>#&gt; Filter [!=(species, 'Gentoo')]</span></span>
 <span><span class='c'>#&gt;   Aggregate [species, sex, mean(bill_area)]</span></span>
 <span><span class='c'>#&gt;     Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, *(bill_length_mm, bill_depth_mm) as bill_area]</span></span>
-<span><span class='c'>#&gt;       r_dataframe_scan(0x55947a45b378)</span></span>
+<span><span class='c'>#&gt;       r_dataframe_scan(0x13c2aa118)</span></span>
 <span><span class='c'>#&gt; </span></span>
 <span><span class='c'>#&gt; ---------------------</span></span>
 <span><span class='c'>#&gt; -- Result Columns  --</span></span>
@@ -136,7 +136,7 @@ All data frame operations are supported. Computation happens upon the first requ
 <span><span class='c'>#&gt; - sex (VARCHAR)</span></span>
 <span><span class='c'>#&gt; - mean_bill_area (DOUBLE)</span></span>
 <span><span class='c'>#&gt; </span></span>
-<span><span class='c'>#&gt; [1] 770.2627 656.8523 694.9360 819.7503 984.2279</span></span></pre>
+<span><span class='c'>#&gt; [1] 656.8523 694.9360 984.2279 819.7503 770.2627</span></span></pre>
 
 After the computation has been carried out, the results are available immediately:
 
@@ -145,11 +145,11 @@ After the computation has been carried out, the results are available immediatel
 <span><span class='c'>#&gt; <span style='color: #555555;'># A tibble: 5 × 3</span></span></span>
 <span><span class='c'>#&gt;   <span style='font-weight: bold;'>species</span>   <span style='font-weight: bold;'>sex</span>    <span style='font-weight: bold;'>mean_bill_area</span></span></span>
 <span><span class='c'>#&gt;   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span></span></span>
-<span><span class='c'>#&gt; <span style='color: #555555;'>1</span> Adelie    male             770.</span></span>
-<span><span class='c'>#&gt; <span style='color: #555555;'>2</span> Adelie    female           657.</span></span>
-<span><span class='c'>#&gt; <span style='color: #555555;'>3</span> Adelie    <span style='color: #BB0000;'>NA</span>               695.</span></span>
+<span><span class='c'>#&gt; <span style='color: #555555;'>1</span> Adelie    female           657.</span></span>
+<span><span class='c'>#&gt; <span style='color: #555555;'>2</span> Adelie    <span style='color: #BB0000;'>NA</span>               695.</span></span>
+<span><span class='c'>#&gt; <span style='color: #555555;'>3</span> Chinstrap male             984.</span></span>
 <span><span class='c'>#&gt; <span style='color: #555555;'>4</span> Chinstrap female           820.</span></span>
-<span><span class='c'>#&gt; <span style='color: #555555;'>5</span> Chinstrap male             984.</span></span></pre>
+<span><span class='c'>#&gt; <span style='color: #555555;'>5</span> Adelie    male             770.</span></span></pre>
 
 ### Session-wide usage
 
@@ -176,7 +176,10 @@ This is the same query as above, without [`as_duckplyr_df()`](https://duckdblabs
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='o'>(</span><span class='nf'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span><span class='o'>(</span><span class='nf'>where</span><span class='o'>(</span><span class='nv'>is.factor</span><span class='o'>)</span>, <span class='nv'>as.character</span><span class='o'>)</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='o'>(</span>bill_area <span class='o'>=</span> <span class='nv'>bill_length_mm</span> <span class='o'>*</span> <span class='nv'>bill_depth_mm</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='o'>(</span>.by <span class='o'>=</span> <span class='nf'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='o'>(</span><span class='nv'>species</span>, <span class='nv'>sex</span><span class='o'>)</span>, mean_bill_area <span class='o'>=</span> <span class='nf'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='o'>(</span><span class='nv'>bill_area</span><span class='o'>)</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='o'>(</span><span class='nv'>species</span> <span class='o'>!=</span> <span class='s'>"Gentoo"</span><span class='o'>)</span></span></pre>
+<span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='o'>(</span><span class='nv'>species</span> <span class='o'>!=</span> <span class='s'>"Gentoo"</span><span class='o'>)</span></span>
+<span><span class='c'>#&gt; Error processing with relational.</span></span>
+<span><span class='c'>#&gt; <span style='font-weight: bold;'>Caused by error in `duckdb_rel_from_df()`:</span></span></span>
+<span><span class='c'>#&gt; <span style='color: #BBBB00;'>!</span> Can't convert factor columns to relational. Affected column: `species`.</span></span></pre>
 
 The result is a plain tibble now:
 
@@ -195,7 +198,7 @@ Querying the number of rows also starts the computation:
 <span><span class='c'>#&gt; Filter [!=(species, 'Gentoo')]</span></span>
 <span><span class='c'>#&gt;   Aggregate [species, sex, mean(bill_area)]</span></span>
 <span><span class='c'>#&gt;     Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, *(bill_length_mm, bill_depth_mm) as bill_area]</span></span>
-<span><span class='c'>#&gt;       r_dataframe_scan(0x55947ac6eda8)</span></span>
+<span><span class='c'>#&gt;       r_dataframe_scan(0x13b4e4028)</span></span>
 <span><span class='c'>#&gt; </span></span>
 <span><span class='c'>#&gt; ---------------------</span></span>
 <span><span class='c'>#&gt; -- Result Columns  --</span></span>
