@@ -9,6 +9,8 @@ get_test_code <- function(name, code, is_tbl_return) {
   extra_args <- test_extra_arg_map[[name]] %||% c("")
 
   if (length(extra_args) == 1) {
+    stopifnot(identical(names2(extra_args), ""))
+
     with_force <- test_force_override[name] %|% fs::file_exists(fs::path("patch", paste0(name, ".patch")))
     if (with_force) {
       force <- ""
@@ -23,15 +25,46 @@ get_test_code <- function(name, code, is_tbl_return) {
       skip <- paste0('  skip("', skip, '")\n\n')
     }
 
-    get_test_code_one(extra_args, pre_step = "", name, two_tables, force, skip, is_tbl_return)
-  } else {
-    paste(map2_chr(
-      extra_args, names2(extra_args),
-      get_test_code_one,
+    out <- get_test_code_one(
+      extra_args,
+      pre_step = "",
       name,
-      two_tables
-    ), collapse = "\n\n")
+      two_tables,
+      force,
+      skip,
+      is_tbl_return
+    )
+  } else {
+    skip <- ""
+    out <- paste(
+      map2_chr(
+        extra_args, names2(extra_args),
+        get_test_code_one,
+        name,
+        two_tables,
+        is_tbl_return = is_tbl_return
+      ),
+      collapse = "\n\n"
+    )
   }
+
+  if (skip == "") {
+    with_force_fallback <- paste0(
+      get_test_code_one(
+        extra_args[[1]],
+        names2(extra_args)[[1]],
+        name,
+        two_tables,
+        force = '  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")\n\n',
+        is_tbl_return = is_tbl_return
+      ),
+      "\n\n"
+    )
+  } else {
+    with_force_fallback <- ""
+  }
+
+  paste0(with_force_fallback, out)
 }
 
 get_test_code_one <- function(extra_arg, pre_step, name, two_tables, force = "", skip = "", is_tbl_return = TRUE) {

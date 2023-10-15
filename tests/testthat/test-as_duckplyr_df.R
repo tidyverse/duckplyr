@@ -6,6 +6,21 @@ meta <- testthat::is_parallel() # Slow!
 # meta <- TRUE
 
 test_that("as_duckplyr_df() and add_count()", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% add_count()
+  post <- test_df %>% add_count() %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and add_count()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
   # Data
@@ -20,6 +35,8 @@ test_that("as_duckplyr_df() and add_count()", {
 })
 
 test_that("as_duckplyr_df() and anti_join(join_by(a))", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
   # Data
   test_df_x <- data.frame(a = 1:4, b = 2)
   test_df_y <- data.frame(a = 2:5, b = 2)
@@ -31,6 +48,35 @@ test_that("as_duckplyr_df() and anti_join(join_by(a))", {
   # Compare
   expect_equal(pre, post)
 })
+
+
+test_that("as_duckplyr_df() and anti_join(join_by(a))", {
+  # Data
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
+
+  # Run
+  pre <- test_df_x %>% as_duckplyr_df() %>% anti_join(test_df_y, join_by(a))
+  post <- test_df_x %>% anti_join(test_df_y, join_by(a)) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+test_that("as_duckplyr_df() and arrange()", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% arrange()
+  post <- test_df %>% arrange() %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 
 test_that("as_duckplyr_df() and arrange()", {
   # Data
@@ -97,6 +143,22 @@ test_that("as_duckplyr_df() and arrange(a, g)", {
 })
 
 test_that("as_duckplyr_df() and auto_copy()", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
+
+  # Run
+  pre <- test_df_x %>% as_duckplyr_df() %>% auto_copy(test_df_y)
+  post <- test_df_x %>% auto_copy(test_df_y)
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and auto_copy()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
   # Data
@@ -110,6 +172,21 @@ test_that("as_duckplyr_df() and auto_copy()", {
   # Compare
   expect_equal(pre, post)
 })
+
+test_that("as_duckplyr_df() and collapse()", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% collapse()
+  post <- test_df %>% collapse() %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 
 test_that("as_duckplyr_df() and collapse()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
@@ -126,6 +203,21 @@ test_that("as_duckplyr_df() and collapse()", {
 })
 
 test_that("as_duckplyr_df() and collect()", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% collect()
+  post <- test_df %>% collect() %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and collect()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
   # Data
@@ -140,6 +232,21 @@ test_that("as_duckplyr_df() and collect()", {
 })
 
 test_that("as_duckplyr_df() and compute()", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% compute()
+  post <- test_df %>% compute() %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and compute()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
   # Data
@@ -152,6 +259,21 @@ test_that("as_duckplyr_df() and compute()", {
   # Compare
   expect_equal(pre, post)
 })
+
+test_that("as_duckplyr_df() and count()", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% count()
+  post <- test_df %>% count() %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 
 test_that("as_duckplyr_df() and count()", {
   # Data
@@ -231,6 +353,22 @@ test_that("as_duckplyr_df() and count(b, g)", {
 })
 
 test_that("as_duckplyr_df() and cross_join()", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
+
+  # Run
+  pre <- test_df_x %>% as_duckplyr_df() %>% cross_join(test_df_y)
+  post <- test_df_x %>% cross_join(test_df_y) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and cross_join()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
   # Data
@@ -244,6 +382,21 @@ test_that("as_duckplyr_df() and cross_join()", {
   # Compare
   expect_equal(pre, post)
 })
+
+test_that("as_duckplyr_df() and distinct()", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% distinct()
+  post <- test_df %>% distinct() %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 
 test_that("as_duckplyr_df() and distinct()", {
   # Data
@@ -388,6 +541,21 @@ test_that("as_duckplyr_df() and distinct(g, .keep_all = TRUE)", {
 })
 
 test_that("as_duckplyr_df() and do(data.frame(c = 1))", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% do(data.frame(c = 1))
+  post <- test_df %>% do(data.frame(c = 1))
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and do(data.frame(c = 1))", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
   # Data
@@ -416,6 +584,21 @@ test_that("as_duckplyr_df() and dplyr_reconstruct(test_df)", {
   # Compare
   expect_equal(pre, post)
 })
+
+test_that("as_duckplyr_df() and filter(a == 1)", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% filter(a == 1)
+  post <- test_df %>% filter(a == 1) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 
 test_that("as_duckplyr_df() and filter(a == 1)", {
   # Data
@@ -456,6 +639,8 @@ test_that("as_duckplyr_df() and filter(a %in% 2:3 & g == 2)", {
 })
 
 test_that("as_duckplyr_df() and full_join(join_by(a))", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
   # Data
   test_df_x <- data.frame(a = 1:4, b = 2)
   test_df_y <- data.frame(a = 2:5, b = 2)
@@ -467,6 +652,35 @@ test_that("as_duckplyr_df() and full_join(join_by(a))", {
   # Compare
   expect_equal(pre, post)
 })
+
+
+test_that("as_duckplyr_df() and full_join(join_by(a))", {
+  # Data
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
+
+  # Run
+  pre <- test_df_x %>% as_duckplyr_df() %>% full_join(test_df_y, join_by(a))
+  post <- test_df_x %>% full_join(test_df_y, join_by(a)) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+test_that("as_duckplyr_df() and group_vars()", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% group_vars()
+  post <- test_df %>% group_vars()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 
 test_that("as_duckplyr_df() and group_vars()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
@@ -483,6 +697,8 @@ test_that("as_duckplyr_df() and group_vars()", {
 })
 
 test_that("as_duckplyr_df() and inner_join(join_by(a))", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
   # Data
   test_df_x <- data.frame(a = 1:4, b = 2)
   test_df_y <- data.frame(a = 2:5, b = 2)
@@ -494,6 +710,36 @@ test_that("as_duckplyr_df() and inner_join(join_by(a))", {
   # Compare
   expect_equal(pre, post)
 })
+
+
+test_that("as_duckplyr_df() and inner_join(join_by(a))", {
+  # Data
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
+
+  # Run
+  pre <- test_df_x %>% as_duckplyr_df() %>% inner_join(test_df_y, join_by(a))
+  post <- test_df_x %>% inner_join(test_df_y, join_by(a)) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+test_that("as_duckplyr_df() and intersect()", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
+
+  # Run
+  pre <- test_df_x %>% as_duckplyr_df() %>% intersect(test_df_y)
+  post <- test_df_x %>% intersect(test_df_y) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 
 test_that("as_duckplyr_df() and intersect()", {
   # Data
@@ -509,6 +755,8 @@ test_that("as_duckplyr_df() and intersect()", {
 })
 
 test_that("as_duckplyr_df() and left_join(join_by(a))", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
   # Data
   test_df_x <- data.frame(a = 1:4, b = 2)
   test_df_y <- data.frame(a = 2:5, b = 2)
@@ -520,6 +768,35 @@ test_that("as_duckplyr_df() and left_join(join_by(a))", {
   # Compare
   expect_equal(pre, post)
 })
+
+
+test_that("as_duckplyr_df() and left_join(join_by(a))", {
+  # Data
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
+
+  # Run
+  pre <- test_df_x %>% as_duckplyr_df() %>% left_join(test_df_y, join_by(a))
+  post <- test_df_x %>% left_join(test_df_y, join_by(a)) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+test_that("as_duckplyr_df() and mutate()", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate()
+  post <- test_df %>% mutate() %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 
 test_that("as_duckplyr_df() and mutate()", {
   # Data
@@ -1044,6 +1321,22 @@ test_that("as_duckplyr_df() and nest_by()", {
 })
 
 test_that("as_duckplyr_df() and nest_join(join_by(a))", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
+
+  # Run
+  pre <- test_df_x %>% as_duckplyr_df() %>% nest_join(test_df_y, join_by(a))
+  post <- test_df_x %>% nest_join(test_df_y, join_by(a)) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and nest_join(join_by(a))", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
   # Data
@@ -1059,6 +1352,8 @@ test_that("as_duckplyr_df() and nest_join(join_by(a))", {
 })
 
 test_that("as_duckplyr_df() and pull()", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -1069,6 +1364,34 @@ test_that("as_duckplyr_df() and pull()", {
   # Compare
   expect_equal(pre, post)
 })
+
+
+test_that("as_duckplyr_df() and pull()", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% pull()
+  post <- test_df %>% pull()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+test_that("as_duckplyr_df() and reframe()", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% reframe()
+  post <- test_df %>% reframe()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 
 test_that("as_duckplyr_df() and reframe()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
@@ -1083,6 +1406,21 @@ test_that("as_duckplyr_df() and reframe()", {
   # Compare
   expect_equal(pre, post)
 })
+
+test_that("as_duckplyr_df() and relocate(g)", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% relocate(g)
+  post <- test_df %>% relocate(g) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 
 test_that("as_duckplyr_df() and relocate(g)", {
   # Data
@@ -1136,6 +1474,21 @@ test_that("as_duckplyr_df() and relocate(a:b, .after = g)", {
 })
 
 test_that("as_duckplyr_df() and rename()", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% rename()
+  post <- test_df %>% rename() %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and rename()", {
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -1161,6 +1514,21 @@ test_that("as_duckplyr_df() and rename(c = a)", {
 })
 
 test_that("as_duckplyr_df() and rename_with(identity)", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% rename_with(identity)
+  post <- test_df %>% rename_with(identity) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and rename_with(identity)", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
   # Data
@@ -1175,6 +1543,8 @@ test_that("as_duckplyr_df() and rename_with(identity)", {
 })
 
 test_that("as_duckplyr_df() and right_join(join_by(a))", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
   # Data
   test_df_x <- data.frame(a = 1:4, b = 2)
   test_df_y <- data.frame(a = 2:5, b = 2)
@@ -1186,6 +1556,36 @@ test_that("as_duckplyr_df() and right_join(join_by(a))", {
   # Compare
   expect_equal(pre, post)
 })
+
+
+test_that("as_duckplyr_df() and right_join(join_by(a))", {
+  # Data
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
+
+  # Run
+  pre <- test_df_x %>% as_duckplyr_df() %>% right_join(test_df_y, join_by(a))
+  post <- test_df_x %>% right_join(test_df_y, join_by(a)) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+test_that("as_duckplyr_df() and rows_append()", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
+
+  # Run
+  pre <- test_df_x %>% as_duckplyr_df() %>% rows_append(test_df_y)
+  post <- test_df_x %>% rows_append(test_df_y) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 
 test_that("as_duckplyr_df() and rows_append()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
@@ -1203,6 +1603,22 @@ test_that("as_duckplyr_df() and rows_append()", {
 })
 
 test_that("as_duckplyr_df() and rows_delete(by = c(\"a\", \"b\"), unmatched = \"ignore\")", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
+
+  # Run
+  pre <- test_df_x %>% as_duckplyr_df() %>% rows_delete(test_df_y, by = c("a", "b"), unmatched = "ignore")
+  post <- test_df_x %>% rows_delete(test_df_y, by = c("a", "b"), unmatched = "ignore") %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and rows_delete(by = c(\"a\", \"b\"), unmatched = \"ignore\")", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
   # Data
@@ -1216,6 +1632,22 @@ test_that("as_duckplyr_df() and rows_delete(by = c(\"a\", \"b\"), unmatched = \"
   # Compare
   expect_equal(pre, post)
 })
+
+test_that("as_duckplyr_df() and rows_insert(by = \"a\", conflict = \"ignore\")", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
+
+  # Run
+  pre <- test_df_x %>% as_duckplyr_df() %>% rows_insert(test_df_y, by = "a", conflict = "ignore")
+  post <- test_df_x %>% rows_insert(test_df_y, by = "a", conflict = "ignore") %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 
 test_that("as_duckplyr_df() and rows_insert(by = \"a\", conflict = \"ignore\")", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
@@ -1233,6 +1665,22 @@ test_that("as_duckplyr_df() and rows_insert(by = \"a\", conflict = \"ignore\")",
 })
 
 test_that("as_duckplyr_df() and rows_patch(by = \"a\", unmatched = \"ignore\")", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
+
+  # Run
+  pre <- test_df_x %>% as_duckplyr_df() %>% rows_patch(test_df_y, by = "a", unmatched = "ignore")
+  post <- test_df_x %>% rows_patch(test_df_y, by = "a", unmatched = "ignore") %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and rows_patch(by = \"a\", unmatched = \"ignore\")", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
   # Data
@@ -1248,6 +1696,22 @@ test_that("as_duckplyr_df() and rows_patch(by = \"a\", unmatched = \"ignore\")",
 })
 
 test_that("as_duckplyr_df() and rows_update(by = \"a\", unmatched = \"ignore\")", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
+
+  # Run
+  pre <- test_df_x %>% as_duckplyr_df() %>% rows_update(test_df_y, by = "a", unmatched = "ignore")
+  post <- test_df_x %>% rows_update(test_df_y, by = "a", unmatched = "ignore") %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and rows_update(by = \"a\", unmatched = \"ignore\")", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
   # Data
@@ -1261,6 +1725,22 @@ test_that("as_duckplyr_df() and rows_update(by = \"a\", unmatched = \"ignore\")"
   # Compare
   expect_equal(pre, post)
 })
+
+test_that("as_duckplyr_df() and rows_upsert(by = \"a\")", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
+
+  # Run
+  pre <- test_df_x %>% as_duckplyr_df() %>% rows_upsert(test_df_y, by = "a")
+  post <- test_df_x %>% rows_upsert(test_df_y, by = "a") %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 
 test_that("as_duckplyr_df() and rows_upsert(by = \"a\")", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
@@ -1310,6 +1790,21 @@ test_that("as_duckplyr_df() and sample_n(size = 1)", {
 })
 
 test_that("as_duckplyr_df() and select(a)", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% select(a)
+  post <- test_df %>% select(a) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and select(a)", {
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -1348,6 +1843,8 @@ test_that("as_duckplyr_df() and select(everything())", {
 })
 
 test_that("as_duckplyr_df() and semi_join(join_by(a))", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
   # Data
   test_df_x <- data.frame(a = 1:4, b = 2)
   test_df_y <- data.frame(a = 2:5, b = 2)
@@ -1359,6 +1856,36 @@ test_that("as_duckplyr_df() and semi_join(join_by(a))", {
   # Compare
   expect_equal(pre, post)
 })
+
+
+test_that("as_duckplyr_df() and semi_join(join_by(a))", {
+  # Data
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
+
+  # Run
+  pre <- test_df_x %>% as_duckplyr_df() %>% semi_join(test_df_y, join_by(a))
+  post <- test_df_x %>% semi_join(test_df_y, join_by(a)) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+test_that("as_duckplyr_df() and setdiff()", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
+
+  # Run
+  pre <- test_df_x %>% as_duckplyr_df() %>% setdiff(test_df_y)
+  post <- test_df_x %>% setdiff(test_df_y) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 
 test_that("as_duckplyr_df() and setdiff()", {
   # Data
@@ -1374,6 +1901,22 @@ test_that("as_duckplyr_df() and setdiff()", {
 })
 
 test_that("as_duckplyr_df() and setequal()", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
+
+  # Run
+  pre <- test_df_x %>% as_duckplyr_df() %>% setequal(test_df_y)
+  post <- test_df_x %>% setequal(test_df_y)
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and setequal()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
   # Data
@@ -1387,6 +1930,21 @@ test_that("as_duckplyr_df() and setequal()", {
   # Compare
   expect_equal(pre, post)
 })
+
+test_that("as_duckplyr_df() and slice()", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% slice()
+  post <- test_df %>% slice() %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 
 test_that("as_duckplyr_df() and slice()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
@@ -1483,6 +2041,21 @@ test_that("as_duckplyr_df() and slice_tail()", {
 })
 
 test_that("as_duckplyr_df() and summarise(c = mean(a))", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% summarise(c = mean(a))
+  post <- test_df %>% summarise(c = mean(a)) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and summarise(c = mean(a))", {
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -1547,6 +2120,8 @@ test_that("as_duckplyr_df() and summarise(c = 1, .by = g)", {
 })
 
 test_that("as_duckplyr_df() and symdiff()", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
   # Data
   test_df_x <- data.frame(a = 1:4, b = 2)
   test_df_y <- data.frame(a = 2:5, b = 2)
@@ -1558,6 +2133,35 @@ test_that("as_duckplyr_df() and symdiff()", {
   # Compare
   expect_equal(pre, post)
 })
+
+
+test_that("as_duckplyr_df() and symdiff()", {
+  # Data
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
+
+  # Run
+  pre <- test_df_x %>% as_duckplyr_df() %>% symdiff(test_df_y)
+  post <- test_df_x %>% symdiff(test_df_y) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+test_that("as_duckplyr_df() and tally()", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% tally()
+  post <- test_df %>% tally() %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 
 test_that("as_duckplyr_df() and tally()", {
   # Data
@@ -1572,6 +2176,21 @@ test_that("as_duckplyr_df() and tally()", {
 })
 
 test_that("as_duckplyr_df() and tbl_vars()", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% tbl_vars()
+  post <- test_df %>% tbl_vars()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and tbl_vars()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
   # Data
@@ -1584,6 +2203,21 @@ test_that("as_duckplyr_df() and tbl_vars()", {
   # Compare
   expect_equal(pre, post)
 })
+
+test_that("as_duckplyr_df() and transmute(c = a + 1)", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% transmute(c = a + 1)
+  post <- test_df %>% transmute(c = a + 1) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 
 test_that("as_duckplyr_df() and transmute(c = a + 1)", {
   # Data
@@ -1627,6 +2261,8 @@ test_that("as_duckplyr_df() and ungroup()", {
 })
 
 test_that("as_duckplyr_df() and union()", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
   # Data
   test_df_x <- data.frame(a = 1:4, b = 2)
   test_df_y <- data.frame(a = 2:5, b = 2)
@@ -1638,6 +2274,36 @@ test_that("as_duckplyr_df() and union()", {
   # Compare
   expect_equal(pre, post)
 })
+
+
+test_that("as_duckplyr_df() and union()", {
+  # Data
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
+
+  # Run
+  pre <- test_df_x %>% as_duckplyr_df() %>% union(test_df_y)
+  post <- test_df_x %>% union(test_df_y) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+test_that("as_duckplyr_df() and union_all()", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df_x <- data.frame(a = 1:4, b = 2)
+  test_df_y <- data.frame(a = 2:5, b = 2)
+
+  # Run
+  pre <- test_df_x %>% as_duckplyr_df() %>% union_all(test_df_y)
+  post <- test_df_x %>% union_all(test_df_y) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 
 test_that("as_duckplyr_df() and union_all()", {
   # Data

@@ -7,6 +7,11 @@ rel_try <- function(rel, ...) {
 
   stats$attempts <- stats$attempts + 1L
 
+  if (Sys.getenv("DUCKPLYR_FALLBACK_FORCE") == "TRUE") {
+    stats$fallback <- stats$fallback + 1L
+    return()
+  }
+
   dots <- list(...)
   for (i in seq_along(dots)) {
     if (isTRUE(dots[[i]])) {
