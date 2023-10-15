@@ -53,6 +53,12 @@ pak::pak("duckdblabs/duckplyr")
 
 ## Examples
 
+```{r attach}
+library(conflicted)
+library(duckplyr)
+conflict_prefer("filter", "duckplyr")
+```
+
 There are two ways to use duckplyr.
 
 1. To enable duckplyr for individual data frames, use `as_duckplyr_df()` as the first step in your pipe.
@@ -64,12 +70,6 @@ See also the companion [demo repository](https://github.com/Tmonster/duckplyr_de
 ### Usage for individual data frames
 
 This example illustrates usage of duckplyr for individual data frames.
-
-```{r individual}
-library(conflicted)
-library(duckplyr)
-conflict_prefer("filter", "duckplyr")
-```
 
 Use `as_duckplyr_df()` to enable processing with duckdb:
 
@@ -116,12 +116,6 @@ out
 ### Session-wide usage
 
 This example illustrates usage of duckplyr for all data frames in the R session.
-
-```{r session}
-library(conflicted)
-library(duckplyr)
-conflict_prefer("filter", "duckplyr")
-```
 
 Use `methods_overwrite()` to enable processing with duckdb for all data frames:
 
