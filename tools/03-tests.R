@@ -36,7 +36,7 @@ get_test_code <- function(name, code, is_tbl_return) {
 
 get_test_code_one <- function(extra_arg, pre_step, name, two_tables, force = "", skip = "", is_tbl_return = TRUE) {
   if (is_tbl_return) {
-    post_coerce <- " %>% as.data.frame()"
+    post_coerce <- " %>% as_duckplyr_df()"
   } else {
     post_coerce <- ""
   }
@@ -62,16 +62,16 @@ get_test_code_one <- function(extra_arg, pre_step, name, two_tables, force = "",
       test_df_xy_code,
       "",
       "  # Run",
-      paste0("  pre <- test_df_x %>% as_duckplyr_df() %>% ", test_df_xy_op_code, "{{{post_coerce}}}"),
-      paste0("  post <- test_df_x %>% ", test_df_xy_op_code)
+      paste0("  pre <- test_df_x %>% as_duckplyr_df() %>% ", test_df_xy_op_code),
+      paste0("  post <- test_df_x %>% ", test_df_xy_op_code, "{{{post_coerce}}}")
     )
   } else {
     test_code <- c(
       test_df_code,
       "",
       "  # Run",
-      paste0("  pre <- test_df %>% as_duckplyr_df() %>% ", test_df_op_code, "{{{post_coerce}}}"),
-      paste0("  post <- test_df %>% ", test_df_op_code)
+      paste0("  pre <- test_df %>% as_duckplyr_df() %>% ", test_df_op_code),
+      paste0("  post <- test_df %>% ", test_df_op_code, "{{{post_coerce}}}")
     )
   }
 
