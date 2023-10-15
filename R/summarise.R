@@ -54,6 +54,10 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
   # dplyr forward
   summarise <- dplyr$summarise.data.frame
   out <- summarise(.data, ..., .by = {{ .by }}, .groups = .groups)
+  # dplyr_reconstruct() is not called here, restoring manually
+  if (!identical(.groups, "rowwise")) {
+    class(out) <- class(.data)
+  }
   return(out)
 
   # dplyr implementation
