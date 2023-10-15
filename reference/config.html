@@ -92,11 +92,11 @@ Currently unused.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --- Relation Tree ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projection [___coalesce(lhs.a_x, rhs.a_y) as a]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Join INNER ___eq_na_matches_na(lhs.a_x, rhs.a_y)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Join REGULAR INNER ___eq_na_matches_na(lhs.a_x, rhs.a_y)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_x]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x561dae232f68)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x5653c8ed1948)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_y]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x561dae1b3c50)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x5653c93b3ba0)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -128,11 +128,11 @@ Currently unused.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --- Relation Tree ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projection [___coalesce(lhs.a_x, rhs.a_y) as a]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Join INNER ___eq_na_matches_na(lhs.a_x, rhs.a_y)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Join REGULAR INNER ___eq_na_matches_na(lhs.a_x, rhs.a_y)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_x]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x561dabc03fa0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x5653c9e020f0)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_y]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x561dab00e5a8)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x5653c9e14560)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -155,13 +155,13 @@ Currently unused.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projection [___coalesce(lhs.a_x, rhs.a_y) as a]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Order [lhs.___row_number_x ASC, rhs.___row_number_y ASC]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Join INNER ___eq_na_matches_na(lhs.a_x, rhs.a_y)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Join REGULAR INNER ___eq_na_matches_na(lhs.a_x, rhs.a_y)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Projection [a_x as a_x, row_number() OVER () as ___row_number_x]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         Projection [a as a_x]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x561dafac7bb0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x5653ca1d3f40)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Projection [a_y as a_y, row_number() OVER () as ___row_number_y]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         Projection [a as a_y]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x561dafac6c28)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x5653ca2566f8)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
