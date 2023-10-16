@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.2.1.9002 (2023-10-16)
+
+## Bug fixes
+
+- `summarise()` keeps `"duckplyr_df"` class (#63, #64).
+
+
 # duckplyr 0.2.1.9001 (2023-10-16)
 
 ## Chore
