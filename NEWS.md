@@ -1,5 +1,22 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.2.1.9001 (2023-10-16)
+
+## Chore
+
+  - Skip tests that give different output on dev tidyselect.
+
+  - Require latest duckdb.
+
+  - Import utils::globalVariables().
+
+  - Clean up imports.
+
+## Documentation
+
+  - Small README improvements (@maelle, #34, #57).
+
+
 # duckplyr 0.2.1.9000 (2023-10-05)
 
 ## Bug fixes
