@@ -5,27 +5,19 @@
 ## Bug fixes
 
 - `summarise()` keeps `"duckplyr_df"` class (#63, #64).
+
 - Fix compatibility with duckdb \>= 0.9.0.
 
 ## Chore
 
 - Skip tests that give different output on dev tidyselect.
-- Require latest duckdb.
-- Import utils::globalVariables().
-- Clean up imports.
-- Use fledge workflow.
-- Adapt path.
-- Code formatting.
-- Replace last `:::` with `$`.
-- Re-sync.
-- `:::` -\> `$` for access of private functions.
-- Sync.
+
+- Import `utils::globalVariables()`.
 
 ## Documentation
 
 - Small README improvements (@maelle, #34, #57).
-- Tweak (#56).
-  Closes #56.
+
 - Fix 301 in README.
 
 
