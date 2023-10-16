@@ -6,7 +6,7 @@
 
 - `summarise()` keeps `"duckplyr_df"` class (#63, #64).
 
-- Fix compatibility with duckdb \>= 0.9.0.
+- Fix compatibility with duckdb \>= 0.9.1.
 
 ## Chore
 
