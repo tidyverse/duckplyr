@@ -25,6 +25,7 @@ local({
   knitr::knit_hooks$set(document = clean_output)
 })
 
+Sys.setenv(DUCKPLYR_OUTPUT_ORDER = TRUE)
 ```
 
 # duckplyr

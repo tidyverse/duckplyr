@@ -76,24 +76,26 @@ duckdb is responsible for eventually carrying out the operations. Despite the la
 <span><span class='nv'>out</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/explain.html'>explain</a></span><span class='o'>(</span><span class='o'>)</span></span>
 <span><span class='c'>#&gt; ┌───────────────────────────┐</span></span>
+<span><span class='c'>#&gt; │          ORDER_BY         │</span></span>
+<span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class='c'>#&gt; │          ORDERS:          │</span></span>
+<span><span class='c'>#&gt; │dataframe_94539365385944_44│</span></span>
+<span><span class='c'>#&gt; │  619787.___row_number ASC │</span></span>
+<span><span class='c'>#&gt; └─────────────┬─────────────┘                             </span></span>
+<span><span class='c'>#&gt; ┌─────────────┴─────────────┐</span></span>
 <span><span class='c'>#&gt; │       HASH_GROUP_BY       │</span></span>
 <span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
 <span><span class='c'>#&gt; │             #0            │</span></span>
 <span><span class='c'>#&gt; │             #1            │</span></span>
-<span><span class='c'>#&gt; │          mean(#2)         │</span></span>
+<span><span class='c'>#&gt; │          min(#2)          │</span></span>
+<span><span class='c'>#&gt; │          mean(#3)         │</span></span>
 <span><span class='c'>#&gt; └─────────────┬─────────────┘                             </span></span>
 <span><span class='c'>#&gt; ┌─────────────┴─────────────┐</span></span>
 <span><span class='c'>#&gt; │         PROJECTION        │</span></span>
 <span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
 <span><span class='c'>#&gt; │          species          │</span></span>
 <span><span class='c'>#&gt; │            sex            │</span></span>
-<span><span class='c'>#&gt; │         bill_area         │</span></span>
-<span><span class='c'>#&gt; └─────────────┬─────────────┘                             </span></span>
-<span><span class='c'>#&gt; ┌─────────────┴─────────────┐</span></span>
-<span><span class='c'>#&gt; │         PROJECTION        │</span></span>
-<span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
-<span><span class='c'>#&gt; │          species          │</span></span>
-<span><span class='c'>#&gt; │            sex            │</span></span>
+<span><span class='c'>#&gt; │       ___row_number       │</span></span>
 <span><span class='c'>#&gt; │         bill_area         │</span></span>
 <span><span class='c'>#&gt; └─────────────┬─────────────┘                             </span></span>
 <span><span class='c'>#&gt; ┌─────────────┴─────────────┐</span></span>
@@ -102,6 +104,18 @@ duckdb is responsible for eventually carrying out the operations. Despite the la
 <span><span class='c'>#&gt; │   (species != 'Gentoo')   │</span></span>
 <span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
 <span><span class='c'>#&gt; │          EC: 344          │</span></span>
+<span><span class='c'>#&gt; └─────────────┬─────────────┘                             </span></span>
+<span><span class='c'>#&gt; ┌─────────────┴─────────────┐</span></span>
+<span><span class='c'>#&gt; │      STREAMING_WINDOW     │</span></span>
+<span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class='c'>#&gt; │    ROW_NUMBER() OVER ()   │</span></span>
+<span><span class='c'>#&gt; └─────────────┬─────────────┘                             </span></span>
+<span><span class='c'>#&gt; ┌─────────────┴─────────────┐</span></span>
+<span><span class='c'>#&gt; │         PROJECTION        │</span></span>
+<span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class='c'>#&gt; │          species          │</span></span>
+<span><span class='c'>#&gt; │            sex            │</span></span>
+<span><span class='c'>#&gt; │         bill_area         │</span></span>
 <span><span class='c'>#&gt; └─────────────┬─────────────┘                             </span></span>
 <span><span class='c'>#&gt; ┌─────────────┴─────────────┐</span></span>
 <span><span class='c'>#&gt; │     R_DATAFRAME_SCAN      │</span></span>
@@ -125,9 +139,12 @@ All data frame operations are supported. Computation happens upon the first requ
 <span><span class='c'>#&gt; --- Relation Tree ---</span></span>
 <span><span class='c'>#&gt; ---------------------</span></span>
 <span><span class='c'>#&gt; Filter [!=(species, 'Gentoo')]</span></span>
-<span><span class='c'>#&gt;   Aggregate [species, sex, mean(bill_area)]</span></span>
-<span><span class='c'>#&gt;     Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, *(bill_length_mm, bill_depth_mm) as bill_area]</span></span>
-<span><span class='c'>#&gt;       r_dataframe_scan(0xdeadbeef)</span></span>
+<span><span class='c'>#&gt;   Projection [species as species, sex as sex, mean_bill_area as mean_bill_area]</span></span>
+<span><span class='c'>#&gt;     Order [___row_number ASC]</span></span>
+<span><span class='c'>#&gt;       Aggregate [species, sex, min(___row_number), mean(bill_area)]</span></span>
+<span><span class='c'>#&gt;         Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, bill_area as bill_area, row_number() OVER () as ___row_number]</span></span>
+<span><span class='c'>#&gt;           Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, *(bill_length_mm, bill_depth_mm) as bill_area]</span></span>
+<span><span class='c'>#&gt;             r_dataframe_scan(0xdeadbeef)</span></span>
 <span><span class='c'>#&gt; </span></span>
 <span><span class='c'>#&gt; ---------------------</span></span>
 <span><span class='c'>#&gt; -- Result Columns  --</span></span>
@@ -136,7 +153,7 @@ All data frame operations are supported. Computation happens upon the first requ
 <span><span class='c'>#&gt; - sex (VARCHAR)</span></span>
 <span><span class='c'>#&gt; - mean_bill_area (DOUBLE)</span></span>
 <span><span class='c'>#&gt; </span></span>
-<span><span class='c'>#&gt; [1] 656.8523 819.7503 770.2627 694.9360 984.2279</span></span></pre>
+<span><span class='c'>#&gt; [1] 770.2627 656.8523 694.9360 819.7503 984.2279</span></span></pre>
 
 After the computation has been carried out, the results are available immediately:
 
@@ -145,10 +162,10 @@ After the computation has been carried out, the results are available immediatel
 <span><span class='c'>#&gt; <span style='color: #555555;'># A tibble: 5 × 3</span></span></span>
 <span><span class='c'>#&gt;   <span style='font-weight: bold;'>species</span>   <span style='font-weight: bold;'>sex</span>    <span style='font-weight: bold;'>mean_bill_area</span></span></span>
 <span><span class='c'>#&gt;   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span></span></span>
-<span><span class='c'>#&gt; <span style='color: #555555;'>1</span> Adelie    female           657.</span></span>
-<span><span class='c'>#&gt; <span style='color: #555555;'>2</span> Chinstrap female           820.</span></span>
-<span><span class='c'>#&gt; <span style='color: #555555;'>3</span> Adelie    male             770.</span></span>
-<span><span class='c'>#&gt; <span style='color: #555555;'>4</span> Adelie    <span style='color: #BB0000;'>NA</span>               695.</span></span>
+<span><span class='c'>#&gt; <span style='color: #555555;'>1</span> Adelie    male             770.</span></span>
+<span><span class='c'>#&gt; <span style='color: #555555;'>2</span> Adelie    female           657.</span></span>
+<span><span class='c'>#&gt; <span style='color: #555555;'>3</span> Adelie    <span style='color: #BB0000;'>NA</span>               695.</span></span>
+<span><span class='c'>#&gt; <span style='color: #555555;'>4</span> Chinstrap female           820.</span></span>
 <span><span class='c'>#&gt; <span style='color: #555555;'>5</span> Chinstrap male             984.</span></span></pre>
 
 ### Session-wide usage
@@ -186,9 +203,12 @@ Querying the number of rows also starts the computation:
 <span><span class='c'>#&gt; --- Relation Tree ---</span></span>
 <span><span class='c'>#&gt; ---------------------</span></span>
 <span><span class='c'>#&gt; Filter [!=(species, 'Gentoo')]</span></span>
-<span><span class='c'>#&gt;   Aggregate [species, sex, mean(bill_area)]</span></span>
-<span><span class='c'>#&gt;     Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, *(bill_length_mm, bill_depth_mm) as bill_area]</span></span>
-<span><span class='c'>#&gt;       r_dataframe_scan(0xdeadbeef)</span></span>
+<span><span class='c'>#&gt;   Projection [species as species, sex as sex, mean_bill_area as mean_bill_area]</span></span>
+<span><span class='c'>#&gt;     Order [___row_number ASC]</span></span>
+<span><span class='c'>#&gt;       Aggregate [species, sex, min(___row_number), mean(bill_area)]</span></span>
+<span><span class='c'>#&gt;         Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, bill_area as bill_area, row_number() OVER () as ___row_number]</span></span>
+<span><span class='c'>#&gt;           Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, *(bill_length_mm, bill_depth_mm) as bill_area]</span></span>
+<span><span class='c'>#&gt;             r_dataframe_scan(0xdeadbeef)</span></span>
 <span><span class='c'>#&gt; </span></span>
 <span><span class='c'>#&gt; ---------------------</span></span>
 <span><span class='c'>#&gt; -- Result Columns  --</span></span>
