@@ -80,7 +80,7 @@ duckdb is responsible for eventually carrying out the operations. Despite the la
 <span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
 <span><span class='c'>#&gt; │          ORDERS:          │</span></span>
 <span><span class='c'>#&gt; │dataframe_42_42│</span></span>
-<span><span class='c'>#&gt; │  619787.___row_number ASC │</span></span>
+<span><span class='c'>#&gt; │    87.___row_number ASC   │</span></span>
 <span><span class='c'>#&gt; └─────────────┬─────────────┘                             </span></span>
 <span><span class='c'>#&gt; ┌─────────────┴─────────────┐</span></span>
 <span><span class='c'>#&gt; │       HASH_GROUP_BY       │</span></span>
