@@ -1,5 +1,5 @@
 diff --git b/R/summarise.R a/R/summarise.R
-index 79ffb8a..a42fc05 100644
+index 79ffb8a..5589cfc 100644
 --- b/R/summarise.R
 +++ a/R/summarise.R
 @@ -1,10 +1,52 @@
@@ -57,3 +57,14 @@ index 79ffb8a..a42fc05 100644
        return(out)
      }
    )
+@@ -12,6 +54,10 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
+   # dplyr forward
+   summarise <- dplyr$summarise.data.frame
+   out <- summarise(.data, ..., .by = {{ .by }}, .groups = .groups)
++  # dplyr_reconstruct() is not called here, restoring manually
++  if (!identical(.groups, "rowwise")) {
++    class(out) <- class(.data)
++  }
+   return(out)
+ 
+   # dplyr implementation
