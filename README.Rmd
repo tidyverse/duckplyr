@@ -15,6 +15,16 @@ knitr::opts_chunk$set(
 pkgload::load_all()
 
 set.seed(20230702)
+
+clean_output <- function(x, options) {
+  gsub("0x[0-9a-f]+", "0xdeadbeef", x)
+}
+
+local({
+  hook_source <- knitr::knit_hooks$get('document')
+  knitr::knit_hooks$set(document = clean_output)
+})
+
 ```
 
 # duckplyr
