@@ -1,3 +1,7 @@
+gert::git_pull(repo = ".sync/dplyr-main")
+
+pkgload::load_all(".sync/dplyr-main")
+
 source("tools/00-funs.R", echo = TRUE)
 
 func_decl <- function(name, code) {

@@ -4,10 +4,7 @@ experimental <- FALSE
 invisible(DBI::dbExecute(con, "CREATE MACRO \"<\"(x, y) AS x < y"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
 invisible(
-  DBI::dbExecute(
-    con,
-    "CREATE MACRO \"___eq_na_matches_na\"(x, y) AS ((x IS NULL AND y IS NULL) OR (x = y))"
-  )
+  DBI::dbExecute(con, "CREATE MACRO \"___eq_na_matches_na\"(x, y) AS (x IS NOT DISTINCT FROM y)")
 )
 invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(x, y) AS COALESCE(x, y)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \">\"(x, y) AS x > y"))
