@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.2.1.9003 (2023-10-18)
+
+## Documentation
+
+- Add stability to README output (@maelle, #62, #65).
+
+
 # duckplyr 0.2.2 (2023-10-16)
 
 ## Bug fixes
