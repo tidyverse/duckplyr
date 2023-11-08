@@ -1,10 +1,14 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# duckplyr 0.2.2.9000 (2023-11-08)
+# duckplyr 0.2.3 (2023-11-08)
 
 ## Chore
 
 - Bump duckdb version.
+
+## Documentation
+
+- Add stability to README output (@maelle, #62, #65).
 
 ## Performance
 
@@ -13,13 +17,6 @@
 ## Uncategorized
 
 - Merge branch 'cran-0.2.2'.
-
-
-# duckplyr 0.2.1.9003 (2023-10-18)
-
-## Documentation
-
-- Add stability to README output (@maelle, #62, #65).
 
 
 # duckplyr 0.2.2 (2023-10-16)
