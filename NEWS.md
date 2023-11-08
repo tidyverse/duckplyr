@@ -2,21 +2,13 @@
 
 # duckplyr 0.2.3 (2023-11-08)
 
-## Chore
-
-- Bump duckdb version.
-
-## Documentation
-
-- Add stability to README output (@maelle, #62, #65).
-
 ## Performance
 
 - Join using `IS NOT DISTINCT FROM` for faster execution (duckdb/duckdb-r#41, #68).
 
-## Uncategorized
+## Documentation
 
-- Merge branch 'cran-0.2.2'.
+- Add stability to README output (@maelle, #62, #65).
 
 
 # duckplyr 0.2.2 (2023-10-16)
