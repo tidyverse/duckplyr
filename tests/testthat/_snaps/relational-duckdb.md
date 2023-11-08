@@ -30,7 +30,8 @@
       ---------------------
       --- Relation Tree ---
       ---------------------
-      r_dataframe_scan(0xdeadbeef)
+      Filter [==(a, 1.0)]
+        r_dataframe_scan(0xdeadbeef)
       
       ---------------------
       -- Result Columns  --
@@ -40,6 +41,18 @@
     Code
       nrow(df)
     Output
+      materializing:
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      Filter [==(a, 1.0)]
+        r_dataframe_scan(0xdeadbeef)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - a (DOUBLE)
+      
       [1] 1
     Code
       duckdb_rel_from_df(df)
