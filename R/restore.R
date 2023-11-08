@@ -10,7 +10,6 @@ methods_restore <- function() {
   vctrs::s3_register("dplyr::cross_join", "data.frame", dplyr$cross_join.data.frame)
   vctrs::s3_register("dplyr::distinct", "data.frame", dplyr$distinct.data.frame)
   vctrs::s3_register("dplyr::do", "data.frame", dplyr$do.data.frame)
-  vctrs::s3_register("dplyr::dplyr_reconstruct", "data.frame", dplyr$dplyr_reconstruct.data.frame)
   vctrs::s3_register("dplyr::filter", "data.frame", dplyr$filter.data.frame)
   vctrs::s3_register("dplyr::full_join", "data.frame", dplyr$full_join.data.frame)
   vctrs::s3_register("dplyr::group_vars", "data.frame", dplyr$group_vars.data.frame)
