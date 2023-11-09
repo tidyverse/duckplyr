@@ -1,5 +1,16 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.2.3.9000 (2023-11-09)
+
+## Chore
+
+  - Sync generated files (#71).
+
+## Uncategorized
+
+  - Merge branch 'cran-0.2.3'.
+
+
 # duckplyr 0.2.3 (2023-11-08)
 
 ## Performance
