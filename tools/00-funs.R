@@ -601,6 +601,10 @@ test_extra_arg_map <- list(
     # Division by zero
     "c = 0, d = 0, e = c / d",
 
+    # Negative log
+    "c = 0, d = -1, e = log(c), f = log(d)",
+    "c = 0, d = -1, e = log(c), f = log10(d)",
+
     NULL
   ),
   nest_join = "join_by(a)",

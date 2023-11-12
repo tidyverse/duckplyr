@@ -27,8 +27,8 @@ duckplyr_macros <- c(
   "is.na" = "(x) AS (x IS NULL)",
   "n" = "() AS CAST(COUNT(*) AS int32)",
   #
-  "log10" = "(x) AS log(x)",
-  "log" = "(x) AS ln(x)",
+  "log10" = "(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE log(x) END",
+  "log" = "(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE ln(x) END",
   # TPCH
 
   # https://github.com/duckdb/duckdb/discussions/8599

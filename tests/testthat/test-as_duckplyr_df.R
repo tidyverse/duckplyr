@@ -1304,6 +1304,34 @@ test_that("as_duckplyr_df() and mutate(c = 0, d = 0, e = c / d)", {
   expect_equal(pre, post)
 })
 
+
+test_that("as_duckplyr_df() and mutate(c = 0, d = -1, e = log(c), f = log(d))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(c = 0, d = -1, e = log(c), f = log(d))
+  # FIXME: This is overwritten by autogeneration but necessary, find better solution
+  post <- test_df %>% mutate(c = 0, d = -1, e = log(c), f = suppressWarnings(log(d))) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and mutate(c = 0, d = -1, e = log(c), f = log10(d))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(c = 0, d = -1, e = log(c), f = log10(d))
+  # FIXME: This is overwritten by autogeneration but necessary, find better solution
+  post <- test_df %>% mutate(c = 0, d = -1, e = log(c), f = suppressWarnings(log10(d))) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 test_that("as_duckplyr_df() and nest_by()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
