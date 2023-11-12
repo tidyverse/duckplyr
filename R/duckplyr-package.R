@@ -8,6 +8,7 @@
 ## usethis namespace: start
 #' @importFrom collections dict
 #' @importFrom collections queue
+#' @importFrom dplyr if_else
 #' @importFrom glue glue
 #' @importFrom lifecycle deprecated
 #' @importFrom purrr imap
