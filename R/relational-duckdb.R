@@ -36,7 +36,7 @@ duckplyr_macros <- c(
 
   "grepl" = "(pattern, x) AS regexp_matches(x, pattern)",
   "as.integer" = "(x) AS CAST(x AS int32)",
-  "ifelse" = "(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)",
+  "if_else" = "(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)",
   "|" = "(x, y) AS (x OR y)",
   "&" = "(x, y) AS (x AND y)",
   "!" = "(x) AS (NOT x)",

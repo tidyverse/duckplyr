@@ -345,7 +345,7 @@ tpch_08 <- function() {
     ) |>
     select_opt(o_year, volume, nation) |>
     summarise(
-      mkt_share = sum(ifelse(nation == "BRAZIL", volume, 0)) / sum(volume),
+      mkt_share = sum(if_else(nation == "BRAZIL", volume, 0)) / sum(volume),
       .by = o_year
     ) |>
     arrange(o_year)
