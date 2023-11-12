@@ -3,7 +3,7 @@
     Code
       data.frame(a = vctrs::new_vctr(1:3)) %>% duckdb_rel_from_df()
     Condition
-      Error in `duckdb_rel_from_df()`:
+      Error in `check_df_for_rel()`:
       ! Attributes are lost during conversion. Affected column: `a`.
 
 # rel_aggregate()

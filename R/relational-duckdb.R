@@ -85,6 +85,18 @@ duckdb_rel_from_df <- function(df) {
     df <- as_duckplyr_df(df)
   }
 
+  out <- check_df_for_rel(df)
+
+  meta_rel_register_df(out, df)
+
+  out
+
+  # Causes protection errors
+  # duckdb$rel_from_df(get_default_duckdb_connection(), df)
+}
+
+# FIXME: This should be duckdb's responsibility
+check_df_for_rel <- function(df) {
   if (is.character(.row_names_info(df, 0L))) {
     stop("Need data frame without row names to convert to relational.")
   }
@@ -133,12 +145,7 @@ duckdb_rel_from_df <- function(df) {
     }
   }
 
-  meta_rel_register_df(out, df)
-
   out
-
-  # Causes protection errors
-  # duckdb$rel_from_df(get_default_duckdb_connection(), df)
 }
 
 #' @export
@@ -370,6 +377,9 @@ to_duckdb_expr <- function(x) {
       out
     },
     relational_relexpr_constant = {
+      # FIXME: Should be duckdb's responsibility
+      check_df_for_rel(tibble(constant = x$val))
+
       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
         experimental <- (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE")
         out <- duckdb$expr_constant(x$val, experimental = experimental)
