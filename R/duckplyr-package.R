@@ -35,6 +35,7 @@
 #' @importFrom vctrs vec_cast
 #' @importFrom vctrs vec_cast_common
 #' @importFrom vctrs vec_cbind
+#' @importFrom vctrs vec_check_size
 #' @importFrom vctrs vec_in
 #' @importFrom vctrs vec_match
 #' @importFrom vctrs vec_rbind

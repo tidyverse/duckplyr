@@ -27,7 +27,8 @@ df_methods <-
   # methods we don't need to implement but can test
   mutate(skip_impl = name %in% c(
     "collapse", "tally",
-    "slice_min", "slice_max", "slice_sample",
+    "sample_n", "sample_frac",
+    "slice_min", "slice_max",
     "tbl_vars",
     NULL
   )) %>%

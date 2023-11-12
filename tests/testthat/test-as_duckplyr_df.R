@@ -2009,8 +2009,6 @@ test_that("as_duckplyr_df() and slice_min(a)", {
 })
 
 test_that("as_duckplyr_df() and slice_sample()", {
-  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
-
   skip("External vector?")
 
   # Data
