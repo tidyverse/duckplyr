@@ -1,5 +1,26 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.2.3.9001 (2023-11-13)
+
+## Bug fixes
+
+  - `distinct()` now preserves order in corner cases (#77, #78).
+
+  - Consistent computation of `log(0)` and `log(-1)` (#75, #76).
+
+## Features
+
+  - Only allow constants in `mutate()` that are actually representable in duckdb (#73).
+
+## Chore
+
+  - Only implement newer `slice_sample()`, not `sample_n()` or `sample_frac()` (#74).
+
+## Testing
+
+  - Add test that TPC-H queries can be processed; feat: Avoid translating `ifelse()`, support `if_else()` (#79).
+
+
 # duckplyr 0.2.3.9000 (2023-11-09)
 
 ## Chore
