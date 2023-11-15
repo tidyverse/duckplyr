@@ -15,7 +15,15 @@ filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
     {
       exprs <- rel_translate_dots(dots, .data)
       rel <- duckdb_rel_from_df(.data)
-      out_rel <- rel_filter(rel, exprs)
+
+      # FIXME: Seems to be necessary only if alternations `|` are used in `exprs`.
+      # Add only then?
+      rel <- oo_prep(rel)
+
+      rel <- rel_filter(rel, exprs)
+
+      out_rel <- oo_restore(rel)
+
       out <- rel_to_df(out_rel)
       out <- dplyr_reconstruct_dispatch(out, .data)
       return(out)

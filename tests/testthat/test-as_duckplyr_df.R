@@ -638,6 +638,19 @@ test_that("as_duckplyr_df() and filter(a %in% 2:3 & g == 2)", {
   expect_equal(pre, post)
 })
 
+
+test_that("as_duckplyr_df() and filter(a != 2 | g != 2)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% filter(a != 2 | g != 2)
+  post <- test_df %>% filter(a != 2 | g != 2) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 test_that("as_duckplyr_df() and full_join(join_by(a))", {
   withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
 

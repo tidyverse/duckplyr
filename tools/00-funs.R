@@ -530,7 +530,10 @@ test_extra_arg_map <- list(
     "a == 1",
     "a %in% 2:3, g == 2",
     "a %in% 2:3 & g == 2",
+
     # "lag(a) == 1, .by = g",
+
+    "a != 2 | g != 2",
     NULL
   ),
   full_join = "join_by(a)",

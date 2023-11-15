@@ -2895,8 +2895,33 @@ test_that("relational filter(a == 1) order-preserving", {
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
-  rel2 <- duckdb$rel_filter(
+  rel2 <- duckdb$rel_project(
     rel1,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("g")
+        duckdb$expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number")
+        tmp_expr
+      }
+    )
+  )
+  rel3 <- duckdb$rel_filter(
+    rel2,
     list(
       duckdb$expr_function(
         "==",
@@ -2911,8 +2936,29 @@ test_that("relational filter(a == 1) order-preserving", {
       )
     )
   )
-  rel2
-  out <- duckdb$rel_to_altrep(rel2)
+  rel4 <- duckdb$rel_order(rel3, list(duckdb$expr_reference("___row_number")))
+  rel5 <- duckdb$rel_project(
+    rel4,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("g")
+        duckdb$expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      }
+    )
+  )
+  rel5
+  out <- duckdb$rel_to_altrep(rel5)
   expect_equal(
     out,
     data.frame(a = 1, b = 2, g = 1L)
@@ -2929,8 +2975,33 @@ test_that("relational filter(a %in% 2:3, g == 2) order-preserving", {
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
-  rel2 <- duckdb$rel_filter(
+  rel2 <- duckdb$rel_project(
     rel1,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("g")
+        duckdb$expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number")
+        tmp_expr
+      }
+    )
+  )
+  rel3 <- duckdb$rel_filter(
+    rel2,
     list(
       duckdb$expr_function(
         "|",
@@ -2972,8 +3043,29 @@ test_that("relational filter(a %in% 2:3, g == 2) order-preserving", {
       )
     )
   )
-  rel2
-  out <- duckdb$rel_to_altrep(rel2)
+  rel4 <- duckdb$rel_order(rel3, list(duckdb$expr_reference("___row_number")))
+  rel5 <- duckdb$rel_project(
+    rel4,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("g")
+        duckdb$expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      }
+    )
+  )
+  rel5
+  out <- duckdb$rel_to_altrep(rel5)
   expect_equal(
     out,
     data.frame(a = c(2, 3), b = c(2, 2), g = c(2L, 2L))
@@ -2991,8 +3083,33 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-preserving", {
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
-  rel2 <- duckdb$rel_filter(
+  rel2 <- duckdb$rel_project(
     rel1,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("g")
+        duckdb$expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number")
+        tmp_expr
+      }
+    )
+  )
+  rel3 <- duckdb$rel_filter(
+    rel2,
     list(
       duckdb$expr_function(
         "&",
@@ -3039,11 +3156,128 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-preserving", {
       )
     )
   )
-  rel2
-  out <- duckdb$rel_to_altrep(rel2)
+  rel4 <- duckdb$rel_order(rel3, list(duckdb$expr_reference("___row_number")))
+  rel5 <- duckdb$rel_project(
+    rel4,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("g")
+        duckdb$expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      }
+    )
+  )
+  rel5
+  out <- duckdb$rel_to_altrep(rel5)
   expect_equal(
     out,
     data.frame(a = c(2, 3), b = c(2, 2), g = c(2L, 2L))
+  )
+  DBI::dbDisconnect(con, shutdown = TRUE)
+})
+
+test_that("relational filter(a != 2 | g != 2) order-preserving", {
+  # Autogenerated
+  con <- DBI::dbConnect(duckdb::duckdb())
+  experimental <- FALSE
+  invisible(DBI::dbExecute(con, "CREATE MACRO \"|\"(x, y) AS (x OR y)"))
+  invisible(DBI::dbExecute(con, "CREATE MACRO \"!=\"(x, y) AS x <> y"))
+  df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
+
+  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel2 <- duckdb$rel_project(
+    rel1,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("g")
+        duckdb$expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number")
+        tmp_expr
+      }
+    )
+  )
+  rel3 <- duckdb$rel_filter(
+    rel2,
+    list(
+      duckdb$expr_function(
+        "|",
+        list(
+          duckdb$expr_function(
+            "!=",
+            list(
+              duckdb$expr_reference("a"),
+              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+                duckdb$expr_constant(2, experimental = experimental)
+              } else {
+                duckdb$expr_constant(2)
+              }
+            )
+          ),
+          duckdb$expr_function(
+            "!=",
+            list(
+              duckdb$expr_reference("g"),
+              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+                duckdb$expr_constant(2, experimental = experimental)
+              } else {
+                duckdb$expr_constant(2)
+              }
+            )
+          )
+        )
+      )
+    )
+  )
+  rel4 <- duckdb$rel_order(rel3, list(duckdb$expr_reference("___row_number")))
+  rel5 <- duckdb$rel_project(
+    rel4,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("g")
+        duckdb$expr_set_alias(tmp_expr, "g")
+        tmp_expr
+      }
+    )
+  )
+  rel5
+  out <- duckdb$rel_to_altrep(rel5)
+  expect_equal(
+    out,
+    data.frame(a = c(1, 3, 4, 5, 6), b = rep(2, 5L), g = c(1L, 2L, 3L, 3L, 3L))
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
@@ -3219,6 +3453,60 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-enforcing", {
   expect_equal(
     out,
     data.frame(a = c(2, 3), b = c(2, 2), g = c(2L, 2L))
+  )
+  DBI::dbDisconnect(con, shutdown = TRUE)
+})
+
+test_that("relational filter(a != 2 | g != 2) order-enforcing", {
+  # Autogenerated
+  con <- DBI::dbConnect(duckdb::duckdb())
+  experimental <- FALSE
+  invisible(DBI::dbExecute(con, "CREATE MACRO \"|\"(x, y) AS (x OR y)"))
+  invisible(DBI::dbExecute(con, "CREATE MACRO \"!=\"(x, y) AS x <> y"))
+  df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
+
+  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel2 <- duckdb$rel_filter(
+    rel1,
+    list(
+      duckdb$expr_function(
+        "|",
+        list(
+          duckdb$expr_function(
+            "!=",
+            list(
+              duckdb$expr_reference("a"),
+              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+                duckdb$expr_constant(2, experimental = experimental)
+              } else {
+                duckdb$expr_constant(2)
+              }
+            )
+          ),
+          duckdb$expr_function(
+            "!=",
+            list(
+              duckdb$expr_reference("g"),
+              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+                duckdb$expr_constant(2, experimental = experimental)
+              } else {
+                duckdb$expr_constant(2)
+              }
+            )
+          )
+        )
+      )
+    )
+  )
+  rel3 <- duckdb$rel_order(
+    rel2,
+    list(duckdb$expr_reference("a"), duckdb$expr_reference("b"), duckdb$expr_reference("g"))
+  )
+  rel3
+  out <- duckdb$rel_to_altrep(rel3)
+  expect_equal(
+    out,
+    data.frame(a = c(1, 3, 4, 5, 6), b = rep(2, 5L), g = c(1L, 2L, 3L, 3L, 3L))
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
