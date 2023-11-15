@@ -94,6 +94,8 @@ duckplyr_tests <- head(n = -1, list(
     NULL
   ),
   "test-generics.R" = c(
+    "`dplyr_reconstruct()`, which gets and sets attributes, doesn't touch `row.names` (#6525)",
+
     NULL
   ),
   "test-group-map.R" = c(

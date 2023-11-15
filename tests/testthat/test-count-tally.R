@@ -142,26 +142,26 @@ test_that("duckplyr_count() owns errors (#6139)", {
 
 test_that("tally can sort output", {
   gf <- group_by(tibble(x = c(1, 1, 2, 2, 2)), x)
-  out <- duckplyr_tally(gf, sort = TRUE)
+  out <- tally(gf, sort = TRUE)
   expect_equal(out, tibble(x = c(2, 1), n = c(3, 2)))
 })
 
 test_that("weighted tally drops NAs (#1145)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = c(1, 1, NA))
-  expect_equal(duckplyr_tally(df, x)$n, 2)
+  expect_equal(tally(df, x)$n, 2)
 })
 
-test_that("duckplyr_tally() drops last group (#5199) ", {
+test_that("tally() drops last group (#5199) ", {
   df <- data.frame(x = 1, y = 2, z = 3)
 
-  res <- expect_message(df %>% group_by(x, y) %>% duckplyr_tally(wt = z), NA)
+  res <- expect_message(df %>% group_by(x, y) %>% tally(wt = z), NA)
   expect_equal(duckplyr_group_vars(res), "x")
 })
 
-test_that("duckplyr_tally() owns errors (#6139)", {
+test_that("tally() owns errors (#6139)", {
   expect_snapshot({
-    (expect_error(duckplyr_tally(mtcars, wt = 1 + "")))
+    (expect_error(tally(mtcars, wt = 1 + "")))
   })
 })
 

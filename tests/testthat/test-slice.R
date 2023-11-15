@@ -230,8 +230,8 @@ test_that("slice_helpers() call get_slice_size()", {
   expect_snapshot(error = TRUE, {
     duckplyr_slice_head(df, n = "a")
     duckplyr_slice_tail(df, n = "a")
-    duckplyr_slice_min(df, x, n = "a")
-    duckplyr_slice_max(df, x, n = "a")
+    slice_min(df, x, n = "a")
+    slice_max(df, x, n = "a")
     duckplyr_slice_sample(df, n= "a")
   })
 })
@@ -306,8 +306,8 @@ test_that("functions silently truncate results", {
   df <- tibble(x = 1:5)
   expect_equal(nrow(duckplyr_slice_head(df, n = 6)), 5)
   expect_equal(nrow(duckplyr_slice_tail(df, n = 6)), 5)
-  expect_equal(nrow(duckplyr_slice_min(df, x, n = 6)), 5)
-  expect_equal(nrow(duckplyr_slice_max(df, x, n = 6)), 5)
+  expect_equal(nrow(slice_min(df, x, n = 6)), 5)
+  expect_equal(nrow(slice_max(df, x, n = 6)), 5)
   expect_equal(nrow(duckplyr_slice_sample(df, n = 6)), 5)
 })
 
@@ -316,42 +316,51 @@ test_that("slice helpers with n = 0 return no rows", {
   df <- tibble(x = 1:5)
   expect_equal(nrow(duckplyr_slice_head(df, n = 0)), 0)
   expect_equal(nrow(duckplyr_slice_tail(df, n = 0)), 0)
-  expect_equal(nrow(duckplyr_slice_min(df, x, n = 0)), 0)
-  expect_equal(nrow(duckplyr_slice_max(df, x, n = 0)), 0)
+  expect_equal(nrow(slice_min(df, x, n = 0)), 0)
+  expect_equal(nrow(slice_max(df, x, n = 0)), 0)
   expect_equal(nrow(duckplyr_slice_sample(df, n = 0)), 0)
 })
 
 test_that("slice_*() doesn't look for `n` in data (#6089)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- data.frame(x = 1:10, n = 10:1, g = rep(1:2, each = 5))
-  expect_error(duckplyr_slice_max(df, order_by = n), NA)
-  expect_error(duckplyr_slice_min(df, order_by = n), NA)
+  expect_error(slice_max(df, order_by = n), NA)
+  expect_error(slice_min(df, order_by = n), NA)
   expect_error(duckplyr_slice_sample(df, weight_by = n, n = 1L), NA)
 
   df <- group_by(df, g)
-  expect_error(duckplyr_slice_max(df, order_by = n), NA)
-  expect_error(duckplyr_slice_min(df, order_by = n), NA)
+  expect_error(slice_max(df, order_by = n), NA)
+  expect_error(slice_min(df, order_by = n), NA)
   expect_error(duckplyr_slice_sample(df, weight_by = n, n = 1L), NA)
 })
 
 test_that("slice_*() checks that `n=` is explicitly named and ... is empty", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   # i.e. that every function calls check_slice_dots()
-
   df <- data.frame(x = 1:10)
+
   expect_snapshot(error = TRUE, {
     duckplyr_slice_head(df, 5)
     duckplyr_slice_tail(df, 5)
-    duckplyr_slice_min(df, x, 5)
-    duckplyr_slice_max(df, x, 5)
+    slice_min(df, x, 5)
+    slice_max(df, x, 5)
     duckplyr_slice_sample(df, 5)
+  })
+
+  # And works with namespace prefix (#6946)
+  expect_snapshot(error = TRUE, {
+    dplyr::duckplyr_slice_head(df, 5)
+    dplyr::duckplyr_slice_tail(df, 5)
+    dplyr::slice_min(df, x, 5)
+    dplyr::slice_max(df, x, 5)
+    dplyr::duckplyr_slice_sample(df, 5)
   })
 
   expect_snapshot(error = TRUE, {
     duckplyr_slice_head(df, 5, 2)
     duckplyr_slice_tail(df, 5, 2)
-    duckplyr_slice_min(df, x, 5, 2)
-    duckplyr_slice_max(df, x, 5, 2)
+    slice_min(df, x, 5, 2)
+    slice_max(df, x, 5, 2)
     duckplyr_slice_sample(df, 5, 2)
   })
 })
@@ -371,10 +380,10 @@ test_that("slice_helpers do call duckplyr_slice() and benefit from dispatch (#60
   expect_warning(duckplyr_slice_sample(nf, n = 2), "noisy")
   expect_warning(duckplyr_slice_head(nf, n = 2), "noisy")
   expect_warning(duckplyr_slice_tail(nf, n = 2), "noisy")
-  expect_warning(duckplyr_slice_min(nf, x, n = 2), "noisy")
-  expect_warning(duckplyr_slice_max(nf, x, n = 2), "noisy")
-  expect_warning(duckplyr_sample_n(nf, 2), "noisy")
-  expect_warning(duckplyr_sample_frac(nf, .5), "noisy")
+  expect_warning(slice_min(nf, x, n = 2), "noisy")
+  expect_warning(slice_max(nf, x, n = 2), "noisy")
+  expect_warning(sample_n(nf, 2), "noisy")
+  expect_warning(sample_frac(nf, .5), "noisy")
 })
 
 test_that("slice_helper `by` errors use correct error context and correct `by_arg`", {
@@ -384,8 +393,8 @@ test_that("slice_helper `by` errors use correct error context and correct `by_ar
   expect_snapshot(error = TRUE, {
     duckplyr_slice_head(gdf, n = 1, by = x)
     duckplyr_slice_tail(gdf, n = 1, by = x)
-    duckplyr_slice_min(gdf, order_by = x, by = x)
-    duckplyr_slice_max(gdf, order_by = x, by = x)
+    slice_min(gdf, order_by = x, by = x)
+    slice_max(gdf, order_by = x, by = x)
     duckplyr_slice_sample(gdf, n = 1, by = x)
   })
 })
@@ -396,8 +405,8 @@ test_that("slice_helper catches `.by` typo (#6647)", {
   expect_snapshot(error = TRUE, {
     duckplyr_slice_head(df, n = 1, .by = x)
     duckplyr_slice_tail(df, n = 1, .by = x)
-    duckplyr_slice_min(df, order_by = x, .by = x)
-    duckplyr_slice_max(df, order_by = x, .by = x)
+    slice_min(df, order_by = x, .by = x)
+    slice_max(df, order_by = x, .by = x)
     duckplyr_slice_sample(df, n = 1, .by = x)
   })
 })
@@ -407,79 +416,79 @@ test_that("slice_helper catches `.by` typo (#6647)", {
 test_that("min and max return ties by default", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(id = 1:5, x = c(1, 1, 1, 2, 2))
-  expect_equal(duckplyr_slice_min(df, x)$id, c(1, 2, 3))
-  expect_equal(duckplyr_slice_max(df, x)$id, c(4, 5))
+  expect_equal(slice_min(df, x)$id, c(1, 2, 3))
+  expect_equal(slice_max(df, x)$id, c(4, 5))
 
-  expect_equal(duckplyr_slice_min(df, x, with_ties = FALSE)$id, 1)
-  expect_equal(duckplyr_slice_max(df, x, with_ties = FALSE)$id, 4)
+  expect_equal(slice_min(df, x, with_ties = FALSE)$id, 1)
+  expect_equal(slice_max(df, x, with_ties = FALSE)$id, 4)
 })
 
 test_that("min and max reorder results", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- data.frame(id = 1:4, x = c(2, 3, 1, 2))
 
-  expect_equal(duckplyr_slice_min(df, x, n = 2)$id, c(3, 1, 4))
-  expect_equal(duckplyr_slice_max(df, x, n = 2)$id, c(2, 1, 4))
+  expect_equal(slice_min(df, x, n = 2)$id, c(3, 1, 4))
+  expect_equal(slice_max(df, x, n = 2)$id, c(2, 1, 4))
 
-  expect_equal(duckplyr_slice_min(df, x, n = 2, with_ties = FALSE)$id, c(3, 1))
-  expect_equal(duckplyr_slice_max(df, x, n = 2, with_ties = FALSE)$id, c(2, 1))
+  expect_equal(slice_min(df, x, n = 2, with_ties = FALSE)$id, c(3, 1))
+  expect_equal(slice_max(df, x, n = 2, with_ties = FALSE)$id, c(2, 1))
 })
 
 test_that("min and max include NAs when appropriate", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(id = 1:3, x = c(1, NA, NA))
-  expect_equal(duckplyr_slice_min(df, x, n = 1)$id, 1)
-  expect_equal(duckplyr_slice_max(df, x, n = 1)$id, 1)
+  expect_equal(slice_min(df, x, n = 1)$id, 1)
+  expect_equal(slice_max(df, x, n = 1)$id, 1)
 
-  expect_equal(duckplyr_slice_min(df, x, n = 2)$id, c(1, 2, 3))
-  expect_equal(duckplyr_slice_min(df, x, n = 2, with_ties = FALSE)$id, c(1, 2))
+  expect_equal(slice_min(df, x, n = 2)$id, c(1, 2, 3))
+  expect_equal(slice_min(df, x, n = 2, with_ties = FALSE)$id, c(1, 2))
 
   df <- tibble(id = 1:4, x = NA)
-  expect_equal(duckplyr_slice_min(df, x, n = 2, na_rm = TRUE)$id, integer())
-  expect_equal(duckplyr_slice_max(df, x, n = 2, na_rm = TRUE)$id, integer())
+  expect_equal(slice_min(df, x, n = 2, na_rm = TRUE)$id, integer())
+  expect_equal(slice_max(df, x, n = 2, na_rm = TRUE)$id, integer())
 })
 
 test_that("min and max ignore NA's when requested (#4826)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(id = 1:4, x = c(2, NA, 1, 2))
-  expect_equal(duckplyr_slice_min(df, x, n = 2, na_rm = TRUE)$id, c(3, 1, 4))
-  expect_equal(duckplyr_slice_max(df, x, n = 2, na_rm = TRUE)$id, c(1, 4))
+  expect_equal(slice_min(df, x, n = 2, na_rm = TRUE)$id, c(3, 1, 4))
+  expect_equal(slice_max(df, x, n = 2, na_rm = TRUE)$id, c(1, 4))
 
   # Check with list to confirm use full vctrs support
   df <- tibble(id = 1:4, x = list(NULL, 1, NULL, NULL))
-  expect_equal(duckplyr_slice_min(df, x, n = 2, na_rm = TRUE)$id, 2)
-  expect_equal(duckplyr_slice_max(df, x, n = 2, na_rm = TRUE)$id, 2)
+  expect_equal(slice_min(df, x, n = 2, na_rm = TRUE)$id, 2)
+  expect_equal(slice_max(df, x, n = 2, na_rm = TRUE)$id, 2)
 
   # Drop when any element is missing
   df <- tibble(id = 1:3, a = c(1, 2, NA), b = c(2, NA, NA))
-  expect_equal(duckplyr_slice_min(df, tibble(a, b), n = 3, na_rm = TRUE)$id, 1)
-  expect_equal(duckplyr_slice_max(df, tibble(a, b), n = 3, na_rm = TRUE)$id, 1)
+  expect_equal(slice_min(df, tibble(a, b), n = 3, na_rm = TRUE)$id, 1)
+  expect_equal(slice_max(df, tibble(a, b), n = 3, na_rm = TRUE)$id, 1)
 })
 
 test_that("slice_min/max() count from back with negative n/prop", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(id = 1:4, x = c(2, 3, 1, 4))
-  expect_equal(duckplyr_slice_min(df, x, n = -1), duckplyr_slice_min(df, x, n = 3))
-  expect_equal(duckplyr_slice_max(df, x, n = -1), duckplyr_slice_max(df, x, n = 3))
+  expect_equal(slice_min(df, x, n = -1), slice_min(df, x, n = 3))
+  expect_equal(slice_max(df, x, n = -1), slice_max(df, x, n = 3))
 
   # and can be larger than group size
-  expect_equal(duckplyr_slice_min(df, x, n = -10), df[0, ])
-  expect_equal(duckplyr_slice_max(df, x, n = -10), df[0, ])
+  expect_equal(slice_min(df, x, n = -10), df[0, ])
+  expect_equal(slice_max(df, x, n = -10), df[0, ])
 })
 
 test_that("slice_min/max() can order by multiple variables (#6176)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(id = 1:4, x = 1, y = c(1, 4, 2, 3))
-  expect_equal(duckplyr_slice_min(df, tibble(x, y), n = 1)$id, 1)
-  expect_equal(duckplyr_slice_max(df, tibble(x, y), n = 1)$id, 2)
+  expect_equal(slice_min(df, tibble(x, y), n = 1)$id, 1)
+  expect_equal(slice_max(df, tibble(x, y), n = 1)$id, 2)
 })
 
 test_that("slice_min/max() work with `by`", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = c(2, 2, 1, 1), x = c(1, 2, 3, 1))
 
-  expect_identical(duckplyr_slice_min(df, x, by = g), df[c(1, 4),])
-  expect_identical(duckplyr_slice_max(df, x, by = g), df[c(2, 3),])
+  expect_identical(slice_min(df, x, by = g), df[c(1, 4),])
+  expect_identical(slice_max(df, x, by = g), df[c(2, 3),])
 })
 
 test_that("slice_min/max() inject `with_ties` and `na_rm` (#6725)", {
@@ -488,39 +497,39 @@ test_that("slice_min/max() inject `with_ties` and `na_rm` (#6725)", {
 
   df <- tibble(x = c(1, 1, 2, 2), with_ties = 1:4)
 
-  expect_identical(duckplyr_slice_min(df, x, n = 1), vec_slice(df, 1:2))
-  expect_identical(duckplyr_slice_min(df, x, n = 1, with_ties = FALSE), vec_slice(df, 1))
+  expect_identical(slice_min(df, x, n = 1), vec_slice(df, 1:2))
+  expect_identical(slice_min(df, x, n = 1, with_ties = FALSE), vec_slice(df, 1))
 
-  expect_identical(duckplyr_slice_max(df, x, n = 1), vec_slice(df, 3:4))
-  expect_identical(duckplyr_slice_max(df, x, n = 1, with_ties = FALSE), vec_slice(df, 3))
+  expect_identical(slice_max(df, x, n = 1), vec_slice(df, 3:4))
+  expect_identical(slice_max(df, x, n = 1, with_ties = FALSE), vec_slice(df, 3))
 
   df <- tibble(x = c(1, NA), na_rm = 1:2)
 
-  expect_identical(duckplyr_slice_min(df, x, n = 2), df)
-  expect_identical(duckplyr_slice_min(df, x, n = 2, na_rm = TRUE), vec_slice(df, 1))
+  expect_identical(slice_min(df, x, n = 2), df)
+  expect_identical(slice_min(df, x, n = 2, na_rm = TRUE), vec_slice(df, 1))
 
-  expect_identical(duckplyr_slice_max(df, x, n = 2), df)
-  expect_identical(duckplyr_slice_max(df, x, n = 2, na_rm = TRUE), vec_slice(df, 1))
+  expect_identical(slice_max(df, x, n = 2), df)
+  expect_identical(slice_max(df, x, n = 2, na_rm = TRUE), vec_slice(df, 1))
 })
 
 test_that("slice_min/max() check size of `order_by=` (#5922)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_snapshot(error = TRUE, {
-    duckplyr_slice_min(data.frame(x = 1:10), 1:6)
-    duckplyr_slice_max(data.frame(x = 1:10), 1:6)
+    slice_min(data.frame(x = 1:10), 1:6)
+    slice_max(data.frame(x = 1:10), 1:6)
   })
 })
 
 test_that("slice_min/max() validate simple arguments", {
   expect_snapshot(error = TRUE, {
-    duckplyr_slice_min(data.frame(x = 1:10))
-    duckplyr_slice_max(data.frame(x = 1:10))
+    slice_min(data.frame(x = 1:10))
+    slice_max(data.frame(x = 1:10))
 
-    duckplyr_slice_min(data.frame(x = 1:10), x, with_ties = 1)
-    duckplyr_slice_max(data.frame(x = 1:10), x, with_ties = 1)
+    slice_min(data.frame(x = 1:10), x, with_ties = 1)
+    slice_max(data.frame(x = 1:10), x, with_ties = 1)
 
-    duckplyr_slice_min(data.frame(x = 1:10), x, na_rm = 1)
-    duckplyr_slice_max(data.frame(x = 1:10), x, na_rm = 1)
+    slice_min(data.frame(x = 1:10), x, na_rm = 1)
+    slice_max(data.frame(x = 1:10), x, na_rm = 1)
   })
 })
 

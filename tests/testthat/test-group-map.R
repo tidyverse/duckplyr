@@ -6,13 +6,13 @@ test_that("group_map() respects empty groups", {
   res <- iris %>%
     group_by(Species) %>%
     duckplyr_filter(Species == "setosa") %>%
-    group_map(~ duckplyr_tally(.x))
+    group_map(~ tally(.x))
   expect_equal(length(res), 1L)
 
   res <- iris %>%
     group_by(Species, .drop = FALSE) %>%
     duckplyr_filter(Species == "setosa") %>%
-    group_map(~ duckplyr_tally(.x))
+    group_map(~ tally(.x))
   expect_equal(length(res), 3L)
 })
 
@@ -40,14 +40,14 @@ test_that("group_modify() makes a grouped_df", {
   res <- iris %>%
     group_by(Species) %>%
     duckplyr_filter(Species == "setosa") %>%
-    group_modify(~ duckplyr_tally(.x))
+    group_modify(~ tally(.x))
   expect_equal(nrow(res), 1L)
   expect_equal(group_rows(res), list_of(1L))
 
   res <- iris %>%
     group_by(Species, .drop = FALSE) %>%
     duckplyr_filter(Species == "setosa") %>%
-    group_modify(~ duckplyr_tally(.x))
+    group_modify(~ tally(.x))
   expect_equal(nrow(res), 3L)
   expect_equal(as.list(group_rows(res)), list(1L, 2L, 3L))
 })
