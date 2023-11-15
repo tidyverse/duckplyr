@@ -27,8 +27,38 @@ tpch_raw_10 <- function(con, experimental) {
       }
     )
   )
-  rel3 <- duckdb$rel_filter(
+  rel3 <- duckdb$rel_project(
     rel2,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("l_orderkey")
+        duckdb$expr_set_alias(tmp_expr, "l_orderkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("l_returnflag")
+        duckdb$expr_set_alias(tmp_expr, "l_returnflag")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("l_extendedprice")
+        duckdb$expr_set_alias(tmp_expr, "l_extendedprice")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("l_discount")
+        duckdb$expr_set_alias(tmp_expr, "l_discount")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number")
+        tmp_expr
+      }
+    )
+  )
+  rel4 <- duckdb$rel_filter(
+    rel3,
     list(
       duckdb$expr_function(
         "==",
@@ -43,8 +73,34 @@ tpch_raw_10 <- function(con, experimental) {
       )
     )
   )
-  rel4 <- duckdb$rel_project(
-    rel3,
+  rel5 <- duckdb$rel_order(rel4, list(duckdb$expr_reference("___row_number")))
+  rel6 <- duckdb$rel_project(
+    rel5,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("l_orderkey")
+        duckdb$expr_set_alias(tmp_expr, "l_orderkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("l_returnflag")
+        duckdb$expr_set_alias(tmp_expr, "l_returnflag")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("l_extendedprice")
+        duckdb$expr_set_alias(tmp_expr, "l_extendedprice")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("l_discount")
+        duckdb$expr_set_alias(tmp_expr, "l_discount")
+        tmp_expr
+      }
+    )
+  )
+  rel7 <- duckdb$rel_project(
+    rel6,
     list(
       {
         tmp_expr <- duckdb$expr_reference("l_orderkey")
@@ -64,9 +120,9 @@ tpch_raw_10 <- function(con, experimental) {
     )
   )
   df2 <- orders
-  rel5 <- duckdb$rel_from_df(con, df2, experimental = experimental)
-  rel6 <- duckdb$rel_project(
-    rel5,
+  rel8 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel9 <- duckdb$rel_project(
+    rel8,
     list(
       {
         tmp_expr <- duckdb$expr_reference("o_orderkey")
@@ -85,8 +141,33 @@ tpch_raw_10 <- function(con, experimental) {
       }
     )
   )
-  rel7 <- duckdb$rel_filter(
-    rel6,
+  rel10 <- duckdb$rel_project(
+    rel9,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("o_orderkey")
+        duckdb$expr_set_alias(tmp_expr, "o_orderkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("o_custkey")
+        duckdb$expr_set_alias(tmp_expr, "o_custkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("o_orderdate")
+        duckdb$expr_set_alias(tmp_expr, "o_orderdate")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number")
+        tmp_expr
+      }
+    )
+  )
+  rel11 <- duckdb$rel_filter(
+    rel10,
     list(
       duckdb$expr_function(
         ">=",
@@ -112,8 +193,29 @@ tpch_raw_10 <- function(con, experimental) {
       )
     )
   )
-  rel8 <- duckdb$rel_project(
-    rel7,
+  rel12 <- duckdb$rel_order(rel11, list(duckdb$expr_reference("___row_number")))
+  rel13 <- duckdb$rel_project(
+    rel12,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("o_orderkey")
+        duckdb$expr_set_alias(tmp_expr, "o_orderkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("o_custkey")
+        duckdb$expr_set_alias(tmp_expr, "o_custkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("o_orderdate")
+        duckdb$expr_set_alias(tmp_expr, "o_orderdate")
+        tmp_expr
+      }
+    )
+  )
+  rel14 <- duckdb$rel_project(
+    rel13,
     list(
       {
         tmp_expr <- duckdb$expr_reference("o_orderkey")
@@ -127,26 +229,75 @@ tpch_raw_10 <- function(con, experimental) {
       }
     )
   )
-  rel9 <- duckdb$rel_set_alias(rel4, "lhs")
-  rel10 <- duckdb$rel_set_alias(rel8, "rhs")
-  rel11 <- duckdb$rel_join(
-    rel9,
-    rel10,
+  rel15 <- duckdb$rel_set_alias(rel7, "lhs")
+  rel16 <- duckdb$rel_set_alias(rel14, "rhs")
+  rel17 <- duckdb$rel_project(
+    rel15,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("l_orderkey")
+        duckdb$expr_set_alias(tmp_expr, "l_orderkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("l_extendedprice")
+        duckdb$expr_set_alias(tmp_expr, "l_extendedprice")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("l_discount")
+        duckdb$expr_set_alias(tmp_expr, "l_discount")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number_x")
+        tmp_expr
+      }
+    )
+  )
+  rel18 <- duckdb$rel_project(
+    rel16,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("o_orderkey")
+        duckdb$expr_set_alias(tmp_expr, "o_orderkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("o_custkey")
+        duckdb$expr_set_alias(tmp_expr, "o_custkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number_y")
+        tmp_expr
+      }
+    )
+  )
+  rel19 <- duckdb$rel_join(
+    rel17,
+    rel18,
     list(
       duckdb$expr_function(
         "==",
-        list(duckdb$expr_reference("l_orderkey", rel9), duckdb$expr_reference("o_orderkey", rel10))
+        list(duckdb$expr_reference("l_orderkey", rel17), duckdb$expr_reference("o_orderkey", rel18))
       )
     ),
     "inner"
   )
-  rel12 <- duckdb$rel_project(
-    rel11,
+  rel20 <- duckdb$rel_order(
+    rel19,
+    list(duckdb$expr_reference("___row_number_x", rel17), duckdb$expr_reference("___row_number_y", rel18))
+  )
+  rel21 <- duckdb$rel_project(
+    rel20,
     list(
       {
         tmp_expr <- duckdb$expr_function(
           "___coalesce",
-          list(duckdb$expr_reference("l_orderkey", rel9), duckdb$expr_reference("o_orderkey", rel10))
+          list(duckdb$expr_reference("l_orderkey", rel17), duckdb$expr_reference("o_orderkey", rel18))
         )
         duckdb$expr_set_alias(tmp_expr, "l_orderkey")
         tmp_expr
@@ -168,8 +319,8 @@ tpch_raw_10 <- function(con, experimental) {
       }
     )
   )
-  rel13 <- duckdb$rel_project(
-    rel12,
+  rel22 <- duckdb$rel_project(
+    rel21,
     list(
       {
         tmp_expr <- duckdb$expr_reference("l_extendedprice")
@@ -188,8 +339,8 @@ tpch_raw_10 <- function(con, experimental) {
       }
     )
   )
-  rel14 <- duckdb$rel_project(
-    rel13,
+  rel23 <- duckdb$rel_project(
+    rel22,
     list(
       {
         tmp_expr <- duckdb$expr_reference("l_extendedprice")
@@ -229,10 +380,45 @@ tpch_raw_10 <- function(con, experimental) {
       }
     )
   )
-  rel15 <- duckdb$rel_aggregate(
-    rel14,
+  rel24 <- duckdb$rel_project(
+    rel23,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("l_extendedprice")
+        duckdb$expr_set_alias(tmp_expr, "l_extendedprice")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("l_discount")
+        duckdb$expr_set_alias(tmp_expr, "l_discount")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("o_custkey")
+        duckdb$expr_set_alias(tmp_expr, "o_custkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("volume")
+        duckdb$expr_set_alias(tmp_expr, "volume")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number")
+        tmp_expr
+      }
+    )
+  )
+  rel25 <- duckdb$rel_aggregate(
+    rel24,
     groups = list(duckdb$expr_reference("o_custkey")),
     aggregates = list(
+      {
+        tmp_expr <- duckdb$expr_function("min", list(duckdb$expr_reference("___row_number")))
+        duckdb$expr_set_alias(tmp_expr, "___row_number")
+        tmp_expr
+      },
       {
         tmp_expr <- duckdb$expr_function("sum", list(duckdb$expr_reference("volume")))
         duckdb$expr_set_alias(tmp_expr, "revenue")
@@ -240,10 +426,26 @@ tpch_raw_10 <- function(con, experimental) {
       }
     )
   )
+  rel26 <- duckdb$rel_order(rel25, list(duckdb$expr_reference("___row_number")))
+  rel27 <- duckdb$rel_project(
+    rel26,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("o_custkey")
+        duckdb$expr_set_alias(tmp_expr, "o_custkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("revenue")
+        duckdb$expr_set_alias(tmp_expr, "revenue")
+        tmp_expr
+      }
+    )
+  )
   df3 <- customer
-  rel16 <- duckdb$rel_from_df(con, df3, experimental = experimental)
-  rel17 <- duckdb$rel_project(
-    rel16,
+  rel28 <- duckdb$rel_from_df(con, df3, experimental = experimental)
+  rel29 <- duckdb$rel_project(
+    rel28,
     list(
       {
         tmp_expr <- duckdb$expr_reference("c_custkey")
@@ -282,26 +484,95 @@ tpch_raw_10 <- function(con, experimental) {
       }
     )
   )
-  rel18 <- duckdb$rel_set_alias(rel17, "lhs")
-  rel19 <- duckdb$rel_set_alias(rel15, "rhs")
-  rel20 <- duckdb$rel_join(
-    rel18,
-    rel19,
+  rel30 <- duckdb$rel_set_alias(rel29, "lhs")
+  rel31 <- duckdb$rel_set_alias(rel27, "rhs")
+  rel32 <- duckdb$rel_project(
+    rel30,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("c_custkey")
+        duckdb$expr_set_alias(tmp_expr, "c_custkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("c_nationkey")
+        duckdb$expr_set_alias(tmp_expr, "c_nationkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("c_name")
+        duckdb$expr_set_alias(tmp_expr, "c_name")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("c_acctbal")
+        duckdb$expr_set_alias(tmp_expr, "c_acctbal")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("c_phone")
+        duckdb$expr_set_alias(tmp_expr, "c_phone")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("c_address")
+        duckdb$expr_set_alias(tmp_expr, "c_address")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("c_comment")
+        duckdb$expr_set_alias(tmp_expr, "c_comment")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number_x")
+        tmp_expr
+      }
+    )
+  )
+  rel33 <- duckdb$rel_project(
+    rel31,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("o_custkey")
+        duckdb$expr_set_alias(tmp_expr, "o_custkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("revenue")
+        duckdb$expr_set_alias(tmp_expr, "revenue")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number_y")
+        tmp_expr
+      }
+    )
+  )
+  rel34 <- duckdb$rel_join(
+    rel32,
+    rel33,
     list(
       duckdb$expr_function(
         "==",
-        list(duckdb$expr_reference("c_custkey", rel18), duckdb$expr_reference("o_custkey", rel19))
+        list(duckdb$expr_reference("c_custkey", rel32), duckdb$expr_reference("o_custkey", rel33))
       )
     ),
     "inner"
   )
-  rel21 <- duckdb$rel_project(
-    rel20,
+  rel35 <- duckdb$rel_order(
+    rel34,
+    list(duckdb$expr_reference("___row_number_x", rel32), duckdb$expr_reference("___row_number_y", rel33))
+  )
+  rel36 <- duckdb$rel_project(
+    rel35,
     list(
       {
         tmp_expr <- duckdb$expr_function(
           "___coalesce",
-          list(duckdb$expr_reference("c_custkey", rel18), duckdb$expr_reference("o_custkey", rel19))
+          list(duckdb$expr_reference("c_custkey", rel32), duckdb$expr_reference("o_custkey", rel33))
         )
         duckdb$expr_set_alias(tmp_expr, "c_custkey")
         tmp_expr
@@ -344,9 +615,9 @@ tpch_raw_10 <- function(con, experimental) {
     )
   )
   df4 <- nation
-  rel22 <- duckdb$rel_from_df(con, df4, experimental = experimental)
-  rel23 <- duckdb$rel_project(
-    rel22,
+  rel37 <- duckdb$rel_from_df(con, df4, experimental = experimental)
+  rel38 <- duckdb$rel_project(
+    rel37,
     list(
       {
         tmp_expr <- duckdb$expr_reference("n_nationkey")
@@ -360,21 +631,95 @@ tpch_raw_10 <- function(con, experimental) {
       }
     )
   )
-  rel24 <- duckdb$rel_set_alias(rel21, "lhs")
-  rel25 <- duckdb$rel_set_alias(rel23, "rhs")
-  rel26 <- duckdb$rel_join(
-    rel24,
-    rel25,
+  rel39 <- duckdb$rel_set_alias(rel36, "lhs")
+  rel40 <- duckdb$rel_set_alias(rel38, "rhs")
+  rel41 <- duckdb$rel_project(
+    rel39,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("c_custkey")
+        duckdb$expr_set_alias(tmp_expr, "c_custkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("c_nationkey")
+        duckdb$expr_set_alias(tmp_expr, "c_nationkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("c_name")
+        duckdb$expr_set_alias(tmp_expr, "c_name")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("c_acctbal")
+        duckdb$expr_set_alias(tmp_expr, "c_acctbal")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("c_phone")
+        duckdb$expr_set_alias(tmp_expr, "c_phone")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("c_address")
+        duckdb$expr_set_alias(tmp_expr, "c_address")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("c_comment")
+        duckdb$expr_set_alias(tmp_expr, "c_comment")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("revenue")
+        duckdb$expr_set_alias(tmp_expr, "revenue")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number_x")
+        tmp_expr
+      }
+    )
+  )
+  rel42 <- duckdb$rel_project(
+    rel40,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("n_nationkey")
+        duckdb$expr_set_alias(tmp_expr, "n_nationkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("n_name")
+        duckdb$expr_set_alias(tmp_expr, "n_name")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number_y")
+        tmp_expr
+      }
+    )
+  )
+  rel43 <- duckdb$rel_join(
+    rel41,
+    rel42,
     list(
       duckdb$expr_function(
         "==",
-        list(duckdb$expr_reference("c_nationkey", rel24), duckdb$expr_reference("n_nationkey", rel25))
+        list(duckdb$expr_reference("c_nationkey", rel41), duckdb$expr_reference("n_nationkey", rel42))
       )
     ),
     "inner"
   )
-  rel27 <- duckdb$rel_project(
-    rel26,
+  rel44 <- duckdb$rel_order(
+    rel43,
+    list(duckdb$expr_reference("___row_number_x", rel41), duckdb$expr_reference("___row_number_y", rel42))
+  )
+  rel45 <- duckdb$rel_project(
+    rel44,
     list(
       {
         tmp_expr <- duckdb$expr_reference("c_custkey")
@@ -384,7 +729,7 @@ tpch_raw_10 <- function(con, experimental) {
       {
         tmp_expr <- duckdb$expr_function(
           "___coalesce",
-          list(duckdb$expr_reference("c_nationkey", rel24), duckdb$expr_reference("n_nationkey", rel25))
+          list(duckdb$expr_reference("c_nationkey", rel41), duckdb$expr_reference("n_nationkey", rel42))
         )
         duckdb$expr_set_alias(tmp_expr, "c_nationkey")
         tmp_expr
@@ -426,8 +771,8 @@ tpch_raw_10 <- function(con, experimental) {
       }
     )
   )
-  rel28 <- duckdb$rel_project(
-    rel27,
+  rel46 <- duckdb$rel_project(
+    rel45,
     list(
       {
         tmp_expr <- duckdb$expr_reference("c_custkey")
@@ -471,8 +816,8 @@ tpch_raw_10 <- function(con, experimental) {
       }
     )
   )
-  rel29 <- duckdb$rel_order(rel28, list(duckdb$expr_function("desc", list(duckdb$expr_reference("revenue")))))
-  rel30 <- duckdb$rel_limit(rel29, 20)
-  rel30
-  duckdb$rel_to_altrep(rel30)
+  rel47 <- duckdb$rel_order(rel46, list(duckdb$expr_function("desc", list(duckdb$expr_reference("revenue")))))
+  rel48 <- duckdb$rel_limit(rel47, 20)
+  rel48
+  duckdb$rel_to_altrep(rel48)
 }

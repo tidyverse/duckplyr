@@ -1,5 +1,5 @@
 diff --git b/R/dplyr_reconstruct.R a/R/dplyr_reconstruct.R
-index 615d278..9459945 100644
+index e07800c..9459945 100644
 --- b/R/dplyr_reconstruct.R
 +++ a/R/dplyr_reconstruct.R
 @@ -1,13 +1,11 @@
@@ -21,3 +21,17 @@ index 615d278..9459945 100644
  
    # dplyr forward
    dplyr_reconstruct <- dplyr$dplyr_reconstruct.data.frame
+@@ -15,7 +13,12 @@ dplyr_reconstruct.duckplyr_df <- function(data, template) {
+   return(out)
+ 
+   # dplyr implementation
+-  .Call(ffi_dplyr_reconstruct, data, template)
++  attrs <- attributes(template)
++  attrs$names <- names(data)
++  attrs$row.names <- .row_names_info(data, type = 0L)
++
++  attributes(data) <- attrs
++  data
+ }
+ 
+ duckplyr_dplyr_reconstruct <- function(data, ...) {

@@ -124,8 +124,28 @@ tpch_raw_oo_18 <- function(con, experimental) {
       }
     )
   )
-  rel6 <- duckdb$rel_filter(
+  rel6 <- duckdb$rel_project(
     rel5,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("l_orderkey")
+        duckdb$expr_set_alias(tmp_expr, "l_orderkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("sum")
+        duckdb$expr_set_alias(tmp_expr, "sum")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number")
+        tmp_expr
+      }
+    )
+  )
+  rel7 <- duckdb$rel_filter(
+    rel6,
     list(
       duckdb$expr_function(
         ">",
@@ -140,12 +160,28 @@ tpch_raw_oo_18 <- function(con, experimental) {
       )
     )
   )
-  df2 <- orders
-  rel7 <- duckdb$rel_from_df(con, df2, experimental = experimental)
-  rel8 <- duckdb$rel_set_alias(rel7, "lhs")
-  rel9 <- duckdb$rel_set_alias(rel6, "rhs")
-  rel10 <- duckdb$rel_project(
+  rel8 <- duckdb$rel_order(rel7, list(duckdb$expr_reference("___row_number")))
+  rel9 <- duckdb$rel_project(
     rel8,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("l_orderkey")
+        duckdb$expr_set_alias(tmp_expr, "l_orderkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("sum")
+        duckdb$expr_set_alias(tmp_expr, "sum")
+        tmp_expr
+      }
+    )
+  )
+  df2 <- orders
+  rel10 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel11 <- duckdb$rel_set_alias(rel10, "lhs")
+  rel12 <- duckdb$rel_set_alias(rel9, "rhs")
+  rel13 <- duckdb$rel_project(
+    rel11,
     list(
       {
         tmp_expr <- duckdb$expr_reference("o_orderkey")
@@ -199,8 +235,8 @@ tpch_raw_oo_18 <- function(con, experimental) {
       }
     )
   )
-  rel11 <- duckdb$rel_project(
-    rel9,
+  rel14 <- duckdb$rel_project(
+    rel12,
     list(
       {
         tmp_expr <- duckdb$expr_reference("l_orderkey")
@@ -219,28 +255,28 @@ tpch_raw_oo_18 <- function(con, experimental) {
       }
     )
   )
-  rel12 <- duckdb$rel_join(
-    rel10,
-    rel11,
+  rel15 <- duckdb$rel_join(
+    rel13,
+    rel14,
     list(
       duckdb$expr_function(
         "==",
-        list(duckdb$expr_reference("o_orderkey", rel10), duckdb$expr_reference("l_orderkey", rel11))
+        list(duckdb$expr_reference("o_orderkey", rel13), duckdb$expr_reference("l_orderkey", rel14))
       )
     ),
     "inner"
   )
-  rel13 <- duckdb$rel_order(
-    rel12,
-    list(duckdb$expr_reference("___row_number_x", rel10), duckdb$expr_reference("___row_number_y", rel11))
+  rel16 <- duckdb$rel_order(
+    rel15,
+    list(duckdb$expr_reference("___row_number_x", rel13), duckdb$expr_reference("___row_number_y", rel14))
   )
-  rel14 <- duckdb$rel_project(
-    rel13,
+  rel17 <- duckdb$rel_project(
+    rel16,
     list(
       {
         tmp_expr <- duckdb$expr_function(
           "___coalesce",
-          list(duckdb$expr_reference("o_orderkey", rel10), duckdb$expr_reference("l_orderkey", rel11))
+          list(duckdb$expr_reference("o_orderkey", rel13), duckdb$expr_reference("l_orderkey", rel14))
         )
         duckdb$expr_set_alias(tmp_expr, "o_orderkey")
         tmp_expr
@@ -292,12 +328,12 @@ tpch_raw_oo_18 <- function(con, experimental) {
       }
     )
   )
-  rel15 <- duckdb$rel_set_alias(rel14, "lhs")
+  rel18 <- duckdb$rel_set_alias(rel17, "lhs")
   df3 <- customer
-  rel16 <- duckdb$rel_from_df(con, df3, experimental = experimental)
-  rel17 <- duckdb$rel_set_alias(rel16, "rhs")
-  rel18 <- duckdb$rel_project(
-    rel15,
+  rel19 <- duckdb$rel_from_df(con, df3, experimental = experimental)
+  rel20 <- duckdb$rel_set_alias(rel19, "rhs")
+  rel21 <- duckdb$rel_project(
+    rel18,
     list(
       {
         tmp_expr <- duckdb$expr_reference("o_orderkey")
@@ -356,8 +392,8 @@ tpch_raw_oo_18 <- function(con, experimental) {
       }
     )
   )
-  rel19 <- duckdb$rel_project(
-    rel17,
+  rel22 <- duckdb$rel_project(
+    rel20,
     list(
       {
         tmp_expr <- duckdb$expr_reference("c_custkey")
@@ -406,23 +442,23 @@ tpch_raw_oo_18 <- function(con, experimental) {
       }
     )
   )
-  rel20 <- duckdb$rel_join(
-    rel18,
-    rel19,
+  rel23 <- duckdb$rel_join(
+    rel21,
+    rel22,
     list(
       duckdb$expr_function(
         "==",
-        list(duckdb$expr_reference("o_custkey", rel18), duckdb$expr_reference("c_custkey", rel19))
+        list(duckdb$expr_reference("o_custkey", rel21), duckdb$expr_reference("c_custkey", rel22))
       )
     ),
     "inner"
   )
-  rel21 <- duckdb$rel_order(
-    rel20,
-    list(duckdb$expr_reference("___row_number_x", rel18), duckdb$expr_reference("___row_number_y", rel19))
+  rel24 <- duckdb$rel_order(
+    rel23,
+    list(duckdb$expr_reference("___row_number_x", rel21), duckdb$expr_reference("___row_number_y", rel22))
   )
-  rel22 <- duckdb$rel_project(
-    rel21,
+  rel25 <- duckdb$rel_project(
+    rel24,
     list(
       {
         tmp_expr <- duckdb$expr_reference("o_orderkey")
@@ -432,7 +468,7 @@ tpch_raw_oo_18 <- function(con, experimental) {
       {
         tmp_expr <- duckdb$expr_function(
           "___coalesce",
-          list(duckdb$expr_reference("o_custkey", rel18), duckdb$expr_reference("c_custkey", rel19))
+          list(duckdb$expr_reference("o_custkey", rel21), duckdb$expr_reference("c_custkey", rel22))
         )
         duckdb$expr_set_alias(tmp_expr, "o_custkey")
         tmp_expr
@@ -514,8 +550,8 @@ tpch_raw_oo_18 <- function(con, experimental) {
       }
     )
   )
-  rel23 <- duckdb$rel_project(
-    rel22,
+  rel26 <- duckdb$rel_project(
+    rel25,
     list(
       {
         tmp_expr <- duckdb$expr_reference("c_name")
@@ -549,11 +585,11 @@ tpch_raw_oo_18 <- function(con, experimental) {
       }
     )
   )
-  rel24 <- duckdb$rel_order(
-    rel23,
+  rel27 <- duckdb$rel_order(
+    rel26,
     list(duckdb$expr_function("desc", list(duckdb$expr_reference("o_totalprice"))), duckdb$expr_reference("o_orderdate"))
   )
-  rel25 <- duckdb$rel_limit(rel24, 100)
-  rel25
-  duckdb$rel_to_altrep(rel25)
+  rel28 <- duckdb$rel_limit(rel27, 100)
+  rel28
+  duckdb$rel_to_altrep(rel28)
 }
