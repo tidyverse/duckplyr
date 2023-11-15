@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.3.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.3.9001</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,6 +44,26 @@
       <small>Source: <a href="https://github.com/duckdblabs/duckplyr/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.2.3.9001" id="duckplyr-0239001-2023-11-13">duckplyr 0.2.3.9001 (2023-11-13)<a class="anchor" aria-label="anchor" href="#duckplyr-0239001-2023-11-13"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-0-2-3-9001">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-2-3-9001"></a></h3>
+<ul><li><p><code><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct()</a></code> now preserves order in corner cases (<a href="https://github.com/duckdblabs/duckplyr/issues/77" class="external-link">#77</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/78" class="external-link">#78</a>).</p></li>
+<li><p>Consistent computation of <code>log(0)</code> and <code>log(-1)</code> (<a href="https://github.com/duckdblabs/duckplyr/issues/75" class="external-link">#75</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/76" class="external-link">#76</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="features-0-2-3-9001">Features<a class="anchor" aria-label="anchor" href="#features-0-2-3-9001"></a></h3>
+<ul><li>Only allow constants in <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> that are actually representable in duckdb (<a href="https://github.com/duckdblabs/duckplyr/issues/73" class="external-link">#73</a>).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="chore-0-2-3-9001">Chore<a class="anchor" aria-label="anchor" href="#chore-0-2-3-9001"></a></h3>
+<ul><li>Only implement newer <code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_sample()</a></code>, not <code><a href="https://dplyr.tidyverse.org/reference/sample_n.html" class="external-link">sample_n()</a></code> or <code><a href="https://dplyr.tidyverse.org/reference/sample_n.html" class="external-link">sample_frac()</a></code> (<a href="https://github.com/duckdblabs/duckplyr/issues/74" class="external-link">#74</a>).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="testing-0-2-3-9001">Testing<a class="anchor" aria-label="anchor" href="#testing-0-2-3-9001"></a></h3>
+<ul><li>Add test that TPC-H queries can be processed; feat: Avoid translating <code><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse()</a></code>, support <code>if_else()</code> (<a href="https://github.com/duckdblabs/duckplyr/issues/79" class="external-link">#79</a>).</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.3.9000" id="duckplyr-0239000-2023-11-09">duckplyr 0.2.3.9000 (2023-11-09)<a class="anchor" aria-label="anchor" href="#duckplyr-0239000-2023-11-09"></a></h2>
 <div class="section level3">
