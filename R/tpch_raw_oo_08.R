@@ -1367,7 +1367,42 @@ tpch_raw_oo_08 <- function(con, experimental) {
       }
     )
   )
-  rel95 <- duckdb$rel_order(rel94, list(duckdb$expr_reference("o_year")))
-  rel95
-  duckdb$rel_to_altrep(rel95)
+  rel95 <- duckdb$rel_project(
+    rel94,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("o_year")
+        duckdb$expr_set_alias(tmp_expr, "o_year")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("mkt_share")
+        duckdb$expr_set_alias(tmp_expr, "mkt_share")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number")
+        tmp_expr
+      }
+    )
+  )
+  rel96 <- duckdb$rel_order(rel95, list(duckdb$expr_reference("o_year"), duckdb$expr_reference("___row_number")))
+  rel97 <- duckdb$rel_project(
+    rel96,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("o_year")
+        duckdb$expr_set_alias(tmp_expr, "o_year")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("mkt_share")
+        duckdb$expr_set_alias(tmp_expr, "mkt_share")
+        tmp_expr
+      }
+    )
+  )
+  rel97
+  duckdb$rel_to_altrep(rel97)
 }

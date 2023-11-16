@@ -1169,7 +1169,55 @@ tpch_raw_oo_22 <- function(con, experimental) {
       }
     )
   )
-  rel36 <- duckdb$rel_order(rel35, list(duckdb$expr_reference("cntrycode")))
-  rel36
-  duckdb$rel_to_altrep(rel36)
+  rel36 <- duckdb$rel_project(
+    rel35,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("cntrycode")
+        duckdb$expr_set_alias(tmp_expr, "cntrycode")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("numcust")
+        duckdb$expr_set_alias(tmp_expr, "numcust")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("totacctbal")
+        duckdb$expr_set_alias(tmp_expr, "totacctbal")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number")
+        tmp_expr
+      }
+    )
+  )
+  rel37 <- duckdb$rel_order(
+    rel36,
+    list(duckdb$expr_reference("cntrycode"), duckdb$expr_reference("___row_number"))
+  )
+  rel38 <- duckdb$rel_project(
+    rel37,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("cntrycode")
+        duckdb$expr_set_alias(tmp_expr, "cntrycode")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("numcust")
+        duckdb$expr_set_alias(tmp_expr, "numcust")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("totacctbal")
+        duckdb$expr_set_alias(tmp_expr, "totacctbal")
+        tmp_expr
+      }
+    )
+  )
+  rel38
+  duckdb$rel_to_altrep(rel38)
 }

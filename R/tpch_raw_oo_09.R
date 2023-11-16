@@ -1043,10 +1043,55 @@ tpch_raw_oo_09 <- function(con, experimental) {
       }
     )
   )
-  rel64 <- duckdb$rel_order(
+  rel64 <- duckdb$rel_project(
     rel63,
-    list(duckdb$expr_reference("nation"), duckdb$expr_function("desc", list(duckdb$expr_reference("o_year"))))
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("nation")
+        duckdb$expr_set_alias(tmp_expr, "nation")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("o_year")
+        duckdb$expr_set_alias(tmp_expr, "o_year")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("sum_profit")
+        duckdb$expr_set_alias(tmp_expr, "sum_profit")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number")
+        tmp_expr
+      }
+    )
   )
-  rel64
-  duckdb$rel_to_altrep(rel64)
+  rel65 <- duckdb$rel_order(
+    rel64,
+    list(duckdb$expr_reference("nation"), duckdb$expr_function("desc", list(duckdb$expr_reference("o_year"))), duckdb$expr_reference("___row_number"))
+  )
+  rel66 <- duckdb$rel_project(
+    rel65,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("nation")
+        duckdb$expr_set_alias(tmp_expr, "nation")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("o_year")
+        duckdb$expr_set_alias(tmp_expr, "o_year")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("sum_profit")
+        duckdb$expr_set_alias(tmp_expr, "sum_profit")
+        tmp_expr
+      }
+    )
+  )
+  rel66
+  duckdb$rel_to_altrep(rel66)
 }

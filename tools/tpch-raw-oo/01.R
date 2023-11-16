@@ -387,9 +387,124 @@ rel11 <- duckdb$rel_project(
     }
   )
 )
-rel12 <- duckdb$rel_order(
+rel12 <- duckdb$rel_project(
   rel11,
-  list(duckdb$expr_reference("l_returnflag"), duckdb$expr_reference("l_linestatus"))
+  list(
+    {
+      tmp_expr <- duckdb$expr_reference("l_returnflag")
+      duckdb$expr_set_alias(tmp_expr, "l_returnflag")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("l_linestatus")
+      duckdb$expr_set_alias(tmp_expr, "l_linestatus")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("sum_qty")
+      duckdb$expr_set_alias(tmp_expr, "sum_qty")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("sum_base_price")
+      duckdb$expr_set_alias(tmp_expr, "sum_base_price")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("sum_disc_price")
+      duckdb$expr_set_alias(tmp_expr, "sum_disc_price")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("sum_charge")
+      duckdb$expr_set_alias(tmp_expr, "sum_charge")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("avg_qty")
+      duckdb$expr_set_alias(tmp_expr, "avg_qty")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("avg_price")
+      duckdb$expr_set_alias(tmp_expr, "avg_price")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("avg_disc")
+      duckdb$expr_set_alias(tmp_expr, "avg_disc")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("count_order")
+      duckdb$expr_set_alias(tmp_expr, "count_order")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+      duckdb$expr_set_alias(tmp_expr, "___row_number")
+      tmp_expr
+    }
+  )
 )
-rel12
-duckdb$rel_to_altrep(rel12)
+rel13 <- duckdb$rel_order(
+  rel12,
+  list(duckdb$expr_reference("l_returnflag"), duckdb$expr_reference("l_linestatus"), duckdb$expr_reference("___row_number"))
+)
+rel14 <- duckdb$rel_project(
+  rel13,
+  list(
+    {
+      tmp_expr <- duckdb$expr_reference("l_returnflag")
+      duckdb$expr_set_alias(tmp_expr, "l_returnflag")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("l_linestatus")
+      duckdb$expr_set_alias(tmp_expr, "l_linestatus")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("sum_qty")
+      duckdb$expr_set_alias(tmp_expr, "sum_qty")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("sum_base_price")
+      duckdb$expr_set_alias(tmp_expr, "sum_base_price")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("sum_disc_price")
+      duckdb$expr_set_alias(tmp_expr, "sum_disc_price")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("sum_charge")
+      duckdb$expr_set_alias(tmp_expr, "sum_charge")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("avg_qty")
+      duckdb$expr_set_alias(tmp_expr, "avg_qty")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("avg_price")
+      duckdb$expr_set_alias(tmp_expr, "avg_price")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("avg_disc")
+      duckdb$expr_set_alias(tmp_expr, "avg_disc")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("count_order")
+      duckdb$expr_set_alias(tmp_expr, "count_order")
+      tmp_expr
+    }
+  )
+)
+rel14
+duckdb$rel_to_altrep(rel14)

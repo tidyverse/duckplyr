@@ -31,38 +31,8 @@ rel2 <- duckdb$rel_project(
     }
   )
 )
-rel3 <- duckdb$rel_project(
+rel3 <- duckdb$rel_filter(
   rel2,
-  list(
-    {
-      tmp_expr <- duckdb$expr_reference("l_shipdate")
-      duckdb$expr_set_alias(tmp_expr, "l_shipdate")
-      tmp_expr
-    },
-    {
-      tmp_expr <- duckdb$expr_reference("l_extendedprice")
-      duckdb$expr_set_alias(tmp_expr, "l_extendedprice")
-      tmp_expr
-    },
-    {
-      tmp_expr <- duckdb$expr_reference("l_discount")
-      duckdb$expr_set_alias(tmp_expr, "l_discount")
-      tmp_expr
-    },
-    {
-      tmp_expr <- duckdb$expr_reference("l_quantity")
-      duckdb$expr_set_alias(tmp_expr, "l_quantity")
-      tmp_expr
-    },
-    {
-      tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
-      duckdb$expr_set_alias(tmp_expr, "___row_number")
-      tmp_expr
-    }
-  )
-)
-rel4 <- duckdb$rel_filter(
-  rel3,
   list(
     duckdb$expr_function(
       ">=",
@@ -121,34 +91,8 @@ rel4 <- duckdb$rel_filter(
     )
   )
 )
-rel5 <- duckdb$rel_order(rel4, list(duckdb$expr_reference("___row_number")))
-rel6 <- duckdb$rel_project(
-  rel5,
-  list(
-    {
-      tmp_expr <- duckdb$expr_reference("l_shipdate")
-      duckdb$expr_set_alias(tmp_expr, "l_shipdate")
-      tmp_expr
-    },
-    {
-      tmp_expr <- duckdb$expr_reference("l_extendedprice")
-      duckdb$expr_set_alias(tmp_expr, "l_extendedprice")
-      tmp_expr
-    },
-    {
-      tmp_expr <- duckdb$expr_reference("l_discount")
-      duckdb$expr_set_alias(tmp_expr, "l_discount")
-      tmp_expr
-    },
-    {
-      tmp_expr <- duckdb$expr_reference("l_quantity")
-      duckdb$expr_set_alias(tmp_expr, "l_quantity")
-      tmp_expr
-    }
-  )
-)
-rel7 <- duckdb$rel_project(
-  rel6,
+rel4 <- duckdb$rel_project(
+  rel3,
   list(
     {
       tmp_expr <- duckdb$expr_reference("l_extendedprice")
@@ -162,8 +106,8 @@ rel7 <- duckdb$rel_project(
     }
   )
 )
-rel8 <- duckdb$rel_aggregate(
-  rel7,
+rel5 <- duckdb$rel_aggregate(
+  rel4,
   groups = list(),
   aggregates = list(
     {
@@ -181,6 +125,6 @@ rel8 <- duckdb$rel_aggregate(
     }
   )
 )
-rel9 <- duckdb$rel_distinct(rel8)
-rel9
-duckdb$rel_to_altrep(rel9)
+rel6 <- duckdb$rel_distinct(rel5)
+rel6
+duckdb$rel_to_altrep(rel6)

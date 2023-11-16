@@ -808,9 +808,67 @@ tpch_raw_oo_11 <- function(con, experimental) {
       }
     )
   )
-  rel43 <- duckdb$rel_order(rel42, list(duckdb$expr_function("desc", list(duckdb$expr_reference("value")))))
-  rel44 <- duckdb$rel_project(
+  rel43 <- duckdb$rel_project(
+    rel42,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("ps_partkey")
+        duckdb$expr_set_alias(tmp_expr, "ps_partkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("value")
+        duckdb$expr_set_alias(tmp_expr, "value")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("global_agr_key")
+        duckdb$expr_set_alias(tmp_expr, "global_agr_key")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("global_value")
+        duckdb$expr_set_alias(tmp_expr, "global_value")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number")
+        tmp_expr
+      }
+    )
+  )
+  rel44 <- duckdb$rel_order(
     rel43,
+    list(duckdb$expr_function("desc", list(duckdb$expr_reference("value"))), duckdb$expr_reference("___row_number"))
+  )
+  rel45 <- duckdb$rel_project(
+    rel44,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("ps_partkey")
+        duckdb$expr_set_alias(tmp_expr, "ps_partkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("value")
+        duckdb$expr_set_alias(tmp_expr, "value")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("global_agr_key")
+        duckdb$expr_set_alias(tmp_expr, "global_agr_key")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("global_value")
+        duckdb$expr_set_alias(tmp_expr, "global_value")
+        tmp_expr
+      }
+    )
+  )
+  rel46 <- duckdb$rel_project(
+    rel45,
     list(
       {
         tmp_expr <- duckdb$expr_reference("ps_partkey")
@@ -824,6 +882,6 @@ tpch_raw_oo_11 <- function(con, experimental) {
       }
     )
   )
-  rel44
-  duckdb$rel_to_altrep(rel44)
+  rel46
+  duckdb$rel_to_altrep(rel46)
 }

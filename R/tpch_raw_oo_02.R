@@ -1219,11 +1219,106 @@ tpch_raw_oo_02 <- function(con, experimental) {
       }
     )
   )
-  rel63 <- duckdb$rel_order(
+  rel63 <- duckdb$rel_project(
     rel62,
-    list(duckdb$expr_function("desc", list(duckdb$expr_reference("s_acctbal"))), duckdb$expr_reference("n_name"), duckdb$expr_reference("s_name"), duckdb$expr_reference("p_partkey"))
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("s_acctbal")
+        duckdb$expr_set_alias(tmp_expr, "s_acctbal")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("s_name")
+        duckdb$expr_set_alias(tmp_expr, "s_name")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("n_name")
+        duckdb$expr_set_alias(tmp_expr, "n_name")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("p_partkey")
+        duckdb$expr_set_alias(tmp_expr, "p_partkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("p_mfgr")
+        duckdb$expr_set_alias(tmp_expr, "p_mfgr")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("s_address")
+        duckdb$expr_set_alias(tmp_expr, "s_address")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("s_phone")
+        duckdb$expr_set_alias(tmp_expr, "s_phone")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("s_comment")
+        duckdb$expr_set_alias(tmp_expr, "s_comment")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number")
+        tmp_expr
+      }
+    )
   )
-  rel64 <- duckdb$rel_limit(rel63, 100)
-  rel64
-  duckdb$rel_to_altrep(rel64)
+  rel64 <- duckdb$rel_order(
+    rel63,
+    list(duckdb$expr_function("desc", list(duckdb$expr_reference("s_acctbal"))), duckdb$expr_reference("n_name"), duckdb$expr_reference("s_name"), duckdb$expr_reference("p_partkey"), duckdb$expr_reference("___row_number"))
+  )
+  rel65 <- duckdb$rel_project(
+    rel64,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("s_acctbal")
+        duckdb$expr_set_alias(tmp_expr, "s_acctbal")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("s_name")
+        duckdb$expr_set_alias(tmp_expr, "s_name")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("n_name")
+        duckdb$expr_set_alias(tmp_expr, "n_name")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("p_partkey")
+        duckdb$expr_set_alias(tmp_expr, "p_partkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("p_mfgr")
+        duckdb$expr_set_alias(tmp_expr, "p_mfgr")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("s_address")
+        duckdb$expr_set_alias(tmp_expr, "s_address")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("s_phone")
+        duckdb$expr_set_alias(tmp_expr, "s_phone")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("s_comment")
+        duckdb$expr_set_alias(tmp_expr, "s_comment")
+        tmp_expr
+      }
+    )
+  )
+  rel66 <- duckdb$rel_limit(rel65, 100)
+  rel66
+  duckdb$rel_to_altrep(rel66)
 }

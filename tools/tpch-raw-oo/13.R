@@ -551,9 +551,44 @@ rel21 <- duckdb$rel_project(
     }
   )
 )
-rel22 <- duckdb$rel_order(
+rel22 <- duckdb$rel_project(
   rel21,
-  list(duckdb$expr_function("desc", list(duckdb$expr_reference("custdist"))), duckdb$expr_function("desc", list(duckdb$expr_reference("c_count"))))
+  list(
+    {
+      tmp_expr <- duckdb$expr_reference("c_count")
+      duckdb$expr_set_alias(tmp_expr, "c_count")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("custdist")
+      duckdb$expr_set_alias(tmp_expr, "custdist")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+      duckdb$expr_set_alias(tmp_expr, "___row_number")
+      tmp_expr
+    }
+  )
 )
-rel22
-duckdb$rel_to_altrep(rel22)
+rel23 <- duckdb$rel_order(
+  rel22,
+  list(duckdb$expr_function("desc", list(duckdb$expr_reference("custdist"))), duckdb$expr_function("desc", list(duckdb$expr_reference("c_count"))), duckdb$expr_reference("___row_number"))
+)
+rel24 <- duckdb$rel_project(
+  rel23,
+  list(
+    {
+      tmp_expr <- duckdb$expr_reference("c_count")
+      duckdb$expr_set_alias(tmp_expr, "c_count")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("custdist")
+      duckdb$expr_set_alias(tmp_expr, "custdist")
+      tmp_expr
+    }
+  )
+)
+rel24
+duckdb$rel_to_altrep(rel24)

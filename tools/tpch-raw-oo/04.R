@@ -420,6 +420,44 @@ rel31 <- duckdb$rel_project(
     }
   )
 )
-rel32 <- duckdb$rel_order(rel31, list(duckdb$expr_reference("o_orderpriority")))
-rel32
-duckdb$rel_to_altrep(rel32)
+rel32 <- duckdb$rel_project(
+  rel31,
+  list(
+    {
+      tmp_expr <- duckdb$expr_reference("o_orderpriority")
+      duckdb$expr_set_alias(tmp_expr, "o_orderpriority")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("order_count")
+      duckdb$expr_set_alias(tmp_expr, "order_count")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+      duckdb$expr_set_alias(tmp_expr, "___row_number")
+      tmp_expr
+    }
+  )
+)
+rel33 <- duckdb$rel_order(
+  rel32,
+  list(duckdb$expr_reference("o_orderpriority"), duckdb$expr_reference("___row_number"))
+)
+rel34 <- duckdb$rel_project(
+  rel33,
+  list(
+    {
+      tmp_expr <- duckdb$expr_reference("o_orderpriority")
+      duckdb$expr_set_alias(tmp_expr, "o_orderpriority")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("order_count")
+      duckdb$expr_set_alias(tmp_expr, "order_count")
+      tmp_expr
+    }
+  )
+)
+rel34
+duckdb$rel_to_altrep(rel34)

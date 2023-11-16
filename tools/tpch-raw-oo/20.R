@@ -1338,6 +1338,41 @@ rel65 <- duckdb$rel_project(
     }
   )
 )
-rel66 <- duckdb$rel_order(rel65, list(duckdb$expr_reference("s_name")))
-rel66
-duckdb$rel_to_altrep(rel66)
+rel66 <- duckdb$rel_project(
+  rel65,
+  list(
+    {
+      tmp_expr <- duckdb$expr_reference("s_name")
+      duckdb$expr_set_alias(tmp_expr, "s_name")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("s_address")
+      duckdb$expr_set_alias(tmp_expr, "s_address")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+      duckdb$expr_set_alias(tmp_expr, "___row_number")
+      tmp_expr
+    }
+  )
+)
+rel67 <- duckdb$rel_order(rel66, list(duckdb$expr_reference("s_name"), duckdb$expr_reference("___row_number")))
+rel68 <- duckdb$rel_project(
+  rel67,
+  list(
+    {
+      tmp_expr <- duckdb$expr_reference("s_name")
+      duckdb$expr_set_alias(tmp_expr, "s_name")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("s_address")
+      duckdb$expr_set_alias(tmp_expr, "s_address")
+      tmp_expr
+    }
+  )
+)
+rel68
+duckdb$rel_to_altrep(rel68)

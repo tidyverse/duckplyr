@@ -1346,9 +1346,64 @@ rel76 <- duckdb$rel_project(
     }
   )
 )
-rel77 <- duckdb$rel_order(
+rel77 <- duckdb$rel_project(
   rel76,
-  list(duckdb$expr_reference("supp_nation"), duckdb$expr_reference("cust_nation"), duckdb$expr_reference("l_year"))
+  list(
+    {
+      tmp_expr <- duckdb$expr_reference("supp_nation")
+      duckdb$expr_set_alias(tmp_expr, "supp_nation")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("cust_nation")
+      duckdb$expr_set_alias(tmp_expr, "cust_nation")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("l_year")
+      duckdb$expr_set_alias(tmp_expr, "l_year")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("revenue")
+      duckdb$expr_set_alias(tmp_expr, "revenue")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+      duckdb$expr_set_alias(tmp_expr, "___row_number")
+      tmp_expr
+    }
+  )
 )
-rel77
-duckdb$rel_to_altrep(rel77)
+rel78 <- duckdb$rel_order(
+  rel77,
+  list(duckdb$expr_reference("supp_nation"), duckdb$expr_reference("cust_nation"), duckdb$expr_reference("l_year"), duckdb$expr_reference("___row_number"))
+)
+rel79 <- duckdb$rel_project(
+  rel78,
+  list(
+    {
+      tmp_expr <- duckdb$expr_reference("supp_nation")
+      duckdb$expr_set_alias(tmp_expr, "supp_nation")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("cust_nation")
+      duckdb$expr_set_alias(tmp_expr, "cust_nation")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("l_year")
+      duckdb$expr_set_alias(tmp_expr, "l_year")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("revenue")
+      duckdb$expr_set_alias(tmp_expr, "revenue")
+      tmp_expr
+    }
+  )
+)
+rel79
+duckdb$rel_to_altrep(rel79)

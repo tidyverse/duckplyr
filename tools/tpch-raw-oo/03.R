@@ -674,10 +674,65 @@ rel40 <- duckdb$rel_project(
     }
   )
 )
-rel41 <- duckdb$rel_order(
+rel41 <- duckdb$rel_project(
   rel40,
-  list(duckdb$expr_function("desc", list(duckdb$expr_reference("revenue"))), duckdb$expr_reference("o_orderdate"))
+  list(
+    {
+      tmp_expr <- duckdb$expr_reference("l_orderkey")
+      duckdb$expr_set_alias(tmp_expr, "l_orderkey")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("revenue")
+      duckdb$expr_set_alias(tmp_expr, "revenue")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("o_orderdate")
+      duckdb$expr_set_alias(tmp_expr, "o_orderdate")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("o_shippriority")
+      duckdb$expr_set_alias(tmp_expr, "o_shippriority")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+      duckdb$expr_set_alias(tmp_expr, "___row_number")
+      tmp_expr
+    }
+  )
 )
-rel42 <- duckdb$rel_limit(rel41, 10)
-rel42
-duckdb$rel_to_altrep(rel42)
+rel42 <- duckdb$rel_order(
+  rel41,
+  list(duckdb$expr_function("desc", list(duckdb$expr_reference("revenue"))), duckdb$expr_reference("o_orderdate"), duckdb$expr_reference("___row_number"))
+)
+rel43 <- duckdb$rel_project(
+  rel42,
+  list(
+    {
+      tmp_expr <- duckdb$expr_reference("l_orderkey")
+      duckdb$expr_set_alias(tmp_expr, "l_orderkey")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("revenue")
+      duckdb$expr_set_alias(tmp_expr, "revenue")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("o_orderdate")
+      duckdb$expr_set_alias(tmp_expr, "o_orderdate")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("o_shippriority")
+      duckdb$expr_set_alias(tmp_expr, "o_shippriority")
+      tmp_expr
+    }
+  )
+)
+rel44 <- duckdb$rel_limit(rel43, 10)
+rel44
+duckdb$rel_to_altrep(rel44)

@@ -2700,11 +2700,46 @@ tpch_raw_oo_21 <- function(con, experimental) {
       }
     )
   )
-  rel78 <- duckdb$rel_order(
+  rel78 <- duckdb$rel_project(
     rel77,
-    list(duckdb$expr_function("desc", list(duckdb$expr_reference("numwait"))), duckdb$expr_reference("s_name"))
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("s_name")
+        duckdb$expr_set_alias(tmp_expr, "s_name")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("numwait")
+        duckdb$expr_set_alias(tmp_expr, "numwait")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number")
+        tmp_expr
+      }
+    )
   )
-  rel79 <- duckdb$rel_limit(rel78, 100)
-  rel79
-  duckdb$rel_to_altrep(rel79)
+  rel79 <- duckdb$rel_order(
+    rel78,
+    list(duckdb$expr_function("desc", list(duckdb$expr_reference("numwait"))), duckdb$expr_reference("s_name"), duckdb$expr_reference("___row_number"))
+  )
+  rel80 <- duckdb$rel_project(
+    rel79,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("s_name")
+        duckdb$expr_set_alias(tmp_expr, "s_name")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("numwait")
+        duckdb$expr_set_alias(tmp_expr, "numwait")
+        tmp_expr
+      }
+    )
+  )
+  rel81 <- duckdb$rel_limit(rel80, 100)
+  rel81
+  duckdb$rel_to_altrep(rel81)
 }

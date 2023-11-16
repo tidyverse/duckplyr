@@ -822,7 +822,105 @@ rel46 <- duckdb$rel_project(
     }
   )
 )
-rel47 <- duckdb$rel_order(rel46, list(duckdb$expr_function("desc", list(duckdb$expr_reference("revenue")))))
-rel48 <- duckdb$rel_limit(rel47, 20)
-rel48
-duckdb$rel_to_altrep(rel48)
+rel47 <- duckdb$rel_project(
+  rel46,
+  list(
+    {
+      tmp_expr <- duckdb$expr_reference("c_custkey")
+      duckdb$expr_set_alias(tmp_expr, "c_custkey")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("c_name")
+      duckdb$expr_set_alias(tmp_expr, "c_name")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("revenue")
+      duckdb$expr_set_alias(tmp_expr, "revenue")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("c_acctbal")
+      duckdb$expr_set_alias(tmp_expr, "c_acctbal")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("n_name")
+      duckdb$expr_set_alias(tmp_expr, "n_name")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("c_address")
+      duckdb$expr_set_alias(tmp_expr, "c_address")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("c_phone")
+      duckdb$expr_set_alias(tmp_expr, "c_phone")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("c_comment")
+      duckdb$expr_set_alias(tmp_expr, "c_comment")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+      duckdb$expr_set_alias(tmp_expr, "___row_number")
+      tmp_expr
+    }
+  )
+)
+rel48 <- duckdb$rel_order(
+  rel47,
+  list(duckdb$expr_function("desc", list(duckdb$expr_reference("revenue"))), duckdb$expr_reference("___row_number"))
+)
+rel49 <- duckdb$rel_project(
+  rel48,
+  list(
+    {
+      tmp_expr <- duckdb$expr_reference("c_custkey")
+      duckdb$expr_set_alias(tmp_expr, "c_custkey")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("c_name")
+      duckdb$expr_set_alias(tmp_expr, "c_name")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("revenue")
+      duckdb$expr_set_alias(tmp_expr, "revenue")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("c_acctbal")
+      duckdb$expr_set_alias(tmp_expr, "c_acctbal")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("n_name")
+      duckdb$expr_set_alias(tmp_expr, "n_name")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("c_address")
+      duckdb$expr_set_alias(tmp_expr, "c_address")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("c_phone")
+      duckdb$expr_set_alias(tmp_expr, "c_phone")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("c_comment")
+      duckdb$expr_set_alias(tmp_expr, "c_comment")
+      tmp_expr
+    }
+  )
+)
+rel50 <- duckdb$rel_limit(rel49, 20)
+rel50
+duckdb$rel_to_altrep(rel50)

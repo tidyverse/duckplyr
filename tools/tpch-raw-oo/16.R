@@ -837,9 +837,64 @@ rel31 <- duckdb$rel_project(
     }
   )
 )
-rel32 <- duckdb$rel_order(
+rel32 <- duckdb$rel_project(
   rel31,
-  list(duckdb$expr_function("desc", list(duckdb$expr_reference("supplier_cnt"))), duckdb$expr_reference("p_brand"), duckdb$expr_reference("p_type"), duckdb$expr_reference("p_size"))
+  list(
+    {
+      tmp_expr <- duckdb$expr_reference("p_brand")
+      duckdb$expr_set_alias(tmp_expr, "p_brand")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("p_type")
+      duckdb$expr_set_alias(tmp_expr, "p_type")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("p_size")
+      duckdb$expr_set_alias(tmp_expr, "p_size")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("supplier_cnt")
+      duckdb$expr_set_alias(tmp_expr, "supplier_cnt")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+      duckdb$expr_set_alias(tmp_expr, "___row_number")
+      tmp_expr
+    }
+  )
 )
-rel32
-duckdb$rel_to_altrep(rel32)
+rel33 <- duckdb$rel_order(
+  rel32,
+  list(duckdb$expr_function("desc", list(duckdb$expr_reference("supplier_cnt"))), duckdb$expr_reference("p_brand"), duckdb$expr_reference("p_type"), duckdb$expr_reference("p_size"), duckdb$expr_reference("___row_number"))
+)
+rel34 <- duckdb$rel_project(
+  rel33,
+  list(
+    {
+      tmp_expr <- duckdb$expr_reference("p_brand")
+      duckdb$expr_set_alias(tmp_expr, "p_brand")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("p_type")
+      duckdb$expr_set_alias(tmp_expr, "p_type")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("p_size")
+      duckdb$expr_set_alias(tmp_expr, "p_size")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("supplier_cnt")
+      duckdb$expr_set_alias(tmp_expr, "supplier_cnt")
+      tmp_expr
+    }
+  )
+)
+rel34
+duckdb$rel_to_altrep(rel34)

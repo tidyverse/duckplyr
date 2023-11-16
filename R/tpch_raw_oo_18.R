@@ -585,11 +585,86 @@ tpch_raw_oo_18 <- function(con, experimental) {
       }
     )
   )
-  rel27 <- duckdb$rel_order(
+  rel27 <- duckdb$rel_project(
     rel26,
-    list(duckdb$expr_function("desc", list(duckdb$expr_reference("o_totalprice"))), duckdb$expr_reference("o_orderdate"))
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("c_name")
+        duckdb$expr_set_alias(tmp_expr, "c_name")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("c_custkey")
+        duckdb$expr_set_alias(tmp_expr, "c_custkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("o_orderkey")
+        duckdb$expr_set_alias(tmp_expr, "o_orderkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("o_orderdate")
+        duckdb$expr_set_alias(tmp_expr, "o_orderdate")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("o_totalprice")
+        duckdb$expr_set_alias(tmp_expr, "o_totalprice")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("sum")
+        duckdb$expr_set_alias(tmp_expr, "sum")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number")
+        tmp_expr
+      }
+    )
   )
-  rel28 <- duckdb$rel_limit(rel27, 100)
-  rel28
-  duckdb$rel_to_altrep(rel28)
+  rel28 <- duckdb$rel_order(
+    rel27,
+    list(duckdb$expr_function("desc", list(duckdb$expr_reference("o_totalprice"))), duckdb$expr_reference("o_orderdate"), duckdb$expr_reference("___row_number"))
+  )
+  rel29 <- duckdb$rel_project(
+    rel28,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("c_name")
+        duckdb$expr_set_alias(tmp_expr, "c_name")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("c_custkey")
+        duckdb$expr_set_alias(tmp_expr, "c_custkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("o_orderkey")
+        duckdb$expr_set_alias(tmp_expr, "o_orderkey")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("o_orderdate")
+        duckdb$expr_set_alias(tmp_expr, "o_orderdate")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("o_totalprice")
+        duckdb$expr_set_alias(tmp_expr, "o_totalprice")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("sum")
+        duckdb$expr_set_alias(tmp_expr, "sum")
+        tmp_expr
+      }
+    )
+  )
+  rel30 <- duckdb$rel_limit(rel29, 100)
+  rel30
+  duckdb$rel_to_altrep(rel30)
 }

@@ -810,6 +810,54 @@ rel17 <- duckdb$rel_project(
     }
   )
 )
-rel18 <- duckdb$rel_order(rel17, list(duckdb$expr_reference("l_shipmode")))
-rel18
-duckdb$rel_to_altrep(rel18)
+rel18 <- duckdb$rel_project(
+  rel17,
+  list(
+    {
+      tmp_expr <- duckdb$expr_reference("l_shipmode")
+      duckdb$expr_set_alias(tmp_expr, "l_shipmode")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("high_line_count")
+      duckdb$expr_set_alias(tmp_expr, "high_line_count")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("low_line_count")
+      duckdb$expr_set_alias(tmp_expr, "low_line_count")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+      duckdb$expr_set_alias(tmp_expr, "___row_number")
+      tmp_expr
+    }
+  )
+)
+rel19 <- duckdb$rel_order(
+  rel18,
+  list(duckdb$expr_reference("l_shipmode"), duckdb$expr_reference("___row_number"))
+)
+rel20 <- duckdb$rel_project(
+  rel19,
+  list(
+    {
+      tmp_expr <- duckdb$expr_reference("l_shipmode")
+      duckdb$expr_set_alias(tmp_expr, "l_shipmode")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("high_line_count")
+      duckdb$expr_set_alias(tmp_expr, "high_line_count")
+      tmp_expr
+    },
+    {
+      tmp_expr <- duckdb$expr_reference("low_line_count")
+      duckdb$expr_set_alias(tmp_expr, "low_line_count")
+      tmp_expr
+    }
+  )
+)
+rel20
+duckdb$rel_to_altrep(rel20)
