@@ -1,5 +1,18 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.2.3.9002 (2023-11-16)
+
+## Bug fixes
+
+  - Add output order preservation for filters.
+
+## Chore
+
+  - Full sync.
+
+  - Update duckdb tests.
+
+
 # duckplyr 0.2.3.9001 (2023-11-13)
 
 ## Bug fixes
