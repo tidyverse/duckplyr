@@ -34,7 +34,7 @@ Imports:
 Suggests: 
     arrow,
     brio,
-    constructive,
+    constructive (>= 0.2.0),
     dbplyr,
     hms,
     lobstr,
