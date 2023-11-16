@@ -25,6 +25,7 @@ meta_record <- function(call) {
 meta_replay <- function(add_pre_code = TRUE) {
   if (add_pre_code) {
     con_exprs <- list(
+      expr(duckdb <- asNamespace("duckdb")),
       expr(con <- DBI::dbConnect(duckdb::duckdb())),
       expr(experimental <- !!(Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
     )
