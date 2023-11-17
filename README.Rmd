@@ -184,17 +184,20 @@ This package also provides generics, for which other packages may then implement
 ```{r extensibility}
 library(duckplyr)
 
+# Create a relational to be used by examples below
 new_dfrel <- function(x) {
   stopifnot(is.data.frame(x))
   new_relational(list(x), class = "dfrel")
 }
 mtcars_rel <- new_dfrel(mtcars[1:5, 1:4])
 
+# Example 1: return a data.frame
 rel_to_df.dfrel <- function(rel, ...) {
   unclass(rel)[[1]]
 }
 rel_to_df(mtcars_rel)
 
+# Example 2: A (random) filter
 rel_filter.dfrel <- function(rel, exprs, ...) {
   df <- unclass(rel)[[1]]
 
@@ -213,6 +216,7 @@ rel_filter(
   )
 )
 
+# Example 3: A custom projection
 rel_project.dfrel <- function(rel, exprs, ...) {
   df <- unclass(rel)[[1]]
 
@@ -226,6 +230,7 @@ rel_project(
   list(relexpr_reference("cyl"), relexpr_reference("disp"))
 )
 
+# Example 4: A custom ordering (eg, ascending by mpg)
 rel_order.dfrel <- function(rel, exprs, ...) {
   df <- unclass(rel)[[1]]
 
@@ -238,6 +243,8 @@ rel_order(
   mtcars_rel,
   list(relexpr_reference("mpg"))
 )
+
+# Example 5: A custom join
 rel_join.dfrel <- function(left, right, conds, join, ...) {
   left_df <- unclass(left)[[1]]
   right_df <- unclass(right)[[1]]
@@ -251,6 +258,7 @@ rel_join.dfrel <- function(left, right, conds, join, ...) {
 
 rel_join(new_dfrel(data.frame(mpg = 21)), mtcars_rel)
 
+# Example 6: Limit the maximum rows returned
 rel_limit.dfrel <- function(rel, n, ...) {
   df <- unclass(rel)[[1]]
 
@@ -259,6 +267,8 @@ rel_limit.dfrel <- function(rel, n, ...) {
 
 rel_limit(mtcars_rel, 3)
 
+# Example 7: Suppress duplicate rows
+#  (ignoring row names)
 rel_distinct.dfrel <- function(rel, ...) {
   df <- unclass(rel)[[1]]
 
@@ -267,6 +277,7 @@ rel_distinct.dfrel <- function(rel, ...) {
 
 rel_distinct(new_dfrel(mtcars[1:3, 1:4]))
 
+# Example 8: Return column names
 rel_names.dfrel <- function(rel, ...) {
   df <- unclass(rel)[[1]]
 
