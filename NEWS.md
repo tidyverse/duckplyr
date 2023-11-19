@@ -1,5 +1,16 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.2.3.9004 (2023-11-19)
+
+## Chore
+
+  - Render README.
+
+## Documentation
+
+  - Separate and explain the new relational examples (@wibeasley, #84).
+
+
 # duckplyr 0.2.3.9003 (2023-11-17)
 
 ## Bug fixes
