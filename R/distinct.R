@@ -62,7 +62,7 @@ distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
       }
 
       out <- rel_to_df(out_rel)
-      out <- dplyr_reconstruct_dispatch(out, .data)
+      out <- dplyr_reconstruct(out, .data)
       return(out)
     }
   )

@@ -18,8 +18,6 @@ DataMask <- dplyr$DataMask
 dplyr_error_call <- dplyr$dplyr_error_call
 dplyr_local_error_call <- dplyr$dplyr_local_error_call
 dplyr_quosures <- dplyr$dplyr_quosures
-# FIXME: Unneeded after https://github.com/tidyverse/dplyr/pull/6927?
-dplyr_reconstruct_dispatch <- dplyr$dplyr_reconstruct_dispatch
 eval_relocate <- dplyr$eval_relocate
 eval_select_by <- dplyr$eval_select_by
 expand_across <- dplyr$expand_across

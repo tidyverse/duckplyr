@@ -30,12 +30,14 @@ df_methods <-
     "sample_n", "sample_frac",
     "slice_min", "slice_max",
     "tbl_vars",
+    "dplyr_reconstruct",
     NULL
   )) %>%
   mutate(is_tbl_return = !(name %in% c(
     # Special case: forward to `NextMethod()`, don't change output
-    "dplyr_reconstruct", "auto_copy", "pull", "setequal", "tbl_vars",
+    "auto_copy", "pull", "setequal", "tbl_vars",
     "group_vars",
+    "dplyr_reconstruct",
 
     # For 03-tests.R
     "do", "reframe",

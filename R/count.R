@@ -37,7 +37,7 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
       }
 
       out <- rel_to_df(out_rel)
-      out <- dplyr_reconstruct_dispatch(out, x)
+      out <- dplyr_reconstruct(out, x)
 
       return(out)
     }

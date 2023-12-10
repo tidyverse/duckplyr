@@ -1,5 +1,5 @@
 diff --git b/R/intersect.R a/R/intersect.R
-index e080cd6..87e7f92 100644
+index e080cd6..d7446a7 100644
 --- b/R/intersect.R
 +++ a/R/intersect.R
 @@ -2,9 +2,36 @@
@@ -35,7 +35,7 @@ index e080cd6..87e7f92 100644
 +
 +        rel <- rel_set_intersect(x_rel, y_rel)
 +        out <- rel_to_df(rel)
-+        out <- dplyr_reconstruct_dispatch(out, x)
++        out <- dplyr_reconstruct(out, x)
 +      }
        return(out)
      }

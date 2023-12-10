@@ -49,7 +49,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
 
       out <- rel_to_df(rel)
 
-      out <- dplyr_reconstruct_dispatch(out, .data)
+      out <- dplyr_reconstruct(out, .data)
 
       names_original <- names(.data)
 

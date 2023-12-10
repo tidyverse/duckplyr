@@ -50,8 +50,11 @@
 #' @importFrom vctrs vec_slice
 #' @importFrom vctrs vec_split
 #' @importFrom vctrs vec_unique_loc
-#' @useDynLib duckplyr, .registration = TRUE
 ## usethis namespace: end
+NULL
+
+# Enable to use compiled code again
+# @useDynLib duckplyr, .registration = TRUE
 NULL
 
 #' @importFrom dplyr %>%

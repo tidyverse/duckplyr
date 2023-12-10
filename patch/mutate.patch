@@ -55,7 +55,7 @@ index 50437cc..b67af99 100644
 +
 +      out <- rel_to_df(rel)
 +
-+      out <- dplyr_reconstruct_dispatch(out, .data)
++      out <- dplyr_reconstruct(out, .data)
 +
 +      names_original <- names(.data)
 +

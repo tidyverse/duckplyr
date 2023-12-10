@@ -25,7 +25,7 @@ filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
       out_rel <- oo_restore(rel)
 
       out <- rel_to_df(out_rel)
-      out <- dplyr_reconstruct_dispatch(out, .data)
+      out <- dplyr_reconstruct(out, .data)
       return(out)
     }
   )
