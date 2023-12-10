@@ -21,7 +21,7 @@ Imports:
     cli,
     collections,
     DBI,
-    dplyr (>= 1.1.3.9000),
+    dplyr (>= 1.1.4),
     duckdb (>= 0.9.1-1),
     glue,
     lifecycle,
@@ -48,8 +48,6 @@ Suggests:
     styler,
     testthat (>= 3.1.5),
     withr
-Remotes: 
-    tidyverse/dplyr
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Config/testthat/start-first: as_duckplyr_df, mutate, filter, count-tally
