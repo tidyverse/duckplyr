@@ -27,8 +27,38 @@ tpch_raw_oo_06 <- function(con, experimental) {
       }
     )
   )
-  rel3 <- duckdb$rel_filter(
+  rel3 <- duckdb$rel_project(
     rel2,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("l_shipdate")
+        duckdb$expr_set_alias(tmp_expr, "l_shipdate")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("l_extendedprice")
+        duckdb$expr_set_alias(tmp_expr, "l_extendedprice")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("l_discount")
+        duckdb$expr_set_alias(tmp_expr, "l_discount")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("l_quantity")
+        duckdb$expr_set_alias(tmp_expr, "l_quantity")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number")
+        tmp_expr
+      }
+    )
+  )
+  rel4 <- duckdb$rel_filter(
+    rel3,
     list(
       duckdb$expr_function(
         ">=",
@@ -87,8 +117,34 @@ tpch_raw_oo_06 <- function(con, experimental) {
       )
     )
   )
-  rel4 <- duckdb$rel_project(
-    rel3,
+  rel5 <- duckdb$rel_order(rel4, list(duckdb$expr_reference("___row_number")))
+  rel6 <- duckdb$rel_project(
+    rel5,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("l_shipdate")
+        duckdb$expr_set_alias(tmp_expr, "l_shipdate")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("l_extendedprice")
+        duckdb$expr_set_alias(tmp_expr, "l_extendedprice")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("l_discount")
+        duckdb$expr_set_alias(tmp_expr, "l_discount")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("l_quantity")
+        duckdb$expr_set_alias(tmp_expr, "l_quantity")
+        tmp_expr
+      }
+    )
+  )
+  rel7 <- duckdb$rel_project(
+    rel6,
     list(
       {
         tmp_expr <- duckdb$expr_reference("l_extendedprice")
@@ -102,8 +158,8 @@ tpch_raw_oo_06 <- function(con, experimental) {
       }
     )
   )
-  rel5 <- duckdb$rel_aggregate(
-    rel4,
+  rel8 <- duckdb$rel_aggregate(
+    rel7,
     groups = list(),
     aggregates = list(
       {
@@ -121,7 +177,7 @@ tpch_raw_oo_06 <- function(con, experimental) {
       }
     )
   )
-  rel6 <- duckdb$rel_distinct(rel5)
-  rel6
-  duckdb$rel_to_altrep(rel6)
+  rel9 <- duckdb$rel_distinct(rel8)
+  rel9
+  duckdb$rel_to_altrep(rel9)
 }

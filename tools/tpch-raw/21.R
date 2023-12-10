@@ -9,7 +9,7 @@ invisible(DBI::dbExecute(con, "CREATE MACRO \"any\"(x) AS (bool_or(x))"))
 invisible(
   DBI::dbExecute(
     con,
-    "CREATE MACRO \"ifelse\"(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)"
+    "CREATE MACRO \"if_else\"(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)"
   )
 )
 invisible(DBI::dbExecute(con, "CREATE MACRO \"&\"(x, y) AS (x AND y)"))
@@ -286,7 +286,7 @@ rel17 <- duckdb$rel_aggregate(
         "sum",
         list(
           duckdb$expr_function(
-            "ifelse",
+            "if_else",
             list(
               duckdb$expr_reference("failed_delivery_commit"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {

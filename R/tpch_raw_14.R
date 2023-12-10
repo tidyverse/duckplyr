@@ -192,7 +192,7 @@ tpch_raw_14 <- function(con, experimental) {
                   "sum",
                   list(
                     duckdb$expr_function(
-                      "ifelse",
+                      "if_else",
                       list(
                         duckdb$expr_function(
                           "grepl",

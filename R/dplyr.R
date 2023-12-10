@@ -37,6 +37,7 @@ mutate_relocate <- dplyr$mutate_relocate
 new_dplyr_quosure <- dplyr$new_dplyr_quosure
 new_join_by <- dplyr$new_join_by
 quo_eval_fns <- dplyr$quo_eval_fns
+sample_int <- dplyr$sample_int
 some <- dplyr$some
 tally_n <- dplyr$tally_n
 

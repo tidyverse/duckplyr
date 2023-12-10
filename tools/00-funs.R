@@ -27,7 +27,8 @@ df_methods <-
   # methods we don't need to implement but can test
   mutate(skip_impl = name %in% c(
     "collapse", "tally",
-    "slice_min", "slice_max", "slice_sample",
+    "sample_n", "sample_frac",
+    "slice_min", "slice_max",
     "tbl_vars",
     "dplyr_reconstruct",
     NULL
@@ -531,7 +532,10 @@ test_extra_arg_map <- list(
     "a == 1",
     "a %in% 2:3, g == 2",
     "a %in% 2:3 & g == 2",
+
     # "lag(a) == 1, .by = g",
+
+    "a != 2 | g != 2",
     NULL
   ),
   full_join = "join_by(a)",
@@ -601,6 +605,13 @@ test_extra_arg_map <- list(
     "a / b",
     # Division by zero
     "c = 0, d = 0, e = c / d",
+
+    # Negative log
+    "c = 0, d = -1, e = log(c), f = log(d)",
+    "c = 0, d = -1, e = log(c), f = log10(d)",
+
+    # grepl with NA
+    "c = NA_character_, d = grepl('.', c)",
 
     NULL
   ),

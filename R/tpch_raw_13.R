@@ -135,7 +135,7 @@ tpch_raw_13 <- function(con, experimental) {
           "sum",
           list(
             duckdb$expr_function(
-              "ifelse",
+              "if_else",
               list(
                 duckdb$expr_function("is.na", list(duckdb$expr_reference("o_orderkey"))),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {

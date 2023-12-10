@@ -14,7 +14,7 @@ invisible(
 invisible(
   DBI::dbExecute(
     con,
-    "CREATE MACRO \"ifelse\"(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)"
+    "CREATE MACRO \"if_else\"(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)"
   )
 )
 invisible(
@@ -212,7 +212,7 @@ rel8 <- duckdb$rel_aggregate(
                 "sum",
                 list(
                   duckdb$expr_function(
-                    "ifelse",
+                    "if_else",
                     list(
                       duckdb$expr_function(
                         "grepl",

@@ -27,16 +27,16 @@ duckplyr_macros <- c(
   "is.na" = "(x) AS (x IS NULL)",
   "n" = "() AS CAST(COUNT(*) AS int32)",
   #
-  "log10" = "(x) AS log(x)",
-  "log" = "(x) AS ln(x)",
+  "log10" = "(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE log(x) END",
+  "log" = "(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE ln(x) END",
   # TPCH
 
   # https://github.com/duckdb/duckdb/discussions/8599
   # "as.Date" = '(x) AS strptime(x, \'%Y-%m-%d\')',
 
-  "grepl" = "(pattern, x) AS regexp_matches(x, pattern)",
+  "grepl" = "(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)",
   "as.integer" = "(x) AS CAST(x AS int32)",
-  "ifelse" = "(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)",
+  "if_else" = "(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)",
   "|" = "(x, y) AS (x OR y)",
   "&" = "(x, y) AS (x AND y)",
   "!" = "(x) AS (NOT x)",
@@ -85,6 +85,18 @@ duckdb_rel_from_df <- function(df) {
     df <- as_duckplyr_df(df)
   }
 
+  out <- check_df_for_rel(df)
+
+  meta_rel_register_df(out, df)
+
+  out
+
+  # Causes protection errors
+  # duckdb$rel_from_df(get_default_duckdb_connection(), df)
+}
+
+# FIXME: This should be duckdb's responsibility
+check_df_for_rel <- function(df) {
   if (is.character(.row_names_info(df, 0L))) {
     stop("Need data frame without row names to convert to relational.")
   }
@@ -133,12 +145,7 @@ duckdb_rel_from_df <- function(df) {
     }
   }
 
-  meta_rel_register_df(out, df)
-
   out
-
-  # Causes protection errors
-  # duckdb$rel_from_df(get_default_duckdb_connection(), df)
 }
 
 #' @export
@@ -370,6 +377,9 @@ to_duckdb_expr <- function(x) {
       out
     },
     relational_relexpr_constant = {
+      # FIXME: Should be duckdb's responsibility
+      check_df_for_rel(tibble(constant = x$val))
+
       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
         experimental <- (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE")
         out <- duckdb$expr_constant(x$val, experimental = experimental)

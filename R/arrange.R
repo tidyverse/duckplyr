@@ -19,8 +19,23 @@ arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
       if (length(dots) == 0) {
         return(.data)
       }
+
       exprs <- rel_translate_dots(dots, .data)
-      out_rel <- rel_order(rel, exprs)
+
+      if (oo_force()) {
+        rel <- oo_prep(rel, force = TRUE)
+        exprs <- c(exprs, list(relexpr_reference("___row_number")))
+      }
+
+      rel <- rel_order(rel, exprs)
+
+      # Don't need to sort here, already sorting by ___row_number
+      if (oo_force()) {
+        out_rel <- oo_restore_cols(rel)
+      } else {
+        out_rel <- rel
+      }
+
       out <- rel_to_df(out_rel)
       out <- dplyr_reconstruct_dispatch(out, .data)
       return(out)

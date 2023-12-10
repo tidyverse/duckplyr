@@ -9,7 +9,7 @@ invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(x, y) AS COALESCE(x,
 invisible(
   DBI::dbExecute(
     con,
-    "CREATE MACRO \"ifelse\"(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)"
+    "CREATE MACRO \"if_else\"(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)"
   )
 )
 invisible(DBI::dbExecute(con, "CREATE MACRO \"&\"(x, y) AS (x AND y)"))
@@ -230,7 +230,7 @@ rel8 <- duckdb$rel_aggregate(
         "sum",
         list(
           duckdb$expr_function(
-            "ifelse",
+            "if_else",
             list(
               duckdb$expr_function(
                 "|",
@@ -281,7 +281,7 @@ rel8 <- duckdb$rel_aggregate(
         "sum",
         list(
           duckdb$expr_function(
-            "ifelse",
+            "if_else",
             list(
               duckdb$expr_function(
                 "&",

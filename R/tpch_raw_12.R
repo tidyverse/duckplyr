@@ -216,7 +216,7 @@ tpch_raw_12 <- function(con, experimental) {
           "sum",
           list(
             duckdb$expr_function(
-              "ifelse",
+              "if_else",
               list(
                 duckdb$expr_function(
                   "|",
@@ -267,7 +267,7 @@ tpch_raw_12 <- function(con, experimental) {
           "sum",
           list(
             duckdb$expr_function(
-              "ifelse",
+              "if_else",
               list(
                 duckdb$expr_function(
                   "&",

@@ -3,7 +3,7 @@
     Code
       data.frame(a = vctrs::new_vctr(1:3)) %>% duckdb_rel_from_df()
     Condition
-      Error in `duckdb_rel_from_df()`:
+      Error in `check_df_for_rel()`:
       ! Attributes are lost during conversion. Affected column: `a`.
 
 # rel_aggregate()
@@ -30,8 +30,11 @@
       ---------------------
       --- Relation Tree ---
       ---------------------
-      Filter [==(a, 1.0)]
-        r_dataframe_scan(0xdeadbeef)
+      Projection [a as a]
+        Order [___row_number ASC]
+          Filter [==(a, 1.0)]
+            Projection [a as a, row_number() OVER () as ___row_number]
+              r_dataframe_scan(0xdeadbeef)
       
       ---------------------
       -- Result Columns  --
@@ -45,8 +48,11 @@
       ---------------------
       --- Relation Tree ---
       ---------------------
-      Filter [==(a, 1.0)]
-        r_dataframe_scan(0xdeadbeef)
+      Projection [a as a]
+        Order [___row_number ASC]
+          Filter [==(a, 1.0)]
+            Projection [a as a, row_number() OVER () as ___row_number]
+              r_dataframe_scan(0xdeadbeef)
       
       ---------------------
       -- Result Columns  --

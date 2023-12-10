@@ -1,7 +1,7 @@
 Type: Package
 Package: duckplyr
 Title: A 'DuckDB'-Backed Version of 'dplyr'
-Version: 0.2.3
+Version: 0.2.3.9003
 Authors@R: c(
     person("Hannes", "Mühleisen", role = "aut",
            comment = c(ORCID = "0000-0001-8552-0029")),
@@ -34,7 +34,7 @@ Imports:
 Suggests: 
     arrow,
     brio,
-    constructive,
+    constructive (>= 0.2.0),
     dbplyr,
     hms,
     lobstr,

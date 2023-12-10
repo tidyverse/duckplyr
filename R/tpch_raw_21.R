@@ -272,7 +272,7 @@ tpch_raw_21 <- function(con, experimental) {
           "sum",
           list(
             duckdb$expr_function(
-              "ifelse",
+              "if_else",
               list(
                 duckdb$expr_reference("failed_delivery_commit"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {

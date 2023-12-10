@@ -38,6 +38,7 @@ distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
           relexpr_window(
             relexpr_function("row_number", list()),
             partitions = exprs,
+            order_bys = list(relexpr_reference("___row_number")),
             alias = "___row_number_by"
           )
         ))

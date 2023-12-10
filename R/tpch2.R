@@ -44,14 +44,14 @@ tpch_12 <- function() {
     ) |>
     summarise(
       high_line_count = sum(
-        ifelse(
+        if_else(
           (o_orderpriority == "1-URGENT") | (o_orderpriority == "2-HIGH"),
           1L,
           0L
         )
       ),
       low_line_count = sum(
-        ifelse(
+        if_else(
           (o_orderpriority != "1-URGENT") & (o_orderpriority != "2-HIGH"),
           1L,
           0L
@@ -73,7 +73,7 @@ tpch_13 <- function() {
     ) |>
     summarise(
       # FIXME: sum(!is.na(o_orderkey))
-      c_count = sum(ifelse(is.na(o_orderkey), 0L, 1L)),
+      c_count = sum(if_else(is.na(o_orderkey), 0L, 1L)),
       .by = c_custkey
     )
 
@@ -92,7 +92,7 @@ tpch_14 <- function() {
     inner_join(na_matches = TPCH_NA_MATCHES, part, by = c("l_partkey" = "p_partkey")) |>
     summarise(
       promo_revenue = 100 * sum(
-        ifelse(grepl("^PROMO", p_type), l_extendedprice * (1 - l_discount), 0)
+        if_else(grepl("^PROMO", p_type), l_extendedprice * (1 - l_discount), 0)
       ) / sum(l_extendedprice * (1 - l_discount))
     )
 }
@@ -290,7 +290,7 @@ tpch_21 <- function() {
     ) |>
     summarise(
       n_supplier = n(),
-      num_failed = sum(ifelse(failed_delivery_commit, 1, 0)),
+      num_failed = sum(if_else(failed_delivery_commit, 1, 0)),
       .by = l_orderkey
     ) |>
     filter(n_supplier > 1 & num_failed == 1)
