@@ -1,4 +1,5 @@
 qloadm("tools/tpch/001.qs")
+duckdb <- asNamespace("duckdb")
 con <- DBI::dbConnect(duckdb::duckdb())
 experimental <- FALSE
 invisible(DBI::dbExecute(con, "CREATE MACRO \">=\"(x, y) AS x >= y"))
@@ -18,7 +19,10 @@ invisible(
   )
 )
 invisible(
-  DBI::dbExecute(con, "CREATE MACRO \"grepl\"(pattern, x) AS regexp_matches(x, pattern)")
+  DBI::dbExecute(
+    con,
+    "CREATE MACRO \"grepl\"(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)"
+  )
 )
 df1 <- lineitem
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)

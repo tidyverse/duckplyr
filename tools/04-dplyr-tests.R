@@ -8,7 +8,7 @@ copy_dplyr_test <- function(test_name) {
 
   rx <- paste0(
     "((?<![a-z_])(?:",
-    paste(df_methods$name, collapse = "|"),
+    paste(df_methods$name[!df_methods$skip_impl], collapse = "|"),
     ")[(])"
   )
 

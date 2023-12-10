@@ -40,6 +40,17 @@
       3 3  1
       4 4  1
 
+# tally() owns errors (#6139)
+
+    Code
+      (expect_error(tally(mtcars, wt = 1 + "")))
+    Output
+      <error/rlang_error>
+      Error in `tally()`:
+      i In argument: `n = sum(1 + "", na.rm = TRUE)`.
+      Caused by error in `1 + ""`:
+      ! non-numeric argument to binary operator
+
 # add_tally() owns errors (#6139)
 
     Code

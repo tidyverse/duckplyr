@@ -69,12 +69,12 @@
       Error in `slice_tail()`:
       ! `n` must be a round number, not the string "a".
     Code
-      duckplyr_slice_min(df, x, n = "a")
+      slice_min(df, x, n = "a")
     Condition
       Error in `slice_min()`:
       ! `n` must be a round number, not the string "a".
     Code
-      duckplyr_slice_max(df, x, n = "a")
+      slice_max(df, x, n = "a")
     Condition
       Error in `slice_max()`:
       ! `n` must be a round number, not the string "a".
@@ -176,13 +176,13 @@
       ! `n` must be explicitly named.
       i Did you mean `slice_tail(n = 5)`?
     Code
-      duckplyr_slice_min(df, x, 5)
+      slice_min(df, x, 5)
     Condition
       Error in `slice_min()`:
       ! `n` must be explicitly named.
       i Did you mean `slice_min(n = 5)`?
     Code
-      duckplyr_slice_max(df, x, 5)
+      slice_max(df, x, 5)
     Condition
       Error in `slice_max()`:
       ! `n` must be explicitly named.
@@ -193,6 +193,36 @@
       Error in `slice_sample()`:
       ! `n` must be explicitly named.
       i Did you mean `slice_sample(n = 5)`?
+
+---
+
+    Code
+      dplyr::duckplyr_slice_head(df, 5)
+    Condition
+      Error:
+      ! 'duckplyr_slice_head' is not an exported object from 'namespace:dplyr'
+    Code
+      dplyr::duckplyr_slice_tail(df, 5)
+    Condition
+      Error:
+      ! 'duckplyr_slice_tail' is not an exported object from 'namespace:dplyr'
+    Code
+      dplyr::slice_min(df, x, 5)
+    Condition
+      Error in `dplyr::slice_min()`:
+      ! `n` must be explicitly named.
+      i Did you mean `dplyr::slice_min(n = 5)`?
+    Code
+      dplyr::slice_max(df, x, 5)
+    Condition
+      Error in `dplyr::slice_max()`:
+      ! `n` must be explicitly named.
+      i Did you mean `dplyr::slice_max(n = 5)`?
+    Code
+      dplyr::duckplyr_slice_sample(df, 5)
+    Condition
+      Error:
+      ! 'duckplyr_slice_sample' is not an exported object from 'namespace:dplyr'
 
 ---
 
@@ -215,7 +245,7 @@
       * ..2 = 2
       i Did you forget to name an argument?
     Code
-      duckplyr_slice_min(df, x, 5, 2)
+      slice_min(df, x, 5, 2)
     Condition
       Error in `slice_min()`:
       ! `...` must be empty.
@@ -224,7 +254,7 @@
       * ..2 = 2
       i Did you forget to name an argument?
     Code
-      duckplyr_slice_max(df, x, 5, 2)
+      slice_max(df, x, 5, 2)
     Condition
       Error in `slice_max()`:
       ! `...` must be empty.
@@ -257,13 +287,13 @@
       ! Can't specify an argument named `.by` in this verb.
       i Did you mean to use `by` instead?
     Code
-      duckplyr_slice_min(df, order_by = x, .by = x)
+      slice_min(df, order_by = x, .by = x)
     Condition
       Error in `slice_min()`:
       ! Can't specify an argument named `.by` in this verb.
       i Did you mean to use `by` instead?
     Code
-      duckplyr_slice_max(df, order_by = x, .by = x)
+      slice_max(df, order_by = x, .by = x)
     Condition
       Error in `slice_max()`:
       ! Can't specify an argument named `.by` in this verb.
@@ -278,16 +308,16 @@
 # slice_min/max() check size of `order_by=` (#5922)
 
     Code
-      duckplyr_slice_min(data.frame(x = 1:10), 1:6)
+      slice_min(data.frame(x = 1:10), 1:6)
     Condition
-      Error in `slice()`:
+      Error in `slice_min()`:
       ! Can't compute indices.
       Caused by error:
       ! `order_by` must have size 10, not size 6.
     Code
-      duckplyr_slice_max(data.frame(x = 1:10), 1:6)
+      slice_max(data.frame(x = 1:10), 1:6)
     Condition
-      Error in `slice()`:
+      Error in `slice_max()`:
       ! Can't compute indices.
       Caused by error:
       ! `order_by` must have size 10, not size 6.
@@ -295,32 +325,32 @@
 # slice_min/max() validate simple arguments
 
     Code
-      duckplyr_slice_min(data.frame(x = 1:10))
+      slice_min(data.frame(x = 1:10))
     Condition
       Error in `slice_min()`:
       ! `order_by` is absent but must be supplied.
     Code
-      duckplyr_slice_max(data.frame(x = 1:10))
+      slice_max(data.frame(x = 1:10))
     Condition
       Error in `slice_max()`:
       ! `order_by` is absent but must be supplied.
     Code
-      duckplyr_slice_min(data.frame(x = 1:10), x, with_ties = 1)
+      slice_min(data.frame(x = 1:10), x, with_ties = 1)
     Condition
       Error in `slice_min()`:
       ! `with_ties` must be `TRUE` or `FALSE`, not the number 1.
     Code
-      duckplyr_slice_max(data.frame(x = 1:10), x, with_ties = 1)
+      slice_max(data.frame(x = 1:10), x, with_ties = 1)
     Condition
       Error in `slice_max()`:
       ! `with_ties` must be `TRUE` or `FALSE`, not the number 1.
     Code
-      duckplyr_slice_min(data.frame(x = 1:10), x, na_rm = 1)
+      slice_min(data.frame(x = 1:10), x, na_rm = 1)
     Condition
       Error in `slice_min()`:
       ! `na_rm` must be `TRUE` or `FALSE`, not the number 1.
     Code
-      duckplyr_slice_max(data.frame(x = 1:10), x, na_rm = 1)
+      slice_max(data.frame(x = 1:10), x, na_rm = 1)
     Condition
       Error in `slice_max()`:
       ! `na_rm` must be `TRUE` or `FALSE`, not the number 1.
