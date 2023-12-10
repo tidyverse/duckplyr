@@ -1,5 +1,14 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.2.3.9005 (2023-12-10)
+
+## Chore
+
+- Sync with dplyr 1.1.4 (#82).
+
+- Remove `dplyr_reconstruct()` method (#48).
+
+
 # duckplyr 0.2.3.9004 (2023-11-19)
 
 ## Chore
