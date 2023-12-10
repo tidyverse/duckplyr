@@ -1,3 +1,0 @@
-dplyr_reconstruct.data.frame <- function(data, template) {
-  .Call(ffi_dplyr_reconstruct, data, template)
-}
