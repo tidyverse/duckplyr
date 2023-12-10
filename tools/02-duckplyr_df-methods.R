@@ -176,9 +176,7 @@ duckplyr_df_methods <-
   ungroup()
 
 # If this fails, we need to install dplyr from source:
-# system("git clone tidyverse/dplyr ../dplyr")
-# system("git -C ../dplyr switch v1.1.2")
-# system("R CMD INSTALL --with-keep.source ../dplyr")
+# system("R CMD INSTALL --with-keep.source .sync/dplyr-main")
 stopifnot(!is.null(attr(duckplyr_df_methods$code[[1]], "srcref")))
 
 old <-

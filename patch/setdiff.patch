@@ -1,5 +1,5 @@
 diff --git b/R/setdiff.R a/R/setdiff.R
-index 314dcd7..cd2a470 100644
+index 314dcd7..23852ec 100644
 --- b/R/setdiff.R
 +++ a/R/setdiff.R
 @@ -2,9 +2,36 @@
@@ -35,7 +35,7 @@ index 314dcd7..cd2a470 100644
 +
 +        rel <- rel_set_diff(x_rel, y_rel)
 +        out <- rel_to_df(rel)
-+        out <- dplyr_reconstruct_dispatch(out, x)
++        out <- dplyr_reconstruct(out, x)
 +      }
        return(out)
      }

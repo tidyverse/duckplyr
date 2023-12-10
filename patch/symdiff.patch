@@ -1,5 +1,5 @@
 diff --git b/R/symdiff.R a/R/symdiff.R
-index dbd08df..14b28dd 100644
+index dbd08df..f99c084 100644
 --- b/R/symdiff.R
 +++ a/R/symdiff.R
 @@ -2,9 +2,38 @@
@@ -37,7 +37,7 @@ index dbd08df..14b28dd 100644
 +
 +        rel <- rel_set_symdiff(x_rel, y_rel)
 +        out <- rel_to_df(rel)
-+        out <- dplyr_reconstruct_dispatch(out, x)
++        out <- dplyr_reconstruct(out, x)
 +      }
        return(out)
      }
