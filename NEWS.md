@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.3.0.9001 (2024-01-15)
+
+  - Internal changes only.
+
+
 # duckplyr 0.3.0.9000 (2023-12-11)
 
   - Merge branch 'cran-0.3.0'.
