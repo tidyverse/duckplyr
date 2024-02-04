@@ -117,7 +117,14 @@ check_df_for_rel <- function(df) {
     }
     # https://github.com/duckdb/duckdb/issues/8561
     col_class <- class(col)
-    if (length(col_class) != 1 || !(col_class %in% c("logical", "integer", "numeric", "character", "Date"))) {
+    if (length(col_class) == 1) {
+      valid <- col_class %in% c("logical", "integer", "numeric", "character", "Date")
+    } else if (length(col_class) == 2) {
+      valid <- identical(col_class, c("POSIXct", "POSIXt"))
+    } else {
+      valid <- FALSE
+    }
+    if (!valid) {
       stop("Can't convert columns of class ", paste0(col_class, collapse = "/"), " to relational. Affected column: `", names(df)[[i]], "`.")
     }
   }
