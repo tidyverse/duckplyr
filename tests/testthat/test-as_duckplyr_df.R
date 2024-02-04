@@ -1305,13 +1305,13 @@ test_that("as_duckplyr_df() and mutate(a / b)", {
 })
 
 
-test_that("as_duckplyr_df() and mutate(c = 0, d = 0, e = c / d)", {
+test_that("as_duckplyr_df() and mutate(d = 0, e = 1 / d, f = 0 / d, g = -1 / d)", {
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
-  pre <- test_df %>% as_duckplyr_df() %>% mutate(c = 0, d = 0, e = c / d)
-  post <- test_df %>% mutate(c = 0, d = 0, e = c / d) %>% as_duckplyr_df()
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(d = 0, e = 1 / d, f = 0 / d, g = -1 / d)
+  post <- test_df %>% mutate(d = 0, e = 1 / d, f = 0 / d, g = -1 / d) %>% as_duckplyr_df()
 
   # Compare
   expect_equal(pre, post)

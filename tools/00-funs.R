@@ -606,7 +606,7 @@ test_extra_arg_map <- list(
 
     "a / b",
     # Division by zero
-    "c = 0, d = 0, e = c / d",
+    "d = 0, e = 1 / d, f = 0 / d, g = -1 / d",
 
     # Negative log
     "c = 0, d = -1, e = log(c), f = log(d)",

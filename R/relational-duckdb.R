@@ -22,7 +22,7 @@ duckplyr_macros <- c(
   "==" = "(x, y) AS x = y",
   "!=" = "(x, y) AS x <> y",
   #
-  "___divide" = "(x, y) AS CASE WHEN x = 0 AND y = 0 THEN CAST('NaN' AS double) ELSE CAST(x AS double) / y END",
+  "___divide" = "(x, y) AS CASE WHEN y = 0 THEN CASE WHEN x = 0 THEN CAST('NaN' AS double) WHEN x > 0 THEN CAST('+Infinity' AS double) ELSE CAST('-Infinity' AS double) END ELSE CAST(x AS double) / y END",
   #
   "is.na" = "(x) AS (x IS NULL)",
   "n" = "() AS CAST(COUNT(*) AS int32)",
