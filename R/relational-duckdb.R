@@ -116,8 +116,9 @@ check_df_for_rel <- function(df) {
       stop("Can't convert S4 columns to relational. Affected column: `", names(df)[[i]], "`.")
     }
     # https://github.com/duckdb/duckdb/issues/8561
-    if (is.factor(col)) {
-      stop("Can't convert factor columns to relational. Affected column: `", names(df)[[i]], "`.")
+    col_class <- class(col)
+    if (length(col_class) != 1 || !(col_class %in% c("logical", "integer", "numeric", "character", "Date"))) {
+      stop("Can't convert columns of class ", paste0(col_class, collapse = "/"), " to relational. Affected column: `", names(df)[[i]], "`.")
     }
   }
 
