@@ -1346,6 +1346,32 @@ test_that("as_duckplyr_df() and mutate(c = 0, d = -1, e = log10(c), f = log10(d)
 })
 
 
+test_that("as_duckplyr_df() and mutate(c = 10, d = log(c))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(c = 10, d = log(c))
+  post <- test_df %>% mutate(c = 10, d = log(c)) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and mutate(c = 10, d = log10(c))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(c = 10, d = log10(c))
+  post <- test_df %>% mutate(c = 10, d = log10(c)) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
 test_that("as_duckplyr_df() and mutate(c = NA_character_, d = grepl('.', c))", {
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
