@@ -146,6 +146,8 @@ rel_translate <- function(
           last = "last_value",
           nth = "nth_value",
           "/" = "___divide",
+          "log10" = "___log10",
+          "log" = "___log",
           NULL
         )
 

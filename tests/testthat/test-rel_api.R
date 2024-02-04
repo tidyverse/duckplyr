@@ -7800,7 +7800,7 @@ test_that("relational mutate(c = 0, d = -1, e = log(c), f = log(d)) order-preser
   invisible(
     DBI::dbExecute(
       con,
-      "CREATE MACRO \"log\"(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE ln(x) END"
+      "CREATE MACRO \"___log\"(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE ln(x) END"
     )
   )
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
@@ -7903,7 +7903,7 @@ test_that("relational mutate(c = 0, d = -1, e = log(c), f = log(d)) order-preser
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function("log", list(duckdb$expr_reference("c")))
+        tmp_expr <- duckdb$expr_function("___log", list(duckdb$expr_reference("c")))
         duckdb$expr_set_alias(tmp_expr, "e")
         tmp_expr
       }
@@ -7943,7 +7943,7 @@ test_that("relational mutate(c = 0, d = -1, e = log(c), f = log(d)) order-preser
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function("log", list(duckdb$expr_reference("d")))
+        tmp_expr <- duckdb$expr_function("___log", list(duckdb$expr_reference("d")))
         duckdb$expr_set_alias(tmp_expr, "f")
         tmp_expr
       }
@@ -7974,7 +7974,7 @@ test_that("relational mutate(c = 0, d = -1, e = log10(c), f = log10(d)) order-pr
   invisible(
     DBI::dbExecute(
       con,
-      "CREATE MACRO \"log10\"(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE log(x) END"
+      "CREATE MACRO \"___log10\"(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE log10(x) END"
     )
   )
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
@@ -8077,7 +8077,7 @@ test_that("relational mutate(c = 0, d = -1, e = log10(c), f = log10(d)) order-pr
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function("log10", list(duckdb$expr_reference("c")))
+        tmp_expr <- duckdb$expr_function("___log10", list(duckdb$expr_reference("c")))
         duckdb$expr_set_alias(tmp_expr, "e")
         tmp_expr
       }
@@ -8117,7 +8117,7 @@ test_that("relational mutate(c = 0, d = -1, e = log10(c), f = log10(d)) order-pr
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function("log10", list(duckdb$expr_reference("d")))
+        tmp_expr <- duckdb$expr_function("___log10", list(duckdb$expr_reference("d")))
         duckdb$expr_set_alias(tmp_expr, "f")
         tmp_expr
       }
@@ -10644,7 +10644,7 @@ test_that("relational mutate(c = 0, d = -1, e = log(c), f = log(d)) order-enforc
   invisible(
     DBI::dbExecute(
       con,
-      "CREATE MACRO \"log\"(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE ln(x) END"
+      "CREATE MACRO \"___log\"(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE ln(x) END"
     )
   )
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
@@ -10747,7 +10747,7 @@ test_that("relational mutate(c = 0, d = -1, e = log(c), f = log(d)) order-enforc
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function("log", list(duckdb$expr_reference("c")))
+        tmp_expr <- duckdb$expr_function("___log", list(duckdb$expr_reference("c")))
         duckdb$expr_set_alias(tmp_expr, "e")
         tmp_expr
       }
@@ -10787,7 +10787,7 @@ test_that("relational mutate(c = 0, d = -1, e = log(c), f = log(d)) order-enforc
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function("log", list(duckdb$expr_reference("d")))
+        tmp_expr <- duckdb$expr_function("___log", list(duckdb$expr_reference("d")))
         duckdb$expr_set_alias(tmp_expr, "f")
         tmp_expr
       }
@@ -10822,7 +10822,7 @@ test_that("relational mutate(c = 0, d = -1, e = log10(c), f = log10(d)) order-en
   invisible(
     DBI::dbExecute(
       con,
-      "CREATE MACRO \"log10\"(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE log(x) END"
+      "CREATE MACRO \"___log10\"(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE log10(x) END"
     )
   )
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
@@ -10925,7 +10925,7 @@ test_that("relational mutate(c = 0, d = -1, e = log10(c), f = log10(d)) order-en
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function("log10", list(duckdb$expr_reference("c")))
+        tmp_expr <- duckdb$expr_function("___log10", list(duckdb$expr_reference("c")))
         duckdb$expr_set_alias(tmp_expr, "e")
         tmp_expr
       }
@@ -10965,7 +10965,7 @@ test_that("relational mutate(c = 0, d = -1, e = log10(c), f = log10(d)) order-en
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function("log10", list(duckdb$expr_reference("d")))
+        tmp_expr <- duckdb$expr_function("___log10", list(duckdb$expr_reference("d")))
         duckdb$expr_set_alias(tmp_expr, "f")
         tmp_expr
       }
