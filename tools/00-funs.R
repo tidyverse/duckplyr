@@ -610,7 +610,7 @@ test_extra_arg_map <- list(
 
     # Negative log
     "c = 0, d = -1, e = log(c), f = log(d)",
-    "c = 0, d = -1, e = log(c), f = log10(d)",
+    "c = 0, d = -1, e = log10(c), f = log10(d)",
 
     # grepl with NA
     "c = NA_character_, d = grepl('.', c)",
