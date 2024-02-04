@@ -132,7 +132,9 @@ rel_translate <- function(
                 consts <- map(values, do_translate, in_window = in_window)
                 ops <- map(consts, list, do_translate(expr[[2]]))
                 cmp <- map(ops, relexpr_function, name = "==")
-                alt <- reduce(cmp, ~ relexpr_function("|", list(.x, .y)))
+                alt <- reduce(cmp, function(.x, .y) {
+                  relexpr_function("|", list(.x, .y))
+                })
                 return(alt)
               },
               error = identity

@@ -55,7 +55,9 @@ rel_join_impl <- function(x, y, by, join, na_matches, suffix, keep, error_call =
     cond_by[cond_by == "=="] <- "___eq_na_matches_na"
   }
 
-  conds <- pmap(list(cond_by, x_by, y_by), ~ relexpr_function(..1, list(..2, ..3)))
+  conds <- pmap(list(cond_by, x_by, y_by), function(...) {
+    relexpr_function(..1, list(..2, ..3))
+  })
 
   if (any(by$filter != "none")) {
     join_ref_type <- "asof"
@@ -98,7 +100,9 @@ rel_join_impl <- function(x, y, by, join, na_matches, suffix, keep, error_call =
       } else {
         exprs[by_pos[eq_idx]] <- pmap(
           list(x_by[eq_idx], y_by[eq_idx], names(vars$x$key)[eq_idx]),
-          ~ relexpr_function("___coalesce", list(..1, ..2), alias = ..3)
+          function(...) {
+            relexpr_function("___coalesce", list(..1, ..2), alias = ..3)
+          }
         )
       }
     }
