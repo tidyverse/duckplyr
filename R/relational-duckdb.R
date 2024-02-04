@@ -118,9 +118,9 @@ check_df_for_rel <- function(df) {
     # https://github.com/duckdb/duckdb/issues/8561
     col_class <- class(col)
     if (length(col_class) == 1) {
-      valid <- col_class %in% c("logical", "integer", "numeric", "character", "Date")
+      valid <- col_class %in% c("logical", "integer", "numeric", "character", "Date", "difftime")
     } else if (length(col_class) == 2) {
-      valid <- identical(col_class, c("POSIXct", "POSIXt"))
+      valid <- identical(col_class, c("POSIXct", "POSIXt")) || identical(col_class, c("hms", "difftime"))
     } else {
       valid <- FALSE
     }
