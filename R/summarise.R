@@ -45,7 +45,8 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
       }
 
       out <- rel_to_df(out_rel)
-      class(out) <- class(.data)
+      # https://github.com/tidyverse/dplyr/pull/6988
+      class(out) <- intersect(c("duckplyr_df", "tbl_df", "tbl", "data.frame"), class(.data))
 
       return(out)
     }
@@ -56,7 +57,8 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
   out <- summarise(.data, ..., .by = {{ .by }}, .groups = .groups)
   # dplyr_reconstruct() is not called here, restoring manually
   if (!identical(.groups, "rowwise")) {
-    class(out) <- class(.data)
+    # https://github.com/tidyverse/dplyr/pull/6988
+    class(out) <- intersect(c("duckplyr_df", "tbl_df", "tbl", "data.frame"), class(.data))
   }
   return(out)
 
