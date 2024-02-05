@@ -1,5 +1,36 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.3.0.9003 (2024-02-05)
+
+## Bug fixes
+
+  - Disambiguate computation of `log10()` and `log()`.
+
+  - Test for `log10()`.
+
+  - `summarise()` no longer restores subclass.
+
+  - Fix division by zero for positive and negative numbers.
+
+## Features
+
+  - Permit `POSIXct` columns.
+
+  - Strict checks for column class, only supporting `integer`, `numeric`, `logical` and `Date` for now.
+
+## Chore
+
+  - Set memory limit and temporary directory for duckdb.
+
+## Continuous integration
+
+  - Use newer Action version to fix build on Windows.
+
+## Testing
+
+  - Add tests for correct base of `log()` and `log10()`.
+
+
 # duckplyr 0.3.0.9002 (2024-01-24)
 
   - Internal changes only.
