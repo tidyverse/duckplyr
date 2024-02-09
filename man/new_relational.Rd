@@ -107,7 +107,7 @@ Users are encouraged to provide the \code{class} argument.
 The typical use case will be to create a wrapper function.
 
 \code{rel_to_df()} extracts a data frame representation from a relational object,
-to be used by \code{\link[dplyr:collect]{dplyr::collect()}}.
+to be used by \code{\link[dplyr:compute]{dplyr::collect()}}.
 
 \code{rel_filter()} keeps rows that match a predicate,
 to be used by \code{\link[dplyr:filter]{dplyr::filter()}}.
@@ -117,15 +117,15 @@ to be used by \code{\link[dplyr:select]{dplyr::select()}}, \code{\link[dplyr:ren
 \code{\link[dplyr:mutate]{dplyr::mutate()}}, \code{\link[dplyr:relocate]{dplyr::relocate()}}, and others.
 
 \code{rel_aggregate()} combines several rows into one,
-to be used by \code{\link[dplyr:summarize]{dplyr::summarize()}}.
+to be used by \code{\link[dplyr:summarise]{dplyr::summarize()}}.
 
 \code{rel_order()} reorders rows by columns or expressions,
 to be used by \code{\link[dplyr:arrange]{dplyr::arrange()}}.
 
 \code{rel_join()} joins or merges two tables,
-to be used by \code{\link[dplyr:left_join]{dplyr::left_join()}}, \code{\link[dplyr:right_join]{dplyr::right_join()}},
-\code{\link[dplyr:inner_join]{dplyr::inner_join()}}, \code{\link[dplyr:full_join]{dplyr::full_join()}}, \code{\link[dplyr:cross_join]{dplyr::cross_join()}},
-\code{\link[dplyr:semi_join]{dplyr::semi_join()}}, and \code{\link[dplyr:anti_join]{dplyr::anti_join()}}.
+to be used by \code{\link[dplyr:mutate-joins]{dplyr::left_join()}}, \code{\link[dplyr:mutate-joins]{dplyr::right_join()}},
+\code{\link[dplyr:mutate-joins]{dplyr::inner_join()}}, \code{\link[dplyr:mutate-joins]{dplyr::full_join()}}, \code{\link[dplyr:cross_join]{dplyr::cross_join()}},
+\code{\link[dplyr:filter-joins]{dplyr::semi_join()}}, and \code{\link[dplyr:filter-joins]{dplyr::anti_join()}}.
 
 \code{rel_limit()} limits the number of rows in a table,
 to be used by \code{\link[utils:head]{utils::head()}}.
@@ -140,10 +140,10 @@ to be used by \code{\link[=intersect]{intersect()}}.
 to be used by \code{\link[=setdiff]{setdiff()}}.
 
 \code{rel_set_symdiff()} returns rows present in any of both tables,
-to be used by \code{\link[dplyr:symdiff]{dplyr::symdiff()}}.
+to be used by \code{\link[dplyr:setops]{dplyr::symdiff()}}.
 
 \code{rel_union_all()} returns rows present in any of both tables,
-to be used by \code{\link[dplyr:union_all]{dplyr::union_all()}}.
+to be used by \code{\link[dplyr:setops]{dplyr::union_all()}}.
 
 \code{rel_explain()} prints an explanation of the plan
 executed by the relational object.
