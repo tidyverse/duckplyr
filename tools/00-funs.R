@@ -617,6 +617,9 @@ test_extra_arg_map <- list(
     # grepl with NA
     "c = NA_character_, d = grepl('.', c)",
 
+    # .data adverb
+    "c = .data$b",
+
     NULL
   ),
   nest_join = "join_by(a)",

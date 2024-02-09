@@ -139,6 +139,18 @@ rel_translate <- function(
               },
               error = identity
             )
+          },
+          "$" = {
+            if (expr[[2]] == ".data") {
+              return(do_translate(expr[[3]], in_window = in_window))
+            } else if (expr[[2]] == ".env") {
+              var_name <- as.character(expr[[3]])
+              if (exists(var_name, envir = env)) {
+                return(do_translate(get(var_name, env), in_window = in_window))
+              } else {
+                abort(paste0("object `", var_name, "` not found"))
+              }
+            }
           }
         )
 
