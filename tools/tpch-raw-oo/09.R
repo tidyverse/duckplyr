@@ -1,6 +1,6 @@
 qloadm("tools/tpch/001.qs")
 duckdb <- asNamespace("duckdb")
-con <- DBI::dbConnect(duckdb::duckdb())
+con <- DBI::dbConnect(duckdb::duckdb(config = list(allow_unsigned_extensions = "true")))
 experimental <- FALSE
 invisible(
   DBI::dbExecute(
@@ -8,7 +8,11 @@ invisible(
     "CREATE MACRO \"grepl\"(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)"
   )
 )
-invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+invisible(
+  DBI::dbExecute(con, "INSTALL 'rfuns' FROM 'http://duckdb-rfuns.s3.us-east-1.amazonaws.com'")
+)
+invisible(DBI::dbExecute(con, "LOAD 'rfuns'"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS \"r_base::==\"(x, y)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(x, y) AS COALESCE(x, y)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"as.integer\"(x) AS CAST(x AS int32)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"desc\"(x) AS (-x)"))
