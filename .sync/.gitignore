@@ -1,3 +1,5 @@
-dplyr-main/
-dplyr-revdep/
+/dplyr-main/
+/dplyr-revdep/
+/dplyr-cloud/
+/problems/
 *.tar.gz
