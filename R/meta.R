@@ -1,5 +1,6 @@
 pre_code_cache <- collections::queue()
 code_cache <- collections::queue()
+ext_cache <- collections::dict()
 macro_cache <- collections::dict()
 df_cache <- collections::dict()
 rel_cache <- collections::dict()
@@ -7,6 +8,7 @@ rel_cache <- collections::dict()
 meta_clear <- function() {
   pre_code_cache$clear()
   code_cache$clear()
+  ext_cache$clear()
   macro_cache$clear()
   df_cache$clear()
   rel_cache$clear()
@@ -26,7 +28,11 @@ meta_replay <- function(add_pre_code = TRUE) {
   if (add_pre_code) {
     con_exprs <- list(
       expr(duckdb <- asNamespace("duckdb")),
-      expr(con <- DBI::dbConnect(duckdb::duckdb())),
+      if (ext_cache$has("rfuns")) {
+        expr(con <- DBI::dbConnect(duckdb::duckdb(config = list(allow_unsigned_extensions = "true"))))
+      } else {
+        expr(con <- DBI::dbConnect(duckdb::duckdb()))
+      },
       expr(experimental <- !!(Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
     )
     con_code <- map(con_exprs, constructive::deparse_call)
@@ -100,6 +106,27 @@ meta_eval <- function() {
   eval(parse(text = code))
 }
 
+meta_ext_register <- function(name = "rfuns") {
+  if (ext_cache$has(name)) {
+    return(invisible())
+  }
+
+  stopifnot(identical(name, "rfuns"))
+
+  ext_install_expr <- expr(invisible(
+    DBI::dbExecute(con, !!sql_ext_install)
+  ))
+  meta_pre_record(constructive::deparse_call(ext_install_expr))
+
+  ext_load_expr <- expr(invisible(
+    DBI::dbExecute(con, !!sql_ext_load)
+  ))
+  meta_pre_record(constructive::deparse_call(ext_load_expr))
+
+  ext_cache$set(name, TRUE)
+  invisible()
+}
+
 meta_macro_register <- function(name) {
   macro <- duckplyr_macros[name]
   if (is.na(macro)) {
@@ -108,6 +135,11 @@ meta_macro_register <- function(name) {
 
   if (macro_cache$has(name)) {
     return(invisible())
+  }
+
+  # Register functions from the rfuns extension
+  if (grepl('"r_', macro)) {
+    meta_ext_register()
   }
 
   macro_expr <- expr(invisible(
