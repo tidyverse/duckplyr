@@ -19,7 +19,7 @@ duckplyr_macros <- c(
   "<=" = "(x, y) AS x <= y",
   ">" = "(x, y) AS x > y",
   ">=" = "(x, y) AS x >= y",
-  "==" = "(x, y) AS x = y",
+  "==" = '(x, y) AS "r_base::=="(x, y)',
   "!=" = "(x, y) AS x <> y",
   #
   "___divide" = "(x, y) AS CASE WHEN y = 0 THEN CASE WHEN x = 0 THEN CAST('NaN' AS double) WHEN x > 0 THEN CAST('+Infinity' AS double) ELSE CAST('-Infinity' AS double) END ELSE CAST(x AS double) / y END",
@@ -57,6 +57,9 @@ create_default_duckdb_connection <- function() {
 
   DBI::dbExecute(con, "set memory_limit='2GB'")
   DBI::dbExecute(con, paste0("pragma temp_directory='", tempdir(), "'"))
+
+  DBI::dbExecute(con, sql_ext_install)
+  DBI::dbExecute(con, sql_ext_load)
 
   for (i in seq_along(duckplyr_macros)) {
     sql <- paste0('CREATE MACRO "', names(duckplyr_macros)[[i]], '"', duckplyr_macros[[i]])
