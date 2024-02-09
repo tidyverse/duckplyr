@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9003</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,6 +44,33 @@
       <small>Source: <a href="https://github.com/duckdblabs/duckplyr/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.0.9003" id="duckplyr-0309003-2024-02-05">duckplyr 0.3.0.9003 (2024-02-05)<a class="anchor" aria-label="anchor" href="#duckplyr-0309003-2024-02-05"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-0-3-0-9003">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-0-9003"></a></h3>
+<ul><li><p>Disambiguate computation of <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10()</a></code> and <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log()</a></code>.</p></li>
+<li><p>Test for <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10()</a></code>.</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code> no longer restores subclass.</p></li>
+<li><p>Fix division by zero for positive and negative numbers.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="features-0-3-0-9003">Features<a class="anchor" aria-label="anchor" href="#features-0-3-0-9003"></a></h3>
+<ul><li><p>Permit <code>POSIXct</code> columns.</p></li>
+<li><p>Strict checks for column class, only supporting <code>integer</code>, <code>numeric</code>, <code>logical</code> and <code>Date</code> for now.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="chore-0-3-0-9003">Chore<a class="anchor" aria-label="anchor" href="#chore-0-3-0-9003"></a></h3>
+<ul><li>Set memory limit and temporary directory for duckdb.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="continuous-integration-0-3-0-9003">Continuous integration<a class="anchor" aria-label="anchor" href="#continuous-integration-0-3-0-9003"></a></h3>
+<ul><li>Use newer Action version to fix build on Windows.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="testing-0-3-0-9003">Testing<a class="anchor" aria-label="anchor" href="#testing-0-3-0-9003"></a></h3>
+<ul><li>Add tests for correct base of <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log()</a></code> and <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10()</a></code>.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.0.9002" id="duckplyr-0309002-2024-01-24">duckplyr 0.3.0.9002 (2024-01-24)<a class="anchor" aria-label="anchor" href="#duckplyr-0309002-2024-01-24"></a></h2>
 <ul><li>Internal changes only.</li>
