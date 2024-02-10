@@ -1,5 +1,24 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.3.0.9004 (2024-02-10)
+
+## Features
+
+  - Translate `.data$a` and `.env$a`.
+
+  - Permit `difftime` columns.
+
+## Chore
+
+  - Document.
+
+  - Update tests.
+
+  - Better `.sync/.gitignore`.
+
+  - Use standalone purrr for dplyr compatibility.
+
+
 # duckplyr 0.3.0.9003 (2024-02-05)
 
 ## Bug fixes
