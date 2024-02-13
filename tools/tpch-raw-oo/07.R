@@ -9,8 +9,8 @@ invisible(
 invisible(DBI::dbExecute(con, "LOAD 'rfuns'"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS \"r_base::==\"(x, y)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(x, y) AS COALESCE(x, y)"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \">=\"(x, y) AS x >= y"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"<=\"(x, y) AS x <= y"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \">=\"(x, y) AS \"r_base::>=\"(x, y)"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"<=\"(x, y) AS \"r_base::<=\"(x, y)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"&\"(x, y) AS (x AND y)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"as.integer\"(x) AS CAST(x AS int32)"))
 df1 <- supplier

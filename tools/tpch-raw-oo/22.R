@@ -9,7 +9,7 @@ invisible(
 )
 invisible(DBI::dbExecute(con, "LOAD 'rfuns'"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS \"r_base::==\"(x, y)"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \">\"(x, y) AS x > y"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \">\"(x, y) AS \"r_base::>\"(x, y)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(x, y) AS COALESCE(x, y)"))
 invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS CAST(COUNT(*) AS int32)"))
 df1 <- customer
