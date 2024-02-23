@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.3.0.9005 (2024-02-23)
+
+## Chore
+
+  - Better duckdb tests.
+
+
 # duckplyr 0.3.0.9004 (2024-02-10)
 
 ## Features
