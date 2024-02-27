@@ -3487,7 +3487,11 @@ test_that("relational filter(a != 2 | g != 2) order-preserving", {
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
   invisible(DBI::dbExecute(con, "CREATE MACRO \"|\"(x, y) AS (x OR y)"))
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"!=\"(x, y) AS x <> y"))
+  invisible(
+    DBI::dbExecute(con, "INSTALL 'rfuns' FROM 'http://duckdb-rfuns.s3.us-east-1.amazonaws.com'")
+  )
+  invisible(DBI::dbExecute(con, "LOAD 'rfuns'"))
+  invisible(DBI::dbExecute(con, "CREATE MACRO \"!=\"(x, y) AS \"r_base::!=\"(x, y)"))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -3774,7 +3778,11 @@ test_that("relational filter(a != 2 | g != 2) order-enforcing", {
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
   invisible(DBI::dbExecute(con, "CREATE MACRO \"|\"(x, y) AS (x OR y)"))
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"!=\"(x, y) AS x <> y"))
+  invisible(
+    DBI::dbExecute(con, "INSTALL 'rfuns' FROM 'http://duckdb-rfuns.s3.us-east-1.amazonaws.com'")
+  )
+  invisible(DBI::dbExecute(con, "LOAD 'rfuns'"))
+  invisible(DBI::dbExecute(con, "CREATE MACRO \"!=\"(x, y) AS \"r_base::!=\"(x, y)"))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
