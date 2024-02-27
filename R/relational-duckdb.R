@@ -15,10 +15,10 @@ get_default_duckdb_connection <- function() {
 }
 
 duckplyr_macros <- c(
-  "<" = "(x, y) AS x < y",
-  "<=" = "(x, y) AS x <= y",
-  ">" = "(x, y) AS x > y",
-  ">=" = "(x, y) AS x >= y",
+  "<" = '(x, y) AS "r_base::<"(x, y)',
+  "<=" = '(x, y) AS "r_base::<="(x, y)',
+  ">" = '(x, y) AS "r_base::>"(x, y)',
+  ">=" = '(x, y) AS "r_base::>="(x, y)',
   "==" = '(x, y) AS "r_base::=="(x, y)',
   "!=" = '(x, y) AS "r_base::!="(x, y)',
   #
