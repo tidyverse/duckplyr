@@ -28,11 +28,7 @@ meta_replay <- function(add_pre_code = TRUE) {
   if (add_pre_code) {
     con_exprs <- list(
       expr(duckdb <- asNamespace("duckdb")),
-      if (ext_cache$has("rfuns")) {
-        expr(con <- DBI::dbConnect(duckdb::duckdb(config = list(allow_unsigned_extensions = "true"))))
-      } else {
-        expr(con <- DBI::dbConnect(duckdb::duckdb()))
-      },
+      expr(con <- DBI::dbConnect(duckdb::duckdb())),
       expr(experimental <- !!(Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
     )
     con_code <- map(con_exprs, constructive::deparse_call)

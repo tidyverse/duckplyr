@@ -11,7 +11,7 @@
 #'   ext_install(force = TRUE)
 #' }
 ext_install <- function(force = FALSE) {
-  con <- DBI::dbConnect(duckdb::duckdb(config = list("allow_unsigned_extensions" = "true")))
+  con <- DBI::dbConnect(duckdb::duckdb())
   on.exit(DBI::dbDisconnect(con))
 
   do_ext_install(con, force)
