@@ -18,7 +18,7 @@ invisible(
   )
 )
 invisible(DBI::dbExecute(con, "CREATE MACRO \"&\"(x, y) AS (x AND y)"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"!=\"(x, y) AS x <> y"))
+invisible(DBI::dbExecute(con, "CREATE MACRO \"!=\"(x, y) AS \"r_base::!=\"(x, y)"))
 df1 <- lineitem
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb$rel_project(
