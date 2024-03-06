@@ -17,6 +17,7 @@ reference:
   contents:
   - config
   - stats_show
+  - ext_install
 - title: Relational operations and expressions
   contents:
   - new_relational
