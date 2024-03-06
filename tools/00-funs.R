@@ -121,6 +121,9 @@ duckplyr_tests <- head(n = -1, list(
     "factor keys are coerced to the union factor type",
 
     "filtering joins finalize unspecified columns (#6804)",
+
+    # Failure on Windows after https://github.com/duckdblabs/duckplyr/pull/100
+    "filtering joins compute common columns",
     NULL
   ),
   "test-mutate.R" = c(
