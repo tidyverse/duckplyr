@@ -50,13 +50,6 @@
       Error:
       ! `na_matches` must be one of "na" or "never", not "foo".
 
-# filtering joins compute common columns
-
-    Code
-      out <- duckplyr_semi_join(df1, df2)
-    Message
-      Joining with `by = join_by(x)`
-
 # error if passed additional arguments
 
     Code
