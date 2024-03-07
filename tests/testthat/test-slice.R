@@ -77,11 +77,11 @@ test_that("slice preserves groups iff requested", {
   gf <- duckplyr_group_by(tibble(g = c(1, 2, 2, 3, 3, 3), id = 1:6), g)
 
   out <- duckplyr_slice(gf, 2, 3)
-  expect_equal(group_keys(out), tibble(g = c(2, 3)))
+  expect_equal(duckplyr_group_keys(out), tibble(g = c(2, 3)))
   expect_equal(group_rows(out), list_of(1, c(2, 3)))
 
   out <- duckplyr_slice(gf, 2, 3, .preserve = TRUE)
-  expect_equal(group_keys(out), tibble(g = c(1, 2, 3)))
+  expect_equal(duckplyr_group_keys(out), tibble(g = c(1, 2, 3)))
   expect_equal(group_rows(out), list_of(integer(), 1, c(2, 3)))
 })
 

@@ -230,7 +230,7 @@ test_that("grouped filter handles indices (#880)", {
   res2 <- duckplyr_mutate(res, Petal = Petal.Width * Petal.Length)
   expect_equal(nrow(res), nrow(res2))
   expect_equal(group_rows(res), group_rows(res2))
-  expect_equal(group_keys(res), group_keys(res2))
+  expect_equal(duckplyr_group_keys(res), duckplyr_group_keys(res2))
 })
 
 test_that("duckplyr_filter(FALSE) handles indices", {

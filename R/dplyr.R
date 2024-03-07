@@ -25,6 +25,7 @@ expand_if_across <- dplyr$expand_if_across
 expr_substitute <- dplyr$expr_substitute
 get_slice_size <- dplyr$get_slice_size
 group_by_drop_default <- dplyr$group_by_drop_default
+group_keys0 <- dplyr$group_keys0
 is_compatible <- dplyr$is_compatible
 is_cross_by <- dplyr$is_cross_by
 join_by_common <- dplyr$join_by_common

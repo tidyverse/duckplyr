@@ -16,7 +16,7 @@ df_methods <-
   filter(!grepl("_$|^as[.]tbl$", name)) %>%
   # special dplyr methods, won't implement
   filter(!(name %in% c(
-    "group_indices", "group_keys", "group_map", "group_modify", "group_nest", "group_size", "group_split", "group_trim", "groups", "n_groups",
+    "group_indices", "group_map", "group_modify", "group_nest", "group_size", "group_split", "group_trim", "groups", "n_groups",
     "same_src", # data frames can be copied into duck-frames with zero cost
     NULL
   ))) %>%
@@ -26,6 +26,7 @@ df_methods <-
     "dplyr_row_slice",
     "group_by",
     "group_data",
+    "group_keys",
     "rowwise",
     NULL
   ))) %>%
@@ -693,6 +694,7 @@ test_skip_map <- c(
   dplyr_reconstruct = "Hack",
   group_by = "Grouped",
   group_data = "Special",
+  group_keys = "Special",
   group_map = "WAT",
   group_modify = "Grouped",
   group_nest = "Always returns tibble",
