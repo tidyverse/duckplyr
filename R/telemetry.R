@@ -3,7 +3,7 @@ call_to_json <- function(call) {
     name = call$name,
     x = df_to_json(call$x),
     y = df_to_json(call$y, names(call$x)),
-    args = map(call$args, arg_to_json, unique(c(names(call$x), names(call$y))))
+    args = map(compact(call$args), arg_to_json, unique(c(names(call$x), names(call$y))))
   )
 
   jsonlite::toJSON(compact(out), auto_unbox = TRUE, null = "null")
