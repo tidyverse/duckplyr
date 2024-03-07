@@ -21,7 +21,7 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
       }
 
       groups <- lapply(by, relexpr_reference)
-      aggregates <- rel_translate_dots(dots, .data)
+      aggregates <- rel_translate_dots(dots, .data, forbid_new = TRUE)
 
       if (oo) {
         aggregates <- c(

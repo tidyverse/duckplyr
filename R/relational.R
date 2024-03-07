@@ -47,9 +47,19 @@ rel_try <- function(rel, ...) {
   stop("Must use a return() in rel_try().")
 }
 
-rel_translate_dots <- function(dots, data) {
+rel_translate_dots <- function(dots, data, forbid_new = FALSE) {
   if (is.null(names(dots))) {
     map(dots, rel_translate, data)
+  } else if (forbid_new) {
+    out <- accumulate(seq_along(dots), .init = NULL, function(.x, .y) {
+      new <- names(dots)[[.y]]
+      translation <- rel_translate(dots[[.y]], alias = new, data, names_forbidden = .x$new)
+      list(
+        new = c(.x$new, new),
+        translation = c(.x$translation, list(translation))
+      )
+    })
+    out[[length(out)]]$translation
   } else {
     imap(dots, rel_translate, data = data)
   }
@@ -60,7 +70,8 @@ rel_translate <- function(
     alias = NULL,
     partition = NULL,
     need_window = FALSE,
-    names_data = names(data)) {
+    names_data = names(data),
+    names_forbidden = NULL) {
   if (is_expression(quo)) {
     expr <- quo
     env <- baseenv()
@@ -84,6 +95,9 @@ rel_translate <- function(
       double = relexpr_constant(expr),
       #
       symbol = {
+        if (as.character(expr) %in% names_forbidden) {
+          abort(paste0("Can't reuse summary variable `", as.character(expr), "`."))
+        }
         if (as.character(expr) %in% names_data) {
           ref <- as.character(expr)
           if (!(ref %in% used)) {
