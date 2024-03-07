@@ -9,8 +9,14 @@ rel_try <- function(rel, ..., call = NULL) {
 
   if (Sys.getenv("DUCKPLYR_TELEMETRY_TEST") == "TRUE") {
     force(call)
-    abort(paste0(call$name, ": ", call_to_json(call)))
-    return()
+    abort(paste0(
+      call$name,
+      ": ",
+      call_to_json(
+        error_cnd(message = paste0("Error in ", call$name)),
+        call
+      )
+    ))
   }
 
   if (Sys.getenv("DUCKPLYR_FALLBACK_FORCE") == "TRUE") {
