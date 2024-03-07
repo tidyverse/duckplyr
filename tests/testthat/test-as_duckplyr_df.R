@@ -1629,6 +1629,22 @@ test_that("as_duckplyr_df() and mutate(c = .data$b)", {
   expect_equal(pre, post)
 })
 
+test_that("as_duckplyr_df() and n_groups()", {
+  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+
+  skip("Special")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% n_groups()
+  post <- test_df %>% n_groups() %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 test_that("as_duckplyr_df() and nest_by()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 

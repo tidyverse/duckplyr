@@ -15,6 +15,7 @@
 #' @importFrom dplyr group_trim
 #' @importFrom dplyr grouped_df
 #' @importFrom dplyr if_else
+#' @importFrom dplyr n_groups
 #' @importFrom glue glue
 #' @importFrom lifecycle deprecated
 #' @importFrom tibble as_tibble

@@ -16,7 +16,6 @@ df_methods <-
   filter(!grepl("_$|^as[.]tbl$", name)) %>%
   # special dplyr methods, won't implement
   filter(!(name %in% c(
-    "n_groups",
     "same_src", # data frames can be copied into duck-frames with zero cost
     NULL
   ))) %>%
@@ -35,6 +34,7 @@ df_methods <-
     "group_split",
     "group_trim",
     "groups",
+    "n_groups",
     "rowwise",
     NULL
   ))) %>%
@@ -711,6 +711,7 @@ test_skip_map <- c(
   group_split = "WAT",
   group_trim = "Grouped",
   groups = "Special",
+  n_groups = "Special",
   nest_by = "WAT",
   # FIXME: Fail with rowwise()
   rowwise = "Stack overflow",
