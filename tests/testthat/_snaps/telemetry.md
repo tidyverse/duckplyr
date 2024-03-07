@@ -96,7 +96,7 @@
       tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% summarise(c = sum(b), .by = a)
     Condition
       Error in `rel_try()`:
-      ! summarise: {"name":"summarise","x":{"...1":"integer","...2":"integer"},"args":{"dots":"Can't translate object of class quosures/list","by":"a",".groups":{}}}
+      ! summarise: {"name":"summarise","x":{"...1":"integer","...2":"integer"},"args":{"dots":"Can't translate object of class quosures/list","by":"a"}}
 
 ---
 
@@ -105,7 +105,7 @@
       .groups = "rowwise")
     Condition
       Error in `rel_try()`:
-      ! summarise: {"name":"summarise","x":{"...1":"integer","...2":"integer"},"args":{"dots":"Can't translate object of class quosures/list","by":[],".groups":"rowwise"}}
+      ! summarise: {"name":"summarise","x":{"...1":"integer","...2":"integer"},"args":{"dots":"Can't translate object of class quosures/list",".groups":"rowwise"}}
 
 # telemetry and symdiff()
 
