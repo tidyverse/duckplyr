@@ -1,0 +1,13 @@
+diff --git b/R/group_indices.R a/R/group_indices.R
+index 48bcf3e..6c1bf15 100644
+--- b/R/group_indices.R
++++ a/R/group_indices.R
+@@ -25,7 +25,7 @@ group_indices.duckplyr_df <- function(.data, ...) {
+     .data <- group_by(.data, ...)
+   }
+ 
+-  .Call(`dplyr_group_indices`, .data, group_rows(.data))
++  # .Call(`dplyr_group_indices`, .data, group_rows(.data))
+ }
+ 
+ duckplyr_group_indices <- function(.data, ...) {
