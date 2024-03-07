@@ -9,7 +9,7 @@ rel_try <- function(rel, ..., call = NULL) {
 
   if (Sys.getenv("DUCKPLYR_TELEMETRY_TEST") == "TRUE") {
     force(call)
-    abort(call$name)
+    abort(paste0(call$name, ": ", call_to_json(call)))
     return()
   }
 
