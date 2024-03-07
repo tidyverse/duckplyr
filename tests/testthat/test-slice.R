@@ -120,7 +120,7 @@ test_that("slice keeps zero length groups", {
   )
   df <- duckplyr_group_by(df, e, f, g, .drop = FALSE)
 
-  expect_equal(group_size(duckplyr_slice(df, 1)), c(1, 1, 0) )
+  expect_equal(duckplyr_group_size(duckplyr_slice(df, 1)), c(1, 1, 0) )
 })
 
 test_that("slicing retains labels for zero length groups", {

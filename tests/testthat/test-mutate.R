@@ -423,7 +423,7 @@ test_that("mutate keeps zero length groups", {
   )
   df <- duckplyr_group_by(df, e, f, g, .drop = FALSE)
 
-  expect_equal( group_size(duckplyr_mutate(df, z = 2)), c(2, 2, 0) )
+  expect_equal( duckplyr_group_size(duckplyr_mutate(df, z = 2)), c(2, 2, 0) )
 })
 
 # other -------------------------------------------------------------------
