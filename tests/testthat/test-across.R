@@ -11,12 +11,12 @@ test_that("across() works on one column data.frame", {
 test_that("across() does not select grouping variables", {
   df <- data.frame(g = 1, x = 1)
 
-  out <- df %>% group_by(g) %>% duckplyr_summarise(x = across(everything(), identity)) %>% duckplyr_pull()
+  out <- df %>% duckplyr_group_by(g) %>% duckplyr_summarise(x = across(everything(), identity)) %>% duckplyr_pull()
   expect_equal(out, tibble(x = 1))
 })
 
 test_that("across() correctly names output columns", {
-  gf <- tibble(x = 1, y = 2, z = 3, s = "") %>% group_by(x)
+  gf <- tibble(x = 1, y = 2, z = 3, s = "") %>% duckplyr_group_by(x)
 
   expect_named(
     duckplyr_summarise(gf, across(everything(), identity)),
@@ -198,7 +198,7 @@ test_that("across() retains original ordering", {
 test_that("across() throws meaningful error with failure during expansion (#6534)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = 1, x = 1, y = 2, z = 3)
-  gdf <- group_by(df, g)
+  gdf <- duckplyr_group_by(df, g)
 
   fn <- function() {
     stop("oh no!")
@@ -312,7 +312,7 @@ test_that("monitoring cache - across() can be used in separate expressions", {
 
 test_that("monitoring cache - across() usage can depend on the group id", {
   df <- tibble(g = 1:2, a = 1:2, b = 3:4)
-  df <- group_by(df, g)
+  df <- duckplyr_group_by(df, g)
 
   switcher <- function() {
     if_else(cur_group_id() == 1L, across(a, identity)$a, across(b, identity)$b)
@@ -329,7 +329,7 @@ test_that("monitoring cache - across() usage can depend on the group id", {
 
 test_that("monitoring cache - across() internal cache key depends on all inputs", {
   df <- tibble(g = rep(1:2, each = 2), a = 1:4)
-  df <- group_by(df, g)
+  df <- duckplyr_group_by(df, g)
 
   expect_identical(
     duckplyr_mutate(df, tibble(x = across(where(is.numeric), mean)$a, y = across(where(is.numeric), max)$a)),
@@ -676,7 +676,7 @@ test_that("across() can omit dots", {
 
 test_that("group variables are in scope (#5832)", {
   f <- function(x, z) x + z
-  gdf <- data.frame(x = 1:2, y = 3:4, g = 1:2) %>% group_by(g)
+  gdf <- data.frame(x = 1:2, y = 3:4, g = 1:2) %>% duckplyr_group_by(g)
   exp <- gdf %>% duckplyr_summarise(x = f(x, z = y))
 
   expect_equal(
@@ -694,7 +694,7 @@ test_that("can pass quosure through `across()`", {
   summarise_mean <- function(data, vars) {
     data %>% duckplyr_summarise(across({{ vars }}, mean))
   }
-  gdf <- data.frame(g = c(1, 1, 2), x = 1:3) %>% group_by(g)
+  gdf <- data.frame(g = c(1, 1, 2), x = 1:3) %>% duckplyr_group_by(g)
 
   expect_equal(
     gdf %>% summarise_mean(where(is.numeric)),
@@ -1070,14 +1070,14 @@ test_that("across() predicates operate on whole data", {
 
 
   out <- df %>%
-    group_by(g) %>%
+    duckplyr_group_by(g) %>%
     duckplyr_mutate(across(where(~ n_distinct(.x) > 1), ~ .x + 10))
 
   exp <- tibble(
     x = c(11, 11, 12),
     g = c(1, 1, 2)
   ) %>%
-    group_by(g)
+    duckplyr_group_by(g)
 
   expect_equal(out, exp)
 })
@@ -1121,11 +1121,11 @@ test_that("expand_if_across() expands lambdas", {
   )
 })
 
-test_that("rowwise() preserves list-cols iff no `.fns` (#5951, #6264)", {
+test_that("duckplyr_rowwise() preserves list-cols iff no `.fns` (#5951, #6264)", {
   # TODO: Deprecate this behavior in favor of `pick()`, which doesn't preserve
   # list-cols but is well-defined as pure macro expansion.
 
-  rf <- rowwise(tibble(x = list(1:2, 3:5)))
+  rf <- duckplyr_rowwise(tibble(x = list(1:2, 3:5)))
 
   # Need to unchop so works like duckplyr_mutate(rf, x = length(x))
   out <- duckplyr_mutate(rf, across(everything(), length))
@@ -1160,7 +1160,7 @@ test_that("can't rename during selection (#6522)", {
 test_that("can't explicitly select grouping columns (#6522)", {
   # Related to removing the mask layer from the quosure environments
   df <- tibble(g = 1, x = 2)
-  gdf <- group_by(df, g)
+  gdf <- duckplyr_group_by(df, g)
 
   expect_snapshot(error = TRUE, {
     duckplyr_mutate(gdf, y = c_across(g))
@@ -1191,7 +1191,7 @@ test_that("across() applies old `.cols = everything()` default with a warning", 
   local_options(lifecycle_verbosity = "warning")
 
   df <- tibble(g = c(1, 2), x = c(1, 2), y = c(3, 4))
-  gdf <- group_by(df, g)
+  gdf <- duckplyr_group_by(df, g)
 
   times_two <- function(x) x * 2
 
@@ -1222,7 +1222,7 @@ test_that("if_any() and if_all() apply old `.cols = everything()` default with a
 
   df <- tibble(x = c(TRUE, FALSE, TRUE), y = c(FALSE, FALSE, TRUE))
   gdf <- duckplyr_mutate(df, g = c(1, 1, 2), .before = 1)
-  gdf <- group_by(gdf, g)
+  gdf <- duckplyr_group_by(gdf, g)
 
   # Expansion path
   expect_snapshot(out <- duckplyr_filter(df, if_any()))
@@ -1251,7 +1251,7 @@ test_that("c_across() applies old `cols = everything()` default with a warning",
   local_options(lifecycle_verbosity = "warning")
 
   df <- tibble(x = c(1, 3), y = c(2, 4))
-  df <- rowwise(df)
+  df <- duckplyr_rowwise(df)
 
   # Will see 2 warnings because verbosity option forces it to warn every time
   expect_snapshot(out <- duckplyr_mutate(df, z = sum(c_across())))
@@ -1378,7 +1378,7 @@ test_that("arguments in dots are evaluated once per group", {
 
   set.seed(0)
   out <- data.frame(g = 1:3, var = NA) %>%
-    group_by(g) %>%
+    duckplyr_group_by(g) %>%
     duckplyr_mutate(across(var, function(x, y) y, rnorm(1))) %>%
     duckplyr_pull(var)
 
@@ -1390,7 +1390,7 @@ test_that("group variables are in scope when passed in dots (#5832)", {
   options(lifecycle_verbosity = "quiet")
 
   f <- function(x, z) x + z
-  gdf <- data.frame(x = 1:2, y = 3:4, g = 1:2) %>% group_by(g)
+  gdf <- data.frame(x = 1:2, y = 3:4, g = 1:2) %>% duckplyr_group_by(g)
   exp <- gdf %>% duckplyr_summarise(x = f(x, z = y))
 
   expect_equal(

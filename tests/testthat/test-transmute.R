@@ -1,19 +1,19 @@
 test_that("non-syntactic grouping variable is preserved (#1138)", {
-  df <- tibble(`a b` = 1L) %>% group_by(`a b`) %>% duckplyr_transmute()
+  df <- tibble(`a b` = 1L) %>% duckplyr_group_by(`a b`) %>% duckplyr_transmute()
   expect_named(df, "a b")
 })
 
 test_that("transmute preserves grouping", {
-  gf <- group_by(tibble(x = 1:2, y = 2), x)
+  gf <- duckplyr_group_by(tibble(x = 1:2, y = 2), x)
 
   i <- count_regroups(out <- duckplyr_transmute(gf, x = 1))
   expect_equal(i, 1L)
   expect_equal(duckplyr_group_vars(out), "x")
-  expect_equal(nrow(group_data(out)), 1)
+  expect_equal(nrow(duckplyr_group_data(out)), 1)
 
   i <- count_regroups(out <- duckplyr_transmute(gf, z = 1))
   expect_equal(i, 0)
-  expect_equal(group_data(out), group_data(gf))
+  expect_equal(duckplyr_group_data(out), duckplyr_group_data(gf))
 })
 
 # Empty transmutes -------------------------------------------------
@@ -21,7 +21,7 @@ test_that("transmute preserves grouping", {
 test_that("transmute with no args returns grouping vars", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1, y = 2)
-  gf <- group_by(df, x)
+  gf <- duckplyr_group_by(df, x)
 
   expect_equal(df %>% duckplyr_transmute(), df[integer()])
   expect_equal(gf %>% duckplyr_transmute(), gf[1L])
@@ -46,9 +46,9 @@ test_that("arguments to duckplyr_transmute() don't match vars_transmute() argume
 test_that("arguments to duckplyr_rename() don't match vars_rename() arguments (#2861)", {
   df <- tibble(a = 1)
   expect_identical(duckplyr_rename(df, var = a), tibble(var = 1))
-  expect_identical(duckplyr_rename(group_by(df, a), var = a), group_by(tibble(var = 1), var))
+  expect_identical(duckplyr_rename(duckplyr_group_by(df, a), var = a), duckplyr_group_by(tibble(var = 1), var))
   expect_identical(duckplyr_rename(df, strict = a), tibble(strict = 1))
-  expect_identical(duckplyr_rename(group_by(df, a), strict = a), group_by(tibble(strict = 1), strict))
+  expect_identical(duckplyr_rename(duckplyr_group_by(df, a), strict = a), duckplyr_group_by(tibble(strict = 1), strict))
 })
 
 test_that("can duckplyr_transmute() with .data pronoun (#2715)", {
@@ -77,7 +77,7 @@ test_that("duckplyr_transmute() retains ordering supplied in `...`, even for pre
 
 test_that("duckplyr_transmute() retains ordering supplied in `...`, even for group columns (#6086)", {
   df <- tibble(x = 1:3, g1 = 1:3, g2 = 1:3, y = 4:6)
-  df <- group_by(df, g1, g2)
+  df <- duckplyr_group_by(df, g1, g2)
 
   out <- duckplyr_transmute(df, x, z = x + 1, y, g1)
 

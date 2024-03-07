@@ -4,7 +4,7 @@ df <- data.frame(
   g = c(1, 2, 2, 3, 3, 3),
   x = 1:6,
   y = 6:1
-) %>% group_by(g)
+) %>% duckplyr_group_by(g)
 
 test_that("unnamed results bound together by row", {
   first <- df %>% duckplyr_do(head(., 1))
@@ -40,27 +40,27 @@ test_that("empty results preserved (#597)", {
 
   dat <- data.frame(a = 1:2, b = factor(1:2))
   expect_equal(
-    dat %>% group_by(b, .drop = FALSE) %>% duckplyr_do(blankdf(.)) %>% duckplyr_ungroup(),
+    dat %>% duckplyr_group_by(b, .drop = FALSE) %>% duckplyr_do(blankdf(.)) %>% duckplyr_ungroup(),
     tibble(b = factor(integer(), levels = 1:2), blank = numeric())
   )
 })
 
 test_that("empty inputs give empty outputs (#597)", {
   out <- data.frame(a = numeric(), b = factor()) %>%
-    group_by(b, .drop = FALSE) %>%
+    duckplyr_group_by(b, .drop = FALSE) %>%
     duckplyr_do(data.frame())
-  expect_equal(out, data.frame(b = factor()) %>% group_by(b, .drop = FALSE))
+  expect_equal(out, data.frame(b = factor()) %>% duckplyr_group_by(b, .drop = FALSE))
 
   out <- data.frame(a = numeric(), b = character()) %>%
-    group_by(b, .drop = FALSE) %>%
+    duckplyr_group_by(b, .drop = FALSE) %>%
     duckplyr_do(data.frame())
-  expect_equal(out, data.frame(b = character()) %>% group_by(b, .drop = FALSE))
+  expect_equal(out, data.frame(b = character()) %>% duckplyr_group_by(b, .drop = FALSE))
 })
 
 test_that("grouped do evaluates args in correct environment", {
   a <- 10
   f <- function(a) {
-    mtcars %>% group_by(cyl) %>% duckplyr_do(a = a)
+    mtcars %>% duckplyr_group_by(cyl) %>% duckplyr_do(a = a)
   }
   expect_equal(f(100)$a, list(100, 100, 100))
 })
@@ -91,8 +91,8 @@ test_that("ungrouped do evaluates args in correct environment", {
 # Rowwise data frames ----------------------------------------------------------
 
 test_that("can do on rowwise dataframe", {
-  out <- mtcars %>% rowwise() %>% duckplyr_do(x = 1)
-  exp <- tibble(x =rep(list(1), nrow(mtcars))) %>% rowwise()
+  out <- mtcars %>% duckplyr_rowwise() %>% duckplyr_do(x = 1)
+  exp <- tibble(x =rep(list(1), nrow(mtcars))) %>% duckplyr_rowwise()
   expect_identical(out, exp)
 })
 
@@ -101,7 +101,7 @@ test_that("can do on rowwise dataframe", {
 
 test_that("empty data frames give consistent outputs", {
   dat <- tibble(x = numeric(0), g = character(0))
-  grp <- dat %>% group_by(g)
+  grp <- dat %>% duckplyr_group_by(g)
   emt <- grp %>% duckplyr_filter(FALSE)
 
   dat %>%
@@ -175,13 +175,13 @@ test_that("empty data frames give consistent outputs", {
 test_that("handling of empty data frames in do", {
   blankdf <- function(x) data.frame(blank = numeric(0))
   dat <- data.frame(a = 1:2, b = factor(1:2))
-  res <- dat %>% group_by(b, .drop = FALSE) %>% duckplyr_do(blankdf(.))
+  res <- dat %>% duckplyr_group_by(b, .drop = FALSE) %>% duckplyr_do(blankdf(.))
   expect_equal(names(res), c("b", "blank"))
 })
 
 test_that("duckplyr_do() does not retain .drop attribute (#4176)", {
   res <- iris %>%
-    group_by(Species) %>%
+    duckplyr_group_by(Species) %>%
     duckplyr_do(data.frame(n=1))
   expect_null(attr(res, ".drop", exact = TRUE))
 })
@@ -193,7 +193,7 @@ test_that("duckplyr_do() gives meaningful error messages", {
     g = c(1, 2, 2, 3, 3, 3),
     x = 1:6,
     y = 6:1
-  ) %>% group_by(g)
+  ) %>% duckplyr_group_by(g)
 
   expect_snapshot({
     (expect_error(df %>% duckplyr_do(head, tail)))

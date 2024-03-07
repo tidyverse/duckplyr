@@ -1,8 +1,8 @@
 test_that("empty slice drops all rows (#6573)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = c(1, 1, 2), x = 1:3)
-  gdf <- group_by(df, g)
-  rdf <- rowwise(df)
+  gdf <- duckplyr_group_by(df, g)
+  rdf <- duckplyr_rowwise(df)
 
   expect_identical(duckplyr_slice(df), df[integer(),])
   expect_identical(duckplyr_slice(gdf), gdf[integer(),])
@@ -16,7 +16,7 @@ test_that("slicing data.frame yields data.frame", {
 })
 
 test_that("slice keeps positive indices, ignoring out of range (#226)", {
-  gf <- group_by(tibble(g = c(1, 2, 2, 3, 3, 3), id = 1:6), g)
+  gf <- duckplyr_group_by(tibble(g = c(1, 2, 2, 3, 3, 3), id = 1:6), g)
 
   out <- duckplyr_slice(gf, 1)
   expect_equal(out$id, c(1, 2, 4))
@@ -26,7 +26,7 @@ test_that("slice keeps positive indices, ignoring out of range (#226)", {
 })
 
 test_that("slice drops negative indices, ignoring out of range (#3073)", {
-  gf <- group_by(tibble(g = c(1, 2, 2, 3, 3, 3), id = 1:6), g)
+  gf <- duckplyr_group_by(tibble(g = c(1, 2, 2, 3, 3, 3), id = 1:6), g)
 
   out <- duckplyr_slice(gf, -1)
   expect_equal(out$id, c(3, 5, 6))
@@ -43,7 +43,7 @@ test_that("slice errors if positive and negative indices mixed", {
 })
 
 test_that("slice ignores 0 and NA (#3313, #1235)", {
-  gf <- group_by(tibble(g = c(1, 2, 2, 3, 3, 3), id = 1:6), g)
+  gf <- duckplyr_group_by(tibble(g = c(1, 2, 2, 3, 3, 3), id = 1:6), g)
 
   out <- duckplyr_slice(gf, 0)
   expect_equal(out$id, integer())
@@ -74,14 +74,14 @@ test_that("slice errors if index is not numeric", {
 })
 
 test_that("slice preserves groups iff requested", {
-  gf <- group_by(tibble(g = c(1, 2, 2, 3, 3, 3), id = 1:6), g)
+  gf <- duckplyr_group_by(tibble(g = c(1, 2, 2, 3, 3, 3), id = 1:6), g)
 
   out <- duckplyr_slice(gf, 2, 3)
-  expect_equal(group_keys(out), tibble(g = c(2, 3)))
+  expect_equal(duckplyr_group_keys(out), tibble(g = c(2, 3)))
   expect_equal(group_rows(out), list_of(1, c(2, 3)))
 
   out <- duckplyr_slice(gf, 2, 3, .preserve = TRUE)
-  expect_equal(group_keys(out), tibble(g = c(1, 2, 3)))
+  expect_equal(duckplyr_group_keys(out), tibble(g = c(1, 2, 3)))
   expect_equal(group_rows(out), list_of(integer(), 1, c(2, 3)))
 })
 
@@ -98,7 +98,7 @@ test_that("user errors are correctly labelled", {
   df <- tibble(x = 1:3)
   expect_snapshot(error = TRUE, {
     duckplyr_slice(df, 1 + "")
-    duckplyr_slice(group_by(df, x), 1 + "")
+    duckplyr_slice(duckplyr_group_by(df, x), 1 + "")
   })
 })
 
@@ -118,9 +118,9 @@ test_that("slice keeps zero length groups", {
     g = c(1, 1, 2, 2),
     x = c(1, 2, 1, 4)
   )
-  df <- group_by(df, e, f, g, .drop = FALSE)
+  df <- duckplyr_group_by(df, e, f, g, .drop = FALSE)
 
-  expect_equal(group_size(duckplyr_slice(df, 1)), c(1, 1, 0) )
+  expect_equal(duckplyr_group_size(duckplyr_slice(df, 1)), c(1, 1, 0) )
 })
 
 test_that("slicing retains labels for zero length groups", {
@@ -130,7 +130,7 @@ test_that("slicing retains labels for zero length groups", {
     g = c(1, 1, 2, 2),
     x = c(1, 2, 1, 4)
   )
-  df <- group_by(df, e, f, g, .drop = FALSE)
+  df <- duckplyr_group_by(df, e, f, g, .drop = FALSE)
 
   expect_equal(
     duckplyr_ungroup(duckplyr_count(duckplyr_slice(df, 1))),
@@ -197,7 +197,7 @@ test_that("can't use `.by` with `.preserve`", {
 
 test_that("catches `.by` with grouped-df", {
   df <- tibble(x = 1)
-  gdf <- group_by(df, x)
+  gdf <- duckplyr_group_by(df, x)
 
   expect_snapshot(error = TRUE, {
     duckplyr_slice(gdf, .by = x)
@@ -206,7 +206,7 @@ test_that("catches `.by` with grouped-df", {
 
 test_that("catches `.by` with rowwise-df", {
   df <- tibble(x = 1)
-  rdf <- rowwise(df)
+  rdf <- duckplyr_rowwise(df)
 
   expect_snapshot(error = TRUE, {
     duckplyr_slice(rdf, .by = x)
@@ -328,7 +328,7 @@ test_that("slice_*() doesn't look for `n` in data (#6089)", {
   expect_error(slice_min(df, order_by = n), NA)
   expect_error(duckplyr_slice_sample(df, weight_by = n, n = 1L), NA)
 
-  df <- group_by(df, g)
+  df <- duckplyr_group_by(df, g)
   expect_error(slice_max(df, order_by = n), NA)
   expect_error(slice_min(df, order_by = n), NA)
   expect_error(duckplyr_slice_sample(df, weight_by = n, n = 1L), NA)
@@ -373,7 +373,7 @@ test_that("slice_helpers do call duckplyr_slice() and benefit from dispatch (#60
     }
   )
 
-  nf <- tibble(x = 1:10, g = rep(1:2, each = 5)) %>% group_by(g)
+  nf <- tibble(x = 1:10, g = rep(1:2, each = 5)) %>% duckplyr_group_by(g)
   class(nf) <- c("noisy", class(nf))
 
   expect_warning(duckplyr_slice(nf, 1:2), "noisy")
@@ -388,7 +388,7 @@ test_that("slice_helpers do call duckplyr_slice() and benefit from dispatch (#60
 
 test_that("slice_helper `by` errors use correct error context and correct `by_arg`", {
   df <- tibble(x = 1)
-  gdf <- group_by(df, x)
+  gdf <- duckplyr_group_by(df, x)
 
   expect_snapshot(error = TRUE, {
     duckplyr_slice_head(gdf, n = 1, by = x)
@@ -583,7 +583,7 @@ test_that("duckplyr_slice_sample() injects `replace` (#6725)", {
 })
 
 test_that("duckplyr_slice_sample() handles positive n= and prop=", {
-  gf <- group_by(tibble(a = 1, b = 1), a)
+  gf <- duckplyr_group_by(tibble(a = 1, b = 1), a)
   expect_equal(duckplyr_slice_sample(gf, n = 3, replace = TRUE), gf[c(1, 1, 1), ])
   expect_equal(duckplyr_slice_sample(gf, prop = 3, replace = TRUE), gf[c(1, 1, 1), ])
 })
@@ -608,7 +608,7 @@ test_that("duckplyr_slice_sample() works with `by`", {
 # slice_head/slice_tail ---------------------------------------------------
 
 test_that("slice_head/slice_tail keep positive values", {
-  gf <- group_by(tibble(g = c(1, 2, 2, 3, 3, 3), id = 1:6), g)
+  gf <- duckplyr_group_by(tibble(g = c(1, 2, 2, 3, 3, 3), id = 1:6), g)
 
   expect_equal(duckplyr_slice_head(gf, n = 1)$id, c(1, 2, 4))
   expect_equal(duckplyr_slice_head(gf, n = 2)$id, c(1, 2, 3, 4, 5))
@@ -629,7 +629,7 @@ test_that("slice_head/tail() count from back with negative n/prop", {
 })
 
 test_that("slice_head/slice_tail drop from opposite end when n/prop negative", {
-  gf <- group_by(tibble(g = c(1, 2, 2, 3, 3, 3), id = 1:6), g)
+  gf <- duckplyr_group_by(tibble(g = c(1, 2, 2, 3, 3, 3), id = 1:6), g)
 
   expect_equal(duckplyr_slice_head(gf, n = -1)$id, c(2, 4, 5))
   expect_equal(duckplyr_slice_head(gf, n = -2)$id, 4)

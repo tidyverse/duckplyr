@@ -16,15 +16,24 @@ df_methods <-
   filter(!grepl("_$|^as[.]tbl$", name)) %>%
   # special dplyr methods, won't implement
   filter(!(name %in% c(
-    "dplyr_col_modify",
-    "dplyr_row_slice",
-    "group_by",
-    "rowwise",
-    "group_data", "group_indices", "group_keys", "group_map", "group_modify", "group_nest", "group_size", "group_split", "group_trim", "groups", "n_groups",
+    "group_indices", "group_nest", "group_split", "group_trim", "n_groups",
     "same_src", # data frames can be copied into duck-frames with zero cost
     NULL
   ))) %>%
-  mutate(always_fallback = FALSE) %>%
+  # won't implement but want to trigger fallback message
+  mutate(always_fallback = (name %in% c(
+    "dplyr_col_modify",
+    "dplyr_row_slice",
+    "group_by",
+    "group_data",
+    "group_keys",
+    "group_map",
+    "group_modify",
+    "group_size",
+    "groups",
+    "rowwise",
+    NULL
+  ))) %>%
   # methods we don't need to implement but can test
   mutate(skip_impl = name %in% c(
     "collapse", "tally",
@@ -503,6 +512,8 @@ test_extra_arg_map <- list(
     # "desc(g)"
     NULL
   ),
+  dplyr_col_modify = "list(a = 6:1)",
+  dplyr_row_slice = "1:2",
   count = c(
     "",
     "a",
@@ -686,11 +697,15 @@ test_skip_map <- c(
   # FIXME: Fail with group_by()
   dplyr_reconstruct = "Hack",
   group_by = "Grouped",
+  group_data = "Special",
+  group_keys = "Special",
   group_map = "WAT",
   group_modify = "Grouped",
   group_nest = "Always returns tibble",
+  group_size = "Special",
   group_split = "WAT",
   group_trim = "Grouped",
+  groups = "Special",
   nest_by = "WAT",
   # FIXME: Fail with rowwise()
   rowwise = "Stack overflow",

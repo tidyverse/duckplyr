@@ -3,7 +3,7 @@ local_options(lifecycle_verbosity = "warning")
 
 test_that("empty duckplyr_arrange() returns input", {
   df <- tibble(x = 1:10, y = 1:10)
-  gf <- group_by(df, x)
+  gf <- duckplyr_group_by(df, x)
 
   expect_identical(duckplyr_arrange(df), df)
   expect_identical(duckplyr_arrange(gf), gf)
@@ -199,7 +199,7 @@ test_that("arrange validates that `.locale` must be one from stringi", {
 test_that("arrange preserves input class", {
   df1 <- data.frame(x = 1:3, y = 3:1)
   df2 <- tibble(x = 1:3, y = 3:1)
-  df3 <- df1 %>% group_by(x)
+  df3 <- df1 %>% duckplyr_group_by(x)
 
   expect_s3_class(duckplyr_arrange(df1, x), "data.frame", exact = TRUE)
   expect_s3_class(duckplyr_arrange(df2, x), "tbl_df")
@@ -208,7 +208,7 @@ test_that("arrange preserves input class", {
 
 test_that("grouped arrange ignores group, unless requested with .by_group", {
   df <- data.frame(g = c(2, 1, 2, 1), x = 4:1)
-  gf <- group_by(df, g)
+  gf <- duckplyr_group_by(df, g)
 
   expect_equal(duckplyr_arrange(gf, x), gf[4:1, ,])
   expect_equal(duckplyr_arrange(gf, x, .by_group = TRUE), gf[c(4, 2, 3, 1), ,])
@@ -216,7 +216,7 @@ test_that("grouped arrange ignores group, unless requested with .by_group", {
 
 test_that("arrange updates the grouping structure (#605)", {
   df <- tibble(g = c(2, 2, 1, 1), x = c(1, 3, 2, 4))
-  res <- df %>% group_by(g) %>% duckplyr_arrange(x)
+  res <- df %>% duckplyr_group_by(g) %>% duckplyr_arrange(x)
   expect_s3_class(res, "grouped_df")
   expect_equal(group_rows(res), list_of(c(2L, 4L), c(1L, 3L)))
 })
@@ -273,7 +273,7 @@ test_that("duckplyr_arrange() evaluates each pick() call on the original data (#
   expect_identical(out, df[c(2, 1),])
 })
 
-test_that("duckplyr_arrange() with empty dots still calls dplyr_row_slice()", {
+test_that("duckplyr_arrange() with empty dots still calls duckplyr_dplyr_row_slice()", {
   tbl <- new_tibble(list(x = 1), nrow = 1L)
   foo <- structure(tbl, class = c("foo_df", class(tbl)))
 
@@ -332,10 +332,10 @@ test_that("arrange keeps zero length groups",{
     g = c(1, 1, 2, 2),
     x = c(1, 2, 1, 4)
   )
-  df <- group_by(df, e, f, g, .drop = FALSE)
+  df <- duckplyr_group_by(df, e, f, g, .drop = FALSE)
 
-  expect_equal( group_size(duckplyr_arrange(df)), c(2, 2, 0) )
-  expect_equal( group_size(duckplyr_arrange(df, x)), c(2, 2, 0) )
+  expect_equal( duckplyr_group_size(duckplyr_arrange(df)), c(2, 2, 0) )
+  expect_equal( duckplyr_group_size(duckplyr_arrange(df, x)), c(2, 2, 0) )
 })
 
 # legacy --------------------------------------------------------------
@@ -375,7 +375,7 @@ test_that("legacy - empty duckplyr_arrange() returns input", {
   local_options(dplyr.legacy_locale = TRUE)
 
   df <- tibble(x = 1:10, y = 1:10)
-  gf <- group_by(df, x)
+  gf <- duckplyr_group_by(df, x)
 
   expect_identical(duckplyr_arrange(df), df)
   expect_identical(duckplyr_arrange(gf), gf)

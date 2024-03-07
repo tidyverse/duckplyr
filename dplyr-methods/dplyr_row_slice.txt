@@ -1,0 +1,3 @@
+dplyr_row_slice.data.frame <- function(data, i, ...) {
+  dplyr_reconstruct(vec_slice(data, i), data)
+}
