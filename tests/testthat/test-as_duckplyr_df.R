@@ -770,6 +770,22 @@ test_that("as_duckplyr_df() and group_data()", {
   expect_equal(pre, post)
 })
 
+test_that("as_duckplyr_df() and group_indices()", {
+  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+
+  skip("Special")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% group_indices()
+  post <- test_df %>% group_indices() %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 test_that("as_duckplyr_df() and group_keys()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
@@ -818,6 +834,22 @@ test_that("as_duckplyr_df() and group_modify(~ .x)", {
   expect_equal(pre, post)
 })
 
+test_that("as_duckplyr_df() and group_nest()", {
+  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+
+  skip("Always returns tibble")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% group_nest()
+  post <- test_df %>% group_nest() %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 test_that("as_duckplyr_df() and group_size()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
@@ -829,6 +861,38 @@ test_that("as_duckplyr_df() and group_size()", {
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% group_size()
   post <- test_df %>% group_size() %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+test_that("as_duckplyr_df() and group_split()", {
+  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+
+  skip("WAT")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% group_split()
+  post <- test_df %>% group_split() %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+test_that("as_duckplyr_df() and group_trim()", {
+  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+
+  skip("Grouped")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% group_trim()
+  post <- test_df %>% group_trim() %>% as_duckplyr_df()
 
   # Compare
   expect_equal(pre, post)
@@ -1560,6 +1624,22 @@ test_that("as_duckplyr_df() and mutate(c = .data$b)", {
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% mutate(c = .data$b)
   post <- test_df %>% mutate(c = .data$b) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+test_that("as_duckplyr_df() and n_groups()", {
+  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+
+  skip("Special")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% n_groups()
+  post <- test_df %>% n_groups() %>% as_duckplyr_df()
 
   # Compare
   expect_equal(pre, post)
