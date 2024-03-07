@@ -1,3 +1,86 @@
+telemetry <- new_environment()
+
+tel_upload_error <- function(cnd, call) {
+  telemetry_env <- Sys.getenv("DUCKPLYR_TELEMETRY")
+  if (telemetry_env == "") {
+    if (!tel_ask(cnd, call)) {
+      return()
+    }
+  } else if (telemetry_env != "TRUE") {
+    return()
+  }
+
+  call_json <- call_to_json(cnd, call)
+  tel_post_async(call_json)
+}
+
+tel_ask <- function(cnd, call) {
+  TRUE
+}
+
+tel_post_async_fail <- function(message) {
+  if (!isTRUE(telemetry$error)) {
+    telemetry$error <- TRUE
+    message("Error uploading telemetry, avoiding further uploads: ", message)
+  }
+}
+
+tel_post_async <- function(json_data) {
+  pool <- tel_pool()
+
+  url <- "https://duckplyr-telemetry.duckdblabs.com/"
+
+  # Create a new curl handle
+  handle <- curl::new_handle()
+  curl::handle_setopt(handle, customrequest = "POST")
+  curl::handle_setheaders(handle, "Content-Type" = "text/plain")
+  curl::handle_setopt(handle, postfields = json_data)
+  curl::curl_fetch_multi(
+    url,
+    done = function(...) { message("Upload successful") },
+    fail = tel_post_async_fail,
+    pool = pool,
+    handle = handle
+  )
+
+  tel_loop_start(pool)
+}
+
+tel_pool <- function() {
+  pool <- telemetry$pool
+  if (is.null(pool)) {
+    pool <- curl::new_pool()
+    telemetry$pool <- pool
+  }
+
+  pool
+}
+
+tel_loop_start <- function(pool) {
+  loop <- telemetry$loop
+  if (is.null(loop)) {
+    loop <- later::create_loop(parent = later::global_loop())
+    telemetry$loop <- loop
+    reg.finalizer(telemetry, tel_finalize, onexit = TRUE)
+  }
+
+  if (!later::loop_empty(loop)) {
+    return()
+  }
+
+  later::later(
+    function() { curl::multi_run(timeout = 2, pool = pool) },
+    loop = loop
+  )
+}
+
+tel_finalize <- function(e) {
+  loop <- telemetry$loop
+  if (!is.null(loop)) {
+    later::run_now(loop = loop)
+  }
+}
+
 call_to_json <- function(cnd, call) {
   out <- list2(
     message = conditionMessage(cnd),

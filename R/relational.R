@@ -47,6 +47,8 @@ rel_try <- function(rel, ..., call = NULL) {
 
   out <- rlang::try_fetch(rel, error = identity)
   if (inherits(out, "error")) {
+    tel_upload_error(out, call)
+
     # FIXME: enable always
     if (Sys.getenv("DUCKPLYR_FALLBACK_INFO") == "TRUE") {
       rlang::cnd_signal(rlang::message_cnd(message = "Error processing with relational.", parent = out))
