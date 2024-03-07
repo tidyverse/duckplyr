@@ -3,11 +3,12 @@ globalVariables("___row_number_by")
 
 #' @export
 distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
+  dots <- enquos(..., .named = TRUE)
+
   # Our implementation
-  rel_try(
+  rel_try(call = list(name = "distinct", x = .data, args = list(dots = dots, .keep_all = .keep_all)),
     "Implemented for all cases?" = FALSE,
     {
-      dots <- enquos(..., .named = TRUE)
       # FIXME: avoid column duplication in a cleaner way
       dupes <- duplicated(names(dots), fromLast = TRUE)
       dots <- dots[!dupes]

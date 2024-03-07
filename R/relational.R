@@ -1,11 +1,23 @@
-rel_try <- function(rel, ...) {
-  call <- as.character(sys.call(-1)[[1]])
+rel_try <- function(rel, ..., call = NULL) {
+  call_name <- as.character(sys.call(-1)[[1]])
 
-  if (!(list(call) %in% stats$calls)) {
-    stats$calls <- c(stats$calls, call)
+  if (!(call_name %in% stats$calls)) {
+    stats$calls <- c(stats$calls, call_name)
   }
 
   stats$attempts <- stats$attempts + 1L
+
+  if (Sys.getenv("DUCKPLYR_TELEMETRY_TEST") == "TRUE") {
+    force(call)
+    abort(paste0(
+      call$name,
+      ": ",
+      call_to_json(
+        error_cnd(message = paste0("Error in ", call$name)),
+        call
+      )
+    ))
+  }
 
   if (Sys.getenv("DUCKPLYR_FALLBACK_FORCE") == "TRUE") {
     stats$fallback <- stats$fallback + 1L

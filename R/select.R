@@ -13,7 +13,7 @@ select.duckplyr_df <- function(.data, ...) {
 
   exprs <- exprs_from_loc(.data, loc)
 
-  rel_try(
+  rel_try(call = list(name = "select", x = .data, args = list(dots = enquos(...))),
     "Can't use relational with zero-column result set." = (length(exprs) == 0),
     {
       rel <- duckdb_rel_from_df(.data)

@@ -7,7 +7,7 @@ transmute.duckplyr_df <- function(.data, ...) {
   dots <- dplyr_quosures(!!!dots)
   dots <- fix_auto_name(dots)
 
-  rel_try(
+  rel_try(call = list(name = "transmute", x = .data, args = list(dots = enquos(...))),
     "Can't use relational with zero-column result set." = (length(dots) == 0),
     {
       exprs <- rel_translate_dots(dots, .data)
