@@ -9,11 +9,11 @@ test_that("transmute preserves grouping", {
   i <- count_regroups(out <- duckplyr_transmute(gf, x = 1))
   expect_equal(i, 1L)
   expect_equal(duckplyr_group_vars(out), "x")
-  expect_equal(nrow(group_data(out)), 1)
+  expect_equal(nrow(duckplyr_group_data(out)), 1)
 
   i <- count_regroups(out <- duckplyr_transmute(gf, z = 1))
   expect_equal(i, 0)
-  expect_equal(group_data(out), group_data(gf))
+  expect_equal(duckplyr_group_data(out), duckplyr_group_data(gf))
 })
 
 # Empty transmutes -------------------------------------------------

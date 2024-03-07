@@ -22,6 +22,7 @@
 #' @importFrom utils globalVariables
 #' @importFrom utils head
 #' @importFrom vctrs new_data_frame
+#' @importFrom vctrs new_list_of
 #' @importFrom vctrs new_rcrd
 #' @importFrom vctrs unspecified
 #' @importFrom vctrs vec_as_names
