@@ -18,6 +18,7 @@ methods_overwrite <- function() {
   vctrs::s3_register("dplyr::group_data", "data.frame", group_data.duckplyr_df)
   vctrs::s3_register("dplyr::group_keys", "data.frame", group_keys.duckplyr_df)
   vctrs::s3_register("dplyr::group_map", "data.frame", group_map.duckplyr_df)
+  vctrs::s3_register("dplyr::group_modify", "data.frame", group_modify.duckplyr_df)
   vctrs::s3_register("dplyr::group_vars", "data.frame", group_vars.duckplyr_df)
   vctrs::s3_register("dplyr::inner_join", "data.frame", inner_join.duckplyr_df)
   vctrs::s3_register("dplyr::intersect", "data.frame", intersect.duckplyr_df)
