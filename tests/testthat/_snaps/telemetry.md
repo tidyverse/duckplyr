@@ -96,7 +96,7 @@
       tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% summarise(c = sum(b), .by = a)
     Condition
       Error in `rel_try()`:
-      ! summarise: {"message":"Error in summarise","name":"summarise","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"c":"sum(...2)"},"by":"a",".groups":{}}}
+      ! summarise: {"message":"Error in summarise","name":"summarise","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"c":"sum(...2)"},"by":"a",".groups":"Can't translate object of class NULL"}}
 
 ---
 
