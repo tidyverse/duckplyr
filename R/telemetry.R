@@ -1,5 +1,6 @@
-call_to_json <- function(call) {
+call_to_json <- function(cnd, call) {
   out <- list2(
+    message = conditionMessage(cnd),
     name = call$name,
     x = df_to_json(call$x),
     y = df_to_json(call$y, names(call$x)),
