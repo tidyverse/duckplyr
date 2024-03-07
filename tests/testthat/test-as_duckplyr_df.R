@@ -614,6 +614,35 @@ test_that("as_duckplyr_df() and dplyr_reconstruct(test_df)", {
   expect_equal(pre, post)
 })
 
+test_that("as_duckplyr_df() and dplyr_row_slice(1:2)", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% dplyr_row_slice(1:2)
+  post <- test_df %>% dplyr_row_slice(1:2) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and dplyr_row_slice(1:2)", {
+  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% dplyr_row_slice(1:2)
+  post <- test_df %>% dplyr_row_slice(1:2) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 test_that("as_duckplyr_df() and filter(a == 1)", {
   withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
 

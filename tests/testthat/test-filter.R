@@ -552,7 +552,7 @@ test_that("filter preserves grouping", {
   expect_equal(group_rows(out), list_of(c(1L, 2L)))
 })
 
-test_that("duckplyr_filter() with empty dots still calls dplyr_row_slice()", {
+test_that("duckplyr_filter() with empty dots still calls duckplyr_dplyr_row_slice()", {
   tbl <- new_tibble(list(x = 1), nrow = 1L)
   foo <- structure(tbl, class = c("foo_df", class(tbl)))
 

@@ -273,7 +273,7 @@ test_that("duckplyr_arrange() evaluates each pick() call on the original data (#
   expect_identical(out, df[c(2, 1),])
 })
 
-test_that("duckplyr_arrange() with empty dots still calls dplyr_row_slice()", {
+test_that("duckplyr_arrange() with empty dots still calls duckplyr_dplyr_row_slice()", {
   tbl <- new_tibble(list(x = 1), nrow = 1L)
   foo <- structure(tbl, class = c("foo_df", class(tbl)))
 

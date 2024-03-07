@@ -11,6 +11,7 @@ methods_overwrite <- function() {
   vctrs::s3_register("dplyr::distinct", "data.frame", distinct.duckplyr_df)
   vctrs::s3_register("dplyr::do", "data.frame", do.duckplyr_df)
   vctrs::s3_register("dplyr::dplyr_col_modify", "data.frame", dplyr_col_modify.duckplyr_df)
+  vctrs::s3_register("dplyr::dplyr_row_slice", "data.frame", dplyr_row_slice.duckplyr_df)
   vctrs::s3_register("dplyr::filter", "data.frame", filter.duckplyr_df)
   vctrs::s3_register("dplyr::full_join", "data.frame", full_join.duckplyr_df)
   vctrs::s3_register("dplyr::group_by", "data.frame", group_by.duckplyr_df)
