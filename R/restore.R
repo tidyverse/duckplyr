@@ -32,6 +32,7 @@ methods_restore <- function() {
   vctrs::s3_register("dplyr::rows_patch", "data.frame", dplyr$rows_patch.data.frame)
   vctrs::s3_register("dplyr::rows_update", "data.frame", dplyr$rows_update.data.frame)
   vctrs::s3_register("dplyr::rows_upsert", "data.frame", dplyr$rows_upsert.data.frame)
+  vctrs::s3_register("dplyr::rowwise", "data.frame", dplyr$rowwise.data.frame)
   vctrs::s3_register("dplyr::select", "data.frame", dplyr$select.data.frame)
   vctrs::s3_register("dplyr::semi_join", "data.frame", dplyr$semi_join.data.frame)
   vctrs::s3_register("dplyr::setdiff", "data.frame", dplyr$setdiff.data.frame)

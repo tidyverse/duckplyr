@@ -108,12 +108,12 @@ test_that("duckplyr_mutate() supports constants (#6056, #6305)", {
 
   expect_identical(df %>% duckplyr_mutate(y = !!y) %>% duckplyr_pull(y), y)
   expect_identical(df %>% duckplyr_group_by(g) %>% duckplyr_mutate(y = !!y) %>% duckplyr_pull(y), y)
-  expect_identical(df %>% rowwise() %>% duckplyr_mutate(y = !!y) %>% duckplyr_pull(y), y)
+  expect_identical(df %>% duckplyr_rowwise() %>% duckplyr_mutate(y = !!y) %>% duckplyr_pull(y), y)
 
   expect_snapshot({
     (expect_error(df %>% duckplyr_mutate(z = !!z)))
     (expect_error(df %>% duckplyr_group_by(g) %>% duckplyr_mutate(z = !!z)))
-    (expect_error(df %>% rowwise() %>% duckplyr_mutate(z = !!z)))
+    (expect_error(df %>% duckplyr_rowwise() %>% duckplyr_mutate(z = !!z)))
   })
 
   # `.env$` is used for per group evaluation
@@ -122,7 +122,7 @@ test_that("duckplyr_mutate() supports constants (#6056, #6305)", {
 
   expect_snapshot({
     (expect_error(df %>% duckplyr_group_by(g) %>% duckplyr_mutate(y = .env$y)))
-    (expect_error(df %>% rowwise() %>% duckplyr_mutate(y = .env$y)))
+    (expect_error(df %>% duckplyr_rowwise() %>% duckplyr_mutate(y = .env$y)))
   })
 })
 
@@ -241,7 +241,7 @@ test_that("mutate handles matrix columns", {
 
   df_regular <- duckplyr_mutate(df, b = scale(b))
   df_grouped <- duckplyr_mutate(duckplyr_group_by(df, a), b = scale(b))
-  df_rowwise <- duckplyr_mutate(rowwise(df), b = scale(b))
+  df_rowwise <- duckplyr_mutate(duckplyr_rowwise(df), b = scale(b))
 
   expect_equal(dim(df_regular$b), c(6, 1))
   expect_equal(dim(df_grouped$b), c(6, 1))
@@ -257,7 +257,7 @@ test_that("mutate handles data frame columns", {
   res <- duckplyr_mutate(duckplyr_group_by(df, a), new_col = data.frame(x = a))
   expect_equal(res$new_col, data.frame(x = 1:3))
 
-  res <- duckplyr_mutate(rowwise(df), new_col = data.frame(x = a))
+  res <- duckplyr_mutate(duckplyr_rowwise(df), new_col = data.frame(x = a))
   expect_equal(res$new_col, data.frame(x = 1:3))
 })
 
@@ -326,19 +326,19 @@ test_that("mutate preserves class of zero-row rowwise (#4224, #6303)", {
   # Each case needs to test both x and identity(x) because these flow
   # through two slightly different pathways.
 
-  rf <- rowwise(tibble(x = character(0)))
+  rf <- duckplyr_rowwise(tibble(x = character(0)))
   out <- duckplyr_mutate(rf, x2 = identity(x), x3 = x)
   expect_equal(out$x2, character())
   expect_equal(out$x3, character())
 
   # including list-of classes of list-cols where possible
-  rf <- rowwise(tibble(x = list_of(.ptype = character())))
+  rf <- duckplyr_rowwise(tibble(x = list_of(.ptype = character())))
   out <- duckplyr_mutate(rf, x2 = identity(x), x3 = x)
   expect_equal(out$x2, character())
   expect_equal(out$x3, character())
 
   # an empty list is turns into a logical (aka unspecified)
-  rf <- rowwise(tibble(x = list()))
+  rf <- duckplyr_rowwise(tibble(x = list()))
   out <- duckplyr_mutate(rf, x2 = identity(x), x3 = x)
   expect_equal(out$x2, logical())
   expect_equal(out$x3, logical())
@@ -358,39 +358,39 @@ test_that("mutate works on empty data frames (#1142)", {
 })
 
 test_that("mutate handles 0 rows rowwise (#1300)", {
-  res <- tibble(y = character()) %>% rowwise() %>% duckplyr_mutate(z = 1)
+  res <- tibble(y = character()) %>% duckplyr_rowwise() %>% duckplyr_mutate(z = 1)
   expect_equal(nrow(res), 0L)
 })
 
 test_that("rowwise mutate gives expected results (#1381)", {
   f <- function(x) ifelse(x < 2, NA_real_, x)
-  res <- tibble(x = 1:3) %>% rowwise() %>% duckplyr_mutate(y = f(x))
+  res <- tibble(x = 1:3) %>% duckplyr_rowwise() %>% duckplyr_mutate(y = f(x))
   expect_equal(res$y, c(NA, 2, 3))
 })
 
 test_that("rowwise mutate un-lists existing size-1 list-columns (#6302)", {
   # Existing column
-  rf <- rowwise(tibble(x = as.list(1:3)))
+  rf <- duckplyr_rowwise(tibble(x = as.list(1:3)))
   out <- duckplyr_mutate(rf, y = x)
   expect_equal(out$y, 1:3)
 
   # New column
-  rf <- rowwise(tibble(x = 1:3))
+  rf <- duckplyr_rowwise(tibble(x = 1:3))
   out <- duckplyr_mutate(rf, y = list(1), z = y)
   expect_identical(out$z, c(1, 1, 1))
 
   # Column of data 1-row data frames
-  rf <- rowwise(tibble(x = list(tibble(a = 1), tibble(a = 2))))
+  rf <- duckplyr_rowwise(tibble(x = list(tibble(a = 1), tibble(a = 2))))
   out <- duckplyr_mutate(rf, y = x)
   expect_identical(out$y, tibble(a = c(1, 2)))
 
   # Preserves known list-of type
-  rf <- rowwise(tibble(x = list_of(.ptype = character())))
+  rf <- duckplyr_rowwise(tibble(x = list_of(.ptype = character())))
   out <- duckplyr_mutate(rf, y = x)
   expect_identical(out$y, character())
 
   # Errors if it's not a length-1 list
-  df <- rowwise(tibble(x = list(1, 2:3)))
+  df <- duckplyr_rowwise(tibble(x = list(1, 2:3)))
   expect_snapshot(duckplyr_mutate(df, y = x), error = TRUE)
 })
 
@@ -403,7 +403,7 @@ test_that("grouped mutate does not drop grouping attributes (#1020)", {
 })
 
 test_that("duckplyr_mutate() hands list columns with rowwise magic to follow up expressions (#4845)", {
-  test <- rowwise(tibble(x = 1:2))
+  test <- duckplyr_rowwise(tibble(x = 1:2))
 
   expect_identical(
     test %>%
@@ -463,7 +463,7 @@ test_that("grouped subsets are not lazy (#3360)", {
   }
 
   res <- tibble(name = 1:2, value = letters[1:2]) %>%
-    rowwise() %>%
+    duckplyr_rowwise() %>%
     duckplyr_mutate(call = list(make_call(value))) %>%
     duckplyr_pull()
 
@@ -583,7 +583,7 @@ test_that("catches `.by` with grouped-df", {
 
 test_that("catches `.by` with rowwise-df", {
   df <- tibble(x = 1)
-  rdf <- rowwise(df)
+  rdf <- duckplyr_rowwise(df)
 
   expect_snapshot(error = TRUE, {
     duckplyr_mutate(rdf, .by = x)
@@ -732,7 +732,7 @@ test_that("dplyr data mask can become obsolete", {
   )
 
   res <- df %>%
-    rowwise() %>%
+    duckplyr_rowwise() %>%
     duckplyr_mutate(y = lazy(x), .keep = "unused")
   expect_equal(names(res), c("x", "y"))
   expect_error(eval_tidy(res$y[[1]]))
@@ -757,7 +757,7 @@ test_that("functions are not skipped in data pronoun (#5608)", {
   df <- tibble(a = list(f), b = 1)
 
   two <- df %>%
-    rowwise() %>%
+    duckplyr_rowwise() %>%
     duckplyr_mutate(res = .data$a(.data$b)) %>%
     duckplyr_pull(res)
 
@@ -774,7 +774,7 @@ test_that("duckplyr_mutate() casts data frame results to common type (#5646)", {
 
 test_that("duckplyr_mutate() supports empty list columns in rowwise data frames (#5804", {
   res <- tibble(a = list()) %>%
-    rowwise() %>%
+    duckplyr_rowwise() %>%
     duckplyr_mutate(n = lengths(a))
   expect_equal(res$n, integer())
 })
@@ -809,7 +809,7 @@ test_that("duckplyr_mutate() give meaningful errors", {
                       duckplyr_mutate(out = env(a = 1))
     ))
     (expect_error(df %>%
-                      rowwise() %>%
+                      duckplyr_rowwise() %>%
                       duckplyr_mutate(out = rnorm)
     ))
 
@@ -848,12 +848,12 @@ test_that("duckplyr_mutate() give meaningful errors", {
     ))
     (expect_error(
                     data.frame(x = c(2, 2, 3, 3)) %>%
-                      rowwise() %>%
+                      duckplyr_rowwise() %>%
                       duckplyr_mutate(int = 1:5)
     ))
     (expect_error(
                     tibble(y = list(1:3, "a")) %>%
-                      rowwise() %>%
+                      duckplyr_rowwise() %>%
                       duckplyr_mutate(y2 = y)
     ))
     (expect_error(
@@ -873,7 +873,7 @@ test_that("duckplyr_mutate() give meaningful errors", {
     # obsolete data mask
     lazy <- function(x) list(enquo(x))
     res <- tbl %>%
-      rowwise() %>%
+      duckplyr_rowwise() %>%
       duckplyr_mutate(z = lazy(x), .keep = "unused")
     (expect_error(
       eval_tidy(res$z[[1]])

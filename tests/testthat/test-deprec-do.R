@@ -91,8 +91,8 @@ test_that("ungrouped do evaluates args in correct environment", {
 # Rowwise data frames ----------------------------------------------------------
 
 test_that("can do on rowwise dataframe", {
-  out <- mtcars %>% rowwise() %>% duckplyr_do(x = 1)
-  exp <- tibble(x =rep(list(1), nrow(mtcars))) %>% rowwise()
+  out <- mtcars %>% duckplyr_rowwise() %>% duckplyr_do(x = 1)
+  exp <- tibble(x =rep(list(1), nrow(mtcars))) %>% duckplyr_rowwise()
   expect_identical(out, exp)
 })
 

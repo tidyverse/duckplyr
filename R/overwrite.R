@@ -32,6 +32,7 @@ methods_overwrite <- function() {
   vctrs::s3_register("dplyr::rows_patch", "data.frame", rows_patch.duckplyr_df)
   vctrs::s3_register("dplyr::rows_update", "data.frame", rows_update.duckplyr_df)
   vctrs::s3_register("dplyr::rows_upsert", "data.frame", rows_upsert.duckplyr_df)
+  vctrs::s3_register("dplyr::rowwise", "data.frame", rowwise.duckplyr_df)
   vctrs::s3_register("dplyr::select", "data.frame", select.duckplyr_df)
   vctrs::s3_register("dplyr::semi_join", "data.frame", semi_join.duckplyr_df)
   vctrs::s3_register("dplyr::setdiff", "data.frame", setdiff.duckplyr_df)

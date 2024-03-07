@@ -220,7 +220,7 @@ test_that("filter, slice and arrange preserves attributes (#1064)", {
 
 test_that("filter works with rowwise data (#1099)", {
   df <- tibble(First = c("string1", "string2"), Second = c("Sentence with string1", "something"))
-  res <- df %>% rowwise() %>% duckplyr_filter(grepl(First, Second, fixed = TRUE))
+  res <- df %>% duckplyr_rowwise() %>% duckplyr_filter(grepl(First, Second, fixed = TRUE))
   expect_equal(nrow(res), 1L)
   expect_equal(df[1, ], duckplyr_ungroup(res))
 })
@@ -459,7 +459,7 @@ test_that("duckplyr_filter() gives useful error messages", {
     ))
     (expect_error(
                     iris %>%
-                      rowwise(Species) %>%
+                      duckplyr_rowwise(Species) %>%
                       duckplyr_filter(c(TRUE, FALSE))
     ))
     (expect_error(
@@ -475,7 +475,7 @@ test_that("duckplyr_filter() gives useful error messages", {
     ))
     (expect_error(
                     iris %>%
-                      rowwise() %>%
+                      duckplyr_rowwise() %>%
                       duckplyr_filter(data.frame(c(TRUE, FALSE)))
     ))
     (expect_error(
@@ -708,7 +708,7 @@ test_that("catches `.by` with grouped-df", {
 
 test_that("catches `.by` with rowwise-df", {
   df <- tibble(x = 1)
-  rdf <- rowwise(df)
+  rdf <- duckplyr_rowwise(df)
 
   expect_snapshot(error = TRUE, {
     duckplyr_filter(rdf, .by = x)

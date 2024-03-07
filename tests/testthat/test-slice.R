@@ -2,7 +2,7 @@ test_that("empty slice drops all rows (#6573)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = c(1, 1, 2), x = 1:3)
   gdf <- duckplyr_group_by(df, g)
-  rdf <- rowwise(df)
+  rdf <- duckplyr_rowwise(df)
 
   expect_identical(duckplyr_slice(df), df[integer(),])
   expect_identical(duckplyr_slice(gdf), gdf[integer(),])
@@ -206,7 +206,7 @@ test_that("catches `.by` with grouped-df", {
 
 test_that("catches `.by` with rowwise-df", {
   df <- tibble(x = 1)
-  rdf <- rowwise(df)
+  rdf <- duckplyr_rowwise(df)
 
   expect_snapshot(error = TRUE, {
     duckplyr_slice(rdf, .by = x)

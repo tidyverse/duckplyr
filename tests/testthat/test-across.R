@@ -1121,11 +1121,11 @@ test_that("expand_if_across() expands lambdas", {
   )
 })
 
-test_that("rowwise() preserves list-cols iff no `.fns` (#5951, #6264)", {
+test_that("duckplyr_rowwise() preserves list-cols iff no `.fns` (#5951, #6264)", {
   # TODO: Deprecate this behavior in favor of `pick()`, which doesn't preserve
   # list-cols but is well-defined as pure macro expansion.
 
-  rf <- rowwise(tibble(x = list(1:2, 3:5)))
+  rf <- duckplyr_rowwise(tibble(x = list(1:2, 3:5)))
 
   # Need to unchop so works like duckplyr_mutate(rf, x = length(x))
   out <- duckplyr_mutate(rf, across(everything(), length))
@@ -1251,7 +1251,7 @@ test_that("c_across() applies old `cols = everything()` default with a warning",
   local_options(lifecycle_verbosity = "warning")
 
   df <- tibble(x = c(1, 3), y = c(2, 4))
-  df <- rowwise(df)
+  df <- duckplyr_rowwise(df)
 
   # Will see 2 warnings because verbosity option forces it to warn every time
   expect_snapshot(out <- duckplyr_mutate(df, z = sum(c_across())))

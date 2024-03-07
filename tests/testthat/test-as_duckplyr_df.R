@@ -1864,6 +1864,22 @@ test_that("as_duckplyr_df() and rows_upsert(by = \"a\")", {
   expect_equal(pre, post)
 })
 
+test_that("as_duckplyr_df() and rowwise()", {
+  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+
+  skip("Stack overflow")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% rowwise()
+  post <- test_df %>% rowwise() %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 test_that("as_duckplyr_df() and sample_frac()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 

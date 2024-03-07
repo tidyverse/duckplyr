@@ -493,7 +493,7 @@ test_that("nest_join returns list of tibbles (#3570)",{
 
 test_that("nest_join respects types of y (#6295)",{
   df1 <- tibble(x = c(1, 2), y = c(2, 3))
-  df2 <- rowwise(tibble(x = c(1, 1), z = c(2, 3)))
+  df2 <- duckplyr_rowwise(tibble(x = c(1, 1), z = c(2, 3)))
   out <- duckplyr_nest_join(df1, df2, by = "x")
 
   expect_s3_class(out$df2[[1]], "rowwise_df")
@@ -677,7 +677,7 @@ test_that("group column names reflect renamed duplicate columns (#2330)", {
 })
 
 test_that("rowwise group structure is updated after a join (#5227)", {
-  df1 <- rowwise(tibble(x = 1:2))
+  df1 <- duckplyr_rowwise(tibble(x = 1:2))
   df2 <- tibble(x = c(1:2, 2L))
 
   x <- duckplyr_left_join(df1, df2, by = "x")

@@ -47,7 +47,7 @@ test_that("works with grouped empty data frames", {
     tibble(x = integer(), y = integer())
   )
   expect_equal(
-    df %>% rowwise(x) %>% duckplyr_summarise(y = 1L),
+    df %>% duckplyr_rowwise(x) %>% duckplyr_summarise(y = 1L),
     duckplyr_group_by(tibble(x = integer(), y = integer()), x)
   )
 })
@@ -253,7 +253,7 @@ test_that("summarise allows names (#2675)", {
   data <- tibble(a = 1:3) %>% duckplyr_summarise(b = c("1" = a[[1]]))
   expect_equal(names(data$b), "1")
 
-  data <- tibble(a = 1:3) %>% rowwise() %>% duckplyr_summarise(b = setNames(nm = a))
+  data <- tibble(a = 1:3) %>% duckplyr_rowwise() %>% duckplyr_summarise(b = setNames(nm = a))
   expect_equal(names(data$b), c("1", "2", "3"))
 
   data <- tibble(a = c(1, 1, 2)) %>% duckplyr_group_by(a) %>% duckplyr_summarise(b = setNames(nm = a[[1]]))
@@ -311,7 +311,7 @@ test_that("duckplyr_summarise(.groups=) in global environment", {
     env(global_env())
   ))
   expect_message(eval_bare(
-    expr(data.frame(x = 1, y = 2) %>% rowwise(x, y) %>% duckplyr_summarise()),
+    expr(data.frame(x = 1, y = 2) %>% duckplyr_rowwise(x, y) %>% duckplyr_summarise()),
     env(global_env())
   ))
 })
@@ -319,7 +319,7 @@ test_that("duckplyr_summarise(.groups=) in global environment", {
 test_that("duckplyr_summarise(.groups=)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- data.frame(x = 1, y = 2)
-  expect_equal(df %>% duckplyr_summarise(z = 3, .groups= "rowwise"), rowwise(data.frame(z = 3)))
+  expect_equal(df %>% duckplyr_summarise(z = 3, .groups= "rowwise"), duckplyr_rowwise(data.frame(z = 3)))
 
   gf <- df %>% duckplyr_group_by(x, y)
   expect_equal(gf %>% duckplyr_summarise() %>% duckplyr_group_vars(), "x")
@@ -327,7 +327,7 @@ test_that("duckplyr_summarise(.groups=)", {
   expect_equal(gf %>% duckplyr_summarise(.groups = "drop") %>% duckplyr_group_vars(), character())
   expect_equal(gf %>% duckplyr_summarise(.groups = "keep") %>% duckplyr_group_vars(), c("x", "y"))
 
-  rf <- df %>% rowwise(x, y)
+  rf <- df %>% duckplyr_rowwise(x, y)
   expect_equal(rf %>% duckplyr_summarise(.groups = "drop") %>% duckplyr_group_vars(), character())
   expect_equal(rf %>% duckplyr_summarise(.groups = "keep") %>% duckplyr_group_vars(), c("x", "y"))
 })
@@ -410,7 +410,7 @@ test_that("catches `.by` with grouped-df", {
 
 test_that("catches `.by` with rowwise-df", {
   df <- tibble(x = 1)
-  rdf <- rowwise(df)
+  rdf <- duckplyr_rowwise(df)
 
   expect_snapshot(error = TRUE, {
     duckplyr_summarise(rdf, .by = x)
@@ -451,8 +451,8 @@ test_that("duckplyr_summarise() gives meaningful errors", {
     expect_snapshot({
       # Messages about .groups=
       tibble(x = 1, y = 2) %>% duckplyr_group_by(x, y) %>% duckplyr_summarise()
-      tibble(x = 1, y = 2) %>% rowwise(x, y) %>% duckplyr_summarise()
-      tibble(x = 1, y = 2) %>% rowwise() %>% duckplyr_summarise()
+      tibble(x = 1, y = 2) %>% duckplyr_rowwise(x, y) %>% duckplyr_summarise()
+      tibble(x = 1, y = 2) %>% duckplyr_rowwise() %>% duckplyr_summarise()
     })
   }))
 
@@ -470,7 +470,7 @@ test_that("duckplyr_summarise() gives meaningful errors", {
       ))
       (expect_error(
                       tibble(x = 1, y = c(1, 2, 2), z = runif(3)) %>%
-                        rowwise() %>%
+                        duckplyr_rowwise() %>%
                         duckplyr_summarise(a = lm(y ~ x))
       ))
 
@@ -482,7 +482,7 @@ test_that("duckplyr_summarise() gives meaningful errors", {
       ))
       (expect_error(
                       tibble(id = 1:2, a = list(1, "2")) %>%
-                        rowwise() %>%
+                        duckplyr_rowwise() %>%
                         duckplyr_summarise(a = a[[1]])
       ))
 
@@ -535,7 +535,7 @@ test_that("non-summary results are deprecated in favor of `duckplyr_reframe()` (
 
   df <- tibble(g = c(1, 1, 2), x = 1:3)
   gdf <- duckplyr_group_by(df, g)
-  rdf <- rowwise(df)
+  rdf <- duckplyr_rowwise(df)
 
   expect_snapshot({
     out <- duckplyr_summarise(df, x = which(x < 3))
