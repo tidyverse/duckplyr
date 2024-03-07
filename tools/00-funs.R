@@ -24,6 +24,7 @@ df_methods <-
     "same_src", # data frames can be copied into duck-frames with zero cost
     NULL
   ))) %>%
+  mutate(always_fallback = FALSE) %>%
   # methods we don't need to implement but can test
   mutate(skip_impl = name %in% c(
     "collapse", "tally",
