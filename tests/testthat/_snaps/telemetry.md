@@ -4,7 +4,7 @@
       tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% arrange(a, .by_group = TRUE)
     Condition
       Error in `rel_try()`:
-      ! arrange
+      ! arrange: {"name":"arrange","x":{"...1":"integer","...2":"integer"},"args":{"dots":"Can't translate object of class quosures/list",".by_group":true}}
 
 # telemetry and count()
 
@@ -13,7 +13,7 @@
         name = "nn", .drop = FALSE)
     Condition
       Error in `rel_try()`:
-      ! count
+      ! count: {"name":"count","x":{"...1":"integer","...2":"integer"},"args":{"dots":"Can't translate object of class quosures/list","wt":"Can't translate object of class quosure/formula","sort":true,"name":"nn",".drop":false}}
 
 # telemetry and distinct()
 
@@ -21,7 +21,7 @@
       tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% distinct(a, b, .keep_all = TRUE)
     Condition
       Error in `rel_try()`:
-      ! distinct
+      ! distinct: {"name":"distinct","x":{"...1":"integer","...2":"integer"},"args":{"dots":"Can't translate object of class quosures/list",".keep_all":true}}
 
 # telemetry and filter()
 
@@ -29,7 +29,7 @@
       tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% filter(a > 1, .by = b)
     Condition
       Error in `rel_try()`:
-      ! filter
+      ! filter: {"name":"filter","x":{"...1":"integer","...2":"integer"},"args":{"dots":"Can't translate object of class quosures/list","by":"Can't translate object of class quosure/formula","preserve":false}}
 
 ---
 
@@ -37,7 +37,7 @@
       tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% filter(a > 1, .preserve = TRUE)
     Condition
       Error in `rel_try()`:
-      ! filter
+      ! filter: {"name":"filter","x":{"...1":"integer","...2":"integer"},"args":{"dots":"Can't translate object of class quosures/list","by":"Can't translate object of class quosure/formula","preserve":true}}
 
 # telemetry and intersect()
 
@@ -46,7 +46,7 @@
         6))
     Condition
       Error in `rel_try()`:
-      ! intersect
+      ! intersect: {"name":"intersect","x":{"...1":"integer","...2":"integer"},"y":{"a":"integer","b":"integer"}}
 
 # telemetry and mutate()
 
@@ -55,7 +55,7 @@
       .keep = "unused", )
     Condition
       Error in `rel_try()`:
-      ! mutate
+      ! mutate: {"name":"mutate","x":{"...1":"integer","...2":"integer"},"args":{"dots":"Can't translate object of class quosures/list",".by":"Can't translate object of class quosure/formula",".keep":"unused"}}
 
 # telemetry and relocate()
 
@@ -63,7 +63,7 @@
       tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% relocate(b)
     Condition
       Error in `rel_try()`:
-      ! relocate
+      ! relocate: {"name":"relocate","x":{"...1":"integer","...2":"integer"},"args":{"dots":"Can't translate object of class quosures/list"}}
 
 # telemetry and rename()
 
@@ -71,7 +71,7 @@
       tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% rename(c = a)
     Condition
       Error in `rel_try()`:
-      ! rename
+      ! rename: {"name":"rename","x":{"...1":"integer","...2":"integer"},"args":{"dots":"Can't translate object of class quosures/list"}}
 
 # telemetry and select()
 
@@ -79,7 +79,7 @@
       tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% select(c = b)
     Condition
       Error in `rel_try()`:
-      ! select
+      ! select: {"name":"select","x":{"...1":"integer","...2":"integer"},"args":{"dots":"Can't translate object of class quosures/list"}}
 
 # telemetry and setdiff()
 
@@ -88,7 +88,7 @@
         6))
     Condition
       Error in `rel_try()`:
-      ! setdiff
+      ! setdiff: {"name":"setdiff","x":{"...1":"integer","...2":"integer"},"y":{"a":"integer","b":"integer"}}
 
 # telemetry and summarise()
 
@@ -96,7 +96,7 @@
       tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% summarise(c = sum(b), .by = a)
     Condition
       Error in `rel_try()`:
-      ! summarise
+      ! summarise: {"name":"summarise","x":{"...1":"integer","...2":"integer"},"args":{"dots":"Can't translate object of class quosures/list","by":"a",".groups":{}}}
 
 ---
 
@@ -105,7 +105,7 @@
       .groups = "rowwise")
     Condition
       Error in `rel_try()`:
-      ! summarise
+      ! summarise: {"name":"summarise","x":{"...1":"integer","...2":"integer"},"args":{"dots":"Can't translate object of class quosures/list","by":[],".groups":"rowwise"}}
 
 # telemetry and symdiff()
 
@@ -114,7 +114,7 @@
         6))
     Condition
       Error in `rel_try()`:
-      ! symdiff
+      ! symdiff: {"name":"symdiff","x":{"...1":"integer","...2":"integer"},"y":{"a":"integer","b":"integer"}}
 
 # telemetry and transmute()
 
@@ -122,7 +122,7 @@
       tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% transmute(c = a + b)
     Condition
       Error in `rel_try()`:
-      ! transmute
+      ! transmute: {"name":"transmute","x":{"...1":"integer","...2":"integer"},"args":{"dots":"Can't translate object of class quosures/list"}}
 
 # telemetry and union_all()
 
@@ -131,5 +131,5 @@
         6))
     Condition
       Error in `rel_try()`:
-      ! union_all
+      ! union_all: {"name":"union_all","x":{"...1":"integer","...2":"integer"},"y":{"a":"integer","b":"integer"}}
 
