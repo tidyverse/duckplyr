@@ -1,6 +1,7 @@
 dplyr <- asNamespace("dplyr")
 
 as_across_fn_call <- dplyr$as_across_fn_call
+as_group_map_function <- dplyr$as_group_map_function
 as_fun_list <- dplyr$as_fun_list
 as_join_by <- dplyr$as_join_by
 check_filter <- dplyr$check_filter
