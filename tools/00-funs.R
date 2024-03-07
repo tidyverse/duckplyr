@@ -16,7 +16,7 @@ df_methods <-
   filter(!grepl("_$|^as[.]tbl$", name)) %>%
   # special dplyr methods, won't implement
   filter(!(name %in% c(
-    "group_indices", "group_nest", "group_split", "group_trim", "groups", "n_groups",
+    "group_indices", "group_nest", "group_split", "group_trim", "n_groups",
     "same_src", # data frames can be copied into duck-frames with zero cost
     NULL
   ))) %>%
@@ -30,6 +30,7 @@ df_methods <-
     "group_map",
     "group_modify",
     "group_size",
+    "groups",
     "rowwise",
     NULL
   ))) %>%
@@ -704,6 +705,7 @@ test_skip_map <- c(
   group_size = "Special",
   group_split = "WAT",
   group_trim = "Grouped",
+  groups = "Special",
   nest_by = "WAT",
   # FIXME: Fail with rowwise()
   rowwise = "Stack overflow",

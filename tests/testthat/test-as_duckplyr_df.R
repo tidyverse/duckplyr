@@ -863,6 +863,22 @@ test_that("as_duckplyr_df() and group_vars()", {
   expect_equal(pre, post)
 })
 
+test_that("as_duckplyr_df() and groups()", {
+  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+
+  skip("Special")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% groups()
+  post <- test_df %>% groups() %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 test_that("as_duckplyr_df() and inner_join(join_by(a))", {
   withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
 

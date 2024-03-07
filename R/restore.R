@@ -21,6 +21,7 @@ methods_restore <- function() {
   vctrs::s3_register("dplyr::group_modify", "data.frame", dplyr$group_modify.data.frame)
   vctrs::s3_register("dplyr::group_size", "data.frame", dplyr$group_size.data.frame)
   vctrs::s3_register("dplyr::group_vars", "data.frame", dplyr$group_vars.data.frame)
+  vctrs::s3_register("dplyr::groups", "data.frame", dplyr$groups.data.frame)
   vctrs::s3_register("dplyr::inner_join", "data.frame", dplyr$inner_join.data.frame)
   vctrs::s3_register("dplyr::intersect", "data.frame", dplyr$intersect.data.frame)
   vctrs::s3_register("dplyr::left_join", "data.frame", dplyr$left_join.data.frame)
