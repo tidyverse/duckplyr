@@ -10,6 +10,7 @@
 #' @importFrom collections queue
 #' @importFrom dplyr group_by_prepare
 #' @importFrom dplyr group_indices
+#' @importFrom dplyr group_nest
 #' @importFrom dplyr group_split
 #' @importFrom dplyr grouped_df
 #' @importFrom dplyr if_else
