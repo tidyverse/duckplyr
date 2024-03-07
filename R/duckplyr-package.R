@@ -12,6 +12,7 @@
 #' @importFrom dplyr group_indices
 #' @importFrom dplyr group_nest
 #' @importFrom dplyr group_split
+#' @importFrom dplyr group_trim
 #' @importFrom dplyr grouped_df
 #' @importFrom dplyr if_else
 #' @importFrom glue glue

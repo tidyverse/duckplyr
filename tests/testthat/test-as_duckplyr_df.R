@@ -882,6 +882,22 @@ test_that("as_duckplyr_df() and group_split()", {
   expect_equal(pre, post)
 })
 
+test_that("as_duckplyr_df() and group_trim()", {
+  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+
+  skip("Grouped")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% group_trim()
+  post <- test_df %>% group_trim() %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 test_that("as_duckplyr_df() and group_vars()", {
   withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
 
