@@ -5,12 +5,12 @@ globalVariables("___row_number")
 summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
   force(.data)
 
-  rel_try(
+  by <- eval_select_by(enquo(.by), .data)
+
+  rel_try(call = list(name = "summarise", x = .data, args = list(dots = enquos(...), by = by, .groups = .groups)),
     'summarize(.groups = "rowwise") not supported' = identical(.groups, "rowwise"),
     {
       rel <- duckdb_rel_from_df(.data)
-
-      by <- eval_select_by(enquo(.by), .data)
 
       dots <- dplyr_quosures(...)
       dots <- fix_auto_name(dots)

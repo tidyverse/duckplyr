@@ -11,7 +11,7 @@ setdiff.duckplyr_df <- function(x, y, ...) {
     y_names <- x_names
   }
 
-  rel_try(
+  rel_try(call = list(name = "setdiff", x = x, y = y),
     "No duplicate names" = !identical(x_names, y_names) && anyDuplicated(x_names) && anyDuplicated(y_names),
     "Tables of different width" = length(x_names) != length(y_names),
     "Name mismatch" = !identical(x_names, y_names) && !all(y_names %in% x_names),
