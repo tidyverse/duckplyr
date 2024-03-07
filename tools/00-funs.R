@@ -609,8 +609,8 @@ test_extra_arg_map <- list(
     "d = 0, e = 1 / d, f = 0 / d, g = -1 / d",
 
     # Negative log
-    "c = 0, d = -1, e = log(c), f = log(d)",
-    "c = 0, d = -1, e = log10(c), f = log10(d)",
+    "c = 0, d = -1, e = log(c), f = suppressWarnings(log(d))",
+    "c = 0, d = -1, e = log10(c), f = suppressWarnings(log10(d))",
     "c = 10, d = log(c)",
     "c = 10, d = log10(c)",
 

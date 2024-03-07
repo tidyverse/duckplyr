@@ -49,6 +49,9 @@ duckplyr_macros <- c(
   "___eq_na_matches_na" = '(x, y) AS (x IS NOT DISTINCT FROM y)',
   "___coalesce" = "(x, y) AS COALESCE(x, y)",
   #
+  # FIXME: Need a better way?
+  "suppressWarnings" = "(x) AS (x)",
+  #
   NULL
 )
 
