@@ -2,20 +2,46 @@ telemetry <- new_environment()
 
 tel_upload_error <- function(cnd, call) {
   telemetry_env <- Sys.getenv("DUCKPLYR_TELEMETRY")
-  if (telemetry_env == "") {
-    if (!tel_ask(cnd, call)) {
-      return()
-    }
-  } else if (telemetry_env != "TRUE") {
+  if (telemetry_env != "" && telemetry_env != "TRUE") {
     return()
   }
 
   call_json <- call_to_json(cnd, call)
+
+  if (telemetry_env == "") {
+    if (!tel_ask(call_json)) {
+      return()
+    }
+  }
+
   tel_post_async(call_json)
 }
 
 tel_ask <- function(cnd, call) {
-  TRUE
+  time <- Sys.time()
+  old_time <- telemetry$time
+  eight_hours <- 60 * 60 * 8
+  if (!is.null(old_time) && time - old_time < eight_hours) {
+    return(FALSE)
+  }
+
+  cache_path <- tools::R_user_dir("duckplyr", "cache")
+  telemetry_path <- file.path(cache_path, "telemetry", paste0(Sys.getpid(), ".ndjson"))
+
+  cli::cli_inform(c(
+    "duckplyr was unable to process a query, a fallback to dplyr has been triggered. Would you like to help us improve the package by collecting anonymized queries that duckplyr failed to process?",
+    "i" = "Set the {.envvar DUCKPLYR_FALLBACK_COLLECT} environment variable, e.g., in your {.file .Renviron}, to silence this message.",
+    "x" = "Any value other than {.val TRUE} disables the data collection.",
+    "v" = "If {.envvar DUCKPLYR_FALLBACK_COLLECT} is set to {.val TRUE}, the following information is stored in {.file {telemetry_path}} and similar files:",
+    "*" = "The name of the attempted operation",
+    "*" = "The structure of the input data (but not the column names or any values)",
+    "*" = "The arguments passed to the operation, with column names replaced with the names in the dummy data",
+    "i" = "The files can be reviewed at any time and uploaded manually with {.code duckplyr::fallback_upload()}.",
+    "i" = "Automatic uploads are attempted on package load if the {.envvar DUCKPLYR_FALLBACK_AUTOUPLOAD} environment variable is set to an integer value of {.val 1} or greater.",
+    "i" = cli::col_silver("This message will be displayed once every eight hours.")
+  ))
+
+  FALSE
 }
 
 tel_post_async_fail <- function(message) {
