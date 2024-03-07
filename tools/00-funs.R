@@ -16,7 +16,6 @@ df_methods <-
   filter(!grepl("_$|^as[.]tbl$", name)) %>%
   # special dplyr methods, won't implement
   filter(!(name %in% c(
-    "dplyr_col_modify",
     "dplyr_row_slice",
     "group_data", "group_indices", "group_keys", "group_map", "group_modify", "group_nest", "group_size", "group_split", "group_trim", "groups", "n_groups",
     "same_src", # data frames can be copied into duck-frames with zero cost
@@ -24,6 +23,7 @@ df_methods <-
   ))) %>%
   # won't implement but want to trigger fallback message
   mutate(always_fallback = (name %in% c(
+    "dplyr_col_modify",
     "group_by",
     "rowwise",
     NULL
@@ -506,6 +506,7 @@ test_extra_arg_map <- list(
     # "desc(g)"
     NULL
   ),
+  dplyr_col_modify = "list(a = 6:1)",
   count = c(
     "",
     "a",

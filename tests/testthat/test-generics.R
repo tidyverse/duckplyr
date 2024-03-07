@@ -18,42 +18,42 @@ test_that("row_slice preserves empty groups if requested", {
 
 test_that("empty cols returns input", {
   df <- data.frame(x = 1)
-  expect_equal(dplyr_col_modify(df, list()), df)
+  expect_equal(duckplyr_dplyr_col_modify(df, list()), df)
 })
 
 test_that("applies tidyverse recycling rules", {
   expect_equal(
-    dplyr_col_modify(data.frame(x = 1:2), list(y = 1)),
+    duckplyr_dplyr_col_modify(data.frame(x = 1:2), list(y = 1)),
     data.frame(x = 1:2, y = c(1, 1))
   )
   expect_equal(
-    dplyr_col_modify(data.frame(x = integer()), list(y = 1)),
+    duckplyr_dplyr_col_modify(data.frame(x = integer()), list(y = 1)),
     data.frame(x = integer(), y = integer())
   )
 
   expect_error(
-    dplyr_col_modify(data.frame(x = 1:4), list(y = 1:2)),
+    duckplyr_dplyr_col_modify(data.frame(x = 1:4), list(y = 1:2)),
     class = "vctrs_error_recycle_incompatible_size"
   )
 })
 
 test_that("can add, remove, and replace columns", {
   df <- data.frame(x = 1, y = 2)
-  expect_equal(dplyr_col_modify(df, list(y = NULL)), data.frame(x = 1))
-  expect_equal(dplyr_col_modify(df, list(y = 3)), data.frame(x = 1, y = 3))
-  expect_equal(dplyr_col_modify(df, list(z = 3)), data.frame(x = 1, y = 2, z = 3))
+  expect_equal(duckplyr_dplyr_col_modify(df, list(y = NULL)), data.frame(x = 1))
+  expect_equal(duckplyr_dplyr_col_modify(df, list(y = 3)), data.frame(x = 1, y = 3))
+  expect_equal(duckplyr_dplyr_col_modify(df, list(z = 3)), data.frame(x = 1, y = 2, z = 3))
 })
 
 test_that("doesn't expand row names", {
   df <- data.frame(x = 1:10)
-  out <- dplyr_col_modify(df, list(y = 1))
+  out <- duckplyr_dplyr_col_modify(df, list(y = 1))
 
   expect_equal(.row_names_info(out, 1), -10)
 })
 
 test_that("preserves existing row names", {
   df <- data.frame(x = c(1, 2), row.names = c("a", "b"))
-  out <- dplyr_col_modify(df, list(y = 1))
+  out <- duckplyr_dplyr_col_modify(df, list(y = 1))
   expect_equal(row.names(df), c("a", "b"))
 })
 
@@ -72,7 +72,7 @@ test_that("reconstruct method gets a data frame", {
   df <- foobar(data.frame(x = 1))
 
   seen_df <- FALSE
-  dplyr_col_modify(df, list(y = 2))
+  duckplyr_dplyr_col_modify(df, list(y = 2))
   expect_true(seen_df)
 
   seen_df <- FALSE

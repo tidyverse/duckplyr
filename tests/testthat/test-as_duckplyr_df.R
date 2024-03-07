@@ -569,6 +569,35 @@ test_that("as_duckplyr_df() and do(data.frame(c = 1))", {
   expect_equal(pre, post)
 })
 
+test_that("as_duckplyr_df() and dplyr_col_modify(list(a = 6:1))", {
+  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% dplyr_col_modify(list(a = 6:1))
+  post <- test_df %>% dplyr_col_modify(list(a = 6:1)) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and dplyr_col_modify(list(a = 6:1))", {
+  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% dplyr_col_modify(list(a = 6:1))
+  post <- test_df %>% dplyr_col_modify(list(a = 6:1)) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 test_that("as_duckplyr_df() and dplyr_reconstruct(test_df)", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
