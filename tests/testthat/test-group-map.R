@@ -1,16 +1,16 @@
 test_that("group_map() respects empty groups", {
-  res <- group_by(mtcars, cyl) %>%
+  res <- duckplyr_group_by(mtcars, cyl) %>%
     group_map(~ head(.x, 2L))
   expect_equal(length(res), 3L)
 
   res <- iris %>%
-    group_by(Species) %>%
+    duckplyr_group_by(Species) %>%
     duckplyr_filter(Species == "setosa") %>%
     group_map(~ tally(.x))
   expect_equal(length(res), 1L)
 
   res <- iris %>%
-    group_by(Species, .drop = FALSE) %>%
+    duckplyr_group_by(Species, .drop = FALSE) %>%
     duckplyr_filter(Species == "setosa") %>%
     group_map(~ tally(.x))
   expect_equal(length(res), 3L)
@@ -18,7 +18,7 @@ test_that("group_map() respects empty groups", {
 
 test_that("group_map() can return arbitrary objects", {
   expect_equal(
-    group_by(mtcars, cyl) %>% group_map(~ 10),
+    duckplyr_group_by(mtcars, cyl) %>% group_map(~ 10),
     rep(list(10), 3)
   )
 })
@@ -31,21 +31,21 @@ test_that("group_map() works on ungrouped data frames (#4067)", {
 })
 
 test_that("group_modify() makes a grouped_df", {
-  res <- group_by(mtcars, cyl) %>%
+  res <- duckplyr_group_by(mtcars, cyl) %>%
     group_modify(~ head(.x, 2L))
 
   expect_equal(nrow(res), 6L)
   expect_equal(group_rows(res), list_of(1:2, 3:4, 5:6))
 
   res <- iris %>%
-    group_by(Species) %>%
+    duckplyr_group_by(Species) %>%
     duckplyr_filter(Species == "setosa") %>%
     group_modify(~ tally(.x))
   expect_equal(nrow(res), 1L)
   expect_equal(group_rows(res), list_of(1L))
 
   res <- iris %>%
-    group_by(Species, .drop = FALSE) %>%
+    duckplyr_group_by(Species, .drop = FALSE) %>%
     duckplyr_filter(Species == "setosa") %>%
     group_modify(~ tally(.x))
   expect_equal(nrow(res), 3L)
@@ -55,7 +55,7 @@ test_that("group_modify() makes a grouped_df", {
 test_that("group_modify() and group_map() want functions with at least 2 arguments, or ... (#3996)", {
   head1 <- function(d, ...) head(d, 1)
 
-  g <- iris %>% group_by(Species)
+  g <- iris %>% duckplyr_group_by(Species)
   expect_equal(nrow(group_modify(g, head1)), 3L)
   expect_equal(length(group_map(g, head1)), 3L)
 })
@@ -70,7 +70,7 @@ test_that("group_modify() works on ungrouped data frames (#4067)", {
 
 test_that("group_map() uses ptype on empty splits (#4421)", {
   res <- mtcars %>%
-    group_by(cyl) %>%
+    duckplyr_group_by(cyl) %>%
     duckplyr_filter(hp > 1000) %>%
     group_map(~.x)
   expect_equal(res, list(), ignore_attr = TRUE)
@@ -82,10 +82,10 @@ test_that("group_map() uses ptype on empty splits (#4421)", {
 
 test_that("group_modify() uses ptype on empty splits (#4421)", {
   res <- mtcars %>%
-    group_by(cyl) %>%
+    duckplyr_group_by(cyl) %>%
     duckplyr_filter(hp > 1000) %>%
     group_modify(~.x)
-  expect_equal(res, group_by(mtcars[integer(0L), names(res)], cyl))
+  expect_equal(res, duckplyr_group_by(mtcars[integer(0L), names(res)], cyl))
 })
 
 test_that("group_modify() works with additional arguments (#4509)", {
@@ -98,7 +98,7 @@ test_that("group_modify() works with additional arguments (#4509)", {
     data.frame(
       A=rep(1:2, each = 3)
     ) %>%
-    group_by(A)
+    duckplyr_group_by(A)
   targetdata <- srcdata
   targetdata$bar <- 1
 
@@ -120,12 +120,12 @@ test_that("group_map() give meaningful errors", {
 
   expect_snapshot({
     # group_modify()
-    (expect_error(mtcars %>% group_by(cyl) %>% group_modify(~ data.frame(cyl = 19))))
-    (expect_error(mtcars %>% group_by(cyl) %>% group_modify(~ 10)))
-    (expect_error(iris %>% group_by(Species) %>% group_modify(head1)))
+    (expect_error(mtcars %>% duckplyr_group_by(cyl) %>% group_modify(~ data.frame(cyl = 19))))
+    (expect_error(mtcars %>% duckplyr_group_by(cyl) %>% group_modify(~ 10)))
+    (expect_error(iris %>% duckplyr_group_by(Species) %>% group_modify(head1)))
 
     # group_map()
-    (expect_error(iris %>% group_by(Species) %>% group_map(head1)))
+    (expect_error(iris %>% duckplyr_group_by(Species) %>% group_map(head1)))
   })
 
 })

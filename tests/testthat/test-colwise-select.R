@@ -33,7 +33,7 @@ test_that("can select/rename with vars()", {
 
 test_that("select variants can use grouping variables (#3351, #3480)", {
   tbl <- tibble(gr1 = rep(1:2, 4), gr2 = rep(1:2, each = 4), x = 1:8) %>%
-    group_by(gr1)
+    duckplyr_group_by(gr1)
 
   expect_identical(
     duckplyr_select(tbl, gr1),
@@ -50,7 +50,7 @@ test_that("select variants can use grouping variables (#3351, #3480)", {
 })
 
 test_that("select_if keeps grouping cols", {
-  by_species <- iris %>% group_by(Species)
+  by_species <- iris %>% duckplyr_group_by(Species)
   expect_silent(df <- by_species %>% select_if(is.numeric))
   expect_equal(df, by_species[c(5, 1:4)])
 })
@@ -68,8 +68,8 @@ test_that("select_if() handles quoted predicates", {
 
 test_that("rename_all() works with grouped data (#3363)", {
   df <- data.frame(a = 1, b = 2)
-  out <- df %>% group_by(a) %>% rename_all(toupper)
-  expect_identical(out, group_by(data.frame(A = 1, B = 2), A))
+  out <- df %>% duckplyr_group_by(a) %>% rename_all(toupper)
+  expect_identical(out, duckplyr_group_by(data.frame(A = 1, B = 2), A))
 })
 
 test_that("scoping (#3426)", {
@@ -89,7 +89,7 @@ test_that("scoping (#3426)", {
 
 test_that("rename variants can rename a grouping variable (#3351)", {
   tbl <- tibble(gr1 = rep(1:2, 4), gr2 = rep(1:2, each = 4), x = 1:8) %>%
-    group_by(gr1)
+    duckplyr_group_by(gr1)
   res <- duckplyr_rename(tbl, GR1 = gr1, GR2 = gr2, X = x)
 
   expect_identical(
@@ -109,24 +109,24 @@ test_that("rename variants can rename a grouping variable (#3351)", {
 })
 
 test_that("select_all does not change the order of columns (#3351)", {
-  tbl <- group_by(tibble(x = 1:4, y = 4:1), y)
+  tbl <- duckplyr_group_by(tibble(x = 1:4, y = 4:1), y)
   expect_identical(select_all(tbl), tbl)
 
-  tbl <- group_by(tibble(x = 1:4, y = 4:1), x)
+  tbl <- duckplyr_group_by(tibble(x = 1:4, y = 4:1), x)
   expect_identical(select_all(tbl), tbl)
 
-  tbl <- group_by(tibble(x = 1:4, y = 4:1, z = 1:4), y)
+  tbl <- duckplyr_group_by(tibble(x = 1:4, y = 4:1, z = 1:4), y)
   expect_identical(select_all(tbl), tbl)
 })
 
 test_that("mutate_all does not change the order of columns (#3351)", {
-  tbl <- group_by(tibble(x = 1:4, y = 1:4), y)
+  tbl <- duckplyr_group_by(tibble(x = 1:4, y = 1:4), y)
   expect_message(expect_identical(names(mutate_all(tbl, identity)), names(tbl)), "ignored")
 
-  tbl <- group_by(tibble(x = 1:4, y = 1:4), x)
+  tbl <- duckplyr_group_by(tibble(x = 1:4, y = 1:4), x)
   expect_message(expect_identical(names(mutate_all(tbl, identity)), names(tbl)), "ignored")
 
-  tbl <- group_by(tibble(x = 1:4, y = 1:4, z = 1:4), y)
+  tbl <- duckplyr_group_by(tibble(x = 1:4, y = 1:4, z = 1:4), y)
   expect_message(expect_identical(names(mutate_all(tbl, identity)), names(tbl)), "ignored")
 })
 
