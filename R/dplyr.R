@@ -59,6 +59,7 @@ env_bind_do_pronouns <- dplyr$env_bind_do_pronouns
 filter_rows <- dplyr$filter_rows
 groups <- dplyr$groups
 group_nest_impl <- dplyr$group_nest_impl
+group_split_impl <- dplyr$group_split_impl
 join_cast_common <- dplyr$join_cast_common
 join_filter <- dplyr$join_filter
 join_mutate <- dplyr$join_mutate
