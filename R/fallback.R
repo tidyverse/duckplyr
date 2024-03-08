@@ -163,11 +163,11 @@ fallback_review <- function(oldest = NULL, newest = NULL, detail = TRUE) {
 fallback_upload <- function(oldest = NULL, newest = NULL, strict = TRUE) {
   fallback_logs <- tel_fallback_logs(oldest, newest, detail = TRUE)
   if (length(fallback_logs) == 0) {
-    cli::cli_inform("No reports ready for upload.")
+    cli::cli_inform("No {.pkg duckplyr} fallback reports ready for upload.")
     return()
   }
 
-  cli::cli_inform("Uploading {.strong {length(fallback_logs)}} reports.")
+  cli::cli_inform("Uploading {.strong {length(fallback_logs)}} {.pkg duckplyr} fallback reports.")
 
   failures <- character()
 
@@ -191,7 +191,7 @@ fallback_upload <- function(oldest = NULL, newest = NULL, strict = TRUE) {
 
   if (length(failures) > 0) {
     msg <- c(
-      "Failed to upload {length(failures)} report{?s}.",
+      "Failed to upload {length(failures)} {.pkg duckplyr} fallback report{?s}.",
       "i" = "The upload will be attempted again the next time {.code duckplyr::fallback_upload()} is called.",
       " " = '{paste(unique(failures), collapse = "\n")}'
     )
@@ -202,7 +202,7 @@ fallback_upload <- function(oldest = NULL, newest = NULL, strict = TRUE) {
       cli::cli_inform(msg)
     }
   } else {
-    cli::cli_inform("All reports uploaded successfully.")
+    cli::cli_inform("All {.pkg duckplyr} fallback reports uploaded successfully.")
   }
 }
 
