@@ -104,7 +104,7 @@ duckdb_rel_from_df <- function(df) {
 # FIXME: This should be duckdb's responsibility
 check_df_for_rel <- function(df) {
   if (is.character(.row_names_info(df, 0L))) {
-    stop("Need data frame without row names to convert to relational.")
+    cli_abort("Need data frame without row names to convert to relational.")
   }
 
   for (i in seq_along(df)) {
