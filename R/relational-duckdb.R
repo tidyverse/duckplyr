@@ -110,7 +110,7 @@ check_df_for_rel <- function(df) {
   for (i in seq_along(df)) {
     col <- .subset2(df, i)
     if (!is.null(names(col))) {
-      stop("Can't convert named vectors to relational. Affected column: `", names(df)[[i]], "`.")
+      cli_abort("Can't convert named vectors to relational. Affected column: {.var {names(df)[[i]]}}.")
     }
     if (!is.null(dim(col))) {
       stop("Can't convert arrays or matrices to relational. Affected column: `", names(df)[[i]], "`.")
