@@ -85,7 +85,7 @@ fallback_sitrep <- function() {
     fallback_txt_sitrep_logs(fallback_logs)
   )
 
-  cli::cli_inform(msg)
+  cli_inform(msg)
 }
 
 fallback_txt_header <- function() {
@@ -114,11 +114,11 @@ fallback_txt_sitrep_logs <- function(fallback_logs) {
 }
 
 fallback_nudge <- function(call_data) {
-  cli::cli_inform(c(
+  cli_inform(c(
     fallback_txt_header(),
     "i" = "A fallback situation just occurred. The following information would have been recorded:",
     " " = "{call_data}",
-    "i" = cli::col_silver("This message will be displayed once every eight hours.")
+    "i" = col_silver("This message will be displayed once every eight hours.")
   ))
 }
 
@@ -135,14 +135,14 @@ fallback_nudge <- function(call_data) {
 fallback_review <- function(oldest = NULL, newest = NULL, detail = TRUE) {
   fallback_logs <- tel_fallback_logs(oldest, newest, detail)
   if (length(fallback_logs) == 0) {
-    cli::cli_inform("No reports ready for upload.")
+    cli_inform("No reports ready for upload.")
     return(invisible())
   }
 
   for (i in seq_along(fallback_logs)) {
     file <- names(fallback_logs)[[i]]
 
-    cli::cli_inform(c(
+    cli_inform(c(
       "*" = "{.file {file}}",
       " " = if (detail) "{fallback_logs[[i]]}"
     ))
@@ -165,11 +165,11 @@ fallback_review <- function(oldest = NULL, newest = NULL, detail = TRUE) {
 fallback_upload <- function(oldest = NULL, newest = NULL, strict = TRUE) {
   fallback_logs <- tel_fallback_logs(oldest, newest, detail = TRUE)
   if (length(fallback_logs) == 0) {
-    cli::cli_inform("No {.pkg duckplyr} fallback reports ready for upload.")
+    cli_inform("No {.pkg duckplyr} fallback reports ready for upload.")
     return(invisible())
   }
 
-  cli::cli_inform("Uploading {.strong {length(fallback_logs)}} {.pkg duckplyr} fallback reports.")
+  cli_inform("Uploading {.strong {length(fallback_logs)}} {.pkg duckplyr} fallback reports.")
 
   failures <- character()
 
@@ -199,12 +199,12 @@ fallback_upload <- function(oldest = NULL, newest = NULL, strict = TRUE) {
     )
 
     if (strict) {
-      cli::cli_abort(msg)
+      cli_abort(msg)
     } else {
-      cli::cli_inform(msg)
+      cli_inform(msg)
     }
   } else {
-    cli::cli_inform("All {.pkg duckplyr} fallback reports uploaded successfully.")
+    cli_inform("All {.pkg duckplyr} fallback reports uploaded successfully.")
   }
 
   invisible()
@@ -222,9 +222,9 @@ on_load({
         fallback_txt_header(),
         fallback_txt_uploading(fallback_uploading),
         fallback_txt_sitrep_logs(fallback_logs),
-        "i" = cli::col_silver("This message can be disabled by setting {.envvar DUCKPLYR_FALLBACK_AUTOUPLOAD}.")
+        "i" = col_silver("This message can be disabled by setting {.envvar DUCKPLYR_FALLBACK_AUTOUPLOAD}.")
       )
-      packageStartupMessage(cli::format_message(msg))
+      packageStartupMessage(format_message(msg))
     }
   }
 })
@@ -238,11 +238,11 @@ on_load({
 fallback_purge <- function(oldest = NULL, newest = NULL) {
   fallback_logs <- tel_fallback_logs(oldest, newest, detail = FALSE)
   if (length(fallback_logs) == 0) {
-    cli::cli_inform("No {.pkg duckplyr} fallback reports ready to delete.")
+    cli_inform("No {.pkg duckplyr} fallback reports ready to delete.")
     return(invisible())
   }
 
   unlink(names(fallback_logs))
-  cli::cli_inform("Deleted {.strong {length(fallback_logs)}} {.pkg duckplyr} fallback report{?s}.")
+  cli_inform("Deleted {.strong {length(fallback_logs)}} {.pkg duckplyr} fallback report{?s}.")
   invisible()
 }
