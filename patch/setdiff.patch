@@ -1,11 +1,13 @@
 diff --git b/R/setdiff.R a/R/setdiff.R
-index 314dcd7..23852ec 100644
+index 314dcd7a..e14de004 100644
 --- b/R/setdiff.R
 +++ a/R/setdiff.R
 @@ -2,9 +2,36 @@
  #' @export
  setdiff.duckplyr_df <- function(x, y, ...) {
    # Our implementation
+-  rel_try(
+-    "No relational implementation for setdiff()" = TRUE,
 +  check_dots_empty()
 +
 +  x_names <- names(x)
@@ -15,8 +17,7 @@ index 314dcd7..23852ec 100644
 +    y_names <- x_names
 +  }
 +
-   rel_try(
--    "No relational implementation for setdiff()" = TRUE,
++  rel_try(call = list(name = "setdiff", x = x, y = y),
 +    "No duplicate names" = !identical(x_names, y_names) && anyDuplicated(x_names) && anyDuplicated(y_names),
 +    "Tables of different width" = length(x_names) != length(y_names),
 +    "Name mismatch" = !identical(x_names, y_names) && !all(y_names %in% x_names),

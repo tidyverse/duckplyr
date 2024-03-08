@@ -1,5 +1,5 @@
 diff --git b/R/filter.R a/R/filter.R
-index 787a374..19b1281 100644
+index 787a3742..e18bc350 100644
 --- b/R/filter.R
 +++ a/R/filter.R
 @@ -1,10 +1,31 @@
@@ -8,6 +8,8 @@ index 787a374..19b1281 100644
 +
  filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
 -  # Our implementation
+-  rel_try(
+-    "No relational implementation for filter()" = TRUE,
 +  force(.data)
 +
 +  dots <- dplyr_quosures(...)
@@ -15,8 +17,7 @@ index 787a374..19b1281 100644
 +
 +  by <- enquo(.by)
 +
-   rel_try(
--    "No relational implementation for filter()" = TRUE,
++  rel_try(call = list(name = "filter", x = .data, args = list(dots = dots, by = by, preserve = .preserve)),
 +    "Can't use relational with zero-column result set." = (length(.data) == 0),
 +    "Can't use relational without filter conditions." = (length(dots) == 0),
 +    "Can't use relational with grouped operation." = (!quo_is_null(by)), # (length(by$names) > 0),

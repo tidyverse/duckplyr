@@ -1,5 +1,5 @@
 diff --git b/R/count.R a/R/count.R
-index 0b85569..ea3d310 100644
+index 0b855695..dc83ffd8 100644
 --- b/R/count.R
 +++ a/R/count.R
 @@ -1,14 +1,51 @@
@@ -7,6 +7,8 @@ index 0b85569..ea3d310 100644
  #' @export
  count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .drop = group_by_drop_default(x)) {
 -  # Our implementation
+-  rel_try(
+-    "No relational implementation for count()" = TRUE,
 +  force(x)
 +
 +  dplyr_local_error_call()
@@ -17,8 +19,7 @@ index 0b85569..ea3d310 100644
 +  by_exprs <- unname(map(by, quo_get_expr))
 +  is_name <- map_lgl(by_exprs, is_symbol)
 +
-   rel_try(
--    "No relational implementation for count()" = TRUE,
++  rel_try(call = list(name = "count", x = x, args = list(dots = enquos(...), wt = enquo(wt), sort = sort, name = name, .drop = .drop)),
 +    "count() needs all(is_name)" = !all(is_name),
 +    "count() only implemented for .drop = TRUE" = !.drop,
 +    "count() only implemented for sort = FALSE" = sort,
