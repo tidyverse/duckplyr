@@ -78,6 +78,15 @@ Future versions of duckplyr may start logging additional data
 and thus require a higher value to enable uploading.
 Set to 99 to enable uploading for all future versions.
 Use \code{\link[usethis:edit]{usethis::edit_r_environ()}} to edit the environment file.
+
+The location of the logs can be controlled by setting the environment variable
+\code{DUCKPLYR_FALLBACK_LOG_DIR} to a directory path.
+By default, logs are written to a directory in the user's cache directory
+as returned by \code{tools::R_user_dir("duckplyr", "cache")}.
+
+All code related to fallback logging and uploading is in the
+\href{https://github.com/duckdblabs/duckplyr/blob/main/R/fallback.R}{fallback.R} and
+\href{https://github.com/duckdblabs/duckplyr/blob/main/R/telementry.R}{telementry.R} files.
 }
 \examples{
 fallback_sitrep()
