@@ -30,7 +30,7 @@ as_duckplyr_df <- function(.data) {
   }
 
   if (is.character(.row_names_info(.data, 0L))) {
-    abort("Must pass data frame without row names to `as_duckplyr_df()`.")
+    cli_abort("Must pass data frame without row names to `as_duckplyr_df()`.")
   }
 
   if (anyNA(names(.data)) || any(names(.data) == "")) {
