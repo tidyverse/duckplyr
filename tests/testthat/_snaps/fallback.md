@@ -4,9 +4,8 @@
       fallback_sitrep()
     Message
       The duckplyr package is configured to fall back to dplyr when it encounters an incompatibility. Fallback events can be collected and uploaded for analysis to guide future development. See `?duckplyr::fallback()` for details.
-      i Fallback logging is not controlled. Enable or disable it by setting the `DUCKPLYR_FALLBACK_COLLECT` environment variable.
-      i Fallback uploading is not controlled. Enable or disable it by setting the `DUCKPLYR_FALLBACK_AUTOUPLOAD` environment variable.
-      i No reports ready for upload.
+      i Fallback logging is not controlled and therefore disabled. Enable or disable it by setting the `DUCKPLYR_FALLBACK_COLLECT` environment variable.
+      i Fallback uploading is not controlled and therefore disabled. Enable or disable it by setting the `DUCKPLYR_FALLBACK_AUTOUPLOAD` environment variable.
 
 # fallback_sitrep() enabled
 
@@ -42,8 +41,6 @@
       The duckplyr package is configured to fall back to dplyr when it encounters an incompatibility. Fallback events can be collected and uploaded for analysis to guide future development. See `?duckplyr::fallback()` for details.
       x Fallback logging is disabled.
       x Fallback uploading is disabled.
-      v Number of reports ready for upload: 3.
-      > Review with `duckplyr::fallback_review()`, upload with `duckplyr::fallback_upload()`.
 
 # fallback_nudge()
 

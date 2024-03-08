@@ -73,13 +73,13 @@ fallback_sitrep <- function() {
     fallback_txt_header(),
 
     if (is.na(fallback_logging)) {
-      c("i" = "Fallback logging is not controlled. Enable or disable it by setting the {.envvar DUCKPLYR_FALLBACK_COLLECT} environment variable.")
+      c("i" = "Fallback logging is not controlled and therefore disabled. Enable or disable it by setting the {.envvar DUCKPLYR_FALLBACK_COLLECT} environment variable.")
     } else if (fallback_logging) {
       c(
         "v" = "Fallback logging is enabled.",
         "i" = "Logs are written to {.file {fallback_log_dir}}.",
         if (is.na(fallback_verbose)) {
-          c("i" = "Fallback printing is not controlled. Enable or disable it by setting the {.envvar DUCKPLYR_FALLBACK_VERBOSE} environment variable.")
+          c("i" = "Fallback printing is not controlled and therefore disabled. Enable or disable it by setting the {.envvar DUCKPLYR_FALLBACK_VERBOSE} environment variable.")
         } else if (fallback_verbose) {
           c("v" = "Fallback printing is enabled.")
         } else {
@@ -91,7 +91,12 @@ fallback_sitrep <- function() {
     },
 
     fallback_txt_uploading(fallback_uploading),
-    fallback_txt_sitrep_logs(fallback_logs)
+
+    if (isTRUE(fallback_logging)) {
+      fallback_txt_sitrep_logs(fallback_logs)
+    },
+
+    NULL
   )
 
   cli_inform(msg)
@@ -103,7 +108,7 @@ fallback_txt_header <- function() {
 
 fallback_txt_uploading <- function(fallback_uploading) {
   if (is.na(fallback_uploading)) {
-    c("i" = "Fallback uploading is not controlled. Enable or disable it by setting the {.envvar DUCKPLYR_FALLBACK_AUTOUPLOAD} environment variable.")
+    c("i" = "Fallback uploading is not controlled and therefore disabled. Enable or disable it by setting the {.envvar DUCKPLYR_FALLBACK_AUTOUPLOAD} environment variable.")
   } else if (fallback_uploading) {
     c("v" = "Fallback uploading is enabled.")
   } else {
