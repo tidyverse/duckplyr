@@ -771,8 +771,6 @@ test_that("as_duckplyr_df() and group_data()", {
 })
 
 test_that("as_duckplyr_df() and group_indices()", {
-  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
-
   skip("Special")
 
   # Data
@@ -1646,8 +1644,6 @@ test_that("as_duckplyr_df() and n_groups()", {
 })
 
 test_that("as_duckplyr_df() and nest_by()", {
-  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
-
   skip("WAT")
 
   # Data
