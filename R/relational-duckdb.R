@@ -482,6 +482,6 @@ to_duckdb_expr_meta <- function(x) {
       out
     },
     NULL = expr(NULL),
-    stop("Unknown expr class: ", class(x)[[1]])
+    cli_abort("Unknown expr class: {.cls {paste(class(x), collapse = '/')}}")
   )
 }
