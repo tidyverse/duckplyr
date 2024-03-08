@@ -13,9 +13,10 @@ reference:
 - title: Data ingestion
   contents:
   - df_from_file
-- title: Configuration and internals
+- title: Configuration, telemetry, and internals
   contents:
   - config
+  - fallback
   - stats_show
 - title: Relational operations and expressions
   contents:
