@@ -1,3 +1,54 @@
+telemetry <- new_environment()
+
+tel_fallback_logging <- function() {
+  val <- Sys.getenv("DUCKPLYR_FALLBACK_COLLECT")
+  if (val == "") {
+    return(NA)
+  }
+  if (!grepl("^[0-9]+$", val)) {
+    return(FALSE)
+  }
+  as.integer(val) >= 1
+}
+
+tel_fallback_uploading <- function() {
+  val <- Sys.getenv("DUCKPLYR_FALLBACK_AUTOUPLOAD")
+  if (val == "") {
+    return(NA)
+  }
+  if (!grepl("^[0-9]+$", val)) {
+    return(FALSE)
+  }
+  as.integer(val) >= 1
+}
+
+tel_fallback_log_dir <- function() {
+  if (Sys.getenv("DUCKPLYR_FALLBACK_LOG_DIR") != "") {
+    return(Sys.getenv("DUCKPLYR_FALLBACK_LOG_DIR"))
+  }
+
+  cache_path <- tools::R_user_dir("duckplyr", "cache")
+  telemetry_path <- file.path(cache_path, "telemetry")
+
+  # We do not distinguish between an empty an a missing directory.
+  # From that perspective, this is still a pure function.
+  dir.create(telemetry_path, recursive = TRUE, showWarnings = FALSE)
+
+  telemetry_path
+}
+
+tel_fallback_logs <- function() {
+  # For mocking
+  if (Sys.getenv("DUCKPLYR_TELEMETRY_FALLBACK_LOGS") != "") {
+    return(strsplit(Sys.getenv("DUCKPLYR_TELEMETRY_FALLBACK_LOGS"), ",")[[1]])
+  }
+
+  telemetry_path <- tel_fallback_log_dir()
+  list.files(telemetry_path, full.names = TRUE, pattern = "[.]ndjson$")
+}
+
+# ---
+
 call_to_json <- function(cnd, call) {
   name_map <- get_name_map(c(names(call$x), names(call$y), names(call$args$dots)))
   if (!is.null(names(call$args$dots))) {

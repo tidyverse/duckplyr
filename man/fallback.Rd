@@ -2,7 +2,11 @@
 % Please edit documentation in R/fallback.R
 \name{fallback}
 \alias{fallback}
+\alias{fallback_sitrep}
 \title{Fallback to dplyr}
+\usage{
+fallback_sitrep()
+}
 \description{
 The \pkg{duckplyr} package aims at providing
 a fully compatible drop-in replacement for \pkg{dplyr}.
@@ -13,11 +17,14 @@ Whenever duckplyr encounters an incompatibility, it falls back to dplyr.
 To assist future development, the fallback situations can be logged
 to a local file and uploaded for analysis.
 The functions and environment variables on this page control the process.
+
+\code{fallback_sitrep()} prints the current settings for fallback logging and uploading,
+the number of reports ready for upload, and the location of the logs.
 }
 \details{
 Logging and uploading are both opt-in.
 By default, for logging, a message is printed to the console
 for the first time in a session and then once every 8 hours.
-The number of available logs and instructions for uploading
+The number of available logs and instructions for reviewing and uploading
 are printed when the package is loaded.
 }
