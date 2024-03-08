@@ -48,64 +48,30 @@
 <h2 class="pkg-version" data-toc-text="0.3.1" id="duckplyr-031-2024-03-08">duckplyr 0.3.1 (2024-03-08)<a class="anchor" aria-label="anchor" href="#duckplyr-031-2024-03-08"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes-0-3-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-1"></a></h3>
-<ul><li>Improve and test fallback telemetry (<a href="https://github.com/duckdblabs/duckplyr/issues/115" class="external-link">#115</a>).</li>
-<li>Fix autoupload and other telemetry details (<a href="https://github.com/duckdblabs/duckplyr/issues/113" class="external-link">#113</a>).</li>
-<li>Forbid reuse of new columns created in <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize()</a></code> (<a href="https://github.com/duckdblabs/duckplyr/issues/72" class="external-link">#72</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/106" class="external-link">#106</a>).</li>
-<li>Disambiguate computation of <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10()</a></code> and <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log()</a></code>.</li>
-<li>Test for <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10()</a></code>.</li>
+<ul><li>Forbid reuse of new columns created in <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code> (<a href="https://github.com/duckdblabs/duckplyr/issues/72" class="external-link">#72</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/106" class="external-link">#106</a>).</li>
 <li>
 <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code> no longer restores subclass.</li>
+<li>Disambiguate computation of <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10()</a></code> and <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log()</a></code>.</li>
 <li>Fix division by zero for positive and negative numbers.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="features-0-3-1">Features<a class="anchor" aria-label="anchor" href="#features-0-3-1"></a></h3>
-<ul><li>Prefer <code><a href="https://cli.r-lib.org/reference/cli_abort.html" class="external-link">cli::cli_abort()</a></code> over <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> or <code><a href="https://rlang.r-lib.org/reference/abort.html" class="external-link">rlang::abort()</a></code> (<a href="https://github.com/duckdblabs/duckplyr/issues/114" class="external-link">#114</a>).</li>
-<li>Translate <code>.data$a</code> and <code>.env$a</code>.</li>
-<li>Permit <code>difftime</code> columns.</li>
-<li>Permit <code>POSIXct</code> columns.</li>
-<li>Strict checks for column class, only supporting <code>integer</code>, <code>numeric</code>, <code>logical</code> and <code>Date</code> for now.</li>
-</ul></div>
-<div class="section level3">
-<h3 id="chore-0-3-1">Chore<a class="anchor" aria-label="anchor" href="#chore-0-3-1"></a></h3>
-<ul><li>Better default fallback message.</li>
-<li>Add telemetry for joins.</li>
-<li>Better scrubbing for telemetry (<a href="https://github.com/duckdblabs/duckplyr/issues/110" class="external-link">#110</a>).</li>
-<li>Update patches (<a href="https://github.com/duckdblabs/duckplyr/issues/109" class="external-link">#109</a>).</li>
-<li>Add calls for telemetry (<a href="https://github.com/duckdblabs/duckplyr/issues/107" class="external-link">#107</a>).</li>
-<li>Implement almost all dplyr methods (<a href="https://github.com/duckdblabs/duckplyr/issues/105" class="external-link">#105</a>).</li>
-<li>Implement <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code> and other methods to collect fallback information (<a href="https://github.com/duckdblabs/duckplyr/issues/94" class="external-link">#94</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/104" class="external-link">#104</a>).</li>
-<li>Update TPC/H scripts.</li>
-<li>Implement <code><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings()</a></code> as the identity function.</li>
-<li>Document.</li>
-<li>Remove bad patch.</li>
-<li>Better duckdb tests.</li>
-<li>Update tests.</li>
-<li>Better <code>.sync/.gitignore</code>.</li>
-<li>Use standalone purrr for dplyr compatibility.</li>
+<ul><li>New <code><a href="../reference/fallback.html">fallback_sitrep()</a></code> and related functionality for collecting telemetry data (<a href="https://github.com/duckdblabs/duckplyr/issues/102" class="external-link">#102</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/107" class="external-link">#107</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/110" class="external-link">#110</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/111" class="external-link">#111</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/115" class="external-link">#115</a>). No data is collected by default, only a message is displayed once per session and then every eight hours. Opt in or opt out by setting environment variables.</li>
+<li>Implement <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code> and other methods to collect fallback information (<a href="https://github.com/duckdblabs/duckplyr/issues/94" class="external-link">#94</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/104" class="external-link">#104</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/105" class="external-link">#105</a>).</li>
 <li>Set memory limit and temporary directory for duckdb.</li>
+<li>Implement <code><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings()</a></code> as the identity function.</li>
+<li>Prefer <code><a href="https://cli.r-lib.org/reference/cli_abort.html" class="external-link">cli::cli_abort()</a></code> over <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> or <code><a href="https://rlang.r-lib.org/reference/abort.html" class="external-link">rlang::abort()</a></code> (<a href="https://github.com/duckdblabs/duckplyr/issues/114" class="external-link">#114</a>).</li>
+<li>Translate <code>.data$a</code> and <code>.env$a</code>.</li>
+<li>Strict checks for column class, only supporting <code>integer</code>, <code>numeric</code>, <code>logical</code>, <code>Date</code>, <code>POSIXct</code>, and <code>difftime</code> for now.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="continuous-integration-0-3-1">Continuous integration<a class="anchor" aria-label="anchor" href="#continuous-integration-0-3-1"></a></h3>
-<ul><li>Use newer Action version to fix build on Windows.</li>
-</ul></div>
-<div class="section level3">
-<h3 id="documentation-0-3-1">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-3-1"></a></h3>
-<ul><li>Tweak README.</li>
-<li>Tweak description of environment variables and document.</li>
-<li>Tweak messages.</li>
-<li>Telementry -&gt; telemetry (<a href="https://github.com/TimTaylor" class="external-link">@TimTaylor</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/112" class="external-link">#112</a>).</li>
-<li>Clarify default.</li>
-<li>New <code><a href="../reference/fallback.html">fallback_sitrep()</a></code> and related functionality for collecting telemetry data (<a href="https://github.com/duckdblabs/duckplyr/issues/102" class="external-link">#102</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/111" class="external-link">#111</a>).</li>
+<h3 id="internal-0-3-1">Internal<a class="anchor" aria-label="anchor" href="#internal-0-3-1"></a></h3>
+<ul><li>Better duckdb tests.</li>
+<li>Use standalone purrr for dplyr compatibility.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="testing-0-3-1">Testing<a class="anchor" aria-label="anchor" href="#testing-0-3-1"></a></h3>
 <ul><li>Add tests for correct base of <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log()</a></code> and <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10()</a></code>.</li>
-</ul></div>
-<div class="section level3">
-<h3 id="uncategorized-0-3-1">Uncategorized<a class="anchor" aria-label="anchor" href="#uncategorized-0-3-1"></a></h3>
-<ul><li>Merge pull request <a href="https://github.com/duckdblabs/duckplyr/issues/103" class="external-link">#103</a> from duckdblabs/f-cleanup-autogen.</li>
-<li>Internal changes only.</li>
-<li>Merge branch ‘cran-0.3.0’.</li>
 </ul></div>
 </div>
     <div class="section level2">
