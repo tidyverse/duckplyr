@@ -50,7 +50,7 @@
 #'
 #' All code related to fallback logging and uploading is in the
 #' [fallback.R](https://github.com/duckdblabs/duckplyr/blob/main/R/fallback.R) and
-#' [telementry.R](https://github.com/duckdblabs/duckplyr/blob/main/R/telementry.R) files.
+#' [telemetry.R](https://github.com/duckdblabs/duckplyr/blob/main/R/telemetry.R) files.
 #'
 #' @name fallback
 #' @examples
