@@ -136,7 +136,12 @@ Use `methods_overwrite()` to enable processing with duckdb for all data frames:
 ```{r}
 methods_overwrite()
 ```
+
 This is the same query as above, without `as_duckplyr_df()`:
+
+```{r echo = FALSE}
+Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
+```
 
 ```{r}
 out <-
@@ -175,6 +180,30 @@ palmerpenguins::penguins %>%
   mutate(bill_area = bill_length_mm * bill_depth_mm) %>%
   summarize(.by = c(species, sex), mean_bill_area = mean(bill_area)) %>%
   filter(species != "Gentoo")
+```
+
+## Telemetry
+
+We would like to guide our efforts towards improving duckplyr, focusing on the features with the most impact.
+To this end, duckplyr collects and uploads telemetry data, but only if permitted by the user.
+The data collected contains:
+
+- The package version
+- The error message
+- The operation being performed, and the arguments
+    - For the input data frames, only the structure is included (column types only), no column names or data
+
+The first time the package encounters an unsupported function, data type, or operation, instructions are printed to the console.
+
+```{r echo = FALSE}
+Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = "")
+```
+
+```{r}
+palmerpenguins::penguins %>%
+  as_duckplyr_df() %>%
+  transmute(bill_area = bill_length_mm * bill_depth_mm) %>%
+  head(3)
 ```
 
 ## Extensibility
