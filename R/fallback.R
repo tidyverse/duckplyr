@@ -16,37 +16,36 @@
 #' Logging and uploading are both opt-in.
 #' By default, for logging, a message is printed to the console
 #' for the first time in a session and then once every 8 hours.
-#' The number of available logs and instructions for reviewing and uploading
-#' are printed when the package is loaded.
 #'
-#' Logging can be controlled by setting the environment variable
-#' \code{DUCKPLYR_FALLBACK_COLLECT} to an integer value.
-#' If the value is 0, logging is disabled.
-#' Currently, logging is active if the value is 1 or greater.
-#' Future versions of duckplyr may start logging additional data
-#' and thus require a higher value to enable logging.
-#' Set to 99 to enable logging for all future versions.
-#' Use [usethis::edit_r_environ()] to edit the environment file.
+#' The following environment variables control the logging and uploading:
 #'
-#' Printing can be controlled by setting the environment variable
-#' \code{DUCKPLYR_FALLBACK_VERBOSE} to \code{TRUE} or \code{FALSE}.
-#' If the value is \code{TRUE}, a message is printed to the console
-#' for each fallback situation.
-#' This setting is only relevant if logging is enabled.
+#' - \code{DUCKPLYR_FALLBACK_COLLECT} controls logging, set it
+#'   to 1 or greater to enable logging.
+#'   If the value is 0, logging is disabled.
+#'   Future versions of duckplyr may start logging additional data
+#'   and thus require a higher value to enable logging.
+#'   Set to 99 to enable logging for all future versions.
+#'   Use [usethis::edit_r_environ()] to edit the environment file.
 #'
-#' Automatic uploading can be controlled by setting the environment variable
-#' \code{DUCKPLYR_FALLBACK_AUTOUPLOAD} to an integer value.
-#' If the value is 0, uploading is disabled.
-#' Currently, uploading is active if the value is 1 or greater.
-#' Future versions of duckplyr may start logging additional data
-#' and thus require a higher value to enable uploading.
-#' Set to 99 to enable uploading for all future versions.
-#' Use [usethis::edit_r_environ()] to edit the environment file.
+#' - \code{DUCKPLYR_FALLBACK_VERBOSE} controls printing, set it
+#'   to \code{TRUE} or \code{FALSE} to enable or disable printing.
+#'   If the value is \code{TRUE}, a message is printed to the console
+#'   for each fallback situation.
+#'   This setting is only relevant if logging is enabled.
 #'
-#' The location of the logs can be controlled by setting the environment variable
-#' \code{DUCKPLYR_FALLBACK_LOG_DIR} to a directory path.
-#' By default, logs are written to a directory in the user's cache directory
-#' as returned by \code{tools::R_user_dir("duckplyr", "cache")}.
+#' - \code{DUCKPLYR_FALLBACK_AUTOUPLOAD} controls uploading, set it
+#'   to 1 or greater to enable uploading.
+#'   If the value is 0, uploading is disabled.
+#'   Currently, uploading is active if the value is 1 or greater.
+#'   Future versions of duckplyr may start logging additional data
+#'   and thus require a higher value to enable uploading.
+#'   Set to 99 to enable uploading for all future versions.
+#'   Use [usethis::edit_r_environ()] to edit the environment file.
+#'
+#' - \code{DUCKPLYR_FALLBACK_LOG_DIR} controls the location of the logs.
+#'   It must point to a directory (existing or not) where the logs will be written.
+#'   By default, logs are written to a directory in the user's cache directory
+#'   as returned by \code{tools::R_user_dir("duckplyr", "cache")}.
 #'
 #' All code related to fallback logging and uploading is in the
 #' [`fallback.R`](https://github.com/duckdblabs/duckplyr/blob/main/R/fallback.R) and
