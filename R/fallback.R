@@ -25,8 +25,7 @@
 #' Future versions of duckplyr may start logging additional data
 #' and thus require a higher value to enable logging.
 #' Set to 99 to enable logging for all future versions.
-#' `fallback_collect_enable()` and `fallback_collect_disable()` are
-#' convenience helpers to set the environment variable.
+#' Use [usethis::edit_r_environ()] to edit the environment file.
 #'
 #' Printing can be controlled by setting the environment variable
 #' \code{DUCKPLYR_FALLBACK_VERBOSE} to \code{TRUE} or \code{FALSE}.
