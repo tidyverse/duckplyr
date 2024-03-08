@@ -1,5 +1,42 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.3.0.9007 (2024-03-08)
+
+## Bug fixes
+
+- Improve and test fallback telemetry (#115).
+
+- Fix autoupload and other telemetry details (#113).
+
+## Features
+
+- Prefer `cli::cli_abort()` over `stop()` or `rlang::abort()` (#114).
+
+## Chore
+
+- Better default fallback message.
+
+- Add telemetry for joins.
+
+- Better scrubbing for telemetry (#110).
+
+- Update patches (#109).
+
+## Documentation
+
+- Tweak README.
+
+- Tweak description of environment variables and document.
+
+- Tweak messages.
+
+- Telementry -\> telemetry (@TimTaylor, #112).
+
+- Clarify default.
+
+- New `fallback_sitrep()` and related functionality for collecting telemetry data (#102, #111).
+
+
 # duckplyr 0.3.0.9006 (2024-03-08)
 
 ## Bug fixes
