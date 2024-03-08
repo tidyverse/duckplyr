@@ -15,7 +15,7 @@ R functions, and R data types are implemented.
 Whenever duckplyr encounters an incompatibility, it falls back to dplyr.
 
 To assist future development, the fallback situations can be logged
-to a local file and uploaded for analysis.
+to the console or to a local file and uploaded for analysis.
 The functions and environment variables on this page control the process.
 
 \code{fallback_sitrep()} prints the current settings for fallback logging and uploading,
@@ -27,4 +27,19 @@ By default, for logging, a message is printed to the console
 for the first time in a session and then once every 8 hours.
 The number of available logs and instructions for reviewing and uploading
 are printed when the package is loaded.
+
+Logging can be controlled by setting the environment variable
+\code{DUCKPLYR_FALLBACK_COLLECT} to an integer value.
+If the value is 0, logging is disabled.
+Currently, logging is active if the value is 1 or greater.
+Future versions of duckplyr may start logging additional data
+and thus require a higher value to enable logging.
+Set to 99 to enable logging for all future versions.
+Use \code{\link[usethis:edit]{usethis::edit_r_environ()}} to edit the environment file.
+
+Printing can be controlled by setting the environment variable
+\code{DUCKPLYR_FALLBACK_VERBOSE} to \code{TRUE} or \code{FALSE}.
+If the value is \code{TRUE}, a message is printed to the console
+for each fallback situation.
+This setting is only relevant if logging is enabled.
 }
