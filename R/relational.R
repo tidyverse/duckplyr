@@ -173,7 +173,7 @@ rel_translate <- function(
               if (exists(var_name, envir = env)) {
                 return(do_translate(get(var_name, env), in_window = in_window))
               } else {
-                abort(paste0("object `", var_name, "` not found"))
+                cli_abort("object {.var {var_name}} not found")
               }
             }
           }
