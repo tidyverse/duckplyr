@@ -79,8 +79,8 @@ fallback_sitrep <- function() {
       c("x" = "Fallback logging is disabled.")
     },
 
-    fallback_txt_uploading(),
-    fallback_txt_sitrep_logs()
+    fallback_txt_uploading(fallback_uploading),
+    fallback_txt_sitrep_logs(fallback_logs)
   )
 
   cli::cli_inform(msg)
@@ -90,7 +90,7 @@ fallback_txt_header <- function() {
   "The {.pkg duckplyr} package is configured to fall back to {.pkg dplyr} when it encounters an incompatibility. Fallback events can be collected and uploaded for analysis to guide future development. See {.help duckplyr::fallback} for details."
 }
 
-fallback_txt_uploading <- function() {
+fallback_txt_uploading <- function(fallback_uploading) {
   if (is.na(fallback_uploading)) {
     c("i" = "Fallback uploading is not controlled. Enable or disable it by setting the {.envvar DUCKPLYR_FALLBACK_AUTOUPLOAD} environment variable.")
   } else if (fallback_uploading) {
@@ -100,7 +100,7 @@ fallback_txt_uploading <- function() {
   }
 }
 
-fallback_txt_sitrep_logs <- function() {
+fallback_txt_sitrep_logs <- function(fallback_logs) {
   if (length(fallback_logs) > 0) {
     c(
       "v" = "Number of reports ready for upload: {.strong {length(fallback_logs)}}.",
@@ -215,7 +215,7 @@ on_load({
     fallback_logs <- tel_fallback_logs()
     msg <- c(
       fallback_txt_header(),
-      fallback_txt_uploading(),
+      fallback_txt_uploading(fallback_uploading),
       fallback_txt_sitrep_logs(),
       "i" = cli::col_silver("This message can be disabled by setting {.envvar DUCKPLYR_FALLBACK_AUTOUPLOAD}.")
     )
