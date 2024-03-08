@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9007</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,69 +45,115 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.1" id="duckplyr-031-2024-03-08">duckplyr 0.3.1 (2024-03-08)<a class="anchor" aria-label="anchor" href="#duckplyr-031-2024-03-08"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.3.0.9007" id="duckplyr-0309007-2024-03-08">duckplyr 0.3.0.9007 (2024-03-08)<a class="anchor" aria-label="anchor" href="#duckplyr-0309007-2024-03-08"></a></h2>
 <div class="section level3">
-<h3 id="bug-fixes-0-3-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-1"></a></h3>
-<ul><li>Improve and test fallback telemetry (<a href="https://github.com/duckdblabs/duckplyr/issues/115" class="external-link">#115</a>).</li>
-<li>Fix autoupload and other telemetry details (<a href="https://github.com/duckdblabs/duckplyr/issues/113" class="external-link">#113</a>).</li>
-<li>Forbid reuse of new columns created in <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize()</a></code> (<a href="https://github.com/duckdblabs/duckplyr/issues/72" class="external-link">#72</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/106" class="external-link">#106</a>).</li>
-<li>Disambiguate computation of <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10()</a></code> and <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log()</a></code>.</li>
-<li>Test for <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10()</a></code>.</li>
-<li>
-<code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code> no longer restores subclass.</li>
-<li>Fix division by zero for positive and negative numbers.</li>
+<h3 id="bug-fixes-0-3-0-9007">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-0-9007"></a></h3>
+<ul><li><p>Improve and test fallback telemetry (<a href="https://github.com/duckdblabs/duckplyr/issues/115" class="external-link">#115</a>).</p></li>
+<li><p>Fix autoupload and other telemetry details (<a href="https://github.com/duckdblabs/duckplyr/issues/113" class="external-link">#113</a>).</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="features-0-3-1">Features<a class="anchor" aria-label="anchor" href="#features-0-3-1"></a></h3>
+<h3 id="features-0-3-0-9007">Features<a class="anchor" aria-label="anchor" href="#features-0-3-0-9007"></a></h3>
 <ul><li>Prefer <code><a href="https://cli.r-lib.org/reference/cli_abort.html" class="external-link">cli::cli_abort()</a></code> over <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> or <code><a href="https://rlang.r-lib.org/reference/abort.html" class="external-link">rlang::abort()</a></code> (<a href="https://github.com/duckdblabs/duckplyr/issues/114" class="external-link">#114</a>).</li>
-<li>Translate <code>.data$a</code> and <code>.env$a</code>.</li>
-<li>Permit <code>difftime</code> columns.</li>
-<li>Permit <code>POSIXct</code> columns.</li>
-<li>Strict checks for column class, only supporting <code>integer</code>, <code>numeric</code>, <code>logical</code> and <code>Date</code> for now.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="chore-0-3-1">Chore<a class="anchor" aria-label="anchor" href="#chore-0-3-1"></a></h3>
-<ul><li>Better default fallback message.</li>
-<li>Add telemetry for joins.</li>
-<li>Better scrubbing for telemetry (<a href="https://github.com/duckdblabs/duckplyr/issues/110" class="external-link">#110</a>).</li>
-<li>Update patches (<a href="https://github.com/duckdblabs/duckplyr/issues/109" class="external-link">#109</a>).</li>
-<li>Add calls for telemetry (<a href="https://github.com/duckdblabs/duckplyr/issues/107" class="external-link">#107</a>).</li>
-<li>Implement almost all dplyr methods (<a href="https://github.com/duckdblabs/duckplyr/issues/105" class="external-link">#105</a>).</li>
-<li>Implement <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code> and other methods to collect fallback information (<a href="https://github.com/duckdblabs/duckplyr/issues/94" class="external-link">#94</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/104" class="external-link">#104</a>).</li>
-<li>Update TPC/H scripts.</li>
-<li>Implement <code><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings()</a></code> as the identity function.</li>
-<li>Document.</li>
-<li>Remove bad patch.</li>
-<li>Better duckdb tests.</li>
-<li>Update tests.</li>
-<li>Better <code>.sync/.gitignore</code>.</li>
-<li>Use standalone purrr for dplyr compatibility.</li>
-<li>Set memory limit and temporary directory for duckdb.</li>
+<h3 id="chore-0-3-0-9007">Chore<a class="anchor" aria-label="anchor" href="#chore-0-3-0-9007"></a></h3>
+<ul><li><p>Better default fallback message.</p></li>
+<li><p>Add telemetry for joins.</p></li>
+<li><p>Better scrubbing for telemetry (<a href="https://github.com/duckdblabs/duckplyr/issues/110" class="external-link">#110</a>).</p></li>
+<li><p>Update patches (<a href="https://github.com/duckdblabs/duckplyr/issues/109" class="external-link">#109</a>).</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="continuous-integration-0-3-1">Continuous integration<a class="anchor" aria-label="anchor" href="#continuous-integration-0-3-1"></a></h3>
+<h3 id="documentation-0-3-0-9007">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-3-0-9007"></a></h3>
+<ul><li><p>Tweak README.</p></li>
+<li><p>Tweak description of environment variables and document.</p></li>
+<li><p>Tweak messages.</p></li>
+<li><p>Telementry -&gt; telemetry (<a href="https://github.com/TimTaylor" class="external-link">@TimTaylor</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/112" class="external-link">#112</a>).</p></li>
+<li><p>Clarify default.</p></li>
+<li><p>New <code><a href="../reference/fallback.html">fallback_sitrep()</a></code> and related functionality for collecting telemetry data (<a href="https://github.com/duckdblabs/duckplyr/issues/102" class="external-link">#102</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/111" class="external-link">#111</a>).</p></li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.0.9006" id="duckplyr-0309006-2024-03-08">duckplyr 0.3.0.9006 (2024-03-08)<a class="anchor" aria-label="anchor" href="#duckplyr-0309006-2024-03-08"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-0-3-0-9006">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-0-9006"></a></h3>
+<ul><li>Forbid reuse of new columns created in <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize()</a></code> (<a href="https://github.com/duckdblabs/duckplyr/issues/72" class="external-link">#72</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/106" class="external-link">#106</a>).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="chore-0-3-0-9006">Chore<a class="anchor" aria-label="anchor" href="#chore-0-3-0-9006"></a></h3>
+<ul><li><p>Add calls for telemetry (<a href="https://github.com/duckdblabs/duckplyr/issues/107" class="external-link">#107</a>).</p></li>
+<li><p>Implement almost all dplyr methods (<a href="https://github.com/duckdblabs/duckplyr/issues/105" class="external-link">#105</a>).</p></li>
+<li><p>Implement <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code> and other methods to collect fallback information (<a href="https://github.com/duckdblabs/duckplyr/issues/94" class="external-link">#94</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/104" class="external-link">#104</a>).</p></li>
+<li><p>Update TPC/H scripts.</p></li>
+<li><p>Implement <code><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings()</a></code> as the identity function.</p></li>
+<li><p>Document.</p></li>
+<li><p>Remove bad patch.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="uncategorized-0-3-0-9006">Uncategorized<a class="anchor" aria-label="anchor" href="#uncategorized-0-3-0-9006"></a></h3>
+<ul><li>Merge pull request <a href="https://github.com/duckdblabs/duckplyr/issues/103" class="external-link">#103</a> from duckdblabs/f-cleanup-autogen.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.0.9005" id="duckplyr-0309005-2024-02-23">duckplyr 0.3.0.9005 (2024-02-23)<a class="anchor" aria-label="anchor" href="#duckplyr-0309005-2024-02-23"></a></h2>
+<div class="section level3">
+<h3 id="chore-0-3-0-9005">Chore<a class="anchor" aria-label="anchor" href="#chore-0-3-0-9005"></a></h3>
+<ul><li>Better duckdb tests.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.0.9004" id="duckplyr-0309004-2024-02-10">duckplyr 0.3.0.9004 (2024-02-10)<a class="anchor" aria-label="anchor" href="#duckplyr-0309004-2024-02-10"></a></h2>
+<div class="section level3">
+<h3 id="features-0-3-0-9004">Features<a class="anchor" aria-label="anchor" href="#features-0-3-0-9004"></a></h3>
+<ul><li><p>Translate <code>.data$a</code> and <code>.env$a</code>.</p></li>
+<li><p>Permit <code>difftime</code> columns.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="chore-0-3-0-9004">Chore<a class="anchor" aria-label="anchor" href="#chore-0-3-0-9004"></a></h3>
+<ul><li><p>Document.</p></li>
+<li><p>Update tests.</p></li>
+<li><p>Better <code>.sync/.gitignore</code>.</p></li>
+<li><p>Use standalone purrr for dplyr compatibility.</p></li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.0.9003" id="duckplyr-0309003-2024-02-05">duckplyr 0.3.0.9003 (2024-02-05)<a class="anchor" aria-label="anchor" href="#duckplyr-0309003-2024-02-05"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-0-3-0-9003">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-0-9003"></a></h3>
+<ul><li><p>Disambiguate computation of <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10()</a></code> and <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log()</a></code>.</p></li>
+<li><p>Test for <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10()</a></code>.</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code> no longer restores subclass.</p></li>
+<li><p>Fix division by zero for positive and negative numbers.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="features-0-3-0-9003">Features<a class="anchor" aria-label="anchor" href="#features-0-3-0-9003"></a></h3>
+<ul><li><p>Permit <code>POSIXct</code> columns.</p></li>
+<li><p>Strict checks for column class, only supporting <code>integer</code>, <code>numeric</code>, <code>logical</code> and <code>Date</code> for now.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="chore-0-3-0-9003">Chore<a class="anchor" aria-label="anchor" href="#chore-0-3-0-9003"></a></h3>
+<ul><li>Set memory limit and temporary directory for duckdb.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="continuous-integration-0-3-0-9003">Continuous integration<a class="anchor" aria-label="anchor" href="#continuous-integration-0-3-0-9003"></a></h3>
 <ul><li>Use newer Action version to fix build on Windows.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="documentation-0-3-1">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-3-1"></a></h3>
-<ul><li>Tweak README.</li>
-<li>Tweak description of environment variables and document.</li>
-<li>Tweak messages.</li>
-<li>Telementry -&gt; telemetry (<a href="https://github.com/TimTaylor" class="external-link">@TimTaylor</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/112" class="external-link">#112</a>).</li>
-<li>Clarify default.</li>
-<li>New <code><a href="../reference/fallback.html">fallback_sitrep()</a></code> and related functionality for collecting telemetry data (<a href="https://github.com/duckdblabs/duckplyr/issues/102" class="external-link">#102</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/111" class="external-link">#111</a>).</li>
-</ul></div>
-<div class="section level3">
-<h3 id="testing-0-3-1">Testing<a class="anchor" aria-label="anchor" href="#testing-0-3-1"></a></h3>
+<h3 id="testing-0-3-0-9003">Testing<a class="anchor" aria-label="anchor" href="#testing-0-3-0-9003"></a></h3>
 <ul><li>Add tests for correct base of <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log()</a></code> and <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10()</a></code>.</li>
 </ul></div>
-<div class="section level3">
-<h3 id="uncategorized-0-3-1">Uncategorized<a class="anchor" aria-label="anchor" href="#uncategorized-0-3-1"></a></h3>
-<ul><li>Merge pull request <a href="https://github.com/duckdblabs/duckplyr/issues/103" class="external-link">#103</a> from duckdblabs/f-cleanup-autogen.</li>
-<li>Internal changes only.</li>
-<li>Merge branch ‘cran-0.3.0’.</li>
-</ul></div>
 </div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.0.9002" id="duckplyr-0309002-2024-01-24">duckplyr 0.3.0.9002 (2024-01-24)<a class="anchor" aria-label="anchor" href="#duckplyr-0309002-2024-01-24"></a></h2>
+<ul><li>Internal changes only.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.0.9001" id="duckplyr-0309001-2024-01-15">duckplyr 0.3.0.9001 (2024-01-15)<a class="anchor" aria-label="anchor" href="#duckplyr-0309001-2024-01-15"></a></h2>
+<ul><li>Internal changes only.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.0.9000" id="duckplyr-0309000-2023-12-11">duckplyr 0.3.0.9000 (2023-12-11)<a class="anchor" aria-label="anchor" href="#duckplyr-0309000-2023-12-11"></a></h2>
+<ul><li>Merge branch ‘cran-0.3.0’.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.0" id="duckplyr-030-2023-12-10">duckplyr 0.3.0 (2023-12-10)<a class="anchor" aria-label="anchor" href="#duckplyr-030-2023-12-10"></a></h2><p class="text-muted">CRAN release: 2023-12-11</p>
 <div class="section level3">
