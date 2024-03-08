@@ -128,7 +128,7 @@ check_df_for_rel <- function(df) {
       valid <- FALSE
     }
     if (!valid) {
-      stop("Can't convert columns of class ", paste0(col_class, collapse = "/"), " to relational. Affected column: `", names(df)[[i]], "`.")
+      cli_abort("Can't convert columns of class {.cls {paste0(col_class, collapse = '/')}} to relational. Affected column: {.var {names(df)[[i]]}}.")
     }
   }
 
