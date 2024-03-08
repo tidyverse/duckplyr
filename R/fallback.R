@@ -238,12 +238,16 @@ fallback_upload <- function(oldest = NULL, newest = NULL, strict = TRUE) {
 on_load({
   uploading <- tel_fallback_uploading()
   if (isTRUE(tel_fallback_uploading())) {
-    tryCatch(
+    msg <- character()
+    suppressMessages(withCallingHandlers(
       fallback_upload(strict = FALSE),
       message = function(e) {
-        packageStartupMessage(conditionMessage(e))
+        msg <<- c(msg, conditionMessage(e))
       }
-    )
+    ))
+    if (length(msg) > 0) {
+      packageStartupMessage(paste(msg, collapse = "\n"))
+    }
   } else if (is.na(uploading)) {
     fallback_uploading <- tel_fallback_uploading()
     fallback_logs <- tel_fallback_logs()
