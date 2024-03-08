@@ -133,3 +133,60 @@ fallback_review <- function(oldest = NULL, newest = NULL, detail = TRUE) {
 
   invisible()
 }
+
+#' fallback_upload
+#'
+#' `fallback_upload()` uploads the available reports to a central server for analysis.
+#' The server is hosted on AWS and the reports are stored in a private S3 bucket.
+#' Only authorized personnel have access to the reports.
+#'
+#' @param strict If \code{TRUE}, the function aborts if any of the reports fail to upload.
+#'   With \code{FALSE}, only a message is printed.
+#'
+#' @rdname fallback
+#' @export
+fallback_upload <- function(oldest = NULL, newest = NULL, strict = TRUE) {
+  fallback_logs <- tel_fallback_logs(oldest, newest, detail = TRUE)
+  if (length(fallback_logs) == 0) {
+    cli::cli_inform("No reports ready for upload.")
+    return()
+  }
+
+  cli::cli_inform("Uploading {.strong {length(fallback_logs)}} reports.")
+
+  failures <- character()
+
+  pool <- curl::new_pool()
+  imap(fallback_logs, ~ {
+    contents <- .x
+    file <- .y
+
+    done <- function(request) {
+      unlink(file)
+    }
+
+    fail <- function(message) {
+      failures <<- c(failures, message)
+    }
+
+    tel_post_async(contents, done, fail, pool)
+  })
+
+  curl::multi_run(pool = pool)
+
+  if (length(failures) > 0) {
+    msg <- c(
+      "Failed to upload {length(failures)} report{?s}.",
+      "i" = "The upload will be attempted again the next time {.code duckplyr::fallback_upload()} is called.",
+      " " = '{paste(unique(failures), collapse = "\n")}'
+    )
+
+    if (strict) {
+      cli::cli_abort(msg)
+    } else {
+      cli::cli_inform(msg)
+    }
+  } else {
+    cli::cli_inform("All reports uploaded successfully.")
+  }
+}

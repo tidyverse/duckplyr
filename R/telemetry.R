@@ -110,6 +110,23 @@ tel_record <- function(call_json) {
   }
 }
 
+tel_post_async <- function(content, done = NULL, fail = NULL, pool = NULL) {
+  url <- "https://duckplyr-telemetry.duckdblabs.com/"
+
+  # Create a new curl handle
+  handle <- curl::new_handle()
+  curl::handle_setopt(handle, customrequest = "POST")
+  curl::handle_setheaders(handle, "Content-Type" = "text/plain")
+  curl::handle_setopt(handle, postfields = content)
+  curl::curl_fetch_multi(
+    url,
+    done = done,
+    fail = fail,
+    pool = pool,
+    handle = handle
+  )
+}
+
 # ---
 
 call_to_json <- function(cnd, call) {
