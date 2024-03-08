@@ -5,6 +5,7 @@
 \alias{fallback_sitrep}
 \alias{fallback_review}
 \alias{fallback_upload}
+\alias{fallback_purge}
 \title{Fallback to dplyr}
 \usage{
 fallback_sitrep()
@@ -12,6 +13,8 @@ fallback_sitrep()
 fallback_review(oldest = NULL, newest = NULL, detail = TRUE)
 
 fallback_upload(oldest = NULL, newest = NULL, strict = TRUE)
+
+fallback_purge(oldest = NULL, newest = NULL)
 }
 \arguments{
 \item{oldest, newest}{The number of oldest or newest reports to review.
@@ -42,6 +45,8 @@ the number of reports ready for upload, and the location of the logs.
 \code{fallback_upload()} uploads the available reports to a central server for analysis.
 The server is hosted on AWS and the reports are stored in a private S3 bucket.
 Only authorized personnel have access to the reports.
+
+\code{fallback_purge()} deletes some or all available reports.
 }
 \details{
 Logging and uploading are both opt-in.

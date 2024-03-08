@@ -224,3 +224,21 @@ on_load({
     packageStartupMessage(cli::format_message(msg))
   }
 })
+
+#' fallback_purge
+#'
+#' `fallback_purge()` deletes some or all available reports.
+#'
+#' @rdname fallback
+#' @export
+fallback_purge <- function(oldest = NULL, newest = NULL) {
+  fallback_logs <- tel_fallback_logs(oldest, newest, detail = FALSE)
+  if (length(fallback_logs) == 0) {
+    cli::cli_inform("No {.pkg duckplyr} fallback reports ready to delete.")
+    return(invisible())
+  }
+
+  unlink(names(fallback_logs))
+  cli::cli_inform("Deleted {.strong {length(fallback_logs)}} {.pkg duckplyr} fallback report{?s}.")
+  invisible()
+}
