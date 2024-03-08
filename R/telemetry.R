@@ -1,3 +1,138 @@
+telemetry <- new_environment()
+
+tel_fallback_logging <- function() {
+  val <- Sys.getenv("DUCKPLYR_FALLBACK_COLLECT")
+  if (val == "") {
+    return(NA)
+  }
+  if (!grepl("^[0-9]+$", val)) {
+    return(FALSE)
+  }
+  as.integer(val) >= 1
+}
+
+tel_fallback_verbose <- function() {
+  val <- Sys.getenv("DUCKPLYR_FALLBACK_VERBOSE")
+  val == "TRUE"
+}
+
+tel_fallback_uploading <- function() {
+  val <- Sys.getenv("DUCKPLYR_FALLBACK_AUTOUPLOAD")
+  if (val == "") {
+    return(NA)
+  }
+  if (!grepl("^[0-9]+$", val)) {
+    return(FALSE)
+  }
+  as.integer(val) >= 1
+}
+
+tel_fallback_log_dir <- function() {
+  if (Sys.getenv("DUCKPLYR_FALLBACK_LOG_DIR") != "") {
+    return(Sys.getenv("DUCKPLYR_FALLBACK_LOG_DIR"))
+  }
+
+  cache_path <- tools::R_user_dir("duckplyr", "cache")
+  telemetry_path <- file.path(cache_path, "telemetry")
+
+  # We do not distinguish between an empty an a missing directory.
+  # From that perspective, this is still a pure function.
+  dir.create(telemetry_path, recursive = TRUE, showWarnings = FALSE)
+
+  telemetry_path
+}
+
+tel_fallback_logs <- function(oldest = NULL, newest = NULL, detail = FALSE, envir = parent.frame()) {
+  if (!is.null(oldest) && !is.null(newest)) {
+    cli_abort("Specify either {.arg oldest} or {.arg newest}, not both.", .envir = envir)
+  }
+
+  # For mocking
+  if (Sys.getenv("DUCKPLYR_TELEMETRY_FALLBACK_LOGS") != "") {
+    return(strsplit(Sys.getenv("DUCKPLYR_TELEMETRY_FALLBACK_LOGS"), ",")[[1]])
+  }
+
+  telemetry_path <- tel_fallback_log_dir()
+  fallback_logs <- list.files(telemetry_path, full.names = TRUE, pattern = "[.]ndjson$")
+
+  info <- file.info(fallback_logs)
+  info <- info[order(info$mtime), ]
+
+  review <- rownames(info)
+  if (!is.null(oldest)) {
+    review <- utils::head(review, oldest)
+  } else if (!is.null(newest)) {
+    review <- utils::tail(review, newest)
+  }
+
+  if (isTRUE(detail)) {
+    contents <- map_chr(review, ~ paste0(readLines(.x), "\n", collapse = ""))
+  } else {
+    contents <- rep_along(review, NA_character_)
+  }
+
+  set_names(contents, review)
+}
+
+tel_collect <- function(cnd, call) {
+  logging <- tel_fallback_logging()
+  if (!isTRUE(logging) && !is.na(logging)) {
+    return()
+  }
+
+  if (is.na(logging)) {
+    # Deferred evaluation of call_to_json(...)
+    tel_ask(call_to_json(cnd, call))
+    return()
+  }
+
+  tel_record(call_to_json(cnd, call))
+}
+
+tel_ask <- function(call_json) {
+  time <- Sys.time()
+  old_time <- telemetry$time
+  eight_hours <- 60 * 60 * 8
+  if (!is.null(old_time) && time - old_time < eight_hours) {
+    return(FALSE)
+  }
+
+  fallback_nudge(call_json)
+}
+
+tel_record <- function(call_json) {
+  telemetry_path <- tel_fallback_log_dir()
+  telemetry_file <- file.path(telemetry_path, paste0(Sys.getpid(), ".ndjson"))
+
+  cat(call_json, "\n", sep = "", file = telemetry_file, append = TRUE)
+
+  if (tel_fallback_verbose()) {
+    cli_inform(c(
+      "i" = "dplyr fallback recorded",
+      " " = "{call_json}"
+    ))
+  }
+}
+
+tel_post_async <- function(content, done = NULL, fail = NULL, pool = NULL) {
+  url <- "https://duckplyr-telemetry.duckdblabs.com/"
+
+  # Create a new curl handle
+  handle <- curl::new_handle()
+  curl::handle_setopt(handle, customrequest = "POST")
+  curl::handle_setheaders(handle, "Content-Type" = "text/plain")
+  curl::handle_setopt(handle, postfields = content)
+  curl::curl_fetch_multi(
+    url,
+    done = done,
+    fail = fail,
+    pool = pool,
+    handle = handle
+  )
+}
+
+# ---
+
 call_to_json <- function(cnd, call) {
   name_map <- get_name_map(c(names(call$x), names(call$y), names(call$args$dots)))
   if (!is.null(names(call$args$dots))) {

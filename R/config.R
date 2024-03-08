@@ -28,6 +28,8 @@
 #' to certain duckdb functions.
 #' Currently unused.
 #'
+#' See [fallback] for more options related to logging and uploading of fallback events.
+#'
 # Not available in the CRAN package:
 # `DUCKPLYR_META_GLOBAL`: Assume data frames in the global environment as "known".
 # `DUCKPLYR_META_SKIP`: Skip recording the operations, replay not available.

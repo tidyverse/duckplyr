@@ -34,6 +34,8 @@ The default is to check roundtrip of attributes.
 \code{DUCKPLYR_EXPERIMENTAL}: If \code{TRUE}, pass \code{experimental = TRUE}
 to certain duckdb functions.
 Currently unused.
+
+See \link{fallback} for more options related to logging and uploading of fallback events.
 }
 
 \examples{
