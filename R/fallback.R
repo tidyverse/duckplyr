@@ -70,19 +70,8 @@ fallback_sitrep <- function() {
       c("x" = "Fallback logging is disabled.")
     },
 
-    if (is.na(fallback_uploading)) {
-      c("i" = "Fallback uploading is not controlled. Enable or disable it by setting the {.envvar DUCKPLYR_FALLBACK_AUTOUPLOAD} environment variable.")
-    } else if (fallback_uploading) {
-      c("v" = "Fallback uploading is enabled.")
-    } else {
-      c("x" = "Fallback uploading is disabled.")
-    },
-
-    if (length(fallback_logs) > 0) {
-      c("v" = "Number of reports ready for upload: {.strong {length(fallback_logs)}}. Review with {.code duckplyr::fallback_review()}, upload with {.code duckplyr::fallback_upload()}}")
-    } else {
-      c("i" = "No reports ready for upload.")
-    }
+    fallback_txt_uploading(),
+    fallback_txt_sitrep_logs()
   )
 
   cli::cli_inform(msg)
@@ -90,6 +79,27 @@ fallback_sitrep <- function() {
 
 fallback_txt_header <- function() {
   "The {.pkg duckplyr} package is configured to fall back to {.pkg dplyr} when it encounters an incompatibility. Fallback events can be collected and uploaded for analysis to guide future development. See {.help duckplyr::fallback} for details."
+}
+
+fallback_txt_uploading <- function() {
+  if (is.na(fallback_uploading)) {
+    c("i" = "Fallback uploading is not controlled. Enable or disable it by setting the {.envvar DUCKPLYR_FALLBACK_AUTOUPLOAD} environment variable.")
+  } else if (fallback_uploading) {
+    c("v" = "Fallback uploading is enabled.")
+  } else {
+    c("x" = "Fallback uploading is disabled.")
+  }
+}
+
+fallback_txt_sitrep_logs <- function() {
+  if (length(fallback_logs) > 0) {
+    c(
+      "v" = "Number of reports ready for upload: {.strong {length(fallback_logs)}}.",
+      ">" = "Review with {.run duckplyr::fallback_review()}, upload with {.run duckplyr::fallback_upload()}."
+    )
+  } else {
+    c("i" = "No reports ready for upload.")
+  }
 }
 
 fallback_nudge <- function(call_data) {
