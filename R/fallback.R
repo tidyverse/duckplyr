@@ -163,6 +163,16 @@ fallback_review <- function(oldest = NULL, newest = NULL, detail = TRUE) {
 #' @rdname fallback
 #' @export
 fallback_upload <- function(oldest = NULL, newest = NULL, strict = TRUE) {
+  if (strict) {
+    check_installed(
+      "curl",
+      reason = "to upload duckplyr fallback reports."
+    )
+  } else if (!is_installed("curl")) {
+    cli_inform("Skipping upload of duckplyr fallback reports because the {.pkg curl} package is not installed.")
+    return(invisible())
+  }
+
   fallback_logs <- tel_fallback_logs(oldest, newest, detail = TRUE)
   if (length(fallback_logs) == 0) {
     cli_inform("No {.pkg duckplyr} fallback reports ready for upload.")
@@ -213,7 +223,12 @@ fallback_upload <- function(oldest = NULL, newest = NULL, strict = TRUE) {
 on_load({
   uploading <- tel_fallback_uploading()
   if (isTRUE(tel_fallback_uploading())) {
-    fallback_upload(strict = FALSE)
+    tryCatch(
+      fallback_upload(strict = FALSE),
+      message = function(e) {
+        packageStartupMessage(conditionMessage(e))
+      }
+    )
   } else if (is.na(uploading)) {
     fallback_uploading <- tel_fallback_uploading()
     fallback_logs <- tel_fallback_logs()
