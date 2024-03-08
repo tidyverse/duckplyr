@@ -9,14 +9,11 @@ rel_try <- function(rel, ..., call = NULL) {
 
   if (Sys.getenv("DUCKPLYR_TELEMETRY_TEST") == "TRUE") {
     force(call)
-    abort(paste0(
-      call$name,
-      ": ",
-      call_to_json(
-        error_cnd(message = paste0("Error in ", call$name)),
-        call
-      )
-    ))
+    json <- call_to_json(
+      error_cnd(message = paste0("Error in ", call$name)),
+      call
+    )
+    cli_abort("{call$name}: {json}")
   }
 
   if (Sys.getenv("DUCKPLYR_FALLBACK_FORCE") == "TRUE") {
@@ -33,7 +30,7 @@ rel_try <- function(rel, ..., call = NULL) {
           inform(message = c("Requested fallback for relational:", i = names(dots)[[i]]))
         }
         if (Sys.getenv("DUCKPLYR_FORCE") == "TRUE") {
-          abort("Fallback not available with DUCKPLYR_FORCE")
+          cli_abort("Fallback not available with {.envvar DUCKPLYR_FORCE}.")
         }
       }
 
@@ -58,7 +55,7 @@ rel_try <- function(rel, ..., call = NULL) {
   }
 
   # Never reached due to return() in code
-  stop("Must use a return() in rel_try().")
+  cli_abort("Must use a return() in rel_try().")
 }
 
 rel_translate_dots <- function(dots, data, forbid_new = FALSE) {
@@ -110,7 +107,7 @@ rel_translate <- function(
       #
       symbol = {
         if (as.character(expr) %in% names_forbidden) {
-          abort(paste0("Can't reuse summary variable `", as.character(expr), "`."))
+          cli_abort("Can't reuse summary variable {.var {as.character(expr)}}.")
         }
         if (as.character(expr) %in% names_data) {
           ref <- as.character(expr)
@@ -138,10 +135,10 @@ rel_translate <- function(
             args <- as.list(call[-1])
             bad <- !(names(args) %in% c("x"))
             if (any(bad)) {
-              abort(paste0(name, "(", names(args)[which(bad)[[1]]], " = ) not supported"))
+              cli_abort("{name}({names(args)[which(bad)[[1]]]} = ) not supported")
             }
             if (!is.null(getOption("lubridate.week.start"))) {
-              abort('wday() with option("lubridate.week.start") not supported')
+              cli_abort('{.code wday()} with {.code option("lubridate.week.start")} not supported')
             }
           },
           "strftime" = {
@@ -150,7 +147,7 @@ rel_translate <- function(
             args <- as.list(call[-1])
             bad <- !(names(args) %in% c("x", "format"))
             if (any(bad)) {
-              abort(paste0(name, "(", names(args)[which(bad)[[1]]], " = ) not supported"))
+              cli_abort("{name}({names(args)[which(bad)[[1]]]} = ) not supported")
             }
           },
           "%in%" = {
@@ -176,7 +173,7 @@ rel_translate <- function(
               if (exists(var_name, envir = env)) {
                 return(do_translate(get(var_name, env), in_window = in_window))
               } else {
-                abort(paste0("object `", var_name, "` not found"))
+                cli_abort("object {.var {var_name}} not found")
               }
             }
           }
@@ -223,7 +220,7 @@ rel_translate <- function(
         known <- c(names(duckplyr_macros), names(aliases), known_window, known_ops, known_funs)
 
         if (!(name %in% known)) {
-          abort(paste0("Unknown function: ", name))
+          cli_abort("Unknown function: {.code {name}()}")
         }
 
         if (name %in% names(aliases)) {
@@ -269,7 +266,7 @@ rel_translate <- function(
         fun
       },
       #
-      abort(paste0("Internal: Unknown type ", typeof(expr)))
+      cli_abort("Internal: Unknown type {.val {typeof(expr)}}")
     )
   }
 
