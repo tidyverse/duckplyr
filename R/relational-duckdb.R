@@ -154,7 +154,7 @@ check_df_for_rel <- function(df) {
       df_attrib <- attributes(df[[i]])
       roundtrip_attrib <- attributes(roundtrip[[i]])
       if (!identical(df_attrib, roundtrip_attrib)) {
-        stop("Attributes are lost during conversion. Affected column: `", names(df)[[i]], "`.")
+        cli_abort("Attributes are lost during conversion. Affected column: {.var {names(df)[[i]]}}.")
       }
     }
   }
