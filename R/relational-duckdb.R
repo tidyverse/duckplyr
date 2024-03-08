@@ -116,7 +116,7 @@ check_df_for_rel <- function(df) {
       cli_abort("Can't convert arrays or matrices to relational. Affected column: {.var {names(df)[[i]]}}.")
     }
     if (isS4(col)) {
-      stop("Can't convert S4 columns to relational. Affected column: `", names(df)[[i]], "`.")
+      cli_abort("Can't convert S4 columns to relational. Affected column: {.var {names(df)[[i]]}}.")
     }
     # https://github.com/duckdb/duckdb/issues/8561
     col_class <- class(col)
