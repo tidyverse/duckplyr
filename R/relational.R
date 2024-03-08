@@ -266,7 +266,7 @@ rel_translate <- function(
         fun
       },
       #
-      abort(paste0("Internal: Unknown type ", typeof(expr)))
+      cli_abort("Internal: Unknown type {.val {typeof(expr)}}")
     )
   }
 
