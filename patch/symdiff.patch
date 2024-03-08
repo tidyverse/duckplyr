@@ -1,11 +1,13 @@
 diff --git b/R/symdiff.R a/R/symdiff.R
-index dbd08df..f99c084 100644
+index dbd08df2..fc3ba0bf 100644
 --- b/R/symdiff.R
 +++ a/R/symdiff.R
 @@ -2,9 +2,38 @@
  #' @export
  symdiff.duckplyr_df <- function(x, y, ...) {
    # Our implementation
+-  rel_try(
+-    "No relational implementation for symdiff()" = TRUE,
 +  check_dots_empty()
 +
 +  x_names <- names(x)
@@ -15,8 +17,7 @@ index dbd08df..f99c084 100644
 +    y_names <- x_names
 +  }
 +
-   rel_try(
--    "No relational implementation for symdiff()" = TRUE,
++  rel_try(call = list(name = "symdiff", x = x, y = y),
 +    "No duplicate names" = !identical(x_names, y_names) && anyDuplicated(x_names) && anyDuplicated(y_names),
 +    "Tables of different width" = length(x_names) != length(y_names),
 +    "Name mismatch" = !identical(x_names, y_names) && !all(y_names %in% x_names),

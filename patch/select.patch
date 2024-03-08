@@ -1,5 +1,5 @@
 diff --git b/R/select.R a/R/select.R
-index ac22895..586ade4 100644
+index ac22895d..6652bf3e 100644
 --- b/R/select.R
 +++ a/R/select.R
 @@ -1,14 +1,28 @@
@@ -7,6 +7,8 @@ index ac22895..586ade4 100644
  #' @export
  select.duckplyr_df <- function(.data, ...) {
 -  # Our implementation
+-  rel_try(
+-    "No relational implementation for select()" = TRUE,
 +  force(.data)
 +
 +  error_call <- dplyr_error_call()
@@ -19,8 +21,7 @@ index ac22895..586ade4 100644
 +
 +  exprs <- exprs_from_loc(.data, loc)
 +
-   rel_try(
--    "No relational implementation for select()" = TRUE,
++  rel_try(call = list(name = "select", x = .data, args = list(dots = enquos(...))),
 +    "Can't use relational with zero-column result set." = (length(exprs) == 0),
      {
 +      rel <- duckdb_rel_from_df(.data)

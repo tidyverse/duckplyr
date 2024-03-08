@@ -1,11 +1,13 @@
 diff --git b/R/union_all.R a/R/union_all.R
-index ed860f1..727b739 100644
+index ed860f18..d388804c 100644
 --- b/R/union_all.R
 +++ a/R/union_all.R
 @@ -2,9 +2,38 @@
  #' @export
  union_all.duckplyr_df <- function(x, y, ...) {
    # Our implementation
+-  rel_try(
+-    "No relational implementation for union_all()" = TRUE,
 +  check_dots_empty()
 +
 +  x_names <- names(x)
@@ -15,8 +17,7 @@ index ed860f1..727b739 100644
 +    y_names <- x_names
 +  }
 +
-   rel_try(
--    "No relational implementation for union_all()" = TRUE,
++  rel_try(call = list(name = "union_all", x = x, y = y),
 +    "No duplicate names" = !identical(x_names, y_names) && anyDuplicated(x_names) && anyDuplicated(y_names),
 +    "Tables of different width" = length(x_names) != length(y_names),
 +    "Name mismatch" = !identical(x_names, y_names) && !all(y_names %in% x_names),

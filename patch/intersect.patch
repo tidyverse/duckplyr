@@ -1,11 +1,13 @@
 diff --git b/R/intersect.R a/R/intersect.R
-index e080cd6..d7446a7 100644
+index e080cd61..1338f61e 100644
 --- b/R/intersect.R
 +++ a/R/intersect.R
 @@ -2,9 +2,36 @@
  #' @export
  intersect.duckplyr_df <- function(x, y, ...) {
    # Our implementation
+-  rel_try(
+-    "No relational implementation for intersect()" = TRUE,
 +  check_dots_empty()
 +
 +  x_names <- names(x)
@@ -15,8 +17,7 @@ index e080cd6..d7446a7 100644
 +    y_names <- x_names
 +  }
 +
-   rel_try(
--    "No relational implementation for intersect()" = TRUE,
++  rel_try(call = list(name = "intersect", x = x, y = y),
 +    "No duplicate names" = !identical(x_names, y_names) && anyDuplicated(x_names) && anyDuplicated(y_names),
 +    "Tables of different width" = length(x_names) != length(y_names),
 +    "Name mismatch" = !identical(x_names, y_names) && !all(y_names %in% x_names),
