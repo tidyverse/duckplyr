@@ -96,3 +96,13 @@
     Output
       Incompatible types for column `x`: double vs character.
 
+# setequal checks for extra arguments
+
+    Code
+      duckplyr_setequal(mtcars, mtcars, z = 2)
+    Condition
+      Error in `setequal()`:
+      ! `...` must be empty.
+      x Problematic argument:
+      * z = 2
+

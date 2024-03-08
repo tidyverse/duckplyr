@@ -64,7 +64,7 @@
       tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% filter(a > 1, .preserve = TRUE)
     Condition
       Error in `rel_try()`:
-      ! filter: {"message":"Error in filter","name":"filter","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"1":"...1 > \"Don't know how to scrub numeric\""},"by":"\"Don't know how to scrub NULL\"","preserve":true}}
+      ! filter: {"message":"Error in filter","name":"filter","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"1":"...1 > \"Don't know how to scrub numeric\""},"by":"NULL","preserve":true}}
 
 # telemetry and full_join()
 
