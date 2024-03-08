@@ -67,7 +67,6 @@ join_rows <- dplyr$join_rows
 mutate_cols <- dplyr$mutate_cols
 mutate_keep <- dplyr$mutate_keep
 named_args <- dplyr$named_args
-nest_by.grouped_df <- dplyr$nest_by.grouped_df
 rows_bind <- dplyr$rows_bind
 rows_cast_y <- dplyr$rows_cast_y
 rows_check_by <- dplyr$rows_check_by

@@ -16,7 +16,7 @@ nest_by.duckplyr_df <- function(.data, ..., .key = "data", .keep = FALSE) {
 
   # dplyr implementation
   .data <- group_by(.data, ...)
-  nest_by.grouped_df(.data, .key = .key, .keep = .keep)
+  # nest_by.grouped_df(.data, .key = .key, .keep = .keep)
 }
 
 duckplyr_nest_by <- function(.data, ...) {
