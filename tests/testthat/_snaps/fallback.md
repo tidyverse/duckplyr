@@ -126,7 +126,7 @@
     Condition
       Error in `mutate()`:
       i In argument: `c = .env$x`.
-      Caused by error:
+      Caused by error in `eval_bare()`:
       ! object 'x' not found
 
 # unknown function
