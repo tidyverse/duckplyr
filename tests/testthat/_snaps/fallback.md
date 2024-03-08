@@ -67,7 +67,7 @@
         b), b = sum(b))
     Message
       i dplyr fallback recorded
-        {"message":"Can't reuse summary variable `...2`.","name":"summarise","x":{"...1":"numeric","...2":"numeric","...3":"numeric"},"args":{"dots":{"...2":"sum(...2)","...2.1":"sum(...2)"},"by":["...1"]}}
+        {"version":"0.3.1","message":"Can't reuse summary variable `...2`.","name":"summarise","x":{"...1":"numeric","...2":"numeric","...3":"numeric"},"args":{"dots":{"...2":"sum(...2)","...2.1":"sum(...2)"},"by":["...1"]}}
     Output
       # A tibble: 1 x 2
             a     b
@@ -81,7 +81,7 @@
         a, label = TRUE))
     Message
       i dplyr fallback recorded
-        {"message":"wday(label = ) not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"...3::...4(...1, label = \"Don't know how to scrub logical\")"},".by":"NULL",".keep":["all","used","unused","none"]}}
+        {"version":"0.3.1","message":"wday(label = ) not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"...3::...4(...1, label = \"Don't know how to scrub logical\")"},".by":"NULL",".keep":["all","used","unused","none"]}}
     Output
       # A tibble: 1 x 2
         a          b    
@@ -95,7 +95,7 @@
         a))
     Message
       i dplyr fallback recorded
-        {"message":"`wday()` with `option(\"lubridate.week.start\")` not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"...3::...4(...1)"},".by":"NULL",".keep":["all","used","unused","none"]}}
+        {"version":"0.3.1","message":"`wday()` with `option(\"lubridate.week.start\")` not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"...3::...4(...1)"},".by":"NULL",".keep":["all","used","unused","none"]}}
     Output
       # A tibble: 1 x 2
         a              b
@@ -109,7 +109,7 @@
         a, format = "%Y-%m-%d", tz = "CET"))
     Message
       i dplyr fallback recorded
-        {"message":"strftime(tz = ) not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"strftime(...1, format = \"Don't know how to scrub character\", tz = \"Don't know how to scrub character\")"},".by":"NULL",".keep":["all","used","unused","none"]}}
+        {"version":"0.3.1","message":"strftime(tz = ) not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"strftime(...1, format = \"Don't know how to scrub character\", tz = \"Don't know how to scrub character\")"},".by":"NULL",".keep":["all","used","unused","none"]}}
     Output
       # A tibble: 1 x 2
         a          b         
@@ -122,7 +122,7 @@
       tibble(a = 1, b = 2) %>% as_duckplyr_df() %>% mutate(c = .env$x)
     Message
       i dplyr fallback recorded
-        {"message":"internal: object not found, should also be triggered by the dplyr fallback","name":"mutate","x":{"...1":"numeric","...2":"numeric"},"args":{"dots":{"...3":"...4$...5"},".by":"NULL",".keep":["all","used","unused","none"]}}
+        {"version":"0.3.1","message":"internal: object not found, should also be triggered by the dplyr fallback","name":"mutate","x":{"...1":"numeric","...2":"numeric"},"args":{"dots":{"...3":"...4$...5"},".by":"NULL",".keep":["all","used","unused","none"]}}
     Condition
       Error in `mutate()`:
       i In argument: `c = .env$x`.
@@ -135,7 +135,7 @@
       tibble(a = 1, b = 2) %>% as_duckplyr_df() %>% mutate(c = foo(a, b))
     Message
       i dplyr fallback recorded
-        {"message":"Unknown function: `foo()`","name":"mutate","x":{"...1":"numeric","...2":"numeric"},"args":{"dots":{"...3":"foo(...1, ...2)"},".by":"NULL",".keep":["all","used","unused","none"]}}
+        {"version":"0.3.1","message":"Unknown function: `foo()`","name":"mutate","x":{"...1":"numeric","...2":"numeric"},"args":{"dots":{"...3":"foo(...1, ...2)"},".by":"NULL",".keep":["all","used","unused","none"]}}
     Output
       # A tibble: 1 x 3
             a     b     c
@@ -148,7 +148,7 @@
       mtcars[1:2, ] %>% as_duckplyr_df() %>% select(mpg, cyl)
     Message
       i dplyr fallback recorded
-        {"message":"Need data frame without row names to convert to relational.","name":"select","x":{"...1":"numeric","...2":"numeric","...3":"numeric","...4":"numeric","...5":"numeric","...6":"numeric","...7":"numeric","...8":"numeric","...9":"numeric","...10":"numeric","...11":"numeric"},"args":{"dots":{"1":"...1","2":"...2"}}}
+        {"version":"0.3.1","message":"Need data frame without row names to convert to relational.","name":"select","x":{"...1":"numeric","...2":"numeric","...3":"numeric","...4":"numeric","...5":"numeric","...6":"numeric","...7":"numeric","...8":"numeric","...9":"numeric","...10":"numeric","...11":"numeric"},"args":{"dots":{"1":"...1","2":"...2"}}}
     Output
                     mpg cyl
       Mazda RX4      21   6
@@ -160,7 +160,7 @@
       tibble(a = c(x = 1)) %>% as_duckplyr_df() %>% select(a)
     Message
       i dplyr fallback recorded
-        {"message":"Can't convert named vectors to relational. Affected column: `...1`.","name":"select","x":{"...1":"numeric"},"args":{"dots":{"1":"...1"}}}
+        {"version":"0.3.1","message":"Can't convert named vectors to relational. Affected column: `...1`.","name":"select","x":{"...1":"numeric"},"args":{"dots":{"1":"...1"}}}
     Output
       # A tibble: 1 x 1
             a
@@ -173,7 +173,7 @@
       tibble(a = matrix(1:4, ncol = 2)) %>% as_duckplyr_df() %>% select(a)
     Message
       i dplyr fallback recorded
-        {"message":"Can't convert arrays or matrices to relational. Affected column: `...1`.","name":"select","x":{"...1":"matrix/array"},"args":{"dots":{"1":"...1"}}}
+        {"version":"0.3.1","message":"Can't convert arrays or matrices to relational. Affected column: `...1`.","name":"select","x":{"...1":"matrix/array"},"args":{"dots":{"1":"...1"}}}
     Output
       # A tibble: 2 x 1
         a[,1]  [,2]
@@ -187,7 +187,7 @@
       tibble(a = 1, b = 2, c = list(3)) %>% as_duckplyr_df() %>% select(a, b)
     Message
       i dplyr fallback recorded
-        {"message":"Can't convert columns of class <list> to relational. Affected column: `...3`.","name":"select","x":{"...1":"numeric","...2":"numeric","...3":"list"},"args":{"dots":{"1":"...1","2":"...2"}}}
+        {"version":"0.3.1","message":"Can't convert columns of class <list> to relational. Affected column: `...3`.","name":"select","x":{"...1":"numeric","...2":"numeric","...3":"list"},"args":{"dots":{"1":"...1","2":"...2"}}}
     Output
       # A tibble: 1 x 2
             a     b
@@ -200,7 +200,7 @@
       tibble(`___row_number` = 1, b = 2:3) %>% as_duckplyr_df() %>% arrange(b)
     Message
       i dplyr fallback recorded
-        {"message":"Can't use column `...1` already present in rel for order preservation","name":"arrange","x":{"...1":"numeric","...2":"integer"},"args":{"dots":["...2"],".by_group":false}}
+        {"version":"0.3.1","message":"Can't use column `...1` already present in rel for order preservation","name":"arrange","x":{"...1":"numeric","...2":"integer"},"args":{"dots":["...2"],".by_group":false}}
     Output
       # A tibble: 2 x 2
         `___row_number`     b

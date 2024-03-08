@@ -139,7 +139,16 @@ call_to_json <- function(cnd, call) {
     names(call$args$dots) <- name_map[names2(call$args$dots)]
   }
 
+  if (identical(Sys.getenv("TESTTHAT"), "true")) {
+    log_version <- "0.3.1"
+  } else {
+    version <- getNamespaceInfo("duckplyr", "spec")["version"]
+    semantic <- strsplit(version, ".", fixed = TRUE)[[1]][1:3]
+    log_version <- paste0(semantic, collapse = ".")
+  }
+
   out <- list2(
+    version = log_version,
     message = cnd_to_json(cnd, name_map),
     name = call$name,
     x = df_to_json(call$x, name_map),
