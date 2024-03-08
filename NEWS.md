@@ -1,5 +1,32 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.3.0.9006 (2024-03-08)
+
+## Bug fixes
+
+  - Forbid reuse of new columns created in `summarize()` (#72, #106).
+
+## Chore
+
+  - Add calls for telemetry (#107).
+
+  - Implement almost all dplyr methods (#105).
+
+  - Implement `group_by()` and other methods to collect fallback information (#94, #104).
+
+  - Update TPC/H scripts.
+
+  - Implement `suppressWarnings()` as the identity function.
+
+  - Document.
+
+  - Remove bad patch.
+
+## Uncategorized
+
+  - Merge pull request #103 from duckdblabs/f-cleanup-autogen.
+
+
 # duckplyr 0.3.0.9005 (2024-02-23)
 
 ## Chore
