@@ -220,7 +220,7 @@ rel_translate <- function(
         known <- c(names(duckplyr_macros), names(aliases), known_window, known_ops, known_funs)
 
         if (!(name %in% known)) {
-          abort(paste0("Unknown function: ", name))
+          cli_abort("Unknown function: {.code {name}()}")
         }
 
         if (name %in% names(aliases)) {
