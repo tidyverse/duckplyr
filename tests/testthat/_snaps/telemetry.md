@@ -13,7 +13,7 @@
         name = "nn", .drop = FALSE)
     Condition
       Error in `rel_try()`:
-      ! count: {"message":"Error in count","name":"count","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"1":"...1"},"wt":"...2","sort":true,"name":"nn",".drop":false}}
+      ! count: {"message":"Error in count","name":"count","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"1":"...1"},"wt":"...2","sort":true,"name":"...4",".drop":false}}
 
 # telemetry and distinct()
 
@@ -96,7 +96,7 @@
       tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% summarise(c = sum(b), .by = a)
     Condition
       Error in `rel_try()`:
-      ! summarise: {"message":"Error in summarise","name":"summarise","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"...3":"sum(...2)"},"by":"a"}}
+      ! summarise: {"message":"Error in summarise","name":"summarise","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"...3":"sum(...2)"},"by":["...1"]}}
 
 ---
 

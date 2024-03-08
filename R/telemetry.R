@@ -42,8 +42,10 @@ arg_to_json <- function(x, name_map) {
     quos_to_json(x, name_map)
   } else if (is_quosure(x)) {
     quo_to_json(x, name_map)
-  } else if (is_call(x)) {
+  } else if (is_call(x) || is_symbol(x)) {
     expr_to_json(x, name_map)
+  } else if (is.list(x)) {
+    map(x, ~ arg_to_json(.x, name_map))
   } else {
     paste0("Can't translate object of class ", paste(class(x), collapse = "/"))
   }
@@ -65,12 +67,18 @@ expr_to_json <- function(x, name_map) {
 expr_scrub <- function(x, name_map) {
   do_scrub <- function(xx, callee = FALSE) {
     if (is_symbol(xx)) {
+      if (callee) {
+        return(xx)
+      }
+
       match <- name_map[as.character(xx)]
       if (is.na(match)) {
-        xx
-      } else {
-        sym(unname(match))
+        new_pos <- length(name_map) + 1
+        match <- paste0("...", new_pos)
+        name_map[as.character(xx)] <<- match
       }
+
+      sym(unname(match))
     } else if (is_call(xx)) {
       args <- map(as.list(xx)[-1], do_scrub)
       call2(do_scrub(xx[[1]], callee = TRUE), !!!args)
