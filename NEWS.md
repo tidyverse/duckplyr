@@ -1,139 +1,66 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# duckplyr 0.3.0.9007 (2024-03-08)
+# duckplyr 0.3.1 (2024-03-08)
 
 ## Bug fixes
 
 - Improve and test fallback telemetry (#115).
-
 - Fix autoupload and other telemetry details (#113).
+- Forbid reuse of new columns created in `summarize()` (#72, #106).
+- Disambiguate computation of `log10()` and `log()`.
+- Test for `log10()`.
+- `summarise()` no longer restores subclass.
+- Fix division by zero for positive and negative numbers.
 
 ## Features
 
 - Prefer `cli::cli_abort()` over `stop()` or `rlang::abort()` (#114).
+- Translate `.data$a` and `.env$a`.
+- Permit `difftime` columns.
+- Permit `POSIXct` columns.
+- Strict checks for column class, only supporting `integer`, `numeric`, `logical` and `Date` for now.
 
 ## Chore
 
 - Better default fallback message.
-
 - Add telemetry for joins.
-
 - Better scrubbing for telemetry (#110).
-
 - Update patches (#109).
+- Add calls for telemetry (#107).
+- Implement almost all dplyr methods (#105).
+- Implement `group_by()` and other methods to collect fallback information (#94, #104).
+- Update TPC/H scripts.
+- Implement `suppressWarnings()` as the identity function.
+- Document.
+- Remove bad patch.
+- Better duckdb tests.
+- Update tests.
+- Better `.sync/.gitignore`.
+- Use standalone purrr for dplyr compatibility.
+- Set memory limit and temporary directory for duckdb.
+
+## Continuous integration
+
+- Use newer Action version to fix build on Windows.
 
 ## Documentation
 
 - Tweak README.
-
 - Tweak description of environment variables and document.
-
 - Tweak messages.
-
 - Telementry -\> telemetry (@TimTaylor, #112).
-
 - Clarify default.
-
 - New `fallback_sitrep()` and related functionality for collecting telemetry data (#102, #111).
-
-
-# duckplyr 0.3.0.9006 (2024-03-08)
-
-## Bug fixes
-
-  - Forbid reuse of new columns created in `summarize()` (#72, #106).
-
-## Chore
-
-  - Add calls for telemetry (#107).
-
-  - Implement almost all dplyr methods (#105).
-
-  - Implement `group_by()` and other methods to collect fallback information (#94, #104).
-
-  - Update TPC/H scripts.
-
-  - Implement `suppressWarnings()` as the identity function.
-
-  - Document.
-
-  - Remove bad patch.
-
-## Uncategorized
-
-  - Merge pull request #103 from duckdblabs/f-cleanup-autogen.
-
-
-# duckplyr 0.3.0.9005 (2024-02-23)
-
-## Chore
-
-  - Better duckdb tests.
-
-
-# duckplyr 0.3.0.9004 (2024-02-10)
-
-## Features
-
-  - Translate `.data$a` and `.env$a`.
-
-  - Permit `difftime` columns.
-
-## Chore
-
-  - Document.
-
-  - Update tests.
-
-  - Better `.sync/.gitignore`.
-
-  - Use standalone purrr for dplyr compatibility.
-
-
-# duckplyr 0.3.0.9003 (2024-02-05)
-
-## Bug fixes
-
-  - Disambiguate computation of `log10()` and `log()`.
-
-  - Test for `log10()`.
-
-  - `summarise()` no longer restores subclass.
-
-  - Fix division by zero for positive and negative numbers.
-
-## Features
-
-  - Permit `POSIXct` columns.
-
-  - Strict checks for column class, only supporting `integer`, `numeric`, `logical` and `Date` for now.
-
-## Chore
-
-  - Set memory limit and temporary directory for duckdb.
-
-## Continuous integration
-
-  - Use newer Action version to fix build on Windows.
 
 ## Testing
 
-  - Add tests for correct base of `log()` and `log10()`.
+- Add tests for correct base of `log()` and `log10()`.
 
+## Uncategorized
 
-# duckplyr 0.3.0.9002 (2024-01-24)
-
-  - Internal changes only.
-
-
-# duckplyr 0.3.0.9001 (2024-01-15)
-
-  - Internal changes only.
-
-
-# duckplyr 0.3.0.9000 (2023-12-11)
-
-  - Merge branch 'cran-0.3.0'.
+- Merge pull request #103 from duckdblabs/f-cleanup-autogen.
+- Internal changes only.
+- Merge branch 'cran-0.3.0'.
 
 
 # duckplyr 0.3.0 (2023-12-10)
