@@ -95,9 +95,9 @@ Currently unused.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projection [___coalesce(lhs.a_x, rhs.a_y) as a]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Join REGULAR INNER ___eq_na_matches_na(lhs.a_x, rhs.a_y)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_x]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x56173d760ec8)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55579d0d9f28)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_y]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x5617413edc08)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x5557a38d4840)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -131,9 +131,9 @@ Currently unused.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projection [___coalesce(lhs.a_x, rhs.a_y) as a]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Join REGULAR INNER ___eq_na_matches_na(lhs.a_x, rhs.a_y)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_x]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x561743b20f78)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x5557a401f3b8)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_y]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x561743b2f838)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x5557a401e190)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -159,10 +159,10 @@ Currently unused.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Join REGULAR INNER ___eq_na_matches_na(lhs.a_x, rhs.a_y)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Projection [a_x as a_x, row_number() OVER () as ___row_number_x]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         Projection [a as a_x]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x561743e980b8)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x5557a4386a10)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Projection [a_y as a_y, row_number() OVER () as ___row_number_y]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         Projection [a as a_y]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x561743e970c0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x5557a4395308)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -184,12 +184,19 @@ Currently unused.</p>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fu">add_one</span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> The <span style="color: #0000BB;">duckplyr</span> package is configured to fall back to <span style="color: #0000BB;">dplyr</span> when it encounters an</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> incompatibility. Fallback events can be collected and uploaded for analysis to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> guide future development. See `?duckplyr::fallback()` for details.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> guide future development. By default, no data will be collected or uploaded.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> A fallback situation just occurred. The following information would have been</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   recorded:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   {"message":"Unknown function:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   add_one","name":"mutate","x":{"...1":"integer"},"args":{"dots":{"...2":"add_one(...1)"},".by":"\"Don't</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   know how to scrub NULL\"",".keep":["all","used","unused","none"]}}</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Run `duckplyr::fallback_sitrep()` to review the current settings.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Run `Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)` to enable fallback logging,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   and `Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = 1)` in addition to enable</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   printing of fallback situations to the console.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Run `duckplyr::fallback_review()` to review the available reports, and</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   `duckplyr::fallback_upload()` to upload them.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> See `?duckplyr::fallback()` for details.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">This message will be displayed once every eight hours.</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   a b</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 3 4</span>
@@ -211,12 +218,19 @@ Currently unused.</p>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> The <span style="color: #0000BB;">duckplyr</span> package is configured to fall back to <span style="color: #0000BB;">dplyr</span> when it encounters an</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> incompatibility. Fallback events can be collected and uploaded for analysis to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> guide future development. See `?duckplyr::fallback()` for details.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> guide future development. By default, no data will be collected or uploaded.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> A fallback situation just occurred. The following information would have been</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   recorded:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   {"message":"Unknown function:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   add_one","name":"mutate","x":{"...1":"integer"},"args":{"dots":{"...2":"add_one(...1)"},".by":"\"Don't</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   know how to scrub NULL\"",".keep":["all","used","unused","none"]}}</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Run `duckplyr::fallback_sitrep()` to review the current settings.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Run `Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)` to enable fallback logging,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   and `Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = 1)` in addition to enable</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   printing of fallback situations to the console.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Run `duckplyr::fallback_review()` to review the available reports, and</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   `duckplyr::fallback_upload()` to upload them.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> See `?duckplyr::fallback()` for details.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">This message will be displayed once every eight hours.</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Error processing with relational.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `do_translate()` at duckplyr/R/relational.R:276:3:</span></span>
