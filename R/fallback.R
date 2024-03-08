@@ -33,6 +33,15 @@
 #' for each fallback situation.
 #' This setting is only relevant if logging is enabled.
 #'
+#' Automatic uploading can be controlled by setting the environment variable
+#' \code{DUCKPLYR_FALLBACK_AUTOUPLOAD} to an integer value.
+#' If the value is 0, uploading is disabled.
+#' Currently, uploading is active if the value is 1 or greater.
+#' Future versions of duckplyr may start logging additional data
+#' and thus require a higher value to enable uploading.
+#' Set to 99 to enable uploading for all future versions.
+#' Use [usethis::edit_r_environ()] to edit the environment file.
+#'
 #' @name fallback
 NULL
 
@@ -196,3 +205,20 @@ fallback_upload <- function(oldest = NULL, newest = NULL, strict = TRUE) {
     cli::cli_inform("All reports uploaded successfully.")
   }
 }
+
+on_load({
+  uploading <- tel_fallback_uploading()
+  if (isTRUE(tel_fallback_uploading())) {
+    fallback_upload(strict = FALSE)
+  } else if (is.na(uploading)) {
+    fallback_uploading <- tel_fallback_uploading()
+    fallback_logs <- tel_fallback_logs()
+    msg <- c(
+      fallback_txt_header(),
+      fallback_txt_uploading(),
+      fallback_txt_sitrep_logs(),
+      "i" = cli::col_silver("This message can be disabled by setting {.envvar DUCKPLYR_FALLBACK_AUTOUPLOAD}.")
+    )
+    packageStartupMessage(cli::format_message(msg))
+  }
+})

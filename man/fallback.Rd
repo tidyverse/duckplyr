@@ -4,11 +4,14 @@
 \alias{fallback}
 \alias{fallback_sitrep}
 \alias{fallback_review}
+\alias{fallback_upload}
 \title{Fallback to dplyr}
 \usage{
 fallback_sitrep()
 
 fallback_review(oldest = NULL, newest = NULL, detail = TRUE)
+
+fallback_upload(oldest = NULL, newest = NULL, strict = TRUE)
 }
 \arguments{
 \item{oldest, newest}{The number of oldest or newest reports to review.
@@ -16,6 +19,9 @@ If not specified, all reports are dispayed.}
 
 \item{detail}{Print the full content of the reports.
 Set to \code{FALSE} to only print the file names.}
+
+\item{strict}{If \code{TRUE}, the function aborts if any of the reports fail to upload.
+With \code{FALSE}, only a message is printed.}
 }
 \description{
 The \pkg{duckplyr} package aims at providing
@@ -32,6 +38,10 @@ The functions and environment variables on this page control the process.
 the number of reports ready for upload, and the location of the logs.
 
 \code{fallback_review()} prints the available reports for review to the console.
+
+\code{fallback_upload()} uploads the available reports to a central server for analysis.
+The server is hosted on AWS and the reports are stored in a private S3 bucket.
+Only authorized personnel have access to the reports.
 }
 \details{
 Logging and uploading are both opt-in.
@@ -54,4 +64,13 @@ Printing can be controlled by setting the environment variable
 If the value is \code{TRUE}, a message is printed to the console
 for each fallback situation.
 This setting is only relevant if logging is enabled.
+
+Automatic uploading can be controlled by setting the environment variable
+\code{DUCKPLYR_FALLBACK_AUTOUPLOAD} to an integer value.
+If the value is 0, uploading is disabled.
+Currently, uploading is active if the value is 1 or greater.
+Future versions of duckplyr may start logging additional data
+and thus require a higher value to enable uploading.
+Set to 99 to enable uploading for all future versions.
+Use \code{\link[usethis:edit]{usethis::edit_r_environ()}} to edit the environment file.
 }
