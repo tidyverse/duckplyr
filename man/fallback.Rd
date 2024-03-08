@@ -35,6 +35,7 @@ Whenever duckplyr encounters an incompatibility, it falls back to dplyr.
 
 To assist future development, the fallback situations can be logged
 to the console or to a local file and uploaded for analysis.
+By default, \pkg{duckplyr} will not log or upload anything.
 The functions and environment variables on this page control the process.
 
 \code{fallback_sitrep()} prints the current settings for fallback logging and uploading,
