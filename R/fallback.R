@@ -112,11 +112,7 @@ fallback_nudge <- function(call_data) {
 #' @rdname fallback
 #' @export
 fallback_review <- function(oldest = NULL, newest = NULL, detail = TRUE) {
-  if (!is.null(oldest) && !is.null(newest)) {
-    cli::cli_abort("Specify either {.arg oldest} or {.arg newest}, not both.")
-  }
-
-  fallback_logs <- tel_fallback_logs(oldest, newest, detail)
+  fallback_logs <- tel_fallback_logs(oldest, newest, detail, .envir = parent.frame())
   if (length(fallback_logs) == 0) {
     cli::cli_inform("No reports ready for upload.")
     return()

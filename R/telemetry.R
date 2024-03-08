@@ -42,7 +42,11 @@ tel_fallback_log_dir <- function() {
   telemetry_path
 }
 
-tel_fallback_logs <- function(oldest = NULL, newest = NULL, detail = FALSE) {
+tel_fallback_logs <- function(oldest = NULL, newest = NULL, detail = FALSE, envir = parent.frame()) {
+  if (!is.null(oldest) && !is.null(newest)) {
+    cli::cli_abort("Specify either {.arg oldest} or {.arg newest}, not both.", .envir = envir)
+  }
+
   # For mocking
   if (Sys.getenv("DUCKPLYR_TELEMETRY_FALLBACK_LOGS") != "") {
     return(strsplit(Sys.getenv("DUCKPLYR_TELEMETRY_FALLBACK_LOGS"), ",")[[1]])

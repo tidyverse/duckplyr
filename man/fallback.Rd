@@ -3,9 +3,19 @@
 \name{fallback}
 \alias{fallback}
 \alias{fallback_sitrep}
+\alias{fallback_review}
 \title{Fallback to dplyr}
 \usage{
 fallback_sitrep()
+
+fallback_review(oldest = NULL, newest = NULL, detail = TRUE)
+}
+\arguments{
+\item{oldest, newest}{The number of oldest or newest reports to review.
+If not specified, all reports are dispayed.}
+
+\item{detail}{Print the full content of the reports.
+Set to \code{FALSE} to only print the file names.}
 }
 \description{
 The \pkg{duckplyr} package aims at providing
@@ -20,6 +30,8 @@ The functions and environment variables on this page control the process.
 
 \code{fallback_sitrep()} prints the current settings for fallback logging and uploading,
 the number of reports ready for upload, and the location of the logs.
+
+\code{fallback_review()} prints the available reports for review to the console.
 }
 \details{
 Logging and uploading are both opt-in.
