@@ -44,6 +44,13 @@ arg_to_json <- function(x, name_map) {
     quo_to_json(x, name_map)
   } else if (is_call(x) || is_symbol(x)) {
     expr_to_json(x, name_map)
+  } else if (inherits(x, "dplyr_join_by")) {
+    list(
+      condition = x$condition,
+      filter = x$filter,
+      x = arg_to_json(syms(x$x), name_map),
+      y = arg_to_json(syms(x$y), name_map)
+    )
   } else if (is.list(x)) {
     map(x, ~ arg_to_json(.x, name_map))
   } else {

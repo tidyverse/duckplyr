@@ -5,7 +5,7 @@ right_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x
   error_call <- caller_env()
 
   # Our implementation
-  rel_try(
+  rel_try(call = list(name = "right_join", x = x, y = y, args = list(by = if(!is.null(by)) as_join_by(by), copy = copy, keep = keep, na_matches = na_matches, multiple = multiple, unmatched = unmatched, relationship = relationship)),
     "No implicit cross joins for right_join()" = is_cross_by(by),
     "No relational implementation for right_join(copy = TRUE)" = copy,
     {

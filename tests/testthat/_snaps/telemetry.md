@@ -1,3 +1,30 @@
+# telemetry and anti_join()
+
+    Code
+      tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% anti_join(tibble(a = 1:3, b = 4:
+        6), by = "a", copy = TRUE, na_matches = "na")
+    Condition
+      Error in `rel_try()`:
+      ! anti_join: {"message":"Error in anti_join","name":"anti_join","x":{"...1":"integer","...2":"integer"},"y":{"...1":"integer","...2":"integer"},"args":{"by":{"condition":"==","filter":"none","x":["...1"],"y":["...1"]},"copy":true,"na_matches":"na"}}
+
+---
+
+    Code
+      tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% anti_join(tibble(a = 1:3, b = 4:
+        6), by = c(a = "b"), copy = TRUE, na_matches = "na")
+    Condition
+      Error in `rel_try()`:
+      ! anti_join: {"message":"Error in anti_join","name":"anti_join","x":{"...1":"integer","...2":"integer"},"y":{"...1":"integer","...2":"integer"},"args":{"by":{"condition":"==","filter":"none","x":["...1"],"y":["...2"]},"copy":true,"na_matches":"na"}}
+
+---
+
+    Code
+      tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% anti_join(tibble(a = 1:3, b = 4:
+        6), by = join_by(a == b), copy = FALSE, na_matches = "never")
+    Condition
+      Error in `rel_try()`:
+      ! anti_join: {"message":"Error in anti_join","name":"anti_join","x":{"...1":"integer","...2":"integer"},"y":{"...1":"integer","...2":"integer"},"args":{"by":{"condition":"==","filter":"none","x":["...1"],"y":["...2"]},"copy":false,"na_matches":"never"}}
+
 # telemetry and arrange()
 
     Code
@@ -39,6 +66,26 @@
       Error in `rel_try()`:
       ! filter: {"message":"Error in filter","name":"filter","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"1":"...1 > \"Don't know how to scrub numeric\""},"by":"\"Don't know how to scrub NULL\"","preserve":true}}
 
+# telemetry and full_join()
+
+    Code
+      tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% full_join(tibble(a = 1:3, b = 4:
+        6), by = "a", copy = TRUE, suffix = c("x", "y"), keep = TRUE, na_matches = "na",
+      multiple = "all", relationship = "one-to-one")
+    Condition
+      Error in `rel_try()`:
+      ! full_join: {"message":"Error in full_join","name":"full_join","x":{"...1":"integer","...2":"integer"},"y":{"...1":"integer","...2":"integer"},"args":{"by":{"condition":"==","filter":"none","x":["...1"],"y":["...1"]},"copy":true,"keep":true,"na_matches":"na","multiple":"all","relationship":"one-to-one"}}
+
+# telemetry and inner_join()
+
+    Code
+      tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% inner_join(tibble(a = 1:3, b = 4:
+        6), by = "a", copy = TRUE, suffix = c("x", "y"), keep = TRUE, na_matches = "na",
+      multiple = "all", unmatched = "error", relationship = "one-to-one")
+    Condition
+      Error in `rel_try()`:
+      ! inner_join: {"message":"Error in inner_join","name":"inner_join","x":{"...1":"integer","...2":"integer"},"y":{"...1":"integer","...2":"integer"},"args":{"by":{"condition":"==","filter":"none","x":["...1"],"y":["...1"]},"copy":true,"keep":true,"na_matches":"na","multiple":"all","unmatched":"error","relationship":"one-to-one"}}
+
 # telemetry and intersect()
 
     Code
@@ -47,6 +94,16 @@
     Condition
       Error in `rel_try()`:
       ! intersect: {"message":"Error in intersect","name":"intersect","x":{"...1":"integer","...2":"integer"},"y":{"...1":"integer","...2":"integer"}}
+
+# telemetry and left_join()
+
+    Code
+      tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% left_join(tibble(a = 1:3, b = 4:
+        6), by = "a", copy = TRUE, suffix = c("x", "y"), keep = TRUE, na_matches = "na",
+      multiple = "all", unmatched = "error", relationship = "one-to-one")
+    Condition
+      Error in `rel_try()`:
+      ! left_join: {"message":"Error in left_join","name":"left_join","x":{"...1":"integer","...2":"integer"},"y":{"...1":"integer","...2":"integer"},"args":{"by":{"condition":"==","filter":"none","x":["...1"],"y":["...1"]},"copy":true,"keep":true,"na_matches":"na","multiple":"all","unmatched":"error","relationship":"one-to-one"}}
 
 # telemetry and mutate()
 
@@ -73,6 +130,16 @@
       Error in `rel_try()`:
       ! rename: {"message":"Error in rename","name":"rename","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"...3":"...1"}}}
 
+# telemetry and right_join()
+
+    Code
+      tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% right_join(tibble(a = 1:3, b = 4:
+        6), by = "a", copy = TRUE, suffix = c("x", "y"), keep = TRUE, na_matches = "na",
+      multiple = "all", unmatched = "error", relationship = "one-to-one")
+    Condition
+      Error in `rel_try()`:
+      ! right_join: {"message":"Error in right_join","name":"right_join","x":{"...1":"integer","...2":"integer"},"y":{"...1":"integer","...2":"integer"},"args":{"by":{"condition":"==","filter":"none","x":["...1"],"y":["...1"]},"copy":true,"keep":true,"na_matches":"na","multiple":"all","unmatched":"error","relationship":"one-to-one"}}
+
 # telemetry and select()
 
     Code
@@ -80,6 +147,15 @@
     Condition
       Error in `rel_try()`:
       ! select: {"message":"Error in select","name":"select","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"...3":"...2"}}}
+
+# telemetry and semi_join()
+
+    Code
+      tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% semi_join(tibble(a = 1:3, b = 4:
+        6), by = "a", copy = TRUE, na_matches = "na")
+    Condition
+      Error in `rel_try()`:
+      ! semi_join: {"message":"Error in semi_join","name":"semi_join","x":{"...1":"integer","...2":"integer"},"y":{"...1":"integer","...2":"integer"},"args":{"by":{"condition":"==","filter":"none","x":["...1"],"y":["...1"]},"copy":true,"na_matches":"na"}}
 
 # telemetry and setdiff()
 

@@ -1,5 +1,40 @@
 withr::local_envvar(DUCKPLYR_TELEMETRY_TEST = TRUE)
 
+test_that("telemetry and anti_join()", {
+  expect_snapshot(error = TRUE, {
+    tibble(a = 1:3, b = 4:6) %>%
+      as_duckplyr_df() %>%
+      anti_join(
+        tibble(a = 1:3, b = 4:6),
+        by = "a",
+        copy = TRUE,
+        na_matches = "na"
+      )
+  })
+
+  expect_snapshot(error = TRUE, {
+    tibble(a = 1:3, b = 4:6) %>%
+      as_duckplyr_df() %>%
+      anti_join(
+        tibble(a = 1:3, b = 4:6),
+        by = c("a" = "b"),
+        copy = TRUE,
+        na_matches = "na"
+      )
+  })
+
+  expect_snapshot(error = TRUE, {
+    tibble(a = 1:3, b = 4:6) %>%
+      as_duckplyr_df() %>%
+      anti_join(
+        tibble(a = 1:3, b = 4:6),
+        by = join_by(a == b),
+        copy = FALSE,
+        na_matches = "never"
+      )
+  })
+})
+
 test_that("telemetry and arrange()", {
   expect_snapshot(error = TRUE, {
     tibble(a = 1:3, b = 4:6) %>%
@@ -38,11 +73,64 @@ test_that("telemetry and filter()", {
   })
 })
 
+test_that("telemetry and full_join()", {
+  expect_snapshot(error = TRUE, {
+    tibble(a = 1:3, b = 4:6) %>%
+      as_duckplyr_df() %>%
+      full_join(
+        tibble(a = 1:3, b = 4:6),
+        by = "a",
+        copy = TRUE,
+        suffix = c("x", "y"),
+        keep = TRUE,
+        na_matches = "na",
+        multiple = "all",
+        relationship = "one-to-one"
+      )
+  })
+})
+
+test_that("telemetry and inner_join()", {
+  expect_snapshot(error = TRUE, {
+    tibble(a = 1:3, b = 4:6) %>%
+      as_duckplyr_df() %>%
+      inner_join(
+        tibble(a = 1:3, b = 4:6),
+        by = "a",
+        copy = TRUE,
+        suffix = c("x", "y"),
+        keep = TRUE,
+        na_matches = "na",
+        multiple = "all",
+        unmatched = "error",
+        relationship = "one-to-one"
+      )
+  })
+})
+
 test_that("telemetry and intersect()", {
   expect_snapshot(error = TRUE, {
     tibble(a = 1:3, b = 4:6) %>%
       as_duckplyr_df() %>%
       intersect(tibble(a = 1:3, b = 4:6))
+  })
+})
+
+test_that("telemetry and left_join()", {
+  expect_snapshot(error = TRUE, {
+    tibble(a = 1:3, b = 4:6) %>%
+      as_duckplyr_df() %>%
+      left_join(
+        tibble(a = 1:3, b = 4:6),
+        by = "a",
+        copy = TRUE,
+        suffix = c("x", "y"),
+        keep = TRUE,
+        na_matches = "na",
+        multiple = "all",
+        unmatched = "error",
+        relationship = "one-to-one"
+      )
   })
 })
 
@@ -70,11 +158,42 @@ test_that("telemetry and rename()", {
   })
 })
 
+test_that("telemetry and right_join()", {
+  expect_snapshot(error = TRUE, {
+    tibble(a = 1:3, b = 4:6) %>%
+      as_duckplyr_df() %>%
+      right_join(
+        tibble(a = 1:3, b = 4:6),
+        by = "a",
+        copy = TRUE,
+        suffix = c("x", "y"),
+        keep = TRUE,
+        na_matches = "na",
+        multiple = "all",
+        unmatched = "error",
+        relationship = "one-to-one"
+      )
+  })
+})
+
 test_that("telemetry and select()", {
   expect_snapshot(error = TRUE, {
     tibble(a = 1:3, b = 4:6) %>%
       as_duckplyr_df() %>%
       select(c = b)
+  })
+})
+
+test_that("telemetry and semi_join()", {
+  expect_snapshot(error = TRUE, {
+    tibble(a = 1:3, b = 4:6) %>%
+      as_duckplyr_df() %>%
+      semi_join(
+        tibble(a = 1:3, b = 4:6),
+        by = "a",
+        copy = TRUE,
+        na_matches = "na"
+      )
   })
 })
 
