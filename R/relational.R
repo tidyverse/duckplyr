@@ -138,7 +138,7 @@ rel_translate <- function(
               cli_abort("{name}({names(args)[which(bad)[[1]]]} = ) not supported")
             }
             if (!is.null(getOption("lubridate.week.start"))) {
-              abort('wday() with option("lubridate.week.start") not supported')
+              cli_abort('{.code wday()} with {.code option("lubridate.week.start")} not supported')
             }
           },
           "strftime" = {
