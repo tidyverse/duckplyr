@@ -34,7 +34,7 @@ as_duckplyr_df <- function(.data) {
   }
 
   if (anyNA(names(.data)) || any(names(.data) == "")) {
-    abort("Missing or empty names not allowed.")
+    cli_abort("Missing or empty names not allowed.")
   }
 
   class(.data) <- c("duckplyr_df", class(.data))
