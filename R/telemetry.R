@@ -140,7 +140,7 @@ call_to_json <- function(cnd, call) {
   }
 
   out <- list2(
-    message = conditionMessage(cnd),
+    message = cnd_to_json(cnd),
     name = call$name,
     x = df_to_json(call$x, name_map),
     y = df_to_json(call$y, name_map),
@@ -155,6 +155,10 @@ get_name_map <- function(x) {
   new_names <- paste0("...", seq_along(unique))
   names(new_names) <- unique
   new_names
+}
+
+cnd_to_json <- function(cnd) {
+  cli::ansi_strip(conditionMessage(cnd))
 }
 
 df_to_json <- function(df, name_map) {
