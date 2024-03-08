@@ -30,7 +30,7 @@ rel_try <- function(rel, ..., call = NULL) {
           inform(message = c("Requested fallback for relational:", i = names(dots)[[i]]))
         }
         if (Sys.getenv("DUCKPLYR_FORCE") == "TRUE") {
-          abort("Fallback not available with DUCKPLYR_FORCE")
+          cli_abort("Fallback not available with {.envvar DUCKPLYR_FORCE}.")
         }
       }
 
