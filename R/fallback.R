@@ -43,6 +43,8 @@
 #' Use [usethis::edit_r_environ()] to edit the environment file.
 #'
 #' @name fallback
+#' @examples
+#' fallback_sitrep()
 NULL
 
 #' fallback_sitrep

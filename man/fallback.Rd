@@ -79,3 +79,6 @@ and thus require a higher value to enable uploading.
 Set to 99 to enable uploading for all future versions.
 Use \code{\link[usethis:edit]{usethis::edit_r_environ()}} to edit the environment file.
 }
+\examples{
+fallback_sitrep()
+}
