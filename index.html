@@ -281,37 +281,70 @@
 <span>  <span class="nf"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="o">(</span>bill_area <span class="o">=</span> <span class="nv">bill_length_mm</span> <span class="o">*</span> <span class="nv">bill_depth_mm</span><span class="o">)</span> <span class="o"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="nf"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="o">(</span>.by <span class="o">=</span> <span class="nf"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="o">(</span><span class="nv">species</span>, <span class="nv">sex</span><span class="o">)</span>, mean_bill_area <span class="o">=</span> <span class="nf"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="o">(</span><span class="nv">bill_area</span><span class="o">)</span><span class="o">)</span> <span class="o"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="nf"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="o">(</span><span class="nv">species</span> <span class="o">!=</span> <span class="s">"Gentoo"</span><span class="o">)</span></span>
-<span><span class="c">#&gt; materializing:</span></span>
-<span><span class="c">#&gt; ---------------------</span></span>
-<span><span class="c">#&gt; --- Relation Tree ---</span></span>
-<span><span class="c">#&gt; ---------------------</span></span>
-<span><span class="c">#&gt; Projection [species as species, sex as sex, mean_bill_area as mean_bill_area]</span></span>
-<span><span class="c">#&gt;   Order [___row_number ASC]</span></span>
-<span><span class="c">#&gt;     Filter [!=(species, 'Gentoo')]</span></span>
-<span><span class="c">#&gt;       Projection [species as species, sex as sex, mean_bill_area as mean_bill_area, row_number() OVER () as ___row_number]</span></span>
-<span><span class="c">#&gt;         Projection [species as species, sex as sex, mean_bill_area as mean_bill_area]</span></span>
-<span><span class="c">#&gt;           Order [___row_number ASC]</span></span>
-<span><span class="c">#&gt;             Aggregate [species, sex, min(___row_number), mean(bill_area)]</span></span>
-<span><span class="c">#&gt;               Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, bill_area as bill_area, row_number() OVER () as ___row_number]</span></span>
-<span><span class="c">#&gt;                 Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, *(bill_length_mm, bill_depth_mm) as bill_area]</span></span>
-<span><span class="c">#&gt;                   r_dataframe_scan(0xdeadbeef)</span></span>
-<span><span class="c">#&gt; </span></span>
-<span><span class="c">#&gt; ---------------------</span></span>
-<span><span class="c">#&gt; -- Result Columns  --</span></span>
-<span><span class="c">#&gt; ---------------------</span></span>
-<span><span class="c">#&gt; - species (VARCHAR)</span></span>
-<span><span class="c">#&gt; - sex (VARCHAR)</span></span>
-<span><span class="c">#&gt; - mean_bill_area (DOUBLE)</span></span>
-<span><span class="c">#&gt; </span></span>
 <span><span class="c">#&gt; <span style="color: #555555;"># A tibble: 5 × 3</span></span></span>
 <span><span class="c">#&gt;   <span style="font-weight: bold;">species</span>   <span style="font-weight: bold;">sex</span>    <span style="font-weight: bold;">mean_bill_area</span></span></span>
 <span><span class="c">#&gt;   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="c">#&gt; <span style="color: #555555;">1</span> Adelie    male             770.</span></span>
 <span><span class="c">#&gt; <span style="color: #555555;">2</span> Adelie    female           657.</span></span>
-<span><span class="c">#&gt; <span style="color: #555555;">3</span> Adelie    <span style="color: #BB0000;">NA</span>               695.</span></span>
+<span><span class="c">#&gt; <span style="color: #555555;">3</span> Adelie    <span style="color: #BB0000;">NA</span>                <span style="color: #BB0000;">NA</span> </span></span>
 <span><span class="c">#&gt; <span style="color: #555555;">4</span> Chinstrap female           820.</span></span>
 <span><span class="c">#&gt; <span style="color: #555555;">5</span> Chinstrap male             984.</span></span></pre>
 </div>
+</div>
+<div class="section level2">
+<h2 id="telemetry">Telemetry<a class="anchor" aria-label="anchor" href="#telemetry"></a>
+</h2>
+<p>We would like to guide our efforts towards improving duckplyr, focusing on the features with the most impact. To this end, duckplyr collects and uploads telemetry data, but only if permitted by the user. The data collected contains:</p>
+<ul>
+<li>The package version</li>
+<li>The error message</li>
+<li>The operation being performed, and the arguments
+<ul>
+<li>For the input data frames, only the structure is included (column types only), no column names or data</li>
+</ul>
+</li>
+</ul>
+<p>The first time the package encounters an unsupported function, data type, or operation, instructions are printed to the console.</p>
+<pre class="chroma">
+<span><span class="nf">palmerpenguins</span><span class="nf">::</span><span class="nv"><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">penguins</a></span> <span class="o"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="nf"><a href="https://duckdblabs.github.io/duckplyr/reference/as_duckplyr_df.html">as_duckplyr_df</a></span><span class="o">(</span><span class="o">)</span> <span class="o"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="nf"><a href="https://dplyr.tidyverse.org/reference/transmute.html" class="external-link">transmute</a></span><span class="o">(</span>bill_area <span class="o">=</span> <span class="nv">bill_length_mm</span> <span class="o">*</span> <span class="nv">bill_depth_mm</span><span class="o">)</span> <span class="o"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="nf"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="o">(</span><span class="m">3</span><span class="o">)</span></span>
+<span><span class="c">#&gt; The <span style="color: #0000BB;">duckplyr</span> package is configured to fall back to <span style="color: #0000BB;">dplyr</span> when it encounters an</span></span>
+<span><span class="c">#&gt; incompatibility. Fallback events can be collected and uploaded for analysis to</span></span>
+<span><span class="c">#&gt; guide future development. By default, no data will be collected or uploaded.</span></span>
+<span><span class="c">#&gt; <span style="color: #00BBBB;">ℹ</span> A fallback situation just occurred. The following information would have been</span></span>
+<span><span class="c">#&gt;   recorded:</span></span>
+<span><span class="c">#&gt;   {"version":"0.3.0","message":"Can't convert columns of class &lt;factor&gt; to</span></span>
+<span><span class="c">#&gt;   relational. Affected</span></span>
+<span><span class="c">#&gt;   column:\n`...1`.","name":"transmute","x":{"...1":"factor","...2":"factor","...3":"numeric","...4":"numeric","...5":"integer","...6":"integer","...7":"factor","...8":"integer"},"args":{"dots":{"...9":"...3</span></span>
+<span><span class="c">#&gt;   * ...4"}}}</span></span>
+<span><span class="c">#&gt; → Run `duckplyr::fallback_sitrep()` to review the current settings.</span></span>
+<span><span class="c">#&gt; → Run `Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)` to enable fallback logging,</span></span>
+<span><span class="c">#&gt;   and `Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = 1)` in addition to enable</span></span>
+<span><span class="c">#&gt;   printing of fallback situations to the console.</span></span>
+<span><span class="c">#&gt; → Run `duckplyr::fallback_review()` to review the available reports, and</span></span>
+<span><span class="c">#&gt;   `duckplyr::fallback_upload()` to upload them.</span></span>
+<span><span class="c">#&gt; <span style="color: #00BBBB;">ℹ</span> See `?duckplyr::fallback()` for details.</span></span>
+<span><span class="c">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">This message will be displayed once every eight hours.</span></span></span>
+<span><span class="c">#&gt; materializing:</span></span>
+<span><span class="c">#&gt; ---------------------</span></span>
+<span><span class="c">#&gt; --- Relation Tree ---</span></span>
+<span><span class="c">#&gt; ---------------------</span></span>
+<span><span class="c">#&gt; Limit 3</span></span>
+<span><span class="c">#&gt;   r_dataframe_scan(0xdeadbeef)</span></span>
+<span><span class="c">#&gt; </span></span>
+<span><span class="c">#&gt; ---------------------</span></span>
+<span><span class="c">#&gt; -- Result Columns  --</span></span>
+<span><span class="c">#&gt; ---------------------</span></span>
+<span><span class="c">#&gt; - bill_area (DOUBLE)</span></span>
+<span><span class="c">#&gt; </span></span>
+<span><span class="c">#&gt; <span style="color: #555555;"># A tibble: 3 × 1</span></span></span>
+<span><span class="c">#&gt;   <span style="font-weight: bold;">bill_area</span></span></span>
+<span><span class="c">#&gt;       <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="c">#&gt; <span style="color: #555555;">1</span>      731.</span></span>
+<span><span class="c">#&gt; <span style="color: #555555;">2</span>      687.</span></span>
+<span><span class="c">#&gt; <span style="color: #555555;">3</span>      725.</span></span></pre>
 </div>
 <div class="section level2">
 <h2 id="extensibility">Extensibility<a class="anchor" aria-label="anchor" href="#extensibility"></a>
@@ -427,7 +460,6 @@
 <span><span class="o">}</span></span>
 <span></span>
 <span><span class="nf"><a href="https://duckdblabs.github.io/duckplyr/reference/new_relational.html">rel_join</a></span><span class="o">(</span><span class="nf">new_dfrel</span><span class="o">(</span><span class="nf"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="o">(</span>mpg <span class="o">=</span> <span class="m">21</span><span class="o">)</span><span class="o">)</span>, <span class="nv">mtcars_rel</span><span class="o">)</span></span>
-<span><span class="c">#&gt; Joining with `by = join_by(mpg)`</span></span>
 <span><span class="c">#&gt; Joining with `by = join_by(mpg)`</span></span>
 <span><span class="c">#&gt; [[1]]</span></span>
 <span><span class="c">#&gt;   mpg cyl disp  hp</span></span>
