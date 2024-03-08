@@ -100,3 +100,36 @@ fallback_nudge <- function(call_data) {
     "i" = cli::col_silver("This message will be displayed once every eight hours.")
   ))
 }
+
+#' fallback_review
+#'
+#' `fallback_review()` prints the available reports for review to the console.
+#'
+#' @param oldest,newest The number of oldest or newest reports to review.
+#'   If not specified, all reports are dispayed.
+#' @param detail Print the full content of the reports.
+#'   Set to \code{FALSE} to only print the file names.
+#' @rdname fallback
+#' @export
+fallback_review <- function(oldest = NULL, newest = NULL, detail = TRUE) {
+  if (!is.null(oldest) && !is.null(newest)) {
+    cli::cli_abort("Specify either {.arg oldest} or {.arg newest}, not both.")
+  }
+
+  fallback_logs <- tel_fallback_logs(oldest, newest, detail)
+  if (length(fallback_logs) == 0) {
+    cli::cli_inform("No reports ready for upload.")
+    return()
+  }
+
+  for (i in seq_along(fallback_logs)) {
+    file <- names(fallback_logs)[[i]]
+
+    cli::cli_inform(c(
+      "*" = "{.file {file}}",
+      " " = if (detail) "{fallback_logs[[i]]}"
+    ))
+  }
+
+  invisible()
+}

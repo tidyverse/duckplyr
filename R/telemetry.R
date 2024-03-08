@@ -42,14 +42,32 @@ tel_fallback_log_dir <- function() {
   telemetry_path
 }
 
-tel_fallback_logs <- function() {
+tel_fallback_logs <- function(oldest = NULL, newest = NULL, detail = FALSE) {
   # For mocking
   if (Sys.getenv("DUCKPLYR_TELEMETRY_FALLBACK_LOGS") != "") {
     return(strsplit(Sys.getenv("DUCKPLYR_TELEMETRY_FALLBACK_LOGS"), ",")[[1]])
   }
 
   telemetry_path <- tel_fallback_log_dir()
-  list.files(telemetry_path, full.names = TRUE, pattern = "[.]ndjson$")
+  fallback_logs <- list.files(telemetry_path, full.names = TRUE, pattern = "[.]ndjson$")
+
+  info <- file.info(fallback_logs)
+  info <- info[order(info$mtime), ]
+
+  review <- rownames(info)
+  if (!is.null(oldest)) {
+    review <- utils::head(review, oldest)
+  } else if (!is.null(newest)) {
+    review <- utils::tail(review, newest)
+  }
+
+  if (isTRUE(detail)) {
+    contents <- map_chr(review, ~ paste0(readLines(.x), "\n", collapse = ""))
+  } else {
+    contents <- rep_along(review, NA_character_)
+  }
+
+  set_names(contents, review)
 }
 
 tel_collect <- function(cnd, call) {
@@ -63,6 +81,8 @@ tel_collect <- function(cnd, call) {
     tel_ask(call_to_json(cnd, call))
     return()
   }
+
+  tel_record(call_to_json(cnd, call))
 }
 
 tel_ask <- function(call_json) {
@@ -74,6 +94,20 @@ tel_ask <- function(call_json) {
   }
 
   fallback_nudge(call_json)
+}
+
+tel_record <- function(call_json) {
+  telemetry_path <- tel_fallback_log_dir()
+  telemetry_file <- file.path(telemetry_path, paste0(Sys.getpid(), ".ndjson"))
+
+  cat(call_json, "\n", sep = "", file = telemetry_file, append = TRUE)
+
+  if (tel_fallback_verbose()) {
+    cli::cli_inform(c(
+      "i" = "dplyr fallback recorded",
+      " " = "{call_json}"
+    ))
+  }
 }
 
 # ---
