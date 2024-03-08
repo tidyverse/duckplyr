@@ -13,7 +13,7 @@
         name = "nn", .drop = FALSE)
     Condition
       Error in `rel_try()`:
-      ! count: {"message":"Error in count","name":"count","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"1":"...1"},"wt":"...2","sort":true,"name":"nn",".drop":false}}
+      ! count: {"message":"Error in count","name":"count","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"1":"...1"},"wt":"...2","sort":true,"name":"...4",".drop":false}}
 
 # telemetry and distinct()
 
@@ -21,7 +21,7 @@
       tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% distinct(a, b, .keep_all = TRUE)
     Condition
       Error in `rel_try()`:
-      ! distinct: {"message":"Error in distinct","name":"distinct","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"a":"...1","b":"...2"},".keep_all":true}}
+      ! distinct: {"message":"Error in distinct","name":"distinct","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"...1":"...1","...2":"...2"},".keep_all":true}}
 
 # telemetry and filter()
 
@@ -46,7 +46,7 @@
         6))
     Condition
       Error in `rel_try()`:
-      ! intersect: {"message":"Error in intersect","name":"intersect","x":{"...1":"integer","...2":"integer"},"y":{"a":"integer","b":"integer"}}
+      ! intersect: {"message":"Error in intersect","name":"intersect","x":{"...1":"integer","...2":"integer"},"y":{"...1":"integer","...2":"integer"}}
 
 # telemetry and mutate()
 
@@ -55,7 +55,7 @@
       .keep = "unused", )
     Condition
       Error in `rel_try()`:
-      ! mutate: {"message":"Error in mutate","name":"mutate","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"c":"...1 + ...2"},".by":"...1",".keep":"unused"}}
+      ! mutate: {"message":"Error in mutate","name":"mutate","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"...3":"...1 + ...2"},".by":"...1",".keep":"unused"}}
 
 # telemetry and relocate()
 
@@ -71,7 +71,7 @@
       tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% rename(c = a)
     Condition
       Error in `rel_try()`:
-      ! rename: {"message":"Error in rename","name":"rename","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"c":"...1"}}}
+      ! rename: {"message":"Error in rename","name":"rename","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"...3":"...1"}}}
 
 # telemetry and select()
 
@@ -79,7 +79,7 @@
       tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% select(c = b)
     Condition
       Error in `rel_try()`:
-      ! select: {"message":"Error in select","name":"select","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"c":"...2"}}}
+      ! select: {"message":"Error in select","name":"select","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"...3":"...2"}}}
 
 # telemetry and setdiff()
 
@@ -88,7 +88,7 @@
         6))
     Condition
       Error in `rel_try()`:
-      ! setdiff: {"message":"Error in setdiff","name":"setdiff","x":{"...1":"integer","...2":"integer"},"y":{"a":"integer","b":"integer"}}
+      ! setdiff: {"message":"Error in setdiff","name":"setdiff","x":{"...1":"integer","...2":"integer"},"y":{"...1":"integer","...2":"integer"}}
 
 # telemetry and summarise()
 
@@ -96,7 +96,7 @@
       tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% summarise(c = sum(b), .by = a)
     Condition
       Error in `rel_try()`:
-      ! summarise: {"message":"Error in summarise","name":"summarise","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"c":"sum(...2)"},"by":"a"}}
+      ! summarise: {"message":"Error in summarise","name":"summarise","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"...3":"sum(...2)"},"by":["...1"]}}
 
 ---
 
@@ -105,7 +105,7 @@
       .groups = "rowwise")
     Condition
       Error in `rel_try()`:
-      ! summarise: {"message":"Error in summarise","name":"summarise","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"c":"sum(...2)"},".groups":"rowwise"}}
+      ! summarise: {"message":"Error in summarise","name":"summarise","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"...3":"sum(...2)"},".groups":"rowwise"}}
 
 # telemetry and symdiff()
 
@@ -114,7 +114,7 @@
         6))
     Condition
       Error in `rel_try()`:
-      ! symdiff: {"message":"Error in symdiff","name":"symdiff","x":{"...1":"integer","...2":"integer"},"y":{"a":"integer","b":"integer"}}
+      ! symdiff: {"message":"Error in symdiff","name":"symdiff","x":{"...1":"integer","...2":"integer"},"y":{"...1":"integer","...2":"integer"}}
 
 # telemetry and transmute()
 
@@ -122,7 +122,7 @@
       tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% transmute(c = a + b)
     Condition
       Error in `rel_try()`:
-      ! transmute: {"message":"Error in transmute","name":"transmute","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"c":"...1 + ...2"}}}
+      ! transmute: {"message":"Error in transmute","name":"transmute","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"...3":"...1 + ...2"}}}
 
 # telemetry and union_all()
 
@@ -131,5 +131,5 @@
         6))
     Condition
       Error in `rel_try()`:
-      ! union_all: {"message":"Error in union_all","name":"union_all","x":{"...1":"integer","...2":"integer"},"y":{"a":"integer","b":"integer"}}
+      ! union_all: {"message":"Error in union_all","name":"union_all","x":{"...1":"integer","...2":"integer"},"y":{"...1":"integer","...2":"integer"}}
 

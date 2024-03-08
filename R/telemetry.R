@@ -1,70 +1,87 @@
 call_to_json <- function(cnd, call) {
+  name_map <- get_name_map(c(names(call$x), names(call$y), names(call$args$dots)))
+  if (!is.null(names(call$args$dots))) {
+    names(call$args$dots) <- name_map[names2(call$args$dots)]
+  }
+
   out <- list2(
     message = conditionMessage(cnd),
     name = call$name,
-    x = df_to_json(call$x),
-    y = df_to_json(call$y, names(call$x)),
-    args = map(compact(call$args), arg_to_json, unique(c(names(call$x), names(call$y))))
+    x = df_to_json(call$x, name_map),
+    y = df_to_json(call$y, name_map),
+    args = map(compact(call$args), arg_to_json, name_map)
   )
 
   jsonlite::toJSON(compact(out), auto_unbox = TRUE, null = "null")
 }
 
-df_to_json <- function(df, known_names = NULL) {
+get_name_map <- function(x) {
+  unique <- unique(x)
+  new_names <- paste0("...", seq_along(unique))
+  names(new_names) <- unique
+  new_names
+}
+
+df_to_json <- function(df, name_map) {
   if (is.null(df)) {
     return(NULL)
   }
   if (length(df) == 0) {
     return(list())
   }
-  new_names <- paste0("...", seq_along(df))
-  known <- match(names(df), known_names)
-  new_names[!is.na(known)] <- known_names[known[!is.na(known)]]
 
   out <- map(df, ~ paste0(class(.x), collapse = "/"))
-  names(out) <- new_names
+  names(out) <- name_map[names(df)]
   out
 }
 
-arg_to_json <- function(x, known_names) {
+arg_to_json <- function(x, name_map) {
   if (is.atomic(x)) {
     x
   } else if (is_quosures(x)) {
-    quos_to_json(x, known_names)
+    quos_to_json(x, name_map)
   } else if (is_quosure(x)) {
-    quo_to_json(x, known_names)
-  } else if (is_call(x)) {
-    expr_to_json(x, known_names)
+    quo_to_json(x, name_map)
+  } else if (is_call(x) || is_symbol(x)) {
+    expr_to_json(x, name_map)
+  } else if (is.list(x)) {
+    map(x, ~ arg_to_json(.x, name_map))
   } else {
     paste0("Can't translate object of class ", paste(class(x), collapse = "/"))
   }
 }
 
-quos_to_json <- function(x, known_names) {
-  map(x, ~ quo_to_json(.x, known_names))
+quos_to_json <- function(x, name_map) {
+  map(x, ~ quo_to_json(.x, name_map))
 }
 
-quo_to_json <- function(x, known_names) {
-  expr_to_json(quo_get_expr(x), known_names)
+quo_to_json <- function(x, name_map) {
+  expr_to_json(quo_get_expr(x), name_map)
 }
 
-expr_to_json <- function(x, known_names) {
-  scrubbed <- expr_scrub(x, known_names)
+expr_to_json <- function(x, name_map) {
+  scrubbed <- expr_scrub(x, name_map)
   expr_deparse(scrubbed, width = 500L)
 }
 
-expr_scrub <- function(x, known_names) {
-  do_scrub <- function(xx) {
-    if (is_call(xx)) {
-      args <- map(as.list(xx)[-1], do_scrub)
-      call2(xx[[1]], !!!args)
-    } else if (is_symbol(xx)) {
-      match <- match(as.character(xx), known_names)
-      if (is.na(match)) {
-        xx
-      } else {
-        sym(paste0("...", match))
+expr_scrub <- function(x, name_map) {
+  do_scrub <- function(xx, callee = FALSE) {
+    if (is_symbol(xx)) {
+      if (callee) {
+        return(xx)
       }
+
+      match <- name_map[as.character(xx)]
+      if (is.na(match)) {
+        new_pos <- length(name_map) + 1
+        match <- paste0("...", new_pos)
+        name_map[as.character(xx)] <<- match
+      }
+
+      sym(unname(match))
+    } else if (is_call(xx)) {
+      args <- map(as.list(xx)[-1], do_scrub)
+      call2(do_scrub(xx[[1]], callee = TRUE), !!!args)
     } else {
       paste0("Don't know how to scrub ", paste(class(xx), collapse = "/"))
     }
