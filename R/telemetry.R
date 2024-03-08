@@ -140,7 +140,7 @@ call_to_json <- function(cnd, call) {
   }
 
   out <- list2(
-    message = cnd_to_json(cnd),
+    message = cnd_to_json(cnd, name_map),
     name = call$name,
     x = df_to_json(call$x, name_map),
     y = df_to_json(call$y, name_map),
@@ -157,8 +157,16 @@ get_name_map <- function(x) {
   new_names
 }
 
-cnd_to_json <- function(cnd) {
-  cli::ansi_strip(conditionMessage(cnd))
+cnd_to_json <- function(cnd, name_map) {
+  msg <- cli::ansi_strip(conditionMessage(cnd))
+
+  search <- paste0("`", names(name_map), "`")
+  replace <- paste0("`", name_map, "`")
+
+  for (i in seq_along(search)) {
+    msg <- gsub(search[[i]], replace[[i]], msg, fixed = TRUE)
+  }
+  msg
 }
 
 df_to_json <- function(df, name_map) {
@@ -212,7 +220,9 @@ expr_to_json <- function(x, name_map) {
 
 expr_scrub <- function(x, name_map) {
   do_scrub <- function(xx, callee = FALSE) {
-    if (is_symbol(xx)) {
+    if (is.null(xx)) {
+      return(NULL)
+    } else if (is_symbol(xx)) {
       if (callee) {
         return(xx)
       }

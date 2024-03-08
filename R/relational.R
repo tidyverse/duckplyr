@@ -124,12 +124,22 @@ rel_translate <- function(
       language = {
         name <- as.character(expr[[1]])
 
+        if (name[[1]] == "::") {
+          pkg <- name[[2]]
+          name <- name[[3]]
+        } else {
+          pkg <- NULL
+        }
+
         switch(name,
           "(" = {
             return(do_translate(expr[[2]], in_window = in_window))
           },
           # Hack
           "wday" = {
+            if (!is.null(pkg) && pkg != "lubridate") {
+              cli_abort("Don't know how to translate {.code {pkg}::{name}}.")
+            }
             def <- lubridate::wday
             call <- match.call(def, expr, envir = env)
             args <- as.list(call[-1])
@@ -173,7 +183,7 @@ rel_translate <- function(
               if (exists(var_name, envir = env)) {
                 return(do_translate(get(var_name, env), in_window = in_window))
               } else {
-                cli_abort("object {.var {var_name}} not found")
+                cli_abort("internal: object not found, should also be triggered by the dplyr fallback")
               }
             }
           }
