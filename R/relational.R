@@ -55,7 +55,7 @@ rel_try <- function(rel, ..., call = NULL) {
   }
 
   # Never reached due to return() in code
-  stop("Must use a return() in rel_try().")
+  cli_abort("Must use a return() in rel_try().")
 }
 
 rel_translate_dots <- function(dots, data, forbid_new = FALSE) {
