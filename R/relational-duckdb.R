@@ -406,7 +406,7 @@ to_duckdb_expr <- function(x) {
       out
     },
     NULL = NULL,
-    stop("Unknown expr class: ", class(x)[[1]])
+    cli_abort("Unknown expr class: {.cls {paste(class(x), collapse = '/')}}")
   )
 }
 
