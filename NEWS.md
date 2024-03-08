@@ -4,63 +4,29 @@
 
 ## Bug fixes
 
-- Improve and test fallback telemetry (#115).
-- Fix autoupload and other telemetry details (#113).
-- Forbid reuse of new columns created in `summarize()` (#72, #106).
-- Disambiguate computation of `log10()` and `log()`.
-- Test for `log10()`.
+- Forbid reuse of new columns created in `summarise()` (#72, #106).
 - `summarise()` no longer restores subclass.
+- Disambiguate computation of `log10()` and `log()`.
 - Fix division by zero for positive and negative numbers.
 
 ## Features
 
+- New `fallback_sitrep()` and related functionality for collecting telemetry data (#102, #107, #110, #111, #115). No data is collected by default, only a message is displayed once per session and then every eight hours. Opt in or opt out by setting environment variables.
+- Implement `group_by()` and other methods to collect fallback information (#94, #104, #105).
+- Set memory limit and temporary directory for duckdb.
+- Implement `suppressWarnings()` as the identity function.
 - Prefer `cli::cli_abort()` over `stop()` or `rlang::abort()` (#114).
 - Translate `.data$a` and `.env$a`.
-- Permit `difftime` columns.
-- Permit `POSIXct` columns.
-- Strict checks for column class, only supporting `integer`, `numeric`, `logical` and `Date` for now.
+- Strict checks for column class, only supporting `integer`, `numeric`, `logical`, `Date`, `POSIXct`, and `difftime` for now.
 
-## Chore
+## Internal
 
-- Better default fallback message.
-- Add telemetry for joins.
-- Better scrubbing for telemetry (#110).
-- Update patches (#109).
-- Add calls for telemetry (#107).
-- Implement almost all dplyr methods (#105).
-- Implement `group_by()` and other methods to collect fallback information (#94, #104).
-- Update TPC/H scripts.
-- Implement `suppressWarnings()` as the identity function.
-- Document.
-- Remove bad patch.
 - Better duckdb tests.
-- Update tests.
-- Better `.sync/.gitignore`.
 - Use standalone purrr for dplyr compatibility.
-- Set memory limit and temporary directory for duckdb.
-
-## Continuous integration
-
-- Use newer Action version to fix build on Windows.
-
-## Documentation
-
-- Tweak README.
-- Tweak description of environment variables and document.
-- Tweak messages.
-- Telementry -\> telemetry (@TimTaylor, #112).
-- Clarify default.
-- New `fallback_sitrep()` and related functionality for collecting telemetry data (#102, #111).
 
 ## Testing
 
 - Add tests for correct base of `log()` and `log10()`.
-
-## Uncategorized
-
-- Merge pull request #103 from duckdblabs/f-cleanup-autogen.
-- Internal changes only.
-- Merge branch 'cran-0.3.0'.
 
 
 # duckplyr 0.3.0 (2023-12-10)
