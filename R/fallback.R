@@ -49,8 +49,8 @@
 #' as returned by \code{tools::R_user_dir("duckplyr", "cache")}.
 #'
 #' All code related to fallback logging and uploading is in the
-#' [fallback.R](https://github.com/duckdblabs/duckplyr/blob/main/R/fallback.R) and
-#' [telemetry.R](https://github.com/duckdblabs/duckplyr/blob/main/R/telemetry.R) files.
+#' [`fallback.R`](https://github.com/duckdblabs/duckplyr/blob/main/R/fallback.R) and
+#' [`telemetry.R`](https://github.com/duckdblabs/duckplyr/blob/main/R/telemetry.R) files.
 #'
 #' @name fallback
 #' @examples
@@ -194,7 +194,7 @@ fallback_upload <- function(oldest = NULL, newest = NULL, strict = TRUE) {
     return(invisible())
   }
 
-  cli_inform("Uploading {.strong {length(fallback_logs)}} {.pkg duckplyr} fallback reports.")
+  cli_inform("Uploading {.strong {length(fallback_logs)}} {.pkg duckplyr} fallback report{?s}.")
 
   failures <- character()
 
@@ -238,12 +238,16 @@ fallback_upload <- function(oldest = NULL, newest = NULL, strict = TRUE) {
 on_load({
   uploading <- tel_fallback_uploading()
   if (isTRUE(tel_fallback_uploading())) {
-    tryCatch(
+    msg <- character()
+    suppressMessages(withCallingHandlers(
       fallback_upload(strict = FALSE),
       message = function(e) {
-        packageStartupMessage(conditionMessage(e))
+        msg <<- c(msg, conditionMessage(e))
       }
-    )
+    ))
+    if (length(msg) > 0) {
+      packageStartupMessage(paste(msg, collapse = "\n"))
+    }
   } else if (is.na(uploading)) {
     fallback_uploading <- tel_fallback_uploading()
     fallback_logs <- tel_fallback_logs()
