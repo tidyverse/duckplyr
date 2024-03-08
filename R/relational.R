@@ -107,7 +107,7 @@ rel_translate <- function(
       #
       symbol = {
         if (as.character(expr) %in% names_forbidden) {
-          abort(paste0("Can't reuse summary variable `", as.character(expr), "`."))
+          cli_abort("Can't reuse summary variable {.var {as.character(expr)}}.")
         }
         if (as.character(expr) %in% names_data) {
           ref <- as.character(expr)
