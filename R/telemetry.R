@@ -11,6 +11,11 @@ tel_fallback_logging <- function() {
   as.integer(val) >= 1
 }
 
+tel_fallback_verbose <- function() {
+  val <- Sys.getenv("DUCKPLYR_FALLBACK_VERBOSE")
+  val == "TRUE"
+}
+
 tel_fallback_uploading <- function() {
   val <- Sys.getenv("DUCKPLYR_FALLBACK_AUTOUPLOAD")
   if (val == "") {

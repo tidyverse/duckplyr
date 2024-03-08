@@ -8,7 +8,7 @@
 #' Whenever duckplyr encounters an incompatibility, it falls back to dplyr.
 #'
 #' To assist future development, the fallback situations can be logged
-#' to a local file and uploaded for analysis.
+#' to the console or to a local file and uploaded for analysis.
 #' The functions and environment variables on this page control the process.
 #'
 #' @details
@@ -17,6 +17,22 @@
 #' for the first time in a session and then once every 8 hours.
 #' The number of available logs and instructions for reviewing and uploading
 #' are printed when the package is loaded.
+#'
+#' Logging can be controlled by setting the environment variable
+#' \code{DUCKPLYR_FALLBACK_COLLECT} to an integer value.
+#' If the value is 0, logging is disabled.
+#' Currently, logging is active if the value is 1 or greater.
+#' Future versions of duckplyr may start logging additional data
+#' and thus require a higher value to enable logging.
+#' Set to 99 to enable logging for all future versions.
+#' `fallback_collect_enable()` and `fallback_collect_disable()` are
+#' convenience helpers to set the environment variable.
+#'
+#' Printing can be controlled by setting the environment variable
+#' \code{DUCKPLYR_FALLBACK_VERBOSE} to \code{TRUE} or \code{FALSE}.
+#' If the value is \code{TRUE}, a message is printed to the console
+#' for each fallback situation.
+#' This setting is only relevant if logging is enabled.
 #'
 #' @name fallback
 NULL
@@ -29,6 +45,7 @@ NULL
 #' @export
 fallback_sitrep <- function() {
   fallback_logging <- tel_fallback_logging()
+  fallback_verbose <- tel_fallback_verbose()
   fallback_uploading <- tel_fallback_uploading()
   fallback_log_dir <- tel_fallback_log_dir()
   fallback_logs <- tel_fallback_logs()
@@ -39,7 +56,17 @@ fallback_sitrep <- function() {
     if (is.na(fallback_logging)) {
       c("i" = "Fallback logging is not controlled. Enable or disable it by setting the {.envvar DUCKPLYR_FALLBACK_COLLECT} environment variable.")
     } else if (fallback_logging) {
-      c("v" = "Fallback logging is enabled.")
+      c(
+        "v" = "Fallback logging is enabled.",
+        "i" = "Logs are written to {.file {fallback_log_dir}}.",
+        if (is.na(fallback_verbose)) {
+          c("i" = "Fallback printing is not controlled. Enable or disable it by setting the {.envvar DUCKPLYR_FALLBACK_VERBOSE} environment variable.")
+        } else if (fallback_verbose) {
+          c("v" = "Fallback printing is enabled.")
+        } else {
+          c("x" = "Fallback printing is disabled.")
+        }
+      )
     } else {
       c("x" = "Fallback logging is disabled.")
     },
@@ -51,8 +78,6 @@ fallback_sitrep <- function() {
     } else {
       c("x" = "Fallback uploading is disabled.")
     },
-
-    "i" = "If enabled, logs are written to {.file {fallback_log_dir}}.",
 
     if (length(fallback_logs) > 0) {
       c("v" = "Number of reports ready for upload: {.strong {length(fallback_logs)}}. Review with {.code duckplyr::fallback_review()}, upload with {.code duckplyr::fallback_upload()}}")
