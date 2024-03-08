@@ -31,3 +31,13 @@
       i If enabled, logs are written to 'fallback/log/dir'.
       v Number of reports ready for upload: 3. Review with `duckplyr::fallback_review()`, upload with `duckplyr::fallback_upload()`}
 
+# fallback_nudge()
+
+    Code
+      fallback_nudge("{foo:1, bar:2}")
+    Message
+      The duckplyr package is configured to fall back to dplyr when it encounters an incompatibility. Fallback events can be collected and uploaded for analysis to guide future development. See `?duckplyr::fallback()` for details.
+      i A fallback situation just occurred. The following information would have been recorded:
+        {foo:1, bar:2}
+      i This message will be displayed once every eight hours.
+

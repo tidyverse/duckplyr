@@ -47,6 +47,30 @@ tel_fallback_logs <- function() {
   list.files(telemetry_path, full.names = TRUE, pattern = "[.]ndjson$")
 }
 
+tel_collect <- function(cnd, call) {
+  logging <- tel_fallback_logging()
+  if (!isTRUE(logging) && !is.na(logging)) {
+    return()
+  }
+
+  if (is.na(logging)) {
+    # Deferred evaluation of call_to_json(...)
+    tel_ask(call_to_json(cnd, call))
+    return()
+  }
+}
+
+tel_ask <- function(call_json) {
+  time <- Sys.time()
+  old_time <- telemetry$time
+  eight_hours <- 60 * 60 * 8
+  if (!is.null(old_time) && time - old_time < eight_hours) {
+    return(FALSE)
+  }
+
+  fallback_nudge(call_json)
+}
+
 # ---
 
 call_to_json <- function(cnd, call) {

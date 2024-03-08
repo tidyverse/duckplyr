@@ -36,3 +36,9 @@ test_that("fallback_sitrep() disabled", {
     fallback_sitrep()
   })
 })
+
+test_that("fallback_nudge()", {
+  expect_snapshot({
+    fallback_nudge("{foo:1, bar:2}")
+  })
+})

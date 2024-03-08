@@ -34,7 +34,7 @@ fallback_sitrep <- function() {
   fallback_logs <- tel_fallback_logs()
 
   msg <- c(
-    "The {.pkg duckplyr} package is configured to fall back to {.pkg dplyr} when it encounters an incompatibility. Fallback events can be collected and uploaded for analysis to guide future development. See {.help duckplyr::fallback} for details.",
+    fallback_txt_header(),
 
     if (is.na(fallback_logging)) {
       c("i" = "Fallback logging is not controlled. Enable or disable it by setting the {.envvar DUCKPLYR_FALLBACK_COLLECT} environment variable.")
@@ -62,4 +62,17 @@ fallback_sitrep <- function() {
   )
 
   cli::cli_inform(msg)
+}
+
+fallback_txt_header <- function() {
+  "The {.pkg duckplyr} package is configured to fall back to {.pkg dplyr} when it encounters an incompatibility. Fallback events can be collected and uploaded for analysis to guide future development. See {.help duckplyr::fallback} for details."
+}
+
+fallback_nudge <- function(call_data) {
+  cli::cli_inform(c(
+    fallback_txt_header(),
+    "i" = "A fallback situation just occurred. The following information would have been recorded:",
+    " " = "{call_data}",
+    "i" = cli::col_silver("This message will be displayed once every eight hours.")
+  ))
 }
