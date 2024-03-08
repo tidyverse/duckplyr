@@ -120,6 +120,8 @@ test_that("strftime()", {
 })
 
 test_that("$", {
+  skip_if_not(getRversion() >= "4.3")
+
   withr::local_envvar(c(
     "DUCKPLYR_FALLBACK_COLLECT" = "1",
     "DUCKPLYR_FALLBACK_VERBOSE" = "TRUE",
