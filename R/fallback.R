@@ -217,13 +217,15 @@ on_load({
   } else if (is.na(uploading)) {
     fallback_uploading <- tel_fallback_uploading()
     fallback_logs <- tel_fallback_logs()
-    msg <- c(
-      fallback_txt_header(),
-      fallback_txt_uploading(fallback_uploading),
-      fallback_txt_sitrep_logs(),
-      "i" = cli::col_silver("This message can be disabled by setting {.envvar DUCKPLYR_FALLBACK_AUTOUPLOAD}.")
-    )
-    packageStartupMessage(cli::format_message(msg))
+    if (length(fallback_logs) > 0) {
+      msg <- c(
+        fallback_txt_header(),
+        fallback_txt_uploading(fallback_uploading),
+        fallback_txt_sitrep_logs(fallback_logs),
+        "i" = cli::col_silver("This message can be disabled by setting {.envvar DUCKPLYR_FALLBACK_AUTOUPLOAD}.")
+      )
+      packageStartupMessage(cli::format_message(msg))
+    }
   }
 })
 
