@@ -128,7 +128,7 @@ check_df_for_rel <- function(df) {
       valid <- FALSE
     }
     if (!valid) {
-      cli_abort("Can't convert columns of class {.cls {paste0(col_class, collapse = '/')}} to relational. Affected column: {.var {names(df)[[i]]}}.")
+      cli_abort("Can't convert columns of class {.cls {col_class}} to relational. Affected column: {.var {names(df)[[i]]}}.")
     }
   }
 
@@ -406,7 +406,7 @@ to_duckdb_expr <- function(x) {
       out
     },
     NULL = NULL,
-    cli_abort("Unknown expr class: {.cls {paste(class(x), collapse = '/')}}")
+    cli_abort("Unknown expr class: {.cls {class(x))}}")
   )
 }
 
@@ -482,6 +482,6 @@ to_duckdb_expr_meta <- function(x) {
       out
     },
     NULL = expr(NULL),
-    cli_abort("Unknown expr class: {.cls {paste(class(x), collapse = '/')}}")
+    cli_abort("Unknown expr class: {.cls {class(x))}}")
   )
 }

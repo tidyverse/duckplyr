@@ -1,5 +1,5 @@
 diff --git b/R/semi_join.R a/R/semi_join.R
-index e8259a7..7e2f47b 100644
+index e8259a70..3cbfef13 100644
 --- b/R/semi_join.R
 +++ a/R/semi_join.R
 @@ -1,10 +1,17 @@
@@ -13,8 +13,9 @@ index e8259a7..7e2f47b 100644
 +  na_matches <- check_na_matches(na_matches, error_call = error_call)
 +
    # Our implementation
-   rel_try(
+-  rel_try(
 -    "No relational implementation for semi_join()" = TRUE,
++  rel_try(call = list(name = "semi_join", x = x, y = y, args = list(by = if(!is.null(by)) as_join_by(by), copy = copy, na_matches = na_matches)),
 +    "No relational implementation for semi_join(copy = TRUE)" = copy,
      {
 +      out <- rel_join_impl(x, y, by, "semi", na_matches, error_call = error_call)

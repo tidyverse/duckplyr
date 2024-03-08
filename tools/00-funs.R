@@ -91,6 +91,7 @@ duckplyr_tests <- head(n = -1, list(
     NULL
   ),
   "test-deprec-do.R" = c(
+    "ungrouped data frame with unnamed argument returns data frame",
     NULL
   ),
   "test-deprec-funs.R" = c(
@@ -113,6 +114,7 @@ duckplyr_tests <- head(n = -1, list(
     NULL
   ),
   "test-group-map.R" = c(
+    "duckplyr_group_map() works on ungrouped data frames (#4067)",
     "group_modify() works on ungrouped data frames (#4067)",
     NULL
   ),

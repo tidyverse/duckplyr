@@ -29,10 +29,6 @@ as_duckplyr_df <- function(.data) {
     cli_abort("Must pass a plain data frame or a tibble to `as_duckplyr_df()`.")
   }
 
-  if (is.character(.row_names_info(.data, 0L))) {
-    cli_abort("Must pass data frame without row names to `as_duckplyr_df()`.")
-  }
-
   if (anyNA(names(.data)) || any(names(.data) == "")) {
     cli_abort("Missing or empty names not allowed.")
   }

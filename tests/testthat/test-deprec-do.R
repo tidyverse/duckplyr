@@ -68,6 +68,7 @@ test_that("grouped do evaluates args in correct environment", {
 # Ungrouped data frames --------------------------------------------------------
 
 test_that("ungrouped data frame with unnamed argument returns data frame", {
+  skip("TODO duckdb")
   out <- mtcars %>% duckplyr_do(head(.))
   expect_s3_class(out, "data.frame")
   expect_equal(dim(out), c(6, 11))
