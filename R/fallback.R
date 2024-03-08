@@ -194,7 +194,7 @@ fallback_upload <- function(oldest = NULL, newest = NULL, strict = TRUE) {
     return(invisible())
   }
 
-  cli_inform("Uploading {.strong {length(fallback_logs)}} {.pkg duckplyr} fallback reports.")
+  cli_inform("Uploading {.strong {length(fallback_logs)}} {.pkg duckplyr} fallback report{?s}.")
 
   failures <- character()
 
