@@ -131,7 +131,7 @@ fallback_nudge <- function(call_data) {
 #' @rdname fallback
 #' @export
 fallback_review <- function(oldest = NULL, newest = NULL, detail = TRUE) {
-  fallback_logs <- tel_fallback_logs(oldest, newest, detail, .envir = parent.frame())
+  fallback_logs <- tel_fallback_logs(oldest, newest, detail)
   if (length(fallback_logs) == 0) {
     cli::cli_inform("No reports ready for upload.")
     return()
