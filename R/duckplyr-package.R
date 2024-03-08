@@ -4,8 +4,10 @@
 # @rawNamespace import(vctrs, except = data_frame)
 # an alternative for importing nearly everything from vctrs
 # https://github.com/tidyverse/dplyr/blob/16b472fb2afc50a87502c2b4ed803e2f5f82b9d6/R/dplyr.R#L7
+#
+# Can't use blanket cli import, imports must align with dplyr's imports
+#
 #' @import rlang
-#' @import cli
 ## usethis namespace: start
 #' @importFrom collections dict
 #' @importFrom collections queue

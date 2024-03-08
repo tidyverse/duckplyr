@@ -26,7 +26,7 @@ oo_prep <- function(
   names <- rel_names(rel)
 
   if (colname %in% names) {
-    cli_abort("Can't use column {.var {colname}} already present in rel for order preservation")
+    cli::cli_abort("Can't use column {.var {colname}} already present in rel for order preservation")
   }
 
   proj_exprs <- imap(set_names(names), relexpr_reference, rel = NULL)

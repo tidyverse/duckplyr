@@ -101,7 +101,7 @@ fallback_sitrep <- function() {
     NULL
   )
 
-  cli_inform(msg)
+  cli::cli_inform(msg)
 }
 
 fallback_txt_header <- function() {
@@ -136,7 +136,7 @@ fallback_txt_help <- function() {
 }
 
 fallback_nudge <- function(call_data) {
-  cli_inform(c(
+  cli::cli_inform(c(
     fallback_txt_header(),
     "i" = "A fallback situation just occurred. The following information would have been recorded:",
     " " = "{call_data}",
@@ -144,7 +144,7 @@ fallback_nudge <- function(call_data) {
     ">" = "Run {.run Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)} to enable fallback logging, and {.run Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = 1)} in addition to enable printing of fallback situations to the console.",
     ">" = "Run {.run duckplyr::fallback_review()} to review the available reports, and {.run duckplyr::fallback_upload()} to upload them.",
     "i" = "See {.help duckplyr::fallback} for details.",
-    "i" = col_silver("This message will be displayed once every eight hours.")
+    "i" = cli::col_silver("This message will be displayed once every eight hours.")
   ))
 }
 
@@ -161,14 +161,14 @@ fallback_nudge <- function(call_data) {
 fallback_review <- function(oldest = NULL, newest = NULL, detail = TRUE) {
   fallback_logs <- tel_fallback_logs(oldest, newest, detail)
   if (length(fallback_logs) == 0) {
-    cli_inform("No reports ready for upload.")
+    cli::cli_inform("No reports ready for upload.")
     return(invisible())
   }
 
   for (i in seq_along(fallback_logs)) {
     file <- names(fallback_logs)[[i]]
 
-    cli_inform(c(
+    cli::cli_inform(c(
       "*" = "{.file {file}}",
       " " = if (detail) "{fallback_logs[[i]]}"
     ))
@@ -195,17 +195,17 @@ fallback_upload <- function(oldest = NULL, newest = NULL, strict = TRUE) {
       reason = "to upload duckplyr fallback reports."
     )
   } else if (!is_installed("curl")) {
-    cli_inform("Skipping upload of duckplyr fallback reports because the {.pkg curl} package is not installed.")
+    cli::cli_inform("Skipping upload of duckplyr fallback reports because the {.pkg curl} package is not installed.")
     return(invisible())
   }
 
   fallback_logs <- tel_fallback_logs(oldest, newest, detail = TRUE)
   if (length(fallback_logs) == 0) {
-    cli_inform("No {.pkg duckplyr} fallback reports ready for upload.")
+    cli::cli_inform("No {.pkg duckplyr} fallback reports ready for upload.")
     return(invisible())
   }
 
-  cli_inform("Uploading {.strong {length(fallback_logs)}} {.pkg duckplyr} fallback report{?s}.")
+  cli::cli_inform("Uploading {.strong {length(fallback_logs)}} {.pkg duckplyr} fallback report{?s}.")
 
   failures <- character()
 
@@ -235,12 +235,12 @@ fallback_upload <- function(oldest = NULL, newest = NULL, strict = TRUE) {
     )
 
     if (strict) {
-      cli_abort(msg)
+      cli::cli_abort(msg)
     } else {
-      cli_inform(msg)
+      cli::cli_inform(msg)
     }
   } else {
-    cli_inform("All {.pkg duckplyr} fallback reports uploaded successfully.")
+    cli::cli_inform("All {.pkg duckplyr} fallback reports uploaded successfully.")
   }
 
   invisible()
@@ -267,7 +267,7 @@ on_load({
         fallback_txt_header(),
         fallback_txt_uploading(fallback_uploading),
         fallback_txt_sitrep_logs(fallback_logs),
-        "i" = col_silver("This message can be disabled by setting {.envvar DUCKPLYR_FALLBACK_AUTOUPLOAD}.")
+        "i" = cli::col_silver("This message can be disabled by setting {.envvar DUCKPLYR_FALLBACK_AUTOUPLOAD}.")
       )
       packageStartupMessage(format_message(msg))
     }
@@ -283,11 +283,11 @@ on_load({
 fallback_purge <- function(oldest = NULL, newest = NULL) {
   fallback_logs <- tel_fallback_logs(oldest, newest, detail = FALSE)
   if (length(fallback_logs) == 0) {
-    cli_inform("No {.pkg duckplyr} fallback reports ready to delete.")
+    cli::cli_inform("No {.pkg duckplyr} fallback reports ready to delete.")
     return(invisible())
   }
 
   unlink(names(fallback_logs))
-  cli_inform("Deleted {.strong {length(fallback_logs)}} {.pkg duckplyr} fallback report{?s}.")
+  cli::cli_inform("Deleted {.strong {length(fallback_logs)}} {.pkg duckplyr} fallback report{?s}.")
   invisible()
 }
