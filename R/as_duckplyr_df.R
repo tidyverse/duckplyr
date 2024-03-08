@@ -26,7 +26,7 @@ as_duckplyr_df <- function(.data) {
   }
 
   if (!identical(class(.data), "data.frame") && !identical(class(.data), c("tbl_df", "tbl", "data.frame"))) {
-    abort("Must pass a plain data frame or a tibble to `as_duckplyr_df()`.")
+    cli_abort("Must pass a plain data frame or a tibble to `as_duckplyr_df()`.")
   }
 
   if (is.character(.row_names_info(.data, 0L))) {
