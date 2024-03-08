@@ -145,7 +145,7 @@ check_df_for_rel <- function(df) {
     rlang::with_options(duckdb.materialize_message = FALSE, {
       for (i in seq_along(df)) {
         if (!identical(df[[i]], roundtrip[[i]])) {
-          stop("Imperfect roundtrip. Affected column: `", names(df)[[i]], "`.")
+          cli_abort("Imperfect roundtrip. Affected column: {.var {names(df)[[i]]}}.")
         }
       }
     })
