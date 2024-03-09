@@ -231,8 +231,12 @@ expr_to_json <- function(x, name_map) {
 
 expr_scrub <- function(x, name_map) {
   do_scrub <- function(xx, callee = FALSE) {
-    if (is.null(xx)) {
-      return(NULL)
+    if (is.character(xx))  {
+      return("<character>")
+    } else if (is.factor(xx)) {
+      return("<factor>")
+    } else if (is.atomic(xx)) {
+      return(xx)
     } else if (is_symbol(xx)) {
       if (callee) {
         return(xx)
