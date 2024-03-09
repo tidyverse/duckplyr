@@ -139,6 +139,13 @@ duckplyr_tests <- head(n = -1, list(
     "filtering joins finalize unspecified columns (#6804)",
     NULL
   ),
+  "test-join-rows.R" = c(
+    "join_rows() gives meaningful many-to-many warnings",
+    "`multiple = 'error'` is deprecated (#6731)",
+    "`multiple = NULL` is deprecated and results in `'all'` (#6731)",
+    "`multiple = 'warning'` is deprecated (#6731)",
+    NULL
+  ),
   "test-mutate.R" = c(
     # FIXME: vector class?
     "mutate() handles symbol expressions",
