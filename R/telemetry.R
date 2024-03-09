@@ -94,8 +94,10 @@ tel_ask <- function(call_json) {
   old_time <- telemetry$time
   eight_hours <- 60 * 60 * 8
   if (!is.null(old_time) && time - old_time < eight_hours) {
-    return(FALSE)
+    return()
   }
+
+  telemetry$time <- time
 
   fallback_nudge(call_json)
 }
