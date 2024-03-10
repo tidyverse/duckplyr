@@ -26,8 +26,13 @@ rel_try <- function(rel, ..., call = NULL) {
     if (isTRUE(dots[[i]])) {
       stats$fallback <- stats$fallback + 1L
       if (!dplyr_mode) {
+        message <- names(dots)[[i]]
+        if (message != "-") {
+          tel_collect(message, call)
+        }
+
         if (Sys.getenv("DUCKPLYR_FALLBACK_INFO") == "TRUE") {
-          inform(message = c("Requested fallback for relational:", i = names(dots)[[i]]))
+          inform(message = c("Requested fallback for relational:", i = message))
         }
         if (Sys.getenv("DUCKPLYR_FORCE") == "TRUE") {
           cli::cli_abort("Fallback not available with {.envvar DUCKPLYR_FORCE}.")

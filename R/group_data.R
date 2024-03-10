@@ -4,7 +4,7 @@ group_data.duckplyr_df <- function(.data) {
   # Our implementation
   rel_try(
     # Always fall back to dplyr
-    "No relational implementation for group_data()" = TRUE,
+    "-" = TRUE,
     {
       return(out)
     }

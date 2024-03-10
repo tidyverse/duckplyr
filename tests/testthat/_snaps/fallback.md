@@ -208,3 +208,16 @@
       1               1     2
       2               1     3
 
+# rel_try()
+
+    Code
+      tibble(a = 1) %>% as_duckplyr_df() %>% left_join(tibble(a = 1), by = "a", copy = TRUE)
+    Message
+      i dplyr fallback recorded
+        {"version":"0.3.1","message":"No relational implementation for left_join(copy = TRUE)","name":"left_join","x":{"...1":"numeric"},"y":{"...1":"numeric"},"args":{"by":{"condition":"==","filter":"none","x":["...1"],"y":["...1"]},"copy":true,"na_matches":["na","never"],"multiple":"all","unmatched":"drop"}}
+    Output
+      # A tibble: 1 x 1
+            a
+        <dbl>
+      1     1
+
