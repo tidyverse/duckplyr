@@ -7,6 +7,8 @@ on_load({
 #'
 #' After calling `methods_overwrite()`, all dplyr methods are redirected to duckplyr
 #' for the duraton of the session, or until a call to `methods_restore()`.
+#' The `methods_overwrite()` function is called automatically when the package is loaded
+#' if the environment variable `DUCKPLYR_METHODS_OVERWRITE` is set to `TRUE`.
 #'
 #' @return Called for their side effects.
 #' @export

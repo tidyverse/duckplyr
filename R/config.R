@@ -28,6 +28,9 @@
 #' to certain duckdb functions.
 #' Currently unused.
 #'
+#' `DUCKPLYR_METHODS_OVERWRITE`: If `TRUE`, call `methods_overwrite()`
+#' when the package is loaded.
+#'
 #' See [fallback] for more options related to logging and uploading of fallback events.
 #'
 # Not available in the CRAN package:
