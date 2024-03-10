@@ -169,7 +169,15 @@ get_name_map <- function(x) {
 }
 
 cnd_to_json <- function(cnd, name_map) {
-  msg <- cli::ansi_strip(conditionMessage(cnd))
+  if (is_condition(cnd)) {
+    # If conditionMessage() is called at the call site,
+    # the error message changes
+    msg <- cli::ansi_strip(conditionMessage(cnd))
+  } else if (is.character(cnd)) {
+    msg <- cnd
+  } else {
+    msg <- paste0("Unknown message of class ", paste(class(cnd), collapse = "/"))
+  }
 
   search <- paste0("`", names(name_map), "`")
   replace <- paste0("`", name_map, "`")
