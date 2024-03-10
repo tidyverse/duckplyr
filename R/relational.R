@@ -43,6 +43,12 @@ rel_try <- function(rel, ..., call = NULL) {
     }
   }
 
+  # https://github.com/duckdb/duckdb-r/issues/101
+  DBI::dbExecute(get_default_duckdb_connection(), "SET max_expression_depth TO 990")
+  withr::defer({
+    DBI::dbExecute(get_default_duckdb_connection(), "SET max_expression_depth TO 1000")
+  })
+
   if (Sys.getenv("DUCKPLYR_FORCE") == "TRUE") {
     return(rel)
   }
