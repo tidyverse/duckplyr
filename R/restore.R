@@ -1,5 +1,4 @@
-#' @export
-methods_restore <- function() {
+methods_restore_impl <- function() {
   vctrs::s3_register("dplyr::add_count", "data.frame", dplyr$add_count.data.frame)
   vctrs::s3_register("dplyr::anti_join", "data.frame", dplyr$anti_join.data.frame)
   vctrs::s3_register("dplyr::arrange", "data.frame", dplyr$arrange.data.frame)

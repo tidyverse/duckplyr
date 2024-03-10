@@ -1,5 +1,4 @@
-#' @export
-methods_overwrite <- function() {
+methods_overwrite_impl <- function() {
   vctrs::s3_register("dplyr::add_count", "data.frame", add_count.duckplyr_df)
   vctrs::s3_register("dplyr::anti_join", "data.frame", anti_join.duckplyr_df)
   vctrs::s3_register("dplyr::arrange", "data.frame", arrange.duckplyr_df)

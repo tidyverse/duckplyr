@@ -190,7 +190,8 @@ This example illustrates usage of duckplyr for all data frames in the R session.
 Use [`methods_overwrite()`](https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html) to enable processing with duckdb for all data frames:
 
 <pre class='chroma'>
-<span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html'>methods_overwrite</a></span><span class='o'>(</span><span class='o'>)</span></span></pre>
+<span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html'>methods_overwrite</a></span><span class='o'>(</span><span class='o'>)</span></span>
+<span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> Overwriting dplyr methods with duckplyr methods</span></span></pre>
 
 This is the same query as above, without [`as_duckplyr_df()`](https://duckdblabs.github.io/duckplyr/reference/as_duckplyr_df.html):
 
@@ -239,7 +240,8 @@ Querying the number of rows also starts the computation:
 Restart R, or call [`methods_restore()`](https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html) to revert to the default dplyr implementation.
 
 <pre class='chroma'>
-<span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html'>methods_restore</a></span><span class='o'>(</span><span class='o'>)</span></span></pre>
+<span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html'>methods_restore</a></span><span class='o'>(</span><span class='o'>)</span></span>
+<span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> Restoring dplyr methods</span></span></pre>
 
 dplyr is active again:
 

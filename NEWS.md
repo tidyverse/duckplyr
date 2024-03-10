@@ -28,6 +28,10 @@
 
 - Add tests for correct base of `log()` and `log10()`.
 
+## Documentation
+
+- `methods_overwrite()` and `methods_restore()` show a message.
+
 
 # duckplyr 0.3.0 (2023-12-10)
 
