@@ -4,7 +4,7 @@ dplyr_col_modify.duckplyr_df <- function(data, cols) {
   # Our implementation
   rel_try(
     # Always fall back to dplyr
-    "No relational implementation for dplyr_col_modify()" = TRUE,
+    "-" = TRUE,
     {
       return(out)
     }

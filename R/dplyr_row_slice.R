@@ -4,7 +4,7 @@ dplyr_row_slice.duckplyr_df <- function(data, i, ...) {
   # Our implementation
   rel_try(
     # Always fall back to dplyr
-    "No relational implementation for dplyr_row_slice()" = TRUE,
+    "-" = TRUE,
     {
       return(out)
     }
