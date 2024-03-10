@@ -280,7 +280,7 @@ The first time the package encounters an unsupported function, data type, or ope
 <span><span class='c'>#&gt; guide future development. By default, no data will be collected or uploaded.</span></span>
 <span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> A fallback situation just occurred. The following information would have been</span></span>
 <span><span class='c'>#&gt;   recorded:</span></span>
-<span><span class='c'>#&gt;   {"version":"0.3.0","message":"Can't convert columns of class &lt;factor&gt; to</span></span>
+<span><span class='c'>#&gt;   {"version":"0.3.1","message":"Can't convert columns of class &lt;factor&gt; to</span></span>
 <span><span class='c'>#&gt;   relational. Affected</span></span>
 <span><span class='c'>#&gt;   column:\n`...1`.","name":"transmute","x":{"...1":"factor","...2":"factor","...3":"numeric","...4":"numeric","...5":"integer","...6":"integer","...7":"factor","...8":"integer"},"args":{"dots":{"...9":"...3</span></span>
 <span><span class='c'>#&gt;   * ...4"}}}</span></span>
