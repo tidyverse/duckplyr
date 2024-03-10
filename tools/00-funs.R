@@ -16,15 +16,15 @@ df_methods <-
   filter(!grepl("_$|^as[.]tbl$", name)) %>%
   # special dplyr methods, won't implement
   filter(!(name %in% c(
-    "same_src", # data frames can be copied into duck-frames with zero cost
+    # Triggered after fallback, rarely called by users
+    "dplyr_col_modify", "dplyr_row_slice", "group_data",
+    # data frames can be copied into duck-frames with zero cost
+    "same_src",
     NULL
   ))) %>%
   # won't implement but want to trigger fallback message
   mutate(always_fallback = (name %in% c(
-    "dplyr_col_modify",
-    "dplyr_row_slice",
     "group_by",
-    "group_data",
     "group_indices",
     "group_keys",
     "group_map",
