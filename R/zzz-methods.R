@@ -24,13 +24,13 @@ on_load({
 #' tibble(a = 1:3) %>%
 #'   mutate(b = a + 1)
 methods_overwrite <- function() {
-  cli::cli_inform(c(i = "Overwriting dplyr methods with duckplyr methods"))
+  cli::cli_inform(c(i = "Overwriting {.pkg dplyr} methods with {.pkg duckplyr} methods"))
   methods_overwrite_impl()
 }
 
 #' @rdname methods_overwrite
 #' @export
 methods_restore <- function() {
-  cli::cli_inform(c(i = "Restoring dplyr methods"))
+  cli::cli_inform(c(i = "Restoring {.pkg dplyr} methods"))
   methods_restore_impl()
 }

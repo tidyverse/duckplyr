@@ -191,7 +191,8 @@ Use [`methods_overwrite()`](https://duckdblabs.github.io/duckplyr/reference/meth
 
 <pre class='chroma'>
 <span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html'>methods_overwrite</a></span><span class='o'>(</span><span class='o'>)</span></span>
-<span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> Overwriting dplyr methods with duckplyr methods</span></span></pre>
+<span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> Overwriting <span style='color: #0000BB;'>dplyr</span> methods with <span style='color: #0000BB;'>duckplyr</span></span></span>
+<span><span class='c'>#&gt; methods</span></span></pre>
 
 This is the same query as above, without [`as_duckplyr_df()`](https://duckdblabs.github.io/duckplyr/reference/as_duckplyr_df.html):
 
@@ -241,7 +242,7 @@ Restart R, or call [`methods_restore()`](https://duckdblabs.github.io/duckplyr/r
 
 <pre class='chroma'>
 <span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html'>methods_restore</a></span><span class='o'>(</span><span class='o'>)</span></span>
-<span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> Restoring dplyr methods</span></span></pre>
+<span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> Restoring <span style='color: #0000BB;'>dplyr</span> methods</span></span></pre>
 
 dplyr is active again:
 
