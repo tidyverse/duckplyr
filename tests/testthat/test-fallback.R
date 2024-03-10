@@ -221,3 +221,18 @@ test_that("__row_number", {
       arrange(b)
   })
 })
+
+test_that("rel_try()", {
+  withr::local_envvar(c(
+    "DUCKPLYR_FALLBACK_COLLECT" = "1",
+    "DUCKPLYR_FALLBACK_VERBOSE" = "TRUE",
+    "DUCKPLYR_FALLBACK_LOG_DIR" = tempdir(),
+    "DUCKPLYR_OUTPUT_ORDER" = "TRUE"
+  ))
+
+  expect_snapshot({
+    tibble(a = 1) %>%
+      as_duckplyr_df() %>%
+      left_join(tibble(a = 1), by = "a", copy = TRUE)
+  })
+})

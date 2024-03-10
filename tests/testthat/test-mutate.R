@@ -303,11 +303,11 @@ test_that("mutate preserves grouping", {
   i <- count_regroups(out <- duckplyr_mutate(gf, x = 1))
   expect_equal(i, 1L)
   expect_equal(duckplyr_group_vars(out), "x")
-  expect_equal(nrow(duckplyr_group_data(out)), 1)
+  expect_equal(nrow(group_data(out)), 1)
 
   i <- count_regroups(out <- duckplyr_mutate(gf, z = 1))
   expect_equal(i, 0)
-  expect_equal(duckplyr_group_data(out), duckplyr_group_data(gf))
+  expect_equal(group_data(out), group_data(gf))
 })
 
 test_that("mutate works on zero-row grouped data frame (#596)", {
@@ -319,7 +319,7 @@ test_that("mutate works on zero-row grouped data frame (#596)", {
 
   expect_type(group_rows(res), "list")
   expect_equal(attr(group_rows(res), "ptype"), integer())
-  expect_equal(duckplyr_group_data(res)$b, factor(character(0)))
+  expect_equal(group_data(res)$b, factor(character(0)))
 })
 
 test_that("mutate preserves class of zero-row rowwise (#4224, #6303)", {

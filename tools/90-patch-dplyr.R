@@ -27,12 +27,14 @@ forbidden <- fs::path("R", c(
   "zzz.R",
   "zzz-methods.R",
   "duckplyr-package.R",
+  "fallback.R",
   "head.R",
   "meta.R",
   "overwrite.R",
   "qs.R",
   "relational-altrep-wrap.R",
   "restore.R",
+  "telemetry.R",
   "tpch.R",
   "tpch2.R",
   sprintf("tpch_raw_%.2d.R", 1:22),
@@ -70,5 +72,6 @@ dplyr_test_files <- fs::dir_ls(".sync/dplyr-revdep/tests/testthat/", type = "fil
 walk(dplyr_test_files, patch_dplyr_test)
 
 gert::git_add(".", repo = ".sync/dplyr-revdep")
-gert::git_commit("Sync", repo = ".sync/dplyr-revdep")
+message <- paste0("Sync with duckdblabs/duckplyr@", gert::git_log(max = 1)$commit)
+gert::git_commit(message, repo = ".sync/dplyr-revdep")
 gert::git_push(repo = ".sync/dplyr-revdep")

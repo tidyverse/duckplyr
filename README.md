@@ -190,7 +190,9 @@ This example illustrates usage of duckplyr for all data frames in the R session.
 Use [`methods_overwrite()`](https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html) to enable processing with duckdb for all data frames:
 
 <pre class='chroma'>
-<span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html'>methods_overwrite</a></span><span class='o'>(</span><span class='o'>)</span></span></pre>
+<span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html'>methods_overwrite</a></span><span class='o'>(</span><span class='o'>)</span></span>
+<span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> Overwriting <span style='color: #0000BB;'>dplyr</span> methods with <span style='color: #0000BB;'>duckplyr</span></span></span>
+<span><span class='c'>#&gt; methods</span></span></pre>
 
 This is the same query as above, without [`as_duckplyr_df()`](https://duckdblabs.github.io/duckplyr/reference/as_duckplyr_df.html):
 
@@ -239,7 +241,8 @@ Querying the number of rows also starts the computation:
 Restart R, or call [`methods_restore()`](https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html) to revert to the default dplyr implementation.
 
 <pre class='chroma'>
-<span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html'>methods_restore</a></span><span class='o'>(</span><span class='o'>)</span></span></pre>
+<span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html'>methods_restore</a></span><span class='o'>(</span><span class='o'>)</span></span>
+<span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> Restoring <span style='color: #0000BB;'>dplyr</span> methods</span></span></pre>
 
 dplyr is active again:
 
@@ -280,7 +283,7 @@ The first time the package encounters an unsupported function, data type, or ope
 <span><span class='c'>#&gt; guide future development. By default, no data will be collected or uploaded.</span></span>
 <span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> A fallback situation just occurred. The following information would have been</span></span>
 <span><span class='c'>#&gt;   recorded:</span></span>
-<span><span class='c'>#&gt;   {"version":"0.3.0","message":"Can't convert columns of class &lt;factor&gt; to</span></span>
+<span><span class='c'>#&gt;   {"version":"0.3.1","message":"Can't convert columns of class &lt;factor&gt; to</span></span>
 <span><span class='c'>#&gt;   relational. Affected</span></span>
 <span><span class='c'>#&gt;   column:\n`...1`.","name":"transmute","x":{"...1":"factor","...2":"factor","...3":"numeric","...4":"numeric","...5":"integer","...6":"integer","...7":"factor","...8":"integer"},"args":{"dots":{"...9":"...3</span></span>
 <span><span class='c'>#&gt;   * ...4"}}}</span></span>

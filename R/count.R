@@ -20,7 +20,7 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
       name <- check_n_name(name, by_chr)
 
       if (name %in% by_chr) {
-        cli_abort("Name clash in `count()`")
+        cli::cli_abort("Name clash in `count()`")
       }
 
       n <- tally_n(x, {{ wt }})

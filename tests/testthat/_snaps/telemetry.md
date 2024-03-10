@@ -2,19 +2,19 @@
 
     Code
       tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% anti_join(tibble(a = 1:3, b = 4:
-        6), by = "a", copy = TRUE, na_matches = "na")
+        6), by = "a", copy = FALSE, na_matches = "na")
     Condition
       Error in `rel_try()`:
-      ! anti_join: {"version":"0.3.1","message":"Error in anti_join","name":"anti_join","x":{"...1":"integer","...2":"integer"},"y":{"...1":"integer","...2":"integer"},"args":{"by":{"condition":"==","filter":"none","x":["...1"],"y":["...1"]},"copy":true,"na_matches":"na"}}
+      ! anti_join: {"version":"0.3.1","message":"Error in anti_join","name":"anti_join","x":{"...1":"integer","...2":"integer"},"y":{"...1":"integer","...2":"integer"},"args":{"by":{"condition":"==","filter":"none","x":["...1"],"y":["...1"]},"copy":false,"na_matches":"na"}}
 
 ---
 
     Code
       tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% anti_join(tibble(a = 1:3, b = 4:
-        6), by = c(a = "b"), copy = TRUE, na_matches = "na")
+        6), by = c(a = "b"), copy = FALSE, na_matches = "na")
     Condition
       Error in `rel_try()`:
-      ! anti_join: {"version":"0.3.1","message":"Error in anti_join","name":"anti_join","x":{"...1":"integer","...2":"integer"},"y":{"...1":"integer","...2":"integer"},"args":{"by":{"condition":"==","filter":"none","x":["...1"],"y":["...2"]},"copy":true,"na_matches":"na"}}
+      ! anti_join: {"version":"0.3.1","message":"Error in anti_join","name":"anti_join","x":{"...1":"integer","...2":"integer"},"y":{"...1":"integer","...2":"integer"},"args":{"by":{"condition":"==","filter":"none","x":["...1"],"y":["...2"]},"copy":false,"na_matches":"na"}}
 
 ---
 
@@ -56,7 +56,7 @@
       tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% filter(a > 1, .by = b)
     Condition
       Error in `rel_try()`:
-      ! filter: {"version":"0.3.1","message":"Error in filter","name":"filter","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"1":"...1 > \"Don't know how to scrub numeric\""},"by":"...2","preserve":false}}
+      ! filter: {"version":"0.3.1","message":"Error in filter","name":"filter","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"1":"...1 > 1"},"by":"...2","preserve":false}}
 
 ---
 
@@ -64,7 +64,7 @@
       tibble(a = 1:3, b = 4:6) %>% as_duckplyr_df() %>% filter(a > 1, .preserve = TRUE)
     Condition
       Error in `rel_try()`:
-      ! filter: {"version":"0.3.1","message":"Error in filter","name":"filter","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"1":"...1 > \"Don't know how to scrub numeric\""},"by":"NULL","preserve":true}}
+      ! filter: {"version":"0.3.1","message":"Error in filter","name":"filter","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"1":"...1 > 1"},"by":"NULL","preserve":true}}
 
 # telemetry and full_join()
 

@@ -104,19 +104,19 @@ duckdb_rel_from_df <- function(df) {
 # FIXME: This should be duckdb's responsibility
 check_df_for_rel <- function(df) {
   if (is.character(.row_names_info(df, 0L))) {
-    cli_abort("Need data frame without row names to convert to relational.")
+    cli::cli_abort("Need data frame without row names to convert to relational.")
   }
 
   for (i in seq_along(df)) {
     col <- .subset2(df, i)
     if (!is.null(names(col))) {
-      cli_abort("Can't convert named vectors to relational. Affected column: {.var {names(df)[[i]]}}.")
+      cli::cli_abort("Can't convert named vectors to relational. Affected column: {.var {names(df)[[i]]}}.")
     }
     if (!is.null(dim(col))) {
-      cli_abort("Can't convert arrays or matrices to relational. Affected column: {.var {names(df)[[i]]}}.")
+      cli::cli_abort("Can't convert arrays or matrices to relational. Affected column: {.var {names(df)[[i]]}}.")
     }
     if (isS4(col)) {
-      cli_abort("Can't convert S4 columns to relational. Affected column: {.var {names(df)[[i]]}}.")
+      cli::cli_abort("Can't convert S4 columns to relational. Affected column: {.var {names(df)[[i]]}}.")
     }
     # https://github.com/duckdb/duckdb/issues/8561
     col_class <- class(col)
@@ -128,7 +128,7 @@ check_df_for_rel <- function(df) {
       valid <- FALSE
     }
     if (!valid) {
-      cli_abort("Can't convert columns of class {.cls {col_class}} to relational. Affected column: {.var {names(df)[[i]]}}.")
+      cli::cli_abort("Can't convert columns of class {.cls {col_class}} to relational. Affected column: {.var {names(df)[[i]]}}.")
     }
   }
 
@@ -145,7 +145,7 @@ check_df_for_rel <- function(df) {
     rlang::with_options(duckdb.materialize_message = FALSE, {
       for (i in seq_along(df)) {
         if (!identical(df[[i]], roundtrip[[i]])) {
-          cli_abort("Imperfect roundtrip. Affected column: {.var {names(df)[[i]]}}.")
+          cli::cli_abort("Imperfect roundtrip. Affected column: {.var {names(df)[[i]]}}.")
         }
       }
     })
@@ -154,7 +154,7 @@ check_df_for_rel <- function(df) {
       df_attrib <- attributes(df[[i]])
       roundtrip_attrib <- attributes(roundtrip[[i]])
       if (!identical(df_attrib, roundtrip_attrib)) {
-        cli_abort("Attributes are lost during conversion. Affected column: {.var {names(df)[[i]]}}.")
+        cli::cli_abort("Attributes are lost during conversion. Affected column: {.var {names(df)[[i]]}}.")
       }
     }
   }
@@ -406,7 +406,7 @@ to_duckdb_expr <- function(x) {
       out
     },
     NULL = NULL,
-    cli_abort("Unknown expr class: {.cls {class(x))}}")
+    cli::cli_abort("Unknown expr class: {.cls {class(x))}}")
   )
 }
 
@@ -482,6 +482,6 @@ to_duckdb_expr_meta <- function(x) {
       out
     },
     NULL = expr(NULL),
-    cli_abort("Unknown expr class: {.cls {class(x))}}")
+    cli::cli_abort("Unknown expr class: {.cls {class(x))}}")
   )
 }

@@ -1,5 +1,4 @@
-#' @export
-methods_overwrite <- function() {
+methods_overwrite_impl <- function() {
   vctrs::s3_register("dplyr::add_count", "data.frame", add_count.duckplyr_df)
   vctrs::s3_register("dplyr::anti_join", "data.frame", anti_join.duckplyr_df)
   vctrs::s3_register("dplyr::arrange", "data.frame", arrange.duckplyr_df)
@@ -10,12 +9,9 @@ methods_overwrite <- function() {
   vctrs::s3_register("dplyr::cross_join", "data.frame", cross_join.duckplyr_df)
   vctrs::s3_register("dplyr::distinct", "data.frame", distinct.duckplyr_df)
   vctrs::s3_register("dplyr::do", "data.frame", do.duckplyr_df)
-  vctrs::s3_register("dplyr::dplyr_col_modify", "data.frame", dplyr_col_modify.duckplyr_df)
-  vctrs::s3_register("dplyr::dplyr_row_slice", "data.frame", dplyr_row_slice.duckplyr_df)
   vctrs::s3_register("dplyr::filter", "data.frame", filter.duckplyr_df)
   vctrs::s3_register("dplyr::full_join", "data.frame", full_join.duckplyr_df)
   vctrs::s3_register("dplyr::group_by", "data.frame", group_by.duckplyr_df)
-  vctrs::s3_register("dplyr::group_data", "data.frame", group_data.duckplyr_df)
   vctrs::s3_register("dplyr::group_indices", "data.frame", group_indices.duckplyr_df)
   vctrs::s3_register("dplyr::group_keys", "data.frame", group_keys.duckplyr_df)
   vctrs::s3_register("dplyr::group_map", "data.frame", group_map.duckplyr_df)

@@ -81,7 +81,7 @@
         a, label = TRUE))
     Message
       i dplyr fallback recorded
-        {"version":"0.3.1","message":"wday(label = ) not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"...3::...4(...1, label = \"Don't know how to scrub logical\")"},".by":"NULL",".keep":["all","used","unused","none"]}}
+        {"version":"0.3.1","message":"wday(label = ) not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"...3::...4(...1, label = TRUE)"},".by":"NULL",".keep":["all","used","unused","none"]}}
     Output
       # A tibble: 1 x 2
         a          b    
@@ -109,7 +109,7 @@
         a, format = "%Y-%m-%d", tz = "CET"))
     Message
       i dplyr fallback recorded
-        {"version":"0.3.1","message":"strftime(tz = ) not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"strftime(...1, format = \"Don't know how to scrub character\", tz = \"Don't know how to scrub character\")"},".by":"NULL",".keep":["all","used","unused","none"]}}
+        {"version":"0.3.1","message":"strftime(tz = ) not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"strftime(...1, format = \"<character>\", tz = \"<character>\")"},".by":"NULL",".keep":["all","used","unused","none"]}}
     Output
       # A tibble: 1 x 2
         a          b         
@@ -207,4 +207,17 @@
                   <dbl> <int>
       1               1     2
       2               1     3
+
+# rel_try()
+
+    Code
+      tibble(a = 1) %>% as_duckplyr_df() %>% left_join(tibble(a = 1), by = "a", copy = TRUE)
+    Message
+      i dplyr fallback recorded
+        {"version":"0.3.1","message":"No relational implementation for left_join(copy = TRUE)","name":"left_join","x":{"...1":"numeric"},"y":{"...1":"numeric"},"args":{"by":{"condition":"==","filter":"none","x":["...1"],"y":["...1"]},"copy":true,"na_matches":["na","never"],"multiple":"all","unmatched":"drop"}}
+    Output
+      # A tibble: 1 x 1
+            a
+        <dbl>
+      1     1
 

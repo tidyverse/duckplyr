@@ -204,7 +204,7 @@ meta_rel_get <- function(rel) {
 
   if (!rel_cache$has(hash)) {
     rel_out <- paste(utils::capture.output(print(rel), type = "message"), collapse = "\n")
-    cli_abort(c(
+    cli::cli_abort(c(
       "duckplyr: internal: hash not found",
       i = "hash: {hash}",
       i = "relation: {rel_out}"

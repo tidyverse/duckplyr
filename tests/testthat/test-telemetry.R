@@ -7,7 +7,7 @@ test_that("telemetry and anti_join()", {
       anti_join(
         tibble(a = 1:3, b = 4:6),
         by = "a",
-        copy = TRUE,
+        copy = FALSE,
         na_matches = "na"
       )
   })
@@ -18,7 +18,7 @@ test_that("telemetry and anti_join()", {
       anti_join(
         tibble(a = 1:3, b = 4:6),
         by = c("a" = "b"),
-        copy = TRUE,
+        copy = FALSE,
         na_matches = "na"
       )
   })

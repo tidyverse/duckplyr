@@ -44,7 +44,7 @@ tel_fallback_log_dir <- function() {
 
 tel_fallback_logs <- function(oldest = NULL, newest = NULL, detail = FALSE, envir = parent.frame()) {
   if (!is.null(oldest) && !is.null(newest)) {
-    cli_abort("Specify either {.arg oldest} or {.arg newest}, not both.", .envir = envir)
+    cli::cli_abort("Specify either {.arg oldest} or {.arg newest}, not both.", .envir = envir)
   }
 
   # For mocking
@@ -94,8 +94,10 @@ tel_ask <- function(call_json) {
   old_time <- telemetry$time
   eight_hours <- 60 * 60 * 8
   if (!is.null(old_time) && time - old_time < eight_hours) {
-    return(FALSE)
+    return()
   }
+
+  telemetry$time <- time
 
   fallback_nudge(call_json)
 }
@@ -107,7 +109,7 @@ tel_record <- function(call_json) {
   cat(call_json, "\n", sep = "", file = telemetry_file, append = TRUE)
 
   if (tel_fallback_verbose()) {
-    cli_inform(c(
+    cli::cli_inform(c(
       "i" = "dplyr fallback recorded",
       " " = "{call_json}"
     ))
@@ -167,7 +169,15 @@ get_name_map <- function(x) {
 }
 
 cnd_to_json <- function(cnd, name_map) {
-  msg <- cli::ansi_strip(conditionMessage(cnd))
+  if (is_condition(cnd)) {
+    # If conditionMessage() is called at the call site,
+    # the error message changes
+    msg <- cli::ansi_strip(conditionMessage(cnd))
+  } else if (is.character(cnd)) {
+    msg <- cnd
+  } else {
+    msg <- paste0("Unknown message of class ", paste(class(cnd), collapse = "/"))
+  }
 
   search <- paste0("`", names(name_map), "`")
   replace <- paste0("`", name_map, "`")
@@ -229,8 +239,15 @@ expr_to_json <- function(x, name_map) {
 
 expr_scrub <- function(x, name_map) {
   do_scrub <- function(xx, callee = FALSE) {
-    if (is.null(xx)) {
-      return(NULL)
+    if (is.character(xx))  {
+      return("<character>")
+    } else if (is.factor(xx)) {
+      return("<factor>")
+    } else if (is.null(xx)) {
+      # Needed for R 4.4
+      return(xx)
+    } else if (is.atomic(xx)) {
+      return(xx)
     } else if (is_symbol(xx)) {
       if (callee) {
         return(xx)

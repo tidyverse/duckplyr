@@ -9,7 +9,7 @@ overwrite_body <-
   )) |>
   pull()
 
-overwrite_fun <- paste0("#' @export\nmethods_overwrite <- function() {\n", overwrite_body, "\n}\n")
+overwrite_fun <- paste0("methods_overwrite_impl <- function() {\n", overwrite_body, "\n}\n")
 brio::write_file(overwrite_fun, "R/overwrite.R")
 
 
@@ -22,5 +22,5 @@ restore_body <-
   )) |>
   pull()
 
-restore_fun <- paste0("#' @export\nmethods_restore <- function() {\n", restore_body, "\n}\n")
+restore_fun <- paste0("methods_restore_impl <- function() {\n", restore_body, "\n}\n")
 brio::write_file(restore_fun, "R/restore.R")
