@@ -243,6 +243,9 @@ expr_scrub <- function(x, name_map) {
       return("<character>")
     } else if (is.factor(xx)) {
       return("<factor>")
+    } else if (is.null(xx)) {
+      # Needed for R 4.4
+      return(xx)
     } else if (is.atomic(xx)) {
       return(xx)
     } else if (is_symbol(xx)) {
