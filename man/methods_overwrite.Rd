@@ -15,6 +15,8 @@ Called for their side effects.
 \description{
 After calling \code{methods_overwrite()}, all dplyr methods are redirected to duckplyr
 for the duraton of the session, or until a call to \code{methods_restore()}.
+The \code{methods_overwrite()} function is called automatically when the package is loaded
+if the environment variable \code{DUCKPLYR_METHODS_OVERWRITE} is set to \code{TRUE}.
 }
 \examples{
 tibble(a = 1:3) \%>\%

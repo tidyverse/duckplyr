@@ -18,6 +18,7 @@
 - Prefer `cli::cli_abort()` over `stop()` or `rlang::abort()` (#114).
 - Translate `.data$a` and `.env$a`.
 - Strict checks for column class, only supporting `integer`, `numeric`, `logical`, `Date`, `POSIXct`, and `difftime` for now.
+- If the environment variable `DUCKPLYR_METHODS_OVERWRITE` is set to `TRUE`, loading duckplyr automatically calls `methods_overwrite()`.
 
 ## Internal
 
