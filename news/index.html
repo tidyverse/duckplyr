@@ -63,6 +63,7 @@
 <li>Prefer <code><a href="https://cli.r-lib.org/reference/cli_abort.html" class="external-link">cli::cli_abort()</a></code> over <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> or <code><a href="https://rlang.r-lib.org/reference/abort.html" class="external-link">rlang::abort()</a></code> (<a href="https://github.com/duckdblabs/duckplyr/issues/114" class="external-link">#114</a>).</li>
 <li>Translate <code>.data$a</code> and <code>.env$a</code>.</li>
 <li>Strict checks for column class, only supporting <code>integer</code>, <code>numeric</code>, <code>logical</code>, <code>Date</code>, <code>POSIXct</code>, and <code>difftime</code> for now.</li>
+<li>If the environment variable <code>DUCKPLYR_METHODS_OVERWRITE</code> is set to <code>TRUE</code>, loading duckplyr automatically calls <code><a href="../reference/methods_overwrite.html">methods_overwrite()</a></code>.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="internal-0-3-1">Internal<a class="anchor" aria-label="anchor" href="#internal-0-3-1"></a></h3>
