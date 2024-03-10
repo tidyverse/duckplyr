@@ -79,8 +79,6 @@ The default is to check roundtrip of attributes.</p>
 <p><code>DUCKPLYR_EXPERIMENTAL</code>: If <code>TRUE</code>, pass <code>experimental = TRUE</code>
 to certain duckdb functions.
 Currently unused.</p>
-<p><code>DUCKPLYR_METHODS_OVERWRITE</code>: If <code>TRUE</code>, call <code><a href="methods_overwrite.html">methods_overwrite()</a></code>
-when the package is loaded.</p>
 <p>See <a href="fallback.html">fallback</a> for more options related to logging and uploading of fallback events.</p>
     </div>
 
@@ -97,9 +95,9 @@ when the package is loaded.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projection [___coalesce(lhs.a_x, rhs.a_y) as a]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Join REGULAR INNER ___eq_na_matches_na(lhs.a_x, rhs.a_y)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_x]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55cf5f360cd0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x5646585476b0)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_y]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55cf5ee40938)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x564657833868)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -133,9 +131,9 @@ when the package is loaded.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projection [___coalesce(lhs.a_x, rhs.a_y) as a]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Join REGULAR INNER ___eq_na_matches_na(lhs.a_x, rhs.a_y)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_x]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55cf5fa988a0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x564658c9aee0)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_y]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55cf5faaafd8)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x564658cad618)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -161,10 +159,10 @@ when the package is loaded.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Join REGULAR INNER ___eq_na_matches_na(lhs.a_x, rhs.a_y)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Projection [a_x as a_x, row_number() OVER () as ___row_number_x]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         Projection [a as a_x]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x55cf5fdfc2e8)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x564658ffe928)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Projection [a_y as a_y, row_number() OVER () as ___row_number_y]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         Projection [a as a_y]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x55cf5fe0abe0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x56465900f140)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
