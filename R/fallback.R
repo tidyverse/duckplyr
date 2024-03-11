@@ -247,6 +247,10 @@ fallback_upload <- function(oldest = NULL, newest = NULL, strict = TRUE) {
 }
 
 on_load({
+  fallback_autoupload()
+})
+
+fallback_autoupload <- function() {
   uploading <- tel_fallback_uploading()
   if (isTRUE(tel_fallback_uploading())) {
     msg <- character()
@@ -269,10 +273,10 @@ on_load({
         fallback_txt_sitrep_logs(fallback_logs),
         "i" = cli::col_silver("This message can be disabled by setting {.envvar DUCKPLYR_FALLBACK_AUTOUPLOAD}.")
       )
-      packageStartupMessage(format_message(msg))
+      packageStartupMessage(cli::format_message(msg))
     }
   }
-})
+}
 
 #' fallback_purge
 #'
