@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.3.1.9001 (2024-03-12)
+
+## Bug fixes
+
+  - Run autoupload in function so that it will be checked by static analysis (#122).
+
+
 # duckplyr 0.3.1.9000 (2024-03-10)
 
 - Merge branch 'cran-0.3.1'.
