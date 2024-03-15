@@ -5,7 +5,7 @@
     Output
       <error/rlang_error>
       Error in `select()`:
-      ! Problem while evaluating `1 + ""`.
+      i In argument: `1 + ""`.
       Caused by error in `1 + ""`:
       ! non-numeric argument to binary operator
 
