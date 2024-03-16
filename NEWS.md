@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.3.1.9002 (2024-03-16)
+
+## Chore
+
+  - Snapshot updates for rcc-smoke (null) (#125).
+
+
 # duckplyr 0.3.1.9001 (2024-03-12)
 
 ## Bug fixes
