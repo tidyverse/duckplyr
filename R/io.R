@@ -4,7 +4,7 @@
 #' See <https://duckdb.org/docs/data/overview> for a documentation
 #' of the available functions and their options.
 #'
-#' @param path Path to file or directory
+#' @param path Path to file or directory.
 #' @param table_function The name of a table-valued
 #'   DuckDB function such as `"read_parquet"`,
 #'   `"read_csv"`, `"read_csv_auto"` or `"read_json"`.
