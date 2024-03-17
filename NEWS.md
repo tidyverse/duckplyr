@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.3.1.9003 (2024-03-17)
+
+## Features
+
+- New `df_to_parquet()` to write to Parquet, new convenience `df_from_csv()`, `duckdb_df_from_csv()`, `df_from_parquet()` and `duckdb_df_from_parquet()` (#87, #89, #96, #128).
+
+
 # duckplyr 0.3.1.9002 (2024-03-16)
 
 ## Chore
