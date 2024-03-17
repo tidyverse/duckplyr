@@ -1,4 +1,4 @@
-duckplyr 0.3.1
+duckplyr 0.3.2
 
 ## R CMD check results
 
@@ -8,4 +8,4 @@ duckplyr 0.3.1
 
 ## Current CRAN check results
 
-- [x] Checked on 2024-03-08, no problems found.
+- [x] Checked on 2024-03-17, no problems found.
