@@ -8,7 +8,7 @@
 df_from_parquet <- function(path, ..., options = list(), class = NULL) {
   check_dots_empty()
 
-  df_from_file(path, "read_parquet", options, class)
+  df_from_file(path, "read_parquet", options = options, class = class)
 }
 
 #' duckplyr_df_from_parquet
@@ -21,7 +21,7 @@ df_from_parquet <- function(path, ..., options = list(), class = NULL) {
 duckplyr_df_from_parquet <- function(path, ..., options = list(), class = NULL) {
   check_dots_empty()
 
-  duckplyr_df_from_file(path, "read_parquet", options, class)
+  duckplyr_df_from_file(path, "read_parquet", options = options, class = class)
 }
 
 #' df_to_parquet

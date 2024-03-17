@@ -33,7 +33,7 @@
 df_from_csv <- function(path, ..., options = list(), class = NULL) {
   check_dots_empty()
 
-  df_from_file(path, "read_csv_auto", options, class)
+  df_from_file(path, "read_csv_auto", options = options, class = class)
 }
 
 #' duckplyr_df_from_csv
@@ -46,5 +46,5 @@ df_from_csv <- function(path, ..., options = list(), class = NULL) {
 duckplyr_df_from_csv <- function(path, ..., options = list(), class = NULL) {
   check_dots_empty()
 
-  duckplyr_df_from_file(path, "read_csv_auto", options, class)
+  duckplyr_df_from_file(path, "read_csv_auto", options = options, class = class)
 }
