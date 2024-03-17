@@ -5,6 +5,7 @@
 \alias{duckplyr_df_from_csv}
 \alias{df_from_parquet}
 \alias{duckplyr_df_from_parquet}
+\alias{df_to_parquet}
 \alias{df_from_file}
 \alias{duckplyr_df_from_file}
 \title{df_from_csv}
@@ -16,6 +17,8 @@ duckplyr_df_from_csv(path, ..., options = list(), class = NULL)
 df_from_parquet(path, ..., options = list(), class = NULL)
 
 duckplyr_df_from_parquet(path, ..., options = list(), class = NULL)
+
+df_to_parquet(data, path, ..., options = list())
 
 df_from_file(path, table_function, options = list(), class = NULL)
 
@@ -30,6 +33,8 @@ indicated by \code{table_function}.}
 \item{class}{An optional class to add to the data frame.
 The returned object will always be a data frame.
 Pass \code{class(tibble())} to create a tibble.}
+
+\item{data}{A data frame to be written to disk.}
 
 \item{table_function}{The name of a table-valued
 DuckDB function such as \code{"read_parquet"},
@@ -53,6 +58,10 @@ that calls \code{as_duckplyr_df()} on the output.
 
 \code{duckplyr_df_from_parquet()} is a thin wrapper around \code{df_from_parquet()}
 that calls \code{as_duckplyr_df()} on the output.
+
+\code{df_to_parquet()} writes a data frame to a Parquet file via DuckDB.
+If the data frame is a \code{duckplyr_df}, the materialization occurs outside of R.
+An existing file will be overwritten.
 
 \code{df_from_file()} uses arbitrary table functions to read data.
 See \url{https://duckdb.org/docs/data/overview} for a documentation
@@ -82,4 +91,18 @@ df_from_file(
 )
 
 unlink(path)
+
+# Write a Parquet file:
+path_parquet <- tempfile(fileext = ".parquet")
+df_to_parquet(df, path_parquet)
+
+# With a duckplyr_df, the materialization occurs outside of R:
+df \%>\%
+  as_duckplyr_df() \%>\%
+  mutate(b = a + 1) \%>\%
+  df_to_parquet(path_parquet)
+
+duckplyr_df_from_parquet(path_parquet)
+
+unlink(path_parquet)
 }
