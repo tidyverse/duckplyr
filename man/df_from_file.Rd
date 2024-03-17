@@ -62,6 +62,7 @@ that calls \code{as_duckplyr_df()} on the output.
 \code{df_to_parquet()} writes a data frame to a Parquet file via DuckDB.
 If the data frame is a \code{duckplyr_df}, the materialization occurs outside of R.
 An existing file will be overwritten.
+This function requires duckdb >= 0.10.0.
 
 \code{df_from_file()} uses arbitrary table functions to read data.
 See \url{https://duckdb.org/docs/data/overview} for a documentation

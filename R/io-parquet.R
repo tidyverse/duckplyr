@@ -29,6 +29,7 @@ duckplyr_df_from_parquet <- function(path, ..., options = list(), class = NULL) 
 #' `df_to_parquet()` writes a data frame to a Parquet file via DuckDB.
 #' If the data frame is a `duckplyr_df`, the materialization occurs outside of R.
 #' An existing file will be overwritten.
+#' This function requires duckdb >= 0.10.0.
 #'
 #' @param data A data frame to be written to disk.
 #'
