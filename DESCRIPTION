@@ -51,6 +51,7 @@ Suggests:
     testthat (>= 3.1.5),
     usethis,
     withr
+Config/Needs/check: anthonynorth/roxyglobals
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Config/testthat/start-first: rel_api, tpch, as_duckplyr_df, mutate, filter, count-tally
