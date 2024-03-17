@@ -4,6 +4,8 @@
 #' See <https://duckdb.org/docs/data/overview> for a documentation
 #' of the available functions and their options.
 #'
+#' @inheritParams rlang::args_dots_empty
+#'
 #' @param path Path to file or directory.
 #' @param table_function The name of a table-valued
 #'   DuckDB function such as `"read_parquet"`,
@@ -20,8 +22,11 @@
 #' @export
 df_from_file <- function(path,
                          table_function,
+                         ...,
                          options = list(),
                          class = NULL) {
+  check_dots_empty()
+
   # FIXME: For some reason, it's important to create an alias here
   con <- get_default_duckdb_connection()
 
@@ -49,8 +54,11 @@ df_from_file <- function(path,
 duckplyr_df_from_file <- function(
     path,
     table_function,
+    ...,
     options = list(),
     class = NULL) {
+  check_dots_empty()
+
   out <- df_from_file(path, table_function, options, class)
   as_duckplyr_df(out)
 }

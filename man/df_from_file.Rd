@@ -20,12 +20,20 @@ duckplyr_df_from_parquet(path, ..., options = list(), class = NULL)
 
 df_to_parquet(data, path)
 
-df_from_file(path, table_function, options = list(), class = NULL)
+df_from_file(path, table_function, ..., options = list(), class = NULL)
 
-duckplyr_df_from_file(path, table_function, options = list(), class = NULL)
+duckplyr_df_from_file(
+  path,
+  table_function,
+  ...,
+  options = list(),
+  class = NULL
+)
 }
 \arguments{
 \item{path}{Path to file or directory.}
+
+\item{...}{These dots are for future extensions and must be empty.}
 
 \item{options}{Arguments to the DuckDB function
 indicated by \code{table_function}.}
