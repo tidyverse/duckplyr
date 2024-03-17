@@ -1,27 +1,20 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# duckplyr 0.3.1.9003 (2024-03-17)
+# duckplyr 0.3.2 (2024-03-17)
+
+## Bug fixes
+
+- Run autoupload in function so that it will be checked by static analysis (#122).
 
 ## Features
 
 - New `df_to_parquet()` to write to Parquet, new convenience `df_from_csv()`, `duckdb_df_from_csv()`, `df_from_parquet()` and `duckdb_df_from_parquet()` (#87, #89, #96, #128).
 
-
-# duckplyr 0.3.1.9002 (2024-03-16)
-
 ## Chore
 
-  - Snapshot updates for rcc-smoke (null) (#125).
+- Snapshot updates for rcc-smoke (null) (#125).
 
-
-# duckplyr 0.3.1.9001 (2024-03-12)
-
-## Bug fixes
-
-  - Run autoupload in function so that it will be checked by static analysis (#122).
-
-
-# duckplyr 0.3.1.9000 (2024-03-10)
+## Uncategorized
 
 - Merge branch 'cran-0.3.1'.
 
