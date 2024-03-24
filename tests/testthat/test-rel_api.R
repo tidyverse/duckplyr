@@ -8,7 +8,7 @@ test_that("relational anti_join(join_by(a)) order-preserving", {
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
   invisible(
-    DBI::dbExecute(con, "CREATE MACRO \"___eq_na_matches_na\"(x, y) AS (x IS NOT DISTINCT FROM y)")
+    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
   df1 <- data.frame(a = 1:4, b = rep(2, 4L))
 
@@ -79,7 +79,7 @@ test_that("relational anti_join(join_by(a)) order-enforcing", {
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
   invisible(
-    DBI::dbExecute(con, "CREATE MACRO \"___eq_na_matches_na\"(x, y) AS (x IS NOT DISTINCT FROM y)")
+    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
   df1 <- data.frame(a = 1:4, b = rep(2, 4L))
 
@@ -503,7 +503,7 @@ test_that("relational count() order-preserving", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS CAST(COUNT(*) AS int32)"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -532,7 +532,7 @@ test_that("relational count(a) order-preserving", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS CAST(COUNT(*) AS int32)"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -577,7 +577,7 @@ test_that("relational count(b) order-preserving", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS CAST(COUNT(*) AS int32)"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -622,7 +622,7 @@ test_that("relational count(g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS CAST(COUNT(*) AS int32)"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -667,7 +667,7 @@ test_that("relational count(g, a) order-preserving", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS CAST(COUNT(*) AS int32)"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -722,7 +722,7 @@ test_that("relational count(b, g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS CAST(COUNT(*) AS int32)"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -779,7 +779,7 @@ test_that("relational count() order-enforcing", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS CAST(COUNT(*) AS int32)"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -809,7 +809,7 @@ test_that("relational count(a) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS CAST(COUNT(*) AS int32)"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -855,7 +855,7 @@ test_that("relational count(b) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS CAST(COUNT(*) AS int32)"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -901,7 +901,7 @@ test_that("relational count(g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS CAST(COUNT(*) AS int32)"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -947,7 +947,7 @@ test_that("relational count(g, a) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS CAST(COUNT(*) AS int32)"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -1006,7 +1006,7 @@ test_that("relational count(b, g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS CAST(COUNT(*) AS int32)"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -1067,7 +1067,7 @@ test_that("relational distinct() order-preserving", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -1195,7 +1195,7 @@ test_that("relational distinct(a) order-preserving", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -1293,7 +1293,7 @@ test_that("relational distinct(a, b) order-preserving", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -1406,7 +1406,7 @@ test_that("relational distinct(b, b) order-preserving", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -1504,7 +1504,7 @@ test_that("relational distinct(g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -1602,7 +1602,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 3, g = 2L)) %>% distinct(
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -1796,7 +1796,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 4, g = 2L)) %>% distinct(
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -1990,7 +1990,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 5, g = 2L)) %>% distinct(
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -2184,7 +2184,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 6, g = 2L)) %>% distinct(
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -2378,7 +2378,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 7, g = 2L)) %>% distinct(
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -2572,7 +2572,7 @@ test_that("relational distinct(g, .keep_all = TRUE) order-preserving", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -3000,7 +3000,7 @@ test_that("relational distinct(g, .keep_all = TRUE) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -3124,7 +3124,7 @@ test_that("relational filter(a == 1) order-preserving", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -3204,8 +3204,8 @@ test_that("relational filter(a %in% 2:3, g == 2) order-preserving", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"|\"(x, y) AS (x OR y)"))
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -3312,9 +3312,9 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-preserving", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"&\"(x, y) AS (x AND y)"))
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"|\"(x, y) AS (x OR y)"))
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -3426,8 +3426,8 @@ test_that("relational filter(a != 2 | g != 2) order-preserving", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"|\"(x, y) AS (x OR y)"))
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"!=\"(x, y) AS x <> y"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "!="(x, y) AS x <> y'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -3525,7 +3525,7 @@ test_that("relational filter(a == 1) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -3563,8 +3563,8 @@ test_that("relational filter(a %in% 2:3, g == 2) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"|\"(x, y) AS (x OR y)"))
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -3629,9 +3629,9 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"&\"(x, y) AS (x AND y)"))
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"|\"(x, y) AS (x OR y)"))
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -3701,8 +3701,8 @@ test_that("relational filter(a != 2 | g != 2) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"|\"(x, y) AS (x OR y)"))
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"!=\"(x, y) AS x <> y"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "!="(x, y) AS x <> y'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -3759,9 +3759,9 @@ test_that("relational full_join(join_by(a)) order-preserving", {
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
   invisible(
-    DBI::dbExecute(con, "CREATE MACRO \"___eq_na_matches_na\"(x, y) AS (x IS NOT DISTINCT FROM y)")
+    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(x, y) AS COALESCE(x, y)"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
   df1 <- data.frame(a = 1:4, b = rep(2, 4L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -3889,9 +3889,9 @@ test_that("relational full_join(join_by(a)) order-enforcing", {
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
   invisible(
-    DBI::dbExecute(con, "CREATE MACRO \"___eq_na_matches_na\"(x, y) AS (x IS NOT DISTINCT FROM y)")
+    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(x, y) AS COALESCE(x, y)"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
   df1 <- data.frame(a = 1:4, b = rep(2, 4L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -3979,9 +3979,9 @@ test_that("relational inner_join(join_by(a)) order-preserving", {
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
   invisible(
-    DBI::dbExecute(con, "CREATE MACRO \"___eq_na_matches_na\"(x, y) AS (x IS NOT DISTINCT FROM y)")
+    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(x, y) AS COALESCE(x, y)"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
   df1 <- data.frame(a = 1:4, b = rep(2, 4L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -4109,9 +4109,9 @@ test_that("relational inner_join(join_by(a)) order-enforcing", {
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
   invisible(
-    DBI::dbExecute(con, "CREATE MACRO \"___eq_na_matches_na\"(x, y) AS (x IS NOT DISTINCT FROM y)")
+    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(x, y) AS COALESCE(x, y)"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
   df1 <- data.frame(a = 1:4, b = rep(2, 4L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -4199,9 +4199,9 @@ test_that("relational intersect() order-preserving", {
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
   invisible(
-    DBI::dbExecute(con, "CREATE MACRO \"___eq_na_matches_na\"(x, y) AS (x IS NOT DISTINCT FROM y)")
+    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
   df1 <- data.frame(a = 1:4, b = rep(2, 4L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -4386,9 +4386,9 @@ test_that("relational left_join(join_by(a)) order-preserving", {
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
   invisible(
-    DBI::dbExecute(con, "CREATE MACRO \"___eq_na_matches_na\"(x, y) AS (x IS NOT DISTINCT FROM y)")
+    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(x, y) AS COALESCE(x, y)"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
   df1 <- data.frame(a = 1:4, b = rep(2, 4L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -4516,9 +4516,9 @@ test_that("relational left_join(join_by(a)) order-enforcing", {
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
   invisible(
-    DBI::dbExecute(con, "CREATE MACRO \"___eq_na_matches_na\"(x, y) AS (x IS NOT DISTINCT FROM y)")
+    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(x, y) AS COALESCE(x, y)"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
   df1 <- data.frame(a = 1:4, b = rep(2, 4L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -7552,7 +7552,7 @@ test_that("relational mutate(a / b) order-preserving", {
   invisible(
     DBI::dbExecute(
       con,
-      "CREATE MACRO \"___divide\"(x, y) AS CASE WHEN y = 0 THEN CASE WHEN x = 0 THEN CAST('NaN' AS double) WHEN x > 0 THEN CAST('+Infinity' AS double) ELSE CAST('-Infinity' AS double) END ELSE CAST(x AS double) / y END"
+      r"[CREATE MACRO "___divide"(x, y) AS CASE WHEN y = 0 THEN CASE WHEN x = 0 THEN CAST('NaN' AS double) WHEN x > 0 THEN CAST('+Infinity' AS double) ELSE CAST('-Infinity' AS double) END ELSE CAST(x AS double) / y END]"
     )
   )
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
@@ -7606,7 +7606,7 @@ test_that("relational mutate(d = 0, e = 1 / d, f = 0 / d, g = -1 / d) order-pres
   invisible(
     DBI::dbExecute(
       con,
-      "CREATE MACRO \"___divide\"(x, y) AS CASE WHEN y = 0 THEN CASE WHEN x = 0 THEN CAST('NaN' AS double) WHEN x > 0 THEN CAST('+Infinity' AS double) ELSE CAST('-Infinity' AS double) END ELSE CAST(x AS double) / y END"
+      r"[CREATE MACRO "___divide"(x, y) AS CASE WHEN y = 0 THEN CASE WHEN x = 0 THEN CAST('NaN' AS double) WHEN x > 0 THEN CAST('+Infinity' AS double) ELSE CAST('-Infinity' AS double) END ELSE CAST(x AS double) / y END]"
     )
   )
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
@@ -7800,10 +7800,10 @@ test_that("relational mutate(c = 0, d = -1, e = log(c), f = suppressWarnings(log
   invisible(
     DBI::dbExecute(
       con,
-      "CREATE MACRO \"___log\"(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE ln(x) END"
+      r"[CREATE MACRO "___log"(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE ln(x) END]"
     )
   )
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"suppressWarnings\"(x) AS (x)"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "suppressWarnings"(x) AS (x)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -7975,10 +7975,10 @@ test_that("relational mutate(c = 0, d = -1, e = log10(c), f = suppressWarnings(l
   invisible(
     DBI::dbExecute(
       con,
-      "CREATE MACRO \"___log10\"(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE log10(x) END"
+      r"[CREATE MACRO "___log10"(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE log10(x) END]"
     )
   )
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"suppressWarnings\"(x) AS (x)"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "suppressWarnings"(x) AS (x)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -8150,7 +8150,7 @@ test_that("relational mutate(c = 10, d = log(c)) order-preserving", {
   invisible(
     DBI::dbExecute(
       con,
-      "CREATE MACRO \"___log\"(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE ln(x) END"
+      r"[CREATE MACRO "___log"(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE ln(x) END]"
     )
   )
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
@@ -8238,7 +8238,7 @@ test_that("relational mutate(c = 10, d = log10(c)) order-preserving", {
   invisible(
     DBI::dbExecute(
       con,
-      "CREATE MACRO \"___log10\"(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE log10(x) END"
+      r"[CREATE MACRO "___log10"(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE log10(x) END]"
     )
   )
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
@@ -8326,7 +8326,7 @@ test_that("relational mutate(c = NA_character_, d = grepl('.', c)) order-preserv
   invisible(
     DBI::dbExecute(
       con,
-      "CREATE MACRO \"grepl\"(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)"
+      'CREATE MACRO "grepl"(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)'
     )
   )
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
@@ -10613,7 +10613,7 @@ test_that("relational mutate(a / b) order-enforcing", {
   invisible(
     DBI::dbExecute(
       con,
-      "CREATE MACRO \"___divide\"(x, y) AS CASE WHEN y = 0 THEN CASE WHEN x = 0 THEN CAST('NaN' AS double) WHEN x > 0 THEN CAST('+Infinity' AS double) ELSE CAST('-Infinity' AS double) END ELSE CAST(x AS double) / y END"
+      r"[CREATE MACRO "___divide"(x, y) AS CASE WHEN y = 0 THEN CASE WHEN x = 0 THEN CAST('NaN' AS double) WHEN x > 0 THEN CAST('+Infinity' AS double) ELSE CAST('-Infinity' AS double) END ELSE CAST(x AS double) / y END]"
     )
   )
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
@@ -10671,7 +10671,7 @@ test_that("relational mutate(d = 0, e = 1 / d, f = 0 / d, g = -1 / d) order-enfo
   invisible(
     DBI::dbExecute(
       con,
-      "CREATE MACRO \"___divide\"(x, y) AS CASE WHEN y = 0 THEN CASE WHEN x = 0 THEN CAST('NaN' AS double) WHEN x > 0 THEN CAST('+Infinity' AS double) ELSE CAST('-Infinity' AS double) END ELSE CAST(x AS double) / y END"
+      r"[CREATE MACRO "___divide"(x, y) AS CASE WHEN y = 0 THEN CASE WHEN x = 0 THEN CAST('NaN' AS double) WHEN x > 0 THEN CAST('+Infinity' AS double) ELSE CAST('-Infinity' AS double) END ELSE CAST(x AS double) / y END]"
     )
   )
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
@@ -10869,10 +10869,10 @@ test_that("relational mutate(c = 0, d = -1, e = log(c), f = suppressWarnings(log
   invisible(
     DBI::dbExecute(
       con,
-      "CREATE MACRO \"___log\"(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE ln(x) END"
+      r"[CREATE MACRO "___log"(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE ln(x) END]"
     )
   )
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"suppressWarnings\"(x) AS (x)"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "suppressWarnings"(x) AS (x)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -11048,10 +11048,10 @@ test_that("relational mutate(c = 0, d = -1, e = log10(c), f = suppressWarnings(l
   invisible(
     DBI::dbExecute(
       con,
-      "CREATE MACRO \"___log10\"(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE log10(x) END"
+      r"[CREATE MACRO "___log10"(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE log10(x) END]"
     )
   )
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"suppressWarnings\"(x) AS (x)"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "suppressWarnings"(x) AS (x)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -11227,7 +11227,7 @@ test_that("relational mutate(c = 10, d = log(c)) order-enforcing", {
   invisible(
     DBI::dbExecute(
       con,
-      "CREATE MACRO \"___log\"(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE ln(x) END"
+      r"[CREATE MACRO "___log"(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE ln(x) END]"
     )
   )
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
@@ -11319,7 +11319,7 @@ test_that("relational mutate(c = 10, d = log10(c)) order-enforcing", {
   invisible(
     DBI::dbExecute(
       con,
-      "CREATE MACRO \"___log10\"(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE log10(x) END"
+      r"[CREATE MACRO "___log10"(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE log10(x) END]"
     )
   )
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
@@ -11411,7 +11411,7 @@ test_that("relational mutate(c = NA_character_, d = grepl('.', c)) order-enforci
   invisible(
     DBI::dbExecute(
       con,
-      "CREATE MACRO \"grepl\"(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)"
+      'CREATE MACRO "grepl"(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)'
     )
   )
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
@@ -12040,7 +12040,7 @@ test_that("relational right_join(join_by(a)) order-preserving", {
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
   invisible(
-    DBI::dbExecute(con, "CREATE MACRO \"___eq_na_matches_na\"(x, y) AS (x IS NOT DISTINCT FROM y)")
+    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
   df1 <- data.frame(a = 1:4, b = rep(2, 4L))
 
@@ -12169,7 +12169,7 @@ test_that("relational right_join(join_by(a)) order-enforcing", {
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
   invisible(
-    DBI::dbExecute(con, "CREATE MACRO \"___eq_na_matches_na\"(x, y) AS (x IS NOT DISTINCT FROM y)")
+    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
   df1 <- data.frame(a = 1:4, b = rep(2, 4L))
 
@@ -12460,7 +12460,7 @@ test_that("relational semi_join(join_by(a)) order-preserving", {
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
   invisible(
-    DBI::dbExecute(con, "CREATE MACRO \"___eq_na_matches_na\"(x, y) AS (x IS NOT DISTINCT FROM y)")
+    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
   df1 <- data.frame(a = 1:4, b = rep(2, 4L))
 
@@ -12531,7 +12531,7 @@ test_that("relational semi_join(join_by(a)) order-enforcing", {
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
   invisible(
-    DBI::dbExecute(con, "CREATE MACRO \"___eq_na_matches_na\"(x, y) AS (x IS NOT DISTINCT FROM y)")
+    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
   df1 <- data.frame(a = 1:4, b = rep(2, 4L))
 
@@ -12567,9 +12567,9 @@ test_that("relational setdiff() order-preserving", {
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
   invisible(
-    DBI::dbExecute(con, "CREATE MACRO \"___eq_na_matches_na\"(x, y) AS (x IS NOT DISTINCT FROM y)")
+    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
   df1 <- data.frame(a = 1:4, b = rep(2, 4L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -13201,9 +13201,9 @@ test_that("relational symdiff() order-preserving", {
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
   invisible(
-    DBI::dbExecute(con, "CREATE MACRO \"___eq_na_matches_na\"(x, y) AS (x IS NOT DISTINCT FROM y)")
+    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
   df1 <- data.frame(a = 1:4, b = rep(2, 4L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -13468,7 +13468,7 @@ test_that("relational tally() order-preserving", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS CAST(COUNT(*) AS int32)"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -13500,7 +13500,7 @@ test_that("relational tally() order-enforcing", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"n\"() AS CAST(COUNT(*) AS int32)"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -13667,7 +13667,7 @@ test_that("relational union() order-preserving", {
   duckdb <- asNamespace("duckdb")
   con <- DBI::dbConnect(duckdb::duckdb())
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
   df1 <- data.frame(a = 1:4, b = rep(2, 4L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
