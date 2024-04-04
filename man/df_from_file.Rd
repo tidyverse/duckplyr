@@ -31,7 +31,8 @@ duckplyr_df_from_file(
 )
 }
 \arguments{
-\item{path}{Path to file or directory.}
+\item{path}{Path to a file, a directory, or a set of filenames using
+wildcards.}
 
 \item{...}{These dots are for future extensions and must be empty.}
 
@@ -100,6 +101,21 @@ df_from_file(
 )
 
 unlink(path)
+
+# Read multiple file at once
+tbl1 <- data.frame(a = 1)
+tbl2 <- data.frame(a = 2)
+
+temp1 <- tempfile(fileext = ".csv")
+temp2 <- tempfile(fileext = ".csv")
+
+purrr::walk2(
+  list(tbl1, tbl2),
+  list(temp1, temp2),
+  ~ write.csv(x = .x, file = .y)
+)
+
+df <- duckplyr_df_from_csv(file.path(dirname(temp1), "*.csv"))
 
 # Write a Parquet file:
 path_parquet <- tempfile(fileext = ".parquet")
