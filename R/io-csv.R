@@ -43,6 +43,22 @@ df_from_csv <- function(path, ..., options = list(), class = NULL) {
 #'
 #' @rdname df_from_file
 #' @export
+#' @examples
+#'
+#' # Read multiple file at once
+#' tbl1 <- data.frame(a = 1)
+#' tbl2 <- data.frame(a = 2)
+#'
+#' temp1 <- tempfile(fileext = ".csv")
+#' temp2 <- tempfile(fileext = ".csv")
+#'
+#' purrr::walk2(
+#'   list(tbl1, tbl2),
+#'   list(temp1, temp2),
+#'   ~ write.csv(x = .x, file = .y)
+#' )
+#'
+#' df <- duckplyr_df_from_csv(file.path(dirname(temp1), "*.csv"))
 duckplyr_df_from_csv <- function(path, ..., options = list(), class = NULL) {
   check_dots_empty()
 
