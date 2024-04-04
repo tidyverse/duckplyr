@@ -6,7 +6,8 @@
 #'
 #' @inheritParams rlang::args_dots_empty
 #'
-#' @param path Path to file or directory.
+#' @param path Path to a file, a directory, or a set of filenames using
+#'   wildcards.
 #' @param table_function The name of a table-valued
 #'   DuckDB function such as `"read_parquet"`,
 #'   `"read_csv"`, `"read_csv_auto"` or `"read_json"`.
