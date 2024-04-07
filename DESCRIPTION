@@ -47,7 +47,6 @@ Suggests:
     qs,
     reprex,
     rstudioapi,
-    styler,
     testthat (>= 3.1.5),
     usethis,
     withr
