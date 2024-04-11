@@ -141,7 +141,7 @@ fallback_nudge <- function(call_data) {
     "i" = "A fallback situation just occurred. The following information would have been recorded:",
     " " = "{call_data}",
     ">" = "Run {.run duckplyr::fallback_sitrep()} to review the current settings.",
-    ">" = "Run {.run Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)} to enable fallback logging, and {.run Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = 1)} in addition to enable printing of fallback situations to the console.",
+    ">" = "Run {.run Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)} to enable fallback logging, and {.run Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = TRUE)} in addition to enable printing of fallback situations to the console.",
     ">" = "Run {.run duckplyr::fallback_review()} to review the available reports, and {.run duckplyr::fallback_upload()} to upload them.",
     "i" = "See {.help duckplyr::fallback} for details.",
     "i" = cli::col_silver("This message will be displayed once every eight hours.")
