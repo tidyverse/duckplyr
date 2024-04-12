@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.3.2.9001 (2024-04-12)
+
+## Bug fixes
+
+  - Correct wording in instructions for enabling fallback logging (@TimTaylor, #141).
+
+
 # duckplyr 0.3.2.9000 (2024-03-17)
 
 - Merge branch 'cran-0.3.2'.
