@@ -31,7 +31,8 @@ duckplyr_df_from_file(
 )
 }
 \arguments{
-\item{path}{Path to file or directory.}
+\item{path}{Path to a file, a directory, or a set of filenames using
+wildcards.}
 
 \item{...}{These dots are for future extensions and must be empty.}
 
@@ -81,7 +82,7 @@ that calls \code{as_duckplyr_df()} on the output.
 }
 \examples{
 # Create simple CSV file
-path <- tempfile(fileext = ".csv")
+path <- tempfile("duckplyr_test_", fileext = ".csv")
 write.csv(data.frame(a = 1:3, b = letters[4:6]), path, row.names = FALSE)
 
 # Reading is immediate
@@ -99,7 +100,13 @@ df_from_file(
   class = class(tibble())
 )
 
-unlink(path)
+# Read multiple file at once
+path2 <- tempfile("duckplyr_test_", fileext = ".csv")
+write.csv(data.frame(a = 4:6, b = letters[7:9]), path2, row.names = FALSE)
+
+duckplyr_df_from_csv(file.path(tempdir(), "duckplyr_test_*.csv"))
+
+unlink(c(path, path2))
 
 # Write a Parquet file:
 path_parquet <- tempfile(fileext = ".parquet")
