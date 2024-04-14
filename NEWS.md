@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.3.2.9002 (2024-04-14)
+
+## Documentation
+
+  - Mention wildcards to read multiple files in `?df_from_file` (@andreranza, #133, #134).
+
+
 # duckplyr 0.3.2.9001 (2024-04-12)
 
 ## Bug fixes
