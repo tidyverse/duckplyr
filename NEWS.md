@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.3.2.9003 (2024-04-19)
+
+## Chore
+
+  - New constructive version.
+
+
 # duckplyr 0.3.2.9002 (2024-04-14)
 
 ## Documentation
