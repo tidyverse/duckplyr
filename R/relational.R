@@ -178,7 +178,7 @@ rel_translate <- function(
                 values <- eval(expr[[3]], envir = baseenv())
                 consts <- map(values, do_translate, in_window = in_window)
                 ops <- map(consts, list, do_translate(expr[[2]]))
-                cmp <- map(ops, relexpr_function, name = "==")
+                cmp <- map(ops, relexpr_function, name = "___eq_na_matches_na")
                 alt <- reduce(cmp, function(.x, .y) {
                   relexpr_function("|", list(.x, .y))
                 })

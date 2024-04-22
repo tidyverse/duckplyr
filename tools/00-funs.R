@@ -642,6 +642,10 @@ test_extra_arg_map <- list(
     # grepl with NA
     "c = NA_character_, d = grepl('.', c)",
 
+    # %in% with NA
+    "d = a %in% NA_real_",
+    "c = NA_character_, d = c %in% NA_character_",
+
     # .data adverb
     "c = .data$b",
 
