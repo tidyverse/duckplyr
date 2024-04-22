@@ -55,7 +55,7 @@
       i A fallback situation just occurred. The following information would have been recorded:
         {foo:1, bar:2}
       > Run `duckplyr::fallback_sitrep()` to review the current settings.
-      > Run `Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)` to enable fallback logging, and `Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = 1)` in addition to enable printing of fallback situations to the console.
+      > Run `Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)` to enable fallback logging, and `Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = TRUE)` in addition to enable printing of fallback situations to the console.
       > Run `duckplyr::fallback_review()` to review the available reports, and `duckplyr::fallback_upload()` to upload them.
       i See `?duckplyr::fallback()` for details.
       i This message will be displayed once every eight hours.
