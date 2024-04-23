@@ -687,6 +687,8 @@ test_extra_arg_map <- list(
     "c = mean(a), .by = g",
     "c = 1",
     "c = 1, .by = g",
+    "n = n(), n = n() + 1L, .by = g",
+    "n = n(), n = n() + 1L",
     # "sum(a < 3)",
     # "sum(a < 3, .by = g)",
     NULL

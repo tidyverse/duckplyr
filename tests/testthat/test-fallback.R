@@ -71,8 +71,8 @@ test_that("summarize()", {
       as_duckplyr_df() %>%
       summarize(
         .by = a,
-        b = sum(b),
-        b = sum(b)
+        e = sum(b),
+        f = sum(e)
       )
   })
 })

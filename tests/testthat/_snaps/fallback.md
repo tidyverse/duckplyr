@@ -63,16 +63,16 @@
 # summarize()
 
     Code
-      tibble(a = 1, b = 2, c = 3) %>% as_duckplyr_df() %>% summarize(.by = a, b = sum(
-        b), b = sum(b))
+      tibble(a = 1, b = 2, c = 3) %>% as_duckplyr_df() %>% summarize(.by = a, e = sum(
+        b), f = sum(e))
     Message
       i dplyr fallback recorded
-        {"version":"0.3.1","message":"Can't reuse summary variable `...2`.","name":"summarise","x":{"...1":"numeric","...2":"numeric","...3":"numeric"},"args":{"dots":{"...2":"sum(...2)","...2.1":"sum(...2)"},"by":["...1"]}}
+        {"version":"0.3.1","message":"Can't reuse summary variable `...4`.","name":"summarise","x":{"...1":"numeric","...2":"numeric","...3":"numeric"},"args":{"dots":{"...4":"sum(...2)","...5":"sum(...4)"},"by":["...1"]}}
     Output
-      # A tibble: 1 x 2
-            a     b
-        <dbl> <dbl>
-      1     1     2
+      # A tibble: 1 x 3
+            a     e     f
+        <dbl> <dbl> <dbl>
+      1     1     2     2
 
 # wday()
 

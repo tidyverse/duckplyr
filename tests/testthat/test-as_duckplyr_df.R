@@ -2416,6 +2416,32 @@ test_that("as_duckplyr_df() and summarise(c = 1, .by = g)", {
   expect_equal(pre, post)
 })
 
+
+test_that("as_duckplyr_df() and summarise(n = n(), n = n() + 1L, .by = g)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% summarise(n = n(), n = n() + 1L, .by = g)
+  post <- test_df %>% summarise(n = n(), n = n() + 1L, .by = g) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and summarise(n = n(), n = n() + 1L)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% summarise(n = n(), n = n() + 1L)
+  post <- test_df %>% summarise(n = n(), n = n() + 1L) %>% as_duckplyr_df()
+
+  # Compare
+  expect_equal(pre, post)
+})
+
 test_that("as_duckplyr_df() and symdiff()", {
   withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
 

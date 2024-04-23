@@ -14,6 +14,7 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
 
       dots <- dplyr_quosures(...)
       dots <- fix_auto_name(dots)
+      dots <- dots[!duplicated(names(dots), fromLast = TRUE)]
 
       oo <- (length(by) > 0) && oo_force()
       if (oo) {
