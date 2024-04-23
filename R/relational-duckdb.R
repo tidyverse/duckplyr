@@ -15,12 +15,12 @@ get_default_duckdb_connection <- function() {
 }
 
 duckplyr_macros <- c(
-  "<" = "(x, y) AS x < y",
-  "<=" = "(x, y) AS x <= y",
-  ">" = "(x, y) AS x > y",
-  ">=" = "(x, y) AS x >= y",
+  "<" = '(x, y) AS "r_base::<"(x, y)',
+  "<=" = '(x, y) AS "r_base::<="(x, y)',
+  ">" = '(x, y) AS "r_base::>"(x, y)',
+  ">=" = '(x, y) AS "r_base::>="(x, y)',
   "==" = '(x, y) AS "r_base::=="(x, y)',
-  "!=" = "(x, y) AS x <> y",
+  "!=" = '(x, y) AS "r_base::!="(x, y)',
   #
   "___divide" = "(x, y) AS CASE WHEN y = 0 THEN CASE WHEN x = 0 THEN CAST('NaN' AS double) WHEN x > 0 THEN CAST('+Infinity' AS double) ELSE CAST('-Infinity' AS double) END ELSE CAST(x AS double) / y END",
   #
