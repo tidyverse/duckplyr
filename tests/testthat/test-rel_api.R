@@ -64,7 +64,7 @@ test_that("relational anti_join(join_by(a)) order-preserving", {
   )
   rel8
   out <- duckdb$rel_to_altrep(rel8)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = 1L, b = 2)
   )
@@ -100,7 +100,7 @@ test_that("relational anti_join(join_by(a)) order-enforcing", {
   rel6 <- duckdb$rel_order(rel5, list(duckdb$expr_reference("a"), duckdb$expr_reference("b")))
   rel6
   out <- duckdb$rel_to_altrep(rel6)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = 1L, b = 2)
   )
@@ -119,7 +119,7 @@ test_that("relational arrange() order-preserving", {
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
   rel1
   out <- duckdb$rel_to_altrep(rel1)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
   )
@@ -182,7 +182,7 @@ test_that("relational arrange(a) order-preserving", {
   )
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
   )
@@ -245,7 +245,7 @@ test_that("relational arrange(g) order-preserving", {
   )
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
   )
@@ -311,7 +311,7 @@ test_that("relational arrange(g, a) order-preserving", {
   )
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
   )
@@ -377,7 +377,7 @@ test_that("relational arrange(a, g) order-preserving", {
   )
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
   )
@@ -401,7 +401,7 @@ test_that("relational arrange() order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
   )
@@ -423,7 +423,7 @@ test_that("relational arrange(a) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
   )
@@ -445,7 +445,7 @@ test_that("relational arrange(g) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
   )
@@ -467,7 +467,7 @@ test_that("relational arrange(g, a) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
   )
@@ -489,7 +489,7 @@ test_that("relational arrange(a, g) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
   )
@@ -520,7 +520,7 @@ test_that("relational count() order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(n = 6L)
   )
@@ -565,7 +565,7 @@ test_that("relational count(a) order-preserving", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), n = rep(1L, 6L))
   )
@@ -610,7 +610,7 @@ test_that("relational count(b) order-preserving", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(b = 2, n = 6L)
   )
@@ -655,7 +655,7 @@ test_that("relational count(g) order-preserving", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = 1:3, n = 1:3)
   )
@@ -710,7 +710,7 @@ test_that("relational count(g, a) order-preserving", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = c(1L, 2L, 2L, 3L, 3L, 3L), a = seq(1, 6, by = 1), n = rep(1L, 6L))
   )
@@ -765,7 +765,7 @@ test_that("relational count(b, g) order-preserving", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(b = rep(2, 3L), g = 1:3, n = 1:3)
   )
@@ -797,7 +797,7 @@ test_that("relational count() order-enforcing", {
   rel3 <- duckdb$rel_order(rel2, list(duckdb$expr_reference("n")))
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(n = 6L)
   )
@@ -843,7 +843,7 @@ test_that("relational count(a) order-enforcing", {
   rel4 <- duckdb$rel_order(rel3, list(duckdb$expr_reference("a"), duckdb$expr_reference("n")))
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), n = rep(1L, 6L))
   )
@@ -889,7 +889,7 @@ test_that("relational count(b) order-enforcing", {
   rel4 <- duckdb$rel_order(rel3, list(duckdb$expr_reference("b"), duckdb$expr_reference("n")))
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(b = 2, n = 6L)
   )
@@ -935,7 +935,7 @@ test_that("relational count(g) order-enforcing", {
   rel4 <- duckdb$rel_order(rel3, list(duckdb$expr_reference("g"), duckdb$expr_reference("n")))
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = 1:3, n = 1:3)
   )
@@ -994,7 +994,7 @@ test_that("relational count(g, a) order-enforcing", {
   )
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = c(1L, 2L, 2L, 3L, 3L, 3L), a = seq(1, 6, by = 1), n = rep(1L, 6L))
   )
@@ -1053,7 +1053,7 @@ test_that("relational count(b, g) order-enforcing", {
   )
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(b = rep(2, 3L), g = 1:3, n = 1:3)
   )
@@ -1183,7 +1183,7 @@ test_that("relational distinct() order-preserving", {
   )
   rel6
   out <- duckdb$rel_to_altrep(rel6)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
   )
@@ -1281,7 +1281,7 @@ test_that("relational distinct(a) order-preserving", {
   )
   rel6
   out <- duckdb$rel_to_altrep(rel6)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1))
   )
@@ -1394,7 +1394,7 @@ test_that("relational distinct(a, b) order-preserving", {
   )
   rel6
   out <- duckdb$rel_to_altrep(rel6)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L))
   )
@@ -1492,7 +1492,7 @@ test_that("relational distinct(b, b) order-preserving", {
   )
   rel6
   out <- duckdb$rel_to_altrep(rel6)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(b = 2)
   )
@@ -1590,7 +1590,7 @@ test_that("relational distinct(g) order-preserving", {
   )
   rel6
   out <- duckdb$rel_to_altrep(rel6)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = 1:3)
   )
@@ -1784,7 +1784,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 3, g = 2L)) %>% distinct(
   )
   rel12
   out <- duckdb$rel_to_altrep(rel12)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = 1:3)
   )
@@ -1978,7 +1978,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 4, g = 2L)) %>% distinct(
   )
   rel12
   out <- duckdb$rel_to_altrep(rel12)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = 1:3)
   )
@@ -2172,7 +2172,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 5, g = 2L)) %>% distinct(
   )
   rel12
   out <- duckdb$rel_to_altrep(rel12)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = 1:3)
   )
@@ -2366,7 +2366,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 6, g = 2L)) %>% distinct(
   )
   rel12
   out <- duckdb$rel_to_altrep(rel12)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = 1:3)
   )
@@ -2560,7 +2560,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 7, g = 2L)) %>% distinct(
   )
   rel12
   out <- duckdb$rel_to_altrep(rel12)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = 1:3)
   )
@@ -2678,7 +2678,7 @@ test_that("relational distinct(g, .keep_all = TRUE) order-preserving", {
   )
   rel6
   out <- duckdb$rel_to_altrep(rel6)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = c(1, 2, 4), b = rep(2, 3L), g = 1:3)
   )
@@ -2702,7 +2702,7 @@ test_that("relational distinct() order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
   )
@@ -2731,7 +2731,7 @@ test_that("relational distinct(a) order-enforcing", {
   rel4 <- duckdb$rel_order(rel3, list(duckdb$expr_reference("a")))
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1))
   )
@@ -2765,7 +2765,7 @@ test_that("relational distinct(a, b) order-enforcing", {
   rel4 <- duckdb$rel_order(rel3, list(duckdb$expr_reference("a"), duckdb$expr_reference("b")))
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L))
   )
@@ -2794,7 +2794,7 @@ test_that("relational distinct(b, b) order-enforcing", {
   rel4 <- duckdb$rel_order(rel3, list(duckdb$expr_reference("b")))
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(b = 2)
   )
@@ -2823,7 +2823,7 @@ test_that("relational distinct(g) order-enforcing", {
   rel4 <- duckdb$rel_order(rel3, list(duckdb$expr_reference("g")))
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = 1:3)
   )
@@ -2856,7 +2856,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 3, g = 2L)) %>% distinct(
   rel6 <- duckdb$rel_order(rel5, list(duckdb$expr_reference("g")))
   rel6
   out <- duckdb$rel_to_altrep(rel6)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = 1:3)
   )
@@ -2889,7 +2889,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 4, g = 2L)) %>% distinct(
   rel6 <- duckdb$rel_order(rel5, list(duckdb$expr_reference("g")))
   rel6
   out <- duckdb$rel_to_altrep(rel6)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = 1:3)
   )
@@ -2922,7 +2922,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 5, g = 2L)) %>% distinct(
   rel6 <- duckdb$rel_order(rel5, list(duckdb$expr_reference("g")))
   rel6
   out <- duckdb$rel_to_altrep(rel6)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = 1:3)
   )
@@ -2955,7 +2955,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 6, g = 2L)) %>% distinct(
   rel6 <- duckdb$rel_order(rel5, list(duckdb$expr_reference("g")))
   rel6
   out <- duckdb$rel_to_altrep(rel6)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = 1:3)
   )
@@ -2988,7 +2988,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 7, g = 2L)) %>% distinct(
   rel6 <- duckdb$rel_order(rel5, list(duckdb$expr_reference("g")))
   rel6
   out <- duckdb$rel_to_altrep(rel6)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = 1:3)
   )
@@ -3110,7 +3110,7 @@ test_that("relational distinct(g, .keep_all = TRUE) order-enforcing", {
   )
   rel7
   out <- duckdb$rel_to_altrep(rel7)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = c(1, 2, 4), b = rep(2, 3L), g = 1:3)
   )
@@ -3192,7 +3192,7 @@ test_that("relational filter(a == 1) order-preserving", {
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = 1, b = 2, g = 1L)
   )
@@ -3303,7 +3303,7 @@ test_that("relational filter(a %in% 2:3, g == 2) order-preserving", {
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = c(2, 3), b = c(2, 2), g = c(2L, 2L))
   )
@@ -3420,7 +3420,7 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-preserving", {
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = c(2, 3), b = c(2, 2), g = c(2L, 2L))
   )
@@ -3517,7 +3517,7 @@ test_that("relational filter(a != 2 | g != 2) order-preserving", {
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = c(1, 3, 4, 5, 6), b = rep(2, 5L), g = c(1L, 2L, 3L, 3L, 3L))
   )
@@ -3557,7 +3557,7 @@ test_that("relational filter(a == 1) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = 1, b = 2, g = 1L)
   )
@@ -3626,7 +3626,7 @@ test_that("relational filter(a %in% 2:3, g == 2) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = c(2, 3), b = c(2, 2), g = c(2L, 2L))
   )
@@ -3701,7 +3701,7 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = c(2, 3), b = c(2, 2), g = c(2L, 2L))
   )
@@ -3756,7 +3756,7 @@ test_that("relational filter(a != 2 | g != 2) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = c(1, 3, 4, 5, 6), b = rep(2, 5L), g = c(1L, 2L, 3L, 3L, 3L))
   )
@@ -3886,7 +3886,7 @@ test_that("relational full_join(join_by(a)) order-preserving", {
   )
   rel11
   out <- duckdb$rel_to_altrep(rel11)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = 1:5, b.x = rep(c(2, NA), c(4L, 1L)), b.y = rep(c(NA, 2), c(1L, 4L)))
   )
@@ -3976,7 +3976,7 @@ test_that("relational full_join(join_by(a)) order-enforcing", {
   )
   rel9
   out <- duckdb$rel_to_altrep(rel9)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = 1:5, b.x = rep(c(2, NA), c(4L, 1L)), b.y = rep(c(NA, 2), c(1L, 4L)))
   )
@@ -4106,7 +4106,7 @@ test_that("relational inner_join(join_by(a)) order-preserving", {
   )
   rel11
   out <- duckdb$rel_to_altrep(rel11)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = 2:4, b.x = rep(2, 3L), b.y = rep(2, 3L))
   )
@@ -4196,7 +4196,7 @@ test_that("relational inner_join(join_by(a)) order-enforcing", {
   )
   rel9
   out <- duckdb$rel_to_altrep(rel9)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = 2:4, b.x = rep(2, 3L), b.y = rep(2, 3L))
   )
@@ -4359,7 +4359,7 @@ test_that("relational intersect() order-preserving", {
   )
   rel13
   out <- duckdb$rel_to_altrep(rel13)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = 2:4, b = rep(2, 3L))
   )
@@ -4383,7 +4383,7 @@ test_that("relational intersect() order-enforcing", {
   rel4 <- duckdb$rel_order(rel3, list(duckdb$expr_reference("a"), duckdb$expr_reference("b")))
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = 2:4, b = rep(2, 3L))
   )
@@ -4513,7 +4513,7 @@ test_that("relational left_join(join_by(a)) order-preserving", {
   )
   rel11
   out <- duckdb$rel_to_altrep(rel11)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = 1:4, b.x = rep(2, 4L), b.y = c(NA, 2, 2, 2))
   )
@@ -4603,7 +4603,7 @@ test_that("relational left_join(join_by(a)) order-enforcing", {
   )
   rel9
   out <- duckdb$rel_to_altrep(rel9)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = 1:4, b.x = rep(2, 4L), b.y = c(NA, 2, 2, 2))
   )
@@ -4622,7 +4622,7 @@ test_that("relational mutate() order-preserving", {
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
   rel1
   out <- duckdb$rel_to_altrep(rel1)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
   )
@@ -4674,7 +4674,7 @@ test_that("relational mutate(a + 1) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -4788,7 +4788,7 @@ test_that("relational mutate(a + 1, .by = g) order-preserving", {
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -4846,7 +4846,7 @@ test_that("relational mutate(c = a + 1) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -4903,7 +4903,7 @@ test_that("relational mutate(`if` = a + 1) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -4951,7 +4951,7 @@ test_that("relational mutate(sum(a)) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -5055,7 +5055,7 @@ test_that("relational mutate(sum(a), .by = g) order-preserving", {
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -5103,7 +5103,7 @@ test_that("relational mutate(mean(a)) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -5207,7 +5207,7 @@ test_that("relational mutate(mean(a), .by = g) order-preserving", {
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -5255,7 +5255,7 @@ test_that("relational mutate(sd(a)) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -5359,7 +5359,7 @@ test_that("relational mutate(sd(a), .by = g) order-preserving", {
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -5417,7 +5417,7 @@ test_that("relational mutate(lag(a)) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -5531,7 +5531,7 @@ test_that("relational mutate(lag(a), .by = g) order-preserving", {
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -5589,7 +5589,7 @@ test_that("relational mutate(lead(a)) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -5703,7 +5703,7 @@ test_that("relational mutate(lead(a), .by = g) order-preserving", {
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -5761,7 +5761,7 @@ test_that("relational mutate(lag(a, 2)) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -5875,7 +5875,7 @@ test_that("relational mutate(lag(a, 2), .by = g) order-preserving", {
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -5933,7 +5933,7 @@ test_that("relational mutate(lead(a, 2)) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -6047,7 +6047,7 @@ test_that("relational mutate(lead(a, 2), .by = g) order-preserving", {
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -6105,7 +6105,7 @@ test_that("relational mutate(lag(a, 4)) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -6219,7 +6219,7 @@ test_that("relational mutate(lag(a, 4), .by = g) order-preserving", {
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -6277,7 +6277,7 @@ test_that("relational mutate(lead(a, 4)) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -6391,7 +6391,7 @@ test_that("relational mutate(lead(a, 4), .by = g) order-preserving", {
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -6453,7 +6453,7 @@ test_that("relational mutate(lag(a, default = 0)) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -6571,7 +6571,7 @@ test_that("relational mutate(lag(a, default = 0), .by = g) order-preserving", {
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -6633,7 +6633,7 @@ test_that("relational mutate(lead(a, default = 1000)) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -6751,7 +6751,7 @@ test_that("relational mutate(lead(a, default = 1000), .by = g) order-preserving"
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -6799,7 +6799,7 @@ test_that("relational mutate(min(a)) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -6903,7 +6903,7 @@ test_that("relational mutate(min(a), .by = g) order-preserving", {
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -6951,7 +6951,7 @@ test_that("relational mutate(max(a)) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -7055,7 +7055,7 @@ test_that("relational mutate(max(a), .by = g) order-preserving", {
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -7103,7 +7103,7 @@ test_that("relational mutate(first(a)) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -7207,7 +7207,7 @@ test_that("relational mutate(first(a), .by = g) order-preserving", {
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -7255,7 +7255,7 @@ test_that("relational mutate(last(a)) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -7359,7 +7359,7 @@ test_that("relational mutate(last(a), .by = g) order-preserving", {
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -7423,7 +7423,7 @@ test_that("relational mutate(nth(a, 2)) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -7543,7 +7543,7 @@ test_that("relational mutate(nth(a, 2), .by = g) order-preserving", {
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -7597,7 +7597,7 @@ test_that("relational mutate(a / b) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -7790,7 +7790,7 @@ test_that("relational mutate(d = 0, e = 1 / d, f = 0 / d, g = -1 / d) order-pres
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -7964,7 +7964,7 @@ test_that("relational mutate(c = 0, d = -1, e = log(c), f = suppressWarnings(log
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -8139,7 +8139,7 @@ test_that("relational mutate(c = 0, d = -1, e = log10(c), f = suppressWarnings(l
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -8229,7 +8229,7 @@ test_that("relational mutate(c = 10, d = log(c)) order-preserving", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -8317,7 +8317,7 @@ test_that("relational mutate(c = 10, d = log10(c)) order-preserving", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -8415,7 +8415,7 @@ test_that("relational mutate(c = NA_character_, d = grepl('.', c)) order-preserv
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -8476,7 +8476,7 @@ test_that("relational mutate(d = a %in% NA_real_) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -8570,7 +8570,7 @@ test_that("relational mutate(c = NA_character_, d = c %in% NA_character_) order-
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -8653,7 +8653,7 @@ test_that("relational mutate(d = NA_real_, e = is.na(d)) order-preserving", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -8736,7 +8736,7 @@ test_that("relational mutate(d = NaN, e = is.na(d)) order-preserving", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -8941,7 +8941,7 @@ test_that("relational mutate(c = .data$b) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -8969,7 +8969,7 @@ test_that("relational mutate() order-enforcing", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
   )
@@ -9025,7 +9025,7 @@ test_that("relational mutate(a + 1) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -9087,7 +9087,7 @@ test_that("relational mutate(a + 1, .by = g) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -9149,7 +9149,7 @@ test_that("relational mutate(c = a + 1) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -9210,7 +9210,7 @@ test_that("relational mutate(`if` = a + 1) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -9262,7 +9262,7 @@ test_that("relational mutate(sum(a)) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -9314,7 +9314,7 @@ test_that("relational mutate(sum(a), .by = g) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -9366,7 +9366,7 @@ test_that("relational mutate(mean(a)) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -9418,7 +9418,7 @@ test_that("relational mutate(mean(a), .by = g) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -9470,7 +9470,7 @@ test_that("relational mutate(sd(a)) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -9522,7 +9522,7 @@ test_that("relational mutate(sd(a), .by = g) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -9584,7 +9584,7 @@ test_that("relational mutate(lag(a)) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -9646,7 +9646,7 @@ test_that("relational mutate(lag(a), .by = g) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -9708,7 +9708,7 @@ test_that("relational mutate(lead(a)) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -9770,7 +9770,7 @@ test_that("relational mutate(lead(a), .by = g) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -9832,7 +9832,7 @@ test_that("relational mutate(lag(a, 2)) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -9894,7 +9894,7 @@ test_that("relational mutate(lag(a, 2), .by = g) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -9956,7 +9956,7 @@ test_that("relational mutate(lead(a, 2)) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -10018,7 +10018,7 @@ test_that("relational mutate(lead(a, 2), .by = g) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -10080,7 +10080,7 @@ test_that("relational mutate(lag(a, 4)) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -10142,7 +10142,7 @@ test_that("relational mutate(lag(a, 4), .by = g) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -10204,7 +10204,7 @@ test_that("relational mutate(lead(a, 4)) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -10266,7 +10266,7 @@ test_that("relational mutate(lead(a, 4), .by = g) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -10332,7 +10332,7 @@ test_that("relational mutate(lag(a, default = 0)) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -10398,7 +10398,7 @@ test_that("relational mutate(lag(a, default = 0), .by = g) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -10464,7 +10464,7 @@ test_that("relational mutate(lead(a, default = 1000)) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -10530,7 +10530,7 @@ test_that("relational mutate(lead(a, default = 1000), .by = g) order-enforcing",
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -10582,7 +10582,7 @@ test_that("relational mutate(min(a)) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -10634,7 +10634,7 @@ test_that("relational mutate(min(a), .by = g) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -10686,7 +10686,7 @@ test_that("relational mutate(max(a)) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -10738,7 +10738,7 @@ test_that("relational mutate(max(a), .by = g) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -10790,7 +10790,7 @@ test_that("relational mutate(first(a)) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -10842,7 +10842,7 @@ test_that("relational mutate(first(a), .by = g) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -10894,7 +10894,7 @@ test_that("relational mutate(last(a)) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -10946,7 +10946,7 @@ test_that("relational mutate(last(a), .by = g) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -11014,7 +11014,7 @@ test_that("relational mutate(nth(a, 2)) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -11082,7 +11082,7 @@ test_that("relational mutate(nth(a, 2), .by = g) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -11140,7 +11140,7 @@ test_that("relational mutate(a / b) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -11337,7 +11337,7 @@ test_that("relational mutate(d = 0, e = 1 / d, f = 0 / d, g = -1 / d) order-enfo
   )
   rel6
   out <- duckdb$rel_to_altrep(rel6)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -11515,7 +11515,7 @@ test_that("relational mutate(c = 0, d = -1, e = log(c), f = suppressWarnings(log
   )
   rel6
   out <- duckdb$rel_to_altrep(rel6)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -11694,7 +11694,7 @@ test_that("relational mutate(c = 0, d = -1, e = log10(c), f = suppressWarnings(l
   )
   rel6
   out <- duckdb$rel_to_altrep(rel6)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -11788,7 +11788,7 @@ test_that("relational mutate(c = 10, d = log(c)) order-enforcing", {
   )
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -11880,7 +11880,7 @@ test_that("relational mutate(c = 10, d = log10(c)) order-enforcing", {
   )
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -11982,7 +11982,7 @@ test_that("relational mutate(c = NA_character_, d = grepl('.', c)) order-enforci
   )
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -12047,7 +12047,7 @@ test_that("relational mutate(d = a %in% NA_real_) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -12145,7 +12145,7 @@ test_that("relational mutate(c = NA_character_, d = c %in% NA_character_) order-
   )
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -12232,7 +12232,7 @@ test_that("relational mutate(d = NA_real_, e = is.na(d)) order-enforcing", {
   )
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -12319,7 +12319,7 @@ test_that("relational mutate(d = NaN, e = is.na(d)) order-enforcing", {
   )
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -12480,7 +12480,7 @@ test_that("relational mutate(c = .data$b) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(
       a = seq(1, 6, by = 1),
@@ -12524,7 +12524,7 @@ test_that("relational relocate(g) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = c(1L, 2L, 2L, 3L, 3L, 3L), a = seq(1, 6, by = 1), b = rep(2, 6L))
   )
@@ -12561,7 +12561,7 @@ test_that("relational relocate(a) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
   )
@@ -12598,7 +12598,7 @@ test_that("relational relocate(g, .before = b) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), g = c(1L, 2L, 2L, 3L, 3L, 3L), b = rep(2, 6L))
   )
@@ -12635,7 +12635,7 @@ test_that("relational relocate(a:b, .after = g) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = c(1L, 2L, 2L, 3L, 3L, 3L), a = seq(1, 6, by = 1), b = rep(2, 6L))
   )
@@ -12678,7 +12678,7 @@ test_that("relational relocate(g) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = c(1L, 2L, 2L, 3L, 3L, 3L), a = seq(1, 6, by = 1), b = rep(2, 6L))
   )
@@ -12719,7 +12719,7 @@ test_that("relational relocate(a) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
   )
@@ -12760,7 +12760,7 @@ test_that("relational relocate(g, .before = b) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), g = c(1L, 2L, 2L, 3L, 3L, 3L), b = rep(2, 6L))
   )
@@ -12801,7 +12801,7 @@ test_that("relational relocate(a:b, .after = g) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = c(1L, 2L, 2L, 3L, 3L, 3L), a = seq(1, 6, by = 1), b = rep(2, 6L))
   )
@@ -12840,7 +12840,7 @@ test_that("relational rename() order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
   )
@@ -12877,7 +12877,7 @@ test_that("relational rename(c = a) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(c = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
   )
@@ -12920,7 +12920,7 @@ test_that("relational rename() order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
   )
@@ -12961,7 +12961,7 @@ test_that("relational rename(c = a) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(c = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
   )
@@ -13090,7 +13090,7 @@ test_that("relational right_join(join_by(a)) order-preserving", {
   )
   rel11
   out <- duckdb$rel_to_altrep(rel11)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = 2:5, b.x = c(2, 2, 2, NA), b.y = rep(2, 4L))
   )
@@ -13179,7 +13179,7 @@ test_that("relational right_join(join_by(a)) order-enforcing", {
   )
   rel9
   out <- duckdb$rel_to_altrep(rel9)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = 2:5, b.x = c(2, 2, 2, NA), b.y = rep(2, 4L))
   )
@@ -13208,7 +13208,7 @@ test_that("relational select(a) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1))
   )
@@ -13240,7 +13240,7 @@ test_that("relational select(-g) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L))
   )
@@ -13277,7 +13277,7 @@ test_that("relational select(everything()) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
   )
@@ -13307,7 +13307,7 @@ test_that("relational select(a) order-enforcing", {
   rel3 <- duckdb$rel_order(rel2, list(duckdb$expr_reference("a")))
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1))
   )
@@ -13340,7 +13340,7 @@ test_that("relational select(-g) order-enforcing", {
   rel3 <- duckdb$rel_order(rel2, list(duckdb$expr_reference("a"), duckdb$expr_reference("b")))
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L))
   )
@@ -13381,7 +13381,7 @@ test_that("relational select(everything()) order-enforcing", {
   )
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
   )
@@ -13452,7 +13452,7 @@ test_that("relational semi_join(join_by(a)) order-preserving", {
   )
   rel8
   out <- duckdb$rel_to_altrep(rel8)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = 2:4, b = rep(2, 3L))
   )
@@ -13488,7 +13488,7 @@ test_that("relational semi_join(join_by(a)) order-enforcing", {
   rel6 <- duckdb$rel_order(rel5, list(duckdb$expr_reference("a"), duckdb$expr_reference("b")))
   rel6
   out <- duckdb$rel_to_altrep(rel6)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = 2:4, b = rep(2, 3L))
   )
@@ -13651,7 +13651,7 @@ test_that("relational setdiff() order-preserving", {
   )
   rel13
   out <- duckdb$rel_to_altrep(rel13)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = 1L, b = 2)
   )
@@ -13675,7 +13675,7 @@ test_that("relational setdiff() order-enforcing", {
   rel4 <- duckdb$rel_order(rel3, list(duckdb$expr_reference("a"), duckdb$expr_reference("b")))
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = 1L, b = 2)
   )
@@ -13706,7 +13706,7 @@ test_that("relational summarise(c = mean(a)) order-preserving", {
   rel3 <- duckdb$rel_distinct(rel2)
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(c = 3.5)
   )
@@ -13780,7 +13780,7 @@ test_that("relational summarise(c = mean(a), .by = b) order-preserving", {
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(b = 2, c = 3.5)
   )
@@ -13854,7 +13854,7 @@ test_that("relational summarise(c = mean(a), .by = g) order-preserving", {
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = 1:3, c = c(1, 2.5, 5))
   )
@@ -13887,7 +13887,7 @@ test_that("relational summarise(c = 1) order-preserving", {
   rel3 <- duckdb$rel_distinct(rel2)
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(c = 1)
   )
@@ -13965,7 +13965,7 @@ test_that("relational summarise(c = 1, .by = g) order-preserving", {
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = 1:3, c = rep(1, 3L))
   )
@@ -14050,7 +14050,7 @@ test_that("relational summarise(n = n(), n = n() + 1L, .by = g) order-preserving
   )
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = 1:3, n = 2:4)
   )
@@ -14090,7 +14090,7 @@ test_that("relational summarise(n = n(), n = n() + 1L) order-preserving", {
   rel3 <- duckdb$rel_distinct(rel2)
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(n = 7L)
   )
@@ -14122,7 +14122,7 @@ test_that("relational summarise(c = mean(a)) order-enforcing", {
   rel4 <- duckdb$rel_order(rel3, list(duckdb$expr_reference("c")))
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(c = 3.5)
   )
@@ -14151,7 +14151,7 @@ test_that("relational summarise(c = mean(a), .by = b) order-enforcing", {
   rel3 <- duckdb$rel_order(rel2, list(duckdb$expr_reference("b"), duckdb$expr_reference("c")))
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(b = 2, c = 3.5)
   )
@@ -14180,7 +14180,7 @@ test_that("relational summarise(c = mean(a), .by = g) order-enforcing", {
   rel3 <- duckdb$rel_order(rel2, list(duckdb$expr_reference("g"), duckdb$expr_reference("c")))
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = 1:3, c = c(1, 2.5, 5))
   )
@@ -14214,7 +14214,7 @@ test_that("relational summarise(c = 1) order-enforcing", {
   rel4 <- duckdb$rel_order(rel3, list(duckdb$expr_reference("c")))
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(c = 1)
   )
@@ -14247,7 +14247,7 @@ test_that("relational summarise(c = 1, .by = g) order-enforcing", {
   rel3 <- duckdb$rel_order(rel2, list(duckdb$expr_reference("g"), duckdb$expr_reference("c")))
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = 1:3, c = rep(1, 3L))
   )
@@ -14287,7 +14287,7 @@ test_that("relational summarise(n = n(), n = n() + 1L, .by = g) order-enforcing"
   rel3 <- duckdb$rel_order(rel2, list(duckdb$expr_reference("g"), duckdb$expr_reference("n")))
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(g = 1:3, n = 2:4)
   )
@@ -14328,7 +14328,7 @@ test_that("relational summarise(n = n(), n = n() + 1L) order-enforcing", {
   rel4 <- duckdb$rel_order(rel3, list(duckdb$expr_reference("n")))
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(n = 7L)
   )
@@ -14572,7 +14572,7 @@ test_that("relational symdiff() order-preserving", {
   )
   rel19
   out <- duckdb$rel_to_altrep(rel19)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = c(1L, 5L), b = c(2, 2))
   )
@@ -14596,7 +14596,7 @@ test_that("relational symdiff() order-enforcing", {
   rel4 <- duckdb$rel_order(rel3, list(duckdb$expr_reference("a"), duckdb$expr_reference("b")))
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = c(1L, 5L), b = c(2, 2))
   )
@@ -14628,7 +14628,7 @@ test_that("relational tally() order-preserving", {
   rel3 <- duckdb$rel_distinct(rel2)
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(n = 6L)
   )
@@ -14661,7 +14661,7 @@ test_that("relational tally() order-enforcing", {
   rel4 <- duckdb$rel_order(rel3, list(duckdb$expr_reference("n")))
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(n = 6L)
   )
@@ -14700,7 +14700,7 @@ test_that("relational transmute(c = a + 1) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(c = seq(2, 7, by = 1))
   )
@@ -14727,7 +14727,7 @@ test_that("relational transmute(row = a) order-preserving", {
   )
   rel2
   out <- duckdb$rel_to_altrep(rel2)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(row = seq(1, 6, by = 1))
   )
@@ -14767,7 +14767,7 @@ test_that("relational transmute(c = a + 1) order-enforcing", {
   rel3 <- duckdb$rel_order(rel2, list(duckdb$expr_reference("c")))
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(c = seq(2, 7, by = 1))
   )
@@ -14795,7 +14795,7 @@ test_that("relational transmute(row = a) order-enforcing", {
   rel3 <- duckdb$rel_order(rel2, list(duckdb$expr_reference("row")))
   rel3
   out <- duckdb$rel_to_altrep(rel3)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(row = seq(1, 6, by = 1))
   )
@@ -14986,7 +14986,7 @@ test_that("relational union() order-preserving", {
   )
   rel12
   out <- duckdb$rel_to_altrep(rel12)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = 1:5, b = rep(2, 5L))
   )
@@ -15011,7 +15011,7 @@ test_that("relational union() order-enforcing", {
   rel5 <- duckdb$rel_order(rel4, list(duckdb$expr_reference("a"), duckdb$expr_reference("b")))
   rel5
   out <- duckdb$rel_to_altrep(rel5)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = 1:5, b = rep(2, 5L))
   )
@@ -15111,7 +15111,7 @@ test_that("relational union_all() order-preserving", {
   )
   rel7
   out <- duckdb$rel_to_altrep(rel7)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = c(1L, 2L, 3L, 4L, 2L, 3L, 4L, 5L), b = rep(2, 8L))
   )
@@ -15135,7 +15135,7 @@ test_that("relational union_all() order-enforcing", {
   rel4 <- duckdb$rel_order(rel3, list(duckdb$expr_reference("a"), duckdb$expr_reference("b")))
   rel4
   out <- duckdb$rel_to_altrep(rel4)
-  expect_equal(
+  expect_identical(
     out,
     data.frame(a = c(1L, 2L, 2L, 3L, 3L, 4L, 4L, 5L), b = rep(2, 8L))
   )

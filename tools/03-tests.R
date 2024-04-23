@@ -111,7 +111,7 @@ get_test_code_one <- function(extra_arg, pre_step, name, two_tables, force = "",
   test_code_post <- c(
     "",
     "  # Compare",
-    "  expect_equal(pre, post)",
+    "  expect_identical(pre, post)",
     "})",
     ""
   )
