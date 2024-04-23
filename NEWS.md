@@ -1,5 +1,18 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.3.2.9004 (2024-04-23)
+
+## Bug fixes
+
+  - Correctly match `NA` in `%in%`.
+
+## Chore
+
+  - Update snapshots.
+
+  - Avoid error from stats collection.
+
+
 # duckplyr 0.3.2.9003 (2024-04-19)
 
 ## Chore
