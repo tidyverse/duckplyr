@@ -650,6 +650,10 @@ test_extra_arg_map <- list(
     "d = NA_real_, e = is.na(d)",
     "d = NaN, e = is.na(d)",
 
+    # row_number() returns integer
+    "d = row_number()",
+    "d = row_number(), .by = g",
+
     # .data adverb
     "c = .data$b",
 

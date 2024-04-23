@@ -284,6 +284,10 @@ rel_translate <- function(
             offset_expr = offset_expr,
             default_expr = default_expr
           )
+
+          if (name == "row_number") {
+            fun <- relexpr_function("as.integer", list(fun))
+          }
         }
         fun
       },

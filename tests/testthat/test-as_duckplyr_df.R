@@ -1587,6 +1587,32 @@ test_that("as_duckplyr_df() and mutate(d = NaN, e = is.na(d))", {
 })
 
 
+test_that("as_duckplyr_df() and mutate(d = row_number())", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(d = row_number())
+  post <- test_df %>% mutate(d = row_number()) %>% as_duckplyr_df()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and mutate(d = row_number(), .by = g)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(d = row_number(), .by = g)
+  post <- test_df %>% mutate(d = row_number(), .by = g) %>% as_duckplyr_df()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
 test_that("as_duckplyr_df() and mutate(c = .data$b)", {
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
