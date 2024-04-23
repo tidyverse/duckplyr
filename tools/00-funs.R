@@ -639,12 +639,16 @@ test_extra_arg_map <- list(
     "c = 10, d = log(c)",
     "c = 10, d = log10(c)",
 
-    # grepl with NA
+    # grepl() with NA
     "c = NA_character_, d = grepl('.', c)",
 
     # %in% with NA
     "d = a %in% NA_real_",
     "c = NA_character_, d = c %in% NA_character_",
+
+    # is.na() with NaN
+    "d = NA_real_, e = is.na(d)",
+    "d = NaN, e = is.na(d)",
 
     # .data adverb
     "c = .data$b",
