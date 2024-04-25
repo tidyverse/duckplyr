@@ -164,6 +164,10 @@ check_df_for_rel <- function(df) {
 
 #' @export
 rel_to_df.duckdb_relation <- function(rel, ...) {
+  if (anyDuplicated(tolower(names(rel)))) {
+    cli::cli_abort("Column names are case-insensitive in duckdb, fallback required.")
+  }
+
   duckdb$rel_to_altrep(rel)
 }
 
