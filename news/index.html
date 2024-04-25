@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2.9005</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,6 +43,19 @@
       <small>Source: <a href="https://github.com/duckdblabs/duckplyr/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.2.9005" id="duckplyr-0329005-2024-04-25">duckplyr 0.3.2.9005 (2024-04-25)<a class="anchor" aria-label="anchor" href="#duckplyr-0329005-2024-04-25"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-0-3-2-9005">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-2-9005"></a></h3>
+<ul><li><p><code><a href="https://dplyr.tidyverse.org/reference/row_number.html" class="external-link">row_number()</a></code> returns integer.</p></li>
+<li><p><code>is.na(NaN)</code> is <code>TRUE</code>.</p></li>
+<li><p><code>summarise(count = n(), count = n())</code> creates only one column named <code>count</code>.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="testing-0-3-2-9005">Testing<a class="anchor" aria-label="anchor" href="#testing-0-3-2-9005"></a></h3>
+<ul><li>Promote equality checks to <code>expect_identical()</code> to capture differences between doubles and integers.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.2.9004" id="duckplyr-0329004-2024-04-23">duckplyr 0.3.2.9004 (2024-04-23)<a class="anchor" aria-label="anchor" href="#duckplyr-0329004-2024-04-23"></a></h2>
 <div class="section level3">
