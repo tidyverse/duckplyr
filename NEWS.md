@@ -1,5 +1,20 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.3.2.9005 (2024-04-25)
+
+## Bug fixes
+
+  - `row_number()` returns integer.
+
+  - `is.na(NaN)` is `TRUE`.
+
+  - `summarise(count = n(), count = n())` creates only one column named `count`.
+
+## Testing
+
+  - Promote equality checks to `expect_identical()` to capture differences between doubles and integers.
+
+
 # duckplyr 0.3.2.9004 (2024-04-23)
 
 ## Bug fixes
