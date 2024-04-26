@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.3.2.9006 (2024-04-26)
+
+## Bug fixes
+
+  - Require fallback if the result contains duplicate column names when ignoring case.
+
+
 # duckplyr 0.3.2.9005 (2024-04-25)
 
 ## Bug fixes
