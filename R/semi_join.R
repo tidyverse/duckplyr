@@ -3,13 +3,13 @@
 semi_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches = c("na", "never")) {
   check_dots_empty0(...)
   error_call <- caller_env()
+  y <- auto_copy(x, y, copy = copy)
 
   # https://github.com/duckdb/duckdb/issues/6597
   na_matches <- check_na_matches(na_matches, error_call = error_call)
 
   # Our implementation
   rel_try(call = list(name = "semi_join", x = x, y = y, args = list(by = if(!is.null(by)) as_join_by(by), copy = copy, na_matches = na_matches)),
-    "No relational implementation for semi_join(copy = TRUE)" = copy,
     {
       out <- rel_join_impl(x, y, by, "semi", na_matches, error_call = error_call)
       return(out)
@@ -18,7 +18,7 @@ semi_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches
 
   # dplyr forward
   semi_join <- dplyr$semi_join.data.frame
-  out <- semi_join(x, y, by, copy, ..., na_matches = na_matches)
+  out <- semi_join(x, y, by, copy = FALSE, ..., na_matches = na_matches)
   return(out)
 
   # dplyr implementation

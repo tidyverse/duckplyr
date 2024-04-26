@@ -233,6 +233,6 @@ test_that("rel_try()", {
   expect_snapshot({
     tibble(a = 1) %>%
       as_duckplyr_df() %>%
-      left_join(tibble(a = 1), by = "a", copy = TRUE)
+      count(a, .drop = FALSE, name = "n")
   })
 })

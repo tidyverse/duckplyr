@@ -211,13 +211,15 @@
 # rel_try()
 
     Code
-      tibble(a = 1) %>% as_duckplyr_df() %>% left_join(tibble(a = 1), by = "a", copy = TRUE)
+      tibble(a = 1) %>% as_duckplyr_df() %>% count(a, .drop = FALSE, name = "n")
     Message
       i dplyr fallback recorded
-        {"version":"0.3.1","message":"No relational implementation for left_join(copy = TRUE)","name":"left_join","x":{"...1":"numeric"},"y":{"...1":"numeric"},"args":{"by":{"condition":"==","filter":"none","x":["...1"],"y":["...1"]},"copy":true,"na_matches":["na","never"],"multiple":"all","unmatched":"drop"}}
+        {"version":"0.3.1","message":"count() only implemented for .drop = TRUE","name":"count","x":{"...1":"numeric"},"args":{"dots":{"1":"...1"},"wt":"NULL","sort":false,"name":"...3",".drop":false}}
+      i dplyr fallback recorded
+        {"version":"0.3.1","message":"No relational implementation for group_by()"}
     Output
-      # A tibble: 1 x 1
-            a
-        <dbl>
-      1     1
+      # A tibble: 1 x 2
+            a     n
+        <dbl> <int>
+      1     1     1
 

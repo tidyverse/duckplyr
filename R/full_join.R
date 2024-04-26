@@ -3,11 +3,11 @@
 full_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ..., keep = NULL, na_matches = c("na", "never"), multiple = "all", relationship = NULL) {
   check_dots_empty0(...)
   error_call <- caller_env()
+  y <- auto_copy(x, y, copy = copy)
 
   # Our implementation
   rel_try(call = list(name = "full_join", x = x, y = y, args = list(by = if(!is.null(by)) as_join_by(by), copy = copy, keep = keep, na_matches = na_matches, multiple = multiple, relationship = relationship)),
     "No implicit cross joins for full_join()" = is_cross_by(by),
-    "No relational implementation for full_join(copy = TRUE)" = copy,
     {
       out <- rel_join_impl(x, y, by, "full", na_matches, suffix, keep, error_call)
       return(out)
@@ -16,7 +16,7 @@ full_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
 
   # dplyr forward
   full_join <- dplyr$full_join.data.frame
-  out <- full_join(x, y, by, copy, suffix, ..., keep = keep, na_matches = na_matches, multiple = multiple, relationship = relationship)
+  out <- full_join(x, y, by, copy = FALSE, suffix, ..., keep = keep, na_matches = na_matches, multiple = multiple, relationship = relationship)
   return(out)
 
   # dplyr implementation
