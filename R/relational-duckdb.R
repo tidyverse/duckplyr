@@ -58,7 +58,7 @@ duckplyr_macros <- c(
 create_default_duckdb_connection <- function() {
   con <- DBI::dbConnect(duckdb::duckdb())
 
-  DBI::dbExecute(con, "set memory_limit='2GB'")
+  DBI::dbExecute(con, "set memory_limit='1GB'")
   DBI::dbExecute(con, paste0("pragma temp_directory='", tempdir(), "'"))
 
   for (i in seq_along(duckplyr_macros)) {
