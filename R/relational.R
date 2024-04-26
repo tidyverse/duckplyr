@@ -45,10 +45,15 @@ rel_try <- function(rel, ..., call = NULL) {
   }
 
   # https://github.com/duckdb/duckdb-r/issues/101
-  DBI::dbExecute(get_default_duckdb_connection(), "SET max_expression_depth TO 100")
-  withr::defer({
-    DBI::dbExecute(get_default_duckdb_connection(), "SET max_expression_depth TO 200")
-  })
+  max_expression_depth <- DBI::dbGetQuery(get_default_duckdb_connection(), "SELECT current_setting('max_expression_depth')")[[1]]
+  if (max_expression_depth != 100) {
+    # Only reset if this hasn't been set already
+    # NeuroDecodeR, delayed evaluation
+    DBI::dbExecute(get_default_duckdb_connection(), "SET max_expression_depth TO 100")
+    withr::defer({
+      DBI::dbExecute(get_default_duckdb_connection(), "SET max_expression_depth TO 200")
+    })
+  }
 
   if (Sys.getenv("DUCKPLYR_FORCE") == "TRUE") {
     return(rel)
