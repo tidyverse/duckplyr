@@ -4,6 +4,12 @@ test_that("telemetry and anti_join()", {
   expect_snapshot(error = TRUE, {
     tibble(a = 1:3, b = 4:6) %>%
       as_duckplyr_df() %>%
+      anti_join(tibble(a = 1:3, b = 4:6))
+  })
+
+  expect_snapshot(error = TRUE, {
+    tibble(a = 1:3, b = 4:6) %>%
+      as_duckplyr_df() %>%
       anti_join(
         tibble(a = 1:3, b = 4:6),
         by = "a",
@@ -39,11 +45,23 @@ test_that("telemetry and arrange()", {
   expect_snapshot(error = TRUE, {
     tibble(a = 1:3, b = 4:6) %>%
       as_duckplyr_df() %>%
+      arrange(a)
+  })
+
+  expect_snapshot(error = TRUE, {
+    tibble(a = 1:3, b = 4:6) %>%
+      as_duckplyr_df() %>%
       arrange(a, .by_group = TRUE)
   })
 })
 
 test_that("telemetry and count()", {
+  expect_snapshot(error = TRUE, {
+    tibble(a = 1:3, b = 4:6) %>%
+      as_duckplyr_df() %>%
+      count(a)
+  })
+
   expect_snapshot(error = TRUE, {
     tibble(a = 1:3, b = 4:6) %>%
       as_duckplyr_df() %>%
@@ -55,11 +73,23 @@ test_that("telemetry and distinct()", {
   expect_snapshot(error = TRUE, {
     tibble(a = 1:3, b = 4:6) %>%
       as_duckplyr_df() %>%
+      distinct(a)
+  })
+
+  expect_snapshot(error = TRUE, {
+    tibble(a = 1:3, b = 4:6) %>%
+      as_duckplyr_df() %>%
       distinct(a, b, .keep_all = TRUE)
   })
 })
 
 test_that("telemetry and filter()", {
+  expect_snapshot(error = TRUE, {
+    tibble(a = 1:3, b = 4:6) %>%
+      as_duckplyr_df() %>%
+      filter(a > 1)
+  })
+
   expect_snapshot(error = TRUE, {
     tibble(a = 1:3, b = 4:6) %>%
       as_duckplyr_df() %>%
@@ -77,6 +107,12 @@ test_that("telemetry and full_join()", {
   expect_snapshot(error = TRUE, {
     tibble(a = 1:3, b = 4:6) %>%
       as_duckplyr_df() %>%
+      full_join(tibble(a = 1:3, b = 4:6))
+  })
+
+  expect_snapshot(error = TRUE, {
+    tibble(a = 1:3, b = 4:6) %>%
+      as_duckplyr_df() %>%
       full_join(
         tibble(a = 1:3, b = 4:6),
         by = "a",
@@ -91,6 +127,12 @@ test_that("telemetry and full_join()", {
 })
 
 test_that("telemetry and inner_join()", {
+  expect_snapshot(error = TRUE, {
+    tibble(a = 1:3, b = 4:6) %>%
+      as_duckplyr_df() %>%
+      inner_join(tibble(a = 1:3, b = 4:6))
+  })
+
   expect_snapshot(error = TRUE, {
     tibble(a = 1:3, b = 4:6) %>%
       as_duckplyr_df() %>%
@@ -120,6 +162,12 @@ test_that("telemetry and left_join()", {
   expect_snapshot(error = TRUE, {
     tibble(a = 1:3, b = 4:6) %>%
       as_duckplyr_df() %>%
+      left_join(tibble(a = 1:3, b = 4:6))
+  })
+
+  expect_snapshot(error = TRUE, {
+    tibble(a = 1:3, b = 4:6) %>%
+      as_duckplyr_df() %>%
       left_join(
         tibble(a = 1:3, b = 4:6),
         by = "a",
@@ -138,6 +186,12 @@ test_that("telemetry and mutate()", {
   expect_snapshot(error = TRUE, {
     tibble(a = 1:3, b = 4:6) %>%
       as_duckplyr_df() %>%
+      mutate(c = a + b)
+  })
+
+  expect_snapshot(error = TRUE, {
+    tibble(a = 1:3, b = 4:6) %>%
+      as_duckplyr_df() %>%
       mutate(c = a + b, .by = a, .keep = "unused", )
   })
 })
@@ -147,6 +201,18 @@ test_that("telemetry and relocate()", {
     tibble(a = 1:3, b = 4:6) %>%
       as_duckplyr_df() %>%
       relocate(b)
+  })
+
+  expect_snapshot(error = TRUE, {
+    tibble(a = 1:3, b = 4:6) %>%
+      as_duckplyr_df() %>%
+      relocate(b, .before = a)
+  })
+
+  expect_snapshot(error = TRUE, {
+    tibble(a = 1:3, b = 4:6) %>%
+      as_duckplyr_df() %>%
+      relocate(a, .after = b)
   })
 })
 
@@ -159,6 +225,12 @@ test_that("telemetry and rename()", {
 })
 
 test_that("telemetry and right_join()", {
+  expect_snapshot(error = TRUE, {
+    tibble(a = 1:3, b = 4:6) %>%
+      as_duckplyr_df() %>%
+      right_join(tibble(a = 1:3, b = 4:6))
+  })
+
   expect_snapshot(error = TRUE, {
     tibble(a = 1:3, b = 4:6) %>%
       as_duckplyr_df() %>%
@@ -188,6 +260,12 @@ test_that("telemetry and semi_join()", {
   expect_snapshot(error = TRUE, {
     tibble(a = 1:3, b = 4:6) %>%
       as_duckplyr_df() %>%
+      semi_join(tibble(a = 1:3, b = 4:6))
+  })
+
+  expect_snapshot(error = TRUE, {
+    tibble(a = 1:3, b = 4:6) %>%
+      as_duckplyr_df() %>%
       semi_join(
         tibble(a = 1:3, b = 4:6),
         by = "a",
@@ -206,6 +284,12 @@ test_that("telemetry and setdiff()", {
 })
 
 test_that("telemetry and summarise()", {
+  expect_snapshot(error = TRUE, {
+    tibble(a = 1:3, b = 4:6) %>%
+      as_duckplyr_df() %>%
+      summarise(c = sum(b))
+  })
+
   expect_snapshot(error = TRUE, {
     tibble(a = 1:3, b = 4:6) %>%
       as_duckplyr_df() %>%
