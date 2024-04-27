@@ -1,5 +1,24 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.3.2.9007 (2024-04-27)
+
+## Bug fixes
+
+  - More careful detection of row names in data frame.
+
+  - Always check roundtrip for timestamp columns.
+
+  - `%in%` evaluates RHS in the correct environment.
+
+  - `left_join()` and other join functions call `auto_copy()`.
+
+  - Only reset expression depth if it has been set before.
+
+## Features
+
+  - Reduce memory limit for revdepchecks.
+
+
 # duckplyr 0.3.2.9006 (2024-04-26)
 
 ## Bug fixes
