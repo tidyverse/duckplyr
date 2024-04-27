@@ -286,6 +286,13 @@ rel_translate <- function(
         }
 
         args <- map(as.list(expr[-1]), do_translate, in_window = in_window || window)
+
+        if (name == "grepl") {
+          if (!inherits(args[[1]], "relational_relexpr_constant")) {
+            cli::cli_abort("Only constant patterns are supported in {.code grepl()}")
+          }
+        }
+
         fun <- relexpr_function(name, args)
         if (window) {
           partitions <- map(partition, relexpr_reference)
