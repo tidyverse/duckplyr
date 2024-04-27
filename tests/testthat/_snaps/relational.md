@@ -8,3 +8,11 @@
     Output
       NULL
 
+# call with named argument
+
+    Code
+      rel_translate(quo(c(1, b = 2)))
+    Condition
+      Error in `do_translate()`:
+      ! Can't translate named argument `c(b = )`.
+

@@ -18,3 +18,9 @@ test_that("inline parens (3)", {
     rel_translate(quo((a * b)), df),
   )
 })
+
+test_that("call with named argument", {
+  expect_snapshot(error = TRUE, {
+    rel_translate(quo(c(1, b = 2)))
+  })
+})

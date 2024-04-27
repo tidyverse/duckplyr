@@ -148,6 +148,13 @@ rel_translate <- function(
           pkg <- NULL
         }
 
+        if (!(name %in% c("wday", "strftime", "lag", "lead"))) {
+          if (!is.null(names(expr)) && any(names(expr) != "")) {
+            # Fix grepl() logic below when allowing matching by argument name
+            cli::cli_abort("Can't translate named argument {.code {name}({names(expr)[names(expr) != ''][[1]]} = )}.")
+          }
+        }
+
         switch(name,
           "(" = {
             return(do_translate(expr[[2]], in_window = in_window))
