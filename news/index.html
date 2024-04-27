@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2.9006</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2.9007</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,6 +43,21 @@
       <small>Source: <a href="https://github.com/duckdblabs/duckplyr/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.2.9007" id="duckplyr-0329007-2024-04-27">duckplyr 0.3.2.9007 (2024-04-27)<a class="anchor" aria-label="anchor" href="#duckplyr-0329007-2024-04-27"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-0-3-2-9007">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-2-9007"></a></h3>
+<ul><li><p>More careful detection of row names in data frame.</p></li>
+<li><p>Always check roundtrip for timestamp columns.</p></li>
+<li><p><code>%in%</code> evaluates RHS in the correct environment.</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join()</a></code> and other join functions call <code><a href="https://dplyr.tidyverse.org/reference/auto_copy.html" class="external-link">auto_copy()</a></code>.</p></li>
+<li><p>Only reset expression depth if it has been set before.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="features-0-3-2-9007">Features<a class="anchor" aria-label="anchor" href="#features-0-3-2-9007"></a></h3>
+<ul><li>Reduce memory limit for revdepchecks.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.2.9006" id="duckplyr-0329006-2024-04-26">duckplyr 0.3.2.9006 (2024-04-26)<a class="anchor" aria-label="anchor" href="#duckplyr-0329006-2024-04-26"></a></h2>
 <div class="section level3">
