@@ -1,5 +1,22 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.3.2.9008 (2024-04-28)
+
+## Bug fixes
+
+  - More careful detection of row names in data frame.
+
+## Features
+
+  - Only allow constant patterns in `grepl()`.
+
+  - Explicitly reject calls with named arguments for now.
+
+## Testing
+
+  - Improve telemetry tests.
+
+
 # duckplyr 0.3.2.9007 (2024-04-27)
 
 ## Bug fixes
