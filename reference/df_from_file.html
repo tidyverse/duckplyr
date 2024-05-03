@@ -44,7 +44,7 @@ that calls as_duckplyr_df() on the output."><!-- mathjax --><script src="https:/
     
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2.9008</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -124,31 +124,31 @@ that calls <code><a href="as_duckplyr_df.html">as_duckplyr_df()</a></code> on th
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>path</dt>
+    <dl><dt id="arg-path">path<a class="anchor" aria-label="anchor" href="#arg-path"></a></dt>
 <dd><p>Path to a file, a directory, or a set of filenames using
 wildcards.</p></dd>
 
 
-<dt>...</dt>
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>These dots are for future extensions and must be empty.</p></dd>
 
 
-<dt>options</dt>
+<dt id="arg-options">options<a class="anchor" aria-label="anchor" href="#arg-options"></a></dt>
 <dd><p>Arguments to the DuckDB function
 indicated by <code>table_function</code>.</p></dd>
 
 
-<dt>class</dt>
+<dt id="arg-class">class<a class="anchor" aria-label="anchor" href="#arg-class"></a></dt>
 <dd><p>An optional class to add to the data frame.
 The returned object will always be a data frame.
 Pass <code>class(tibble())</code> to create a tibble.</p></dd>
 
 
-<dt>data</dt>
+<dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>A data frame to be written to disk.</p></dd>
 
 
-<dt>table_function</dt>
+<dt id="arg-table-function">table_function<a class="anchor" aria-label="anchor" href="#arg-table-function"></a></dt>
 <dd><p>The name of a table-valued
 DuckDB function such as <code>"read_parquet"</code>,
 <code>"read_csv"</code>, <code>"read_csv_auto"</code> or <code>"read_json"</code>.</p></dd>
@@ -179,7 +179,7 @@ DuckDB function such as <code>"read_parquet"</code>,
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --- Relation Tree ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv_auto(/tmp/Rtmptz1Opx/duckplyr_test_fe770769a3c.csv)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv_auto(/tmp/Rtmp62SxrF/duckplyr_test_104787424ad.csv)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -200,7 +200,7 @@ DuckDB function such as <code>"read_parquet"</code>,
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --- Relation Tree ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv(/tmp/Rtmptz1Opx/duckplyr_test_fe770769a3c.csv)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv(/tmp/Rtmp62SxrF/duckplyr_test_104787424ad.csv)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -224,7 +224,7 @@ DuckDB function such as <code>"read_parquet"</code>,
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --- Relation Tree ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv_auto(/tmp/Rtmptz1Opx/duckplyr_test_*.csv)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv_auto(/tmp/Rtmp62SxrF/duckplyr_test_*.csv)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -233,12 +233,12 @@ DuckDB function such as <code>"read_parquet"</code>,
 <span class="r-out co"><span class="r-pr">#&gt;</span> - b (VARCHAR)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   a b</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 4 g</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 5 h</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 6 i</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 1 d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2 e</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 3 f</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 1 d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2 e</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 3 f</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 4 g</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 5 h</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 6 i</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">path</span>, <span class="va">path2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -257,7 +257,7 @@ DuckDB function such as <code>"read_parquet"</code>,
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --- Relation Tree ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> read_parquet(/tmp/Rtmptz1Opx/filefe754e16e33.parquet)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> read_parquet(/tmp/Rtmp62SxrF/file104721381d42.parquet)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
