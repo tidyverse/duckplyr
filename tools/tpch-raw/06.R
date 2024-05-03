@@ -1,10 +1,12 @@
 qloadm("tools/tpch/001.qs")
 duckdb <- asNamespace("duckdb")
-con <- DBI::dbConnect(duckdb::duckdb())
+drv <- duckdb::duckdb()
+con <- DBI::dbConnect(drv)
 experimental <- FALSE
-invisible(DBI::dbExecute(con, 'CREATE MACRO ">="(x, y) AS x >= y'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "<"(x, y) AS x < y'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "<="(x, y) AS x <= y'))
+invisible(duckdb$rapi_load_rfuns(drv@database_ref))
+invisible(DBI::dbExecute(con, 'CREATE MACRO ">="(x, y) AS "r_base::>="(x, y)'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "<"(x, y) AS "r_base::<"(x, y)'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "<="(x, y) AS "r_base::<="(x, y)'))
 df1 <- lineitem
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb$rel_project(

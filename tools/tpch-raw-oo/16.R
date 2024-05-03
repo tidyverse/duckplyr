@@ -1,8 +1,10 @@
 qloadm("tools/tpch/001.qs")
 duckdb <- asNamespace("duckdb")
-con <- DBI::dbConnect(duckdb::duckdb())
+drv <- duckdb::duckdb()
+con <- DBI::dbConnect(drv)
 experimental <- FALSE
-invisible(DBI::dbExecute(con, 'CREATE MACRO "!="(x, y) AS x <> y'))
+invisible(duckdb$rapi_load_rfuns(drv@database_ref))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "!="(x, y) AS "r_base::!="(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "!"(x) AS (NOT x)'))
 invisible(
   DBI::dbExecute(
@@ -14,7 +16,7 @@ invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
 invisible(
   DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
 )
-invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "n_distinct"(x) AS (COUNT(DISTINCT x))'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "desc"(x) AS (-x)'))
