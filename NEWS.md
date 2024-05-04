@@ -1,5 +1,14 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.3.2.9009 (2024-05-04)
+
+## Chore
+
+  - Update patch.
+
+  - Bump duckdb version (#147).
+
+
 # duckplyr 0.3.2.9008 (2024-04-28)
 
 ## Bug fixes
