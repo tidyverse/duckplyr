@@ -189,6 +189,9 @@ rel_translate <- function(
             tryCatch(
               {
                 values <- eval(expr[[3]], envir = env)
+                if (length(values) == 0) {
+                  return(relexpr_constant(FALSE))
+                }
                 consts <- map(values, do_translate, in_window = in_window)
                 ops <- map(consts, list, do_translate(expr[[2]]))
                 cmp <- map(ops, relexpr_function, name = "___eq_na_matches_na")
