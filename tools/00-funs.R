@@ -646,6 +646,10 @@ test_extra_arg_map <- list(
     "d = a %in% NA_real_",
     "c = NA_character_, d = c %in% NA_character_",
 
+    # %in% and empty
+    "d = a %in% NULL",
+    "d = a %in% integer()",
+
     # is.na() with NaN
     "d = NA_real_, e = is.na(d)",
     "d = NaN, e = is.na(d)",
@@ -656,6 +660,12 @@ test_extra_arg_map <- list(
 
     # .data adverb
     "c = .data$b",
+
+    # NA constant
+    "d = NA",
+    "d = NA_integer_",
+    "d = NA_real_",
+    "d = NA_character_",
 
     NULL
   ),
