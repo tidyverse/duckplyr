@@ -424,7 +424,7 @@ to_duckdb_expr <- function(x) {
       out
     },
     NULL = NULL,
-    cli::cli_abort("Unknown expr class: {.cls {class(x))}}")
+    cli::cli_abort("Unknown expr class: {.cls {class(x)}}")
   )
 }
 
@@ -500,6 +500,6 @@ to_duckdb_expr_meta <- function(x) {
       out
     },
     NULL = expr(NULL),
-    cli::cli_abort("Unknown expr class: {.cls {class(x))}}")
+    cli::cli_abort("Unknown expr class: {.cls {class(x)}}")
   )
 }
