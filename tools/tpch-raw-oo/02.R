@@ -2,18 +2,18 @@ qloadm("tools/tpch/001.qs")
 duckdb <- asNamespace("duckdb")
 con <- DBI::dbConnect(duckdb::duckdb())
 experimental <- FALSE
-invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
 invisible(
   DBI::dbExecute(
     con,
-    "CREATE MACRO \"grepl\"(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)"
+    'CREATE MACRO "grepl"(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)'
   )
 )
-invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(x, y) AS COALESCE(x, y)"))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(
-  DBI::dbExecute(con, "CREATE MACRO \"___eq_na_matches_na\"(x, y) AS (x IS NOT DISTINCT FROM y)")
+  DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
 )
-invisible(DBI::dbExecute(con, "CREATE MACRO \"desc\"(x) AS (-x)"))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "desc"(x) AS (-x)'))
 df1 <- partsupp
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb$rel_project(

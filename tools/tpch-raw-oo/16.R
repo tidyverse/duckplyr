@@ -2,19 +2,22 @@ qloadm("tools/tpch/001.qs")
 duckdb <- asNamespace("duckdb")
 con <- DBI::dbConnect(duckdb::duckdb())
 experimental <- FALSE
-invisible(DBI::dbExecute(con, "CREATE MACRO \"!=\"(x, y) AS x <> y"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"!\"(x) AS (NOT x)"))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "!="(x, y) AS x <> y'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "!"(x) AS (NOT x)'))
 invisible(
   DBI::dbExecute(
     con,
-    "CREATE MACRO \"grepl\"(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)"
+    'CREATE MACRO "grepl"(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)'
   )
 )
-invisible(DBI::dbExecute(con, "CREATE MACRO \"|\"(x, y) AS (x OR y)"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(x, y) AS COALESCE(x, y)"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"n_distinct\"(x) AS (COUNT(DISTINCT x))"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"desc\"(x) AS (-x)"))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
+invisible(
+  DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
+)
+invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "n_distinct"(x) AS (COUNT(DISTINCT x))'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "desc"(x) AS (-x)'))
 df1 <- part
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb$rel_project(
@@ -124,7 +127,7 @@ rel3 <- duckdb$rel_filter(
                               "|",
                               list(
                                 duckdb$expr_function(
-                                  "==",
+                                  "___eq_na_matches_na",
                                   list(
                                     if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                       duckdb$expr_constant(49, experimental = experimental)
@@ -135,7 +138,7 @@ rel3 <- duckdb$rel_filter(
                                   )
                                 ),
                                 duckdb$expr_function(
-                                  "==",
+                                  "___eq_na_matches_na",
                                   list(
                                     if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                       duckdb$expr_constant(14, experimental = experimental)
@@ -148,7 +151,7 @@ rel3 <- duckdb$rel_filter(
                               )
                             ),
                             duckdb$expr_function(
-                              "==",
+                              "___eq_na_matches_na",
                               list(
                                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                   duckdb$expr_constant(23, experimental = experimental)
@@ -161,7 +164,7 @@ rel3 <- duckdb$rel_filter(
                           )
                         ),
                         duckdb$expr_function(
-                          "==",
+                          "___eq_na_matches_na",
                           list(
                             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                               duckdb$expr_constant(45, experimental = experimental)
@@ -174,7 +177,7 @@ rel3 <- duckdb$rel_filter(
                       )
                     ),
                     duckdb$expr_function(
-                      "==",
+                      "___eq_na_matches_na",
                       list(
                         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                           duckdb$expr_constant(19, experimental = experimental)
@@ -187,7 +190,7 @@ rel3 <- duckdb$rel_filter(
                   )
                 ),
                 duckdb$expr_function(
-                  "==",
+                  "___eq_na_matches_na",
                   list(
                     if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                       duckdb$expr_constant(3, experimental = experimental)
@@ -200,7 +203,7 @@ rel3 <- duckdb$rel_filter(
               )
             ),
             duckdb$expr_function(
-              "==",
+              "___eq_na_matches_na",
               list(
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                   duckdb$expr_constant(36, experimental = experimental)
@@ -213,7 +216,7 @@ rel3 <- duckdb$rel_filter(
           )
         ),
         duckdb$expr_function(
-          "==",
+          "___eq_na_matches_na",
           list(
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
               duckdb$expr_constant(9, experimental = experimental)

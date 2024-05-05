@@ -2,26 +2,26 @@ qloadm("tools/tpch/001.qs")
 duckdb <- asNamespace("duckdb")
 con <- DBI::dbConnect(duckdb::duckdb())
 experimental <- FALSE
-invisible(DBI::dbExecute(con, "CREATE MACRO \">=\"(x, y) AS x >= y"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"<\"(x, y) AS x < y"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(x, y) AS COALESCE(x, y)"))
+invisible(DBI::dbExecute(con, 'CREATE MACRO ">="(x, y) AS x >= y'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "<"(x, y) AS x < y'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(
   DBI::dbExecute(
     con,
-    "CREATE MACRO \"___divide\"(x, y) AS CASE WHEN y = 0 THEN CASE WHEN x = 0 THEN CAST('NaN' AS double) WHEN x > 0 THEN CAST('+Infinity' AS double) ELSE CAST('-Infinity' AS double) END ELSE CAST(x AS double) / y END"
+    r"[CREATE MACRO "___divide"(x, y) AS CASE WHEN y = 0 THEN CASE WHEN x = 0 THEN CAST('NaN' AS double) WHEN x > 0 THEN CAST('+Infinity' AS double) ELSE CAST('-Infinity' AS double) END ELSE CAST(x AS double) / y END]"
   )
 )
 invisible(
   DBI::dbExecute(
     con,
-    "CREATE MACRO \"if_else\"(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)"
+    'CREATE MACRO "if_else"(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)'
   )
 )
 invisible(
   DBI::dbExecute(
     con,
-    "CREATE MACRO \"grepl\"(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)"
+    'CREATE MACRO "grepl"(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)'
   )
 )
 df1 <- lineitem

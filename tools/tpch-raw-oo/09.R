@@ -5,13 +5,13 @@ experimental <- FALSE
 invisible(
   DBI::dbExecute(
     con,
-    "CREATE MACRO \"grepl\"(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)"
+    'CREATE MACRO "grepl"(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)'
   )
 )
-invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(x, y) AS COALESCE(x, y)"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"as.integer\"(x) AS CAST(x AS int32)"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"desc\"(x) AS (-x)"))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "as.integer"(x) AS CAST(x AS int32)'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "desc"(x) AS (-x)'))
 df1 <- part
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb$rel_project(

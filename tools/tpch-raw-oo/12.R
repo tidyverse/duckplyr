@@ -2,19 +2,22 @@ qloadm("tools/tpch/001.qs")
 duckdb <- asNamespace("duckdb")
 con <- DBI::dbConnect(duckdb::duckdb())
 experimental <- FALSE
-invisible(DBI::dbExecute(con, "CREATE MACRO \"|\"(x, y) AS (x OR y)"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"<\"(x, y) AS x < y"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \">=\"(x, y) AS x >= y"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(x, y) AS COALESCE(x, y)"))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
+invisible(
+  DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
+)
+invisible(DBI::dbExecute(con, 'CREATE MACRO "<"(x, y) AS x < y'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO ">="(x, y) AS x >= y'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(
   DBI::dbExecute(
     con,
-    "CREATE MACRO \"if_else\"(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)"
+    'CREATE MACRO "if_else"(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)'
   )
 )
-invisible(DBI::dbExecute(con, "CREATE MACRO \"&\"(x, y) AS (x AND y)"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"!=\"(x, y) AS x <> y"))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "!="(x, y) AS x <> y'))
 df1 <- lineitem
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb$rel_project(
@@ -114,7 +117,7 @@ rel3 <- duckdb$rel_filter(
       "|",
       list(
         duckdb$expr_function(
-          "==",
+          "___eq_na_matches_na",
           list(
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
               duckdb$expr_constant("MAIL", experimental = experimental)
@@ -125,7 +128,7 @@ rel3 <- duckdb$rel_filter(
           )
         ),
         duckdb$expr_function(
-          "==",
+          "___eq_na_matches_na",
           list(
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
               duckdb$expr_constant("SHIP", experimental = experimental)

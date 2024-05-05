@@ -2,13 +2,13 @@ qloadm("tools/tpch/001.qs")
 duckdb <- asNamespace("duckdb")
 con <- DBI::dbConnect(duckdb::duckdb())
 experimental <- FALSE
-invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(x, y) AS COALESCE(x, y)"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"<\"(x, y) AS x < y"))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "<"(x, y) AS x < y'))
 invisible(
   DBI::dbExecute(
     con,
-    "CREATE MACRO \"___divide\"(x, y) AS CASE WHEN y = 0 THEN CASE WHEN x = 0 THEN CAST('NaN' AS double) WHEN x > 0 THEN CAST('+Infinity' AS double) ELSE CAST('-Infinity' AS double) END ELSE CAST(x AS double) / y END"
+    r"[CREATE MACRO "___divide"(x, y) AS CASE WHEN y = 0 THEN CASE WHEN x = 0 THEN CAST('NaN' AS double) WHEN x > 0 THEN CAST('+Infinity' AS double) ELSE CAST('-Infinity' AS double) END ELSE CAST(x AS double) / y END]"
   )
 )
 df1 <- part

@@ -2,10 +2,10 @@ qloadm("tools/tpch/001.qs")
 duckdb <- asNamespace("duckdb")
 con <- DBI::dbConnect(duckdb::duckdb())
 experimental <- FALSE
-invisible(DBI::dbExecute(con, "CREATE MACRO \">=\"(x, y) AS x >= y"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"<\"(x, y) AS x < y"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(x, y) AS COALESCE(x, y)"))
+invisible(DBI::dbExecute(con, 'CREATE MACRO ">="(x, y) AS x >= y'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "<"(x, y) AS x < y'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 df1 <- lineitem
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb$rel_project(

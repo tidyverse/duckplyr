@@ -99,7 +99,7 @@ tpch_raw_oo_12 <- function(con, experimental) {
         "|",
         list(
           duckdb$expr_function(
-            "==",
+            "___eq_na_matches_na",
             list(
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                 duckdb$expr_constant("MAIL", experimental = experimental)
@@ -110,7 +110,7 @@ tpch_raw_oo_12 <- function(con, experimental) {
             )
           ),
           duckdb$expr_function(
-            "==",
+            "___eq_na_matches_na",
             list(
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                 duckdb$expr_constant("SHIP", experimental = experimental)
