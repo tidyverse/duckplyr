@@ -1,9 +1,9 @@
 pkgload::load_all()
 
-Sys.setenv(DUCKPLYR_FORCE = TRUE)
+withr::local_envvar(DUCKPLYR_FORCE = TRUE)
 # Don't care
-# Sys.setenv(DUCKPLYR_EXPERIMENTAL = FALSE)
-Sys.setenv(DUCKPLYR_META_GLOBAL = TRUE)
+# withr::local_envvar(DUCKPLYR_EXPERIMENTAL = FALSE)
+withr::local_envvar(DUCKPLYR_META_GLOBAL = TRUE)
 
 qloadm("tools/tpch/001.qs")
 
