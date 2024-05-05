@@ -1548,19 +1548,6 @@ test_that("as_duckplyr_df() and mutate(d = a %in% NA_real_)", {
 })
 
 
-test_that("as_duckplyr_df() and mutate(c = NA_character_, d = c %in% NA_character_)", {
-  # Data
-  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
-
-  # Run
-  pre <- test_df %>% as_duckplyr_df() %>% mutate(c = NA_character_, d = c %in% NA_character_)
-  post <- test_df %>% mutate(c = NA_character_, d = c %in% NA_character_) %>% as_duckplyr_df()
-
-  # Compare
-  expect_identical(pre, post)
-})
-
-
 test_that("as_duckplyr_df() and mutate(d = a %in% NULL)", {
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))

@@ -192,12 +192,23 @@ rel_translate <- function(
                 if (length(values) == 0) {
                   return(relexpr_constant(FALSE))
                 }
-                consts <- map(values, do_translate, in_window = in_window)
-                ops <- map(consts, list, do_translate(expr[[2]]))
-                cmp <- map(ops, relexpr_function, name = "___eq_na_matches_na")
-                alt <- reduce(cmp, function(.x, .y) {
+
+                lhs <- do_translate(expr[[2]])
+
+                if (anyNA(values)) {
+                  cmp_base <- list(relexpr_function("is.na", list(lhs)))
+                  values <- values[!is.na(values)]
+                } else {
+                  cmp_base <- NULL
+                }
+
+                consts <- map(values, do_translate)
+                ops <- map(consts, ~ list(lhs, .x))
+                cmp <- map(ops, relexpr_function, name = "r_base::==")
+                alt <- reduce(c(cmp_base, cmp), function(.x, .y) {
                   relexpr_function("|", list(.x, .y))
                 })
+                meta_ext_register()
                 return(alt)
               },
               error = identity

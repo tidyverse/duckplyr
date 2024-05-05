@@ -9,25 +9,25 @@ tpch_raw_12 <- function(con, experimental) {
         "|",
         list(
           duckdb$expr_function(
-            "___eq_na_matches_na",
+            "r_base::==",
             list(
+              duckdb$expr_reference("l_shipmode"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                 duckdb$expr_constant("MAIL", experimental = experimental)
               } else {
                 duckdb$expr_constant("MAIL")
-              },
-              duckdb$expr_reference("l_shipmode")
+              }
             )
           ),
           duckdb$expr_function(
-            "___eq_na_matches_na",
+            "r_base::==",
             list(
+              duckdb$expr_reference("l_shipmode"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                 duckdb$expr_constant("SHIP", experimental = experimental)
               } else {
                 duckdb$expr_constant("SHIP")
-              },
-              duckdb$expr_reference("l_shipmode")
+              }
             )
           )
         )

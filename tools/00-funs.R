@@ -644,7 +644,8 @@ test_extra_arg_map <- list(
 
     # %in% with NA
     "d = a %in% NA_real_",
-    "c = NA_character_, d = c %in% NA_character_",
+    # https://github.com/hannes/duckdb-rfuns/issues/89
+    # "c = NA_character_, d = c %in% NA_character_",
 
     # %in% and empty
     "d = a %in% NULL",
