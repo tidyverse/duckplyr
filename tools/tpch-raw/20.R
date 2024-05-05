@@ -2,17 +2,17 @@ qloadm("tools/tpch/001.qs")
 duckdb <- asNamespace("duckdb")
 con <- DBI::dbConnect(duckdb::duckdb())
 experimental <- FALSE
-invisible(DBI::dbExecute(con, "CREATE MACRO \"==\"(x, y) AS x = y"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"___coalesce\"(x, y) AS COALESCE(x, y)"))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS x = y'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(
   DBI::dbExecute(
     con,
-    "CREATE MACRO \"grepl\"(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)"
+    'CREATE MACRO "grepl"(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)'
   )
 )
-invisible(DBI::dbExecute(con, "CREATE MACRO \">=\"(x, y) AS x >= y"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \"<\"(x, y) AS x < y"))
-invisible(DBI::dbExecute(con, "CREATE MACRO \">\"(x, y) AS x > y"))
+invisible(DBI::dbExecute(con, 'CREATE MACRO ">="(x, y) AS x >= y'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "<"(x, y) AS x < y'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO ">"(x, y) AS x > y'))
 df1 <- nation
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb$rel_filter(

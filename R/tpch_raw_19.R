@@ -196,7 +196,7 @@ tpch_raw_19 <- function(con, experimental) {
                                                     "|",
                                                     list(
                                                       duckdb$expr_function(
-                                                        "==",
+                                                        "___eq_na_matches_na",
                                                         list(
                                                           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                                             duckdb$expr_constant("SM CASE", experimental = experimental)
@@ -207,7 +207,7 @@ tpch_raw_19 <- function(con, experimental) {
                                                         )
                                                       ),
                                                       duckdb$expr_function(
-                                                        "==",
+                                                        "___eq_na_matches_na",
                                                         list(
                                                           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                                             duckdb$expr_constant("SM BOX", experimental = experimental)
@@ -220,7 +220,7 @@ tpch_raw_19 <- function(con, experimental) {
                                                     )
                                                   ),
                                                   duckdb$expr_function(
-                                                    "==",
+                                                    "___eq_na_matches_na",
                                                     list(
                                                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                                         duckdb$expr_constant("SM PACK", experimental = experimental)
@@ -233,7 +233,7 @@ tpch_raw_19 <- function(con, experimental) {
                                                 )
                                               ),
                                               duckdb$expr_function(
-                                                "==",
+                                                "___eq_na_matches_na",
                                                 list(
                                                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                                     duckdb$expr_constant("SM PKG", experimental = experimental)
@@ -313,7 +313,7 @@ tpch_raw_19 <- function(con, experimental) {
                         "|",
                         list(
                           duckdb$expr_function(
-                            "==",
+                            "___eq_na_matches_na",
                             list(
                               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                 duckdb$expr_constant("AIR", experimental = experimental)
@@ -324,7 +324,7 @@ tpch_raw_19 <- function(con, experimental) {
                             )
                           ),
                           duckdb$expr_function(
-                            "==",
+                            "___eq_na_matches_na",
                             list(
                               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                 duckdb$expr_constant("AIR REG", experimental = experimental)
@@ -393,7 +393,7 @@ tpch_raw_19 <- function(con, experimental) {
                                                     "|",
                                                     list(
                                                       duckdb$expr_function(
-                                                        "==",
+                                                        "___eq_na_matches_na",
                                                         list(
                                                           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                                             duckdb$expr_constant("MED BAG", experimental = experimental)
@@ -404,7 +404,7 @@ tpch_raw_19 <- function(con, experimental) {
                                                         )
                                                       ),
                                                       duckdb$expr_function(
-                                                        "==",
+                                                        "___eq_na_matches_na",
                                                         list(
                                                           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                                             duckdb$expr_constant("MED BOX", experimental = experimental)
@@ -417,7 +417,7 @@ tpch_raw_19 <- function(con, experimental) {
                                                     )
                                                   ),
                                                   duckdb$expr_function(
-                                                    "==",
+                                                    "___eq_na_matches_na",
                                                     list(
                                                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                                         duckdb$expr_constant("MED PKG", experimental = experimental)
@@ -430,7 +430,7 @@ tpch_raw_19 <- function(con, experimental) {
                                                 )
                                               ),
                                               duckdb$expr_function(
-                                                "==",
+                                                "___eq_na_matches_na",
                                                 list(
                                                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                                     duckdb$expr_constant("MED PACK", experimental = experimental)
@@ -510,7 +510,7 @@ tpch_raw_19 <- function(con, experimental) {
                         "|",
                         list(
                           duckdb$expr_function(
-                            "==",
+                            "___eq_na_matches_na",
                             list(
                               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                 duckdb$expr_constant("AIR", experimental = experimental)
@@ -521,7 +521,7 @@ tpch_raw_19 <- function(con, experimental) {
                             )
                           ),
                           duckdb$expr_function(
-                            "==",
+                            "___eq_na_matches_na",
                             list(
                               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                 duckdb$expr_constant("AIR REG", experimental = experimental)
@@ -592,7 +592,7 @@ tpch_raw_19 <- function(con, experimental) {
                                                 "|",
                                                 list(
                                                   duckdb$expr_function(
-                                                    "==",
+                                                    "___eq_na_matches_na",
                                                     list(
                                                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                                         duckdb$expr_constant("LG CASE", experimental = experimental)
@@ -603,7 +603,7 @@ tpch_raw_19 <- function(con, experimental) {
                                                     )
                                                   ),
                                                   duckdb$expr_function(
-                                                    "==",
+                                                    "___eq_na_matches_na",
                                                     list(
                                                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                                         duckdb$expr_constant("LG BOX", experimental = experimental)
@@ -616,7 +616,7 @@ tpch_raw_19 <- function(con, experimental) {
                                                 )
                                               ),
                                               duckdb$expr_function(
-                                                "==",
+                                                "___eq_na_matches_na",
                                                 list(
                                                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                                     duckdb$expr_constant("LG PACK", experimental = experimental)
@@ -629,7 +629,7 @@ tpch_raw_19 <- function(con, experimental) {
                                             )
                                           ),
                                           duckdb$expr_function(
-                                            "==",
+                                            "___eq_na_matches_na",
                                             list(
                                               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                                 duckdb$expr_constant("LG PKG", experimental = experimental)
@@ -709,7 +709,7 @@ tpch_raw_19 <- function(con, experimental) {
                     "|",
                     list(
                       duckdb$expr_function(
-                        "==",
+                        "___eq_na_matches_na",
                         list(
                           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                             duckdb$expr_constant("AIR", experimental = experimental)
@@ -720,7 +720,7 @@ tpch_raw_19 <- function(con, experimental) {
                         )
                       ),
                       duckdb$expr_function(
-                        "==",
+                        "___eq_na_matches_na",
                         list(
                           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                             duckdb$expr_constant("AIR REG", experimental = experimental)

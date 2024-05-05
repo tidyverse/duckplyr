@@ -54,7 +54,7 @@ tpch_raw_16 <- function(con, experimental) {
                                 "|",
                                 list(
                                   duckdb$expr_function(
-                                    "==",
+                                    "___eq_na_matches_na",
                                     list(
                                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                         duckdb$expr_constant(49, experimental = experimental)
@@ -65,7 +65,7 @@ tpch_raw_16 <- function(con, experimental) {
                                     )
                                   ),
                                   duckdb$expr_function(
-                                    "==",
+                                    "___eq_na_matches_na",
                                     list(
                                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                         duckdb$expr_constant(14, experimental = experimental)
@@ -78,7 +78,7 @@ tpch_raw_16 <- function(con, experimental) {
                                 )
                               ),
                               duckdb$expr_function(
-                                "==",
+                                "___eq_na_matches_na",
                                 list(
                                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                     duckdb$expr_constant(23, experimental = experimental)
@@ -91,7 +91,7 @@ tpch_raw_16 <- function(con, experimental) {
                             )
                           ),
                           duckdb$expr_function(
-                            "==",
+                            "___eq_na_matches_na",
                             list(
                               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                 duckdb$expr_constant(45, experimental = experimental)
@@ -104,7 +104,7 @@ tpch_raw_16 <- function(con, experimental) {
                         )
                       ),
                       duckdb$expr_function(
-                        "==",
+                        "___eq_na_matches_na",
                         list(
                           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                             duckdb$expr_constant(19, experimental = experimental)
@@ -117,7 +117,7 @@ tpch_raw_16 <- function(con, experimental) {
                     )
                   ),
                   duckdb$expr_function(
-                    "==",
+                    "___eq_na_matches_na",
                     list(
                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                         duckdb$expr_constant(3, experimental = experimental)
@@ -130,7 +130,7 @@ tpch_raw_16 <- function(con, experimental) {
                 )
               ),
               duckdb$expr_function(
-                "==",
+                "___eq_na_matches_na",
                 list(
                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                     duckdb$expr_constant(36, experimental = experimental)
@@ -143,7 +143,7 @@ tpch_raw_16 <- function(con, experimental) {
             )
           ),
           duckdb$expr_function(
-            "==",
+            "___eq_na_matches_na",
             list(
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                 duckdb$expr_constant(9, experimental = experimental)
