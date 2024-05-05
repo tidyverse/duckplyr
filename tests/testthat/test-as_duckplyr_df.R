@@ -1549,6 +1549,8 @@ test_that("as_duckplyr_df() and mutate(d = a %in% NA_real_)", {
 
 
 test_that("as_duckplyr_df() and mutate(c = NA_character_, d = c %in% NA_character_)", {
+  skip("Needs rfuns fix")
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
