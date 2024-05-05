@@ -225,6 +225,7 @@ rel_translate <- function(
           "/" = "___divide",
           "log10" = "___log10",
           "log" = "___log",
+          "as.integer" = "r_base::as.integer",
           NULL
         )
 
@@ -263,6 +264,9 @@ rel_translate <- function(
 
         if (name %in% names(aliases)) {
           name <- aliases[[name]]
+          if (grepl("^r_base::", name)) {
+            meta_ext_register()
+          }
         }
         # name <- aliases[name] %|% name
 
@@ -309,7 +313,8 @@ rel_translate <- function(
           )
 
           if (name == "row_number") {
-            fun <- relexpr_function("as.integer", list(fun))
+            fun <- relexpr_function("r_base::as.integer", list(fun))
+            meta_ext_register()
           }
         }
         fun
