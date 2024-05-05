@@ -8,9 +8,6 @@ invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
-invisible(
-  DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
-)
 invisible(DBI::dbExecute(con, 'CREATE MACRO ">="(x, y) AS "r_base::>="(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "<="(x, y) AS "r_base::<="(x, y)'))
 df1 <- lineitem
@@ -209,51 +206,51 @@ rel7 <- duckdb$rel_filter(
                                                   "|",
                                                   list(
                                                     duckdb$expr_function(
-                                                      "___eq_na_matches_na",
+                                                      "r_base::==",
                                                       list(
+                                                        duckdb$expr_reference("p_container"),
                                                         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                                           duckdb$expr_constant("SM CASE", experimental = experimental)
                                                         } else {
                                                           duckdb$expr_constant("SM CASE")
-                                                        },
-                                                        duckdb$expr_reference("p_container")
+                                                        }
                                                       )
                                                     ),
                                                     duckdb$expr_function(
-                                                      "___eq_na_matches_na",
+                                                      "r_base::==",
                                                       list(
+                                                        duckdb$expr_reference("p_container"),
                                                         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                                           duckdb$expr_constant("SM BOX", experimental = experimental)
                                                         } else {
                                                           duckdb$expr_constant("SM BOX")
-                                                        },
-                                                        duckdb$expr_reference("p_container")
+                                                        }
                                                       )
                                                     )
                                                   )
                                                 ),
                                                 duckdb$expr_function(
-                                                  "___eq_na_matches_na",
+                                                  "r_base::==",
                                                   list(
+                                                    duckdb$expr_reference("p_container"),
                                                     if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                                       duckdb$expr_constant("SM PACK", experimental = experimental)
                                                     } else {
                                                       duckdb$expr_constant("SM PACK")
-                                                    },
-                                                    duckdb$expr_reference("p_container")
+                                                    }
                                                   )
                                                 )
                                               )
                                             ),
                                             duckdb$expr_function(
-                                              "___eq_na_matches_na",
+                                              "r_base::==",
                                               list(
+                                                duckdb$expr_reference("p_container"),
                                                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                                   duckdb$expr_constant("SM PKG", experimental = experimental)
                                                 } else {
                                                   duckdb$expr_constant("SM PKG")
-                                                },
-                                                duckdb$expr_reference("p_container")
+                                                }
                                               )
                                             )
                                           )
@@ -326,25 +323,25 @@ rel7 <- duckdb$rel_filter(
                       "|",
                       list(
                         duckdb$expr_function(
-                          "___eq_na_matches_na",
+                          "r_base::==",
                           list(
+                            duckdb$expr_reference("l_shipmode"),
                             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                               duckdb$expr_constant("AIR", experimental = experimental)
                             } else {
                               duckdb$expr_constant("AIR")
-                            },
-                            duckdb$expr_reference("l_shipmode")
+                            }
                           )
                         ),
                         duckdb$expr_function(
-                          "___eq_na_matches_na",
+                          "r_base::==",
                           list(
+                            duckdb$expr_reference("l_shipmode"),
                             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                               duckdb$expr_constant("AIR REG", experimental = experimental)
                             } else {
                               duckdb$expr_constant("AIR REG")
-                            },
-                            duckdb$expr_reference("l_shipmode")
+                            }
                           )
                         )
                       )
@@ -406,51 +403,51 @@ rel7 <- duckdb$rel_filter(
                                                   "|",
                                                   list(
                                                     duckdb$expr_function(
-                                                      "___eq_na_matches_na",
+                                                      "r_base::==",
                                                       list(
+                                                        duckdb$expr_reference("p_container"),
                                                         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                                           duckdb$expr_constant("MED BAG", experimental = experimental)
                                                         } else {
                                                           duckdb$expr_constant("MED BAG")
-                                                        },
-                                                        duckdb$expr_reference("p_container")
+                                                        }
                                                       )
                                                     ),
                                                     duckdb$expr_function(
-                                                      "___eq_na_matches_na",
+                                                      "r_base::==",
                                                       list(
+                                                        duckdb$expr_reference("p_container"),
                                                         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                                           duckdb$expr_constant("MED BOX", experimental = experimental)
                                                         } else {
                                                           duckdb$expr_constant("MED BOX")
-                                                        },
-                                                        duckdb$expr_reference("p_container")
+                                                        }
                                                       )
                                                     )
                                                   )
                                                 ),
                                                 duckdb$expr_function(
-                                                  "___eq_na_matches_na",
+                                                  "r_base::==",
                                                   list(
+                                                    duckdb$expr_reference("p_container"),
                                                     if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                                       duckdb$expr_constant("MED PKG", experimental = experimental)
                                                     } else {
                                                       duckdb$expr_constant("MED PKG")
-                                                    },
-                                                    duckdb$expr_reference("p_container")
+                                                    }
                                                   )
                                                 )
                                               )
                                             ),
                                             duckdb$expr_function(
-                                              "___eq_na_matches_na",
+                                              "r_base::==",
                                               list(
+                                                duckdb$expr_reference("p_container"),
                                                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                                   duckdb$expr_constant("MED PACK", experimental = experimental)
                                                 } else {
                                                   duckdb$expr_constant("MED PACK")
-                                                },
-                                                duckdb$expr_reference("p_container")
+                                                }
                                               )
                                             )
                                           )
@@ -523,25 +520,25 @@ rel7 <- duckdb$rel_filter(
                       "|",
                       list(
                         duckdb$expr_function(
-                          "___eq_na_matches_na",
+                          "r_base::==",
                           list(
+                            duckdb$expr_reference("l_shipmode"),
                             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                               duckdb$expr_constant("AIR", experimental = experimental)
                             } else {
                               duckdb$expr_constant("AIR")
-                            },
-                            duckdb$expr_reference("l_shipmode")
+                            }
                           )
                         ),
                         duckdb$expr_function(
-                          "___eq_na_matches_na",
+                          "r_base::==",
                           list(
+                            duckdb$expr_reference("l_shipmode"),
                             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                               duckdb$expr_constant("AIR REG", experimental = experimental)
                             } else {
                               duckdb$expr_constant("AIR REG")
-                            },
-                            duckdb$expr_reference("l_shipmode")
+                            }
                           )
                         )
                       )
@@ -605,51 +602,51 @@ rel7 <- duckdb$rel_filter(
                                               "|",
                                               list(
                                                 duckdb$expr_function(
-                                                  "___eq_na_matches_na",
+                                                  "r_base::==",
                                                   list(
+                                                    duckdb$expr_reference("p_container"),
                                                     if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                                       duckdb$expr_constant("LG CASE", experimental = experimental)
                                                     } else {
                                                       duckdb$expr_constant("LG CASE")
-                                                    },
-                                                    duckdb$expr_reference("p_container")
+                                                    }
                                                   )
                                                 ),
                                                 duckdb$expr_function(
-                                                  "___eq_na_matches_na",
+                                                  "r_base::==",
                                                   list(
+                                                    duckdb$expr_reference("p_container"),
                                                     if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                                       duckdb$expr_constant("LG BOX", experimental = experimental)
                                                     } else {
                                                       duckdb$expr_constant("LG BOX")
-                                                    },
-                                                    duckdb$expr_reference("p_container")
+                                                    }
                                                   )
                                                 )
                                               )
                                             ),
                                             duckdb$expr_function(
-                                              "___eq_na_matches_na",
+                                              "r_base::==",
                                               list(
+                                                duckdb$expr_reference("p_container"),
                                                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                                   duckdb$expr_constant("LG PACK", experimental = experimental)
                                                 } else {
                                                   duckdb$expr_constant("LG PACK")
-                                                },
-                                                duckdb$expr_reference("p_container")
+                                                }
                                               )
                                             )
                                           )
                                         ),
                                         duckdb$expr_function(
-                                          "___eq_na_matches_na",
+                                          "r_base::==",
                                           list(
+                                            duckdb$expr_reference("p_container"),
                                             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                               duckdb$expr_constant("LG PKG", experimental = experimental)
                                             } else {
                                               duckdb$expr_constant("LG PKG")
-                                            },
-                                            duckdb$expr_reference("p_container")
+                                            }
                                           )
                                         )
                                       )
@@ -722,25 +719,25 @@ rel7 <- duckdb$rel_filter(
                   "|",
                   list(
                     duckdb$expr_function(
-                      "___eq_na_matches_na",
+                      "r_base::==",
                       list(
+                        duckdb$expr_reference("l_shipmode"),
                         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                           duckdb$expr_constant("AIR", experimental = experimental)
                         } else {
                           duckdb$expr_constant("AIR")
-                        },
-                        duckdb$expr_reference("l_shipmode")
+                        }
                       )
                     ),
                     duckdb$expr_function(
-                      "___eq_na_matches_na",
+                      "r_base::==",
                       list(
+                        duckdb$expr_reference("l_shipmode"),
                         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                           duckdb$expr_constant("AIR REG", experimental = experimental)
                         } else {
                           duckdb$expr_constant("AIR REG")
-                        },
-                        duckdb$expr_reference("l_shipmode")
+                        }
                       )
                     )
                   )

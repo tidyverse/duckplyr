@@ -3265,11 +3265,8 @@ test_that("relational filter(a %in% 2:3, g == 2) order-preserving", {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
-  invisible(
-    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
-  )
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
@@ -3306,25 +3303,25 @@ test_that("relational filter(a %in% 2:3, g == 2) order-preserving", {
         "|",
         list(
           duckdb$expr_function(
-            "___eq_na_matches_na",
+            "r_base::==",
             list(
+              duckdb$expr_reference("a"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                 duckdb$expr_constant(2L, experimental = experimental)
               } else {
                 duckdb$expr_constant(2L)
-              },
-              duckdb$expr_reference("a")
+              }
             )
           ),
           duckdb$expr_function(
-            "___eq_na_matches_na",
+            "r_base::==",
             list(
+              duckdb$expr_reference("a"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                 duckdb$expr_constant(3L, experimental = experimental)
               } else {
                 duckdb$expr_constant(3L)
-              },
-              duckdb$expr_reference("a")
+              }
             )
           )
         )
@@ -3378,12 +3375,9 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-preserving", {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
+  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
-  invisible(
-    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
-  )
-  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
@@ -3423,25 +3417,25 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-preserving", {
             "|",
             list(
               duckdb$expr_function(
-                "___eq_na_matches_na",
+                "r_base::==",
                 list(
+                  duckdb$expr_reference("a"),
                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                     duckdb$expr_constant(2L, experimental = experimental)
                   } else {
                     duckdb$expr_constant(2L)
-                  },
-                  duckdb$expr_reference("a")
+                  }
                 )
               ),
               duckdb$expr_function(
-                "___eq_na_matches_na",
+                "r_base::==",
                 list(
+                  duckdb$expr_reference("a"),
                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                     duckdb$expr_constant(3L, experimental = experimental)
                   } else {
                     duckdb$expr_constant(3L)
-                  },
-                  duckdb$expr_reference("a")
+                  }
                 )
               )
             )
@@ -3638,11 +3632,8 @@ test_that("relational filter(a %in% 2:3, g == 2) order-enforcing", {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
-  invisible(
-    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
-  )
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
@@ -3654,25 +3645,25 @@ test_that("relational filter(a %in% 2:3, g == 2) order-enforcing", {
         "|",
         list(
           duckdb$expr_function(
-            "___eq_na_matches_na",
+            "r_base::==",
             list(
+              duckdb$expr_reference("a"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                 duckdb$expr_constant(2L, experimental = experimental)
               } else {
                 duckdb$expr_constant(2L)
-              },
-              duckdb$expr_reference("a")
+              }
             )
           ),
           duckdb$expr_function(
-            "___eq_na_matches_na",
+            "r_base::==",
             list(
+              duckdb$expr_reference("a"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                 duckdb$expr_constant(3L, experimental = experimental)
               } else {
                 duckdb$expr_constant(3L)
-              },
-              duckdb$expr_reference("a")
+              }
             )
           )
         )
@@ -3709,12 +3700,9 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-enforcing", {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
+  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
-  invisible(
-    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
-  )
-  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
@@ -3729,25 +3717,25 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-enforcing", {
             "|",
             list(
               duckdb$expr_function(
-                "___eq_na_matches_na",
+                "r_base::==",
                 list(
+                  duckdb$expr_reference("a"),
                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                     duckdb$expr_constant(2L, experimental = experimental)
                   } else {
                     duckdb$expr_constant(2L)
-                  },
-                  duckdb$expr_reference("a")
+                  }
                 )
               ),
               duckdb$expr_function(
-                "___eq_na_matches_na",
+                "r_base::==",
                 list(
+                  duckdb$expr_reference("a"),
                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                     duckdb$expr_constant(3L, experimental = experimental)
                   } else {
                     duckdb$expr_constant(3L)
-                  },
-                  duckdb$expr_reference("a")
+                  }
                 )
               )
             )
@@ -8561,9 +8549,8 @@ test_that("relational mutate(d = a %in% NA_real_) order-preserving", {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(
-    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
-  )
+  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "is.na"(x) AS (x IS NULL OR isnan(x))'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -8586,17 +8573,7 @@ test_that("relational mutate(d = a %in% NA_real_) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function(
-          "___eq_na_matches_na",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(NA_real_, experimental = experimental)
-            } else {
-              duckdb$expr_constant(NA_real_)
-            },
-            duckdb$expr_reference("a")
-          )
-        )
+        tmp_expr <- duckdb$expr_function("is.na", list(duckdb$expr_reference("a")))
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
       }
@@ -8611,102 +8588,6 @@ test_that("relational mutate(d = a %in% NA_real_) order-preserving", {
       b = rep(2, 6L),
       g = c(1L, 2L, 2L, 3L, 3L, 3L),
       d = logical(6)
-    )
-  )
-  DBI::dbDisconnect(con, shutdown = TRUE)
-})
-
-test_that("relational mutate(c = NA_character_, d = c %in% NA_character_) order-preserving", {
-  # Autogenerated
-  duckdb <- asNamespace("duckdb")
-  drv <- duckdb::duckdb()
-  con <- DBI::dbConnect(drv)
-  experimental <- FALSE
-  invisible(
-    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
-  )
-  df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
-
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
-  rel2 <- duckdb$rel_project(
-    rel1,
-    list(
-      {
-        tmp_expr <- duckdb$expr_reference("a")
-        duckdb$expr_set_alias(tmp_expr, "a")
-        tmp_expr
-      },
-      {
-        tmp_expr <- duckdb$expr_reference("b")
-        duckdb$expr_set_alias(tmp_expr, "b")
-        tmp_expr
-      },
-      {
-        tmp_expr <- duckdb$expr_reference("g")
-        duckdb$expr_set_alias(tmp_expr, "g")
-        tmp_expr
-      },
-      {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_character_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_character_)
-        }
-        duckdb$expr_set_alias(tmp_expr, "c")
-        tmp_expr
-      }
-    )
-  )
-  rel3 <- duckdb$rel_project(
-    rel2,
-    list(
-      {
-        tmp_expr <- duckdb$expr_reference("a")
-        duckdb$expr_set_alias(tmp_expr, "a")
-        tmp_expr
-      },
-      {
-        tmp_expr <- duckdb$expr_reference("b")
-        duckdb$expr_set_alias(tmp_expr, "b")
-        tmp_expr
-      },
-      {
-        tmp_expr <- duckdb$expr_reference("g")
-        duckdb$expr_set_alias(tmp_expr, "g")
-        tmp_expr
-      },
-      {
-        tmp_expr <- duckdb$expr_reference("c")
-        duckdb$expr_set_alias(tmp_expr, "c")
-        tmp_expr
-      },
-      {
-        tmp_expr <- duckdb$expr_function(
-          "___eq_na_matches_na",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(NA_character_, experimental = experimental)
-            } else {
-              duckdb$expr_constant(NA_character_)
-            },
-            duckdb$expr_reference("c")
-          )
-        )
-        duckdb$expr_set_alias(tmp_expr, "d")
-        tmp_expr
-      }
-    )
-  )
-  rel3
-  out <- duckdb$rel_to_altrep(rel3)
-  expect_identical(
-    out,
-    data.frame(
-      a = seq(1, 6, by = 1),
-      b = rep(2, 6L),
-      g = c(1L, 2L, 2L, 3L, 3L, 3L),
-      c = rep(NA_character_, 6L),
-      d = rep(TRUE, 6L)
     )
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
@@ -12488,9 +12369,8 @@ test_that("relational mutate(d = a %in% NA_real_) order-enforcing", {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(
-    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
-  )
+  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "is.na"(x) AS (x IS NULL OR isnan(x))'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -12513,17 +12393,7 @@ test_that("relational mutate(d = a %in% NA_real_) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function(
-          "___eq_na_matches_na",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(NA_real_, experimental = experimental)
-            } else {
-              duckdb$expr_constant(NA_real_)
-            },
-            duckdb$expr_reference("a")
-          )
-        )
+        tmp_expr <- duckdb$expr_function("is.na", list(duckdb$expr_reference("a")))
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
       }
@@ -12542,106 +12412,6 @@ test_that("relational mutate(d = a %in% NA_real_) order-enforcing", {
       b = rep(2, 6L),
       g = c(1L, 2L, 2L, 3L, 3L, 3L),
       d = logical(6)
-    )
-  )
-  DBI::dbDisconnect(con, shutdown = TRUE)
-})
-
-test_that("relational mutate(c = NA_character_, d = c %in% NA_character_) order-enforcing", {
-  # Autogenerated
-  duckdb <- asNamespace("duckdb")
-  drv <- duckdb::duckdb()
-  con <- DBI::dbConnect(drv)
-  experimental <- FALSE
-  invisible(
-    DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
-  )
-  df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
-
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
-  rel2 <- duckdb$rel_project(
-    rel1,
-    list(
-      {
-        tmp_expr <- duckdb$expr_reference("a")
-        duckdb$expr_set_alias(tmp_expr, "a")
-        tmp_expr
-      },
-      {
-        tmp_expr <- duckdb$expr_reference("b")
-        duckdb$expr_set_alias(tmp_expr, "b")
-        tmp_expr
-      },
-      {
-        tmp_expr <- duckdb$expr_reference("g")
-        duckdb$expr_set_alias(tmp_expr, "g")
-        tmp_expr
-      },
-      {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_character_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_character_)
-        }
-        duckdb$expr_set_alias(tmp_expr, "c")
-        tmp_expr
-      }
-    )
-  )
-  rel3 <- duckdb$rel_project(
-    rel2,
-    list(
-      {
-        tmp_expr <- duckdb$expr_reference("a")
-        duckdb$expr_set_alias(tmp_expr, "a")
-        tmp_expr
-      },
-      {
-        tmp_expr <- duckdb$expr_reference("b")
-        duckdb$expr_set_alias(tmp_expr, "b")
-        tmp_expr
-      },
-      {
-        tmp_expr <- duckdb$expr_reference("g")
-        duckdb$expr_set_alias(tmp_expr, "g")
-        tmp_expr
-      },
-      {
-        tmp_expr <- duckdb$expr_reference("c")
-        duckdb$expr_set_alias(tmp_expr, "c")
-        tmp_expr
-      },
-      {
-        tmp_expr <- duckdb$expr_function(
-          "___eq_na_matches_na",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(NA_character_, experimental = experimental)
-            } else {
-              duckdb$expr_constant(NA_character_)
-            },
-            duckdb$expr_reference("c")
-          )
-        )
-        duckdb$expr_set_alias(tmp_expr, "d")
-        tmp_expr
-      }
-    )
-  )
-  rel4 <- duckdb$rel_order(
-    rel3,
-    list(duckdb$expr_reference("a"), duckdb$expr_reference("b"), duckdb$expr_reference("g"), duckdb$expr_reference("c"), duckdb$expr_reference("d"))
-  )
-  rel4
-  out <- duckdb$rel_to_altrep(rel4)
-  expect_identical(
-    out,
-    data.frame(
-      a = seq(1, 6, by = 1),
-      b = rep(2, 6L),
-      g = c(1L, 2L, 2L, 3L, 3L, 3L),
-      c = rep(NA_character_, 6L),
-      d = rep(TRUE, 6L)
     )
   )
   DBI::dbDisconnect(con, shutdown = TRUE)
