@@ -8,7 +8,6 @@ invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO ">="(x, y) AS "r_base::>="(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "<="(x, y) AS "r_base::<="(x, y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "as.integer"(x) AS CAST(x AS int32)'))
 invisible(
   DBI::dbExecute(
     con,
@@ -707,7 +706,7 @@ rel57 <- duckdb$rel_project(
     },
     {
       tmp_expr <- duckdb$expr_function(
-        "as.integer",
+        "r_base::as.integer",
         list(
           duckdb$expr_function(
             "strftime",

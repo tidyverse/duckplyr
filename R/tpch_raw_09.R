@@ -555,7 +555,7 @@ tpch_raw_09 <- function(con, experimental) {
       },
       {
         tmp_expr <- duckdb$expr_function(
-          "as.integer",
+          "r_base::as.integer",
           list(
             duckdb$expr_function(
               "strftime",

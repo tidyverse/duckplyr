@@ -12,7 +12,6 @@ invisible(
 invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "as.integer"(x) AS CAST(x AS int32)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "desc"(x) AS (-x)'))
 df1 <- part
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -569,7 +568,7 @@ rel39 <- duckdb$rel_project(
     },
     {
       tmp_expr <- duckdb$expr_function(
-        "as.integer",
+        "r_base::as.integer",
         list(
           duckdb$expr_function(
             "strftime",
