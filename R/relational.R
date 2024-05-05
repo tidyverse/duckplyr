@@ -118,9 +118,10 @@ rel_translate <- function(
 
     switch(typeof(expr),
       character = ,
-      logical = ,
       integer = ,
       double = relexpr_constant(expr),
+      # https://github.com/duckdb/duckdb-r/pull/156
+      logical = if (is.na(expr)) relexpr_function("___null", list()) else relexpr_constant(expr),
       #
       symbol = {
         if (as.character(expr) %in% names_forbidden) {
@@ -188,6 +189,9 @@ rel_translate <- function(
             tryCatch(
               {
                 values <- eval(expr[[3]], envir = env)
+                if (length(values) == 0) {
+                  return(relexpr_constant(FALSE))
+                }
                 consts <- map(values, do_translate, in_window = in_window)
                 ops <- map(consts, list, do_translate(expr[[2]]))
                 cmp <- map(ops, relexpr_function, name = "___eq_na_matches_na")

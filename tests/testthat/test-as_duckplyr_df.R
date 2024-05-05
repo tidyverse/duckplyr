@@ -1561,6 +1561,32 @@ test_that("as_duckplyr_df() and mutate(c = NA_character_, d = c %in% NA_characte
 })
 
 
+test_that("as_duckplyr_df() and mutate(d = a %in% NULL)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(d = a %in% NULL)
+  post <- test_df %>% mutate(d = a %in% NULL) %>% as_duckplyr_df()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and mutate(d = a %in% integer())", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(d = a %in% integer())
+  post <- test_df %>% mutate(d = a %in% integer()) %>% as_duckplyr_df()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
 test_that("as_duckplyr_df() and mutate(d = NA_real_, e = is.na(d))", {
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
@@ -1620,6 +1646,58 @@ test_that("as_duckplyr_df() and mutate(c = .data$b)", {
   # Run
   pre <- test_df %>% as_duckplyr_df() %>% mutate(c = .data$b)
   post <- test_df %>% mutate(c = .data$b) %>% as_duckplyr_df()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and mutate(d = NA)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(d = NA)
+  post <- test_df %>% mutate(d = NA) %>% as_duckplyr_df()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and mutate(d = NA_integer_)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(d = NA_integer_)
+  post <- test_df %>% mutate(d = NA_integer_) %>% as_duckplyr_df()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and mutate(d = NA_real_)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(d = NA_real_)
+  post <- test_df %>% mutate(d = NA_real_) %>% as_duckplyr_df()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df() and mutate(d = NA_character_)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(d = NA_character_)
+  post <- test_df %>% mutate(d = NA_character_) %>% as_duckplyr_df()
 
   # Compare
   expect_identical(pre, post)
