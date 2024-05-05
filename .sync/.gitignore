@@ -2,4 +2,5 @@
 /dplyr-revdep/
 /dplyr-cloud/
 /problems*/
+/cran/
 *.tar.gz

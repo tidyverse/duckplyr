@@ -33,6 +33,7 @@ forbidden <- fs::path("R", c(
   "overwrite.R",
   "qs.R",
   "relational-altrep-wrap.R",
+  "revdep.R",
   "restore.R",
   "telemetry.R",
   "tpch.R",
