@@ -1690,6 +1690,19 @@ test_that("as_duckplyr_df() and mutate(d = NA_character_)", {
   expect_identical(pre, post)
 })
 
+
+test_that("as_duckplyr_df() and mutate(d = if_else(a > 1, \"ok\", NA))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df() %>% mutate(d = if_else(a > 1, "ok", NA))
+  post <- test_df %>% mutate(d = if_else(a > 1, "ok", NA)) %>% as_duckplyr_df()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
 test_that("as_duckplyr_df() and n_groups()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 

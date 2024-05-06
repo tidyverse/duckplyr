@@ -110,7 +110,7 @@ rel_translate <- function(
 
   used <- character()
 
-  do_translate <- function(expr, in_window = FALSE) {
+  do_translate <- function(expr, in_window = FALSE, top_level = FALSE) {
     if (is_quosure(expr)) {
       # FIXME: What to do with the environment here?
       expr <- quo_get_expr(expr)
@@ -121,7 +121,7 @@ rel_translate <- function(
       integer = ,
       double = relexpr_constant(expr),
       # https://github.com/duckdb/duckdb-r/pull/156
-      logical = if (is.na(expr)) relexpr_function("___null", list()) else relexpr_constant(expr),
+      logical = if (top_level && length(expr) == 1 && is.na(expr)) relexpr_function("___null", list()) else relexpr_constant(expr),
       #
       symbol = {
         if (as.character(expr) %in% names_forbidden) {
@@ -335,7 +335,7 @@ rel_translate <- function(
     )
   }
 
-  out <- do_translate(expr)
+  out <- do_translate(expr, top_level = TRUE)
 
   if (!is.null(alias) && !identical(alias, "")) {
     out <- relexpr_set_alias(out, alias)
