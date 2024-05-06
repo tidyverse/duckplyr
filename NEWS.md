@@ -1,5 +1,34 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.3.2.9010 (2024-05-06)
+
+## Bug fixes
+
+  - `head(-1)` forwards to the default implementation (#131, #156).
+
+  - Fix cli syntax for internal error message (#151).
+
+## Chore
+
+  - Use equality from rfuns to implement a better version of `%in%` (#155).
+
+  - Use rfuns for `as.integer()` (#154).
+
+  - Use built-in rfuns extension to implement equality and inequality operators, improve translation for `NA` and `%in%` (#83, #148).
+
+  - Restore state after sync script (#152).
+
+  - `pkg_review()` (#150).
+
+  - Remove styler dependency (#137, #138).
+
+## Testing
+
+  - Synchronize tests (#153).
+
+  - Test that `vec_ptype()` does not materialize (#149).
+
+
 # duckplyr 0.3.2.9009 (2024-05-04)
 
 ## Chore
