@@ -69,14 +69,14 @@ pak::pak("duckdblabs/duckplyr")
 
 ```{r attach}
 library(conflicted)
-library(duckplyr)
+library(dplyr)
 conflict_prefer("filter", "duckplyr")
 ```
 
 There are two ways to use duckplyr.
 
-1. To enable duckplyr for individual data frames, use `as_duckplyr_df()` as the first step in your pipe.
-1. To enable duckplyr for the entire session, use `methods_overwrite()`.
+1. To enable duckplyr for individual data frames, use `duckplyr::as_duckplyr_df()` as the first step in your pipe, without attaching the package.
+1. By calling `library(duckplyr)`, it is enabled for the entire session. To turn this off, call `methods_restore()`.
 
 The examples below illustrate both methods.
 See also the companion [demo repository](https://github.com/Tmonster/duckplyr_demo) for a use case with a large dataset.
@@ -85,14 +85,14 @@ See also the companion [demo repository](https://github.com/Tmonster/duckplyr_de
 
 This example illustrates usage of duckplyr for individual data frames.
 
-Use `as_duckplyr_df()` to enable processing with duckdb:
+Use `duckplyr::as_duckplyr_df()` to enable processing with duckdb:
 
 ```{r}
 out <-
   palmerpenguins::penguins %>%
   # CAVEAT: factor columns are not supported yet
   mutate(across(where(is.factor), as.character)) %>%
-  as_duckplyr_df() %>%
+  duckplyr::as_duckplyr_df() %>%
   mutate(bill_area = bill_length_mm * bill_depth_mm) %>%
   summarize(.by = c(species, sex), mean_bill_area = mean(bill_area)) %>%
   filter(species != "Gentoo")
@@ -131,10 +131,10 @@ out
 
 This example illustrates usage of duckplyr for all data frames in the R session.
 
-Use `methods_overwrite()` to enable processing with duckdb for all data frames:
+Use `library(duckplyr)` or `duckplyr::methods_overwrite()` to enable processing with duckdb for all data frames:
 
 ```{r}
-methods_overwrite()
+duckplyr::methods_overwrite()
 ```
 
 This is the same query as above, without `as_duckplyr_df()`:
@@ -165,10 +165,10 @@ Querying the number of rows also starts the computation:
 nrow(out)
 ```
 
-Restart R, or call `methods_restore()` to revert to the default dplyr implementation.
+Restart R, or call `duckplyr::methods_restore()` to revert to the default dplyr implementation.
 
 ```{r}
-methods_restore()
+duckplyr::methods_restore()
 ```
 
 dplyr is active again:
@@ -201,7 +201,7 @@ Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = "")
 
 ```{r}
 palmerpenguins::penguins %>%
-  as_duckplyr_df() %>%
+  duckplyr::as_duckplyr_df() %>%
   transmute(bill_area = bill_length_mm * bill_depth_mm) %>%
   head(3)
 ```
@@ -212,7 +212,14 @@ This package also provides generics, for which other packages may then implement
 
 ```{r extensibility}
 library(duckplyr)
+```
 
+
+```{r overwrite, echo = FALSE}
+methods_overwrite()
+```
+
+```{r extensibility2}
 # Create a relational to be used by examples below
 new_dfrel <- function(x) {
   stopifnot(is.data.frame(x))
