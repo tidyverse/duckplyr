@@ -186,37 +186,32 @@ rel_translate <- function(
             }
           },
           "%in%" = {
-            tryCatch(
-              {
-                values <- eval(expr[[3]], envir = env)
-                if (length(values) == 0) {
-                  return(relexpr_constant(FALSE))
-                }
+            values <- eval_tidy(expr[[3]], data = new_failing_mask(names_data), env = env)
+            if (length(values) == 0) {
+              return(relexpr_constant(FALSE))
+            }
 
-                lhs <- do_translate(expr[[2]])
+            lhs <- do_translate(expr[[2]])
 
-                if (anyNA(values)) {
-                  has_na <- TRUE
-                  values <- values[!is.na(values)]
-                  if (length(values) == 0) {
-                    return(relexpr_function("is.na", list(lhs)))
-                  }
-                } else {
-                  has_na <- FALSE
-                }
+            if (anyNA(values)) {
+              has_na <- TRUE
+              values <- values[!is.na(values)]
+              if (length(values) == 0) {
+                return(relexpr_function("is.na", list(lhs)))
+              }
+            } else {
+              has_na <- FALSE
+            }
 
-                consts <- map(values, do_translate)
-                ops <- map(consts, ~ list(lhs, .x))
-                cmp <- map(ops, relexpr_function, name = "r_base::==")
-                alt <- reduce(cmp, function(.x, .y) {
-                  relexpr_function("|", list(.x, .y))
-                })
-                coalesce <- relexpr_function("___coalesce", list(alt, relexpr_constant(has_na)))
-                meta_ext_register()
-                return(coalesce)
-              },
-              error = identity
-            )
+            consts <- map(values, do_translate)
+            ops <- map(consts, ~ list(lhs, .x))
+            cmp <- map(ops, relexpr_function, name = "r_base::==")
+            alt <- reduce(cmp, function(.x, .y) {
+              relexpr_function("|", list(.x, .y))
+            })
+            coalesce <- relexpr_function("___coalesce", list(alt, relexpr_constant(has_na)))
+            meta_ext_register()
+            return(coalesce)
           },
           "$" = {
             if (expr[[2]] == ".data") {
@@ -346,4 +341,10 @@ rel_translate <- function(
   }
 
   structure(out, used = used)
+}
+
+new_failing_mask <- function(names_data) {
+  env <- new_environment()
+  walk(names_data, ~ env_bind_lazy(env, !!.x := stop("Can't access data in this context")))
+  new_data_mask(env)
 }
