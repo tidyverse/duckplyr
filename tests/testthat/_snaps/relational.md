@@ -16,3 +16,11 @@
       Error in `do_translate()`:
       ! Can't translate named argument `c(b = )`.
 
+# a %in% b
+
+    Code
+      rel_translate(quo(a %in% b), data.frame(a = 1:3, b = 2:4))
+    Condition
+      Error:
+      ! Can't access data in this context
+
