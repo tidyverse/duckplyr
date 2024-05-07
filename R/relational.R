@@ -196,20 +196,24 @@ rel_translate <- function(
                 lhs <- do_translate(expr[[2]])
 
                 if (anyNA(values)) {
-                  cmp_base <- list(relexpr_function("is.na", list(lhs)))
+                  has_na <- TRUE
                   values <- values[!is.na(values)]
+                  if (length(values) == 0) {
+                    return(relexpr_function("is.na", list(lhs)))
+                  }
                 } else {
-                  cmp_base <- NULL
+                  has_na <- FALSE
                 }
 
                 consts <- map(values, do_translate)
                 ops <- map(consts, ~ list(lhs, .x))
                 cmp <- map(ops, relexpr_function, name = "r_base::==")
-                alt <- reduce(c(cmp_base, cmp), function(.x, .y) {
+                alt <- reduce(cmp, function(.x, .y) {
                   relexpr_function("|", list(.x, .y))
                 })
+                coalesce <- relexpr_function("___coalesce", list(alt, relexpr_constant(has_na)))
                 meta_ext_register()
-                return(alt)
+                return(coalesce)
               },
               error = identity
             )

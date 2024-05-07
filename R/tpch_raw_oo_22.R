@@ -59,7 +59,7 @@ tpch_raw_oo_22 <- function(con, experimental) {
         "&",
         list(
           duckdb$expr_function(
-            "|",
+            "___coalesce",
             list(
               duckdb$expr_function(
                 "|",
@@ -77,29 +77,60 @@ tpch_raw_oo_22 <- function(con, experimental) {
                                 "|",
                                 list(
                                   duckdb$expr_function(
-                                    "r_base::==",
+                                    "|",
                                     list(
                                       duckdb$expr_function(
-                                        "substr",
+                                        "r_base::==",
                                         list(
-                                          duckdb$expr_reference("c_phone"),
+                                          duckdb$expr_function(
+                                            "substr",
+                                            list(
+                                              duckdb$expr_reference("c_phone"),
+                                              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+                                                duckdb$expr_constant(1L, experimental = experimental)
+                                              } else {
+                                                duckdb$expr_constant(1L)
+                                              },
+                                              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+                                                duckdb$expr_constant(2L, experimental = experimental)
+                                              } else {
+                                                duckdb$expr_constant(2L)
+                                              }
+                                            )
+                                          ),
                                           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                            duckdb$expr_constant(1L, experimental = experimental)
+                                            duckdb$expr_constant("13", experimental = experimental)
                                           } else {
-                                            duckdb$expr_constant(1L)
-                                          },
-                                          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                            duckdb$expr_constant(2L, experimental = experimental)
-                                          } else {
-                                            duckdb$expr_constant(2L)
+                                            duckdb$expr_constant("13")
                                           }
                                         )
                                       ),
-                                      if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                        duckdb$expr_constant("13", experimental = experimental)
-                                      } else {
-                                        duckdb$expr_constant("13")
-                                      }
+                                      duckdb$expr_function(
+                                        "r_base::==",
+                                        list(
+                                          duckdb$expr_function(
+                                            "substr",
+                                            list(
+                                              duckdb$expr_reference("c_phone"),
+                                              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+                                                duckdb$expr_constant(1L, experimental = experimental)
+                                              } else {
+                                                duckdb$expr_constant(1L)
+                                              },
+                                              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+                                                duckdb$expr_constant(2L, experimental = experimental)
+                                              } else {
+                                                duckdb$expr_constant(2L)
+                                              }
+                                            )
+                                          ),
+                                          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+                                            duckdb$expr_constant("31", experimental = experimental)
+                                          } else {
+                                            duckdb$expr_constant("31")
+                                          }
+                                        )
+                                      )
                                     )
                                   ),
                                   duckdb$expr_function(
@@ -122,9 +153,9 @@ tpch_raw_oo_22 <- function(con, experimental) {
                                         )
                                       ),
                                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                        duckdb$expr_constant("31", experimental = experimental)
+                                        duckdb$expr_constant("23", experimental = experimental)
                                       } else {
-                                        duckdb$expr_constant("31")
+                                        duckdb$expr_constant("23")
                                       }
                                     )
                                   )
@@ -150,9 +181,9 @@ tpch_raw_oo_22 <- function(con, experimental) {
                                     )
                                   ),
                                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                    duckdb$expr_constant("23", experimental = experimental)
+                                    duckdb$expr_constant("29", experimental = experimental)
                                   } else {
-                                    duckdb$expr_constant("23")
+                                    duckdb$expr_constant("29")
                                   }
                                 )
                               )
@@ -178,9 +209,9 @@ tpch_raw_oo_22 <- function(con, experimental) {
                                 )
                               ),
                               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                duckdb$expr_constant("29", experimental = experimental)
+                                duckdb$expr_constant("30", experimental = experimental)
                               } else {
-                                duckdb$expr_constant("29")
+                                duckdb$expr_constant("30")
                               }
                             )
                           )
@@ -206,9 +237,9 @@ tpch_raw_oo_22 <- function(con, experimental) {
                             )
                           ),
                           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                            duckdb$expr_constant("30", experimental = experimental)
+                            duckdb$expr_constant("18", experimental = experimental)
                           } else {
-                            duckdb$expr_constant("30")
+                            duckdb$expr_constant("18")
                           }
                         )
                       )
@@ -234,40 +265,19 @@ tpch_raw_oo_22 <- function(con, experimental) {
                         )
                       ),
                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                        duckdb$expr_constant("18", experimental = experimental)
+                        duckdb$expr_constant("17", experimental = experimental)
                       } else {
-                        duckdb$expr_constant("18")
+                        duckdb$expr_constant("17")
                       }
                     )
                   )
                 )
               ),
-              duckdb$expr_function(
-                "r_base::==",
-                list(
-                  duckdb$expr_function(
-                    "substr",
-                    list(
-                      duckdb$expr_reference("c_phone"),
-                      if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                        duckdb$expr_constant(1L, experimental = experimental)
-                      } else {
-                        duckdb$expr_constant(1L)
-                      },
-                      if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                        duckdb$expr_constant(2L, experimental = experimental)
-                      } else {
-                        duckdb$expr_constant(2L)
-                      }
-                    )
-                  ),
-                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                    duckdb$expr_constant("17", experimental = experimental)
-                  } else {
-                    duckdb$expr_constant("17")
-                  }
-                )
-              )
+              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+                duckdb$expr_constant(FALSE, experimental = experimental)
+              } else {
+                duckdb$expr_constant(FALSE)
+              }
             )
           ),
           duckdb$expr_function(
@@ -779,7 +789,7 @@ tpch_raw_oo_22 <- function(con, experimental) {
         "&",
         list(
           duckdb$expr_function(
-            "|",
+            "___coalesce",
             list(
               duckdb$expr_function(
                 "|",
@@ -797,14 +807,30 @@ tpch_raw_oo_22 <- function(con, experimental) {
                                 "|",
                                 list(
                                   duckdb$expr_function(
-                                    "r_base::==",
+                                    "|",
                                     list(
-                                      duckdb$expr_reference("cntrycode"),
-                                      if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                        duckdb$expr_constant("13", experimental = experimental)
-                                      } else {
-                                        duckdb$expr_constant("13")
-                                      }
+                                      duckdb$expr_function(
+                                        "r_base::==",
+                                        list(
+                                          duckdb$expr_reference("cntrycode"),
+                                          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+                                            duckdb$expr_constant("13", experimental = experimental)
+                                          } else {
+                                            duckdb$expr_constant("13")
+                                          }
+                                        )
+                                      ),
+                                      duckdb$expr_function(
+                                        "r_base::==",
+                                        list(
+                                          duckdb$expr_reference("cntrycode"),
+                                          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+                                            duckdb$expr_constant("31", experimental = experimental)
+                                          } else {
+                                            duckdb$expr_constant("31")
+                                          }
+                                        )
+                                      )
                                     )
                                   ),
                                   duckdb$expr_function(
@@ -812,9 +838,9 @@ tpch_raw_oo_22 <- function(con, experimental) {
                                     list(
                                       duckdb$expr_reference("cntrycode"),
                                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                        duckdb$expr_constant("31", experimental = experimental)
+                                        duckdb$expr_constant("23", experimental = experimental)
                                       } else {
-                                        duckdb$expr_constant("31")
+                                        duckdb$expr_constant("23")
                                       }
                                     )
                                   )
@@ -825,9 +851,9 @@ tpch_raw_oo_22 <- function(con, experimental) {
                                 list(
                                   duckdb$expr_reference("cntrycode"),
                                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                    duckdb$expr_constant("23", experimental = experimental)
+                                    duckdb$expr_constant("29", experimental = experimental)
                                   } else {
-                                    duckdb$expr_constant("23")
+                                    duckdb$expr_constant("29")
                                   }
                                 )
                               )
@@ -838,9 +864,9 @@ tpch_raw_oo_22 <- function(con, experimental) {
                             list(
                               duckdb$expr_reference("cntrycode"),
                               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                duckdb$expr_constant("29", experimental = experimental)
+                                duckdb$expr_constant("30", experimental = experimental)
                               } else {
-                                duckdb$expr_constant("29")
+                                duckdb$expr_constant("30")
                               }
                             )
                           )
@@ -851,9 +877,9 @@ tpch_raw_oo_22 <- function(con, experimental) {
                         list(
                           duckdb$expr_reference("cntrycode"),
                           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                            duckdb$expr_constant("30", experimental = experimental)
+                            duckdb$expr_constant("18", experimental = experimental)
                           } else {
-                            duckdb$expr_constant("30")
+                            duckdb$expr_constant("18")
                           }
                         )
                       )
@@ -864,25 +890,19 @@ tpch_raw_oo_22 <- function(con, experimental) {
                     list(
                       duckdb$expr_reference("cntrycode"),
                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                        duckdb$expr_constant("18", experimental = experimental)
+                        duckdb$expr_constant("17", experimental = experimental)
                       } else {
-                        duckdb$expr_constant("18")
+                        duckdb$expr_constant("17")
                       }
                     )
                   )
                 )
               ),
-              duckdb$expr_function(
-                "r_base::==",
-                list(
-                  duckdb$expr_reference("cntrycode"),
-                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                    duckdb$expr_constant("17", experimental = experimental)
-                  } else {
-                    duckdb$expr_constant("17")
-                  }
-                )
-              )
+              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+                duckdb$expr_constant(FALSE, experimental = experimental)
+              } else {
+                duckdb$expr_constant(FALSE)
+              }
             )
           ),
           duckdb$expr_function(">", list(duckdb$expr_reference("c_acctbal"), duckdb$expr_reference("acctbal_min")))

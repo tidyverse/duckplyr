@@ -6,30 +6,40 @@ tpch_raw_12 <- function(con, experimental) {
     rel1,
     list(
       duckdb$expr_function(
-        "|",
+        "___coalesce",
         list(
           duckdb$expr_function(
-            "r_base::==",
+            "|",
             list(
-              duckdb$expr_reference("l_shipmode"),
-              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                duckdb$expr_constant("MAIL", experimental = experimental)
-              } else {
-                duckdb$expr_constant("MAIL")
-              }
+              duckdb$expr_function(
+                "r_base::==",
+                list(
+                  duckdb$expr_reference("l_shipmode"),
+                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+                    duckdb$expr_constant("MAIL", experimental = experimental)
+                  } else {
+                    duckdb$expr_constant("MAIL")
+                  }
+                )
+              ),
+              duckdb$expr_function(
+                "r_base::==",
+                list(
+                  duckdb$expr_reference("l_shipmode"),
+                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+                    duckdb$expr_constant("SHIP", experimental = experimental)
+                  } else {
+                    duckdb$expr_constant("SHIP")
+                  }
+                )
+              )
             )
           ),
-          duckdb$expr_function(
-            "r_base::==",
-            list(
-              duckdb$expr_reference("l_shipmode"),
-              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                duckdb$expr_constant("SHIP", experimental = experimental)
-              } else {
-                duckdb$expr_constant("SHIP")
-              }
-            )
-          )
+          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+            duckdb$expr_constant(FALSE, experimental = experimental)
+          } else {
+            duckdb$expr_constant(FALSE)
+          }
         )
       ),
       duckdb$expr_function(
