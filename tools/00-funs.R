@@ -668,6 +668,9 @@ test_extra_arg_map <- list(
     "d = NA_real_",
     "d = NA_character_",
 
+    # NA in use
+    'd = if_else(a > 1, "ok", NA)',
+
     NULL
   ),
   nest_join = "join_by(a)",
