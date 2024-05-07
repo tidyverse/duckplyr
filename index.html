@@ -130,9 +130,18 @@
 <span><span class="c">#&gt; ┌─────────────┴─────────────┐</span></span>
 <span><span class="c">#&gt; │           FILTER          │</span></span>
 <span><span class="c">#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
-<span><span class="c">#&gt; │   (species != 'Gentoo')   │</span></span>
+<span><span class="c">#&gt; │r_base::!=(species, 'Gentoo│</span></span>
+<span><span class="c">#&gt; │             ')            │</span></span>
 <span><span class="c">#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
-<span><span class="c">#&gt; │          EC: 344          │</span></span>
+<span><span class="c">#&gt; │           EC: 34          │</span></span>
+<span><span class="c">#&gt; └─────────────┬─────────────┘                             </span></span>
+<span><span class="c">#&gt; ┌─────────────┴─────────────┐</span></span>
+<span><span class="c">#&gt; │         PROJECTION        │</span></span>
+<span><span class="c">#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class="c">#&gt; │             #0            │</span></span>
+<span><span class="c">#&gt; │             #1            │</span></span>
+<span><span class="c">#&gt; │             #2            │</span></span>
+<span><span class="c">#&gt; │             #3            │</span></span>
 <span><span class="c">#&gt; └─────────────┬─────────────┘                             </span></span>
 <span><span class="c">#&gt; ┌─────────────┴─────────────┐</span></span>
 <span><span class="c">#&gt; │      STREAMING_WINDOW     │</span></span>
@@ -161,6 +170,14 @@
 <span><span class="c">#&gt; │            sex            │</span></span>
 <span><span class="c">#&gt; │       ___row_number       │</span></span>
 <span><span class="c">#&gt; │         bill_area         │</span></span>
+<span><span class="c">#&gt; └─────────────┬─────────────┘                             </span></span>
+<span><span class="c">#&gt; ┌─────────────┴─────────────┐</span></span>
+<span><span class="c">#&gt; │         PROJECTION        │</span></span>
+<span><span class="c">#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class="c">#&gt; │             #0            │</span></span>
+<span><span class="c">#&gt; │             #1            │</span></span>
+<span><span class="c">#&gt; │             #2            │</span></span>
+<span><span class="c">#&gt; │             #3            │</span></span>
 <span><span class="c">#&gt; └─────────────┬─────────────┘                             </span></span>
 <span><span class="c">#&gt; ┌─────────────┴─────────────┐</span></span>
 <span><span class="c">#&gt; │      STREAMING_WINDOW     │</span></span>
@@ -317,13 +334,13 @@
 <span><span class="c">#&gt; guide future development. By default, no data will be collected or uploaded.</span></span>
 <span><span class="c">#&gt; <span style="color: #00BBBB;">ℹ</span> A fallback situation just occurred. The following information would have been</span></span>
 <span><span class="c">#&gt;   recorded:</span></span>
-<span><span class="c">#&gt;   {"version":"0.3.1","message":"Can't convert columns of class &lt;factor&gt; to</span></span>
+<span><span class="c">#&gt;   {"version":"0.3.2","message":"Can't convert columns of class &lt;factor&gt; to</span></span>
 <span><span class="c">#&gt;   relational. Affected</span></span>
 <span><span class="c">#&gt;   column:\n`...1`.","name":"transmute","x":{"...1":"factor","...2":"factor","...3":"numeric","...4":"numeric","...5":"integer","...6":"integer","...7":"factor","...8":"integer"},"args":{"dots":{"...9":"...3</span></span>
 <span><span class="c">#&gt;   * ...4"}}}</span></span>
 <span><span class="c">#&gt; → Run `duckplyr::fallback_sitrep()` to review the current settings.</span></span>
 <span><span class="c">#&gt; → Run `Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)` to enable fallback logging,</span></span>
-<span><span class="c">#&gt;   and `Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = 1)` in addition to enable</span></span>
+<span><span class="c">#&gt;   and `Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = TRUE)` in addition to enable</span></span>
 <span><span class="c">#&gt;   printing of fallback situations to the console.</span></span>
 <span><span class="c">#&gt; → Run `duckplyr::fallback_review()` to review the available reports, and</span></span>
 <span><span class="c">#&gt;   `duckplyr::fallback_upload()` to upload them.</span></span>

@@ -2,7 +2,7 @@ pandoc: 3.1.11
 pkgdown: 2.0.9.9000
 pkgdown_sha: 7bc81933fa3e63252a109010ecf361f109a6744c
 articles: {}
-last_built: 2024-05-07T18:04Z
+last_built: 2024-05-07T19:33Z
 urls:
   reference: https://duckdblabs.github.io/duckplyr/reference
   article: https://duckdblabs.github.io/duckplyr/articles
