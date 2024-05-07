@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2.9010</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,6 +43,28 @@
       <small>Source: <a href="https://github.com/duckdblabs/duckplyr/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.2.9010" id="duckplyr-0329010-2024-05-06">duckplyr 0.3.2.9010 (2024-05-06)<a class="anchor" aria-label="anchor" href="#duckplyr-0329010-2024-05-06"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-0-3-2-9010">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-2-9010"></a></h3>
+<ul><li><p><code>head(-1)</code> forwards to the default implementation (<a href="https://github.com/duckdblabs/duckplyr/issues/131" class="external-link">#131</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/156" class="external-link">#156</a>).</p></li>
+<li><p>Fix cli syntax for internal error message (<a href="https://github.com/duckdblabs/duckplyr/issues/151" class="external-link">#151</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="chore-0-3-2-9010">Chore<a class="anchor" aria-label="anchor" href="#chore-0-3-2-9010"></a></h3>
+<ul><li><p>Use equality from rfuns to implement a better version of <code>%in%</code> (<a href="https://github.com/duckdblabs/duckplyr/issues/155" class="external-link">#155</a>).</p></li>
+<li><p>Use rfuns for <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> (<a href="https://github.com/duckdblabs/duckplyr/issues/154" class="external-link">#154</a>).</p></li>
+<li><p>Use built-in rfuns extension to implement equality and inequality operators, improve translation for <code>NA</code> and <code>%in%</code> (<a href="https://github.com/duckdblabs/duckplyr/issues/83" class="external-link">#83</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/148" class="external-link">#148</a>).</p></li>
+<li><p>Restore state after sync script (<a href="https://github.com/duckdblabs/duckplyr/issues/152" class="external-link">#152</a>).</p></li>
+<li><p><code>pkg_review()</code> (<a href="https://github.com/duckdblabs/duckplyr/issues/150" class="external-link">#150</a>).</p></li>
+<li><p>Remove styler dependency (<a href="https://github.com/duckdblabs/duckplyr/issues/137" class="external-link">#137</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/138" class="external-link">#138</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="testing-0-3-2-9010">Testing<a class="anchor" aria-label="anchor" href="#testing-0-3-2-9010"></a></h3>
+<ul><li><p>Synchronize tests (<a href="https://github.com/duckdblabs/duckplyr/issues/153" class="external-link">#153</a>).</p></li>
+<li><p>Test that <code>vec_ptype()</code> does not materialize (<a href="https://github.com/duckdblabs/duckplyr/issues/149" class="external-link">#149</a>).</p></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.2.9009" id="duckplyr-0329009-2024-05-04">duckplyr 0.3.2.9009 (2024-05-04)<a class="anchor" aria-label="anchor" href="#duckplyr-0329009-2024-05-04"></a></h2>
 <div class="section level3">

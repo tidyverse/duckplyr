@@ -12,7 +12,7 @@ and one option."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/
     
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2.9010</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,9 +96,9 @@ when the package is loaded.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projection [___coalesce(lhs.a_x, rhs.a_y) as a]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Join REGULAR INNER ___eq_na_matches_na(lhs.a_x, rhs.a_y)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_x]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55932a81c0b0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55bb91a051d0)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_y]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55932a829a58)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55bb91a14a98)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -132,9 +132,9 @@ when the package is loaded.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projection [___coalesce(lhs.a_x, rhs.a_y) as a]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Join REGULAR INNER ___eq_na_matches_na(lhs.a_x, rhs.a_y)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_x]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55932abaed88)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55bb91d84778)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_y]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55932abada48)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55bb91d96ba0)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -160,10 +160,10 @@ when the package is loaded.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Join REGULAR INNER ___eq_na_matches_na(lhs.a_x, rhs.a_y)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Projection [a_x as a_x, row_number() OVER () as ___row_number_x]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         Projection [a as a_x]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x55932ad35e18)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x55bb91f0f648)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Projection [a_y as a_y, row_number() OVER () as ___row_number_y]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         Projection [a as a_y]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x55932ad34b10)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x55bb91f1dc30)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -208,7 +208,8 @@ when the package is loaded.</p>
 <span class="r-in"><span>    <span class="fu"><a href="as_duckplyr_df.html">as_duckplyr_df</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fu">add_one</span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error in do_translate(expr) : Unknown function: `add_one()`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error in do_translate(expr, top_level = TRUE) : </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Unknown function: `add_one()`</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Sys.setenv(DUCKPLYR_FALLBACK_INFO = TRUE)</span></span></span>
 <span class="r-in"><span><span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://withr.r-lib.org/reference/with_envvar.html" class="external-link">with_envvar</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>DUCKPLYR_FALLBACK_INFO <span class="op">=</span> <span class="st">"TRUE"</span><span class="op">)</span>, <span class="op">{</span></span></span>
