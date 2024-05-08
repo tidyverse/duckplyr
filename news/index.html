@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.99.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,123 +44,71 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.2.9010" id="duckplyr-0329010-2024-05-06">duckplyr 0.3.2.9010 (2024-05-06)<a class="anchor" aria-label="anchor" href="#duckplyr-0329010-2024-05-06"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.3.99.9000" id="duckplyr-03999000-2024-05-08">duckplyr 0.3.99.9000 (2024-05-08)<a class="anchor" aria-label="anchor" href="#duckplyr-03999000-2024-05-08"></a></h2>
 <div class="section level3">
-<h3 id="bug-fixes-0-3-2-9010">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-2-9010"></a></h3>
-<ul><li><p><code>head(-1)</code> forwards to the default implementation (<a href="https://github.com/duckdblabs/duckplyr/issues/131" class="external-link">#131</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/156" class="external-link">#156</a>).</p></li>
-<li><p>Fix cli syntax for internal error message (<a href="https://github.com/duckdblabs/duckplyr/issues/151" class="external-link">#151</a>).</p></li>
+<h3 id="bug-fixes-0-3-99-9000">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-99-9000"></a></h3>
+<ul><li>Avoid translating <code>a %in% b</code> if <code>b</code> is a column (<a href="https://github.com/duckdblabs/duckplyr/issues/160" class="external-link">#160</a>).</li>
+<li>Fix <code>NA %in% letters</code> case (<a href="https://github.com/duckdblabs/duckplyr/issues/159" class="external-link">#159</a>).</li>
+<li>Distinguish between constant <code>NA</code> and those used in an expression (<a href="https://github.com/duckdblabs/duckplyr/issues/157" class="external-link">#157</a>).</li>
+<li>
+<code>head(-1)</code> forwards to the default implementation (<a href="https://github.com/duckdblabs/duckplyr/issues/131" class="external-link">#131</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/156" class="external-link">#156</a>).</li>
+<li>Fix cli syntax for internal error message (<a href="https://github.com/duckdblabs/duckplyr/issues/151" class="external-link">#151</a>).</li>
+<li>More careful detection of row names in data frame.</li>
+<li>Always check roundtrip for timestamp columns.</li>
+<li>
+<code>%in%</code> evaluates RHS in the correct environment.</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join()</a></code> and other join functions call <code><a href="https://dplyr.tidyverse.org/reference/auto_copy.html" class="external-link">auto_copy()</a></code>.</li>
+<li>Only reset expression depth if it has been set before.</li>
+<li>Require fallback if the result contains duplicate column names when ignoring case.</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/row_number.html" class="external-link">row_number()</a></code> returns integer.</li>
+<li>
+<code>is.na(NaN)</code> is <code>TRUE</code>.</li>
+<li>
+<code>summarise(count = n(), count = n())</code> creates only one column named <code>count</code>.</li>
+<li>Correctly match <code>NA</code> in <code>%in%</code>.</li>
+<li>Correct wording in instructions for enabling fallback logging (<a href="https://github.com/TimTaylor" class="external-link">@TimTaylor</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/141" class="external-link">#141</a>).</li>
 </ul></div>
 <div class="section level3">
-<h3 id="chore-0-3-2-9010">Chore<a class="anchor" aria-label="anchor" href="#chore-0-3-2-9010"></a></h3>
-<ul><li><p>Use equality from rfuns to implement a better version of <code>%in%</code> (<a href="https://github.com/duckdblabs/duckplyr/issues/155" class="external-link">#155</a>).</p></li>
-<li><p>Use rfuns for <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> (<a href="https://github.com/duckdblabs/duckplyr/issues/154" class="external-link">#154</a>).</p></li>
-<li><p>Use built-in rfuns extension to implement equality and inequality operators, improve translation for <code>NA</code> and <code>%in%</code> (<a href="https://github.com/duckdblabs/duckplyr/issues/83" class="external-link">#83</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/148" class="external-link">#148</a>).</p></li>
-<li><p>Restore state after sync script (<a href="https://github.com/duckdblabs/duckplyr/issues/152" class="external-link">#152</a>).</p></li>
-<li><p><code>pkg_review()</code> (<a href="https://github.com/duckdblabs/duckplyr/issues/150" class="external-link">#150</a>).</p></li>
-<li><p>Remove styler dependency (<a href="https://github.com/duckdblabs/duckplyr/issues/137" class="external-link">#137</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/138" class="external-link">#138</a>).</p></li>
+<h3 id="features-0-3-99-9000">Features<a class="anchor" aria-label="anchor" href="#features-0-3-99-9000"></a></h3>
+<ul><li>Only allow constant patterns in <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl()</a></code>.</li>
+<li>Explicitly reject calls with named arguments for now.</li>
+<li>Reduce memory limit for revdepchecks.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="testing-0-3-2-9010">Testing<a class="anchor" aria-label="anchor" href="#testing-0-3-2-9010"></a></h3>
-<ul><li><p>Synchronize tests (<a href="https://github.com/duckdblabs/duckplyr/issues/153" class="external-link">#153</a>).</p></li>
-<li><p>Test that <code>vec_ptype()</code> does not materialize (<a href="https://github.com/duckdblabs/duckplyr/issues/149" class="external-link">#149</a>).</p></li>
+<h3 id="chore-0-3-99-9000">Chore<a class="anchor" aria-label="anchor" href="#chore-0-3-99-9000"></a></h3>
+<ul><li>Use equality from rfuns to implement a better version of <code>%in%</code> (<a href="https://github.com/duckdblabs/duckplyr/issues/155" class="external-link">#155</a>).</li>
+<li>Use rfuns for <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> (<a href="https://github.com/duckdblabs/duckplyr/issues/154" class="external-link">#154</a>).</li>
+<li>Use built-in rfuns extension to implement equality and inequality operators, improve translation for <code>NA</code> and <code>%in%</code> (<a href="https://github.com/duckdblabs/duckplyr/issues/83" class="external-link">#83</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/148" class="external-link">#148</a>).</li>
+<li>Restore state after sync script (<a href="https://github.com/duckdblabs/duckplyr/issues/152" class="external-link">#152</a>).</li>
+<li>
+<code>pkg_review()</code> (<a href="https://github.com/duckdblabs/duckplyr/issues/150" class="external-link">#150</a>).</li>
+<li>Remove styler dependency (<a href="https://github.com/duckdblabs/duckplyr/issues/137" class="external-link">#137</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/138" class="external-link">#138</a>).</li>
+<li>Update patch.</li>
+<li>Bump duckdb version (<a href="https://github.com/duckdblabs/duckplyr/issues/147" class="external-link">#147</a>).</li>
+<li>Update snapshots.</li>
+<li>Avoid error from stats collection.</li>
+<li>New constructive version.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="documentation-0-3-99-9000">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-3-99-9000"></a></h3>
+<ul><li>Re-render README.</li>
+<li>Mention wildcards to read multiple files in <code><a href="../reference/df_from_file.html">?df_from_file</a></code> (<a href="https://github.com/andreranza" class="external-link">@andreranza</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/133" class="external-link">#133</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/134" class="external-link">#134</a>).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="testing-0-3-99-9000">Testing<a class="anchor" aria-label="anchor" href="#testing-0-3-99-9000"></a></h3>
+<ul><li>Synchronize tests (<a href="https://github.com/duckdblabs/duckplyr/issues/153" class="external-link">#153</a>).</li>
+<li>Test that <code>vec_ptype()</code> does not materialize (<a href="https://github.com/duckdblabs/duckplyr/issues/149" class="external-link">#149</a>).</li>
+<li>Improve telemetry tests.</li>
+<li>Promote equality checks to <code>expect_identical()</code> to capture differences between doubles and integers.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="uncategorized-0-3-99-9000">Uncategorized<a class="anchor" aria-label="anchor" href="#uncategorized-0-3-99-9000"></a></h3>
+<ul><li>Same as previous version.</li>
+<li>Merge branch ‘cran-0.3.2’.</li>
 </ul></div>
 </div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.2.9009" id="duckplyr-0329009-2024-05-04">duckplyr 0.3.2.9009 (2024-05-04)<a class="anchor" aria-label="anchor" href="#duckplyr-0329009-2024-05-04"></a></h2>
-<div class="section level3">
-<h3 id="chore-0-3-2-9009">Chore<a class="anchor" aria-label="anchor" href="#chore-0-3-2-9009"></a></h3>
-<ul><li><p>Update patch.</p></li>
-<li><p>Bump duckdb version (<a href="https://github.com/duckdblabs/duckplyr/issues/147" class="external-link">#147</a>).</p></li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.2.9008" id="duckplyr-0329008-2024-04-28">duckplyr 0.3.2.9008 (2024-04-28)<a class="anchor" aria-label="anchor" href="#duckplyr-0329008-2024-04-28"></a></h2>
-<div class="section level3">
-<h3 id="bug-fixes-0-3-2-9008">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-2-9008"></a></h3>
-<ul><li>More careful detection of row names in data frame.</li>
-</ul></div>
-<div class="section level3">
-<h3 id="features-0-3-2-9008">Features<a class="anchor" aria-label="anchor" href="#features-0-3-2-9008"></a></h3>
-<ul><li><p>Only allow constant patterns in <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl()</a></code>.</p></li>
-<li><p>Explicitly reject calls with named arguments for now.</p></li>
-</ul></div>
-<div class="section level3">
-<h3 id="testing-0-3-2-9008">Testing<a class="anchor" aria-label="anchor" href="#testing-0-3-2-9008"></a></h3>
-<ul><li>Improve telemetry tests.</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.2.9007" id="duckplyr-0329007-2024-04-27">duckplyr 0.3.2.9007 (2024-04-27)<a class="anchor" aria-label="anchor" href="#duckplyr-0329007-2024-04-27"></a></h2>
-<div class="section level3">
-<h3 id="bug-fixes-0-3-2-9007">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-2-9007"></a></h3>
-<ul><li><p>More careful detection of row names in data frame.</p></li>
-<li><p>Always check roundtrip for timestamp columns.</p></li>
-<li><p><code>%in%</code> evaluates RHS in the correct environment.</p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join()</a></code> and other join functions call <code><a href="https://dplyr.tidyverse.org/reference/auto_copy.html" class="external-link">auto_copy()</a></code>.</p></li>
-<li><p>Only reset expression depth if it has been set before.</p></li>
-</ul></div>
-<div class="section level3">
-<h3 id="features-0-3-2-9007">Features<a class="anchor" aria-label="anchor" href="#features-0-3-2-9007"></a></h3>
-<ul><li>Reduce memory limit for revdepchecks.</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.2.9006" id="duckplyr-0329006-2024-04-26">duckplyr 0.3.2.9006 (2024-04-26)<a class="anchor" aria-label="anchor" href="#duckplyr-0329006-2024-04-26"></a></h2>
-<div class="section level3">
-<h3 id="bug-fixes-0-3-2-9006">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-2-9006"></a></h3>
-<ul><li>Require fallback if the result contains duplicate column names when ignoring case.</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.2.9005" id="duckplyr-0329005-2024-04-25">duckplyr 0.3.2.9005 (2024-04-25)<a class="anchor" aria-label="anchor" href="#duckplyr-0329005-2024-04-25"></a></h2>
-<div class="section level3">
-<h3 id="bug-fixes-0-3-2-9005">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-2-9005"></a></h3>
-<ul><li><p><code><a href="https://dplyr.tidyverse.org/reference/row_number.html" class="external-link">row_number()</a></code> returns integer.</p></li>
-<li><p><code>is.na(NaN)</code> is <code>TRUE</code>.</p></li>
-<li><p><code>summarise(count = n(), count = n())</code> creates only one column named <code>count</code>.</p></li>
-</ul></div>
-<div class="section level3">
-<h3 id="testing-0-3-2-9005">Testing<a class="anchor" aria-label="anchor" href="#testing-0-3-2-9005"></a></h3>
-<ul><li>Promote equality checks to <code>expect_identical()</code> to capture differences between doubles and integers.</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.2.9004" id="duckplyr-0329004-2024-04-23">duckplyr 0.3.2.9004 (2024-04-23)<a class="anchor" aria-label="anchor" href="#duckplyr-0329004-2024-04-23"></a></h2>
-<div class="section level3">
-<h3 id="bug-fixes-0-3-2-9004">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-2-9004"></a></h3>
-<ul><li>Correctly match <code>NA</code> in <code>%in%</code>.</li>
-</ul></div>
-<div class="section level3">
-<h3 id="chore-0-3-2-9004">Chore<a class="anchor" aria-label="anchor" href="#chore-0-3-2-9004"></a></h3>
-<ul><li><p>Update snapshots.</p></li>
-<li><p>Avoid error from stats collection.</p></li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.2.9003" id="duckplyr-0329003-2024-04-19">duckplyr 0.3.2.9003 (2024-04-19)<a class="anchor" aria-label="anchor" href="#duckplyr-0329003-2024-04-19"></a></h2>
-<div class="section level3">
-<h3 id="chore-0-3-2-9003">Chore<a class="anchor" aria-label="anchor" href="#chore-0-3-2-9003"></a></h3>
-<ul><li>New constructive version.</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.2.9002" id="duckplyr-0329002-2024-04-14">duckplyr 0.3.2.9002 (2024-04-14)<a class="anchor" aria-label="anchor" href="#duckplyr-0329002-2024-04-14"></a></h2>
-<div class="section level3">
-<h3 id="documentation-0-3-2-9002">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-3-2-9002"></a></h3>
-<ul><li>Mention wildcards to read multiple files in <code><a href="../reference/df_from_file.html">?df_from_file</a></code> (<a href="https://github.com/andreranza" class="external-link">@andreranza</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/133" class="external-link">#133</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/134" class="external-link">#134</a>).</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.2.9001" id="duckplyr-0329001-2024-04-12">duckplyr 0.3.2.9001 (2024-04-12)<a class="anchor" aria-label="anchor" href="#duckplyr-0329001-2024-04-12"></a></h2>
-<div class="section level3">
-<h3 id="bug-fixes-0-3-2-9001">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-2-9001"></a></h3>
-<ul><li>Correct wording in instructions for enabling fallback logging (<a href="https://github.com/TimTaylor" class="external-link">@TimTaylor</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/141" class="external-link">#141</a>).</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.2.9000" id="duckplyr-0329000-2024-03-17">duckplyr 0.3.2.9000 (2024-03-17)<a class="anchor" aria-label="anchor" href="#duckplyr-0329000-2024-03-17"></a></h2>
-<ul><li>Merge branch ‘cran-0.3.2’.</li>
-</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.2" id="duckplyr-032-2024-03-17">duckplyr 0.3.2 (2024-03-17)<a class="anchor" aria-label="anchor" href="#duckplyr-032-2024-03-17"></a></h2><p class="text-muted">CRAN release: 2024-03-17</p>
 <div class="section level3">
