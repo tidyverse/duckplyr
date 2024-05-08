@@ -1,152 +1,61 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# duckplyr 0.3.2.9011 (2024-05-08)
+# duckplyr 0.3.99.9000 (2024-05-08)
 
 ## Bug fixes
 
-  - Avoid translating `a %in% b` if `b` is a column (#160).
-
-  - Fix `NA %in% letters` case (#159).
-
-  - Distinguish between constant `NA` and those used in an expression (#157).
-
-## Documentation
-
-  - Re-render README.
-
-
-# duckplyr 0.3.2.9010 (2024-05-06)
-
-## Bug fixes
-
-  - `head(-1)` forwards to the default implementation (#131, #156).
-
-  - Fix cli syntax for internal error message (#151).
-
-## Chore
-
-  - Use equality from rfuns to implement a better version of `%in%` (#155).
-
-  - Use rfuns for `as.integer()` (#154).
-
-  - Use built-in rfuns extension to implement equality and inequality operators, improve translation for `NA` and `%in%` (#83, #148).
-
-  - Restore state after sync script (#152).
-
-  - `pkg_review()` (#150).
-
-  - Remove styler dependency (#137, #138).
-
-## Testing
-
-  - Synchronize tests (#153).
-
-  - Test that `vec_ptype()` does not materialize (#149).
-
-
-# duckplyr 0.3.2.9009 (2024-05-04)
-
-## Chore
-
-  - Update patch.
-
-  - Bump duckdb version (#147).
-
-
-# duckplyr 0.3.2.9008 (2024-04-28)
-
-## Bug fixes
-
-  - More careful detection of row names in data frame.
+- Avoid translating `a %in% b` if `b` is a column (#160).
+- Fix `NA %in% letters` case (#159).
+- Distinguish between constant `NA` and those used in an expression (#157).
+- `head(-1)` forwards to the default implementation (#131, #156).
+- Fix cli syntax for internal error message (#151).
+- More careful detection of row names in data frame.
+- Always check roundtrip for timestamp columns.
+- `%in%` evaluates RHS in the correct environment.
+- `left_join()` and other join functions call `auto_copy()`.
+- Only reset expression depth if it has been set before.
+- Require fallback if the result contains duplicate column names when ignoring case.
+- `row_number()` returns integer.
+- `is.na(NaN)` is `TRUE`.
+- `summarise(count = n(), count = n())` creates only one column named `count`.
+- Correctly match `NA` in `%in%`.
+- Correct wording in instructions for enabling fallback logging (@TimTaylor, #141).
 
 ## Features
 
-  - Only allow constant patterns in `grepl()`.
-
-  - Explicitly reject calls with named arguments for now.
-
-## Testing
-
-  - Improve telemetry tests.
-
-
-# duckplyr 0.3.2.9007 (2024-04-27)
-
-## Bug fixes
-
-  - More careful detection of row names in data frame.
-
-  - Always check roundtrip for timestamp columns.
-
-  - `%in%` evaluates RHS in the correct environment.
-
-  - `left_join()` and other join functions call `auto_copy()`.
-
-  - Only reset expression depth if it has been set before.
-
-## Features
-
-  - Reduce memory limit for revdepchecks.
-
-
-# duckplyr 0.3.2.9006 (2024-04-26)
-
-## Bug fixes
-
-  - Require fallback if the result contains duplicate column names when ignoring case.
-
-
-# duckplyr 0.3.2.9005 (2024-04-25)
-
-## Bug fixes
-
-  - `row_number()` returns integer.
-
-  - `is.na(NaN)` is `TRUE`.
-
-  - `summarise(count = n(), count = n())` creates only one column named `count`.
-
-## Testing
-
-  - Promote equality checks to `expect_identical()` to capture differences between doubles and integers.
-
-
-# duckplyr 0.3.2.9004 (2024-04-23)
-
-## Bug fixes
-
-  - Correctly match `NA` in `%in%`.
+- Only allow constant patterns in `grepl()`.
+- Explicitly reject calls with named arguments for now.
+- Reduce memory limit for revdepchecks.
 
 ## Chore
 
-  - Update snapshots.
-
-  - Avoid error from stats collection.
-
-
-# duckplyr 0.3.2.9003 (2024-04-19)
-
-## Chore
-
-  - New constructive version.
-
-
-# duckplyr 0.3.2.9002 (2024-04-14)
+- Use equality from rfuns to implement a better version of `%in%` (#155).
+- Use rfuns for `as.integer()` (#154).
+- Use built-in rfuns extension to implement equality and inequality operators, improve translation for `NA` and `%in%` (#83, #148).
+- Restore state after sync script (#152).
+- `pkg_review()` (#150).
+- Remove styler dependency (#137, #138).
+- Update patch.
+- Bump duckdb version (#147).
+- Update snapshots.
+- Avoid error from stats collection.
+- New constructive version.
 
 ## Documentation
 
-  - Mention wildcards to read multiple files in `?df_from_file` (@andreranza, #133, #134).
+- Re-render README.
+- Mention wildcards to read multiple files in `?df_from_file` (@andreranza, #133, #134).
 
+## Testing
 
-# duckplyr 0.3.2.9001 (2024-04-12)
+- Synchronize tests (#153).
+- Test that `vec_ptype()` does not materialize (#149).
+- Improve telemetry tests.
+- Promote equality checks to `expect_identical()` to capture differences between doubles and integers.
 
-## Bug fixes
+## Uncategorized
 
-  - Correct wording in instructions for enabling fallback logging (@TimTaylor, #141).
-
-
-# duckplyr 0.3.2.9000 (2024-03-17)
-
+- Same as previous version.
 - Merge branch 'cran-0.3.2'.
 
 
