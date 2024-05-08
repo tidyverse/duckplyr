@@ -1,5 +1,20 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.3.2.9011 (2024-05-08)
+
+## Bug fixes
+
+  - Avoid translating `a %in% b` if `b` is a column (#160).
+
+  - Fix `NA %in% letters` case (#159).
+
+  - Distinguish between constant `NA` and those used in an expression (#157).
+
+## Documentation
+
+  - Re-render README.
+
+
 # duckplyr 0.3.2.9010 (2024-05-06)
 
 ## Bug fixes
