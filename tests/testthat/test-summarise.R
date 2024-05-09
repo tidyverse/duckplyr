@@ -194,7 +194,6 @@ test_that("assigning with `<-` doesn't affect the mask (#6666)", {
 })
 
 test_that("duckplyr_summarise() correctly auto-names expressions (#6741)", {
-  skip("TODO duckdb")
   df <- tibble(a = 1:3)
   expect_identical(duckplyr_summarise(df, min(-a)), tibble("min(-a)" = -3L))
 })

@@ -50,12 +50,30 @@
       Error:
       ! `na_matches` must be one of "na" or "never", not "foo".
 
+# mutating joins compute common columns
+
+    Code
+      out <- duckplyr_left_join(df1, df2)
+    Message
+      Joining with `by = join_by(x)`
+
 # filtering joins compute common columns
 
     Code
       out <- duckplyr_semi_join(df1, df2)
     Message
       Joining with `by = join_by(x)`
+
+# mutating joins reference original column in `y` when there are type errors (#6465)
+
+    Code
+      (expect_error(duckplyr_left_join(x, y, by = join_by(a == b))))
+    Output
+      <error/dplyr_error_join_incompatible_type>
+      Error in `left_join()`:
+      ! Can't join `x$a` with `y$b` due to incompatible types.
+      i `x$a` is a <double>.
+      i `y$b` is a <character>.
 
 # error if passed additional arguments
 

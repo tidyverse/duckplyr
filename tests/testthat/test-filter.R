@@ -86,7 +86,6 @@ test_that("date class remains on filter (#273)", {
 })
 
 test_that("filter handles $ correctly (#278)", {
-  skip("TODO duckdb")
   d1 <- tibble(
     num1 = as.character(sample(1:10, 1000, T)),
     var1 = runif(1000),
@@ -596,7 +595,6 @@ test_that("duckplyr_filter() preserves the call stack on error (#5308)", {
 })
 
 test_that("if_any() and if_all() work", {
-  skip("TODO duckdb")
   df <- tibble(x1 = 1:10, x2 = c(1:5, 10:6))
   expect_equal(
     duckplyr_filter(df, if_all(starts_with("x"), ~ . > 6)),

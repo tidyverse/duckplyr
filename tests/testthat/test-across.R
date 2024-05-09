@@ -218,7 +218,6 @@ test_that("across() throws meaningful error with failure during expansion (#6534
 })
 
 test_that("across() gives meaningful messages", {
-  skip("TODO duckdb")
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_snapshot({
     # expanding
@@ -599,7 +598,6 @@ test_that("across() caching not confused when used from if_any() and if_all() (#
 })
 
 test_that("if_any() and if_all() respect duckplyr_filter()-like NA handling", {
-  skip("TODO duckdb")
   df <- expand.grid(
     x = c(TRUE, FALSE, NA), y = c(TRUE, FALSE, NA)
   )
@@ -953,7 +951,6 @@ test_that("if_any() and if_all() wrapped deal with no inputs or single inputs", 
 })
 
 test_that("expanded if_any() finds local data", {
-  skip("TODO duckdb")
   limit <- 7
   df <- data.frame(x = 1:10, y = 10:1)
 

@@ -24,7 +24,6 @@ test_that("duckplyr_group_map() can return arbitrary objects", {
 })
 
 test_that("duckplyr_group_map() works on ungrouped data frames (#4067)", {
-  skip("TODO duckdb")
   expect_identical(
     duckplyr_group_map(mtcars, ~ head(.x, 2L)),
     list(head(as_tibble(mtcars), 2L))
@@ -62,7 +61,6 @@ test_that("duckplyr_group_modify() and duckplyr_group_map() want functions with 
 })
 
 test_that("duckplyr_group_modify() works on ungrouped data frames (#4067)", {
-  skip("TODO duckdb")
   expect_identical(
     duckplyr_group_modify(mtcars, ~ head(.x, 2L)),
     head(mtcars, 2L)

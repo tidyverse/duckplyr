@@ -79,7 +79,7 @@
       Error in `summarise()`:
       i In argument: `across(y, mean)`.
       Caused by error in `across()`:
-      ! Can't subset columns that don't exist.
+      ! Can't select columns that don't exist.
       x Column `y` doesn't exist.
     Code
       (expect_error(tibble(x = 1) %>% duckplyr_summarise(res = across(where(
@@ -97,7 +97,7 @@
       Error in `summarise()`:
       i In argument: `z = across(y, mean)`.
       Caused by error in `across()`:
-      ! Can't subset columns that don't exist.
+      ! Can't select columns that don't exist.
       x Column `y` doesn't exist.
     Code
       (expect_error(tibble(x = 1) %>% duckplyr_summarise(res = sum(if_any(where(
