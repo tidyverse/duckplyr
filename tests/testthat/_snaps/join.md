@@ -50,6 +50,13 @@
       Error:
       ! `na_matches` must be one of "na" or "never", not "foo".
 
+# mutating joins compute common columns
+
+    Code
+      out <- duckplyr_left_join(df1, df2)
+    Message
+      Joining with `by = join_by(x)`
+
 # filtering joins compute common columns
 
     Code

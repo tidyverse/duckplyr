@@ -56,7 +56,6 @@ test_that("keys are coerced to symmetric type", {
 })
 
 test_that("factor keys are coerced to the union factor type", {
-  skip("TODO duckdb")
   df1 <- tibble(x = 1, y = factor("a"))
   df2 <- tibble(x = 2, y = factor("b"))
   out <- duckplyr_full_join(df1, df2, by = c("x", "y"))
@@ -417,7 +416,6 @@ test_that("mutating joins finalize unspecified columns (#6804)", {
 })
 
 test_that("filtering joins finalize unspecified columns (#6804)", {
-  skip("TODO duckdb")
   df1 <- tibble(x = NA)
   df2 <- tibble(x = NA)
 
@@ -443,7 +441,6 @@ test_that("filtering joins finalize unspecified columns (#6804)", {
 })
 
 test_that("mutating joins reference original column in `y` when there are type errors (#6465)", {
-  skip("TODO duckdb")
   x <- tibble(a = 1)
   y <- tibble(b = "1")
 
