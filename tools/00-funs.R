@@ -69,11 +69,6 @@ duckplyr_tests <- head(n = -1, list(
     NULL
   ),
   "test-across.R" = c(
-    # Sort order
-    "if_any() and if_all() respect filter()-like NA handling",
-    "expanded if_any() finds local data",
-    # needs tidyselect > 1.2.0 for stable snapshots
-    "across() gives meaningful messages",
     NULL
   ),
   "test-all-equal.R" = c(
@@ -91,7 +86,6 @@ duckplyr_tests <- head(n = -1, list(
     NULL
   ),
   "test-deprec-do.R" = c(
-    "ungrouped data frame with unnamed argument returns data frame",
     NULL
   ),
   "test-deprec-funs.R" = c(
@@ -101,21 +95,14 @@ duckplyr_tests <- head(n = -1, list(
     NULL
   ),
   "test-filter.R" = c(
-    # FIXME: oo for filter?
-    "if_any() and if_all() work",
-
-    # FIXME: oo for %in%
-    "filter handles $ correctly (#278)",
     NULL
   ),
   "test-generics.R" = c(
+    # https://github.com/tidyverse/dplyr/pull/7022
     "`dplyr_reconstruct()`, which gets and sets attributes, doesn't touch `row.names` (#6525)",
-
     NULL
   ),
   "test-group-map.R" = c(
-    "duckplyr_group_map() works on ungrouped data frames (#4067)",
-    "group_modify() works on ungrouped data frames (#4067)",
     NULL
   ),
   "test-groups-with.R" = c(
@@ -125,18 +112,11 @@ duckplyr_tests <- head(n = -1, list(
     "mutating joins trigger multiple match warning",
     "mutating joins don't trigger multiple match warning when called indirectly",
 
-    "mutating joins reference original column in `y` when there are type errors (#6465)",
     "filtering joins reference original column in `y` when there are type errors (#6465)",
 
     "mutating joins trigger many-to-many warning",
     "mutating joins compute common columns",
     "mutating joins don't trigger many-to-many warning when called indirectly",
-
-    # https://github.com/duckdb/duckdb/issues/7451
-    # https://github.com/tidyverse/dplyr/pull/6846
-    "factor keys are coerced to the union factor type",
-
-    "filtering joins finalize unspecified columns (#6804)",
     NULL
   ),
   "test-join-rows.R" = c(
@@ -147,8 +127,6 @@ duckplyr_tests <- head(n = -1, list(
     NULL
   ),
   "test-mutate.R" = c(
-    # FIXME: vector class?
-    "mutate() handles symbol expressions",
     NULL
   ),
   "test-pull.R" = c(
@@ -164,26 +142,14 @@ duckplyr_tests <- head(n = -1, list(
     NULL
   ),
   "test-sets.R" = c(
-    "setequal tibbles must have same rows and columns",
-
     NULL
   ),
   "test-slice.R" = c(
     NULL
   ),
   "test-summarise.R" = c(
-    # Removed sum() macro for now
+    # Will be fixed by extension
     "works with empty data frames",
-
-    # sum(1:3) returns HUGEINT in duckdb
-    "summarise() correctly auto-names expressions (#6741)",
-
-    # Fails in R CMD check
-    "summarise() gives meaningful errors",
-
-    # Fails in R CMD check, also https://github.com/tidyverse/dplyr/pull/6883
-    "summarise(.groups=) in global environment",
-
     NULL
   ),
   "test-transmute.R" = c(
