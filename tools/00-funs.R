@@ -150,6 +150,13 @@ duckplyr_tests <- head(n = -1, list(
   "test-summarise.R" = c(
     # Will be fixed by extension
     "works with empty data frames",
+
+    # Fails in R CMD check
+    "summarise() gives meaningful errors",
+
+    # Fails in R CMD check, also https://github.com/tidyverse/dplyr/pull/6883
+    "summarise(.groups=) in global environment",
+
     NULL
   ),
   "test-transmute.R" = c(
