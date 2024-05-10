@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.3.99.9001 (2024-05-10)
+
+## Testing
+
+  - Reenable tests that now run successfully (#166).
+
+
 # duckplyr 0.3.99.9000 (2024-05-08)
 
 ## Bug fixes
