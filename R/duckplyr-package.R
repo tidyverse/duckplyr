@@ -12,6 +12,7 @@
 ## usethis namespace: start
 #' @importFrom collections dict
 #' @importFrom collections queue
+#' @importFrom dplyr auto_copy
 #' @importFrom dplyr do
 #' @importFrom dplyr dplyr_col_modify
 #' @importFrom dplyr dplyr_reconstruct
@@ -123,10 +124,6 @@ dplyr::anti_join
 #' @importFrom dplyr arrange
 #' @export
 dplyr::arrange
-
-#' @importFrom dplyr auto_copy
-#' @export
-dplyr::auto_copy
 
 #' @importFrom dplyr between
 #' @export
