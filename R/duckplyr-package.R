@@ -182,22 +182,6 @@ dplyr::desc
 #' @export
 dplyr::distinct
 
-#' @importFrom dplyr do
-#' @export
-dplyr::do
-
-#' @importFrom dplyr dplyr_col_modify
-#' @export
-dplyr::dplyr_col_modify
-
-#' @importFrom dplyr dplyr_reconstruct
-#' @export
-dplyr::dplyr_reconstruct
-
-#' @importFrom dplyr dplyr_row_slice
-#' @export
-dplyr::dplyr_row_slice
-
 #' @importFrom dplyr explain
 #' @export
 dplyr::explain
@@ -213,55 +197,6 @@ dplyr::first
 #' @importFrom dplyr full_join
 #' @export
 dplyr::full_join
-
-#' @importFrom dplyr funs
-#' @export
-dplyr::funs
-
-#' @importFrom dplyr group_by
-#' @export
-dplyr::group_by
-
-#' @importFrom dplyr group_data
-#' @export
-dplyr::group_data
-
-#' @importFrom dplyr group_indices
-#' @export
-dplyr::group_indices
-
-#' @importFrom dplyr group_keys
-#' @export
-dplyr::group_keys
-
-#' @importFrom dplyr group_map
-#' @export
-dplyr::group_map
-
-#' @importFrom dplyr group_modify
-#' @export
-dplyr::group_modify
-
-#' @importFrom dplyr group_rows
-#' @export
-dplyr::group_rows
-
-#' @importFrom dplyr group_size
-#' @export
-dplyr::group_size
-
-#' @importFrom dplyr group_vars
-#' @export
-dplyr::group_vars
-
-#' @importFrom dplyr group_walk
-#' @export
-dplyr::group_walk
-
-#' @importFrom dplyr groups
-#' @export
-dplyr::groups
-
 #' @importFrom dplyr if_all
 #' @export
 dplyr::if_all
@@ -277,10 +212,6 @@ dplyr::inner_join
 #' @importFrom dplyr intersect
 #' @export
 dplyr::intersect
-
-#' @importFrom dplyr is_grouped_df
-#' @export
-dplyr::is_grouped_df
 
 #' @importFrom dplyr join_by
 #' @export
@@ -313,10 +244,6 @@ dplyr::n
 #' @importFrom dplyr n_distinct
 #' @export
 dplyr::n_distinct
-
-#' @importFrom dplyr n_groups
-#' @export
-dplyr::n_groups
 
 #' @importFrom dplyr nest_by
 #' @export
@@ -381,14 +308,6 @@ dplyr::rows_update
 #' @importFrom dplyr rows_upsert
 #' @export
 dplyr::rows_upsert
-
-#' @importFrom dplyr rowwise
-#' @export
-dplyr::rowwise
-
-#' @importFrom dplyr same_src
-#' @export
-dplyr::same_src
 
 #' @importFrom dplyr sample_frac
 #' @export
@@ -473,10 +392,6 @@ dplyr::union
 #' @importFrom dplyr union_all
 #' @export
 dplyr::union_all
-
-#' @importFrom dplyr vars
-#' @export
-dplyr::vars
 
 #' @importFrom dplyr with_groups
 #' @export
