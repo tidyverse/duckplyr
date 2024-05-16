@@ -27,6 +27,7 @@
 #' @importFrom dplyr cur_group_id
 #' @importFrom dplyr cur_group_rows
 #' @importFrom dplyr dense_rank
+#' @importFrom dplyr funs_
 #' @importFrom dplyr group_by_prepare
 #' @importFrom dplyr group_cols
 #' @importFrom dplyr group_indices
@@ -207,10 +208,6 @@ dplyr::full_join
 #' @importFrom dplyr funs
 #' @export
 dplyr::funs
-
-#' @importFrom dplyr funs_
-#' @export
-dplyr::funs_
 
 #' @importFrom dplyr group_by
 #' @export
