@@ -12,13 +12,28 @@
 \alias{anti_join}
 \alias{arrange}
 \alias{auto_copy}
+\alias{between}
+\alias{bind_cols}
+\alias{bind_rows}
 \alias{c_across}
+\alias{case_match}
 \alias{case_when}
+\alias{coalesce}
 \alias{collapse}
 \alias{collect}
 \alias{compute}
+\alias{consecutive_id}
 \alias{count}
 \alias{cross_join}
+\alias{cumall}
+\alias{cumany}
+\alias{cume_dist}
+\alias{cummean}
+\alias{cur_column}
+\alias{cur_group}
+\alias{cur_group_id}
+\alias{cur_group_rows}
+\alias{dense_rank}
 \alias{desc}
 \alias{distinct}
 \alias{explain}
@@ -27,6 +42,7 @@
 \alias{full_join}
 \alias{if_all}
 \alias{if_any}
+\alias{if_else}
 \alias{inner_join}
 \alias{intersect}
 \alias{join_by}
@@ -34,12 +50,19 @@
 \alias{last}
 \alias{lead}
 \alias{left_join}
+\alias{min_rank}
 \alias{mutate}
 \alias{n}
 \alias{n_distinct}
+\alias{na_if}
+\alias{near}
 \alias{nest_by}
 \alias{nest_join}
 \alias{nth}
+\alias{ntile}
+\alias{order_by}
+\alias{percent_rank}
+\alias{pick}
 \alias{pull}
 \alias{reframe}
 \alias{relocate}
@@ -70,11 +93,27 @@
 \alias{symdiff}
 \alias{tally}
 \alias{tbl_vars}
+\alias{top_n}
 \alias{transmute}
 \alias{ungroup}
 \alias{union}
 \alias{union_all}
 \alias{with_groups}
+\alias{with_order}
+\alias{.data}
+\alias{add_row}
+\alias{as_tibble}
+\alias{tribble}
+\alias{all_of}
+\alias{any_of}
+\alias{contains}
+\alias{everything}
+\alias{last_col}
+\alias{matches}
+\alias{num_range}
+\alias{one_of}
+\alias{starts_with}
+\alias{where}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -82,6 +121,12 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{dplyr}{\code{\link[dplyr:reexports]{\%>\%}}, \code{\link[dplyr]{across}}, \code{\link[dplyr:count]{add_count}}, \code{\link[dplyr:count]{add_tally}}, \code{\link[dplyr]{all_equal}}, \code{\link[dplyr:filter-joins]{anti_join}}, \code{\link[dplyr]{arrange}}, \code{\link[dplyr]{auto_copy}}, \code{\link[dplyr]{c_across}}, \code{\link[dplyr]{case_when}}, \code{\link[dplyr:compute]{collapse}}, \code{\link[dplyr:compute]{collect}}, \code{\link[dplyr]{compute}}, \code{\link[dplyr]{count}}, \code{\link[dplyr]{cross_join}}, \code{\link[dplyr]{desc}}, \code{\link[dplyr]{distinct}}, \code{\link[dplyr]{explain}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr:nth]{first}}, \code{\link[dplyr:mutate-joins]{full_join}}, \code{\link[dplyr:across]{if_all}}, \code{\link[dplyr:across]{if_any}}, \code{\link[dplyr:mutate-joins]{inner_join}}, \code{\link[dplyr:setops]{intersect}}, \code{\link[dplyr]{join_by}}, \code{\link[dplyr:lead-lag]{lag}}, \code{\link[dplyr:nth]{last}}, \code{\link[dplyr:lead-lag]{lead}}, \code{\link[dplyr:mutate-joins]{left_join}}, \code{\link[dplyr]{mutate}}, \code{\link[dplyr:context]{n}}, \code{\link[dplyr]{n_distinct}}, \code{\link[dplyr]{nest_by}}, \code{\link[dplyr]{nest_join}}, \code{\link[dplyr]{nth}}, \code{\link[dplyr]{pull}}, \code{\link[dplyr]{reframe}}, \code{\link[dplyr]{relocate}}, \code{\link[dplyr]{rename}}, \code{\link[dplyr:rename]{rename_with}}, \code{\link[dplyr:mutate-joins]{right_join}}, \code{\link[dplyr]{row_number}}, \code{\link[dplyr:rows]{rows_append}}, \code{\link[dplyr:rows]{rows_delete}}, \code{\link[dplyr:rows]{rows_insert}}, \code{\link[dplyr:rows]{rows_patch}}, \code{\link[dplyr:rows]{rows_update}}, \code{\link[dplyr:rows]{rows_upsert}}, \code{\link[dplyr:sample_n]{sample_frac}}, \code{\link[dplyr]{sample_n}}, \code{\link[dplyr]{select}}, \code{\link[dplyr:filter-joins]{semi_join}}, \code{\link[dplyr:setops]{setdiff}}, \code{\link[dplyr:setops]{setequal}}, \code{\link[dplyr]{slice}}, \code{\link[dplyr:slice]{slice_head}}, \code{\link[dplyr:slice]{slice_max}}, \code{\link[dplyr:slice]{slice_min}}, \code{\link[dplyr:slice]{slice_sample}}, \code{\link[dplyr:slice]{slice_tail}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr:summarise]{summarize}}, \code{\link[dplyr:setops]{symdiff}}, \code{\link[dplyr:count]{tally}}, \code{\link[dplyr]{tbl_vars}}, \code{\link[dplyr:reexports]{tibble}}, \code{\link[dplyr]{transmute}}, \code{\link[dplyr:group_by]{ungroup}}, \code{\link[dplyr:setops]{union}}, \code{\link[dplyr:setops]{union_all}}, \code{\link[dplyr]{with_groups}}}
+  \item{dplyr}{\code{\link[dplyr:reexports]{\%>\%}}, \code{\link[dplyr]{across}}, \code{\link[dplyr:count]{add_count}}, \code{\link[dplyr:count]{add_tally}}, \code{\link[dplyr]{all_equal}}, \code{\link[dplyr:filter-joins]{anti_join}}, \code{\link[dplyr]{arrange}}, \code{\link[dplyr]{auto_copy}}, \code{\link[dplyr]{between}}, \code{\link[dplyr]{bind_cols}}, \code{\link[dplyr]{bind_rows}}, \code{\link[dplyr]{c_across}}, \code{\link[dplyr]{case_match}}, \code{\link[dplyr]{case_when}}, \code{\link[dplyr]{coalesce}}, \code{\link[dplyr:compute]{collapse}}, \code{\link[dplyr:compute]{collect}}, \code{\link[dplyr]{compute}}, \code{\link[dplyr]{consecutive_id}}, \code{\link[dplyr]{count}}, \code{\link[dplyr]{cross_join}}, \code{\link[dplyr]{cumall}}, \code{\link[dplyr:cumall]{cumany}}, \code{\link[dplyr:percent_rank]{cume_dist}}, \code{\link[dplyr:cumall]{cummean}}, \code{\link[dplyr:context]{cur_column}}, \code{\link[dplyr:context]{cur_group}}, \code{\link[dplyr:context]{cur_group_id}}, \code{\link[dplyr:context]{cur_group_rows}}, \code{\link[dplyr:row_number]{dense_rank}}, \code{\link[dplyr]{desc}}, \code{\link[dplyr]{distinct}}, \code{\link[dplyr]{explain}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr:nth]{first}}, \code{\link[dplyr:mutate-joins]{full_join}}, \code{\link[dplyr:across]{if_all}}, \code{\link[dplyr:across]{if_any}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr:mutate-joins]{inner_join}}, \code{\link[dplyr:setops]{intersect}}, \code{\link[dplyr]{join_by}}, \code{\link[dplyr:lead-lag]{lag}}, \code{\link[dplyr:nth]{last}}, \code{\link[dplyr:lead-lag]{lead}}, \code{\link[dplyr:mutate-joins]{left_join}}, \code{\link[dplyr:row_number]{min_rank}}, \code{\link[dplyr]{mutate}}, \code{\link[dplyr:context]{n}}, \code{\link[dplyr]{n_distinct}}, \code{\link[dplyr]{na_if}}, \code{\link[dplyr]{near}}, \code{\link[dplyr]{nest_by}}, \code{\link[dplyr]{nest_join}}, \code{\link[dplyr]{nth}}, \code{\link[dplyr]{ntile}}, \code{\link[dplyr]{order_by}}, \code{\link[dplyr]{percent_rank}}, \code{\link[dplyr]{pick}}, \code{\link[dplyr]{pull}}, \code{\link[dplyr]{reframe}}, \code{\link[dplyr]{relocate}}, \code{\link[dplyr]{rename}}, \code{\link[dplyr:rename]{rename_with}}, \code{\link[dplyr:mutate-joins]{right_join}}, \code{\link[dplyr]{row_number}}, \code{\link[dplyr:rows]{rows_append}}, \code{\link[dplyr:rows]{rows_delete}}, \code{\link[dplyr:rows]{rows_insert}}, \code{\link[dplyr:rows]{rows_patch}}, \code{\link[dplyr:rows]{rows_update}}, \code{\link[dplyr:rows]{rows_upsert}}, \code{\link[dplyr:sample_n]{sample_frac}}, \code{\link[dplyr]{sample_n}}, \code{\link[dplyr]{select}}, \code{\link[dplyr:filter-joins]{semi_join}}, \code{\link[dplyr:setops]{setdiff}}, \code{\link[dplyr:setops]{setequal}}, \code{\link[dplyr]{slice}}, \code{\link[dplyr:slice]{slice_head}}, \code{\link[dplyr:slice]{slice_max}}, \code{\link[dplyr:slice]{slice_min}}, \code{\link[dplyr:slice]{slice_sample}}, \code{\link[dplyr:slice]{slice_tail}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr:summarise]{summarize}}, \code{\link[dplyr:setops]{symdiff}}, \code{\link[dplyr:count]{tally}}, \code{\link[dplyr]{tbl_vars}}, \code{\link[dplyr:reexports]{tibble}}, \code{\link[dplyr]{top_n}}, \code{\link[dplyr]{transmute}}, \code{\link[dplyr:group_by]{ungroup}}, \code{\link[dplyr:setops]{union}}, \code{\link[dplyr:setops]{union_all}}, \code{\link[dplyr]{with_groups}}, \code{\link[dplyr]{with_order}}}
+
+  \item{rlang}{\code{\link[rlang:dot-data]{.data}}}
+
+  \item{tibble}{\code{\link[tibble]{add_row}}, \code{\link[tibble]{as_tibble}}, \code{\link[tibble]{tribble}}}
+
+  \item{tidyselect}{\code{\link[tidyselect]{all_of}}, \code{\link[tidyselect:all_of]{any_of}}, \code{\link[tidyselect:starts_with]{contains}}, \code{\link[tidyselect]{everything}}, \code{\link[tidyselect:everything]{last_col}}, \code{\link[tidyselect:starts_with]{matches}}, \code{\link[tidyselect:starts_with]{num_range}}, \code{\link[tidyselect]{one_of}}, \code{\link[tidyselect]{starts_with}}, \code{\link[tidyselect]{where}}}
 }}
 

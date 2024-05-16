@@ -128,13 +128,33 @@ dplyr::arrange
 #' @export
 dplyr::auto_copy
 
+#' @importFrom dplyr between
+#' @export
+dplyr::between
+
+#' @importFrom dplyr bind_cols
+#' @export
+dplyr::bind_cols
+
+#' @importFrom dplyr bind_rows
+#' @export
+dplyr::bind_rows
+
 #' @importFrom dplyr c_across
 #' @export
 dplyr::c_across
 
+#' @importFrom dplyr case_match
+#' @export
+dplyr::case_match
+
 #' @importFrom dplyr case_when
 #' @export
 dplyr::case_when
+
+#' @importFrom dplyr coalesce
+#' @export
+dplyr::coalesce
 
 #' @importFrom dplyr collapse
 #' @export
@@ -148,6 +168,10 @@ dplyr::collect
 #' @export
 dplyr::compute
 
+#' @importFrom dplyr consecutive_id
+#' @export
+dplyr::consecutive_id
+
 #' @importFrom dplyr count
 #' @export
 dplyr::count
@@ -155,6 +179,42 @@ dplyr::count
 #' @importFrom dplyr cross_join
 #' @export
 dplyr::cross_join
+
+#' @importFrom dplyr cumall
+#' @export
+dplyr::cumall
+
+#' @importFrom dplyr cumany
+#' @export
+dplyr::cumany
+
+#' @importFrom dplyr cume_dist
+#' @export
+dplyr::cume_dist
+
+#' @importFrom dplyr cummean
+#' @export
+dplyr::cummean
+
+#' @importFrom dplyr cur_column
+#' @export
+dplyr::cur_column
+
+#' @importFrom dplyr cur_group
+#' @export
+dplyr::cur_group
+
+#' @importFrom dplyr cur_group_id
+#' @export
+dplyr::cur_group_id
+
+#' @importFrom dplyr cur_group_rows
+#' @export
+dplyr::cur_group_rows
+
+#' @importFrom dplyr dense_rank
+#' @export
+dplyr::dense_rank
 
 #' @importFrom dplyr desc
 #' @export
@@ -187,6 +247,10 @@ dplyr::if_all
 #' @export
 dplyr::if_any
 
+#' @importFrom dplyr if_else
+#' @export
+dplyr::if_else
+
 #' @importFrom dplyr inner_join
 #' @export
 dplyr::inner_join
@@ -215,6 +279,10 @@ dplyr::lead
 #' @export
 dplyr::left_join
 
+#' @importFrom dplyr min_rank
+#' @export
+dplyr::min_rank
+
 #' @importFrom dplyr mutate
 #' @export
 dplyr::mutate
@@ -227,6 +295,14 @@ dplyr::n
 #' @export
 dplyr::n_distinct
 
+#' @importFrom dplyr na_if
+#' @export
+dplyr::na_if
+
+#' @importFrom dplyr near
+#' @export
+dplyr::near
+
 #' @importFrom dplyr nest_by
 #' @export
 dplyr::nest_by
@@ -238,6 +314,22 @@ dplyr::nest_join
 #' @importFrom dplyr nth
 #' @export
 dplyr::nth
+
+#' @importFrom dplyr ntile
+#' @export
+dplyr::ntile
+
+#' @importFrom dplyr order_by
+#' @export
+dplyr::order_by
+
+#' @importFrom dplyr percent_rank
+#' @export
+dplyr::percent_rank
+
+#' @importFrom dplyr pick
+#' @export
+dplyr::pick
 
 #' @importFrom dplyr pull
 #' @export
@@ -359,6 +451,10 @@ dplyr::tally
 #' @export
 dplyr::tbl_vars
 
+#' @importFrom dplyr top_n
+#' @export
+dplyr::top_n
+
 #' @importFrom dplyr transmute
 #' @export
 dplyr::transmute
@@ -378,6 +474,70 @@ dplyr::union_all
 #' @importFrom dplyr with_groups
 #' @export
 dplyr::with_groups
+
+#' @importFrom dplyr with_order
+#' @export
+dplyr::with_order
+
+
+#' @importFrom rlang .data
+#' @export
+rlang::.data
+
+
+#' @importFrom tibble add_row
+#' @export
+tibble::add_row
+
+#' @importFrom tibble as_tibble
+#' @export
+tibble::as_tibble
+
+#' @importFrom tibble tribble
+#' @export
+tibble::tribble
+
+
+#' @importFrom tidyselect all_of
+#' @export
+tidyselect::all_of
+
+#' @importFrom tidyselect any_of
+#' @export
+tidyselect::any_of
+
+#' @importFrom tidyselect contains
+#' @export
+tidyselect::contains
+
+#' @importFrom tidyselect everything
+#' @export
+tidyselect::everything
+
+#' @importFrom tidyselect last_col
+#' @export
+tidyselect::last_col
+
+#' @importFrom tidyselect matches
+#' @export
+tidyselect::matches
+
+#' @importFrom tidyselect num_range
+#' @export
+tidyselect::num_range
+
+#' @importFrom tidyselect one_of
+#' @export
+tidyselect::one_of
+
+#' @importFrom tidyselect starts_with
+#' @export
+tidyselect::starts_with
+
+#' @importFrom tidyselect where
+#' @export
+tidyselect::where
+
 
 # Only in this package
 dplyr_mode <- FALSE
