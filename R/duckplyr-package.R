@@ -38,6 +38,7 @@
 #' @importFrom dplyr groups
 #' @importFrom dplyr if_else
 #' @importFrom dplyr min_rank
+#' @importFrom dplyr mutate_all
 #' @importFrom dplyr n_groups
 #' @importFrom dplyr na_if
 #' @importFrom dplyr near
@@ -45,6 +46,14 @@
 #' @importFrom dplyr order_by
 #' @importFrom dplyr percent_rank
 #' @importFrom dplyr pick
+#' @importFrom dplyr rename_all
+#' @importFrom dplyr rename_at
+#' @importFrom dplyr rename_if
+#' @importFrom dplyr select_all
+#' @importFrom dplyr select_at
+#' @importFrom dplyr select_if
+#' @importFrom dplyr summarise_all
+#' @importFrom dplyr summarise_at
 #' @importFrom dplyr top_n
 #' @importFrom dplyr with_order
 #' @importFrom glue glue
@@ -289,10 +298,6 @@ dplyr::left_join
 #' @export
 dplyr::mutate
 
-#' @importFrom dplyr mutate_all
-#' @export
-dplyr::mutate_all
-
 #' @importFrom dplyr n
 #' @export
 dplyr::n
@@ -328,18 +333,6 @@ dplyr::relocate
 #' @importFrom dplyr rename
 #' @export
 dplyr::rename
-
-#' @importFrom dplyr rename_all
-#' @export
-dplyr::rename_all
-
-#' @importFrom dplyr rename_at
-#' @export
-dplyr::rename_at
-
-#' @importFrom dplyr rename_if
-#' @export
-dplyr::rename_if
 
 #' @importFrom dplyr rename_with
 #' @export
@@ -397,18 +390,6 @@ dplyr::sample_n
 #' @export
 dplyr::select
 
-#' @importFrom dplyr select_all
-#' @export
-dplyr::select_all
-
-#' @importFrom dplyr select_at
-#' @export
-dplyr::select_at
-
-#' @importFrom dplyr select_if
-#' @export
-dplyr::select_if
-
 #' @importFrom dplyr semi_join
 #' @export
 dplyr::semi_join
@@ -448,14 +429,6 @@ dplyr::slice_tail
 #' @importFrom dplyr summarise
 #' @export
 dplyr::summarise
-
-#' @importFrom dplyr summarise_all
-#' @export
-dplyr::summarise_all
-
-#' @importFrom dplyr summarise_at
-#' @export
-dplyr::summarise_at
 
 #' @importFrom dplyr summarize
 #' @export
