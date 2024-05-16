@@ -226,6 +226,10 @@ dplyr::group_by
 #' @export
 dplyr::group_data
 
+#' @importFrom dplyr group_indices
+#' @export
+dplyr::group_indices
+
 #' @importFrom dplyr group_keys
 #' @export
 dplyr::group_keys
@@ -253,6 +257,10 @@ dplyr::group_vars
 #' @importFrom dplyr group_walk
 #' @export
 dplyr::group_walk
+
+#' @importFrom dplyr groups
+#' @export
+dplyr::groups
 
 #' @importFrom dplyr if_all
 #' @export
@@ -305,6 +313,10 @@ dplyr::n
 #' @importFrom dplyr n_distinct
 #' @export
 dplyr::n_distinct
+
+#' @importFrom dplyr n_groups
+#' @export
+dplyr::n_groups
 
 #' @importFrom dplyr nest_by
 #' @export
