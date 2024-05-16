@@ -21,29 +21,14 @@
 \alias{cross_join}
 \alias{desc}
 \alias{distinct}
-\alias{do}
-\alias{dplyr_col_modify}
-\alias{dplyr_reconstruct}
-\alias{dplyr_row_slice}
 \alias{explain}
 \alias{filter}
 \alias{first}
 \alias{full_join}
-\alias{funs}
-\alias{group_by}
-\alias{group_data}
-\alias{group_keys}
-\alias{group_map}
-\alias{group_modify}
-\alias{group_rows}
-\alias{group_size}
-\alias{group_vars}
-\alias{group_walk}
 \alias{if_all}
 \alias{if_any}
 \alias{inner_join}
 \alias{intersect}
-\alias{is_grouped_df}
 \alias{join_by}
 \alias{lag}
 \alias{last}
@@ -68,8 +53,6 @@
 \alias{rows_patch}
 \alias{rows_update}
 \alias{rows_upsert}
-\alias{rowwise}
-\alias{same_src}
 \alias{sample_frac}
 \alias{sample_n}
 \alias{select}
@@ -91,7 +74,6 @@
 \alias{ungroup}
 \alias{union}
 \alias{union_all}
-\alias{vars}
 \alias{with_groups}
 \title{Objects exported from other packages}
 \keyword{internal}
@@ -100,6 +82,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{dplyr}{\code{\link[dplyr:reexports]{\%>\%}}, \code{\link[dplyr]{across}}, \code{\link[dplyr:count]{add_count}}, \code{\link[dplyr:count]{add_tally}}, \code{\link[dplyr]{all_equal}}, \code{\link[dplyr:filter-joins]{anti_join}}, \code{\link[dplyr]{arrange}}, \code{\link[dplyr]{auto_copy}}, \code{\link[dplyr]{c_across}}, \code{\link[dplyr]{case_when}}, \code{\link[dplyr:compute]{collapse}}, \code{\link[dplyr:compute]{collect}}, \code{\link[dplyr]{compute}}, \code{\link[dplyr]{count}}, \code{\link[dplyr]{cross_join}}, \code{\link[dplyr]{desc}}, \code{\link[dplyr]{distinct}}, \code{\link[dplyr]{do}}, \code{\link[dplyr:dplyr_extending]{dplyr_col_modify}}, \code{\link[dplyr:dplyr_extending]{dplyr_reconstruct}}, \code{\link[dplyr:dplyr_extending]{dplyr_row_slice}}, \code{\link[dplyr]{explain}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr:nth]{first}}, \code{\link[dplyr:mutate-joins]{full_join}}, \code{\link[dplyr]{funs}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{group_data}}, \code{\link[dplyr:group_data]{group_keys}}, \code{\link[dplyr]{group_map}}, \code{\link[dplyr:group_map]{group_modify}}, \code{\link[dplyr:group_data]{group_rows}}, \code{\link[dplyr:group_data]{group_size}}, \code{\link[dplyr:group_data]{group_vars}}, \code{\link[dplyr:group_map]{group_walk}}, \code{\link[dplyr:across]{if_all}}, \code{\link[dplyr:across]{if_any}}, \code{\link[dplyr:mutate-joins]{inner_join}}, \code{\link[dplyr:setops]{intersect}}, \code{\link[dplyr:grouped_df]{is_grouped_df}}, \code{\link[dplyr]{join_by}}, \code{\link[dplyr:lead-lag]{lag}}, \code{\link[dplyr:nth]{last}}, \code{\link[dplyr:lead-lag]{lead}}, \code{\link[dplyr:mutate-joins]{left_join}}, \code{\link[dplyr]{mutate}}, \code{\link[dplyr:context]{n}}, \code{\link[dplyr]{n_distinct}}, \code{\link[dplyr]{nest_by}}, \code{\link[dplyr]{nest_join}}, \code{\link[dplyr]{nth}}, \code{\link[dplyr]{pull}}, \code{\link[dplyr]{reframe}}, \code{\link[dplyr]{relocate}}, \code{\link[dplyr]{rename}}, \code{\link[dplyr:rename]{rename_with}}, \code{\link[dplyr:mutate-joins]{right_join}}, \code{\link[dplyr]{row_number}}, \code{\link[dplyr:rows]{rows_append}}, \code{\link[dplyr:rows]{rows_delete}}, \code{\link[dplyr:rows]{rows_insert}}, \code{\link[dplyr:rows]{rows_patch}}, \code{\link[dplyr:rows]{rows_update}}, \code{\link[dplyr:rows]{rows_upsert}}, \code{\link[dplyr]{rowwise}}, \code{\link[dplyr]{same_src}}, \code{\link[dplyr:sample_n]{sample_frac}}, \code{\link[dplyr]{sample_n}}, \code{\link[dplyr]{select}}, \code{\link[dplyr:filter-joins]{semi_join}}, \code{\link[dplyr:setops]{setdiff}}, \code{\link[dplyr:setops]{setequal}}, \code{\link[dplyr]{slice}}, \code{\link[dplyr:slice]{slice_head}}, \code{\link[dplyr:slice]{slice_max}}, \code{\link[dplyr:slice]{slice_min}}, \code{\link[dplyr:slice]{slice_sample}}, \code{\link[dplyr:slice]{slice_tail}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr:summarise]{summarize}}, \code{\link[dplyr:setops]{symdiff}}, \code{\link[dplyr:count]{tally}}, \code{\link[dplyr]{tbl_vars}}, \code{\link[dplyr:reexports]{tibble}}, \code{\link[dplyr]{transmute}}, \code{\link[dplyr:group_by]{ungroup}}, \code{\link[dplyr:setops]{union}}, \code{\link[dplyr:setops]{union_all}}, \code{\link[dplyr]{vars}}, \code{\link[dplyr]{with_groups}}}
+  \item{dplyr}{\code{\link[dplyr:reexports]{\%>\%}}, \code{\link[dplyr]{across}}, \code{\link[dplyr:count]{add_count}}, \code{\link[dplyr:count]{add_tally}}, \code{\link[dplyr]{all_equal}}, \code{\link[dplyr:filter-joins]{anti_join}}, \code{\link[dplyr]{arrange}}, \code{\link[dplyr]{auto_copy}}, \code{\link[dplyr]{c_across}}, \code{\link[dplyr]{case_when}}, \code{\link[dplyr:compute]{collapse}}, \code{\link[dplyr:compute]{collect}}, \code{\link[dplyr]{compute}}, \code{\link[dplyr]{count}}, \code{\link[dplyr]{cross_join}}, \code{\link[dplyr]{desc}}, \code{\link[dplyr]{distinct}}, \code{\link[dplyr]{explain}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr:nth]{first}}, \code{\link[dplyr:mutate-joins]{full_join}}, \code{\link[dplyr:across]{if_all}}, \code{\link[dplyr:across]{if_any}}, \code{\link[dplyr:mutate-joins]{inner_join}}, \code{\link[dplyr:setops]{intersect}}, \code{\link[dplyr]{join_by}}, \code{\link[dplyr:lead-lag]{lag}}, \code{\link[dplyr:nth]{last}}, \code{\link[dplyr:lead-lag]{lead}}, \code{\link[dplyr:mutate-joins]{left_join}}, \code{\link[dplyr]{mutate}}, \code{\link[dplyr:context]{n}}, \code{\link[dplyr]{n_distinct}}, \code{\link[dplyr]{nest_by}}, \code{\link[dplyr]{nest_join}}, \code{\link[dplyr]{nth}}, \code{\link[dplyr]{pull}}, \code{\link[dplyr]{reframe}}, \code{\link[dplyr]{relocate}}, \code{\link[dplyr]{rename}}, \code{\link[dplyr:rename]{rename_with}}, \code{\link[dplyr:mutate-joins]{right_join}}, \code{\link[dplyr]{row_number}}, \code{\link[dplyr:rows]{rows_append}}, \code{\link[dplyr:rows]{rows_delete}}, \code{\link[dplyr:rows]{rows_insert}}, \code{\link[dplyr:rows]{rows_patch}}, \code{\link[dplyr:rows]{rows_update}}, \code{\link[dplyr:rows]{rows_upsert}}, \code{\link[dplyr:sample_n]{sample_frac}}, \code{\link[dplyr]{sample_n}}, \code{\link[dplyr]{select}}, \code{\link[dplyr:filter-joins]{semi_join}}, \code{\link[dplyr:setops]{setdiff}}, \code{\link[dplyr:setops]{setequal}}, \code{\link[dplyr]{slice}}, \code{\link[dplyr:slice]{slice_head}}, \code{\link[dplyr:slice]{slice_max}}, \code{\link[dplyr:slice]{slice_min}}, \code{\link[dplyr:slice]{slice_sample}}, \code{\link[dplyr:slice]{slice_tail}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr:summarise]{summarize}}, \code{\link[dplyr:setops]{symdiff}}, \code{\link[dplyr:count]{tally}}, \code{\link[dplyr]{tbl_vars}}, \code{\link[dplyr:reexports]{tibble}}, \code{\link[dplyr]{transmute}}, \code{\link[dplyr:group_by]{ungroup}}, \code{\link[dplyr:setops]{union}}, \code{\link[dplyr:setops]{union_all}}, \code{\link[dplyr]{with_groups}}}
 }}
 
