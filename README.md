@@ -259,7 +259,7 @@ Restart R, or call [`duckplyr::methods_restore()`](https://duckdblabs.github.io/
 
 <pre class='chroma'>
 <span><span class='nf'>duckplyr</span><span class='nf'>::</span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html'>methods_restore</a></span><span class='o'>(</span><span class='o'>)</span></span>
-<span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> Restoring <span style='color: #0000BB;'>dplyr</span> methods</span></span></pre>
+<span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> Restoring <span style='color: #0000BB;'>dplyr</span> methods.</span></span></pre>
 
 dplyr is active again:
 

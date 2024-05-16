@@ -38,6 +38,6 @@ methods_overwrite <- function() {
 #' @rdname methods_overwrite
 #' @export
 methods_restore <- function() {
-  cli::cli_inform(c(i = "Restoring {.pkg dplyr} methods"))
+  cli::cli_inform(c(i = "Restoring {.pkg dplyr} methods."))
   methods_restore_impl()
 }
