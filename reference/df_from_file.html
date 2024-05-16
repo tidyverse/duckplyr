@@ -33,24 +33,14 @@ df_from_file() uses arbitrary table functions to read data.
 See https://duckdb.org/docs/data/overview for a documentation
 of the available functions and their options.
 duckplyr_df_from_file() is a thin wrapper around df_from_file()
-that calls as_duckplyr_df() on the output."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--></head><body>
+that calls as_duckplyr_df() on the output."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
-
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
-    
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
-
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.99.9000</small>
-
-    
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.99.9001</small>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
@@ -62,22 +52,18 @@ that calls as_duckplyr_df() on the output."><!-- mathjax --><script src="https:/
 <input type="search" class="form-control" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json"></form></li>
 <li class="nav-item">
   <a class="external-link nav-link" href="https://github.com/duckdblabs/duckplyr/" aria-label="github">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
+    <span class="fa fab fa-github fa-lg"></span>
   </a>
 </li>
       </ul></div>
-
-    
   </div>
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>df_from_csv</h1>
+      <h1>df_from_csv</h1>
       <small class="dont-index">Source: <a href="https://github.com/duckdblabs/duckplyr/blob/HEAD/R/io-csv.R" class="external-link"><code>R/io-csv.R</code></a>, <a href="https://github.com/duckdblabs/duckplyr/blob/HEAD/R/io-parquet.R" class="external-link"><code>R/io-parquet.R</code></a>, <a href="https://github.com/duckdblabs/duckplyr/blob/HEAD/R/io.R" class="external-link"><code>R/io.R</code></a></small>
       <div class="d-none name"><code>df_from_file.Rd</code></div>
     </div>
-
     <div class="ref-description section level2">
     <p>These functions ingest data from a file using a table function.
 The results are transparently converted to a data frame, but the data is only read when
@@ -98,7 +84,6 @@ of the available functions and their options.</p>
 <p><code>duckplyr_df_from_file()</code> is a thin wrapper around <code>df_from_file()</code>
 that calls <code><a href="as_duckplyr_df.html">as_duckplyr_df()</a></code> on the output.</p>
     </div>
-
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">df_from_csv</span><span class="op">(</span><span class="va">path</span>, <span class="va">...</span>, options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>, class <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
@@ -121,47 +106,32 @@ that calls <code><a href="as_duckplyr_df.html">as_duckplyr_df()</a></code> on th
 <span>  class <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
-
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt id="arg-path">path<a class="anchor" aria-label="anchor" href="#arg-path"></a></dt>
 <dd><p>Path to a file, a directory, or a set of filenames using
 wildcards.</p></dd>
-
-
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>These dots are for future extensions and must be empty.</p></dd>
-
-
 <dt id="arg-options">options<a class="anchor" aria-label="anchor" href="#arg-options"></a></dt>
 <dd><p>Arguments to the DuckDB function
 indicated by <code>table_function</code>.</p></dd>
-
-
 <dt id="arg-class">class<a class="anchor" aria-label="anchor" href="#arg-class"></a></dt>
 <dd><p>An optional class to add to the data frame.
 The returned object will always be a data frame.
 Pass <code>class(tibble())</code> to create a tibble.</p></dd>
-
-
 <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>A data frame to be written to disk.</p></dd>
-
-
 <dt id="arg-table-function">table_function<a class="anchor" aria-label="anchor" href="#arg-table-function"></a></dt>
 <dd><p>The name of a table-valued
 DuckDB function such as <code>"read_parquet"</code>,
 <code>"read_csv"</code>, <code>"read_csv_auto"</code> or <code>"read_json"</code>.</p></dd>
-
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    
-
 <p>A data frame for <code>df_from_file()</code>, or a <code>duckplyr_df</code> for
 <code>duckplyr_df_from_file()</code>, extended by the provided <code>class</code>.</p>
     </div>
-
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Create simple CSV file</span></span></span>
@@ -179,7 +149,7 @@ DuckDB function such as <code>"read_parquet"</code>,
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --- Relation Tree ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv_auto(/tmp/RtmpC81giE/duckplyr_test_10364ce5e816.csv)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv_auto(/tmp/RtmphJA4np/duckplyr_test_ef432ed2a68.csv)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -200,7 +170,7 @@ DuckDB function such as <code>"read_parquet"</code>,
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --- Relation Tree ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv(/tmp/RtmpC81giE/duckplyr_test_10364ce5e816.csv)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv(/tmp/RtmphJA4np/duckplyr_test_ef432ed2a68.csv)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -224,7 +194,7 @@ DuckDB function such as <code>"read_parquet"</code>,
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --- Relation Tree ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv_auto(/tmp/RtmpC81giE/duckplyr_test_*.csv)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv_auto(/tmp/RtmphJA4np/duckplyr_test_*.csv)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -233,12 +203,12 @@ DuckDB function such as <code>"read_parquet"</code>,
 <span class="r-out co"><span class="r-pr">#&gt;</span> - b (VARCHAR)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   a b</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 1 d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2 e</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 3 f</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 4 g</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 5 h</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 6 i</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 4 g</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 5 h</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 6 i</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 1 d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2 e</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 3 f</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">path</span>, <span class="va">path2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -257,7 +227,7 @@ DuckDB function such as <code>"read_parquet"</code>,
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --- Relation Tree ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> read_parquet(/tmp/RtmpC81giE/file10362dc10711.parquet)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> read_parquet(/tmp/RtmphJA4np/fileef476477c46.parquet)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -273,23 +243,14 @@ DuckDB function such as <code>"read_parquet"</code>,
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">path_parquet</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
-
-
     <footer><div class="pkgdown-footer-left">
   <p>Developed by Hannes Mühleisen, <a href="https://krlmlr.info" class="external-link">Kirill Müller</a>, Posit Software, PBC.</p>
 </div>
-
 <div class="pkgdown-footer-right">
   <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.9000.</p>
 </div>
-
     </footer></div>
-
-  
-
-  
-
   </body></html>
 

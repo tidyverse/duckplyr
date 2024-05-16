@@ -29,24 +29,14 @@ fallback_review() prints the available reports for review to the console.
 fallback_upload() uploads the available reports to a central server for analysis.
 The server is hosted on AWS and the reports are stored in a private S3 bucket.
 Only authorized personnel have access to the reports.
-fallback_purge() deletes some or all available reports."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--></head><body>
+fallback_purge() deletes some or all available reports."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
-
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
-    
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
-
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.99.9000</small>
-
-    
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.99.9001</small>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
@@ -58,22 +48,18 @@ fallback_purge() deletes some or all available reports."><!-- mathjax --><script
 <input type="search" class="form-control" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json"></form></li>
 <li class="nav-item">
   <a class="external-link nav-link" href="https://github.com/duckdblabs/duckplyr/" aria-label="github">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
+    <span class="fa fab fa-github fa-lg"></span>
   </a>
 </li>
       </ul></div>
-
-    
   </div>
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Fallback to dplyr</h1>
+      <h1>Fallback to dplyr</h1>
       <small class="dont-index">Source: <a href="https://github.com/duckdblabs/duckplyr/blob/HEAD/R/fallback.R" class="external-link"><code>R/fallback.R</code></a></small>
       <div class="d-none name"><code>fallback.Rd</code></div>
     </div>
-
     <div class="ref-description section level2">
     <p>The <span class="pkg">duckplyr</span> package aims at providing
 a fully compatible drop-in replacement for <span class="pkg">dplyr</span>.
@@ -92,7 +78,6 @@ The server is hosted on AWS and the reports are stored in a private S3 bucket.
 Only authorized personnel have access to the reports.</p>
 <p><code>fallback_purge()</code> deletes some or all available reports.</p>
     </div>
-
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fallback_sitrep</span><span class="op">(</span><span class="op">)</span></span>
@@ -103,23 +88,17 @@ Only authorized personnel have access to the reports.</p>
 <span></span>
 <span><span class="fu">fallback_purge</span><span class="op">(</span>oldest <span class="op">=</span> <span class="cn">NULL</span>, newest <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
-
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt id="arg-oldest-newest">oldest, newest<a class="anchor" aria-label="anchor" href="#arg-oldest-newest"></a></dt>
 <dd><p>The number of oldest or newest reports to review.
 If not specified, all reports are dispayed.</p></dd>
-
-
 <dt id="arg-detail">detail<a class="anchor" aria-label="anchor" href="#arg-detail"></a></dt>
 <dd><p>Print the full content of the reports.
 Set to <code>FALSE</code> to only print the file names.</p></dd>
-
-
 <dt id="arg-strict">strict<a class="anchor" aria-label="anchor" href="#arg-strict"></a></dt>
 <dd><p>If <code>TRUE</code>, the function aborts if any of the reports fail to upload.
 With <code>FALSE</code>, only a message is printed.</p></dd>
-
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -154,7 +133,6 @@ as returned by <code>tools::R_user_dir("duckplyr", "cache")</code>.</p></li>
 <a href="https://github.com/duckdblabs/duckplyr/blob/main/R/fallback.R" class="external-link"><code>fallback.R</code></a> and
 <a href="https://github.com/duckdblabs/duckplyr/blob/main/R/telemetry.R" class="external-link"><code>telemetry.R</code></a> files.</p>
     </div>
-
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">fallback_sitrep</span><span class="op">(</span><span class="op">)</span></span></span>
@@ -170,23 +148,14 @@ as returned by <code>tools::R_user_dir("duckplyr", "cache")</code>.</p></li>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> See `?duckplyr::fallback()` for details.</span>
 </code></pre></div>
     </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
-
-
     <footer><div class="pkgdown-footer-left">
   <p>Developed by Hannes Mühleisen, <a href="https://krlmlr.info" class="external-link">Kirill Müller</a>, Posit Software, PBC.</p>
 </div>
-
 <div class="pkgdown-footer-right">
   <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.9000.</p>
 </div>
-
     </footer></div>
-
-  
-
-  
-
   </body></html>
 

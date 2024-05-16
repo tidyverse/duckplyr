@@ -23,24 +23,14 @@ relexpr_function() applies a function.
 The arguments to this function are a list of other expression objects.
 relexpr_window() applies a function over a window,
 similarly to the SQL OVER clause.
-relexpr_set_alias() assigns an alias to an expression.'><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--></head><body>
+relexpr_set_alias() assigns an alias to an expression.'><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
-
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
-    
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
-
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.99.9000</small>
-
-    
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.99.9001</small>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
@@ -52,22 +42,18 @@ relexpr_set_alias() assigns an alias to an expression.'><!-- mathjax --><script 
 <input type="search" class="form-control" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json"></form></li>
 <li class="nav-item">
   <a class="external-link nav-link" href="https://github.com/duckdblabs/duckplyr/" aria-label="github">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
+    <span class="fa fab fa-github fa-lg"></span>
   </a>
 </li>
       </ul></div>
-
-    
   </div>
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Relational expressions</h1>
+      <h1>Relational expressions</h1>
       <small class="dont-index">Source: <a href="https://github.com/duckdblabs/duckplyr/blob/HEAD/R/relational-expr.R" class="external-link"><code>R/relational-expr.R</code></a></small>
       <div class="d-none name"><code>new_relexpr.Rd</code></div>
     </div>
-
     <div class="ref-description section level2">
     <p>These functions provide a backend-agnostic way to construct expression trees
 built of column references, constants, and functions.
@@ -83,7 +69,6 @@ The arguments to this function are a list of other expression objects.</p>
 similarly to the SQL <code>OVER</code> clause.</p>
 <p><code>relexpr_set_alias()</code> assigns an alias to an expression.</p>
     </div>
-
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">new_relexpr</span><span class="op">(</span><span class="va">x</span>, class <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
@@ -105,82 +90,41 @@ similarly to the SQL <code>OVER</code> clause.</p>
 <span></span>
 <span><span class="fu">relexpr_set_alias</span><span class="op">(</span><span class="va">expr</span>, alias <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
-
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>An object.</p></dd>
-
-
 <dt id="arg-class">class<a class="anchor" aria-label="anchor" href="#arg-class"></a></dt>
 <dd><p>Classes added in front of the <code>"relational_relexpr"</code> base class.</p></dd>
-
-
 <dt id="arg-name">name<a class="anchor" aria-label="anchor" href="#arg-name"></a></dt>
 <dd><p>The name of the column or function to reference.</p></dd>
-
-
 <dt id="arg-rel">rel<a class="anchor" aria-label="anchor" href="#arg-rel"></a></dt>
 <dd><p>The name of the relation to reference.</p></dd>
-
-
 <dt id="arg-alias">alias<a class="anchor" aria-label="anchor" href="#arg-alias"></a></dt>
 <dd><p>An alias for the new expression.</p></dd>
-
-
 <dt id="arg-val">val<a class="anchor" aria-label="anchor" href="#arg-val"></a></dt>
 <dd><p>The value to use in the constant expression.</p></dd>
-
-
 <dt id="arg-args">args<a class="anchor" aria-label="anchor" href="#arg-args"></a></dt>
 <dd><p>Function arguments, a list of <code>expr</code> objects.</p></dd>
-
-
 <dt id="arg-expr">expr<a class="anchor" aria-label="anchor" href="#arg-expr"></a></dt>
 <dd><p>An <code>expr</code> object.</p></dd>
-
-
 <dt id="arg-partitions">partitions<a class="anchor" aria-label="anchor" href="#arg-partitions"></a></dt>
 <dd><p>Partitions, a list of <code>expr</code> objects.</p></dd>
-
-
 <dt id="arg-order-bys">order_bys<a class="anchor" aria-label="anchor" href="#arg-order-bys"></a></dt>
 <dd><p>which variables to order results by (list).</p></dd>
-
-
 <dt id="arg-offset-expr">offset_expr<a class="anchor" aria-label="anchor" href="#arg-offset-expr"></a></dt>
 <dd><p>offset relational expression.</p></dd>
-
-
 <dt id="arg-default-expr">default_expr<a class="anchor" aria-label="anchor" href="#arg-default-expr"></a></dt>
 <dd><p>default relational expression.</p></dd>
-
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    
-
 <p>an object of class <code>"relational_relexpr"</code></p>
-
-
-
 <p>an object of class <code>"relational_relexpr"</code></p>
-
-
-
 <p>an object of class <code>"relational_relexpr"</code></p>
-
-
-
 <p>an object of class <code>"relational_relexpr"</code></p>
-
-
-
 <p>an object of class <code>"relational_relexpr"</code></p>
-
-
     </div>
-
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">relexpr_set_alias</span><span class="op">(</span></span></span>
@@ -209,23 +153,14 @@ similarly to the SQL <code>OVER</code> clause.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"</span>
 </code></pre></div>
     </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
-
-
     <footer><div class="pkgdown-footer-left">
   <p>Developed by Hannes Mühleisen, <a href="https://krlmlr.info" class="external-link">Kirill Müller</a>, Posit Software, PBC.</p>
 </div>
-
 <div class="pkgdown-footer-right">
   <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.9000.</p>
 </div>
-
     </footer></div>
-
-  
-
-  
-
   </body></html>
 

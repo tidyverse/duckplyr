@@ -81,24 +81,14 @@ executed by the relational object.
 rel_alias() returns the alias name for a relational object.
 rel_set_alias() sets the alias name for a relational object.
 rel_names() returns the column names as character vector,
-to be used by colnames()."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--></head><body>
+to be used by colnames()."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
-
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
-    
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
-
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.99.9000</small>
-
-    
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.99.9001</small>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
@@ -110,22 +100,18 @@ to be used by colnames()."><!-- mathjax --><script src="https://cdnjs.cloudflare
 <input type="search" class="form-control" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json"></form></li>
 <li class="nav-item">
   <a class="external-link nav-link" href="https://github.com/duckdblabs/duckplyr/" aria-label="github">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
+    <span class="fa fab fa-github fa-lg"></span>
   </a>
 </li>
       </ul></div>
-
-    
   </div>
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Relational implementer's interface</h1>
+      <h1>Relational implementer's interface</h1>
       <small class="dont-index">Source: <a href="https://github.com/duckdblabs/duckplyr/blob/HEAD/R/relational-rel.R" class="external-link"><code>R/relational-rel.R</code></a></small>
       <div class="d-none name"><code>new_relational.Rd</code></div>
     </div>
-
     <div class="ref-description section level2">
     <p>The constructor and generics described here define a class
 that helps separating dplyr's user interface from the actual underlying operations.
@@ -170,7 +156,6 @@ executed by the relational object.</p>
 <p><code>rel_names()</code> returns the column names as character vector,
 to be used by <code><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames()</a></code>.</p>
     </div>
-
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">new_relational</span><span class="op">(</span><span class="va">...</span>, class <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
@@ -214,67 +199,40 @@ to be used by <code><a href="https://rdrr.io/r/base/colnames.html" class="extern
 <span></span>
 <span><span class="fu">rel_names</span><span class="op">(</span><span class="va">rel</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
-
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Reserved for future extensions, must be empty.</p></dd>
-
-
 <dt id="arg-class">class<a class="anchor" aria-label="anchor" href="#arg-class"></a></dt>
 <dd><p>Classes added in front of the <code>"relational"</code> base class.</p></dd>
-
-
 <dt id="arg-rel-rel-a-rel-b-left-right">rel, rel_a, rel_b, left, right<a class="anchor" aria-label="anchor" href="#arg-rel-rel-a-rel-b-left-right"></a></dt>
 <dd><p>A relational object.</p></dd>
-
-
 <dt id="arg-exprs">exprs<a class="anchor" aria-label="anchor" href="#arg-exprs"></a></dt>
 <dd><p>A list of expr objects to filter by.</p></dd>
-
-
 <dt id="arg-groups">groups<a class="anchor" aria-label="anchor" href="#arg-groups"></a></dt>
 <dd><p>A list of expressions to group by.</p></dd>
-
-
 <dt id="arg-aggregates">aggregates<a class="anchor" aria-label="anchor" href="#arg-aggregates"></a></dt>
 <dd><p>A list of expressions with aggregates to compute.</p></dd>
-
-
 <dt id="arg-orders">orders<a class="anchor" aria-label="anchor" href="#arg-orders"></a></dt>
 <dd><p>A list of expressions to order by.</p></dd>
-
-
 <dt id="arg-conds">conds<a class="anchor" aria-label="anchor" href="#arg-conds"></a></dt>
 <dd><p>A list of expressions to use for the join.</p></dd>
-
-
 <dt id="arg-join">join<a class="anchor" aria-label="anchor" href="#arg-join"></a></dt>
 <dd><p>The type of join.</p></dd>
-
-
 <dt id="arg-join-ref-type">join_ref_type<a class="anchor" aria-label="anchor" href="#arg-join-ref-type"></a></dt>
 <dd><p>The ref type of join.</p></dd>
-
-
 <dt id="arg-n">n<a class="anchor" aria-label="anchor" href="#arg-n"></a></dt>
 <dd><p>The number of rows.</p></dd>
-
-
 <dt id="arg-alias">alias<a class="anchor" aria-label="anchor" href="#arg-alias"></a></dt>
 <dd><p>the new alias</p></dd>
-
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    
-
 <ul><li><p><code>new_relational()</code> returns a new relational object.</p></li>
 <li><p><code>rel_to_df()</code> returns a data frame.</p></li>
 <li><p><code>rel_names()</code> returns a character vector.</p></li>
 <li><p>All other generics return a modified relational object.</p></li>
 </ul></div>
-
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">new_dfrel</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span></span>
@@ -427,23 +385,14 @@ to be used by <code><a href="https://rdrr.io/r/base/colnames.html" class="extern
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "mpg"  "cyl"  "disp" "hp"  </span>
 </code></pre></div>
     </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
-
-
     <footer><div class="pkgdown-footer-left">
   <p>Developed by Hannes Mühleisen, <a href="https://krlmlr.info" class="external-link">Kirill Müller</a>, Posit Software, PBC.</p>
 </div>
-
 <div class="pkgdown-footer-right">
   <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.9000.</p>
 </div>
-
     </footer></div>
-
-  
-
-  
-
   </body></html>
 
