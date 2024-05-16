@@ -28,8 +28,8 @@ on_load({
 methods_overwrite <- function() {
   cli::cli_inform(
     c(
-      v = "Overwriting {.pkg dplyr} methods with {.pkg duckplyr} methods",
-      i = "Turn off with {.run duckplyr::methods_restore()}"
+      v = "Overwriting {.pkg dplyr} methods with {.pkg duckplyr} methods.",
+      i = "Turn off with {.run duckplyr::methods_restore()}."
     )
   )
   methods_overwrite_impl()

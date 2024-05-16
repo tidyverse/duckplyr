@@ -70,13 +70,13 @@ pak::pak("duckdblabs/duckplyr")
 ```{r attach}
 library(conflicted)
 library(dplyr)
-conflict_prefer("filter", "duckplyr")
+conflict_prefer("filter", "dplyr")
 ```
 
 There are two ways to use duckplyr.
 
 1. To enable duckplyr for individual data frames, use `duckplyr::as_duckplyr_df()` as the first step in your pipe, without attaching the package.
-1. By calling `library(duckplyr)`, it is enabled for the entire session. To turn this off, call `methods_restore()`.
+1. By calling `library(duckplyr)`, it overwrites dplyr methods and is automatically enabled for the entire session without having to call `as_duckplyr_df()`. To turn this off, call `methods_restore()`.
 
 The examples below illustrate both methods.
 See also the companion [demo repository](https://github.com/Tmonster/duckplyr_demo) for a use case with a large dataset.
@@ -131,7 +131,7 @@ out
 
 This example illustrates usage of duckplyr for all data frames in the R session.
 
-Use `library(duckplyr)` or `duckplyr::methods_overwrite()` to enable processing with duckdb for all data frames:
+Use `library(duckplyr)` or `duckplyr::methods_overwrite()` to overwrite dplyr methods and enable processing with duckdb for all data frames:
 
 ```{r}
 duckplyr::methods_overwrite()

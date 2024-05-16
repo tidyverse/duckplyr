@@ -35,14 +35,14 @@ Or from [GitHub](https://github.com/) with:
 <pre class='chroma'>
 <span><span class='kr'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='o'>(</span><span class='nv'><a href='https://conflicted.r-lib.org/'>conflicted</a></span><span class='o'>)</span></span>
 <span><span class='kr'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='o'>(</span><span class='nv'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='o'>)</span></span>
-<span><span class='nf'><a href='https://conflicted.r-lib.org/reference/conflict_prefer.html'>conflict_prefer</a></span><span class='o'>(</span><span class='s'>"filter"</span>, <span class='s'>"duckplyr"</span><span class='o'>)</span></span>
-<span><span class='c'>#&gt; <span style='color: #555555;'>[conflicted]</span> Will prefer <span style='color: #0000BB; font-weight: bold;'>duckplyr</span>::filter over</span></span>
-<span><span class='c'>#&gt; any other package.</span></span></pre>
+<span><span class='nf'><a href='https://conflicted.r-lib.org/reference/conflict_prefer.html'>conflict_prefer</a></span><span class='o'>(</span><span class='s'>"filter"</span>, <span class='s'>"dplyr"</span><span class='o'>)</span></span>
+<span><span class='c'>#&gt; <span style='color: #555555;'>[conflicted]</span> Will prefer <span style='color: #0000BB; font-weight: bold;'>dplyr</span>::filter over any</span></span>
+<span><span class='c'>#&gt; other package.</span></span></pre>
 
 There are two ways to use duckplyr.
 
 1.  To enable duckplyr for individual data frames, use [`duckplyr::as_duckplyr_df()`](https://duckdblabs.github.io/duckplyr/reference/as_duckplyr_df.html) as the first step in your pipe, without attaching the package.
-2.  By calling [`library(duckplyr)`](https://duckdblabs.github.io/duckplyr/), it is enabled for the entire session. To turn this off, call `methods_restore()`.
+2.  By calling [`library(duckplyr)`](https://duckdblabs.github.io/duckplyr/), it overwrites dplyr methods and is automatically enabled for the entire session without having to call `as_duckplyr_df()`. To turn this off, call `methods_restore()`.
 
 The examples below illustrate both methods. See also the companion [demo repository](https://github.com/Tmonster/duckplyr_demo) for a use case with a large dataset.
 
@@ -204,12 +204,12 @@ After the computation has been carried out, the results are available immediatel
 
 This example illustrates usage of duckplyr for all data frames in the R session.
 
-Use [`library(duckplyr)`](https://duckdblabs.github.io/duckplyr/) or [`duckplyr::methods_overwrite()`](https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html) to enable processing with duckdb for all data frames:
+Use [`library(duckplyr)`](https://duckdblabs.github.io/duckplyr/) or [`duckplyr::methods_overwrite()`](https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html) to overwrite dplyr methods and enable processing with duckdb for all data frames:
 
 <pre class='chroma'>
 <span><span class='nf'>duckplyr</span><span class='nf'>::</span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html'>methods_overwrite</a></span><span class='o'>(</span><span class='o'>)</span></span>
-<span><span class='c'>#&gt; <span style='color: #00BB00;'>✔</span> Overwriting <span style='color: #0000BB;'>dplyr</span> methods with <span style='color: #0000BB;'>duckplyr</span> methods</span></span>
-<span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> Turn off with `duckplyr::methods_restore()`</span></span></pre>
+<span><span class='c'>#&gt; <span style='color: #00BB00;'>✔</span> Overwriting <span style='color: #0000BB;'>dplyr</span> methods with <span style='color: #0000BB;'>duckplyr</span> methods.</span></span>
+<span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> Turn off with `duckplyr::methods_restore()`.</span></span></pre>
 
 This is the same query as above, without `as_duckplyr_df()`:
 
@@ -300,7 +300,7 @@ The first time the package encounters an unsupported function, data type, or ope
 <span><span class='c'>#&gt; guide future development. By default, no data will be collected or uploaded.</span></span>
 <span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> A fallback situation just occurred. The following information would have been</span></span>
 <span><span class='c'>#&gt;   recorded:</span></span>
-<span><span class='c'>#&gt;   {"version":"0.3.2","message":"Can't convert columns of class &lt;factor&gt; to</span></span>
+<span><span class='c'>#&gt;   {"version":"0.3.99","message":"Can't convert columns of class &lt;factor&gt; to</span></span>
 <span><span class='c'>#&gt;   relational. Affected</span></span>
 <span><span class='c'>#&gt;   column:\n`...1`.","name":"transmute","x":{"...1":"factor","...2":"factor","...3":"numeric","...4":"numeric","...5":"integer","...6":"integer","...7":"factor","...8":"integer"},"args":{"dots":{"...9":"...3</span></span>
 <span><span class='c'>#&gt;   * ...4"}}}</span></span>
@@ -338,8 +338,8 @@ This package also provides generics, for which other packages may then implement
 <pre class='chroma'>
 <span><span class='kr'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='o'>(</span><span class='nv'><a href='https://duckdblabs.github.io/duckplyr/'>duckplyr</a></span><span class='o'>)</span></span></pre>
 <pre class='chroma'>
-<span><span class='c'>#&gt; <span style='color: #00BB00;'>✔</span> Overwriting <span style='color: #0000BB;'>dplyr</span> methods with <span style='color: #0000BB;'>duckplyr</span> methods</span></span>
-<span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> Turn off with `duckplyr::methods_restore()`</span></span></pre>
+<span><span class='c'>#&gt; <span style='color: #00BB00;'>✔</span> Overwriting <span style='color: #0000BB;'>dplyr</span> methods with <span style='color: #0000BB;'>duckplyr</span> methods.</span></span>
+<span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> Turn off with `duckplyr::methods_restore()`.</span></span></pre>
 <pre class='chroma'>
 <span><span class='c'># Create a relational to be used by examples below</span></span>
 <span><span class='nv'>new_dfrel</span> <span class='o'>&lt;-</span> <span class='kr'>function</span><span class='o'>(</span><span class='nv'>x</span><span class='o'>)</span> <span class='o'>{</span></span>
