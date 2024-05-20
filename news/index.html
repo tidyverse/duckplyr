@@ -3,24 +3,16 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.99.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.99.9002</small>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
-</li>
-<li class="active nav-item">
-  <a class="nav-link" href="../news/index.html">Changelog</a>
-</li>
-      </ul><ul class="navbar-nav"><li><form class="form-inline" role="search">
-<input type="search" class="form-control" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json"></form></li>
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/duckdblabs/duckplyr/" aria-label="github">
-    <span class="fa fab fa-github fa-lg"></span>
-  </a>
-</li>
+      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
+      </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/duckdblabs/duckplyr/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul></div>
   </div>
 </nav><div class="container template-news">
@@ -29,6 +21,14 @@
       <h1>Changelog</h1>
       <small>Source: <a href="https://github.com/duckdblabs/duckplyr/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.99.9002" id="duckplyr-03999002-2024-05-17">duckplyr 0.3.99.9002 (2024-05-17)<a class="anchor" aria-label="anchor" href="#duckplyr-03999002-2024-05-17"></a></h2>
+<div class="section level3">
+<h3 id="features-0-3-99-9002">Features<a class="anchor" aria-label="anchor" href="#features-0-3-99-9002"></a></h3>
+<ul><li>
+<code><a href="https://duckdblabs.github.io/duckplyr/">library(duckplyr)</a></code> calls <code><a href="../reference/methods_overwrite.html">methods_overwrite()</a></code> (<a href="https://github.com/duckdblabs/duckplyr/issues/164" class="external-link">#164</a>).</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.99.9001" id="duckplyr-03999001-2024-05-10">duckplyr 0.3.99.9001 (2024-05-10)<a class="anchor" aria-label="anchor" href="#duckplyr-03999001-2024-05-10"></a></h2>
 <div class="section level3">
@@ -51,7 +51,7 @@
 <li>
 <code>%in%</code> evaluates RHS in the correct environment.</li>
 <li>
-<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join()</a></code> and other join functions call <code><a href="https://dplyr.tidyverse.org/reference/auto_copy.html" class="external-link">auto_copy()</a></code>.</li>
+<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join()</a></code> and other join functions call <code>auto_copy()</code>.</li>
 <li>Only reset expression depth if it has been set before.</li>
 <li>Require fallback if the result contains duplicate column names when ignoring case.</li>
 <li>
@@ -126,7 +126,7 @@
 <div class="section level3">
 <h3 id="features-0-3-1">Features<a class="anchor" aria-label="anchor" href="#features-0-3-1"></a></h3>
 <ul><li>New <code><a href="../reference/fallback.html">fallback_sitrep()</a></code> and related functionality for collecting telemetry data (<a href="https://github.com/duckdblabs/duckplyr/issues/102" class="external-link">#102</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/107" class="external-link">#107</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/110" class="external-link">#110</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/111" class="external-link">#111</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/115" class="external-link">#115</a>). No data is collected by default, only a message is displayed once per session and then every eight hours. Opt in or opt out by setting environment variables.</li>
-<li>Implement <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code> and other methods to collect fallback information (<a href="https://github.com/duckdblabs/duckplyr/issues/94" class="external-link">#94</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/104" class="external-link">#104</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/105" class="external-link">#105</a>).</li>
+<li>Implement <code>group_by()</code> and other methods to collect fallback information (<a href="https://github.com/duckdblabs/duckplyr/issues/94" class="external-link">#94</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/104" class="external-link">#104</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/105" class="external-link">#105</a>).</li>
 <li>Set memory limit and temporary directory for duckdb.</li>
 <li>Implement <code><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings()</a></code> as the identity function.</li>
 <li>Prefer <code><a href="https://cli.r-lib.org/reference/cli_abort.html" class="external-link">cli::cli_abort()</a></code> over <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> or <code><a href="https://rlang.r-lib.org/reference/abort.html" class="external-link">rlang::abort()</a></code> (<a href="https://github.com/duckdblabs/duckplyr/issues/114" class="external-link">#114</a>).</li>
@@ -155,7 +155,7 @@
 <h3 id="bug-fixes-0-3-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-0"></a></h3>
 <ul><li>
 <code>grepl(x = NA)</code> gives correct results.</li>
-<li>Fix <code><a href="https://dplyr.tidyverse.org/reference/auto_copy.html" class="external-link">auto_copy()</a></code> for non-data-frame input.</li>
+<li>Fix <code>auto_copy()</code> for non-data-frame input.</li>
 <li>Add output order preservation for filters.</li>
 <li>
 <code><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct()</a></code> now preserves order in corner cases (<a href="https://github.com/duckdblabs/duckplyr/issues/77" class="external-link">#77</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/78" class="external-link">#78</a>).</li>
@@ -164,7 +164,7 @@
 <div class="section level3">
 <h3 id="features-0-3-0">Features<a class="anchor" aria-label="anchor" href="#features-0-3-0"></a></h3>
 <ul><li>Only allow constants in <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> that are actually representable in duckdb (<a href="https://github.com/duckdblabs/duckplyr/issues/73" class="external-link">#73</a>).</li>
-<li>Avoid translating <code><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse()</a></code>, support <code>if_else()</code> (<a href="https://github.com/duckdblabs/duckplyr/issues/79" class="external-link">#79</a>).</li>
+<li>Avoid translating <code><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse()</a></code>, support <code><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else()</a></code> (<a href="https://github.com/duckdblabs/duckplyr/issues/79" class="external-link">#79</a>).</li>
 </ul></div>
 <div class="section level3">
 <h3 id="documentation-0-3-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-3-0"></a></h3>
@@ -177,7 +177,7 @@
 <div class="section level3">
 <h3 id="chore-0-3-0">Chore<a class="anchor" aria-label="anchor" href="#chore-0-3-0"></a></h3>
 <ul><li>Sync with dplyr 1.1.4 (<a href="https://github.com/duckdblabs/duckplyr/issues/82" class="external-link">#82</a>).</li>
-<li>Remove <code><a href="https://dplyr.tidyverse.org/reference/dplyr_extending.html" class="external-link">dplyr_reconstruct()</a></code> method (<a href="https://github.com/duckdblabs/duckplyr/issues/48" class="external-link">#48</a>).</li>
+<li>Remove <code>dplyr_reconstruct()</code> method (<a href="https://github.com/duckdblabs/duckplyr/issues/48" class="external-link">#48</a>).</li>
 <li>Render README.</li>
 <li>Fix code generated by <code>meta_replay()</code>.</li>
 <li>Bump constructive dependency.</li>
@@ -219,7 +219,7 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.1" id="duckplyr-021-2023-09-16">duckplyr 0.2.1 (2023-09-16)<a class="anchor" aria-label="anchor" href="#duckplyr-021-2023-09-16"></a></h2><p class="text-muted">CRAN release: 2023-09-17</p>
 <ul><li><p>Improve documentation.</p></li>
-<li><p>Work around problem with <code><a href="https://dplyr.tidyverse.org/reference/dplyr_extending.html" class="external-link">dplyr_reconstruct()</a></code> in R 4.3.</p></li>
+<li><p>Work around problem with <code>dplyr_reconstruct()</code> in R 4.3.</p></li>
 <li><p>Rename <code>duckdb_from_file()</code> to <code><a href="../reference/df_from_file.html">df_from_file()</a></code>.</p></li>
 <li><p>Unexport private <code>duckdb_rel_from_df()</code>, <code>rel_from_df()</code>, <code>wrap_df()</code> and <code>wrap_integer()</code>.</p></li>
 <li><p>Reexport <code>%&gt;%</code> and <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble()</a></code>.</p></li>
