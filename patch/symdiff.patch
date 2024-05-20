@@ -1,14 +1,15 @@
 diff --git b/R/symdiff.R a/R/symdiff.R
-index dbd08df2..fc3ba0bf 100644
+index dbd08df2..c48b7fd2 100644
 --- b/R/symdiff.R
 +++ a/R/symdiff.R
-@@ -2,9 +2,38 @@
+@@ -2,9 +2,39 @@
  #' @export
  symdiff.duckplyr_df <- function(x, y, ...) {
    # Our implementation
 -  rel_try(
 -    "No relational implementation for symdiff()" = TRUE,
 +  check_dots_empty()
++  check_compatible(x, y)
 +
 +  x_names <- names(x)
 +  y_names <- names(y)

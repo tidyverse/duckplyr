@@ -1,14 +1,15 @@
 diff --git b/R/setdiff.R a/R/setdiff.R
-index 314dcd7a..e14de004 100644
+index 314dcd7a..b5d303e7 100644
 --- b/R/setdiff.R
 +++ a/R/setdiff.R
-@@ -2,9 +2,36 @@
+@@ -2,9 +2,37 @@
  #' @export
  setdiff.duckplyr_df <- function(x, y, ...) {
    # Our implementation
 -  rel_try(
 -    "No relational implementation for setdiff()" = TRUE,
 +  check_dots_empty()
++  check_compatible(x, y)
 +
 +  x_names <- names(x)
 +  y_names <- names(y)

@@ -3,6 +3,7 @@
 setdiff.duckplyr_df <- function(x, y, ...) {
   # Our implementation
   check_dots_empty()
+  check_compatible(x, y)
 
   x_names <- names(x)
   y_names <- names(y)
