@@ -1,5 +1,16 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.3.99.9003 (2024-05-21)
+
+## Bug fixes
+
+  - Stricter type checks in the set operations `intersect()`, `setdiff()`, `symdiff()`, `union()`, and `union_all()` (#169).
+
+## Features
+
+  - Reexport non-deprecated dplyr functions (#144, #163).
+
+
 # duckplyr 0.3.99.9002 (2024-05-17)
 
 ## Features
