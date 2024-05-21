@@ -236,6 +236,11 @@ rel_translate <- function(
           "log10" = "___log10",
           "log" = "___log",
           "as.integer" = "r_base::as.integer",
+
+          # Aggregates
+          "sum" = "r_base::aggregate::sum",
+          "min" = "r_base::aggregate::min",
+          "max" = "r_base::aggregate::max",
           NULL
         )
 
@@ -280,7 +285,7 @@ rel_translate <- function(
         }
         # name <- aliases[name] %|% name
 
-        window <- need_window && (name %in% known_window)
+        window <- need_window && (grepl("^r_base::aggregate::", name) || name %in% known_window)
 
         order_bys <- list()
         offset_expr <- NULL
