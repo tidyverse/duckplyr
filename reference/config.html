@@ -5,7 +5,7 @@ and one option."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.99.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -65,9 +65,9 @@ when the package is loaded.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projection [___coalesce(lhs.a_x, rhs.a_y) as a]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Join REGULAR INNER ___eq_na_matches_na(lhs.a_x, rhs.a_y)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_x]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x555e36b53898)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x560323585e68)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_y]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x555e36b63198)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x560323587d88)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -101,9 +101,9 @@ when the package is loaded.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projection [___coalesce(lhs.a_x, rhs.a_y) as a]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Join REGULAR INNER ___eq_na_matches_na(lhs.a_x, rhs.a_y)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_x]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x555e36eee340)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x560324178e78)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_y]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x555e36eed070)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x56032417b9d8)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -129,10 +129,10 @@ when the package is loaded.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Join REGULAR INNER ___eq_na_matches_na(lhs.a_x, rhs.a_y)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Projection [a_x as a_x, row_number() OVER () as ___row_number_x]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         Projection [a as a_x]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x555e370715c8)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x5603249a1a88)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Projection [a_y as a_y, row_number() OVER () as ___row_number_y]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         Projection [a as a_y]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x555e370702f8)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x5603249a45e8)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -157,7 +157,7 @@ when the package is loaded.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> guide future development. By default, no data will be collected or uploaded.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> A fallback situation just occurred. The following information would have been</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   recorded:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   {"version":"0.3.99","message":"Unknown function:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   {"version":"0.4.0","message":"Unknown function:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   `add_one()`","name":"mutate","x":{"...1":"integer"},"args":{"dots":{"...2":"add_one(...1)"},".by":"NULL",".keep":["all","used","unused","none"]}}</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → Run `duckplyr::fallback_sitrep()` to review the current settings.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → Run `Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)` to enable fallback logging,</span>

@@ -3,7 +3,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.99.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -22,25 +22,11 @@
       <small>Source: <a href="https://github.com/duckdblabs/duckplyr/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.99.9002" id="duckplyr-03999002-2024-05-17">duckplyr 0.3.99.9002 (2024-05-17)<a class="anchor" aria-label="anchor" href="#duckplyr-03999002-2024-05-17"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.4.0" id="duckplyr-040-2024-05-21">duckplyr 0.4.0 (2024-05-21)<a class="anchor" aria-label="anchor" href="#duckplyr-040-2024-05-21"></a></h2>
 <div class="section level3">
-<h3 id="features-0-3-99-9002">Features<a class="anchor" aria-label="anchor" href="#features-0-3-99-9002"></a></h3>
-<ul><li>
-<code><a href="https://duckdblabs.github.io/duckplyr/">library(duckplyr)</a></code> calls <code><a href="../reference/methods_overwrite.html">methods_overwrite()</a></code> (<a href="https://github.com/duckdblabs/duckplyr/issues/164" class="external-link">#164</a>).</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.99.9001" id="duckplyr-03999001-2024-05-10">duckplyr 0.3.99.9001 (2024-05-10)<a class="anchor" aria-label="anchor" href="#duckplyr-03999001-2024-05-10"></a></h2>
-<div class="section level3">
-<h3 id="testing-0-3-99-9001">Testing<a class="anchor" aria-label="anchor" href="#testing-0-3-99-9001"></a></h3>
-<ul><li>Reenable tests that now run successfully (<a href="https://github.com/duckdblabs/duckplyr/issues/166" class="external-link">#166</a>).</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.99.9000" id="duckplyr-03999000-2024-05-08">duckplyr 0.3.99.9000 (2024-05-08)<a class="anchor" aria-label="anchor" href="#duckplyr-03999000-2024-05-08"></a></h2>
-<div class="section level3">
-<h3 id="bug-fixes-0-3-99-9000">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-99-9000"></a></h3>
-<ul><li>Avoid translating <code>a %in% b</code> if <code>b</code> is a column (<a href="https://github.com/duckdblabs/duckplyr/issues/160" class="external-link">#160</a>).</li>
+<h3 id="bug-fixes-0-4-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-4-0"></a></h3>
+<ul><li>Stricter type checks in the set operations <code><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">intersect()</a></code>, <code><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">setdiff()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/setops.html" class="external-link">symdiff()</a></code>, <code><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">union()</a></code>, and <code><a href="https://dplyr.tidyverse.org/reference/setops.html" class="external-link">union_all()</a></code> (<a href="https://github.com/duckdblabs/duckplyr/issues/169" class="external-link">#169</a>).</li>
+<li>Avoid translating <code>a %in% b</code> if <code>b</code> is a column (<a href="https://github.com/duckdblabs/duckplyr/issues/160" class="external-link">#160</a>).</li>
 <li>Fix <code>NA %in% letters</code> case (<a href="https://github.com/duckdblabs/duckplyr/issues/159" class="external-link">#159</a>).</li>
 <li>Distinguish between constant <code>NA</code> and those used in an expression (<a href="https://github.com/duckdblabs/duckplyr/issues/157" class="external-link">#157</a>).</li>
 <li>
@@ -64,13 +50,16 @@
 <li>Correct wording in instructions for enabling fallback logging (<a href="https://github.com/TimTaylor" class="external-link">@TimTaylor</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/141" class="external-link">#141</a>).</li>
 </ul></div>
 <div class="section level3">
-<h3 id="features-0-3-99-9000">Features<a class="anchor" aria-label="anchor" href="#features-0-3-99-9000"></a></h3>
-<ul><li>Only allow constant patterns in <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl()</a></code>.</li>
+<h3 id="features-0-4-0">Features<a class="anchor" aria-label="anchor" href="#features-0-4-0"></a></h3>
+<ul><li>Reexport non-deprecated dplyr functions (<a href="https://github.com/duckdblabs/duckplyr/issues/144" class="external-link">#144</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/163" class="external-link">#163</a>).</li>
+<li>
+<code><a href="https://duckdblabs.github.io/duckplyr/">library(duckplyr)</a></code> calls <code><a href="../reference/methods_overwrite.html">methods_overwrite()</a></code> (<a href="https://github.com/duckdblabs/duckplyr/issues/164" class="external-link">#164</a>).</li>
+<li>Only allow constant patterns in <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl()</a></code>.</li>
 <li>Explicitly reject calls with named arguments for now.</li>
 <li>Reduce memory limit for revdepchecks.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="chore-0-3-99-9000">Chore<a class="anchor" aria-label="anchor" href="#chore-0-3-99-9000"></a></h3>
+<h3 id="chore-0-4-0">Chore<a class="anchor" aria-label="anchor" href="#chore-0-4-0"></a></h3>
 <ul><li>Use equality from rfuns to implement a better version of <code>%in%</code> (<a href="https://github.com/duckdblabs/duckplyr/issues/155" class="external-link">#155</a>).</li>
 <li>Use rfuns for <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code> (<a href="https://github.com/duckdblabs/duckplyr/issues/154" class="external-link">#154</a>).</li>
 <li>Use built-in rfuns extension to implement equality and inequality operators, improve translation for <code>NA</code> and <code>%in%</code> (<a href="https://github.com/duckdblabs/duckplyr/issues/83" class="external-link">#83</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/148" class="external-link">#148</a>).</li>
@@ -85,19 +74,20 @@
 <li>New constructive version.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="documentation-0-3-99-9000">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-3-99-9000"></a></h3>
+<h3 id="documentation-0-4-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-4-0"></a></h3>
 <ul><li>Re-render README.</li>
 <li>Mention wildcards to read multiple files in <code><a href="../reference/df_from_file.html">?df_from_file</a></code> (<a href="https://github.com/andreranza" class="external-link">@andreranza</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/133" class="external-link">#133</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/134" class="external-link">#134</a>).</li>
 </ul></div>
 <div class="section level3">
-<h3 id="testing-0-3-99-9000">Testing<a class="anchor" aria-label="anchor" href="#testing-0-3-99-9000"></a></h3>
-<ul><li>Synchronize tests (<a href="https://github.com/duckdblabs/duckplyr/issues/153" class="external-link">#153</a>).</li>
+<h3 id="testing-0-4-0">Testing<a class="anchor" aria-label="anchor" href="#testing-0-4-0"></a></h3>
+<ul><li>Reenable tests that now run successfully (<a href="https://github.com/duckdblabs/duckplyr/issues/166" class="external-link">#166</a>).</li>
+<li>Synchronize tests (<a href="https://github.com/duckdblabs/duckplyr/issues/153" class="external-link">#153</a>).</li>
 <li>Test that <code>vec_ptype()</code> does not materialize (<a href="https://github.com/duckdblabs/duckplyr/issues/149" class="external-link">#149</a>).</li>
 <li>Improve telemetry tests.</li>
 <li>Promote equality checks to <code>expect_identical()</code> to capture differences between doubles and integers.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="uncategorized-0-3-99-9000">Uncategorized<a class="anchor" aria-label="anchor" href="#uncategorized-0-3-99-9000"></a></h3>
+<h3 id="uncategorized-0-4-0">Uncategorized<a class="anchor" aria-label="anchor" href="#uncategorized-0-4-0"></a></h3>
 <ul><li>Same as previous version.</li>
 <li>Merge branch ‘cran-0.3.2’.</li>
 </ul></div>
