@@ -1,34 +1,10 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# duckplyr 0.3.99.9003 (2024-05-21)
+# duckplyr 0.4.0 (2024-05-21)
 
 ## Bug fixes
 
-  - Stricter type checks in the set operations `intersect()`, `setdiff()`, `symdiff()`, `union()`, and `union_all()` (#169).
-
-## Features
-
-  - Reexport non-deprecated dplyr functions (#144, #163).
-
-
-# duckplyr 0.3.99.9002 (2024-05-17)
-
-## Features
-
-  - `library(duckplyr)` calls `methods_overwrite()` (#164).
-
-
-# duckplyr 0.3.99.9001 (2024-05-10)
-
-## Testing
-
-  - Reenable tests that now run successfully (#166).
-
-
-# duckplyr 0.3.99.9000 (2024-05-08)
-
-## Bug fixes
-
+- Stricter type checks in the set operations `intersect()`, `setdiff()`, `symdiff()`, `union()`, and `union_all()` (#169).
 - Avoid translating `a %in% b` if `b` is a column (#160).
 - Fix `NA %in% letters` case (#159).
 - Distinguish between constant `NA` and those used in an expression (#157).
@@ -48,6 +24,8 @@
 
 ## Features
 
+- Reexport non-deprecated dplyr functions (#144, #163).
+- `library(duckplyr)` calls `methods_overwrite()` (#164).
 - Only allow constant patterns in `grepl()`.
 - Explicitly reject calls with named arguments for now.
 - Reduce memory limit for revdepchecks.
@@ -73,6 +51,7 @@
 
 ## Testing
 
+- Reenable tests that now run successfully (#166).
 - Synchronize tests (#153).
 - Test that `vec_ptype()` does not materialize (#149).
 - Improve telemetry tests.
