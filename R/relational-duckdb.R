@@ -43,7 +43,6 @@ duckplyr_macros <- c(
   "&" = "(x, y) AS (x AND y)",
   "!" = "(x) AS (NOT x)",
   "any" = "(x) AS (bool_or(x))",
-  "desc" = "(x) AS (-x)",
   "n_distinct" = "(x) AS (COUNT(DISTINCT x))",
   #
   "wday" = "(x) AS CAST(weekday(CAST (x AS DATE)) + 1 AS int32)",
@@ -53,6 +52,7 @@ duckplyr_macros <- c(
   #
   # FIXME: Need a better way?
   "suppressWarnings" = "(x) AS (x)",
+  "desc" = "(x) AS (x)",
   #
   NULL
 )
@@ -239,9 +239,12 @@ rel_aggregate.duckdb_relation <- function(rel, groups, aggregates, ...) {
 
 #' @export
 rel_order.duckdb_relation <- function(rel, orders, ...) {
+
+  ascending <- sapply(orders, function(order) order$name != "desc" )
+
   duckdb_orders <- to_duckdb_exprs(orders)
 
-  out <- duckdb$rel_order(rel, duckdb_orders)
+  out <- duckdb$rel_order(rel, duckdb_orders, ascending)
 
   meta_rel_register(out, expr(duckdb$rel_order(
     !!meta_rel_get(rel)$name,
