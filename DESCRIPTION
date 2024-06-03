@@ -21,7 +21,7 @@ Imports:
     cli,
     collections,
     DBI,
-    dplyr (>= 1.1.4),
+    dplyr (>= 1.1.4.9000),
     duckdb (>= 0.10.2),
     glue,
     jsonlite,
