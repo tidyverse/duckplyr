@@ -17,6 +17,29 @@ arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
         return(.data)
       }
 
+      # Extract the sort order of arguments
+      # i.e. check if the argument is wrapped in desc()
+      ascending <- sapply(dots,function(dot) { 
+        expr <- get_expr(dot)
+        if (typeof(expr) != "language") return(TRUE)
+        return(expr[[1]] != "desc")
+      })
+
+      # Remove any desc-function calls from the expressions:
+      # desc(colname) -> colname
+      dots <- lapply(dots,function(dot) {         
+        expr <- get_expr(dot)
+
+        if (typeof(expr)  != "language") return(dot)
+        if (expr[[1]]     != "desc")     return(dot)
+
+        # Check that desc is called with a single argument
+        # (we cannot return more than one argument due to expectations of rel_translate_dots)
+        if (length(expr) > 2) cli::cli_abort("desc() must be called with exactly one argument.")
+
+        return(expr[[2]])
+      })
+
       exprs <- rel_translate_dots(dots, .data)
 
       if (oo_force()) {
@@ -24,7 +47,7 @@ arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
         exprs <- c(exprs, list(relexpr_reference("___row_number")))
       }
 
-      rel <- rel_order(rel, exprs)
+      rel <- rel_order(rel, exprs, ascending)
 
       # Don't need to sort here, already sorting by ___row_number
       if (oo_force()) {

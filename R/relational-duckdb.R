@@ -52,7 +52,6 @@ duckplyr_macros <- c(
   #
   # FIXME: Need a better way?
   "suppressWarnings" = "(x) AS (x)",
-  "desc" = "(x) AS (x)",
   #
   NULL
 )
@@ -238,13 +237,11 @@ rel_aggregate.duckdb_relation <- function(rel, groups, aggregates, ...) {
 }
 
 #' @export
-rel_order.duckdb_relation <- function(rel, orders, ...) {
-
-  ascending <- sapply(orders, function(order) order$name != "desc" )
+rel_order.duckdb_relation <- function(rel, orders, ascending, ...) {
 
   duckdb_orders <- to_duckdb_exprs(orders)
 
-  out <- duckdb$rel_order(rel, duckdb_orders, ascending)
+  out <- duckdb$rel_order(rel, duckdb_orders, ascending)  
 
   meta_rel_register(out, expr(duckdb$rel_order(
     !!meta_rel_get(rel)$name,
