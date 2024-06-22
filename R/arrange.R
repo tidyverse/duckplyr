@@ -17,34 +17,16 @@ arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
         return(.data)
       }
 
-      # Extract the sort order of arguments
-      # i.e. check if the argument is wrapped in desc()
-      ascending <- sapply(dots,function(dot) { 
-        expr <- get_expr(dot)
-        if (typeof(expr) != "language") return(TRUE)
-        return(expr[[1]] != "desc")
-      })
-
-      # Remove any desc-function calls from the expressions:
-      # desc(colname) -> colname
-      dots <- lapply(dots,function(dot) {         
-        expr <- get_expr(dot)
-
-        if (typeof(expr)  != "language") return(dot)
-        if (expr[[1]]     != "desc")     return(dot)
-
-        # Check that desc is called with a single argument
-        # (we cannot return more than one argument due to expectations of rel_translate_dots)
-        if (length(expr) > 2) cli::cli_abort("desc() must be called with exactly one argument.")
-
-        return(expr[[2]])
-      })
+      dots_ascending  <- handle_desc(dots)
+      dots            <- dots_ascending$dots
+      ascending       <- dots_ascending$ascending
 
       exprs <- rel_translate_dots(dots, .data)
 
       if (oo_force()) {
         rel <- oo_prep(rel, force = TRUE)
         exprs <- c(exprs, list(relexpr_reference("___row_number")))
+        ascending <- c(ascending,TRUE)
       }
 
       rel <- rel_order(rel, exprs, ascending)
@@ -88,4 +70,27 @@ duckplyr_arrange <- function(.data, ...) {
   out <- arrange(.data, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
+}
+
+handle_desc <- function(dots) {
+  # Handles calls to 'desc' function by
+  # - extracting the sort order
+  # - removing any desc-function calls from the expressions: desc(colname) -> colname
+  ascending <- rep(TRUE, length(dots))
+
+  for (i in seq_along(dots)) {
+    expr <- get_expr(dots[[i]])
+
+    if (!is.call(expr))       next
+    if (expr[[1]] != "desc")  next
+
+    # Check that desc is called with a single argument
+    # (we cannot return more than one argument due to expectations of rel_translate_dots)
+    if (length(expr) > 2) cli::cli_abort("desc() must be called with exactly one argument.")
+
+    ascending[i] <- FALSE
+    dots[[i]]    <- new_quosure(expr[[2]])
+  }
+
+  list(dots = dots,ascending = ascending)
 }

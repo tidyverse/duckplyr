@@ -237,7 +237,7 @@ rel_aggregate.duckdb_relation <- function(rel, groups, aggregates, ...) {
 }
 
 #' @export
-rel_order.duckdb_relation <- function(rel, orders, ascending, ...) {
+rel_order.duckdb_relation <- function(rel, orders, ascending = NULL, ...) {
 
   duckdb_orders <- to_duckdb_exprs(orders)
 
