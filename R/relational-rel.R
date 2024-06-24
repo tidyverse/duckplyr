@@ -141,7 +141,7 @@ rel_aggregate <- function(rel, groups, aggregates, ...) {
 #' to be used by [dplyr::arrange()].
 #'
 #' @param orders A list of expressions to order by.
-#' @param ascending A logical vector describing the sort order
+#' @param ascending A logical vector describing the sort order.
 #' @rdname new_relational
 #' @export
 #' @examples
