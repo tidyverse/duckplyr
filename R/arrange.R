@@ -26,7 +26,7 @@ arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
       if (oo_force()) {
         rel <- oo_prep(rel, force = TRUE)
         exprs <- c(exprs, list(relexpr_reference("___row_number")))
-        ascending <- c(ascending,TRUE)
+        ascending <- c(ascending, TRUE)
       }
 
       rel <- rel_order(rel, exprs, ascending)
@@ -92,5 +92,5 @@ handle_desc <- function(dots) {
     dots[[i]]    <- new_quosure(expr[[2]])
   }
 
-  list(dots = dots,ascending = ascending)
+  list(dots = dots, ascending = ascending)
 }
