@@ -85,7 +85,7 @@ handle_desc <- function(dots) {
     if (expr[[1]] != "desc")  next
 
     # Check that desc is called with a single argument
-    # (we cannot return more than one argument due to expectations of rel_translate_dots)
+    # (dplyr::desc() accepts only one argument)
     if (length(expr) > 2) cli::cli_abort("desc() must be called with exactly one argument.")
 
     ascending[i] <- FALSE
