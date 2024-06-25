@@ -30,7 +30,7 @@ rel_project(rel, exprs, ...)
 
 rel_aggregate(rel, groups, aggregates, ...)
 
-rel_order(rel, orders, ...)
+rel_order(rel, orders, ascending, ...)
 
 rel_join(
   left,
@@ -75,6 +75,8 @@ rel_names(rel, ...)
 \item{aggregates}{A list of expressions with aggregates to compute.}
 
 \item{orders}{A list of expressions to order by.}
+
+\item{ascending}{A logical vector describing the sort order.}
 
 \item{conds}{A list of expressions to use for the join.}
 

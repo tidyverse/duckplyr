@@ -141,6 +141,7 @@ rel_aggregate <- function(rel, groups, aggregates, ...) {
 #' to be used by [dplyr::arrange()].
 #'
 #' @param orders A list of expressions to order by.
+#' @param ascending A logical vector describing the sort order.
 #' @rdname new_relational
 #' @export
 #' @examples
@@ -157,7 +158,7 @@ rel_aggregate <- function(rel, groups, aggregates, ...) {
 #'   mtcars_rel,
 #'   list(relexpr_reference("mpg"))
 #' )
-rel_order <- function(rel, orders, ...) {
+rel_order <- function(rel, orders, ascending, ...) {
   rel_stats_env$rel_order <- (rel_stats_env$rel_order %||% 0L) + 1L
   UseMethod("rel_order")
 }

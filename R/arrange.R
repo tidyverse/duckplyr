@@ -17,14 +17,19 @@ arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
         return(.data)
       }
 
+      dots_ascending  <- handle_desc(dots)
+      dots            <- dots_ascending$dots
+      ascending       <- dots_ascending$ascending
+
       exprs <- rel_translate_dots(dots, .data)
 
       if (oo_force()) {
         rel <- oo_prep(rel, force = TRUE)
         exprs <- c(exprs, list(relexpr_reference("___row_number")))
+        ascending <- c(ascending, TRUE)
       }
 
-      rel <- rel_order(rel, exprs)
+      rel <- rel_order(rel, exprs, ascending)
 
       # Don't need to sort here, already sorting by ___row_number
       if (oo_force()) {
@@ -65,4 +70,27 @@ duckplyr_arrange <- function(.data, ...) {
   out <- arrange(.data, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
+}
+
+handle_desc <- function(dots) {
+  # Handles calls to 'desc' function by
+  # - extracting the sort order
+  # - removing any desc-function calls from the expressions: desc(colname) -> colname
+  ascending <- rep(TRUE, length(dots))
+
+  for (i in seq_along(dots)) {
+    expr <- quo_get_expr(dots[[i]])
+
+    if (!is.call(expr))       next
+    if (expr[[1]] != "desc")  next
+
+    # Check that desc is called with a single argument
+    # (dplyr::desc() accepts only one argument)
+    if (length(expr) > 2) cli::cli_abort("`desc()` must be called with exactly one argument.")
+
+    ascending[i] <- FALSE
+    dots[[i]]    <- new_quosure(expr[[2]], env = quo_get_env(dots[[i]]))
+  }
+
+  list(dots = dots, ascending = ascending)
 }
