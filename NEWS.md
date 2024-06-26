@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.4.0.9001 (2024-06-26)
+
+## Features
+
+  - Support descending sort for character and other non-numeric data (@toppyy, #92, #175).
+
+
 # duckplyr 0.4.0.9000 (2024-05-21)
 
 - Merge branch 'cran-0.4.0'.
