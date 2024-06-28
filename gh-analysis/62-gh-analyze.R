@@ -28,9 +28,11 @@ get_dplyr_calls <- function(lang) {
   out
 }
 
-get_dplyr_calls_exprs <- function(exprs) {
-  exprs |>
-    as.list() |>
+get_dplyr_calls_exprs <- function(parsed) {
+  parsed |>
+    mutate(as_tibble(transpose(parsed))) |>
+    pull(result) |>
+    unlist() |>
     map(get_dplyr_calls) |>
     compact() |>
     unlist()
@@ -45,12 +47,8 @@ for (file in files) {
     try({
       parsed <- qs::qread(file)
       exprs <- get_dplyr_calls_exprs(parsed)
-      if (length(exprs) == 0) {
-        writeLines(character(), analyzed_file)
-      } else {
-        print(length(exprs))
-        qs::qsave(exprs, analyzed_file)
-      }
+      print(length(exprs))
+      qs::qsave(exprs, analyzed_file)
     })
   }
 }

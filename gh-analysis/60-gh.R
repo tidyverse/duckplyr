@@ -1,28 +1,88 @@
 library(tidyverse)
+library(DBI)
+library(withr)
 pkgload::load_all()
 
-contents <- duckplyr_df_from_parquet("gh-analysis/data/r_contents-*.parquet", class = class(tibble()))
+con <- dbConnect(duckdb::duckdb())
+
+contents <- duckdb::tbl_query(con, "'gh-analysis/data/r_contents-*.parquet'")
+
+local_db_result <- function(res, .local_envir = parent.frame()) {
+    requireNamespace("DBI", quietly = TRUE)
+    stopifnot(methods::is(res, "DBIResult"))
+    defer(DBI::dbClearResult(res), envir = .local_envir)
+    res
+}
+
+rowwise_map <- function(.data, .f, .progress = FALSE) {
+  .f <- as_function(.f)
+  sql <- dbplyr::sql_render(.data)
+  con <- dbplyr::remote_con(.data)
+
+  res <- local_db_result(dbSendQuery(con, sql))
+
+  out <- list()
+
+  if (.progress) {
+    message("Processing", appendLF = FALSE)
+  }
+
+  while (!dbHasCompleted(res)) {
+    if (.progress) {
+      message(".", appendLF = FALSE)
+    }
+    chunk <- dbFetch(res, n = 1)
+    if (nrow(chunk) == 0) break
+    out <- c(out, list(.f(as_tibble(chunk))))
+  }
+
+  if (.progress) {
+    message("")
+  }
+
+  out
+}
+
+rowwise_walk <- function(.data, .f, .progress = FALSE) {
+  .f <- as_function(.f)
+  walker <- function(.x) {
+    .f(.x)
+    NULL
+  }
+  rowwise_map(.data, walker, .progress)
+  invisible(.data)
+}
+
+blob_decode <- function(content) {
+  if (is.null(content)) return("")
+  stopifnot(is.raw(content))
+  # Substitute embedded NUL with newlines
+  content[content == 0] <- as.raw(10)
+  rawToChar(content)
+}
+
+write_parsed <- function(x) {
+  path <- fs::path("gh-analysis/data/parsed", paste0(x$two, ".qs"))
+  if (fs::file_exists(path)) {
+    return()
+  }
+
+  packed <- x$packed[[1]] |>
+    arrange(id) |>
+    mutate(content = map_chr(content, blob_decode)) |>
+    mutate(parsed = map(content, safely(rlang::parse_exprs))) |>
+    select(id, parsed) |>
+    as_tibble()
+
+  qs::qsave(packed, path)
+}
+
+fs::dir_create("gh-analysis/data/parsed")
 
 contents |>
-  count(binary)
-
-ids <-
-  contents |>
+  mutate(two = substr(id, 1, 2)) |>
   filter(!binary) |>
-  pull(id)
-
-fs::dir_create("gh-analysis/data/contents")
-
-sql <- paste0(
-  ".output\nSELECT ", seq_along(ids), ";\n",
-  ".output gh-analysis/data/contents/", ids, ".R\n",
-  "SELECT content FROM contents WHERE id = '", ids, "';"
-)
-
-header <- ".bail on
-CREATE TEMP TABLE contents AS SELECT * FROM read_parquet('gh-analysis/data/r_contents-*.parquet');
-.mode line
-.headers off
-"
-
-writeLines(c(header, sql), "gh-analysis/data/extract.sql")
+  mutate(content = ENCODE(content)) |>
+  summarize(packed = LIST(STRUCT_PACK(id, content)), .by = two) |>
+  arrange(two) |>
+  rowwise_walk(write_parsed, .progress = TRUE)
