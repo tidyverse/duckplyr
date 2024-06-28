@@ -1,5 +1,4 @@
 library(tidyverse)
-pkgload::load_all()
 
 files <- fs::dir_ls("gh-analysis/data/parsed")
 

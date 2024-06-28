@@ -1,7 +1,7 @@
 library(tidyverse)
 library(DBI)
 library(withr)
-pkgload::load_all()
+library(rlang)
 
 con <- dbConnect(duckdb::duckdb())
 
