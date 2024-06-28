@@ -84,6 +84,7 @@ fs::dir_create("gh-analysis/data/parsed")
 contents |>
   mutate(two = substr(id, 1, 2)) |>
   filter(!binary) |>
+  filter(row_number() == 1, .by = id) |>
   mutate(content = ENCODE(content)) |>
   summarize(packed = LIST(STRUCT_PACK(id, content)), .by = two) |>
   arrange(two) |>
