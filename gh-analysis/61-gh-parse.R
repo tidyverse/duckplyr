@@ -1,12 +1,12 @@
 library(tidyverse)
 pkgload::load_all()
 
-files <- fs::dir_ls("gh/contents")
+files <- fs::dir_ls("gh-analysis/data/contents")
 
-fs::dir_create("gh/parsed")
+fs::dir_create("gh-analysis/data/parsed")
 
 for (file in files) {
-  parsed_file <- fs::path("gh/parsed", fs::path_ext_set(fs::path_file(file), ".qs"))
+  parsed_file <- fs::path("gh-analysis/data/parsed", fs::path_ext_set(fs::path_file(file), ".qs"))
   if (!fs::file_exists(parsed_file)) {
     message(file)
     try({

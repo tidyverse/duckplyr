@@ -1,9 +1,9 @@
 library(tidyverse)
 pkgload::load_all()
 
-files <- fs::dir_ls("gh/parsed")
+files <- fs::dir_ls("gh-analysis/data/parsed")
 
-fs::dir_create("gh/analyzed")
+fs::dir_create("gh-analysis/data/analyzed")
 
 funs <- c("mutate", "filter", "summarise", "summarize")
 
@@ -36,10 +36,10 @@ get_dplyr_calls_exprs <- function(exprs) {
     unlist()
 }
 
-fs::dir_create("gh/analyzed")
+fs::dir_create("gh-analysis/data/analyzed")
 
 for (file in files) {
-  analyzed_file <- fs::path("gh/analyzed", fs::path_ext_set(fs::path_file(file), ".qs"))
+  analyzed_file <- fs::path("gh-analysis/data/analyzed", fs::path_ext_set(fs::path_file(file), ".qs"))
   if (!fs::file_exists(analyzed_file)) {
     message(file)
     try({

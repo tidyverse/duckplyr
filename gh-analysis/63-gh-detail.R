@@ -1,7 +1,7 @@
 pkgload::load_all()
 library(tidyverse)
 
-file_info <- fs::dir_info("gh/analyzed")
+file_info <- fs::dir_info("gh-analysis/data/analyzed")
 files <-
   file_info |>
   filter(size > 0) |>
