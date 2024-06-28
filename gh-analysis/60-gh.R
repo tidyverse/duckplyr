@@ -8,10 +8,10 @@ con <- dbConnect(duckdb::duckdb())
 contents <- duckdb::tbl_query(con, "'gh-analysis/data/r_contents-*.parquet'")
 
 local_db_result <- function(res, .local_envir = parent.frame()) {
-    requireNamespace("DBI", quietly = TRUE)
-    stopifnot(methods::is(res, "DBIResult"))
-    defer(DBI::dbClearResult(res), envir = .local_envir)
-    res
+  requireNamespace("DBI", quietly = TRUE)
+  stopifnot(methods::is(res, "DBIResult"))
+  defer(DBI::dbClearResult(res), envir = .local_envir)
+  res
 }
 
 rowwise_map <- function(.data, .f, .progress = FALSE) {
