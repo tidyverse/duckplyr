@@ -30,11 +30,12 @@ get_dplyr_calls <- function(lang) {
 get_dplyr_calls_exprs <- function(parsed) {
   parsed |>
     mutate(as_tibble(transpose(parsed))) |>
-    pull(result) |>
-    unlist() |>
-    map(get_dplyr_calls) |>
-    compact() |>
-    unlist()
+    select(id, result) |>
+    unnest(result) |>
+    mutate(calls = map(result, get_dplyr_calls)) |>
+    select(-result) |>
+    unnest(calls) |>
+    rename(call = calls)
 }
 
 fs::dir_create("gh-analysis/data/analyzed")
@@ -46,7 +47,7 @@ for (file in files) {
     try({
       parsed <- qs::qread(file)
       exprs <- get_dplyr_calls_exprs(parsed)
-      print(length(exprs))
+      print(nrow(exprs))
       qs::qsave(exprs, analyzed_file)
     })
   }

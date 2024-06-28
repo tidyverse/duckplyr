@@ -3,10 +3,9 @@ library(tidyverse)
 file_info <- fs::dir_info("gh-analysis/data/analyzed")
 files <-
   file_info |>
-  filter(size > 0) |>
   pull(path)
 
-data <- unlist(purrr::map(files, qs::qread, .progress = TRUE))
+data <- bind_rows(purrr::map(files, qs::qread, .progress = TRUE))
 
 get_calls <- function(lang) {
   if (!is.call(lang)) {
@@ -40,28 +39,34 @@ get_calls <- function(lang) {
   out
 }
 
-expr_funs <- purrr::map(data, get_calls, .progress = TRUE)
+data_expr_funs <-
+  data |>
+  mutate(expr_funs = map(call, get_calls, .progress = TRUE)) |>
+  mutate(expr_funs_sorted = map_chr(expr_funs, ~ paste(sort(.x), collapse = " ")))
 
-expr_funs_sorted <- purrr::map_chr(expr_funs, ~ paste(sort(.x), collapse = " "))
-
-tibble(expr_funs_sorted) |>
+# Check variability of expression functions
+data_expr_funs |>
   count(expr_funs_sorted, sort = TRUE) |>
   mutate(prop = n / sum(n), cum_prop = cumsum(prop)) |>
   view()
 
-calls <- unlist(expr_funs)
+result_base <-
+  data_expr_funs |>
+  select(id, expr_funs) |>
+  unnest(expr_funs) |>
+  filter(!(expr_funs %in% c("mutate", "filter", "summarise", "summarize", "dplyr::mutate", "dplyr::filter", "dplyr::summarise", "dplyr::summarize")))
 
 result <-
-  tibble(calls) |>
-  filter(!(calls %in% c("mutate", "filter", "summarise", "summarize", "dplyr::mutate", "dplyr::filter", "dplyr::summarise", "dplyr::summarize"))) |>
-  count(calls, sort = TRUE) |>
+  result_base |>
+  count(expr_funs, sort = TRUE) |>
   mutate(prop = n / sum(n), cum_prop = cumsum(prop))
 
 result |>
   view()
 
 expr_unnested <-
-  tibble(expr = seq_along(expr_funs), funs = map(expr_funs, unique)) |>
+  data_expr_funs |>
+  transmute(expr = row_number(), funs = map(expr_funs, unique)) |>
   unnest(funs)
 
 expr_result <-
