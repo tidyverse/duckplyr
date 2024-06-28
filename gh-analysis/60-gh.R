@@ -4,6 +4,8 @@ library(withr)
 library(rlang)
 
 con <- dbConnect(duckdb::duckdb())
+DBI::dbExecute(con, "set memory_limit='8GB'")
+DBI::dbExecute(con, paste0("pragma temp_directory='", tempdir(), "'"))
 
 contents <- duckdb::tbl_query(con, "'gh-analysis/data/r_contents-*.parquet'")
 
