@@ -85,3 +85,23 @@ expr_result <-
 
 expr_result |>
   view()
+
+# Understand weird operators
+
+result_base |>
+  filter(expr_funs == "<other>$") |>
+  count(id, sort = TRUE)
+
+# # A tibble: 2,209 × 2
+#    id                                           n
+#    <chr>                                    <int>
+#  1 73f21f2f970b64d2d11295c06028409a2058da17   151
+#  2 812dcbe47f7d01b8ebaca8a9d7d9749649c40de9   137
+#  3 b85cfb474698c3b99e05bcbedbefb7234ee7bbee   122
+#  4 bdb638ebd6801755090ab43511f7c435d2ac71ed   108
+#  5 94bd75ed00dbc023404095264eebe84800585eb4    83
+#  6 d7c83f16df6fb8263260315b8c5e0f4f0eac3e43    78
+#  7 e2b14bcbbf10d2067604aafb95634be2d307ca47    78
+#  8 2cbb0d964a27676a704a80962fdf2b4928824e8d    70
+#  9 203c1f04cbb676698d72ca71f0fee73715734651    69
+# 10 a8849b4ffec4deca987d0a437c2e5aff08919a64    56
