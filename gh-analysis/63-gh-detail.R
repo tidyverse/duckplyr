@@ -59,7 +59,7 @@ data_expr_funs |>
 
 result_base <-
   data_expr_funs |>
-  select(id, expr_funs) |>
+  select(id, call, expr_funs) |>
   unnest(expr_funs) |>
   filter(!(expr_funs %in% c("mutate", "filter", "summarise", "summarize", "dplyr::mutate", "dplyr::filter", "dplyr::summarise", "dplyr::summarize")))
 
@@ -114,3 +114,27 @@ result_base |>
 # 10 98ec37bfb2e4ed8e830328e98a61d075faf8eec7    53
 # # ℹ 1,799 more rows
 # # ℹ Use `print(n = ...)` to see more rows
+
+result_base |>
+  filter(expr_funs == "<other>$") |>
+  filter(row_number() == 1, .by = id) |>
+  add_count(id) |>
+  arrange(desc(n)) |>
+  filter(id == first(id)) |>
+  pull(call)
+
+result_base |>
+  filter(expr_funs == "[") |>
+  filter(row_number() == 1, .by = id) |>
+  add_count(id) |>
+  arrange(desc(n)) |>
+  filter(id == first(id)) |>
+  pull(call)
+
+result_base |>
+  filter(expr_funs == "[[") |>
+  filter(row_number() == 1, .by = id) |>
+  add_count(id) |>
+  arrange(desc(n)) |>
+  filter(id == first(id)) |>
+  pull(call)
