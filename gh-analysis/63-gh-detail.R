@@ -124,6 +124,10 @@ result_base |>
   pull(call)
 
 result_base |>
+  filter(any(expr_funs == "<other>$"), .by = id) |>
+  count(expr_funs, sort = TRUE)
+
+result_base |>
   filter(expr_funs == "[") |>
   filter(row_number() == 1, .by = id) |>
   add_count(id) |>
@@ -132,9 +136,17 @@ result_base |>
   pull(call)
 
 result_base |>
+  filter(any(expr_funs == "["), .by = id) |>
+  count(expr_funs, sort = TRUE)
+
+result_base |>
   filter(expr_funs == "[[") |>
   filter(row_number() == 1, .by = id) |>
   add_count(id) |>
   arrange(desc(n)) |>
   filter(id == first(id)) |>
   pull(call)
+
+result_base |>
+  filter(any(expr_funs == "[["), .by = id) |>
+  count(expr_funs, sort = TRUE)
