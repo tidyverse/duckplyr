@@ -1,3 +1,91 @@
+rel_find_call <- function(fun, env) {
+  name <- as.character(fun)
+
+  if (name[[1]] == "::") {
+    # Fully qualified name, no check needed
+    return(c(name[[2]], name[[3]]))
+  } else if (length(name) != 1) {
+    cli::cli_abort("Can't translate function {.code {expr_deparse(fun)}}.")
+  }
+
+  pkg <- switch(name,
+    # Handled in a special way, not mentioned here
+    # "desc" = "dplyr",
+
+    # Macros
+    "<" = "base",
+    "<=" = "base",
+    ">" = "base",
+    ">=" = "base",
+    "==" = "base",
+    "!=" = "base",
+    "is.na" = "base",
+    "n" = "dplyr",
+    "n_distinct" = "dplyr",
+
+    # Operators
+    "(" = "base",
+    "+" = "base",
+    "-" = "base",
+    "*" = "base",
+    "/" = "base",
+
+    "grepl" = "base",
+    "if_else" = "dplyr",
+    "|" = "base",
+    "&" = "base",
+    "!" = "base",
+    "any" = "base",
+    "suppressWarnings" = "base",
+    "lag" = "dplyr",
+    "lead" = "dplyr",
+    "%in%" = "base",
+    "$" = "base",
+    "sd" = "stats",
+    "first" = "dplyr",
+    "last" = "dplyr",
+    "nth" = "dplyr",
+    "log10" = "base",
+    "log" = "base",
+    "as.integer" = "base",
+    "rank" = "dplyr",
+    "dense_rank" = "dplyr",
+    "percent_rank" = "dplyr",
+    "row_number" = "dplyr",
+    "cume_dist" = "dplyr",
+    "ntile" = "dplyr",
+    "sum" = "base",
+    "mean" = "base",
+    "min" = "base",
+    "max" = "base",
+    "median" = "stats",
+    "hour" = "lubridate",
+    "minute" = "lubridate",
+    "second" = "lubridate",
+    "wday" = "lubridate",
+    "strftime" = "base",
+    "abs" = "base",
+    "substr" = "base"
+  )
+
+  if (is.null(pkg)) {
+    cli::cli_abort("No translation for function {.code {name}}.")
+  }
+
+  # https://github.com/tidyverse/dplyr/pull/7046
+  if (name == "n") {
+    return(c("dplyr", "n"))
+  }
+
+  fun_val <- get0(fun, env, mode = "function", inherits = TRUE)
+
+  if (!identical(fun_val, get(name, envir = asNamespace(pkg)))) {
+    cli::cli_abort("Function {.code {name}} does not map to {.code {pkg}::{name}}.")
+  }
+
+  c(pkg, name)
+}
+
 rel_translate_lang <- function(
     expr,
     do_translate,
@@ -9,14 +97,9 @@ rel_translate_lang <- function(
     in_window,
     need_window
 ) {
-  name <- as.character(expr[[1]])
-
-  if (name[[1]] == "::") {
-    pkg <- name[[2]]
-    name <- name[[3]]
-  } else {
-    pkg <- NULL
-  }
+  pkg_name <- rel_find_call(expr[[1]], env)
+  pkg <- pkg_name[[1]]
+  name <- pkg_name[[2]]
 
   if (!(name %in% c("wday", "strftime", "lag", "lead"))) {
     if (!is.null(names(expr)) && any(names(expr) != "")) {
@@ -110,36 +193,17 @@ rel_translate_lang <- function(
 
   known_window <- c(
     # Window functions
-    "rank", "rank_dense", "dense_rank", "percent_rank",
-    "row_number", "first_value", "last_value", "nth_value",
+    "rank", "dense_rank", "percent_rank",
+    "row_number", "first", "last", "nth",
     "cume_dist", "lead", "lag", "ntile",
 
     # Aggregates
-    "sum", "mean", "stddev", "min", "max", "median",
+    "sum", "mean", "sd", "min", "max", "median",
     #
     NULL
   )
 
-  known_ops <- c("+", "-", "*", "/")
-
-  known_funs <- c(
-    # FIXME: How to indicate these are from lubridate?
-    "hour",
-    "minute",
-    "second",
-    "strftime",
-    "abs",
-    "%in%",
-    "substr",
-    #
-    NULL
-  )
-
-  known <- c(names(duckplyr_macros), names(aliases), known_window, known_ops, known_funs)
-
-  if (!(name %in% known)) {
-    cli::cli_abort("Unknown function: {.code {name}()}")
-  }
+  window <- need_window && (name %in% known_window)
 
   if (name %in% names(aliases)) {
     name <- aliases[[name]]
@@ -148,8 +212,6 @@ rel_translate_lang <- function(
     }
   }
   # name <- aliases[name] %|% name
-
-  window <- need_window && (name %in% known_window)
 
   order_bys <- list()
   offset_expr <- NULL

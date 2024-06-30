@@ -135,7 +135,7 @@
       tibble(a = 1, b = 2) %>% as_duckplyr_df() %>% mutate(c = foo(a, b))
     Message
       i dplyr fallback recorded
-        {"version":"0.3.1","message":"Unknown function: `foo()`","name":"mutate","x":{"...1":"numeric","...2":"numeric"},"args":{"dots":{"...3":"foo(...1, ...2)"},".by":"NULL",".keep":["all","used","unused","none"]}}
+        {"version":"0.3.1","message":"No translation for function `foo`.","name":"mutate","x":{"...1":"numeric","...2":"numeric"},"args":{"dots":{"...3":"foo(...1, ...2)"},".by":"NULL",".keep":["all","used","unused","none"]}}
     Output
       # A tibble: 1 x 3
             a     b     c
