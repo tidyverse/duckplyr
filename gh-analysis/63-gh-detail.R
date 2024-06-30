@@ -7,12 +7,17 @@ files <-
 
 data <- bind_rows(purrr::map(files, qs::qread, .progress = TRUE))
 
-get_calls <- function(lang) {
+get_calls <- function(lang, ignore = NULL) {
   if (!is.call(lang)) {
     return(NULL)
   }
 
   out <- NULL
+
+  if (identical(lang, quote(1:n()))) {
+    # FIXME: Need to implement
+    return("1:n()")
+  }
 
   arg_list <- as.list(lang)[-1]
   if (lang[[1]] == "%in%") {
@@ -20,9 +25,15 @@ get_calls <- function(lang) {
     arg_list <- arg_list[1]
   }
 
+  child_ignore <- ignore
+  if (lang[[1]] == "case_when") {
+    # Special semantics of ~ inside case_when()
+    child_ignore <- c(child_ignore, "~")
+  }
+
   for (arg in arg_list) {
     if (!missing(arg)) {
-      child <- get_calls(arg)
+      child <- get_calls(arg, child_ignore)
       if (!is.null(child)) {
         out <- c(out, child)
       }
@@ -43,7 +54,8 @@ get_calls <- function(lang) {
   } else if (is.call(lang[[1]]) && lang[[1]][[1]] == "::") {
     out <- c(out, deparse(lang[[1]][[3]]))
   }
-  out
+
+  unique(setdiff(out, ignore))
 }
 
 data_expr_funs <-
@@ -73,15 +85,29 @@ result |>
 
 expr_unnested <-
   data_expr_funs |>
-  transmute(expr = row_number(), funs = map(expr_funs, unique)) |>
+  transmute(expr = row_number(), funs = expr_funs) |>
   unnest(funs)
 
 expr_result <-
   expr_unnested |>
   filter(!(funs %in% c("mutate", "filter", "summarise", "summarize", "dplyr::mutate", "dplyr::filter", "dplyr::summarise", "dplyr::summarize"))) |>
   mutate(n = n(), .by = funs) |>
+  arrange(desc(n)) |>
+  mutate(funs = forcats::fct_inorder(funs)) |>
+  mutate(idx_expr = n() - row_number(), .by = expr) |>
+  mutate(has_all = (idx_expr == 0)) |>
+  summarize(.by = funs, expr_done = sum(has_all)) |>
+  mutate(pct_done = expr_done / sum(expr_done), cum_pct_done = cumsum(pct_done))
+
+expr_result |>
+  view()
+
+expr_result_without_bad <-
+  expr_unnested |>
+  filter(!(funs %in% c("mutate", "filter", "summarise", "summarize", "dplyr::mutate", "dplyr::filter", "dplyr::summarise", "dplyr::summarize"))) |>
+  mutate(n = n(), .by = funs) |>
   arrange(
-    # funs %in% c("<other>$", "[", "factor", "replace", ":", "as.numeric", "as.character", "paste", "round", "group_by", "paste0", "length"),
+    funs %in% c("<other>$", "[", "[[", ":", "~"),
     desc(n)
   ) |>
   mutate(funs = forcats::fct_inorder(funs)) |>
@@ -90,7 +116,7 @@ expr_result <-
   summarize(.by = funs, expr_done = sum(has_all)) |>
   mutate(pct_done = expr_done / sum(expr_done), cum_pct_done = cumsum(pct_done))
 
-expr_result |>
+expr_result_without_bad |>
   view()
 
 # Understand weird operators
@@ -115,6 +141,8 @@ result_base |>
 # # ℹ 1,799 more rows
 # # ℹ Use `print(n = ...)` to see more rows
 
+# constant folding?
+
 result_base |>
   filter(expr_funs == "<other>$") |>
   filter(row_number() == 1, .by = id) |>
@@ -126,6 +154,8 @@ result_base |>
 result_base |>
   filter(any(expr_funs == "<other>$"), .by = id) |>
   count(expr_funs, sort = TRUE)
+
+# constant folding?
 
 result_base |>
   filter(expr_funs == "[") |>
@@ -139,6 +169,8 @@ result_base |>
   filter(any(expr_funs == "["), .by = id) |>
   count(expr_funs, sort = TRUE)
 
+# constant folding?
+
 result_base |>
   filter(expr_funs == "[[") |>
   filter(row_number() == 1, .by = id) |>
@@ -149,4 +181,65 @@ result_base |>
 
 result_base |>
   filter(any(expr_funs == "[["), .by = id) |>
+  count(expr_funs, sort = TRUE)
+
+# constant folding?
+
+result_base |>
+  filter(expr_funs == "c") |>
+  filter(row_number() == 1, .by = id) |>
+  add_count(id) |>
+  arrange(desc(n)) |>
+  filter(id == first(id)) |>
+  pull(call)
+
+result_base |>
+  filter(any(expr_funs == "c"), .by = id) |>
+  count(expr_funs, sort = TRUE)
+
+# replace(.x, .y, .z) === case_when(.y, .z, .x)
+
+result_base |>
+  filter(expr_funs == "replace") |>
+  add_count(id) |>
+  arrange(desc(n)) |>
+  pull(call) |>
+  map_chr(deparse1) |>
+  writeLines()
+
+result_base |>
+  filter(any(expr_funs == "replace"), .by = id) |>
+  count(expr_funs, sort = TRUE)
+
+# factor
+# as.numeric
+# as.character
+
+
+# Often `1:n()`, sometimes `1:nrow(...)`
+
+result_base |>
+  filter(expr_funs == ":") |>
+  add_count(id) |>
+  arrange(desc(n)) |>
+  pull(call) |>
+  map_chr(deparse1) |>
+  writeLines()
+
+result_base |>
+  filter(any(expr_funs == ":"), .by = id) |>
+  count(expr_funs, sort = TRUE)
+
+# ~ often in case_when() and in purrr functions
+
+result_base |>
+  filter(expr_funs == "~") |>
+  add_count(id) |>
+  arrange(desc(n)) |>
+  pull(call) |>
+  map_chr(deparse1) |>
+  writeLines()
+
+result_base |>
+  filter(any(expr_funs == ":"), .by = id) |>
   count(expr_funs, sort = TRUE)
