@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.4.0.9002 (2024-06-30)
+
+  - Internal changes only.
+
+
 # duckplyr 0.4.0.9001 (2024-06-26)
 
 ## Features
