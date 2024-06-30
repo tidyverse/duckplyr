@@ -111,11 +111,7 @@ rel_translate <- function(
   used <- character()
 
   do_translate <- function(expr, in_window = FALSE, top_level = FALSE) {
-    if (is_quosure(expr)) {
-      # FIXME: What to do with the environment here?
-      expr <- quo_get_expr(expr)
-    }
-
+    stopifnot(!is_quosure(expr))
     switch(typeof(expr),
       character = ,
       integer = ,
