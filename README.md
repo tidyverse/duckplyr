@@ -8,7 +8,7 @@
 
 <!-- badges: end -->
 
-The goal of duckplyr is to provide a drop-in replacement for dplyr that uses [DuckDB](https://duckdb.org/) as a backend for fast operation. DuckDB is an in-process SQL OLAP database management system.
+The goal of the duckplyr R package is to provide a drop-in replacement for [dplyr](https://dplyr.tidyverse.org/) that uses [DuckDB](https://duckdb.org/) as a backend for fast operation. DuckDB is an in-process SQL OLAP database management system, dplyr is the grammar of data manipulation in the tidyverse.
 
 duckplyr also defines a set of generics that provide a low-level implementer’s interface for dplyr’s high-level user interface.
 
@@ -22,7 +22,7 @@ Install duckplyr from CRAN with:
 You can also install the development version of duckplyr from R-universe:
 
 <pre class='chroma'>
-<span><span class='nf'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='o'>(</span><span class='s'>'duckplyr'</span>, repos <span class='o'>=</span> <span class='nf'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='o'>(</span><span class='s'>'https://duckdblabs.r-universe.dev'</span>, <span class='s'>'https://cloud.r-project.org'</span><span class='o'>)</span><span class='o'>)</span></span></pre>
+<span><span class='nf'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='o'>(</span><span class='s'>"duckplyr"</span>, repos <span class='o'>=</span> <span class='nf'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='o'>(</span><span class='s'>"https://duckdblabs.r-universe.dev"</span>, <span class='s'>"https://cloud.r-project.org"</span><span class='o'>)</span><span class='o'>)</span></span></pre>
 
 Or from [GitHub](https://github.com/) with:
 
@@ -80,7 +80,7 @@ duckdb is responsible for eventually carrying out the operations. Despite the la
 <span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
 <span><span class='c'>#&gt; │          ORDERS:          │</span></span>
 <span><span class='c'>#&gt; │      dataframe_42_42      │</span></span>
-<span><span class='c'>#&gt; │      42.___row_number ASC     │</span></span>
+<span><span class='c'>#&gt; │    42.___row_number ASC   │</span></span>
 <span><span class='c'>#&gt; └─────────────┬─────────────┘                             </span></span>
 <span><span class='c'>#&gt; ┌─────────────┴─────────────┐</span></span>
 <span><span class='c'>#&gt; │           FILTER          │</span></span>
@@ -108,7 +108,7 @@ duckdb is responsible for eventually carrying out the operations. Despite the la
 <span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
 <span><span class='c'>#&gt; │          ORDERS:          │</span></span>
 <span><span class='c'>#&gt; │      dataframe_42_42      │</span></span>
-<span><span class='c'>#&gt; │      42.___row_number ASC     │</span></span>
+<span><span class='c'>#&gt; │    42.___row_number ASC   │</span></span>
 <span><span class='c'>#&gt; └─────────────┬─────────────┘                             </span></span>
 <span><span class='c'>#&gt; ┌─────────────┴─────────────┐</span></span>
 <span><span class='c'>#&gt; │       HASH_GROUP_BY       │</span></span>
@@ -300,7 +300,7 @@ The first time the package encounters an unsupported function, data type, or ope
 <span><span class='c'>#&gt; guide future development. By default, no data will be collected or uploaded.</span></span>
 <span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> A fallback situation just occurred. The following information would have been</span></span>
 <span><span class='c'>#&gt;   recorded:</span></span>
-<span><span class='c'>#&gt;   {"version":"0.3.99","message":"Can't convert columns of class &lt;factor&gt; to</span></span>
+<span><span class='c'>#&gt;   {"version":"0.4.0","message":"Can't convert columns of class &lt;factor&gt; to</span></span>
 <span><span class='c'>#&gt;   relational. Affected</span></span>
 <span><span class='c'>#&gt;   column:\n`...1`.","name":"transmute","x":{"...1":"factor","...2":"factor","...3":"numeric","...4":"numeric","...5":"integer","...6":"integer","...7":"factor","...8":"integer"},"args":{"dots":{"...9":"...3</span></span>
 <span><span class='c'>#&gt;   * ...4"}}}</span></span>

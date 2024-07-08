@@ -19,7 +19,7 @@ set.seed(20230702)
 clean_output <- function(x, options) {
   x <- gsub("0x[0-9a-f]+", "0xdeadbeef", x)
   x <- gsub("dataframe_[0-9]*_[0-9]*", "      dataframe_42_42      ", x)
-  x <- gsub("[0-9]*\\.___row_number ASC", "  42.___row_number ASC  ", x)
+  x <- gsub("[0-9]*\\.___row_number ASC", "42.___row_number ASC", x)
   x
 }
 
@@ -38,8 +38,8 @@ Sys.setenv(DUCKPLYR_OUTPUT_ORDER = TRUE)
 [![R-CMD-check](https://github.com/duckdblabs/duckplyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/duckdblabs/duckplyr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of duckplyr is to provide a drop-in replacement for dplyr that uses [DuckDB](https://duckdb.org/) as a backend for fast operation.
-DuckDB is an in-process SQL OLAP database management system.
+The goal of the duckplyr R package is to provide a drop-in replacement for [dplyr](https://dplyr.tidyverse.org/) that uses [DuckDB](https://duckdb.org/) as a backend for fast operation.
+DuckDB is an in-process SQL OLAP database management system, dplyr is the grammar of data manipulation in the tidyverse.
 
 duckplyr also defines a set of generics that provide a low-level implementer's interface for dplyr's high-level user interface.
 
@@ -54,7 +54,7 @@ install.packages("duckplyr")
 You can also install the development version of duckplyr from R-universe:
 
 ``` r
-install.packages('duckplyr', repos = c('https://duckdblabs.r-universe.dev', 'https://cloud.r-project.org'))
+install.packages("duckplyr", repos = c("https://duckdblabs.r-universe.dev", "https://cloud.r-project.org"))
 ```
 
 Or from [GitHub](https://github.com/) with:
