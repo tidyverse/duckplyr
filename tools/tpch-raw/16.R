@@ -16,7 +16,6 @@ invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y
 invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "n_distinct"(x) AS (COUNT(DISTINCT x))'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "desc"(x) AS (-x)'))
 df1 <- part
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb$rel_filter(
@@ -409,7 +408,7 @@ rel16 <- duckdb$rel_project(
 )
 rel17 <- duckdb$rel_order(
   rel16,
-  list(duckdb$expr_function("desc", list(duckdb$expr_reference("supplier_cnt"))), duckdb$expr_reference("p_brand"), duckdb$expr_reference("p_type"), duckdb$expr_reference("p_size"))
+  list(duckdb$expr_reference("supplier_cnt"), duckdb$expr_reference("p_brand"), duckdb$expr_reference("p_type"), duckdb$expr_reference("p_size"))
 )
 rel17
 duckdb$rel_to_altrep(rel17)

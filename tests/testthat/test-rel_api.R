@@ -15245,38 +15245,12 @@ test_that("relational symdiff() order-preserving", {
       }
     )
   )
-  df3 <- data.frame(a = 5L, b = 2)
+  df3 <- data.frame(a = 1L, b = 2)
 
   rel9 <- duckdb$rel_from_df(con, df3, experimental = experimental)
-  rel10 <- duckdb$rel_project(
-    rel8,
-    list(
-      {
-        tmp_expr <- duckdb$expr_reference("a")
-        duckdb$expr_set_alias(tmp_expr, "a")
-        tmp_expr
-      },
-      {
-        tmp_expr <- duckdb$expr_reference("b")
-        duckdb$expr_set_alias(tmp_expr, "b")
-        tmp_expr
-      },
-      {
-        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
-        duckdb$expr_set_alias(tmp_expr, "___row_number_x")
-        tmp_expr
-      },
-      {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_integer_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_integer_)
-        }
-        duckdb$expr_set_alias(tmp_expr, "___row_number_y")
-        tmp_expr
-      }
-    )
-  )
+  df4 <- data.frame(a = 5L, b = 2)
+
+  rel10 <- duckdb$rel_from_df(con, df4, experimental = experimental)
   rel11 <- duckdb$rel_project(
     rel9,
     list(
@@ -15291,6 +15265,35 @@ test_that("relational symdiff() order-preserving", {
         tmp_expr
       },
       {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number_x")
+        tmp_expr
+      },
+      {
+        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+          duckdb$expr_constant(NA_integer_, experimental = experimental)
+        } else {
+          duckdb$expr_constant(NA_integer_)
+        }
+        duckdb$expr_set_alias(tmp_expr, "___row_number_y")
+        tmp_expr
+      }
+    )
+  )
+  rel12 <- duckdb$rel_project(
+    rel10,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
         tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(NA_integer_, experimental = experimental)
         } else {
@@ -15306,13 +15309,13 @@ test_that("relational symdiff() order-preserving", {
       }
     )
   )
-  rel12 <- duckdb$rel_union_all(rel10, rel11)
-  rel13 <- duckdb$rel_order(
-    rel12,
+  rel13 <- duckdb$rel_union_all(rel11, rel12)
+  rel14 <- duckdb$rel_order(
+    rel13,
     list(duckdb$expr_reference("___row_number_x"), duckdb$expr_reference("___row_number_y"))
   )
-  rel14 <- duckdb$rel_project(
-    rel13,
+  rel15 <- duckdb$rel_project(
+    rel14,
     list(
       {
         tmp_expr <- duckdb$expr_reference("a")
@@ -15326,8 +15329,8 @@ test_that("relational symdiff() order-preserving", {
       }
     )
   )
-  rel15 <- duckdb$rel_project(
-    rel14,
+  rel16 <- duckdb$rel_project(
+    rel15,
     list(
       {
         tmp_expr <- duckdb$expr_reference("a")
@@ -15346,8 +15349,8 @@ test_that("relational symdiff() order-preserving", {
       }
     )
   )
-  rel16 <- duckdb$rel_project(
-    rel15,
+  rel17 <- duckdb$rel_project(
+    rel16,
     list(
       {
         tmp_expr <- duckdb$expr_reference("a")
@@ -15384,8 +15387,8 @@ test_that("relational symdiff() order-preserving", {
       }
     )
   )
-  rel17 <- duckdb$rel_filter(
-    rel16,
+  rel18 <- duckdb$rel_filter(
+    rel17,
     list(
       duckdb$expr_function(
         "==",
@@ -15400,9 +15403,9 @@ test_that("relational symdiff() order-preserving", {
       )
     )
   )
-  rel18 <- duckdb$rel_order(rel17, list(duckdb$expr_reference("___row_number")))
-  rel19 <- duckdb$rel_project(
-    rel18,
+  rel19 <- duckdb$rel_order(rel18, list(duckdb$expr_reference("___row_number")))
+  rel20 <- duckdb$rel_project(
+    rel19,
     list(
       {
         tmp_expr <- duckdb$expr_reference("a")
@@ -15416,8 +15419,8 @@ test_that("relational symdiff() order-preserving", {
       }
     )
   )
-  rel19
-  out <- duckdb$rel_to_altrep(rel19)
+  rel20
+  out <- duckdb$rel_to_altrep(rel20)
   expect_identical(
     out,
     data.frame(a = c(1L, 5L), b = c(2, 2))

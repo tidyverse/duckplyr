@@ -937,10 +937,7 @@ tpch_raw_oo_05 <- function(con, experimental) {
       }
     )
   )
-  rel67 <- duckdb$rel_order(
-    rel66,
-    list(duckdb$expr_function("desc", list(duckdb$expr_reference("revenue"))), duckdb$expr_reference("___row_number"))
-  )
+  rel67 <- duckdb$rel_order(rel66, list(duckdb$expr_reference("revenue"), duckdb$expr_reference("___row_number")))
   rel68 <- duckdb$rel_project(
     rel67,
     list(

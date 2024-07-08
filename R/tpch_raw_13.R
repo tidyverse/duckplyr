@@ -168,10 +168,7 @@ tpch_raw_13 <- function(con, experimental) {
       }
     )
   )
-  rel10 <- duckdb$rel_order(
-    rel9,
-    list(duckdb$expr_function("desc", list(duckdb$expr_reference("custdist"))), duckdb$expr_function("desc", list(duckdb$expr_reference("c_count"))))
-  )
+  rel10 <- duckdb$rel_order(rel9, list(duckdb$expr_reference("custdist"), duckdb$expr_reference("c_count")))
   rel10
   duckdb$rel_to_altrep(rel10)
 }

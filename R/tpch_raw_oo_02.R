@@ -1271,7 +1271,7 @@ tpch_raw_oo_02 <- function(con, experimental) {
   )
   rel64 <- duckdb$rel_order(
     rel63,
-    list(duckdb$expr_function("desc", list(duckdb$expr_reference("s_acctbal"))), duckdb$expr_reference("n_name"), duckdb$expr_reference("s_name"), duckdb$expr_reference("p_partkey"), duckdb$expr_reference("___row_number"))
+    list(duckdb$expr_reference("s_acctbal"), duckdb$expr_reference("n_name"), duckdb$expr_reference("s_name"), duckdb$expr_reference("p_partkey"), duckdb$expr_reference("___row_number"))
   )
   rel65 <- duckdb$rel_project(
     rel64,

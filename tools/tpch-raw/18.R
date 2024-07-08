@@ -7,7 +7,6 @@ invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 invisible(DBI::dbExecute(con, 'CREATE MACRO ">"(x, y) AS "r_base::>"(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "desc"(x) AS (-x)'))
 df1 <- lineitem
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb$rel_aggregate(
@@ -255,7 +254,7 @@ rel14 <- duckdb$rel_project(
 )
 rel15 <- duckdb$rel_order(
   rel14,
-  list(duckdb$expr_function("desc", list(duckdb$expr_reference("o_totalprice"))), duckdb$expr_reference("o_orderdate"))
+  list(duckdb$expr_reference("o_totalprice"), duckdb$expr_reference("o_orderdate"))
 )
 rel16 <- duckdb$rel_limit(rel15, 100)
 rel16

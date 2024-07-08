@@ -15,7 +15,6 @@ invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y
 invisible(
   DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
 )
-invisible(DBI::dbExecute(con, 'CREATE MACRO "desc"(x) AS (-x)'))
 df1 <- partsupp
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb$rel_project(
@@ -714,7 +713,7 @@ rel38 <- duckdb$rel_project(
 )
 rel39 <- duckdb$rel_order(
   rel38,
-  list(duckdb$expr_function("desc", list(duckdb$expr_reference("s_acctbal"))), duckdb$expr_reference("n_name"), duckdb$expr_reference("s_name"), duckdb$expr_reference("p_partkey"))
+  list(duckdb$expr_reference("s_acctbal"), duckdb$expr_reference("n_name"), duckdb$expr_reference("s_name"), duckdb$expr_reference("p_partkey"))
 )
 rel40 <- duckdb$rel_limit(rel39, 100)
 rel40

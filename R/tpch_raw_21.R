@@ -657,10 +657,7 @@ tpch_raw_21 <- function(con, experimental) {
       }
     )
   )
-  rel36 <- duckdb$rel_order(
-    rel35,
-    list(duckdb$expr_function("desc", list(duckdb$expr_reference("numwait"))), duckdb$expr_reference("s_name"))
-  )
+  rel36 <- duckdb$rel_order(rel35, list(duckdb$expr_reference("numwait"), duckdb$expr_reference("s_name")))
   rel37 <- duckdb$rel_limit(rel36, 100)
   rel37
   duckdb$rel_to_altrep(rel37)

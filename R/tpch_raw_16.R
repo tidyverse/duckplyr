@@ -392,7 +392,7 @@ tpch_raw_16 <- function(con, experimental) {
   )
   rel17 <- duckdb$rel_order(
     rel16,
-    list(duckdb$expr_function("desc", list(duckdb$expr_reference("supplier_cnt"))), duckdb$expr_reference("p_brand"), duckdb$expr_reference("p_type"), duckdb$expr_reference("p_size"))
+    list(duckdb$expr_reference("supplier_cnt"), duckdb$expr_reference("p_brand"), duckdb$expr_reference("p_type"), duckdb$expr_reference("p_size"))
   )
   rel17
   duckdb$rel_to_altrep(rel17)

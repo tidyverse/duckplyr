@@ -681,10 +681,7 @@ tpch_raw_09 <- function(con, experimental) {
       }
     )
   )
-  rel43 <- duckdb$rel_order(
-    rel42,
-    list(duckdb$expr_reference("nation"), duckdb$expr_function("desc", list(duckdb$expr_reference("o_year"))))
-  )
+  rel43 <- duckdb$rel_order(rel42, list(duckdb$expr_reference("nation"), duckdb$expr_reference("o_year")))
   rel43
   duckdb$rel_to_altrep(rel43)
 }

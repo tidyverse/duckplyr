@@ -16,7 +16,6 @@ invisible(
   )
 )
 invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "desc"(x) AS (-x)'))
 df1 <- lineitem
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb$rel_aggregate(
@@ -674,10 +673,7 @@ rel35 <- duckdb$rel_aggregate(
     }
   )
 )
-rel36 <- duckdb$rel_order(
-  rel35,
-  list(duckdb$expr_function("desc", list(duckdb$expr_reference("numwait"))), duckdb$expr_reference("s_name"))
-)
+rel36 <- duckdb$rel_order(rel35, list(duckdb$expr_reference("numwait"), duckdb$expr_reference("s_name")))
 rel37 <- duckdb$rel_limit(rel36, 100)
 rel37
 duckdb$rel_to_altrep(rel37)

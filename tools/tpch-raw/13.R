@@ -21,7 +21,6 @@ invisible(
 )
 invisible(DBI::dbExecute(con, 'CREATE MACRO "is.na"(x) AS (x IS NULL OR isnan(x))'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "desc"(x) AS (-x)'))
 df1 <- orders
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb$rel_filter(
@@ -190,9 +189,6 @@ rel9 <- duckdb$rel_aggregate(
     }
   )
 )
-rel10 <- duckdb$rel_order(
-  rel9,
-  list(duckdb$expr_function("desc", list(duckdb$expr_reference("custdist"))), duckdb$expr_function("desc", list(duckdb$expr_reference("c_count"))))
-)
+rel10 <- duckdb$rel_order(rel9, list(duckdb$expr_reference("custdist"), duckdb$expr_reference("c_count")))
 rel10
 duckdb$rel_to_altrep(rel10)

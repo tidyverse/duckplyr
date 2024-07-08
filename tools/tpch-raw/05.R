@@ -8,7 +8,6 @@ invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO ">="(x, y) AS "r_base::>="(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "<"(x, y) AS "r_base::<"(x, y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "desc"(x) AS (-x)'))
 df1 <- nation
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb$rel_project(
@@ -533,6 +532,6 @@ rel41 <- duckdb$rel_aggregate(
     }
   )
 )
-rel42 <- duckdb$rel_order(rel41, list(duckdb$expr_function("desc", list(duckdb$expr_reference("revenue")))))
+rel42 <- duckdb$rel_order(rel41, list(duckdb$expr_reference("revenue")))
 rel42
 duckdb$rel_to_altrep(rel42)

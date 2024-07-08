@@ -524,7 +524,7 @@ tpch_raw_05 <- function(con, experimental) {
       }
     )
   )
-  rel42 <- duckdb$rel_order(rel41, list(duckdb$expr_function("desc", list(duckdb$expr_reference("revenue")))))
+  rel42 <- duckdb$rel_order(rel41, list(duckdb$expr_reference("revenue")))
   rel42
   duckdb$rel_to_altrep(rel42)
 }

@@ -8,7 +8,6 @@ invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO ">="(x, y) AS "r_base::>="(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "<"(x, y) AS "r_base::<"(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "desc"(x) AS (-x)'))
 df1 <- lineitem
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb$rel_project(
@@ -875,10 +874,7 @@ rel47 <- duckdb$rel_project(
     }
   )
 )
-rel48 <- duckdb$rel_order(
-  rel47,
-  list(duckdb$expr_function("desc", list(duckdb$expr_reference("revenue"))), duckdb$expr_reference("___row_number"))
-)
+rel48 <- duckdb$rel_order(rel47, list(duckdb$expr_reference("revenue"), duckdb$expr_reference("___row_number")))
 rel49 <- duckdb$rel_project(
   rel48,
   list(

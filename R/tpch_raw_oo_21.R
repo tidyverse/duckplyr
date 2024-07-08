@@ -2722,7 +2722,7 @@ tpch_raw_oo_21 <- function(con, experimental) {
   )
   rel79 <- duckdb$rel_order(
     rel78,
-    list(duckdb$expr_function("desc", list(duckdb$expr_reference("numwait"))), duckdb$expr_reference("s_name"), duckdb$expr_reference("___row_number"))
+    list(duckdb$expr_reference("numwait"), duckdb$expr_reference("s_name"), duckdb$expr_reference("___row_number"))
   )
   rel80 <- duckdb$rel_project(
     rel79,

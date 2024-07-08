@@ -1070,7 +1070,7 @@ tpch_raw_oo_09 <- function(con, experimental) {
   )
   rel65 <- duckdb$rel_order(
     rel64,
-    list(duckdb$expr_reference("nation"), duckdb$expr_function("desc", list(duckdb$expr_reference("o_year"))), duckdb$expr_reference("___row_number"))
+    list(duckdb$expr_reference("nation"), duckdb$expr_reference("o_year"), duckdb$expr_reference("___row_number"))
   )
   rel66 <- duckdb$rel_project(
     rel65,

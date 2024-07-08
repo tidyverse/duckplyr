@@ -12,7 +12,6 @@ invisible(
 invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "desc"(x) AS (-x)'))
 df1 <- part
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb$rel_project(
@@ -1083,7 +1082,7 @@ rel64 <- duckdb$rel_project(
 )
 rel65 <- duckdb$rel_order(
   rel64,
-  list(duckdb$expr_reference("nation"), duckdb$expr_function("desc", list(duckdb$expr_reference("o_year"))), duckdb$expr_reference("___row_number"))
+  list(duckdb$expr_reference("nation"), duckdb$expr_reference("o_year"), duckdb$expr_reference("___row_number"))
 )
 rel66 <- duckdb$rel_project(
   rel65,

@@ -627,7 +627,7 @@ tpch_raw_oo_18 <- function(con, experimental) {
   )
   rel28 <- duckdb$rel_order(
     rel27,
-    list(duckdb$expr_function("desc", list(duckdb$expr_reference("o_totalprice"))), duckdb$expr_reference("o_orderdate"), duckdb$expr_reference("___row_number"))
+    list(duckdb$expr_reference("o_totalprice"), duckdb$expr_reference("o_orderdate"), duckdb$expr_reference("___row_number"))
   )
   rel29 <- duckdb$rel_project(
     rel28,
