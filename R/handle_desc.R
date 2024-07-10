@@ -1,4 +1,4 @@
-#' Used in arrange()
+# Used in arrange()
 handle_desc <- function(dots) {
   # Handles calls to 'desc' function by
   # - extracting the sort order
