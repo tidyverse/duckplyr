@@ -236,6 +236,11 @@ rel_translate <- function(
           "log10" = "___log10",
           "log" = "___log",
           "as.integer" = "r_base::as.integer",
+
+          # Aggregates
+          "sum" = "r_base::sum",
+          "min" = "r_base::min",
+          "max" = "r_base::max",
           NULL
         )
 
@@ -249,6 +254,10 @@ rel_translate <- function(
           "sum", "mean", "stddev", "min", "max", "median",
           #
           NULL
+        )
+
+        known_rfuns_aggregate <- c(
+          "sum", "min", "max"
         )
 
         known_ops <- c("+", "-", "*", "/")
@@ -266,7 +275,7 @@ rel_translate <- function(
           NULL
         )
 
-        known <- c(names(duckplyr_macros), names(aliases), known_window, known_ops, known_funs)
+        known <- c(names(duckplyr_macros), names(aliases), known_window, known_rfuns_aggregate, known_ops, known_funs)
 
         if (!(name %in% known)) {
           cli::cli_abort("Unknown function: {.code {name}()}")
@@ -280,7 +289,7 @@ rel_translate <- function(
         }
         # name <- aliases[name] %|% name
 
-        window <- need_window && (name %in% known_window)
+        window <- need_window && (name %in% known_window || name %in% paste0("r_base::", known_rfuns_aggregate))
 
         order_bys <- list()
         offset_expr <- NULL
