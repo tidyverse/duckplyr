@@ -60,7 +60,7 @@ create_default_duckdb_connection <- function() {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
 
-  DBI::dbExecute(con, "set memory_limit='1GB'")
+  # DBI::dbExecute(con, "set memory_limit='1GB'")
   DBI::dbExecute(con, paste0("pragma temp_directory='", tempdir(), "'"))
 
   duckdb$rapi_load_rfuns(drv@database_ref)
@@ -241,7 +241,7 @@ rel_order.duckdb_relation <- function(rel, orders, ascending = NULL, ...) {
 
   duckdb_orders <- to_duckdb_exprs(orders)
 
-  out <- duckdb$rel_order(rel, duckdb_orders, ascending)  
+  out <- duckdb$rel_order(rel, duckdb_orders, ascending)
 
   meta_rel_register(out, expr(duckdb$rel_order(
     !!meta_rel_get(rel)$name,
