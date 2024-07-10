@@ -28,6 +28,18 @@ df_from_file <- function(path,
                          class = NULL) {
   check_dots_empty()
 
+  if (!rlang::is_bare_character(path)) {
+    cli::cli_abort("{.arg path} must be a string.")
+  }
+
+  if (!rlang::is_string(path)) {
+    cli::cli_alert(c(
+      "{.arg path} must be a string.",
+      i = "Pass glob patterns to read multiple files."
+    ))
+  }
+
+
   # FIXME: For some reason, it's important to create an alias here
   con <- get_default_duckdb_connection()
 
