@@ -1,5 +1,10 @@
 test_that("demo queries work", {
+  skip_if_not_installed("lubridate")
+
   withr::local_envvar(DUCKPLYR_FORCE = TRUE)
+
+  wday <- lubridate::wday
+  hour <- lubridate::hour
 
   expect_snapshot({
     tips_by_day_hour <- taxi_data_2019 |>
