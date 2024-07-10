@@ -42,7 +42,7 @@ df_from_file <- function(path,
   }
 
   if (!rlang::is_string(path)) {
-    cli::cli_alert(c(
+    cli::cli_abort(c(
       "{.arg path} must be a string.",
       i = "Pass glob patterns to read multiple files."
     ))
