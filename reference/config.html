@@ -85,9 +85,9 @@ when the package is loaded.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projection [___coalesce(lhs.a_x, rhs.a_y) as a]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Join REGULAR INNER ___eq_na_matches_na(lhs.a_x, rhs.a_y)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_x]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55f09f77faf0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55fa6f94d520)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_y]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55f09f78f150)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55fa6f960988)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -121,9 +121,9 @@ when the package is loaded.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projection [___coalesce(lhs.a_x, rhs.a_y) as a]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Join REGULAR INNER ___eq_na_matches_na(lhs.a_x, rhs.a_y)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_x]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55f09fb28528)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55fa6fcd6dd8)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Projection [a as a_y]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55f09fb27258)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r_dataframe_scan(0x55fa6fceef98)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -149,10 +149,10 @@ when the package is loaded.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Join REGULAR INNER ___eq_na_matches_na(lhs.a_x, rhs.a_y)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Projection [a_x as a_x, row_number() OVER () as ___row_number_x]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         Projection [a as a_x]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x55f09fcaf318)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x55fa6fe73298)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Projection [a_y as a_y, row_number() OVER () as ___row_number_y]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         Projection [a as a_y]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x55f09fcae048)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           r_dataframe_scan(0x55fa6fe818b8)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -177,8 +177,8 @@ when the package is loaded.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> guide future development. By default, no data will be collected or uploaded.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> A fallback situation just occurred. The following information would have been</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   recorded:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   {"version":"0.4.0","message":"Unknown function:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   `add_one()`","name":"mutate","x":{"...1":"integer"},"args":{"dots":{"...2":"add_one(...1)"},".by":"NULL",".keep":["all","used","unused","none"]}}</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   {"version":"0.4.0","message":"No translation for function</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   `add_one`.","name":"mutate","x":{"...1":"integer"},"args":{"dots":{"...2":"add_one(...1)"},".by":"NULL",".keep":["all","used","unused","none"]}}</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → Run `duckplyr::fallback_sitrep()` to review the current settings.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → Run `Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)` to enable fallback logging,</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   and `Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = TRUE)` in addition to enable</span>
@@ -197,8 +197,8 @@ when the package is loaded.</p>
 <span class="r-in"><span>    <span class="fu"><a href="as_duckplyr_df.html">as_duckplyr_df</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fu">add_one</span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error in do_translate(expr, top_level = TRUE) : </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Unknown function: `add_one()`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error in rel_find_call(expr[[1]], env) : </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   No translation for function `add_one`.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Sys.setenv(DUCKPLYR_FALLBACK_INFO = TRUE)</span></span></span>
 <span class="r-in"><span><span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://withr.r-lib.org/reference/with_envvar.html" class="external-link">with_envvar</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>DUCKPLYR_FALLBACK_INFO <span class="op">=</span> <span class="st">"TRUE"</span><span class="op">)</span>, <span class="op">{</span></span></span>
@@ -207,8 +207,8 @@ when the package is loaded.</p>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fu">add_one</span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Error processing with relational.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `do_translate()` at duckplyr/R/relational.R:337:3:</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Unknown function: `add_one()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `rel_find_call()` at duckplyr/R/translate.R:131:3:</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> No translation for function `add_one`.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   a b</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 3 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 2 3</span>
