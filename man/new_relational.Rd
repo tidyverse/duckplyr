@@ -68,7 +68,8 @@ rel_names(rel, ...)
 
 \item{rel, rel_a, rel_b, left, right}{A relational object.}
 
-\item{exprs}{A list of \link{expr} objects to filter by.}
+\item{exprs}{A list of \code{"relational_relexpr"} objects to filter by,
+created by \code{\link[=new_relexpr]{new_relexpr()}}.}
 
 \item{groups}{A list of expressions to group by.}
 

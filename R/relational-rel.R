@@ -67,7 +67,8 @@ rel_to_df <- function(rel, ...) {
 #' `rel_filter()` keeps rows that match a predicate,
 #'  to be used by [dplyr::filter()].
 #'
-#' @param exprs A list of [expr] objects to filter by.
+#' @param exprs A list of `"relational_relexpr"` objects to filter by,
+#'   created by [new_relexpr()].
 #' @rdname new_relational
 #' @export
 #' @examples
