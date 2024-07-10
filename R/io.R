@@ -4,6 +4,15 @@
 #' See <https://duckdb.org/docs/data/overview> for a documentation
 #' of the available functions and their options.
 #'
+#' To read multiple files, pass a wildcard to the `path` argument,
+#' or use code of the form:
+#'
+#' ```
+#' files %>%
+#'   purrr::map(df_from_file, table_function = "...") %>%
+#'   purrr::reduce(union_all)
+#' ```
+#'
 #' @inheritParams rlang::args_dots_empty
 #'
 #' @param path Path to a file, a directory, or a set of filenames using

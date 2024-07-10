@@ -80,6 +80,15 @@ of the available functions and their options.
 \code{duckplyr_df_from_file()} is a thin wrapper around \code{df_from_file()}
 that calls \code{as_duckplyr_df()} on the output.
 }
+\details{
+To read multiple files, pass a wildcard to the \code{path} argument,
+or use code of the form:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{files \%>\%
+  purrr::map(df_from_file, table_function = "...") \%>\%
+  purrr::reduce(union_all)
+}\if{html}{\out{</div>}}
+}
 \examples{
 # Create simple CSV file
 path <- tempfile("duckplyr_test_", fileext = ".csv")
