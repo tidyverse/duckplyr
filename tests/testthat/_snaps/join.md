@@ -75,6 +75,17 @@
       i `x$a` is a <double>.
       i `y$b` is a <character>.
 
+# filtering joins reference original column in `y` when there are type errors (#6465)
+
+    Code
+      (expect_error(duckplyr_semi_join(x, y, by = join_by(a == b))))
+    Output
+      <error/dplyr_error_join_incompatible_type>
+      Error in `semi_join()`:
+      ! Can't join `x$a` with `y$b` due to incompatible types.
+      i `x$a` is a <double>.
+      i `y$b` is a <character>.
+
 # error if passed additional arguments
 
     Code
