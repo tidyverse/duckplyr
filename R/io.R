@@ -53,7 +53,7 @@ df_from_file <- function(path,
   meta_rel_register_file(out, path, table_function, options)
 
   out <- duckdb$rel_to_altrep(out)
-  class(out) <- unique(c(class, "data.frame"))
+  class(out) <- unique(c(class, "data.frame"), fromLast = TRUE)
   out
 }
 
