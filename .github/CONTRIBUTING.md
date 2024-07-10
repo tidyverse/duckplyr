@@ -40,6 +40,18 @@ See our guide on [how to create a great issue](https://code-review.tidyverse.org
 *  We use [testthat](https://cran.r-project.org/package=testthat) for unit tests. 
    Contributions with test cases included are easier to accept.  
 
+## New translations for functions
+
+For all functions used in dplyr verbs, translations must be provided.
+The code lives in `translate.R` .
+New translations must change code in two places:
+
+1. The `switch()` in `rel_find_call()` needs a new entry, together with the package that is home to the function. The top 60 functions, ranked by importance, are already part of that `switch()`, as a comment if they are not implemented yet.
+2. The actual translation must be implemented in `rel_translate_lang()`. This is easy for some functions that have similar functions that are already translated, but harder for others. This part of the code is not very clear yet, in particular, argument matching by name is only available for a few functions but should be generalized.
+3. Add a test for the new translation to the `mutate =` section of `test_extra_arg_map` in `00-funs.R`. (At some point we want to have more specific tests for the translations, for now, this is what it is.)
+4. Run `03-tests.R`, commit the changes to the generated code to version control.
+
+
 ## Code of Conduct
 
 Please note that the duckplyr project is released with a
