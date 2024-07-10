@@ -8,7 +8,7 @@
 
 <!-- badges: end -->
 
-The goal of the duckplyr R package is to provide a drop-in replacement for [dplyr](https://dplyr.tidyverse.org/) that uses [DuckDB](https://duckdb.org/) as a backend for fast operation. DuckDB is an in-process SQL OLAP database management system, dplyr is the grammar of data manipulation in the tidyverse.
+The goal of the duckplyr R package is to provide a drop-in replacement for [dplyr](https://dplyr.tidyverse.org/) that uses [DuckDB](https://duckdb.org/) as a backend for fast operation. DuckDB is an in-process OLAP database management system, dplyr is the grammar of data manipulation in the tidyverse.
 
 duckplyr also defines a set of generics that provide a low-level implementer’s interface for dplyr’s high-level user interface.
 
@@ -330,6 +330,16 @@ The first time the package encounters an unsupported function, data type, or ope
 <span><span class='c'>#&gt; <span style='color: #555555;'>1</span>      731.</span></span>
 <span><span class='c'>#&gt; <span style='color: #555555;'>2</span>      687.</span></span>
 <span><span class='c'>#&gt; <span style='color: #555555;'>3</span>      725.</span></span></pre>
+
+## How is this different from dbplyr?
+
+The duckplyr package is a dplyr backend that uses DuckDB, a high-performance, embeddable OLAP database. It is designed to be a fully compatible drop-in replacement for dplyr, with *exactly* the same syntax and semantics:
+
+- Input and output are data frames or tibbles
+- All dplyr verbs are supported, with fallback
+- All R data types and functions are supported, with fallback
+
+The dbplyr package is a dplyr backend that connects to SQL databases, and is designed to work with various databases that support SQL, including DuckDB. Data must be copied into and collected from the database, and the syntax and semantics are similar but not identical to plain dplyr.
 
 ## Extensibility
 
