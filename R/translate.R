@@ -1,3 +1,5 @@
+# Documented in `.github/CONTRIBUTING.md`
+
 rel_find_call <- function(fun, env) {
   name <- as.character(fun)
 
@@ -8,64 +10,93 @@ rel_find_call <- function(fun, env) {
     cli::cli_abort("Can't translate function {.code {expr_deparse(fun)}}.")
   }
 
+  # Order from https://docs.google.com/spreadsheets/d/1j3AFOKiAknTGpXU1uSH7JzzscgYjVbUEwmdRHS7268E/edit?gid=769885824#gid=769885824,
+  # generated as `expr_result` by 63-gh-detail.R
+
   pkg <- switch(name,
     # Handled in a special way, not mentioned here
     # "desc" = "dplyr",
-
-    # Macros
-    "<" = "base",
-    "<=" = "base",
-    ">" = "base",
-    ">=" = "base",
     "==" = "base",
-    "!=" = "base",
-    "is.na" = "base",
-    "n" = "dplyr",
-    "n_distinct" = "dplyr",
-
-    # Operators
-    "(" = "base",
-    "+" = "base",
-    "-" = "base",
-    "*" = "base",
     "/" = "base",
-
-    "grepl" = "base",
-    "if_else" = "dplyr",
-    "|" = "base",
-    "&" = "base",
+    "$" = "base", # very special, also with constant folding
+    "mean" = "base",
+    "n" = "dplyr",
+    ">" = "base",
+    "%in%" = "base",
+    "sum" = "base",
     "!" = "base",
+    "&" = "base",
+    "-" = "base",
+    "(" = "base",
+    "is.na" = "base",
+    # "ifelse" = "base",
+    "!=" = "base",
+    # "c" = "base",
+    "*" = "base",
+    "+" = "base",
+    "<" = "base",
+    # "[" = "base", # won't implement?
+    ">=" = "base",
+    "n_distinct" = "dplyr",
+    "max" = "base",
+    "<=" = "base",
+    # "as.numeric" = "base",
+    "|" = "base",
+    # "factor" = "base",
+    # "^" = "base",
+    "min" = "base",
+    # "replace" = "base",
+    "grepl" = "base",
+    # ":" = "base",
+    # "as.character" = "base",
+    # "paste" = "base",
+    # "round" = "base",
+    # "paste0" = "base",
+    # "length" = "base",
+    # ".data$" = "dplyr", # implemented
+    "sd" = "stats",
+    # "[[" = "base", # won't implement?
+    # "gsub" = "base",
+    # "str_detect" = "stringr",
+    "median" = "stats",
+    # "~" = "base", # won't implement?
+    # "unique" = "base", # what's the use case?
+    # ".$" = "dplyr", # won't implement?
+    # "%>%" = "magrittr", # with the help of magrittr?
+    # "as.Date" = "base",
+    "as.integer" = "base",
+    # "nrow" = "base",
+    # "as.factor" = "base",
+    # "%<=>%" = "???", # what is this?
+    "row_number" = "dplyr",
+    # "rev" = "base", # what's the use case?
+    # "seq" = "base", # what's the use case?
+    # "sqrt" = "base",
+    # "abs" = "base",
+    "if_else" = "dplyr",
+
     "any" = "base",
     "suppressWarnings" = "base",
     "lag" = "dplyr",
     "lead" = "dplyr",
-    "%in%" = "base",
-    "$" = "base",
-    "sd" = "stats",
     "first" = "dplyr",
     "last" = "dplyr",
     "nth" = "dplyr",
     "log10" = "base",
     "log" = "base",
-    "as.integer" = "base",
     "rank" = "dplyr",
     "dense_rank" = "dplyr",
     "percent_rank" = "dplyr",
-    "row_number" = "dplyr",
     "cume_dist" = "dplyr",
     "ntile" = "dplyr",
-    "sum" = "base",
-    "mean" = "base",
-    "min" = "base",
-    "max" = "base",
-    "median" = "stats",
     "hour" = "lubridate",
     "minute" = "lubridate",
     "second" = "lubridate",
     "wday" = "lubridate",
     "strftime" = "base",
     "abs" = "base",
-    "substr" = "base"
+    "substr" = "base",
+    NULL
   )
 
   if (is.null(pkg)) {
