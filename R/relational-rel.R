@@ -39,7 +39,7 @@ rel_stats_get <- function() {
 #' }
 #' mtcars_rel <- new_dfrel(mtcars[1:5, 1:4])
 new_relational <- function(..., class = NULL) {
-  structure(..., class = unique(c(class, "relational")))
+  structure(..., class = unique(c(class, "relational"), fromLast = TRUE))
 }
 
 #' rel_to_df()

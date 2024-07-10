@@ -27,7 +27,7 @@
 #'   )
 #' )
 new_relexpr <- function(x, class = NULL) {
-  structure(x, class = unique(c(class, "relational_relexpr")))
+  structure(x, class = unique(c(class, "relational_relexpr"), fromLast = TRUE))
 }
 
 #' relexpr_reference
