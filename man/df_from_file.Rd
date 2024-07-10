@@ -101,11 +101,11 @@ df <- df_from_csv(path)
 names(df)
 df$a
 
-# Return as tibble:
+# Return as tibble, specify column types:
 df_from_file(
   path,
   "read_csv",
-  options = list(delim = ",", auto_detect = TRUE),
+  options = list(delim = ",", types = list(c("DOUBLE", "VARCHAR"))),
   class = class(tibble())
 )
 
