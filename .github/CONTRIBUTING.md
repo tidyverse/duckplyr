@@ -51,6 +51,29 @@ New translations must change code in two places:
 3. Add a test for the new translation to the `mutate =` section of `test_extra_arg_map` in `00-funs.R`. (At some point we want to have more specific tests for the translations, for now, this is what it is.)
 4. Run `03-tests.R`, commit the changes to the generated code to version control.
 
+## Support more options for verbs
+
+All verbs wrap the code in a `rel_try({})` call and fall back to dplyr in the case of failure.
+The `rel_try()` function takes named arguments that describe conditions for an early drop-out, and the corresponding error message.
+To add support for a condition for which a drop-out is being defined, roughly the following steps are necessary:
+
+1. Remove the drop-out condition.
+2. Run the tests, take note of the failures.
+3. Provide an implementation that fixes the failures.
+4. Add a test that the verb works with `DUCKPLYR_FORCE = TRUE` under the new conditions.
+5. Run `02-duckplyr_df-methods.R` to update the corresponding patch file.
+
+## Support new verbs
+
+Let's discuss first!
+
+## Support new column data types
+
+Let's discuss first!
+
+## Support new data frame types
+
+Let's discuss first!
 
 ## Code of Conduct
 
