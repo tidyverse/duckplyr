@@ -63,6 +63,10 @@ NULL
 #' @rdname fallback
 #' @export
 fallback_sitrep <- function() {
+  fallback_do_sitrep(cli::cli_inform)
+}
+
+fallback_do_sitrep <- function(reporter) {
   fallback_logging <- tel_fallback_logging()
   fallback_verbose <- tel_fallback_verbose()
   fallback_uploading <- tel_fallback_uploading()
@@ -101,7 +105,7 @@ fallback_sitrep <- function() {
     NULL
   )
 
-  cli::cli_inform(msg)
+  reporter(msg)
 }
 
 fallback_txt_header <- function() {
@@ -251,8 +255,13 @@ on_load({
 })
 
 fallback_autoupload <- function() {
+  if (is.na(tel_fallback_logging())) {
+    fallback_do_sitrep(function(msg) packageStartupMessage(cli::format_message(msg)))
+    return()
+  }
+
   uploading <- tel_fallback_uploading()
-  if (isTRUE(tel_fallback_uploading())) {
+  if (isTRUE(uploading)) {
     msg <- character()
     suppressMessages(withCallingHandlers(
       fallback_upload(strict = FALSE),
@@ -264,12 +273,11 @@ fallback_autoupload <- function() {
       packageStartupMessage(paste(msg, collapse = "\n"))
     }
   } else if (is.na(uploading)) {
-    fallback_uploading <- tel_fallback_uploading()
     fallback_logs <- tel_fallback_logs()
     if (length(fallback_logs) > 0) {
       msg <- c(
         fallback_txt_header(),
-        fallback_txt_uploading(fallback_uploading),
+        fallback_txt_uploading(uploading),
         fallback_txt_sitrep_logs(fallback_logs),
         "i" = cli::col_silver("This message can be disabled by setting {.envvar DUCKPLYR_FALLBACK_AUTOUPLOAD}.")
       )
