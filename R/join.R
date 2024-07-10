@@ -1,4 +1,13 @@
-rel_join_impl <- function(x, y, by, join, na_matches, suffix, keep, error_call = caller_env()) {
+rel_join_impl <- function(
+    x,
+    y,
+    by,
+    join,
+    na_matches,
+    suffix = c(".x", ".y"),
+    keep = NULL,
+    error_call = caller_env()
+) {
   mutating <- !(join %in% c("semi", "anti"))
 
   if (mutating) {
@@ -22,6 +31,25 @@ rel_join_impl <- function(x, y, by, join, na_matches, suffix, keep, error_call =
   x_rel <- rel_set_alias(x_rel, "lhs")
   y_rel <- duckdb_rel_from_df(y)
   y_rel <- rel_set_alias(y_rel, "rhs")
+
+  # FIXME: Split join_cols, https://github.com/tidyverse/dplyr/issues/7050
+  vars <- join_cols(
+    x_names = x_names,
+    y_names = y_names,
+    by = by,
+    suffix = suffix,
+    keep = keep,
+    error_call = error_call
+  )
+
+  x_in <- vec_ptype(x)
+  y_in <- vec_ptype(y)
+
+  x_key <- set_names(x_in[vars$x$key], names(vars$x$key))
+  y_key <- set_names(y_in[vars$y$key], names(vars$x$key))
+
+  # Side effect: check join compatibility
+  join_ptype_common(x_key, y_key, vars, error_call = error_call)
 
   # Rename if non-unique column names
   if (mutating) {
@@ -72,15 +100,6 @@ rel_join_impl <- function(x, y, by, join, na_matches, suffix, keep, error_call =
       joined,
       c("___row_number_x", "___row_number_y"),
       list(x_rel, y_rel)
-    )
-
-    vars <- join_cols(
-      x_names = x_names,
-      y_names = y_names,
-      by = by,
-      suffix = suffix,
-      keep = keep,
-      error_call = error_call
     )
 
     exprs <- c(

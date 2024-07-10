@@ -112,10 +112,7 @@ duckplyr_tests <- head(n = -1, list(
     "mutating joins trigger multiple match warning",
     "mutating joins don't trigger multiple match warning when called indirectly",
 
-    "filtering joins reference original column in `y` when there are type errors (#6465)",
-
     "mutating joins trigger many-to-many warning",
-    "mutating joins compute common columns",
     "mutating joins don't trigger many-to-many warning when called indirectly",
     NULL
   ),
