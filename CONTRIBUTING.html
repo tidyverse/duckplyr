@@ -66,6 +66,27 @@
 <li>Run <code>03-tests.R</code>, commit the changes to the generated code to version control.</li>
 </ol></div>
 <div class="section level2">
+<h2 id="support-more-options-for-verbs">Support more options for verbs<a class="anchor" aria-label="anchor" href="#support-more-options-for-verbs"></a></h2>
+<p>All verbs wrap the code in a <code>rel_try({})</code> call and fall back to dplyr in the case of failure. The <code>rel_try()</code> function takes named arguments that describe conditions for an early drop-out, and the corresponding error message. To add support for a condition for which a drop-out is being defined, roughly the following steps are necessary:</p>
+<ol style="list-style-type: decimal"><li>Remove the drop-out condition.</li>
+<li>Run the tests, take note of the failures.</li>
+<li>Provide an implementation that fixes the failures.</li>
+<li>Add a test that the verb works with <code>DUCKPLYR_FORCE = TRUE</code> under the new conditions.</li>
+<li>Run <code>02-duckplyr_df-methods.R</code> to update the corresponding patch file.</li>
+</ol></div>
+<div class="section level2">
+<h2 id="support-new-verbs">Support new verbs<a class="anchor" aria-label="anchor" href="#support-new-verbs"></a></h2>
+<p>Let’s discuss first!</p>
+</div>
+<div class="section level2">
+<h2 id="support-new-column-data-types">Support new column data types<a class="anchor" aria-label="anchor" href="#support-new-column-data-types"></a></h2>
+<p>Let’s discuss first!</p>
+</div>
+<div class="section level2">
+<h2 id="support-new-data-frame-types">Support new data frame types<a class="anchor" aria-label="anchor" href="#support-new-data-frame-types"></a></h2>
+<p>Let’s discuss first!</p>
+</div>
+<div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a></h2>
 <p>Please note that the duckplyr project is released with a <a href="CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project you agree to abide by its terms.</p>
 </div>
