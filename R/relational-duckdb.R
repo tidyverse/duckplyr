@@ -60,7 +60,7 @@ create_default_duckdb_connection <- function() {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
 
-  DBI::dbExecute(con, "set memory_limit='1GB'")
+  # DBI::dbExecute(con, "set memory_limit='1GB'")
   DBI::dbExecute(con, paste0("pragma temp_directory='", tempdir(), "'"))
 
   duckdb$rapi_load_rfuns(drv@database_ref)
