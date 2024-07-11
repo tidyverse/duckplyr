@@ -31,8 +31,7 @@ duckplyr_df_from_parquet(path, ..., options = list(), class = NULL)
 df_to_parquet(data, path)
 }
 \arguments{
-\item{path}{Path to a file, a directory, or a set of filenames using
-wildcards.}
+\item{path}{Path to files, glob patterns \code{*} and \verb{?} are supported.}
 
 \item{table_function}{The name of a table-valued
 DuckDB function such as \code{"read_parquet"},
@@ -57,6 +56,8 @@ A data frame for \code{df_from_file()}, or a \code{duckplyr_df} for
 \code{df_from_file()} uses arbitrary table functions to read data.
 See \url{https://duckdb.org/docs/data/overview} for a documentation
 of the available functions and their options.
+To read multiple files with the same schema,
+pass a wildcard or a character vector to the \code{path} argument,
 
 \code{duckplyr_df_from_file()} is a thin wrapper around \code{df_from_file()}
 that calls \code{as_duckplyr_df()} on the output.
@@ -79,15 +80,6 @@ that calls \code{as_duckplyr_df()} on the output.
 If the data frame is a \code{duckplyr_df}, the materialization occurs outside of R.
 An existing file will be overwritten.
 This function requires duckdb >= 0.10.0.
-}
-\details{
-To read multiple files, pass a wildcard to the \code{path} argument,
-or use code of the form:
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{files \%>\%
-  purrr::map(df_from_file, table_function = "...") \%>\%
-  purrr::reduce(union_all)
-}\if{html}{\out{</div>}}
 }
 \examples{
 # Create simple CSV file
