@@ -3,20 +3,12 @@
 #' `df_from_file()` uses arbitrary table functions to read data.
 #' See <https://duckdb.org/docs/data/overview> for a documentation
 #' of the available functions and their options.
-#'
-#' To read multiple files, pass a wildcard to the `path` argument,
-#' or use code of the form:
-#'
-#' ```
-#' files %>%
-#'   purrr::map(df_from_file, table_function = "...") %>%
-#'   purrr::reduce(union_all)
-#' ```
+#' To read multiple files with the same schema,
+#' pass a wildcard or a character vector to the `path` argument,
 #'
 #' @inheritParams rlang::args_dots_empty
 #'
-#' @param path Path to a file, a directory, or a set of filenames using
-#'   wildcards.
+#' @param path Path to files, glob patterns `*` and `?` are supported.
 #' @param table_function The name of a table-valued
 #'   DuckDB function such as `"read_parquet"`,
 #'   `"read_csv"`, `"read_csv_auto"` or `"read_json"`.
@@ -38,16 +30,12 @@ df_from_file <- function(path,
   check_dots_empty()
 
   if (!rlang::is_bare_character(path)) {
-    cli::cli_abort("{.arg path} must be a string.")
+    cli::cli_abort("{.arg path} must be a character vector.")
   }
 
-  if (!rlang::is_string(path)) {
-    cli::cli_abort(c(
-      "{.arg path} must be a string.",
-      i = "Pass glob patterns to read multiple files."
-    ))
+  if (length(path) != 1) {
+    path <- list(path)
   }
-
 
   # FIXME: For some reason, it's important to create an alias here
   con <- get_default_duckdb_connection()
