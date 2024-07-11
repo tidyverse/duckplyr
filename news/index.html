@@ -35,42 +35,22 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.1" id="duckplyr-041-2024-07-11">duckplyr 0.4.1 (2024-07-11)<a class="anchor" aria-label="anchor" href="#duckplyr-041-2024-07-11"></a></h2>
 <div class="section level3">
-<h3 id="bug-fixes-0-4-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-4-1"></a></h3>
-<ul><li>Use <code>cli_abort()</code>.</li>
-<li>Fix document link.</li>
-<li>Avoid documenting file.</li>
-</ul></div>
-<div class="section level3">
 <h3 id="features-0-4-1">Features<a class="anchor" aria-label="anchor" href="#features-0-4-1"></a></h3>
 <ul><li>
-<code><a href="../reference/df_from_file.html">df_from_file()</a></code> and related functions support multiple files (<a href="https://github.com/duckdblabs/duckplyr/issues/194" class="external-link">#194</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/195" class="external-link">#195</a>).</li>
+<code><a href="../reference/df_from_file.html">df_from_file()</a></code> and related functions support multiple files (<a href="https://github.com/duckdblabs/duckplyr/issues/194" class="external-link">#194</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/195" class="external-link">#195</a>) and show a clear error message for non-string <code>path</code> arguments (<a href="https://github.com/duckdblabs/duckplyr/issues/182" class="external-link">#182</a>).</li>
+<li>Support descending sort for character and other non-numeric data (<a href="https://github.com/toppyy" class="external-link">@toppyy</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/92" class="external-link">#92</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/175" class="external-link">#175</a>).</li>
 <li>Avoid setting memory limit (<a href="https://github.com/duckdblabs/duckplyr/issues/193" class="external-link">#193</a>).</li>
 <li>Check compatibility of join columns (<a href="https://github.com/duckdblabs/duckplyr/issues/168" class="external-link">#168</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/185" class="external-link">#185</a>).</li>
 <li>Explicitly list supported functions, add contributing guide, add analysis scripts for GitHub activity data (<a href="https://github.com/duckdblabs/duckplyr/issues/179" class="external-link">#179</a>).</li>
-<li>Clear error message for non-string <code>path</code> arguments in <code><a href="../reference/df_from_file.html">df_from_file()</a></code> and functions that call it (<a href="https://github.com/duckdblabs/duckplyr/issues/182" class="external-link">#182</a>).</li>
-<li>Support descending sort for character and other non-numeric data (<a href="https://github.com/toppyy" class="external-link">@toppyy</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/92" class="external-link">#92</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/175" class="external-link">#175</a>).</li>
-</ul></div>
-<div class="section level3">
-<h3 id="chore-0-4-1">Chore<a class="anchor" aria-label="anchor" href="#chore-0-4-1"></a></h3>
-<ul><li>Use <code>unique(fromLast = TRUE)</code> to compute the <code>"class"</code> attribute (<a href="https://github.com/duckdblabs/duckplyr/issues/183" class="external-link">#183</a>).</li>
-<li>Move <code>handle_desc()</code> (<a href="https://github.com/duckdblabs/duckplyr/issues/184" class="external-link">#184</a>).</li>
-<li>Update constructive, sync.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="documentation-0-4-1">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-4-1"></a></h3>
-<ul><li>Shorter startup message (<a href="https://github.com/duckdblabs/duckplyr/issues/198" class="external-link">#198</a>).</li>
-<li>Show <code><a href="../reference/fallback.html">fallback_sitrep()</a></code> at package load if telemetry is not configured (<a href="https://github.com/duckdblabs/duckplyr/issues/188" class="external-link">#188</a>).</li>
+<ul><li>Add contributing guide (<a href="https://github.com/duckdblabs/duckplyr/issues/179" class="external-link">#179</a>).</li>
+<li>Show a startup message at package load if telemetry is not configured (<a href="https://github.com/duckdblabs/duckplyr/issues/188" class="external-link">#188</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/198" class="external-link">#198</a>).</li>
+<li>
+<code><a href="../reference/df_from_file.html">?df_from_file</a></code> shows how to read multiple files (<a href="https://github.com/duckdblabs/duckplyr/issues/181" class="external-link">#181</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/186" class="external-link">#186</a>) and how to specify CSV column types (<a href="https://github.com/duckdblabs/duckplyr/issues/140" class="external-link">#140</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/189" class="external-link">#189</a>), and is shown correctly in reference index (<a href="https://github.com/duckdblabs/duckplyr/issues/173" class="external-link">#173</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/190" class="external-link">#190</a>).</li>
 <li>Discuss dbplyr in README (<a href="https://github.com/duckdblabs/duckplyr/issues/145" class="external-link">#145</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/191" class="external-link">#191</a>).</li>
-<li>Fix <code><a href="../reference/df_from_file.html">df_from_csv()</a></code> in reference index (<a href="https://github.com/duckdblabs/duckplyr/issues/173" class="external-link">#173</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/190" class="external-link">#190</a>).</li>
-<li>Show how to specify CSV column types (<a href="https://github.com/duckdblabs/duckplyr/issues/140" class="external-link">#140</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/189" class="external-link">#189</a>).</li>
-<li>More contributing guide.</li>
-<li>Show how to read multiple files (<a href="https://github.com/duckdblabs/duckplyr/issues/181" class="external-link">#181</a>, <a href="https://github.com/duckdblabs/duckplyr/issues/186" class="external-link">#186</a>).</li>
-<li>Tweak README.</li>
-</ul></div>
-<div class="section level3">
-<h3 id="uncategorized-0-4-1">Uncategorized<a class="anchor" aria-label="anchor" href="#uncategorized-0-4-1"></a></h3>
-<ul><li>Internal changes only.</li>
-<li>Merge branch ‘cran-0.4.0’.</li>
+<li>Add analysis scripts for GitHub activity data (<a href="https://github.com/duckdblabs/duckplyr/issues/179" class="external-link">#179</a>).</li>
 </ul></div>
 </div>
     <div class="section level2">
