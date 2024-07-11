@@ -1,5 +1,16 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.4.0.9005 (2024-07-11)
+
+## Features
+
+- `df_from_file()` and related functions support multiple files (#194, #195).
+
+## Documentation
+
+- Shorter startup message (#198).
+
+
 # duckplyr 0.4.0.9004 (2024-07-11)
 
 ## Bug fixes
