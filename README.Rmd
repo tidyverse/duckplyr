@@ -185,7 +185,12 @@ palmerpenguins::penguins %>%
 ## Telemetry
 
 We would like to guide our efforts towards improving duckplyr, focusing on the features with the most impact.
-To this end, duckplyr collects and uploads telemetry data, but only if permitted by the user.
+To this end, duckplyr collects and uploads telemetry data, but only if permitted by the user:
+
+- No collection will happen unless the user explicitly opts in.
+- Uploads are done upon request only.
+- There is an option to automatically upload when the package is loaded, this is also opt-in.
+
 The data collected contains:
 
 - The package version
@@ -214,6 +219,7 @@ It is designed to be a fully compatible drop-in replacement for dplyr, with *exa
 - Input and output are data frames or tibbles
 - All dplyr verbs are supported, with fallback
 - All R data types and functions are supported, with fallback
+- No SQL is generated
 
 The dbplyr package is a dplyr backend that connects to SQL databases, and is designed to work with various databases that support SQL, including DuckDB.
 Data must be copied into and collected from the database, and the syntax and semantics are similar but not identical to plain dplyr.

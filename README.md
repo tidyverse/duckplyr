@@ -281,7 +281,13 @@ dplyr is active again:
 
 ## Telemetry
 
-We would like to guide our efforts towards improving duckplyr, focusing on the features with the most impact. To this end, duckplyr collects and uploads telemetry data, but only if permitted by the user. The data collected contains:
+We would like to guide our efforts towards improving duckplyr, focusing on the features with the most impact. To this end, duckplyr collects and uploads telemetry data, but only if permitted by the user:
+
+- No collection will happen unless the user explicitly opts in.
+- Uploads are done upon request only.
+- There is an option to automatically upload when the package is loaded, this is also opt-in.
+
+The data collected contains:
 
 - The package version
 - The error message
@@ -300,7 +306,7 @@ The first time the package encounters an unsupported function, data type, or ope
 <span><span class='c'>#&gt; guide future development. By default, no data will be collected or uploaded.</span></span>
 <span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> A fallback situation just occurred. The following information would have been</span></span>
 <span><span class='c'>#&gt;   recorded:</span></span>
-<span><span class='c'>#&gt;   {"version":"0.4.0","message":"Can't convert columns of class &lt;factor&gt; to</span></span>
+<span><span class='c'>#&gt;   {"version":"0.4.1","message":"Can't convert columns of class &lt;factor&gt; to</span></span>
 <span><span class='c'>#&gt;   relational. Affected</span></span>
 <span><span class='c'>#&gt;   column:\n`...1`.","name":"transmute","x":{"...1":"factor","...2":"factor","...3":"numeric","...4":"numeric","...5":"integer","...6":"integer","...7":"factor","...8":"integer"},"args":{"dots":{"...9":"...3</span></span>
 <span><span class='c'>#&gt;   * ...4"}}}</span></span>
@@ -338,6 +344,7 @@ The duckplyr package is a dplyr backend that uses DuckDB, a high-performance, em
 - Input and output are data frames or tibbles
 - All dplyr verbs are supported, with fallback
 - All R data types and functions are supported, with fallback
+- No SQL is generated
 
 The dbplyr package is a dplyr backend that connects to SQL databases, and is designed to work with various databases that support SQL, including DuckDB. Data must be copied into and collected from the database, and the syntax and semantics are similar but not identical to plain dplyr.
 
