@@ -63,10 +63,6 @@ NULL
 #' @rdname fallback
 #' @export
 fallback_sitrep <- function() {
-  fallback_do_sitrep(cli::cli_inform)
-}
-
-fallback_do_sitrep <- function(reporter) {
   fallback_logging <- tel_fallback_logging()
   fallback_verbose <- tel_fallback_verbose()
   fallback_uploading <- tel_fallback_uploading()
@@ -105,7 +101,7 @@ fallback_do_sitrep <- function(reporter) {
     NULL
   )
 
-  reporter(msg)
+  cli::cli_inform(msg)
 }
 
 fallback_txt_header <- function() {
@@ -133,6 +129,12 @@ fallback_txt_sitrep_logs <- function(fallback_logs) {
   }
 }
 
+fallback_txt_run_sitrep <- function() {
+  c(
+    ">" = "Run {.run duckplyr::fallback_sitrep()} to review the current settings."
+  )
+}
+
 fallback_txt_help <- function() {
   c(
     "i" = "See {.help duckplyr::fallback} for details."
@@ -144,10 +146,10 @@ fallback_nudge <- function(call_data) {
     fallback_txt_header(),
     "i" = "A fallback situation just occurred. The following information would have been recorded:",
     " " = "{call_data}",
-    ">" = "Run {.run duckplyr::fallback_sitrep()} to review the current settings.",
+    fallback_txt_run_sitrep(),
     ">" = "Run {.run Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)} to enable fallback logging, and {.run Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = TRUE)} in addition to enable printing of fallback situations to the console.",
     ">" = "Run {.run duckplyr::fallback_review()} to review the available reports, and {.run duckplyr::fallback_upload()} to upload them.",
-    "i" = "See {.help duckplyr::fallback} for details.",
+    fallback_txt_help(),
     "i" = cli::col_silver("This message will be displayed once every eight hours.")
   ))
 }
@@ -256,7 +258,12 @@ on_load({
 
 fallback_autoupload <- function() {
   if (is.na(tel_fallback_logging())) {
-    fallback_do_sitrep(function(msg) packageStartupMessage(cli::format_message(msg)))
+    msg <- c(
+      fallback_txt_header(),
+      fallback_txt_run_sitrep()
+    )
+
+    packageStartupMessage(cli::format_message(msg))
     return()
   }
 
