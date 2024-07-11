@@ -1,82 +1,42 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# duckplyr 0.4.0.9005 (2024-07-11)
+# duckplyr 0.4.1 (2024-07-11)
+
+## Bug fixes
+
+- Use `cli_abort()`.
+- Fix document link.
+- Avoid documenting file.
 
 ## Features
 
 - `df_from_file()` and related functions support multiple files (#194, #195).
+- Avoid setting memory limit (#193).
+- Check compatibility of join columns (#168, #185).
+- Explicitly list supported functions, add contributing guide, add analysis scripts for GitHub activity data (#179).
+- Clear error message for non-string `path` arguments in `df_from_file()` and functions that call it (#182).
+- Support descending sort for character and other non-numeric data (@toppyy, #92, #175).
+
+## Chore
+
+- Use `unique(fromLast = TRUE)` to compute the `"class"` attribute (#183).
+- Move `handle_desc()` (#184).
+- Update constructive, sync.
 
 ## Documentation
 
 - Shorter startup message (#198).
+- Show `fallback_sitrep()` at package load if telemetry is not configured (#188).
+- Discuss dbplyr in README (#145, #191).
+- Fix `df_from_csv()` in reference index (#173, #190).
+- Show how to specify CSV column types (#140, #189).
+- More contributing guide.
+- Show how to read multiple files (#181, #186).
+- Tweak README.
 
+## Uncategorized
 
-# duckplyr 0.4.0.9004 (2024-07-11)
-
-## Bug fixes
-
-  - Use `cli_abort()`.
-
-  - Fix document link.
-
-  - Avoid documenting file.
-
-## Features
-
-  - Avoid setting memory limit (#193).
-
-  - Check compatibility of join columns (#168, #185).
-
-  - Explicitly list supported functions, add contributing guide, add analysis scripts for GitHub activity data (#179).
-
-  - Clear error message for non-string `path` arguments in `df_from_file()` and functions that call it (#182).
-
-## Chore
-
-  - Use `unique(fromLast = TRUE)` to compute the `"class"` attribute (#183).
-
-  - Move `handle_desc()` (#184).
-
-## Documentation
-
-  - Show `fallback_sitrep()` at package load if telemetry is not configured (#188).
-
-  - Discuss dbplyr in README (#145, #191).
-
-  - Fix `df_from_csv()` in reference index (#173, #190).
-
-  - Show how to specify CSV column types (#140, #189).
-
-  - More contributing guide.
-
-  - Show how to read multiple files (#181, #186).
-
-
-# duckplyr 0.4.0.9003 (2024-07-09)
-
-## Chore
-
-  - Update constructive, sync.
-
-## Documentation
-
-  - Tweak README.
-
-
-# duckplyr 0.4.0.9002 (2024-06-30)
-
-  - Internal changes only.
-
-
-# duckplyr 0.4.0.9001 (2024-06-26)
-
-## Features
-
-  - Support descending sort for character and other non-numeric data (@toppyy, #92, #175).
-
-
-# duckplyr 0.4.0.9000 (2024-05-21)
-
+- Internal changes only.
 - Merge branch 'cran-0.4.0'.
 
 
