@@ -1,5 +1,46 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.4.0.9004 (2024-07-11)
+
+## Bug fixes
+
+  - Use `cli_abort()`.
+
+  - Fix document link.
+
+  - Avoid documenting file.
+
+## Features
+
+  - Avoid setting memory limit (#193).
+
+  - Check compatibility of join columns (#168, #185).
+
+  - Explicitly list supported functions, add contributing guide, add analysis scripts for GitHub activity data (#179).
+
+  - Clear error message for non-string `path` arguments in `df_from_file()` and functions that call it (#182).
+
+## Chore
+
+  - Use `unique(fromLast = TRUE)` to compute the `"class"` attribute (#183).
+
+  - Move `handle_desc()` (#184).
+
+## Documentation
+
+  - Show `fallback_sitrep()` at package load if telemetry is not configured (#188).
+
+  - Discuss dbplyr in README (#145, #191).
+
+  - Fix `df_from_csv()` in reference index (#173, #190).
+
+  - Show how to specify CSV column types (#140, #189).
+
+  - More contributing guide.
+
+  - Show how to read multiple files (#181, #186).
+
+
 # duckplyr 0.4.0.9003 (2024-07-09)
 
 ## Chore
