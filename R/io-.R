@@ -78,3 +78,7 @@ duckplyr_df_from_file <- function(
   out <- df_from_file(path, table_function, options = options, class = class)
   as_duckplyr_df(out)
 }
+
+default_df_class <- function() {
+  class(new_tibble(list()))
+}
