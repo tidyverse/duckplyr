@@ -1,5 +1,5 @@
 test_that("Roundtrip to Parquet works", {
-  df <- data.frame(a = 1:3, b = letters[4:6])
+  df <- tibble(a = 1:3, b = letters[4:6])
 
   path_parquet <- withr::local_tempfile(fileext = ".parquet")
 
@@ -12,7 +12,7 @@ test_that("Roundtrip to Parquet works", {
 test_that("Writing to Parquet works without materialization", {
   withr::local_options(duckdb.materialize_message = TRUE)
 
-  df <- data.frame(a = 1:3, b = letters[4:6])
+  df <- tibble(a = 1:3, b = letters[4:6])
   path_parquet <- withr::local_tempfile(fileext = ".parquet")
 
   df %>%

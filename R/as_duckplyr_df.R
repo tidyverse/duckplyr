@@ -36,3 +36,7 @@ as_duckplyr_df <- function(.data) {
   class(.data) <- c("duckplyr_df", class(.data))
   .data
 }
+
+default_df_class <- function() {
+  class(new_tibble(list()))
+}

@@ -4,7 +4,7 @@
 
 ## Features
 
-- `df_from_file()` and related functions support multiple files (#194, #195) and show a clear error message for non-string `path` arguments (#182).
+- `df_from_file()` and related functions support multiple files (#194, #195), show a clear error message for non-string `path` arguments (#182), and create a tibble by default (#177).
 - Support descending sort for character and other non-numeric data (@toppyy, #92, #175).
 - Avoid setting memory limit (#193).
 - Check compatibility of join columns (#168, #185).
