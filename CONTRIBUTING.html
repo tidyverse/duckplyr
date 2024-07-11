@@ -29,7 +29,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Contributing to duckplyr</h1>
-      <small class="dont-index">Source: <a href="https://github.com/duckdblabs/duckplyr/blob/main/.github/CONTRIBUTING.md" class="external-link"><code>.github/CONTRIBUTING.md</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/duckdblabs/duckplyr/blob/cran-0.4.1/.github/CONTRIBUTING.md" class="external-link"><code>.github/CONTRIBUTING.md</code></a></small>
     </div>
 
 <div id="contributing-to-duckplyr" class="section level1">
@@ -60,10 +60,16 @@
 <div class="section level2">
 <h2 id="new-translations-for-functions">New translations for functions<a class="anchor" aria-label="anchor" href="#new-translations-for-functions"></a></h2>
 <p>For all functions used in dplyr verbs, translations must be provided. The code lives in <code>translate.R</code> . New translations must change code in two places:</p>
-<ol style="list-style-type: decimal"><li>The <code><a href="https://rdrr.io/r/base/switch.html" class="external-link">switch()</a></code> in <code>rel_find_call()</code> needs a new entry, together with the package that is home to the function. The top 60 functions, ranked by importance, are already part of that <code><a href="https://rdrr.io/r/base/switch.html" class="external-link">switch()</a></code>, as a comment if they are not implemented yet.</li>
-<li>The actual translation must be implemented in <code>rel_translate_lang()</code>. This is easy for some functions that have similar functions that are already translated, but harder for others. This part of the code is not very clear yet, in particular, argument matching by name is only available for a few functions but should be generalized.</li>
-<li>Add a test for the new translation to the <code>mutate =</code> section of <code>test_extra_arg_map</code> in <code>00-funs.R</code>. (At some point we want to have more specific tests for the translations, for now, this is what it is.)</li>
-<li>Run <code>03-tests.R</code>, commit the changes to the generated code to version control.</li>
+<ol style="list-style-type: decimal"><li><p>The <code><a href="https://rdrr.io/r/base/switch.html" class="external-link">switch()</a></code> in <code>rel_find_call()</code> needs a new entry, together with the package that is home to the function. The top 60 functions, ranked by importance, are already part of that <code><a href="https://rdrr.io/r/base/switch.html" class="external-link">switch()</a></code>, as a comment if they are not implemented yet.</p></li>
+<li><p>The actual translation must be implemented in <code>rel_translate_lang()</code>. This is easy for some functions that have similar functions that are already translated, but harder for others. This part of the code is not very clear yet, in particular, argument matching by name is only available for a few functions but should be generalized.</p></li>
+<li>
+<p>Test your implementation in the console with code of the form:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">rel_translate</span><span class="op">(</span><span class="fu">quo</span><span class="op">(</span><span class="va">a</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">constructive</span><span class="fu">::</span><span class="fu"><a href="https://cynkra.github.io/constructive/reference/construct.html" class="external-link">construct</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</li>
+<li><p>Add a test for the new translation to the <code>mutate =</code> section of <code>test_extra_arg_map</code> in <code>00-funs.R</code>. (At some point we want to have more specific tests for the translations, for now, this is what it is.)</p></li>
+<li><p>Run <code>03-tests.R</code>, commit the changes to the generated code to version control.</p></li>
 </ol></div>
 <div class="section level2">
 <h2 id="support-more-options-for-verbs">Support more options for verbs<a class="anchor" aria-label="anchor" href="#support-more-options-for-verbs"></a></h2>

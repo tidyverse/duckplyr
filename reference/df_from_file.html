@@ -67,7 +67,7 @@ This function requires duckdb &amp;gt;= 0.10.0."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Read Parquet, CSV, and other files using DuckDB</h1>
-      <small class="dont-index">Source: <a href="https://github.com/duckdblabs/duckplyr/blob/main/R/io-.R" class="external-link"><code>R/io-.R</code></a>, <a href="https://github.com/duckdblabs/duckplyr/blob/main/R/io-csv.R" class="external-link"><code>R/io-csv.R</code></a>, <a href="https://github.com/duckdblabs/duckplyr/blob/main/R/io-parquet.R" class="external-link"><code>R/io-parquet.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/duckdblabs/duckplyr/blob/cran-0.4.1/R/io-.R" class="external-link"><code>R/io-.R</code></a>, <a href="https://github.com/duckdblabs/duckplyr/blob/cran-0.4.1/R/io-csv.R" class="external-link"><code>R/io-csv.R</code></a>, <a href="https://github.com/duckdblabs/duckplyr/blob/cran-0.4.1/R/io-parquet.R" class="external-link"><code>R/io-parquet.R</code></a></small>
       <div class="d-none name"><code>df_from_file.Rd</code></div>
     </div>
 
@@ -173,7 +173,7 @@ Pass <code>class(tibble())</code> to create a tibble.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --- Relation Tree ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv_auto(/tmp/RtmpWWti2w/duckplyr_test_f126d50dce7.csv)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv_auto(/tmp/RtmpaF83Qv/duckplyr_test_f95205b4af8.csv)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -194,7 +194,7 @@ Pass <code>class(tibble())</code> to create a tibble.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --- Relation Tree ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv(/tmp/RtmpWWti2w/duckplyr_test_f126d50dce7.csv)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv(/tmp/RtmpaF83Qv/duckplyr_test_f95205b4af8.csv)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -218,7 +218,7 @@ Pass <code>class(tibble())</code> to create a tibble.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --- Relation Tree ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv_auto(/tmp/RtmpWWti2w/duckplyr_test_*.csv)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> read_csv_auto(/tmp/RtmpaF83Qv/duckplyr_test_*.csv)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -226,13 +226,15 @@ Pass <code>class(tibble())</code> to create a tibble.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - a (BIGINT)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - b (VARCHAR)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   a b</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 4 g</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 5 h</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 6 i</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 1 d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2 e</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 3 f</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       a b    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     1 d    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     2 e    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     3 f    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>     4 g    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>     5 h    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>     6 i    </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">path</span>, <span class="va">path2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -251,7 +253,7 @@ Pass <code>class(tibble())</code> to create a tibble.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --- Relation Tree ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> read_parquet(/tmp/RtmpWWti2w/filef122ab43adc.parquet)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> read_parquet(/tmp/RtmpaF83Qv/filef952f682988.parquet)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -259,10 +261,12 @@ Pass <code>class(tibble())</code> to create a tibble.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - a (DOUBLE)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - b (DOUBLE)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   a b</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 1 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 3 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       a     b</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     1     2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     2     3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     3     4</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">path_parquet</span><span class="op">)</span></span></span>
 </code></pre></div>
