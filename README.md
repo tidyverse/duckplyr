@@ -41,8 +41,8 @@ Or from [GitHub](https://github.com/) with:
 
 There are two ways to use duckplyr.
 
-1.  To enable duckplyr for individual data frames, use [`duckplyr::as_duckplyr_df()`](https://duckdblabs.github.io/duckplyr/reference/as_duckplyr_df.html) as the first step in your pipe, without attaching the package.
-2.  By calling [`library(duckplyr)`](https://duckdblabs.github.io/duckplyr/), it overwrites dplyr methods and is automatically enabled for the entire session without having to call `as_duckplyr_df()`. To turn this off, call `methods_restore()`.
+1.  To enable duckplyr for individual data frames, use [`duckplyr::as_duckplyr_tibble()`](https://duckdblabs.github.io/duckplyr/reference/as_duckplyr_tibble.html) as the first step in your pipe, without attaching the package.
+2.  By calling [`library(duckplyr)`](https://duckdblabs.github.io/duckplyr/), it overwrites dplyr methods and is automatically enabled for the entire session without having to call `as_duckplyr_tibble()`. To turn this off, call `methods_restore()`.
 
 The examples below illustrate both methods. See also the companion [demo repository](https://github.com/Tmonster/duckplyr_demo) for a use case with a large dataset.
 
@@ -50,19 +50,19 @@ The examples below illustrate both methods. See also the companion [demo reposit
 
 This example illustrates usage of duckplyr for individual data frames.
 
-Use [`duckplyr::as_duckplyr_df()`](https://duckdblabs.github.io/duckplyr/reference/as_duckplyr_df.html) to enable processing with duckdb:
+Use [`duckplyr::as_duckplyr_tibble()`](https://duckdblabs.github.io/duckplyr/reference/as_duckplyr_tibble.html) to enable processing with duckdb:
 
 <pre class='chroma'>
 <span><span class='nv'>out</span> <span class='o'>&lt;-</span></span>
 <span>  <span class='nf'>palmerpenguins</span><span class='nf'>::</span><span class='nv'><a href='https://allisonhorst.github.io/palmerpenguins/reference/penguins.html'>penguins</a></span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='c'># CAVEAT: factor columns are not supported yet</span></span>
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='o'>(</span><span class='nf'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span><span class='o'>(</span><span class='nf'><a href='https://tidyselect.r-lib.org/reference/where.html'>where</a></span><span class='o'>(</span><span class='nv'>is.factor</span><span class='o'>)</span>, <span class='nv'>as.character</span><span class='o'>)</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>  <span class='nf'>duckplyr</span><span class='nf'>::</span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/as_duckplyr_df.html'>as_duckplyr_df</a></span><span class='o'>(</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='nf'>duckplyr</span><span class='nf'>::</span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/as_duckplyr_tibble.html'>as_duckplyr_tibble</a></span><span class='o'>(</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='o'>(</span>bill_area <span class='o'>=</span> <span class='nv'>bill_length_mm</span> <span class='o'>*</span> <span class='nv'>bill_depth_mm</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='o'>(</span>.by <span class='o'>=</span> <span class='nf'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='o'>(</span><span class='nv'>species</span>, <span class='nv'>sex</span><span class='o'>)</span>, mean_bill_area <span class='o'>=</span> <span class='nf'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='o'>(</span><span class='nv'>bill_area</span><span class='o'>)</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='o'>(</span><span class='nv'>species</span> <span class='o'>!=</span> <span class='s'>"Gentoo"</span><span class='o'>)</span></span></pre>
 
-The result is a data frame or tibble, with its own class.
+The result is a tibble, with its own class.
 
 <pre class='chroma'>
 <span><span class='nf'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='o'>(</span><span class='nv'>out</span><span class='o'>)</span></span>
@@ -211,7 +211,7 @@ Use [`library(duckplyr)`](https://duckdblabs.github.io/duckplyr/) or [`duckplyr:
 <span><span class='c'>#&gt; <span style='color: #00BB00;'>✔</span> Overwriting <span style='color: #0000BB;'>dplyr</span> methods with <span style='color: #0000BB;'>duckplyr</span> methods.</span></span>
 <span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> Turn off with `duckplyr::methods_restore()`.</span></span></pre>
 
-This is the same query as above, without `as_duckplyr_df()`:
+This is the same query as above, without `as_duckplyr_tibble()`:
 
 <pre class='chroma'>
 <span><span class='nv'>out</span> <span class='o'>&lt;-</span></span>
@@ -281,7 +281,13 @@ dplyr is active again:
 
 ## Telemetry
 
-We would like to guide our efforts towards improving duckplyr, focusing on the features with the most impact. To this end, duckplyr collects and uploads telemetry data, but only if permitted by the user. The data collected contains:
+We would like to guide our efforts towards improving duckplyr, focusing on the features with the most impact. To this end, duckplyr collects and uploads telemetry data, but only if permitted by the user:
+
+- No collection will happen unless the user explicitly opts in.
+- Uploads are done upon request only.
+- There is an option to automatically upload when the package is loaded, this is also opt-in.
+
+The data collected contains:
 
 - The package version
 - The error message
@@ -292,7 +298,7 @@ The first time the package encounters an unsupported function, data type, or ope
 
 <pre class='chroma'>
 <span><span class='nf'>palmerpenguins</span><span class='nf'>::</span><span class='nv'><a href='https://allisonhorst.github.io/palmerpenguins/reference/penguins.html'>penguins</a></span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>  <span class='nf'>duckplyr</span><span class='nf'>::</span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/as_duckplyr_df.html'>as_duckplyr_df</a></span><span class='o'>(</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='nf'>duckplyr</span><span class='nf'>::</span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/as_duckplyr_tibble.html'>as_duckplyr_tibble</a></span><span class='o'>(</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/transmute.html'>transmute</a></span><span class='o'>(</span>bill_area <span class='o'>=</span> <span class='nv'>bill_length_mm</span> <span class='o'>*</span> <span class='nv'>bill_depth_mm</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='nf'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='o'>(</span><span class='m'>3</span><span class='o'>)</span></span>
 <span><span class='c'>#&gt; The <span style='color: #0000BB;'>duckplyr</span> package is configured to fall back to <span style='color: #0000BB;'>dplyr</span> when it encounters an</span></span>
@@ -300,7 +306,7 @@ The first time the package encounters an unsupported function, data type, or ope
 <span><span class='c'>#&gt; guide future development. By default, no data will be collected or uploaded.</span></span>
 <span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> A fallback situation just occurred. The following information would have been</span></span>
 <span><span class='c'>#&gt;   recorded:</span></span>
-<span><span class='c'>#&gt;   {"version":"0.4.0","message":"Can't convert columns of class &lt;factor&gt; to</span></span>
+<span><span class='c'>#&gt;   {"version":"0.4.1","message":"Can't convert columns of class &lt;factor&gt; to</span></span>
 <span><span class='c'>#&gt;   relational. Affected</span></span>
 <span><span class='c'>#&gt;   column:\n`...1`.","name":"transmute","x":{"...1":"factor","...2":"factor","...3":"numeric","...4":"numeric","...5":"integer","...6":"integer","...7":"factor","...8":"integer"},"args":{"dots":{"...9":"...3</span></span>
 <span><span class='c'>#&gt;   * ...4"}}}</span></span>
@@ -338,6 +344,7 @@ The duckplyr package is a dplyr backend that uses DuckDB, a high-performance, em
 - Input and output are data frames or tibbles
 - All dplyr verbs are supported, with fallback
 - All R data types and functions are supported, with fallback
+- No SQL is generated
 
 The dbplyr package is a dplyr backend that connects to SQL databases, and is designed to work with various databases that support SQL, including DuckDB. Data must be copied into and collected from the database, and the syntax and semantics are similar but not identical to plain dplyr.
 

@@ -42,9 +42,11 @@ DuckDB function such as \code{"read_parquet"},
 \item{options}{Arguments to the DuckDB function
 indicated by \code{table_function}.}
 
-\item{class}{An optional class to add to the data frame.
+\item{class}{The class of the output.
+By default, a tibble is created.
 The returned object will always be a data frame.
-Pass \code{class(tibble())} to create a tibble.}
+Use \code{class = "data.frame"} or \code{class = character()}
+to create a plain data frame.}
 
 \item{data}{A data frame to be written to disk.}
 }

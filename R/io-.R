@@ -14,9 +14,11 @@
 #'   `"read_csv"`, `"read_csv_auto"` or `"read_json"`.
 #' @param options Arguments to the DuckDB function
 #'   indicated by `table_function`.
-#' @param class An optional class to add to the data frame.
+#' @param class The class of the output.
+#'   By default, a tibble is created.
 #'   The returned object will always be a data frame.
-#'   Pass `class(tibble())` to create a tibble.
+#'   Use `class = "data.frame"` or `class = character()`
+#'   to create a plain data frame.
 #'
 #' @return A data frame for `df_from_file()`, or a `duckplyr_df` for
 #'   `duckplyr_df_from_file()`, extended by the provided `class`.
@@ -35,6 +37,10 @@ df_from_file <- function(path,
 
   if (length(path) != 1) {
     path <- list(path)
+  }
+
+  if (is.null(class)) {
+    class <- default_df_class()
   }
 
   # FIXME: For some reason, it's important to create an alias here
@@ -71,4 +77,8 @@ duckplyr_df_from_file <- function(
 
   out <- df_from_file(path, table_function, options = options, class = class)
   as_duckplyr_df(out)
+}
+
+default_df_class <- function() {
+  class(new_tibble(list()))
 }

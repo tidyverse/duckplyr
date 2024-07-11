@@ -75,8 +75,8 @@ conflict_prefer("filter", "dplyr")
 
 There are two ways to use duckplyr.
 
-1. To enable duckplyr for individual data frames, use `duckplyr::as_duckplyr_df()` as the first step in your pipe, without attaching the package.
-1. By calling `library(duckplyr)`, it overwrites dplyr methods and is automatically enabled for the entire session without having to call `as_duckplyr_df()`. To turn this off, call `methods_restore()`.
+1. To enable duckplyr for individual data frames, use `duckplyr::as_duckplyr_tibble()` as the first step in your pipe, without attaching the package.
+1. By calling `library(duckplyr)`, it overwrites dplyr methods and is automatically enabled for the entire session without having to call `as_duckplyr_tibble()`. To turn this off, call `methods_restore()`.
 
 The examples below illustrate both methods.
 See also the companion [demo repository](https://github.com/Tmonster/duckplyr_demo) for a use case with a large dataset.
@@ -85,20 +85,20 @@ See also the companion [demo repository](https://github.com/Tmonster/duckplyr_de
 
 This example illustrates usage of duckplyr for individual data frames.
 
-Use `duckplyr::as_duckplyr_df()` to enable processing with duckdb:
+Use `duckplyr::as_duckplyr_tibble()` to enable processing with duckdb:
 
 ```{r}
 out <-
   palmerpenguins::penguins %>%
   # CAVEAT: factor columns are not supported yet
   mutate(across(where(is.factor), as.character)) %>%
-  duckplyr::as_duckplyr_df() %>%
+  duckplyr::as_duckplyr_tibble() %>%
   mutate(bill_area = bill_length_mm * bill_depth_mm) %>%
   summarize(.by = c(species, sex), mean_bill_area = mean(bill_area)) %>%
   filter(species != "Gentoo")
 ```
 
-The result is a data frame or tibble, with its own class.
+The result is a tibble, with its own class.
 
 ```{r}
 class(out)
@@ -137,7 +137,7 @@ Use `library(duckplyr)` or `duckplyr::methods_overwrite()` to overwrite dplyr me
 duckplyr::methods_overwrite()
 ```
 
-This is the same query as above, without `as_duckplyr_df()`:
+This is the same query as above, without `as_duckplyr_tibble()`:
 
 ```{r echo = FALSE}
 Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
@@ -185,7 +185,12 @@ palmerpenguins::penguins %>%
 ## Telemetry
 
 We would like to guide our efforts towards improving duckplyr, focusing on the features with the most impact.
-To this end, duckplyr collects and uploads telemetry data, but only if permitted by the user.
+To this end, duckplyr collects and uploads telemetry data, but only if permitted by the user:
+
+- No collection will happen unless the user explicitly opts in.
+- Uploads are done upon request only.
+- There is an option to automatically upload when the package is loaded, this is also opt-in.
+
 The data collected contains:
 
 - The package version
@@ -201,7 +206,7 @@ Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = "")
 
 ```{r}
 palmerpenguins::penguins %>%
-  duckplyr::as_duckplyr_df() %>%
+  duckplyr::as_duckplyr_tibble() %>%
   transmute(bill_area = bill_length_mm * bill_depth_mm) %>%
   head(3)
 ```
@@ -214,6 +219,7 @@ It is designed to be a fully compatible drop-in replacement for dplyr, with *exa
 - Input and output are data frames or tibbles
 - All dplyr verbs are supported, with fallback
 - All R data types and functions are supported, with fallback
+- No SQL is generated
 
 The dbplyr package is a dplyr backend that connects to SQL databases, and is designed to work with various databases that support SQL, including DuckDB.
 Data must be copied into and collected from the database, and the syntax and semantics are similar but not identical to plain dplyr.

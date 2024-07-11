@@ -1,16 +1,23 @@
 #' Convert to a duckplyr data frame
 #'
-#' For an object of class `duckplyr_df`,
+#' @description
+#' These functions convert a data-frame-like input to an object of class `"duckpylr_df"`.
+#' For such objects,
 #' dplyr verbs such as [mutate()], [select()] or [filter()]  will attempt to use DuckDB.
 #' If this is not possible, the original dplyr implementation is used.
 #'
+#' `as_duckplyr_df()` requires the input to be a plain data frame or a tibble,
+#' and will fail for any other classes, including subclasses of `"data.frame"` or `"tbl_df"`.
+#' This behavior is likely to change, do not rely on it.
+#'
+#' @details
 #' Set the `DUCKPLYR_FALLBACK_INFO` and `DUCKPLYR_FORCE` environment variables
 #' for more control over the behavior, see [config] for more details.
 #'
 #' @param .data data frame or tibble to transform
 #'
-#' @return An object of class `"duckplyr_df"`, inheriting from the classes of the
-#'   `.data` argument.
+#' @return For `as_duckplyr_df()`, an object of class `"duckplyr_df"`,
+#'   inheriting from the classes of the `.data` argument.
 #'
 #' @export
 #' @examples

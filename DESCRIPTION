@@ -34,7 +34,7 @@ Imports:
 Suggests: 
     arrow,
     brio,
-    constructive (>= 0.2.0),
+    constructive (>= 1.0.0),
     curl,
     dbplyr,
     hms,
