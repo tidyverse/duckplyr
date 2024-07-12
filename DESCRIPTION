@@ -1,7 +1,7 @@
 Type: Package
 Package: duckplyr
 Title: A 'DuckDB'-Backed Version of 'dplyr'
-Version: 0.4.1
+Version: 0.4.1.9000
 Authors@R: c(
     person("Hannes", "Mühleisen", role = "aut",
            comment = c(ORCID = "0000-0001-8552-0029")),
