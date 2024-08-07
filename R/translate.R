@@ -3,8 +3,8 @@
 rel_find_call <- function(fun, env) {
   name <- as.character(fun)
 
-  if (name[[1]] == "::") {
-    # Fully qualified name, no check needed
+  if (length(name) == 3 && name[[1]] %in% c("::", "$")) {
+    # Fully qualified name (base: "::", box: "$"), no check needed
     return(c(name[[2]], name[[3]]))
   } else if (length(name) != 1) {
     cli::cli_abort("Can't translate function {.code {expr_deparse(fun)}}.")
