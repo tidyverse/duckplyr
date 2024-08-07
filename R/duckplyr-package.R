@@ -543,7 +543,7 @@ tidyselect::where
 dplyr_mode <- FALSE
 
 on_load({
-  if (!identical(Sys.getenv("TESTTHAT"), "true")) {
+  if (!identical(Sys.getenv("TESTTHAT"), "true") & is.null(getOption("duckdb.materialize_message"))) {
     options(duckdb.materialize_message = TRUE)
   }
 })
