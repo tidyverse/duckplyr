@@ -25,6 +25,9 @@ reference:
   - new_relational
   - new_relexpr
 
+development:
+  mode: auto
+
 authors:
   Kirill Müller:
     href: https://krlmlr.info
