@@ -1,5 +1,7 @@
-url: https://tidyverse.github.io/duckplyr/
+url: https://tidyverse.github.io/duckplyr
+
 template:
+  package: tidytemplate
   bootstrap: 5
 
 reference:
