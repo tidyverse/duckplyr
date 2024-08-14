@@ -83,8 +83,8 @@ as returned by \code{tools::R_user_dir("duckplyr", "cache")}.
 }
 
 All code related to fallback logging and uploading is in the
-\href{https://github.com/duckdblabs/duckplyr/blob/main/R/fallback.R}{\code{fallback.R}} and
-\href{https://github.com/duckdblabs/duckplyr/blob/main/R/telemetry.R}{\code{telemetry.R}} files.
+\href{https://github.com/tidyverse/duckplyr/blob/main/R/fallback.R}{\code{fallback.R}} and
+\href{https://github.com/tidyverse/duckplyr/blob/main/R/telemetry.R}{\code{telemetry.R}} files.
 }
 \examples{
 fallback_sitrep()

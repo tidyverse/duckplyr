@@ -43,7 +43,7 @@ WHERE
 
 ### `tinker.r_contents`
 
-This is the final dataset, available for download from a [GitHub release](https://github.com/duckdblabs/duckplyr/releases/tag/gh-analysis) in this repository, uploaded with the [piggyback](https://docs.ropensci.org/piggyback) R package.
+This is the final dataset, available for download from a [GitHub release](https://github.com/tidyverse/duckplyr/releases/tag/gh-analysis) in this repository, uploaded with the [piggyback](https://docs.ropensci.org/piggyback) R package.
 
 ```sql
 SELECT

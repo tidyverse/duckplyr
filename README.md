@@ -4,7 +4,7 @@
 
 <!-- badges: start -->
 
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) [![R-CMD-check](https://github.com/duckdblabs/duckplyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/duckdblabs/duckplyr/actions/workflows/R-CMD-check.yaml)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) [![R-CMD-check](https://github.com/tidyverse/duckplyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidyverse/duckplyr/actions/workflows/R-CMD-check.yaml)
 
 <!-- badges: end -->
 
@@ -22,13 +22,13 @@ Install duckplyr from CRAN with:
 You can also install the development version of duckplyr from R-universe:
 
 <pre class='chroma'>
-<span><span class='nf'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='o'>(</span><span class='s'>"duckplyr"</span>, repos <span class='o'>=</span> <span class='nf'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='o'>(</span><span class='s'>"https://duckdblabs.r-universe.dev"</span>, <span class='s'>"https://cloud.r-project.org"</span><span class='o'>)</span><span class='o'>)</span></span></pre>
+<span><span class='nf'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='o'>(</span><span class='s'>"duckplyr"</span>, repos <span class='o'>=</span> <span class='nf'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='o'>(</span><span class='s'>"https://tidyverse.r-universe.dev"</span>, <span class='s'>"https://cloud.r-project.org"</span><span class='o'>)</span><span class='o'>)</span></span></pre>
 
 Or from [GitHub](https://github.com/) with:
 
 <pre class='chroma'>
 <span><span class='c'># install.packages("pak", repos = sprintf("https://r-lib.github.io/p/pak/stable/%s/%s/%s", .Platform$pkgType, R.Version()$os, R.Version()$arch))</span></span>
-<span><span class='nf'>pak</span><span class='nf'>::</span><span class='nf'><a href='https://pak.r-lib.org/reference/pak.html'>pak</a></span><span class='o'>(</span><span class='s'>"duckdblabs/duckplyr"</span><span class='o'>)</span></span></pre>
+<span><span class='nf'>pak</span><span class='nf'>::</span><span class='nf'><a href='https://pak.r-lib.org/reference/pak.html'>pak</a></span><span class='o'>(</span><span class='s'>"tidyverse/duckplyr"</span><span class='o'>)</span></span></pre>
 
 ## Examples
 
@@ -41,8 +41,8 @@ Or from [GitHub](https://github.com/) with:
 
 There are two ways to use duckplyr.
 
-1.  To enable duckplyr for individual data frames, use [`duckplyr::as_duckplyr_tibble()`](https://duckdblabs.github.io/duckplyr/reference/as_duckplyr_tibble.html) as the first step in your pipe, without attaching the package.
-2.  By calling [`library(duckplyr)`](https://duckdblabs.github.io/duckplyr/), it overwrites dplyr methods and is automatically enabled for the entire session without having to call `as_duckplyr_tibble()`. To turn this off, call `methods_restore()`.
+1.  To enable duckplyr for individual data frames, use [`duckplyr::as_duckplyr_tibble()`](https://tidyverse.github.io/duckplyr/reference/as_duckplyr_tibble.html) as the first step in your pipe, without attaching the package.
+2.  By calling [`library(duckplyr)`](https://tidyverse.github.io/duckplyr/), it overwrites dplyr methods and is automatically enabled for the entire session without having to call `as_duckplyr_tibble()`. To turn this off, call `methods_restore()`.
 
 The examples below illustrate both methods. See also the companion [demo repository](https://github.com/Tmonster/duckplyr_demo) for a use case with a large dataset.
 
@@ -50,14 +50,14 @@ The examples below illustrate both methods. See also the companion [demo reposit
 
 This example illustrates usage of duckplyr for individual data frames.
 
-Use [`duckplyr::as_duckplyr_tibble()`](https://duckdblabs.github.io/duckplyr/reference/as_duckplyr_tibble.html) to enable processing with duckdb:
+Use [`duckplyr::as_duckplyr_tibble()`](https://tidyverse.github.io/duckplyr/reference/as_duckplyr_tibble.html) to enable processing with duckdb:
 
 <pre class='chroma'>
 <span><span class='nv'>out</span> <span class='o'>&lt;-</span></span>
 <span>  <span class='nf'>palmerpenguins</span><span class='nf'>::</span><span class='nv'><a href='https://allisonhorst.github.io/palmerpenguins/reference/penguins.html'>penguins</a></span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='c'># CAVEAT: factor columns are not supported yet</span></span>
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='o'>(</span><span class='nf'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span><span class='o'>(</span><span class='nf'><a href='https://tidyselect.r-lib.org/reference/where.html'>where</a></span><span class='o'>(</span><span class='nv'>is.factor</span><span class='o'>)</span>, <span class='nv'>as.character</span><span class='o'>)</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>  <span class='nf'>duckplyr</span><span class='nf'>::</span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/as_duckplyr_tibble.html'>as_duckplyr_tibble</a></span><span class='o'>(</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='nf'>duckplyr</span><span class='nf'>::</span><span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/as_duckplyr_tibble.html'>as_duckplyr_tibble</a></span><span class='o'>(</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='o'>(</span>bill_area <span class='o'>=</span> <span class='nv'>bill_length_mm</span> <span class='o'>*</span> <span class='nv'>bill_depth_mm</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='o'>(</span>.by <span class='o'>=</span> <span class='nf'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='o'>(</span><span class='nv'>species</span>, <span class='nv'>sex</span><span class='o'>)</span>, mean_bill_area <span class='o'>=</span> <span class='nf'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='o'>(</span><span class='nv'>bill_area</span><span class='o'>)</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='o'>(</span><span class='nv'>species</span> <span class='o'>!=</span> <span class='s'>"Gentoo"</span><span class='o'>)</span></span></pre>
@@ -204,10 +204,10 @@ After the computation has been carried out, the results are available immediatel
 
 This example illustrates usage of duckplyr for all data frames in the R session.
 
-Use [`library(duckplyr)`](https://duckdblabs.github.io/duckplyr/) or [`duckplyr::methods_overwrite()`](https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html) to overwrite dplyr methods and enable processing with duckdb for all data frames:
+Use [`library(duckplyr)`](https://tidyverse.github.io/duckplyr/) or [`duckplyr::methods_overwrite()`](https://tidyverse.github.io/duckplyr/reference/methods_overwrite.html) to overwrite dplyr methods and enable processing with duckdb for all data frames:
 
 <pre class='chroma'>
-<span><span class='nf'>duckplyr</span><span class='nf'>::</span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html'>methods_overwrite</a></span><span class='o'>(</span><span class='o'>)</span></span>
+<span><span class='nf'>duckplyr</span><span class='nf'>::</span><span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/methods_overwrite.html'>methods_overwrite</a></span><span class='o'>(</span><span class='o'>)</span></span>
 <span><span class='c'>#&gt; <span style='color: #00BB00;'>✔</span> Overwriting <span style='color: #0000BB;'>dplyr</span> methods with <span style='color: #0000BB;'>duckplyr</span> methods.</span></span>
 <span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> Turn off with `duckplyr::methods_restore()`.</span></span></pre>
 
@@ -255,10 +255,10 @@ Querying the number of rows also starts the computation:
 <span><span class='c'>#&gt; - mean_bill_area (DOUBLE)</span></span>
 <span><span class='c'>#&gt; [1] 5</span></span></pre>
 
-Restart R, or call [`duckplyr::methods_restore()`](https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html) to revert to the default dplyr implementation.
+Restart R, or call [`duckplyr::methods_restore()`](https://tidyverse.github.io/duckplyr/reference/methods_overwrite.html) to revert to the default dplyr implementation.
 
 <pre class='chroma'>
-<span><span class='nf'>duckplyr</span><span class='nf'>::</span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/methods_overwrite.html'>methods_restore</a></span><span class='o'>(</span><span class='o'>)</span></span>
+<span><span class='nf'>duckplyr</span><span class='nf'>::</span><span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/methods_overwrite.html'>methods_restore</a></span><span class='o'>(</span><span class='o'>)</span></span>
 <span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> Restoring <span style='color: #0000BB;'>dplyr</span> methods.</span></span></pre>
 
 dplyr is active again:
@@ -298,7 +298,7 @@ The first time the package encounters an unsupported function, data type, or ope
 
 <pre class='chroma'>
 <span><span class='nf'>palmerpenguins</span><span class='nf'>::</span><span class='nv'><a href='https://allisonhorst.github.io/palmerpenguins/reference/penguins.html'>penguins</a></span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>  <span class='nf'>duckplyr</span><span class='nf'>::</span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/as_duckplyr_tibble.html'>as_duckplyr_tibble</a></span><span class='o'>(</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='nf'>duckplyr</span><span class='nf'>::</span><span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/as_duckplyr_tibble.html'>as_duckplyr_tibble</a></span><span class='o'>(</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/transmute.html'>transmute</a></span><span class='o'>(</span>bill_area <span class='o'>=</span> <span class='nv'>bill_length_mm</span> <span class='o'>*</span> <span class='nv'>bill_depth_mm</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='nf'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='o'>(</span><span class='m'>3</span><span class='o'>)</span></span>
 <span><span class='c'>#&gt; The <span style='color: #0000BB;'>duckplyr</span> package is configured to fall back to <span style='color: #0000BB;'>dplyr</span> when it encounters an</span></span>
@@ -353,7 +353,7 @@ The dbplyr package is a dplyr backend that connects to SQL databases, and is des
 This package also provides generics, for which other packages may then implement methods.
 
 <pre class='chroma'>
-<span><span class='kr'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='o'>(</span><span class='nv'><a href='https://duckdblabs.github.io/duckplyr/'>duckplyr</a></span><span class='o'>)</span></span></pre>
+<span><span class='kr'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='o'>(</span><span class='nv'><a href='https://tidyverse.github.io/duckplyr/'>duckplyr</a></span><span class='o'>)</span></span></pre>
 <pre class='chroma'>
 <span><span class='c'>#&gt; <span style='color: #00BB00;'>✔</span> Overwriting <span style='color: #0000BB;'>dplyr</span> methods with <span style='color: #0000BB;'>duckplyr</span> methods.</span></span>
 <span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> Turn off with `duckplyr::methods_restore()`.</span></span></pre>
@@ -361,7 +361,7 @@ This package also provides generics, for which other packages may then implement
 <span><span class='c'># Create a relational to be used by examples below</span></span>
 <span><span class='nv'>new_dfrel</span> <span class='o'>&lt;-</span> <span class='kr'>function</span><span class='o'>(</span><span class='nv'>x</span><span class='o'>)</span> <span class='o'>{</span></span>
 <span>  <span class='nf'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span><span class='o'>(</span><span class='nf'><a href='https://rdrr.io/r/base/as.data.frame.html'>is.data.frame</a></span><span class='o'>(</span><span class='nv'>x</span><span class='o'>)</span><span class='o'>)</span></span>
-<span>  <span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/new_relational.html'>new_relational</a></span><span class='o'>(</span><span class='nf'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='o'>(</span><span class='nv'>x</span><span class='o'>)</span>, class <span class='o'>=</span> <span class='s'>"dfrel"</span><span class='o'>)</span></span>
+<span>  <span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/new_relational.html'>new_relational</a></span><span class='o'>(</span><span class='nf'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='o'>(</span><span class='nv'>x</span><span class='o'>)</span>, class <span class='o'>=</span> <span class='s'>"dfrel"</span><span class='o'>)</span></span>
 <span><span class='o'>}</span></span>
 <span><span class='nv'>mtcars_rel</span> <span class='o'>&lt;-</span> <span class='nf'>new_dfrel</span><span class='o'>(</span><span class='nv'>mtcars</span><span class='o'>[</span><span class='m'>1</span><span class='o'>:</span><span class='m'>5</span>, <span class='m'>1</span><span class='o'>:</span><span class='m'>4</span><span class='o'>]</span><span class='o'>)</span></span>
 <span></span>
@@ -369,7 +369,7 @@ This package also provides generics, for which other packages may then implement
 <span><span class='nv'>rel_to_df.dfrel</span> <span class='o'>&lt;-</span> <span class='kr'>function</span><span class='o'>(</span><span class='nv'>rel</span>, <span class='nv'>...</span><span class='o'>)</span> <span class='o'>{</span></span>
 <span>  <span class='nf'><a href='https://rdrr.io/r/base/class.html'>unclass</a></span><span class='o'>(</span><span class='nv'>rel</span><span class='o'>)</span><span class='o'>[[</span><span class='m'>1</span><span class='o'>]</span><span class='o'>]</span></span>
 <span><span class='o'>}</span></span>
-<span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/new_relational.html'>rel_to_df</a></span><span class='o'>(</span><span class='nv'>mtcars_rel</span><span class='o'>)</span></span>
+<span><span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/new_relational.html'>rel_to_df</a></span><span class='o'>(</span><span class='nv'>mtcars_rel</span><span class='o'>)</span></span>
 <span><span class='c'>#&gt;                    mpg cyl disp  hp</span></span>
 <span><span class='c'>#&gt; Mazda RX4         21.0   6  160 110</span></span>
 <span><span class='c'>#&gt; Mazda RX4 Wag     21.0   6  160 110</span></span>
@@ -386,12 +386,12 @@ This package also provides generics, for which other packages may then implement
 <span>  <span class='nf'>new_dfrel</span><span class='o'>(</span><span class='nv'>df</span><span class='o'>[</span><span class='nf'><a href='https://rdrr.io/r/base/sample.html'>sample.int</a></span><span class='o'>(</span><span class='nf'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='o'>(</span><span class='nv'>df</span><span class='o'>)</span>, <span class='m'>3</span>, replace <span class='o'>=</span> <span class='kc'>TRUE</span><span class='o'>)</span>, <span class='o'>]</span><span class='o'>)</span></span>
 <span><span class='o'>}</span></span>
 <span></span>
-<span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/new_relational.html'>rel_filter</a></span><span class='o'>(</span></span>
+<span><span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/new_relational.html'>rel_filter</a></span><span class='o'>(</span></span>
 <span>  <span class='nv'>mtcars_rel</span>,</span>
 <span>  <span class='nf'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='o'>(</span></span>
-<span>    <span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/new_relexpr.html'>relexpr_function</a></span><span class='o'>(</span></span>
+<span>    <span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/new_relexpr.html'>relexpr_function</a></span><span class='o'>(</span></span>
 <span>      <span class='s'>"gt"</span>,</span>
-<span>      <span class='nf'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='o'>(</span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/new_relexpr.html'>relexpr_reference</a></span><span class='o'>(</span><span class='s'>"cyl"</span><span class='o'>)</span>, <span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/new_relexpr.html'>relexpr_constant</a></span><span class='o'>(</span><span class='s'>"6"</span><span class='o'>)</span><span class='o'>)</span></span>
+<span>      <span class='nf'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='o'>(</span><span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/new_relexpr.html'>relexpr_reference</a></span><span class='o'>(</span><span class='s'>"cyl"</span><span class='o'>)</span>, <span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/new_relexpr.html'>relexpr_constant</a></span><span class='o'>(</span><span class='s'>"6"</span><span class='o'>)</span><span class='o'>)</span></span>
 <span>    <span class='o'>)</span></span>
 <span>  <span class='o'>)</span></span>
 <span><span class='o'>)</span></span>
@@ -413,9 +413,9 @@ This package also provides generics, for which other packages may then implement
 <span>  <span class='nf'>new_dfrel</span><span class='o'>(</span><span class='nv'>df</span><span class='o'>[</span><span class='nf'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='o'>(</span><span class='nf'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='o'>(</span><span class='m'>3</span>, <span class='nf'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='o'>(</span><span class='nv'>df</span><span class='o'>)</span><span class='o'>)</span><span class='o'>)</span><span class='o'>]</span><span class='o'>)</span></span>
 <span><span class='o'>}</span></span>
 <span></span>
-<span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/new_relational.html'>rel_project</a></span><span class='o'>(</span></span>
+<span><span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/new_relational.html'>rel_project</a></span><span class='o'>(</span></span>
 <span>  <span class='nv'>mtcars_rel</span>,</span>
-<span>  <span class='nf'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='o'>(</span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/new_relexpr.html'>relexpr_reference</a></span><span class='o'>(</span><span class='s'>"cyl"</span><span class='o'>)</span>, <span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/new_relexpr.html'>relexpr_reference</a></span><span class='o'>(</span><span class='s'>"disp"</span><span class='o'>)</span><span class='o'>)</span></span>
+<span>  <span class='nf'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='o'>(</span><span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/new_relexpr.html'>relexpr_reference</a></span><span class='o'>(</span><span class='s'>"cyl"</span><span class='o'>)</span>, <span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/new_relexpr.html'>relexpr_reference</a></span><span class='o'>(</span><span class='s'>"disp"</span><span class='o'>)</span><span class='o'>)</span></span>
 <span><span class='o'>)</span></span>
 <span><span class='c'>#&gt; [[1]]</span></span>
 <span><span class='c'>#&gt;                    mpg cyl disp</span></span>
@@ -437,9 +437,9 @@ This package also provides generics, for which other packages may then implement
 <span>  <span class='nf'>new_dfrel</span><span class='o'>(</span><span class='nv'>df</span><span class='o'>[</span><span class='nf'><a href='https://rdrr.io/r/base/order.html'>order</a></span><span class='o'>(</span><span class='nv'>df</span><span class='o'>[[</span><span class='m'>1</span><span class='o'>]</span><span class='o'>]</span><span class='o'>)</span>, <span class='o'>]</span><span class='o'>)</span></span>
 <span><span class='o'>}</span></span>
 <span></span>
-<span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/new_relational.html'>rel_order</a></span><span class='o'>(</span></span>
+<span><span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/new_relational.html'>rel_order</a></span><span class='o'>(</span></span>
 <span>  <span class='nv'>mtcars_rel</span>,</span>
-<span>  <span class='nf'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='o'>(</span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/new_relexpr.html'>relexpr_reference</a></span><span class='o'>(</span><span class='s'>"mpg"</span><span class='o'>)</span><span class='o'>)</span></span>
+<span>  <span class='nf'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='o'>(</span><span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/new_relexpr.html'>relexpr_reference</a></span><span class='o'>(</span><span class='s'>"mpg"</span><span class='o'>)</span><span class='o'>)</span></span>
 <span><span class='o'>)</span></span>
 <span><span class='c'>#&gt; [[1]]</span></span>
 <span><span class='c'>#&gt;                    mpg cyl disp  hp</span></span>
@@ -464,7 +464,7 @@ This package also provides generics, for which other packages may then implement
 <span>  <span class='nf'>new_dfrel</span><span class='o'>(</span><span class='nf'>dplyr</span><span class='nf'>::</span><span class='nf'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span><span class='o'>(</span><span class='nv'>left_df</span>, <span class='nv'>right_df</span><span class='o'>)</span><span class='o'>)</span></span>
 <span><span class='o'>}</span></span>
 <span></span>
-<span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/new_relational.html'>rel_join</a></span><span class='o'>(</span><span class='nf'>new_dfrel</span><span class='o'>(</span><span class='nf'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='o'>(</span>mpg <span class='o'>=</span> <span class='m'>21</span><span class='o'>)</span><span class='o'>)</span>, <span class='nv'>mtcars_rel</span><span class='o'>)</span></span>
+<span><span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/new_relational.html'>rel_join</a></span><span class='o'>(</span><span class='nf'>new_dfrel</span><span class='o'>(</span><span class='nf'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='o'>(</span>mpg <span class='o'>=</span> <span class='m'>21</span><span class='o'>)</span><span class='o'>)</span>, <span class='nv'>mtcars_rel</span><span class='o'>)</span></span>
 <span><span class='c'>#&gt; Joining with `by = join_by(mpg)`</span></span>
 <span><span class='c'>#&gt; Joining with `by = join_by(mpg)`</span></span>
 <span><span class='c'>#&gt; [[1]]</span></span>
@@ -482,7 +482,7 @@ This package also provides generics, for which other packages may then implement
 <span>  <span class='nf'>new_dfrel</span><span class='o'>(</span><span class='nv'>df</span><span class='o'>[</span><span class='nf'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='o'>(</span><span class='nv'>n</span><span class='o'>)</span>, <span class='o'>]</span><span class='o'>)</span></span>
 <span><span class='o'>}</span></span>
 <span></span>
-<span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/new_relational.html'>rel_limit</a></span><span class='o'>(</span><span class='nv'>mtcars_rel</span>, <span class='m'>3</span><span class='o'>)</span></span>
+<span><span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/new_relational.html'>rel_limit</a></span><span class='o'>(</span><span class='nv'>mtcars_rel</span>, <span class='m'>3</span><span class='o'>)</span></span>
 <span><span class='c'>#&gt; [[1]]</span></span>
 <span><span class='c'>#&gt;                mpg cyl disp  hp</span></span>
 <span><span class='c'>#&gt; Mazda RX4     21.0   6  160 110</span></span>
@@ -500,7 +500,7 @@ This package also provides generics, for which other packages may then implement
 <span>  <span class='nf'>new_dfrel</span><span class='o'>(</span><span class='nv'>df</span><span class='o'>[</span><span class='o'>!</span><span class='nf'><a href='https://rdrr.io/r/base/duplicated.html'>duplicated</a></span><span class='o'>(</span><span class='nv'>df</span><span class='o'>)</span>, <span class='o'>]</span><span class='o'>)</span></span>
 <span><span class='o'>}</span></span>
 <span></span>
-<span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/new_relational.html'>rel_distinct</a></span><span class='o'>(</span><span class='nf'>new_dfrel</span><span class='o'>(</span><span class='nv'>mtcars</span><span class='o'>[</span><span class='m'>1</span><span class='o'>:</span><span class='m'>3</span>, <span class='m'>1</span><span class='o'>:</span><span class='m'>4</span><span class='o'>]</span><span class='o'>)</span><span class='o'>)</span></span>
+<span><span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/new_relational.html'>rel_distinct</a></span><span class='o'>(</span><span class='nf'>new_dfrel</span><span class='o'>(</span><span class='nv'>mtcars</span><span class='o'>[</span><span class='m'>1</span><span class='o'>:</span><span class='m'>3</span>, <span class='m'>1</span><span class='o'>:</span><span class='m'>4</span><span class='o'>]</span><span class='o'>)</span><span class='o'>)</span></span>
 <span><span class='c'>#&gt; [[1]]</span></span>
 <span><span class='c'>#&gt;             mpg cyl disp  hp</span></span>
 <span><span class='c'>#&gt; Mazda RX4  21.0   6  160 110</span></span>
@@ -516,5 +516,5 @@ This package also provides generics, for which other packages may then implement
 <span>  <span class='nf'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='o'>(</span><span class='nv'>df</span><span class='o'>)</span></span>
 <span><span class='o'>}</span></span>
 <span></span>
-<span><span class='nf'><a href='https://duckdblabs.github.io/duckplyr/reference/new_relational.html'>rel_names</a></span><span class='o'>(</span><span class='nv'>mtcars_rel</span><span class='o'>)</span></span>
+<span><span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/new_relational.html'>rel_names</a></span><span class='o'>(</span><span class='nv'>mtcars_rel</span><span class='o'>)</span></span>
 <span><span class='c'>#&gt; [1] "mpg"  "cyl"  "disp" "hp"</span></span></pre>

@@ -73,6 +73,6 @@ dplyr_test_files <- fs::dir_ls(".sync/dplyr-revdep/tests/testthat/", type = "fil
 walk(dplyr_test_files, patch_dplyr_test)
 
 gert::git_add(".", repo = ".sync/dplyr-revdep")
-message <- paste0("Sync with duckdblabs/duckplyr@", gert::git_log(max = 1)$commit)
+message <- paste0("Sync with tidyverse/duckplyr@", gert::git_log(max = 1)$commit)
 gert::git_commit(message, repo = ".sync/dplyr-revdep")
 gert::git_push(repo = ".sync/dplyr-revdep")

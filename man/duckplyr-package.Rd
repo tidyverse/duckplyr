@@ -11,9 +11,9 @@ A drop-in replacement for 'dplyr', powered by 'DuckDB' for performance. Also def
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://duckdblabs.github.io/duckplyr/}
-  \item \url{https://github.com/duckdblabs/duckplyr}
-  \item Report bugs at \url{https://github.com/duckdblabs/duckplyr/issues}
+  \item \url{https://tidyverse.github.io/duckplyr/}
+  \item \url{https://github.com/tidyverse/duckplyr}
+  \item Report bugs at \url{https://github.com/tidyverse/duckplyr/issues}
 }
 
 }
