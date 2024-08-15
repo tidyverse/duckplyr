@@ -35,7 +35,7 @@ Sys.setenv(DUCKPLYR_OUTPUT_ORDER = TRUE)
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![R-CMD-check](https://github.com/duckdblabs/duckplyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/duckdblabs/duckplyr/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/tidyverse/duckplyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidyverse/duckplyr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of the duckplyr R package is to provide a drop-in replacement for [dplyr](https://dplyr.tidyverse.org/) that uses [DuckDB](https://duckdb.org/) as a backend for fast operation.
@@ -54,14 +54,14 @@ install.packages("duckplyr")
 You can also install the development version of duckplyr from R-universe:
 
 ``` r
-install.packages("duckplyr", repos = c("https://duckdblabs.r-universe.dev", "https://cloud.r-project.org"))
+install.packages("duckplyr", repos = c("https://tidyverse.r-universe.dev", "https://cloud.r-project.org"))
 ```
 
 Or from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("pak", repos = sprintf("https://r-lib.github.io/p/pak/stable/%s/%s/%s", .Platform$pkgType, R.Version()$os, R.Version()$arch))
-pak::pak("duckdblabs/duckplyr")
+pak::pak("tidyverse/duckplyr")
 ```
 
 

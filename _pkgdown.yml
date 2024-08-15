@@ -1,5 +1,7 @@
-url: https://duckdblabs.github.io/duckplyr/
+url: https://tidyverse.github.io/duckplyr
+
 template:
+  package: tidytemplate
   bootstrap: 5
 
 reference:
@@ -22,6 +24,9 @@ reference:
   contents:
   - new_relational
   - new_relexpr
+
+development:
+  mode: auto
 
 authors:
   Kirill Müller:

@@ -48,8 +48,8 @@
 #'   as returned by \code{tools::R_user_dir("duckplyr", "cache")}.
 #'
 #' All code related to fallback logging and uploading is in the
-#' [`fallback.R`](https://github.com/duckdblabs/duckplyr/blob/main/R/fallback.R) and
-#' [`telemetry.R`](https://github.com/duckdblabs/duckplyr/blob/main/R/telemetry.R) files.
+#' [`fallback.R`](https://github.com/tidyverse/duckplyr/blob/main/R/fallback.R) and
+#' [`telemetry.R`](https://github.com/tidyverse/duckplyr/blob/main/R/telemetry.R) files.
 #'
 #' @name fallback
 #' @examples

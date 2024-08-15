@@ -13,8 +13,8 @@ Description: A drop-in replacement for 'dplyr', powered by 'DuckDB' for performa
     Also defines a set of generics that provide a low-level
     implementer's interface for the high-level user interface of 'dplyr'.
 License: MIT + file LICENSE
-URL: https://duckdblabs.github.io/duckplyr/, https://github.com/duckdblabs/duckplyr
-BugReports: https://github.com/duckdblabs/duckplyr/issues
+URL: https://tidyverse.github.io/duckplyr/, https://github.com/tidyverse/duckplyr
+BugReports: https://github.com/tidyverse/duckplyr/issues
 Depends: 
     R (>= 4.1.0)
 Imports: 
@@ -58,3 +58,4 @@ Encoding: UTF-8
 Roxygen: list( markdown = TRUE, roclets = c("collate", "namespace", "rd",
     "roxyglobals::global_roclet") )
 RoxygenNote: 7.3.2.9000
+Config/Needs/website: tidyverse/tidytemplate
