@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.4.1.9002 (2024-08-16)
+
+## Documentation
+
+  - Move to tidyverse (#225).
+
+
 # duckplyr 0.4.1.9001 (2024-07-13)
 
   - Merge branch 'cran-0.4.1'.
