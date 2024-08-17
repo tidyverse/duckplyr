@@ -1,0 +1,40 @@
+name: 'Custom steps to run after R packages are installed'
+
+runs:
+  using: "composite"
+  steps:
+    # Must be done after installing R because rtools is installed only then
+    - name: Compute cache key
+      run: |
+        echo "DUCKDB_R_PREBUILT_ARCHIVE_GHA_CACHE_KEY=duckdb-tar-R$(Rscript --vanilla -e 'cat(format(getRversion()))')-${{ runner.os }}-$($(R CMD config CXX) --version | head -n 1 | sed -r 's/[, ]/-/g')-${{ hashFiles('src/duckdb/**') }}" | tee -a $GITHUB_ENV
+        echo "DUCKDB_R_PREBUILT_ARCHIVE=${{ runner.temp }}/duckdb.tar" | tee -a $GITHUB_ENV
+      shell: bash
+
+    - name: Cache duckdb archive
+      uses: actions/cache@v3
+      with:
+        path: ${{ env.DUCKDB_R_PREBUILT_ARCHIVE }}
+        key: ${{ env.DUCKDB_R_PREBUILT_ARCHIVE_GHA_CACHE_KEY }}
+
+    - name: Compute ccache key
+      run: |
+        echo "GHA_CCACHE_KEY=${{ runner.os }}-$($(R CMD config CXX) --version | head -n 1 | sed -r 's/[, ]/-/g')-R-$(Rscript --vanilla -e 'cat(format(getRversion()))')" | tee -a $GITHUB_ENV
+      shell: bash
+
+    - name: Install persistent ccache
+      uses: hendrikmuhs/ccache-action@v1.2.10
+      with:
+        key: ${{ env.GHA_CCACHE_KEY }}
+        max-size: 200M
+        verbose: 1
+
+    - name: Install to avoid R CMD INSTALL --pre-clean run otherwise
+      run: |
+        mkdir ../lib
+        R CMD INSTALL --library=$(dirname $(pwd))/lib -d --no-byte-compile .
+      shell: bash
+
+    - name: Show ccache stats
+      run: |
+        ccache -s
+      shell: bash
