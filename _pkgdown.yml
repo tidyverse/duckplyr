@@ -20,6 +20,7 @@ reference:
   - config
   - fallback
   - stats_show
+  - duckplyr_execute
 - title: Relational operations and expressions
   contents:
   - new_relational
