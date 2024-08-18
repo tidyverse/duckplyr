@@ -51,6 +51,8 @@ runs:
             git commit -m "chore: Auto-update from GitHub Actions"$'\n'$'\n'"Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
             git push -u origin HEAD
           fi
+        else
+          git switch ${GITHUB_HEAD_REF}
         fi
         # Unconditionally set the output because it could come from a manually triggered run
         echo sha=$(git rev-parse HEAD) >> $GITHUB_OUTPUT
