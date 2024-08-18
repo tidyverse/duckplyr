@@ -76,8 +76,8 @@ jobs:
 
       - name: Bump version
         run: |
-          allow_non_default_branch <- ("${{ steps.branch_protection.outputs.branch_protection }}" != "")
-          if (fledge::bump_version(which = "dev", no_change_behavior = "noop", allow_non_default_branch = allow_non_default_branch)) {
+          check_default_branch <- ("${{ steps.branch_protection.outputs.branch_protection }}" == "")
+          if (fledge::bump_version(which = "dev", no_change_behavior = "noop", check_default_branch = check_default_branch)) {
             fledge::finalize_version(push = TRUE)
           }
         shell: Rscript {0}
