@@ -210,7 +210,7 @@ jobs:
         if: failure()
         with:
           ref: ${{ needs.rcc-smoke.outputs.sha }}
-          context: rcc
+          context: rcc-full
 
   rcc-success:
     needs:
@@ -230,7 +230,7 @@ jobs:
       - uses: ./.github/workflows/update-status
         with:
           ref: ${{ needs.rcc-smoke.outputs.sha }}
-          context: rcc
+          context: rcc-full
 
   suggests-matrix:
     runs-on: ubuntu-22.04
