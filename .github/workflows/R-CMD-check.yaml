@@ -143,12 +143,15 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
 
+    needs:
+      - rcc-smoke
+
     name: Collect versions
 
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          ref: ${{ needs.rcc-smoke.outputs.sha }}
 
       - uses: ./.github/workflows/rate-limit
         with:
@@ -206,11 +209,11 @@ jobs:
       - uses: ./.github/workflows/update-status
         if: failure()
         with:
-          sha: ${{ needs.rcc-smoke.outputs.sha }}
+          ref: ${{ needs.rcc-smoke.outputs.sha }}
+          context: rcc
 
   rcc-success:
     needs:
-      # FIXME: Adding rcc-suggests nees to include this into the big matrix
       - rcc-full
       - rcc-smoke
       - pkgdown
@@ -226,51 +229,36 @@ jobs:
 
       - uses: ./.github/workflows/update-status
         with:
-          sha: ${{ needs.rcc-smoke.outputs.sha }}
+          ref: ${{ needs.rcc-smoke.outputs.sha }}
+          context: rcc
 
   suggests-matrix:
     runs-on: ubuntu-22.04
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
 
+    needs:
+      - rcc-smoke
+
     name: Collect suggests deps
 
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          ref: ${{ needs.rcc-smoke.outputs.sha }}
 
       - uses: ./.github/workflows/rate-limit
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: r-lib/actions/setup-r@v2
-        with:
-          install-r: false
-          use-public-rspm: true
-
       - id: set-matrix
         uses: ./.github/workflows/dep-suggests-matrix-read
 
-  check-suggests-matrix:
-    runs-on: ubuntu-22.04
-    needs: suggests-matrix
-
-    name: Check suggests deps
-
-    if: ${{ needs.suggests-matrix.outputs.matrix != '' }}
-
-    steps:
-      - name: Install json2yaml
-        run: |
-          sudo npm install -g json2yaml
-
-      - name: Check matrix definition
-        run: |
-          matrix='${{ needs.suggests-matrix.outputs.matrix }}'
-          echo $matrix
-          echo $matrix | jq .
-          echo $matrix | json2yaml
+      - uses: ./.github/workflows/update-status
+        if: steps.set-matrix.outputs.matrix == ''
+        with:
+          ref: ${{ needs.rcc-smoke.outputs.sha }}
+          context: rcc-suggests
 
   rcc-suggests:
     needs:
@@ -346,3 +334,28 @@ jobs:
       - uses: ./.github/workflows/check
         with:
           results: ${{ matrix.package }}
+
+      - uses: ./.github/workflows/update-status
+        if: failure()
+        with:
+          ref: ${{ needs.rcc-smoke.outputs.sha }}
+          context: rcc-suggests
+
+  rcc-suggests-success:
+    needs:
+      - rcc-suggests
+      - rcc-smoke
+
+    runs-on: ubuntu-latest
+
+    name: 'rcc-suggests: success'
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.rcc-smoke.outputs.sha }}
+
+      - uses: ./.github/workflows/update-status
+        with:
+          ref: ${{ needs.rcc-smoke.outputs.sha }}
+          context: rcc-suggests
