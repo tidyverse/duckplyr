@@ -209,7 +209,7 @@ jobs:
       - uses: ./.github/workflows/update-status
         if: failure()
         with:
-          ref: ${{ needs.rcc-smoke.outputs.sha }}
+          sha: ${{ needs.rcc-smoke.outputs.sha }}
           context: rcc-full
 
   rcc-success:
@@ -229,7 +229,7 @@ jobs:
 
       - uses: ./.github/workflows/update-status
         with:
-          ref: ${{ needs.rcc-smoke.outputs.sha }}
+          sha: ${{ needs.rcc-smoke.outputs.sha }}
           context: rcc-full
 
   suggests-matrix:
@@ -257,7 +257,7 @@ jobs:
       - uses: ./.github/workflows/update-status
         if: steps.set-matrix.outputs.matrix == ''
         with:
-          ref: ${{ needs.rcc-smoke.outputs.sha }}
+          sha: ${{ needs.rcc-smoke.outputs.sha }}
           context: rcc-suggests
 
   rcc-suggests:
@@ -338,7 +338,7 @@ jobs:
       - uses: ./.github/workflows/update-status
         if: failure()
         with:
-          ref: ${{ needs.rcc-smoke.outputs.sha }}
+          sha: ${{ needs.rcc-smoke.outputs.sha }}
           context: rcc-suggests
 
   rcc-suggests-success:
@@ -357,5 +357,5 @@ jobs:
 
       - uses: ./.github/workflows/update-status
         with:
-          ref: ${{ needs.rcc-smoke.outputs.sha }}
+          sha: ${{ needs.rcc-smoke.outputs.sha }}
           context: rcc-suggests
