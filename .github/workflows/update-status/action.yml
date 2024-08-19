@@ -4,6 +4,9 @@ inputs:
   sha:
     description: 'SHA to update'
     required: true
+  context:
+    description: 'Context to update'
+    required: true
 
 runs:
   using: "composite"
@@ -13,27 +16,36 @@ runs:
     # The duckdbneo repository contains several failed attempts.
     - run: |
         set -x
-        if [ -n '${{ inputs.sha }}' ]; then
-          export GH_TOKEN=${{ github.token }}
-
-          html_url=$(gh api \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            repos/${{ github.repository }}/actions/runs/${{ github.run_id }} | jq -r .html_url)
-
-          # Check if a failing status has been set already
-          status=$(gh api \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            repos/${{ github.repository }}/commits/${{ inputs.sha }}/status | jq -r .state)
-
-          if [ "${status}" != "error" ] && [ "${status}" != "failure" ]; then
-            gh api \
-              --method POST \
-              -H "Accept: application/vnd.github+json" \
-              -H "X-GitHub-Api-Version: 2022-11-28" \
-              repos/${{ github.repository }}/statuses/${{ inputs.sha }} \
-              -f "state=${{ job.status }}" -f "target_url=$html_url" -f "description=${{ github.workflow }} / ${{ github.job }}" -f "context=actions-sync"
+        sha=${{ inputs.sha }}
+        # If no SHA is provided, use the current commit
+        if [ -z '${{ inputs.sha }}' ]; then
+          if [ -n '${{ github.head_ref }}' ]; then
+            git fetch origin ${{ github.head_ref }}
+            sha=$(git rev-parse origin/${{ github.head_ref }})
+          else
+            sha=$(git rev-parse HEAD)
           fi
+        fi
+
+        export GH_TOKEN=${{ github.token }}
+
+        html_url=$(gh api \
+          -H "Accept: application/vnd.github+json" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          repos/${{ github.repository }}/actions/runs/${{ github.run_id }} | jq -r .html_url)
+
+        # Check if a failing status has been set already
+        status=$(gh api \
+          -H "Accept: application/vnd.github+json" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          repos/${{ github.repository }}/commits/${sha}/status | jq -r .state)
+
+        if [ "${status}" != "error" ] && [ "${status}" != "failure" ]; then
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            repos/${{ github.repository }}/statuses/${sha} \
+            -f "state=${{ job.status }}" -f "target_url=$html_url" -f "description=${{ github.workflow }} / ${{ github.job }}" -f "context=${{ inputs.context }}"
         fi
       shell: bash
