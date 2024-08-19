@@ -18,7 +18,7 @@ runs:
         set -x
         sha=${{ inputs.sha }}
         # If no SHA is provided, use the current commit
-        if [ -n '${{ inputs.sha }}' ]; then
+        if [ -z '${{ inputs.sha }}' ]; then
           if [ -n '${{ github.head_ref }}' ]; then
             sha=$(git rev-parse ${{ github.head_ref }})
           else
