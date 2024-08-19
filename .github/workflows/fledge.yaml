@@ -90,12 +90,15 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh pr create --base main --head fledge --title "Bump version" --body "Bump version"
+          set -x
+          gh pr create --base main --head fledge --fill-first
           gh workflow run rcc -f ref=$(git rev-parse HEAD)
           gh pr merge --merge --auto
         shell: bash
 
       - name: Check release
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         run: |
           fledge:::release_after_cran_built_binaries()
         shell: Rscript {0}
