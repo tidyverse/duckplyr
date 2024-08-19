@@ -15,7 +15,7 @@ runs:
     # The /jobs API and/or the `github` context are misaligned.
     # The duckdbneo repository contains several failed attempts.
     - env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ github.token }}
       run: |
         set -x
         sha=${{ inputs.sha }}
