@@ -13,7 +13,7 @@ runs:
       shell: bash
 
     - run: |
-        matrix=${{ inputs.matrix }}
+        matrix="${{ inputs.matrix }}"
         if [ -n "${matrix}" ]; then
           echo $matrix | jq .
           echo $matrix | json2yaml
