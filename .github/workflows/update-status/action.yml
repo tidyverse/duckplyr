@@ -14,20 +14,23 @@ runs:
     # It's difficult to get the URL of the current job.
     # The /jobs API and/or the `github` context are misaligned.
     # The duckdbneo repository contains several failed attempts.
-    - run: |
+    - env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
         set -x
         sha=${{ inputs.sha }}
         # If no SHA is provided, use the current commit
         if [ -z '${{ inputs.sha }}' ]; then
           if [ -n '${{ github.head_ref }}' ]; then
-            git fetch origin ${{ github.head_ref }}
-            sha=$(git rev-parse origin/${{ github.head_ref }})
+            # Find the name of the remote of the PR's source
+            remote_repo=${{ github.event.pull_request.head.repo.clone_url }}
+            git remote add pr-source $remote_repo
+            git fetch pr-source ${{ github.head_ref }}
+            sha=$(git rev-parse pr-source/${{ github.head_ref }})
           else
             sha=$(git rev-parse HEAD)
           fi
         fi
-
-        export GH_TOKEN=${{ github.token }}
 
         html_url=$(gh api \
           -H "Accept: application/vnd.github+json" \
