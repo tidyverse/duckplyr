@@ -83,7 +83,7 @@ jobs:
         env:
           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          check_default_branch <- ("${{ github.ref_protected }}" != "true")
+          check_default_branch <- ("${{ github.ref_protected == 'true' || inputs.pr }}" != "true")
           if (fledge::bump_version(which = "dev", no_change_behavior = "noop", check_default_branch = check_default_branch)) {
             fledge::finalize_version(push = TRUE)
           }
