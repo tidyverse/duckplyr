@@ -2,7 +2,7 @@
 #'
 #' `as_duckplyr_tibble()` converts the input to a tibble and then to a duckplyr data frame.
 #'
-#' @return For `as_duckplyr_df()`, an object of class
+#' @return For `as_duckplyr_tibble()`, an object of class
 #'   `c("duckplyr_df", class(tibble()))` .
 #'
 #' @rdname as_duckplyr_df
