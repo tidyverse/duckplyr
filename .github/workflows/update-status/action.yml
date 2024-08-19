@@ -7,6 +7,9 @@ inputs:
   context:
     description: 'Context to update'
     required: true
+  state:
+    description: 'State to set'
+    required: false
 
 runs:
   using: "composite"
@@ -27,9 +30,15 @@ runs:
             git remote add pr-source $remote_repo
             git fetch pr-source ${{ github.head_ref }}
             sha=$(git rev-parse pr-source/${{ github.head_ref }})
+            git remote remove pr-source
           else
             sha=$(git rev-parse HEAD)
           fi
+        fi
+
+        state=${{ inputs.state }}
+        if [ -z "${state}" ]; then
+          state=${{ job.status }}
         fi
 
         html_url=$(gh api \
@@ -49,6 +58,6 @@ runs:
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             repos/${{ github.repository }}/statuses/${sha} \
-            -f "state=${{ job.status }}" -f "target_url=$html_url" -f "description=${{ github.workflow }} / ${{ github.job }}" -f "context=${{ inputs.context }}"
+            -f "state=${state}" -f "target_url=$html_url" -f "description=${{ github.workflow }} / ${{ github.job }}" -f "context=${{ inputs.context }}"
         fi
       shell: bash

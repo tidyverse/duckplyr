@@ -51,6 +51,20 @@ jobs:
         with:
           ref: ${{ inputs.ref }}
 
+      - uses: ./.github/workflows/update-status
+        # Set status to pending
+        with:
+          sha: ${{ steps.commit.outputs.sha }}
+          context: rcc-full
+          state: pending
+
+      - uses: ./.github/workflows/update-status
+        # Set status to pending
+        with:
+          sha: ${{ steps.commit.outputs.sha }}
+          context: rcc-suggests
+          state: pending
+
       - uses: ./.github/workflows/rate-limit
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
