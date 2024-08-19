@@ -52,6 +52,8 @@ test_that("duckdb_rel_from_df() and changing column names", {
 })
 
 test_that("rel_aggregate()", {
+  skip_if_not_installed("palmerpenguins")
+
   expr_species <- relexpr_reference("species")
   expr_aggregate <- relexpr_function(alias = "mean_bill_length_mm", "avg", list(
     relexpr_reference("bill_length_mm")

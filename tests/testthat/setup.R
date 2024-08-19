@@ -12,5 +12,7 @@ withr::defer(envir = testthat::teardown_env(), {
   writeLines("")
   stats_show()
   writeLines("")
-  writeLines(format(hms::as_hms(Sys.time() - start)))
+  if (is_installed("hms")) {
+    writeLines(format(hms::as_hms(Sys.time() - start)))
+  }
 })
