@@ -27,9 +27,8 @@ if (length(packages) > 0) {
     paste0('"', packages, '"', collapse = ","),
     ']}'
   )
+  writeLines(paste0("matrix=", json), Sys.getenv("GITHUB_OUTPUT"))
+  writeLines(json)
 } else {
-  json <- character()
+  writeLines("No suggested packages found.")
 }
-
-writeLines(json, ".github/dep-suggests-matrix.json")
-writeLines(json)
