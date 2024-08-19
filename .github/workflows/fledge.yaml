@@ -3,6 +3,12 @@ name: fledge
 on:
   # for manual triggers
   workflow_dispatch:
+    inputs:
+      pr:
+        description: "Create PR"
+        required: false
+        type: boolean
+        default: false
   # daily run
   schedule:
   - cron: "30 0 * * *"
@@ -61,7 +67,7 @@ jobs:
           cache-version: fledge-1
 
       - name: Switch to branch if branch protection is enabled
-        if: github.ref_protected == 'true' || github.event_name == 'workflow_dispatch'
+        if: github.ref_protected == 'true' || inputs.pr
         run: |
           git checkout -b fledge
         shell: bash
@@ -75,7 +81,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Create and merge PR if branch protection is enabled
-        if: github.ref_protected == 'true' || github.event_name == 'workflow_dispatch'
+        if: github.ref_protected == 'true' || inputs.pr
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
