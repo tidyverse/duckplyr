@@ -35,6 +35,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+      actions: write
     env:
       FLEDGE_GHA_CI: true
     steps:
