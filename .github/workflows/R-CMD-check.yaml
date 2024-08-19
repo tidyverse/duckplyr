@@ -217,16 +217,16 @@ jobs:
 
     runs-on: ubuntu-22.04
 
-    name: Without ${{ matrix.package }}
-
     if: ${{ needs.rcc-smoke.outputs.dep-suggests-matrix != '' }}
+
+    name: Without ${{ matrix.package }}
 
     # Begin custom: services
     # End custom: services
 
     strategy:
       fail-fast: false
-      matrix: ${{fromJson(needs.suggests-matrix.outputs.matrix)}}
+      matrix: ${{fromJson(needs.rcc-smoke.outputs.dep-suggests-matrix)}}
 
     steps:
       - uses: actions/checkout@v4
