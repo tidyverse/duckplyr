@@ -113,7 +113,7 @@ jobs:
       - name: Install packages
         run: |
           .libPaths()
-          pak::pak(c("r-lib/pkgdown", "local::.", "Config/Needs/website"))
+          pak::pak(c("r-lib/pkgdown", "local::."), dependencies = "Config/Needs/website")
         shell: Rscript {0}
 
       - uses: ./.github/workflows/pkgdown-build
