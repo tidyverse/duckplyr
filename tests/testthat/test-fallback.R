@@ -78,6 +78,8 @@ test_that("summarize()", {
 })
 
 test_that("wday()", {
+  skip_if_not_installed("lubridate")
+
   withr::local_envvar(c(
     "DUCKPLYR_FALLBACK_COLLECT" = "1",
     "DUCKPLYR_FALLBACK_VERBOSE" = "TRUE",
