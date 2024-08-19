@@ -20,6 +20,7 @@ runs:
         # If no SHA is provided, use the current commit
         if [ -z '${{ inputs.sha }}' ]; then
           if [ -n '${{ github.head_ref }}' ]; then
+            git fetch origin ${{ github.head_ref }}
             sha=$(git rev-parse origin/${{ github.head_ref }})
           else
             sha=$(git rev-parse HEAD)
