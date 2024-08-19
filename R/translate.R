@@ -13,14 +13,14 @@ rel_find_call <- function(fun, env) {
   # Order from https://docs.google.com/spreadsheets/d/1j3AFOKiAknTGpXU1uSH7JzzscgYjVbUEwmdRHS7268E/edit?gid=769885824#gid=769885824,
   # generated as `expr_result` by 63-gh-detail.R
 
-  pkg <- switch(name,
+  pkgs <- switch(name,
     # Handled in a special way, not mentioned here
-    # "desc" = "dplyr",
+    # "desc" = c("dplyr", "duckplyr"),
     "==" = "base",
     "/" = "base",
     "$" = "base", # very special, also with constant folding
     "mean" = "base",
-    "n" = "dplyr",
+    "n" = c("dplyr", "duckplyr"),
     ">" = "base",
     "%in%" = "base",
     "sum" = "base",
@@ -37,7 +37,7 @@ rel_find_call <- function(fun, env) {
     "<" = "base",
     # "[" = "base", # won't implement?
     ">=" = "base",
-    "n_distinct" = "dplyr",
+    "n_distinct" = c("dplyr", "duckplyr"),
     "max" = "base",
     "<=" = "base",
     # "as.numeric" = "base",
@@ -53,7 +53,7 @@ rel_find_call <- function(fun, env) {
     # "round" = "base",
     # "paste0" = "base",
     # "length" = "base",
-    # ".data$" = "dplyr", # implemented
+    # ".data$" = c("dplyr", "duckplyr"), # implemented
     "sd" = "stats",
     # "[[" = "base", # won't implement?
     # "gsub" = "base",
@@ -61,34 +61,35 @@ rel_find_call <- function(fun, env) {
     "median" = "stats",
     # "~" = "base", # won't implement?
     # "unique" = "base", # what's the use case?
-    # ".$" = "dplyr", # won't implement?
+    # ".$" = c("dplyr", "duckplyr"), # won't implement?
     # "%>%" = "magrittr", # with the help of magrittr?
     # "as.Date" = "base",
     "as.integer" = "base",
     # "nrow" = "base",
     # "as.factor" = "base",
     # "%<=>%" = "???", # what is this?
-    "row_number" = "dplyr",
+    "row_number" = c("dplyr", "duckplyr"),
     # "rev" = "base", # what's the use case?
     # "seq" = "base", # what's the use case?
     # "sqrt" = "base",
     # "abs" = "base",
-    "if_else" = "dplyr",
+    "if_else" = c("dplyr", "duckplyr"),
 
     "any" = "base",
     "suppressWarnings" = "base",
-    "lag" = "dplyr",
-    "lead" = "dplyr",
-    "first" = "dplyr",
-    "last" = "dplyr",
-    "nth" = "dplyr",
+    "lag" = c("dplyr", "duckplyr"),
+    "lead" = c("dplyr", "duckplyr"),
+    "first" = c("dplyr", "duckplyr"),
+    "last" = c("dplyr", "duckplyr"),
+    "nth" = c("dplyr", "duckplyr"),
     "log10" = "base",
     "log" = "base",
-    "rank" = "dplyr",
-    "dense_rank" = "dplyr",
-    "percent_rank" = "dplyr",
-    "cume_dist" = "dplyr",
-    "ntile" = "dplyr",
+    "rank" = "base",
+    "min_rank" = c("dplyr", "duckplyr"),
+    "dense_rank" = c("dplyr", "duckplyr"),
+    "percent_rank" = c("dplyr", "duckplyr"),
+    "cume_dist" = c("dplyr", "duckplyr"),
+    "ntile" = c("dplyr", "duckplyr"),
     "hour" = "lubridate",
     "minute" = "lubridate",
     "second" = "lubridate",
@@ -99,7 +100,7 @@ rel_find_call <- function(fun, env) {
     NULL
   )
 
-  if (is.null(pkg)) {
+  if (is.null(pkgs)) {
     cli::cli_abort("No translation for function {.code {name}}.")
   }
 
@@ -110,11 +111,17 @@ rel_find_call <- function(fun, env) {
 
   fun_val <- get0(fun, env, mode = "function", inherits = TRUE)
 
-  if (!identical(fun_val, get(name, envir = asNamespace(pkg)))) {
-    cli::cli_abort("Function {.code {name}} does not map to {.code {pkg}::{name}}.")
+  for (pkg in pkgs) {
+    if (identical(fun_val, get(name, envir = asNamespace(pkg)))) {
+      return(c(pkg, name))
+    }
   }
 
-  c(pkg, name)
+  if (length(pkgs) == 1) {
+    cli::cli_abort("Function {.code {name}} does not map to {.code {pkgs}::{name}}.")
+  } else {
+    cli::cli_abort("Function {.code {name}} does not map to the corresponding function in {.pkg {pkgs}}.")
+  }
 }
 
 rel_translate_lang <- function(
