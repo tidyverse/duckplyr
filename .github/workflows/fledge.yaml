@@ -3,6 +3,12 @@ name: fledge
 on:
   # for manual triggers
   workflow_dispatch:
+    inputs:
+      pr:
+        description: "Create PR"
+        required: false
+        type: boolean
+        default: false
   # daily run
   schedule:
   - cron: "30 0 * * *"
@@ -61,12 +67,14 @@ jobs:
           cache-version: fledge-1
 
       - name: Switch to branch if branch protection is enabled
-        if: github.ref_protected == 'true' || github.event_name == 'workflow_dispatch'
+        if: github.ref_protected == 'true' || inputs.pr
         run: |
           git checkout -b fledge
         shell: bash
 
       - name: Bump version
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         run: |
           check_default_branch <- ("${{ github.ref_protected }}" != "true")
           if (fledge::bump_version(which = "dev", no_change_behavior = "noop", check_default_branch = check_default_branch)) {
@@ -75,7 +83,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Create and merge PR if branch protection is enabled
-        if: github.ref_protected == 'true' || github.event_name == 'workflow_dispatch'
+        if: github.ref_protected == 'true' || inputs.pr
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
