@@ -61,29 +61,22 @@ jobs:
           packages: cynkra/fledge
           cache-version: fledge-1
 
-      - name: Check if branch protection is enabled
-        # true if has a type element "non_fast_forward"
-        id: branch_protection
-        env:
-          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      - name: Switch to branch if branch protection is enabled
+        if: github.ref_protected == 'true'
         run: |
-          branch_protection=$(gh api /repos/tidyverse/${GITHUB_REPOSITORY}/branches/${GITHUB_REF#refs/heads/} | jq -r '.[] | select(.type == "non_fast_forward") | .type')
-          echo "branch_protection=$branch_protection" >> $GITHUB_OUTPUT
-          if [ -n "$branch_protection" ]; then
-            git checkout -b fledge
-          fi
+          git checkout -b fledge
         shell: bash
 
       - name: Bump version
         run: |
-          check_default_branch <- ("${{ steps.branch_protection.outputs.branch_protection }}" == "")
+          check_default_branch <- ("${{ github.ref_protected }}" != "true")
           if (fledge::bump_version(which = "dev", no_change_behavior = "noop", check_default_branch = check_default_branch)) {
             fledge::finalize_version(push = TRUE)
           }
         shell: Rscript {0}
 
       - name: Create and merge PR if branch protection is enabled
-        if: steps.branch_protection.outputs.branch_protection == 'non_fast_forward'
+        if: github.ref_protected == 'true'
         env:
           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         run: |
