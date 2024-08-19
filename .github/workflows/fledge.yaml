@@ -62,7 +62,7 @@ jobs:
           cache-version: fledge-1
 
       - name: Switch to branch if branch protection is enabled
-        if: github.ref_protected == 'true'
+        if: github.ref_protected == 'true' || github.event_name == 'workflow_dispatch'
         run: |
           git checkout -b fledge
         shell: bash
@@ -76,12 +76,13 @@ jobs:
         shell: Rscript {0}
 
       - name: Create and merge PR if branch protection is enabled
-        if: github.ref_protected == 'true'
+        if: github.ref_protected == 'true' || github.event_name == 'workflow_dispatch'
         env:
           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git push -f -u origin HEAD
           gh pr create --base main --head fledge --title "Bump version" --body "Bump version"
+          gh workflow run rcc -f ref=$(git rev-parse HEAD)
           gh pr merge --merge --auto
         shell: bash
 
