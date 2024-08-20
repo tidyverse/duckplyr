@@ -2,7 +2,7 @@ pandoc: 3.1.11
 pkgdown: 2.1.0
 pkgdown_sha: ~
 articles: {}
-last_built: 2024-08-20T00:49Z
+last_built: 2024-08-20T00:59Z
 urls:
   reference: https://tidyverse.github.io/duckplyr/reference
   article: https://tidyverse.github.io/duckplyr/articles
