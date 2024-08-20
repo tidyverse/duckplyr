@@ -22,9 +22,11 @@ get_deps <- function() {
 if (Sys.getenv("GITHUB_BASE_REF") != "") {
   print(Sys.getenv("GITHUB_BASE_REF"))
   system("git fetch origin ${GITHUB_BASE_REF}")
-  has_diff <- (system("git diff origin/${GITHUB_BASE_REF}... | egrep '^[+][^+]' | grep -q ::") == 0)
+  # Use .. to avoid having to fetch the entire history
+  # https://github.com/krlmlr/actions-sync/issues/45
+  has_diff <- (system("git diff origin/${GITHUB_BASE_REF}.. | egrep '^[+][^+]' | grep -q ::") == 0)
   if (has_diff) {
-    system("git diff origin/${GITHUB_BASE_REF}... | egrep '^[+][^+]' | grep -q ::")
+    system("git diff origin/${GITHUB_BASE_REF}.. | egrep '^[+][^+]' | grep -q ::")
     packages <- get_deps()
   } else {
     writeLines("No changes using :: found, not checking without suggested packages")
