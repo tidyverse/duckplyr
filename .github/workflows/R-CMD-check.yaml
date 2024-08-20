@@ -94,7 +94,6 @@ jobs:
         shell: bash
 
       - id: commit
-        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
         uses: ./.github/workflows/commit
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -108,6 +107,16 @@ jobs:
 
       - uses: ./.github/workflows/pkgdown-deploy
         if: github.event_name == 'push'
+
+      # Upload sha as artifact
+      - run: |
+          echo -n "${{ steps.commit.outputs.sha }}" > rcc-smoke-sha.txt
+        shell: bash
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: rcc-smoke-sha
+          path: rcc-smoke-sha.txt
 
   rcc-smoke-check-matrix:
     runs-on: ubuntu-latest

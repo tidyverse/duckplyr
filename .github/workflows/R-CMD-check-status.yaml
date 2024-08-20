@@ -25,7 +25,6 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -x
-          sha=${{ github.event.workflow_run.head_sha }}
 
           if [ "${{ github.event.workflow_run.status }}" == "completed" ]; then
             if [ "${{ github.event.workflow_run.conclusion }}" == "success" ]; then
@@ -33,8 +32,30 @@ jobs:
             else
               state="failure"
             fi
+            # Read artifact
+            artifact=$(gh api \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              repos/${{ github.repository }}/actions/runs/${{ github.event.workflow_run.id }}/artifacts | jq -r '.artifacts[] | select(.name == "rcc-smoke-sha") | .archive_download_url')
+
+            # Download artifact
+            curl -sSL -o rcc-smoke-sha.zip $artifact
+
+            # Extract artifact
+            unzip rcc-smoke-sha.zip
+
+            # Read artifact
+            sha=$(cat rcc-smoke-sha.txt)
+
+            # Clean up
+            rm rcc-smoke-sha.zip rcc-smoke-sha.txt
+
+            if [ -z "${sha}" ]; then
+              sha=${{ github.event.workflow_run.head_sha }}
+            fi
           else
             state="pending"
+            sha=${{ github.event.workflow_run.head_sha }}
           fi
 
           html_url=${{ github.event.workflow_run.html_url }}
