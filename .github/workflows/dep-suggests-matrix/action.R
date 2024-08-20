@@ -21,9 +21,9 @@ get_deps <- function() {
 
 if (Sys.getenv("GITHUB_BASE_REF") != "") {
   print(Sys.getenv("GITHUB_BASE_REF"))
-  has_diff <- (system("git diff ${{ github.event.pull_request.base.sha }}... | egrep '^[+][^+]' | grep -q ::") == 0)
+  has_diff <- (system("git diff ${GITHUB_BASE_REF}... | egrep '^[+][^+]' | grep -q ::") == 0)
   if (has_diff) {
-    system("git diff ${{ github.event.pull_request.base.sha }}... | egrep '^[+][^+]' | grep -q ::")
+    system("git diff ${GITHUB_BASE_REF}... | egrep '^[+][^+]' | grep -q ::")
     packages <- get_deps()
   } else {
     writeLines("No changes using :: found, not checking without suggested packages")
