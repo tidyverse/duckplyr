@@ -41,11 +41,11 @@ jobs:
 
             if [ -n "${artifact_id}" ]; then
               # Download artifact
-              gh api \
+              curl -L -o rcc-smoke-sha.zip \
                 -H "Accept: application/vnd.github+json" \
+                -H "Authorization: Bearer ${GH_TOKEN}" \
                 -H "X-GitHub-Api-Version: 2022-11-28" \
-                repos/${{ github.repository }}/actions/artifacts/${artifact_id}/zip \
-                -o rcc-smoke-sha.zip
+                https://api.github.com/repos/${{ github.repository }}/actions/artifacts/${artifact_id}/zip
 
               # Unzip artifact
               unzip rcc-smoke-sha.zip
