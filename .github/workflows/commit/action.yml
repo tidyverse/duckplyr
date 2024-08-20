@@ -24,7 +24,7 @@ runs:
           if [ "${foreign}" = "true" ]; then
             # https://github.com/krlmlr/actions-sync/issues/44
             echo "Can't push to foreign branch"
-          else if [ "${protected}" = "true" ]; then
+          elif [ "${protected}" = "true" ]; then
             current_branch=$(git branch --show-current)
             new_branch=gha-commit-$(git rev-parse --short HEAD)
             git checkout -b ${new_branch}
