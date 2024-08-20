@@ -51,20 +51,6 @@ jobs:
         with:
           ref: ${{ inputs.ref }}
 
-      - uses: ./.github/workflows/update-status
-        # Set status to pending
-        with:
-          sha: ${{ steps.commit.outputs.sha }}
-          context: rcc-full
-          state: pending
-
-      - uses: ./.github/workflows/update-status
-        # Set status to pending
-        with:
-          sha: ${{ steps.commit.outputs.sha }}
-          context: rcc-suggests
-          state: pending
-
       - uses: ./.github/workflows/rate-limit
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -122,20 +108,6 @@ jobs:
 
       - uses: ./.github/workflows/pkgdown-deploy
         if: github.event_name == 'push'
-
-      - uses: ./.github/workflows/update-status
-        # Update status if versions matrix is empty
-        if: steps.versions-matrix.outputs.matrix == ''
-        with:
-          sha: ${{ steps.commit.outputs.sha }}
-          context: rcc-full
-
-      - uses: ./.github/workflows/update-status
-        # Update status if no suggested packages
-        if: steps.dep-suggests-matrix.outputs.matrix == ''
-        with:
-          sha: ${{ steps.commit.outputs.sha }}
-          context: rcc-suggests
 
   rcc-smoke-check-matrix:
     runs-on: ubuntu-latest
@@ -199,31 +171,6 @@ jobs:
       - uses: ./.github/workflows/check
         with:
           results: ${{ runner.os }}-r${{ matrix.r }}
-
-      - uses: ./.github/workflows/update-status
-        if: failure()
-        with:
-          sha: ${{ needs.rcc-smoke.outputs.sha }}
-          context: rcc-full
-
-  rcc-full-success:
-    needs:
-      - rcc-full
-      - rcc-smoke
-
-    runs-on: ubuntu-latest
-
-    name: 'rcc: success'
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ needs.rcc-smoke.outputs.sha }}
-
-      - uses: ./.github/workflows/update-status
-        with:
-          sha: ${{ needs.rcc-smoke.outputs.sha }}
-          context: rcc-full
 
   rcc-suggests:
     needs:
@@ -298,28 +245,3 @@ jobs:
       - uses: ./.github/workflows/check
         with:
           results: ${{ matrix.package }}
-
-      - uses: ./.github/workflows/update-status
-        if: failure()
-        with:
-          sha: ${{ needs.rcc-smoke.outputs.sha }}
-          context: rcc-suggests
-
-  rcc-suggests-success:
-    needs:
-      - rcc-suggests
-      - rcc-smoke
-
-    runs-on: ubuntu-latest
-
-    name: 'rcc-suggests: success'
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ needs.rcc-smoke.outputs.sha }}
-
-      - uses: ./.github/workflows/update-status
-        with:
-          sha: ${{ needs.rcc-smoke.outputs.sha }}
-          context: rcc-suggests
