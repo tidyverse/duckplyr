@@ -19,15 +19,14 @@ runs:
         set -x
         if [ -n "$(git status --porcelain)" ]; then
           echo "Changed"
-          protected=${{ github.ref_protected }}
+          protected=${{ github.ref_protected || github.event.pull_request.head.repo.full_name != github.repository }}
           if [ "${protected}" = "true" ]; then
             current_branch=$(git branch --show-current)
-            new_branch=gha-commit
+            new_branch=gha-commit-$(git rev-parse --short HEAD)
             git checkout -b ${new_branch}
             git add .
             git commit -m "chore: Auto-update from GitHub Actions"$'\n'$'\n'"Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-            # Force-push, used in only one place
-            # Alternative: separate branch names for each usage
+            # Force-push, collisions are unlikely
             git push -u origin HEAD -f
 
             existing_pr=$(gh pr list --state open --base main --head ${new_branch} --json number --jq '.[] | .number')
@@ -37,7 +36,7 @@ runs:
               gh pr create --base main --head ${new_branch} --title "chore: Auto-update from GitHub Actions" --body "Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
             fi
 
-            gh workflow run rcc -f ref=$(git rev-parse HEAD)
+            gh pr merge --merge --auto
           else
             git fetch
             if [ -n '${{ github.head_ref }}' ]; then
