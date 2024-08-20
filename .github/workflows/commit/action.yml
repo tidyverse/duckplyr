@@ -30,7 +30,8 @@ runs:
             git checkout -b ${new_branch}
             git add .
             git commit -m "chore: Auto-update from GitHub Actions"$'\n'$'\n'"Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-            # Force-push, collisions are unlikely
+            # Force-push, used in only one place
+            # Alternative: separate branch names for each usage
             git push -u origin HEAD -f
 
             existing_pr=$(gh pr list --state open --base main --head ${new_branch} --json number --jq '.[] | .number')
