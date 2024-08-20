@@ -21,6 +21,7 @@ get_deps <- function() {
 
 if (Sys.getenv("GITHUB_BASE_REF") != "") {
   print(Sys.getenv("GITHUB_BASE_REF"))
+  system("git fetch origin ${GITHUB_BASE_REF}")
   has_diff <- (system("git diff origin/${GITHUB_BASE_REF}... | egrep '^[+][^+]' | grep -q ::") == 0)
   if (has_diff) {
     system("git diff origin/${GITHUB_BASE_REF}... | egrep '^[+][^+]' | grep -q ::")
