@@ -1,5 +1,54 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.4.1.9003 (2024-08-20)
+
+## Features
+
+  - Detect functions from the duckplyr package (#246).
+
+  - New `duckplyr_execute()` to execute configuration queries against the default duckdb connection (#39, #165, #227).
+
+  - `as_duckplyr_tibble()` supports dbplyr connections to a duckdb database (#86, #211, #226).
+
+## Continuous integration
+
+  - Avoid failures if artifact is missing.
+
+  - Store SHA as artifact.
+
+  - Move towards external status updates.
+
+  - Tweak status workflow.
+
+  - Use token.
+
+  - Add external workflow to update commit statuses.
+
+  - Avoid manually installing package for pkgdown (#245).
+
+  - Fix fledge (#243).
+
+  - Use proper remote repo (#241).
+
+  - Add permissions to fledge workflow (#238).
+
+  - Fix tests without suggested packages (#236).
+
+  - Add permissions to fledge workflow (#235).
+
+  - Add permissions to fledge workflow (#234).
+
+  - Add input to fledge workflow (#233).
+
+  - Use proper token for fledge (#232).
+
+  - Fix fledge workflow (#231).
+
+  - Bump version via PR (#230).
+
+  - Sync with duckdb.
+
+
 # duckplyr 0.4.1.9002 (2024-08-16)
 
 ## Documentation
