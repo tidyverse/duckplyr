@@ -16,6 +16,9 @@ jobs:
 
     name: "Update commit status"
 
+    # Only run if triggered by rcc workflow
+    if: github.event.workflow_run.name == 'rcc'
+
     steps:
       - name: "Update commit status"
         env:
@@ -34,10 +37,13 @@ jobs:
             state="pending"
           fi
 
+          html_url=${{ github.event.workflow_run.html_url }}
+          description=${{ github.event.workflow_run.name }}
+
           gh api \
             --method POST \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             repos/${{ github.repository }}/statuses/${sha} \
-            -f "state=${state}" -f "target_url=$html_url" -f "description=${{ github.workflow }} / ${{ github.job }}" -f "context=rcc"
+            -f "state=${state}" -f "target_url=${html_url}" -f "description=${description}" -f "context=rcc"
         shell: bash
