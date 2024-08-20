@@ -41,10 +41,7 @@ jobs:
 
             if [ -n "${artifact}" ]; then
               # Download artifact
-              curl -sSL -o rcc-smoke-sha.zip $artifact
-
-              # Extract artifact
-              unzip rcc-smoke-sha.zip
+              curl -sSL -o rcc-smoke-sha.txt $artifact
 
               # Read artifact
               sha=$(cat rcc-smoke-sha.txt)
