@@ -1,5 +1,5 @@
 ---
-output: downlit::readme_document
+output: github_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -34,8 +34,9 @@ Sys.setenv(DUCKPLYR_OUTPUT_ORDER = TRUE)
 # duckplyr
 
 <!-- badges: start -->
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![CRAN status](https://www.r-pkg.org/badges/version/duckplyr)](https://cran.r-project.org/package=duckplyr)
 [![R-CMD-check](https://github.com/tidyverse/duckplyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidyverse/duckplyr/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/tidyverse/duckplyr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidyverse/duckplyr?branch=main)
 <!-- badges: end -->
 
 The goal of the duckplyr R package is to provide a drop-in replacement for [dplyr](https://dplyr.tidyverse.org/) that uses [DuckDB](https://duckdb.org/) as a backend for fast operation.
