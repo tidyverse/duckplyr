@@ -16,7 +16,7 @@ as_duckplyr_tibble(.data)
 For \code{as_duckplyr_df()}, an object of class \code{"duckplyr_df"},
 inheriting from the classes of the \code{.data} argument.
 
-For \code{as_duckplyr_df()}, an object of class
+For \code{as_duckplyr_tibble()}, an object of class
 \code{c("duckplyr_df", class(tibble()))} .
 }
 \description{
