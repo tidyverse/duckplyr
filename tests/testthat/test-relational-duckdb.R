@@ -98,7 +98,14 @@ test_that("duckdb_rel_from_df() uses materialized results", {
     data.frame(a = 1) %>%
     duckplyr_filter(a == 1)
 
-  expect_snapshot(transform = function(x) gsub("0x[0-9a-f]+", "0xdeadbeef", x), {
+  transform <- function(x) {
+    x <- gsub("0x[0-9a-f]+", "0xdeadbeef", x)
+    # FIXME: Remove when duckdb 1.1.0 is out
+    x <- gsub('"=="', "==", x)
+    x
+  }
+
+  expect_snapshot(transform = transform, {
     duckdb_rel_from_df(df)
     nrow(df)
     duckdb_rel_from_df(df)
