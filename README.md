@@ -315,21 +315,16 @@ The first time the package encounters an unsupported function, data type, or ope
 <span>  <span class='nf'>duckplyr</span><span class='nf'>::</span><span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/as_duckplyr_df.html'>as_duckplyr_tibble</a></span><span class='o'>(</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/transmute.html'>transmute</a></span><span class='o'>(</span>bill_area <span class='o'>=</span> <span class='nv'>bill_length_mm</span> <span class='o'>*</span> <span class='nv'>bill_depth_mm</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='nf'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='o'>(</span><span class='m'>3</span><span class='o'>)</span></span>
-<span><span class='c'>#&gt; The <span style='color: #0000BB;'>duckplyr</span> package is configured to fall back to <span style='color: #0000BB;'>dplyr</span> when it encounters an</span></span>
-<span><span class='c'>#&gt; incompatibility. Fallback events can be collected and uploaded for analysis to</span></span>
-<span><span class='c'>#&gt; guide future development. By default, no data will be collected or uploaded.</span></span>
-<span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> A fallback situation just occurred. The following information would have been</span></span>
-<span><span class='c'>#&gt;   recorded:</span></span>
-<span><span class='c'>#&gt;   {"version":"0.4.1","message":"Can't convert columns of class &lt;factor&gt; to</span></span>
-<span><span class='c'>#&gt;   relational. Affected</span></span>
-<span><span class='c'>#&gt;   column:\n`...1`.","name":"transmute","x":{"...1":"factor","...2":"factor","...3":"numeric","...4":"numeric","...5":"integer","...6":"integer","...7":"factor","...8":"integer"},"args":{"dots":{"...9":"...3</span></span>
+<span><span class='c'>#&gt; The <span style='color: #0000BB;'>duckplyr</span> package is configured to fall back to <span style='color: #0000BB;'>dplyr</span> when it encounters an incompatibility. Fallback events can be collected and uploaded</span></span>
+<span><span class='c'>#&gt; for analysis to guide future development. By default, no data will be collected or uploaded.</span></span>
+<span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> A fallback situation just occurred. The following information would have been recorded:</span></span>
+<span><span class='c'>#&gt;   {"version":"0.4.1","message":"Can't convert columns of class &lt;factor&gt; to relational. Affected column:</span></span>
+<span><span class='c'>#&gt;   `...1`.","name":"transmute","x":{"...1":"factor","...2":"factor","...3":"numeric","...4":"numeric","...5":"integer","...6":"integer","...7":"factor","...8":"integer"},"args":{"dots":{"...9":"...3</span></span>
 <span><span class='c'>#&gt;   * ...4"}}}</span></span>
 <span><span class='c'>#&gt; → Run `duckplyr::fallback_sitrep()` to review the current settings.</span></span>
-<span><span class='c'>#&gt; → Run `Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)` to enable fallback logging,</span></span>
-<span><span class='c'>#&gt;   and `Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = TRUE)` in addition to enable</span></span>
-<span><span class='c'>#&gt;   printing of fallback situations to the console.</span></span>
-<span><span class='c'>#&gt; → Run `duckplyr::fallback_review()` to review the available reports, and</span></span>
-<span><span class='c'>#&gt;   `duckplyr::fallback_upload()` to upload them.</span></span>
+<span><span class='c'>#&gt; → Run `Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)` to enable fallback logging, and `Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = TRUE)` in addition</span></span>
+<span><span class='c'>#&gt;   to enable printing of fallback situations to the console.</span></span>
+<span><span class='c'>#&gt; → Run `duckplyr::fallback_review()` to review the available reports, and `duckplyr::fallback_upload()` to upload them.</span></span>
 <span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> See `?duckplyr::fallback()` for details.</span></span>
 <span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> <span style='color: #555555;'>This message will be displayed once every eight hours.</span></span></span>
 <span><span class='c'>#&gt; materializing:</span></span>

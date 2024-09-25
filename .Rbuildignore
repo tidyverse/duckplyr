@@ -24,3 +24,4 @@
 ^codecov\.yml$
 ^R/revdep\.R$
 ^gh-analysis$
+^Makefile$
