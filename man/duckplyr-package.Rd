@@ -6,12 +6,14 @@
 \alias{duckplyr-package}
 \title{duckplyr: A 'DuckDB'-Backed Version of 'dplyr'}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 A drop-in replacement for 'dplyr', powered by 'DuckDB' for performance. Also defines a set of generics that provide a low-level implementer's interface for the high-level user interface of 'dplyr'.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://tidyverse.github.io/duckplyr}
+  \item \url{https://duckplyr.tidyverse.org}
   \item \url{https://github.com/tidyverse/duckplyr}
   \item Report bugs at \url{https://github.com/tidyverse/duckplyr/issues}
 }
