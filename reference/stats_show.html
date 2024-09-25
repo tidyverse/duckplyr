@@ -3,7 +3,7 @@
 The output shows the total number of requests in the current session,
 split by fallbacks to dplyr and requests handled by duckdb."><meta property="og:description" content="Prints statistics on how many calls were handled by DuckDB.
 The output shows the total number of requests in the current session,
-split by fallbacks to dplyr and requests handled by duckdb."></head><body>
+split by fallbacks to dplyr and requests handled by duckdb."><meta property="og:image" content="https://duckplyr.tidyverse.org/logo.png"><script defer data-domain="duckplyr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script></head><body>
     <a href="#container" class="visually-hidden-focusable">Skip to content</a>
 
 
@@ -31,8 +31,7 @@ split by fallbacks to dplyr and requests handled by duckdb."></head><body>
 </nav><div class="container template-reference-topic" id="container">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Show stats</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Show stats</h1>
       <small class="dont-index">Source: <a href="https://github.com/tidyverse/duckplyr/blob/docs/R/stats.R" class="external-link"><code>R/stats.R</code></a></small>
       <div class="d-none name"><code>stats_show.Rd</code></div>
     </div>
@@ -68,8 +67,8 @@ split by fallbacks to dplyr and requests handled by duckdb.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --- Relation Tree ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Projection [a as a, +(a, 1.0) as b]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   r_dataframe_scan(0x55dbad62ff50)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Projection [a as a, "+"(a, 1.0) as b]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   r_dataframe_scan(0x55c5845e8c40)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -102,7 +101,7 @@ split by fallbacks to dplyr and requests handled by duckdb.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
 </div>
 
   </div></footer></body></html>

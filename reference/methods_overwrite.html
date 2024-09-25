@@ -5,7 +5,7 @@ The methods_overwrite() function is called automatically when the package is loa
 if the environment variable DUCKPLYR_METHODS_OVERWRITE is set to TRUE."><meta property="og:description" content="After calling methods_overwrite(), all dplyr methods are redirected to duckplyr
 for the duraton of the session, or until a call to methods_restore().
 The methods_overwrite() function is called automatically when the package is loaded
-if the environment variable DUCKPLYR_METHODS_OVERWRITE is set to TRUE."></head><body>
+if the environment variable DUCKPLYR_METHODS_OVERWRITE is set to TRUE."><meta property="og:image" content="https://duckplyr.tidyverse.org/logo.png"><script defer data-domain="duckplyr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script></head><body>
     <a href="#container" class="visually-hidden-focusable">Skip to content</a>
 
 
@@ -33,8 +33,7 @@ if the environment variable DUCKPLYR_METHODS_OVERWRITE is set to TRUE."></head><
 </nav><div class="container template-reference-topic" id="container">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Forward all dplyr methods to duckplyr</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Forward all dplyr methods to duckplyr</h1>
       <small class="dont-index">Source: <a href="https://github.com/tidyverse/duckplyr/blob/docs/R/zzz-methods.R" class="external-link"><code>R/zzz-methods.R</code></a></small>
       <div class="d-none name"><code>methods_overwrite.Rd</code></div>
     </div>
@@ -79,8 +78,8 @@ if the environment variable <code>DUCKPLYR_METHODS_OVERWRITE</code> is set to <c
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --- Relation Tree ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Projection [a as a, +(a, 1.0) as b]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   r_dataframe_scan(0x55dbab5e3808)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Projection [a as a, "+"(a, 1.0) as b]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   r_dataframe_scan(0x55c5834f4408)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -- Result Columns  --</span>
@@ -119,7 +118,7 @@ if the environment variable <code>DUCKPLYR_METHODS_OVERWRITE</code> is set to <c
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
 </div>
 
   </div></footer></body></html>
