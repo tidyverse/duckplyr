@@ -42,7 +42,7 @@ Or from [GitHub](https://github.com/) with:
 There are two ways to use duckplyr.
 
 1.  To enable duckplyr for individual data frames, use [`duckplyr::as_duckplyr_tibble()`](https://tidyverse.github.io/duckplyr/reference/as_duckplyr_df.html) as the first step in your pipe, without attaching the package.
-2.  By calling [`library(duckplyr)`](https://tidyverse.github.io/duckplyr/), it overwrites dplyr methods and is automatically enabled for the entire session without having to call `as_duckplyr_tibble()`. To turn this off, call `methods_restore()`.
+2.  By calling [`library(duckplyr)`](https://duckplyr.tidyverse.org), it overwrites dplyr methods and is automatically enabled for the entire session without having to call `as_duckplyr_tibble()`. To turn this off, call `methods_restore()`.
 
 The examples below illustrate both methods. See also the companion [demo repository](https://github.com/Tmonster/duckplyr_demo) for a use case with a large dataset.
 
@@ -218,7 +218,7 @@ After the computation has been carried out, the results are available immediatel
 
 This example illustrates usage of duckplyr for all data frames in the R session.
 
-Use [`library(duckplyr)`](https://tidyverse.github.io/duckplyr/) or [`duckplyr::methods_overwrite()`](https://tidyverse.github.io/duckplyr/reference/methods_overwrite.html) to overwrite dplyr methods and enable processing with duckdb for all data frames:
+Use [`library(duckplyr)`](https://duckplyr.tidyverse.org) or [`duckplyr::methods_overwrite()`](https://tidyverse.github.io/duckplyr/reference/methods_overwrite.html) to overwrite dplyr methods and enable processing with duckdb for all data frames:
 
 <pre class='chroma'>
 <span><span class='nf'>duckplyr</span><span class='nf'>::</span><span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/methods_overwrite.html'>methods_overwrite</a></span><span class='o'>(</span><span class='o'>)</span></span>
@@ -367,7 +367,7 @@ The dbplyr package is a dplyr backend that connects to SQL databases, and is des
 This package also provides generics, for which other packages may then implement methods.
 
 <pre class='chroma'>
-<span><span class='kr'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='o'>(</span><span class='nv'><a href='https://tidyverse.github.io/duckplyr/'>duckplyr</a></span><span class='o'>)</span></span></pre>
+<span><span class='kr'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='o'>(</span><span class='nv'><a href='https://duckplyr.tidyverse.org'>duckplyr</a></span><span class='o'>)</span></span></pre>
 <pre class='chroma'>
 <span><span class='c'>#&gt; <span style='color: #00BB00;'>✔</span> Overwriting <span style='color: #0000BB;'>dplyr</span> methods with <span style='color: #0000BB;'>duckplyr</span> methods.</span></span>
 <span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> Turn off with `duckplyr::methods_restore()`.</span></span></pre>
