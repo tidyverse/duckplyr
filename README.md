@@ -1,6 +1,6 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# duckplyr
+# duckplyr <a href="https://duckplyr.tidyverse.org"><img src="man/figures/logo.png" align="right" height="138" /></a>
 
 <!-- badges: start -->
 
@@ -41,8 +41,8 @@ Or from [GitHub](https://github.com/) with:
 
 There are two ways to use duckplyr.
 
-1.  To enable duckplyr for individual data frames, use [`duckplyr::as_duckplyr_tibble()`](https://tidyverse.github.io/duckplyr/reference/as_duckplyr_tibble.html) as the first step in your pipe, without attaching the package.
-2.  By calling [`library(duckplyr)`](https://tidyverse.github.io/duckplyr/), it overwrites dplyr methods and is automatically enabled for the entire session without having to call `as_duckplyr_tibble()`. To turn this off, call `methods_restore()`.
+1.  To enable duckplyr for individual data frames, use [`duckplyr::as_duckplyr_tibble()`](https://tidyverse.github.io/duckplyr/reference/as_duckplyr_df.html) as the first step in your pipe, without attaching the package.
+2.  By calling [`library(duckplyr)`](https://duckplyr.tidyverse.org), it overwrites dplyr methods and is automatically enabled for the entire session without having to call `as_duckplyr_tibble()`. To turn this off, call `methods_restore()`.
 
 The examples below illustrate both methods. See also the companion [demo repository](https://github.com/Tmonster/duckplyr_demo) for a use case with a large dataset.
 
@@ -50,14 +50,14 @@ The examples below illustrate both methods. See also the companion [demo reposit
 
 This example illustrates usage of duckplyr for individual data frames.
 
-Use [`duckplyr::as_duckplyr_tibble()`](https://tidyverse.github.io/duckplyr/reference/as_duckplyr_tibble.html) to enable processing with duckdb:
+Use [`duckplyr::as_duckplyr_tibble()`](https://tidyverse.github.io/duckplyr/reference/as_duckplyr_df.html) to enable processing with duckdb:
 
 <pre class='chroma'>
 <span><span class='nv'>out</span> <span class='o'>&lt;-</span></span>
 <span>  <span class='nf'>palmerpenguins</span><span class='nf'>::</span><span class='nv'><a href='https://allisonhorst.github.io/palmerpenguins/reference/penguins.html'>penguins</a></span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='c'># CAVEAT: factor columns are not supported yet</span></span>
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='o'>(</span><span class='nf'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span><span class='o'>(</span><span class='nf'><a href='https://tidyselect.r-lib.org/reference/where.html'>where</a></span><span class='o'>(</span><span class='nv'>is.factor</span><span class='o'>)</span>, <span class='nv'>as.character</span><span class='o'>)</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>  <span class='nf'>duckplyr</span><span class='nf'>::</span><span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/as_duckplyr_tibble.html'>as_duckplyr_tibble</a></span><span class='o'>(</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='nf'>duckplyr</span><span class='nf'>::</span><span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/as_duckplyr_df.html'>as_duckplyr_tibble</a></span><span class='o'>(</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='o'>(</span>bill_area <span class='o'>=</span> <span class='nv'>bill_length_mm</span> <span class='o'>*</span> <span class='nv'>bill_depth_mm</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='o'>(</span>.by <span class='o'>=</span> <span class='nf'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='o'>(</span><span class='nv'>species</span>, <span class='nv'>sex</span><span class='o'>)</span>, mean_bill_area <span class='o'>=</span> <span class='nf'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='o'>(</span><span class='nv'>bill_area</span><span class='o'>)</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='o'>(</span><span class='nv'>species</span> <span class='o'>!=</span> <span class='s'>"Gentoo"</span><span class='o'>)</span></span></pre>
@@ -77,86 +77,100 @@ duckdb is responsible for eventually carrying out the operations. Despite the la
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/explain.html'>explain</a></span><span class='o'>(</span><span class='o'>)</span></span>
 <span><span class='c'>#&gt; ┌───────────────────────────┐</span></span>
 <span><span class='c'>#&gt; │          ORDER_BY         │</span></span>
-<span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
-<span><span class='c'>#&gt; │          ORDERS:          │</span></span>
+<span><span class='c'>#&gt; │    ────────────────────   │</span></span>
 <span><span class='c'>#&gt; │      dataframe_42_42      │</span></span>
 <span><span class='c'>#&gt; │    42.___row_number ASC   │</span></span>
-<span><span class='c'>#&gt; └─────────────┬─────────────┘                             </span></span>
+<span><span class='c'>#&gt; └─────────────┬─────────────┘</span></span>
 <span><span class='c'>#&gt; ┌─────────────┴─────────────┐</span></span>
 <span><span class='c'>#&gt; │           FILTER          │</span></span>
-<span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
-<span><span class='c'>#&gt; │r_base::!=(species, 'Gentoo│</span></span>
-<span><span class='c'>#&gt; │             ')            │</span></span>
-<span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
-<span><span class='c'>#&gt; │           EC: 34          │</span></span>
-<span><span class='c'>#&gt; └─────────────┬─────────────┘                             </span></span>
+<span><span class='c'>#&gt; │    ────────────────────   │</span></span>
+<span><span class='c'>#&gt; │   "r_base::!="(species,   │</span></span>
+<span><span class='c'>#&gt; │         'Gentoo')         │</span></span>
+<span><span class='c'>#&gt; │                           │</span></span>
+<span><span class='c'>#&gt; │          ~34 Rows         │</span></span>
+<span><span class='c'>#&gt; └─────────────┬─────────────┘</span></span>
 <span><span class='c'>#&gt; ┌─────────────┴─────────────┐</span></span>
 <span><span class='c'>#&gt; │         PROJECTION        │</span></span>
-<span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class='c'>#&gt; │    ────────────────────   │</span></span>
 <span><span class='c'>#&gt; │             #0            │</span></span>
 <span><span class='c'>#&gt; │             #1            │</span></span>
 <span><span class='c'>#&gt; │             #2            │</span></span>
 <span><span class='c'>#&gt; │             #3            │</span></span>
-<span><span class='c'>#&gt; └─────────────┬─────────────┘                             </span></span>
+<span><span class='c'>#&gt; │                           │</span></span>
+<span><span class='c'>#&gt; │         ~172 Rows         │</span></span>
+<span><span class='c'>#&gt; └─────────────┬─────────────┘</span></span>
 <span><span class='c'>#&gt; ┌─────────────┴─────────────┐</span></span>
 <span><span class='c'>#&gt; │      STREAMING_WINDOW     │</span></span>
-<span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class='c'>#&gt; │    ────────────────────   │</span></span>
+<span><span class='c'>#&gt; │        Projections:       │</span></span>
 <span><span class='c'>#&gt; │    ROW_NUMBER() OVER ()   │</span></span>
-<span><span class='c'>#&gt; └─────────────┬─────────────┘                             </span></span>
+<span><span class='c'>#&gt; └─────────────┬─────────────┘</span></span>
 <span><span class='c'>#&gt; ┌─────────────┴─────────────┐</span></span>
 <span><span class='c'>#&gt; │          ORDER_BY         │</span></span>
-<span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
-<span><span class='c'>#&gt; │          ORDERS:          │</span></span>
+<span><span class='c'>#&gt; │    ────────────────────   │</span></span>
 <span><span class='c'>#&gt; │      dataframe_42_42      │</span></span>
 <span><span class='c'>#&gt; │    42.___row_number ASC   │</span></span>
-<span><span class='c'>#&gt; └─────────────┬─────────────┘                             </span></span>
+<span><span class='c'>#&gt; └─────────────┬─────────────┘</span></span>
 <span><span class='c'>#&gt; ┌─────────────┴─────────────┐</span></span>
 <span><span class='c'>#&gt; │       HASH_GROUP_BY       │</span></span>
-<span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class='c'>#&gt; │    ────────────────────   │</span></span>
+<span><span class='c'>#&gt; │          Groups:          │</span></span>
 <span><span class='c'>#&gt; │             #0            │</span></span>
 <span><span class='c'>#&gt; │             #1            │</span></span>
+<span><span class='c'>#&gt; │                           │</span></span>
+<span><span class='c'>#&gt; │        Aggregates:        │</span></span>
 <span><span class='c'>#&gt; │          min(#2)          │</span></span>
 <span><span class='c'>#&gt; │          mean(#3)         │</span></span>
-<span><span class='c'>#&gt; └─────────────┬─────────────┘                             </span></span>
+<span><span class='c'>#&gt; │                           │</span></span>
+<span><span class='c'>#&gt; │         ~172 Rows         │</span></span>
+<span><span class='c'>#&gt; └─────────────┬─────────────┘</span></span>
 <span><span class='c'>#&gt; ┌─────────────┴─────────────┐</span></span>
 <span><span class='c'>#&gt; │         PROJECTION        │</span></span>
-<span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class='c'>#&gt; │    ────────────────────   │</span></span>
 <span><span class='c'>#&gt; │          species          │</span></span>
 <span><span class='c'>#&gt; │            sex            │</span></span>
 <span><span class='c'>#&gt; │       ___row_number       │</span></span>
 <span><span class='c'>#&gt; │         bill_area         │</span></span>
-<span><span class='c'>#&gt; └─────────────┬─────────────┘                             </span></span>
+<span><span class='c'>#&gt; │                           │</span></span>
+<span><span class='c'>#&gt; │         ~344 Rows         │</span></span>
+<span><span class='c'>#&gt; └─────────────┬─────────────┘</span></span>
 <span><span class='c'>#&gt; ┌─────────────┴─────────────┐</span></span>
 <span><span class='c'>#&gt; │         PROJECTION        │</span></span>
-<span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class='c'>#&gt; │    ────────────────────   │</span></span>
 <span><span class='c'>#&gt; │             #0            │</span></span>
 <span><span class='c'>#&gt; │             #1            │</span></span>
 <span><span class='c'>#&gt; │             #2            │</span></span>
 <span><span class='c'>#&gt; │             #3            │</span></span>
-<span><span class='c'>#&gt; └─────────────┬─────────────┘                             </span></span>
+<span><span class='c'>#&gt; │                           │</span></span>
+<span><span class='c'>#&gt; │         ~344 Rows         │</span></span>
+<span><span class='c'>#&gt; └─────────────┬─────────────┘</span></span>
 <span><span class='c'>#&gt; ┌─────────────┴─────────────┐</span></span>
 <span><span class='c'>#&gt; │      STREAMING_WINDOW     │</span></span>
-<span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class='c'>#&gt; │    ────────────────────   │</span></span>
+<span><span class='c'>#&gt; │        Projections:       │</span></span>
 <span><span class='c'>#&gt; │    ROW_NUMBER() OVER ()   │</span></span>
-<span><span class='c'>#&gt; └─────────────┬─────────────┘                             </span></span>
+<span><span class='c'>#&gt; └─────────────┬─────────────┘</span></span>
 <span><span class='c'>#&gt; ┌─────────────┴─────────────┐</span></span>
 <span><span class='c'>#&gt; │         PROJECTION        │</span></span>
-<span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class='c'>#&gt; │    ────────────────────   │</span></span>
 <span><span class='c'>#&gt; │          species          │</span></span>
 <span><span class='c'>#&gt; │            sex            │</span></span>
 <span><span class='c'>#&gt; │         bill_area         │</span></span>
-<span><span class='c'>#&gt; └─────────────┬─────────────┘                             </span></span>
+<span><span class='c'>#&gt; │                           │</span></span>
+<span><span class='c'>#&gt; │         ~344 Rows         │</span></span>
+<span><span class='c'>#&gt; └─────────────┬─────────────┘</span></span>
 <span><span class='c'>#&gt; ┌─────────────┴─────────────┐</span></span>
 <span><span class='c'>#&gt; │     R_DATAFRAME_SCAN      │</span></span>
-<span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class='c'>#&gt; │    ────────────────────   │</span></span>
 <span><span class='c'>#&gt; │         data.frame        │</span></span>
-<span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
+<span><span class='c'>#&gt; │                           │</span></span>
+<span><span class='c'>#&gt; │        Projections:       │</span></span>
 <span><span class='c'>#&gt; │          species          │</span></span>
 <span><span class='c'>#&gt; │       bill_length_mm      │</span></span>
 <span><span class='c'>#&gt; │       bill_depth_mm       │</span></span>
 <span><span class='c'>#&gt; │            sex            │</span></span>
-<span><span class='c'>#&gt; │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │</span></span>
-<span><span class='c'>#&gt; │          EC: 344          │</span></span>
+<span><span class='c'>#&gt; │                           │</span></span>
+<span><span class='c'>#&gt; │         ~344 Rows         │</span></span>
 <span><span class='c'>#&gt; └───────────────────────────┘</span></span></pre>
 
 All data frame operations are supported. Computation happens upon the first request.
@@ -169,13 +183,13 @@ All data frame operations are supported. Computation happens upon the first requ
 <span><span class='c'>#&gt; ---------------------</span></span>
 <span><span class='c'>#&gt; Projection [species as species, sex as sex, mean_bill_area as mean_bill_area]</span></span>
 <span><span class='c'>#&gt;   Order [___row_number ASC]</span></span>
-<span><span class='c'>#&gt;     Filter [!=(species, 'Gentoo')]</span></span>
+<span><span class='c'>#&gt;     Filter ["!="(species, 'Gentoo')]</span></span>
 <span><span class='c'>#&gt;       Projection [species as species, sex as sex, mean_bill_area as mean_bill_area, row_number() OVER () as ___row_number]</span></span>
 <span><span class='c'>#&gt;         Projection [species as species, sex as sex, mean_bill_area as mean_bill_area]</span></span>
 <span><span class='c'>#&gt;           Order [___row_number ASC]</span></span>
 <span><span class='c'>#&gt;             Aggregate [species, sex, min(___row_number), mean(bill_area)]</span></span>
 <span><span class='c'>#&gt;               Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, bill_area as bill_area, row_number() OVER () as ___row_number]</span></span>
-<span><span class='c'>#&gt;                 Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, *(bill_length_mm, bill_depth_mm) as bill_area]</span></span>
+<span><span class='c'>#&gt;                 Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, "*"(bill_length_mm, bill_depth_mm) as bill_area]</span></span>
 <span><span class='c'>#&gt;                   r_dataframe_scan(0xdeadbeef)</span></span>
 <span><span class='c'>#&gt; </span></span>
 <span><span class='c'>#&gt; ---------------------</span></span>
@@ -204,7 +218,7 @@ After the computation has been carried out, the results are available immediatel
 
 This example illustrates usage of duckplyr for all data frames in the R session.
 
-Use [`library(duckplyr)`](https://tidyverse.github.io/duckplyr/) or [`duckplyr::methods_overwrite()`](https://tidyverse.github.io/duckplyr/reference/methods_overwrite.html) to overwrite dplyr methods and enable processing with duckdb for all data frames:
+Use [`library(duckplyr)`](https://duckplyr.tidyverse.org) or [`duckplyr::methods_overwrite()`](https://tidyverse.github.io/duckplyr/reference/methods_overwrite.html) to overwrite dplyr methods and enable processing with duckdb for all data frames:
 
 <pre class='chroma'>
 <span><span class='nf'>duckplyr</span><span class='nf'>::</span><span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/methods_overwrite.html'>methods_overwrite</a></span><span class='o'>(</span><span class='o'>)</span></span>
@@ -238,13 +252,13 @@ Querying the number of rows also starts the computation:
 <span><span class='c'>#&gt; ---------------------</span></span>
 <span><span class='c'>#&gt; Projection [species as species, sex as sex, mean_bill_area as mean_bill_area]</span></span>
 <span><span class='c'>#&gt;   Order [___row_number ASC]</span></span>
-<span><span class='c'>#&gt;     Filter [!=(species, 'Gentoo')]</span></span>
+<span><span class='c'>#&gt;     Filter ["!="(species, 'Gentoo')]</span></span>
 <span><span class='c'>#&gt;       Projection [species as species, sex as sex, mean_bill_area as mean_bill_area, row_number() OVER () as ___row_number]</span></span>
 <span><span class='c'>#&gt;         Projection [species as species, sex as sex, mean_bill_area as mean_bill_area]</span></span>
 <span><span class='c'>#&gt;           Order [___row_number ASC]</span></span>
 <span><span class='c'>#&gt;             Aggregate [species, sex, min(___row_number), mean(bill_area)]</span></span>
 <span><span class='c'>#&gt;               Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, bill_area as bill_area, row_number() OVER () as ___row_number]</span></span>
-<span><span class='c'>#&gt;                 Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, *(bill_length_mm, bill_depth_mm) as bill_area]</span></span>
+<span><span class='c'>#&gt;                 Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, "*"(bill_length_mm, bill_depth_mm) as bill_area]</span></span>
 <span><span class='c'>#&gt;                   r_dataframe_scan(0xdeadbeef)</span></span>
 <span><span class='c'>#&gt; </span></span>
 <span><span class='c'>#&gt; ---------------------</span></span>
@@ -298,7 +312,7 @@ The first time the package encounters an unsupported function, data type, or ope
 
 <pre class='chroma'>
 <span><span class='nf'>palmerpenguins</span><span class='nf'>::</span><span class='nv'><a href='https://allisonhorst.github.io/palmerpenguins/reference/penguins.html'>penguins</a></span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span>  <span class='nf'>duckplyr</span><span class='nf'>::</span><span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/as_duckplyr_tibble.html'>as_duckplyr_tibble</a></span><span class='o'>(</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='nf'>duckplyr</span><span class='nf'>::</span><span class='nf'><a href='https://tidyverse.github.io/duckplyr/reference/as_duckplyr_df.html'>as_duckplyr_tibble</a></span><span class='o'>(</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='nf'><a href='https://dplyr.tidyverse.org/reference/transmute.html'>transmute</a></span><span class='o'>(</span>bill_area <span class='o'>=</span> <span class='nv'>bill_length_mm</span> <span class='o'>*</span> <span class='nv'>bill_depth_mm</span><span class='o'>)</span> <span class='o'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='nf'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='o'>(</span><span class='m'>3</span><span class='o'>)</span></span>
 <span><span class='c'>#&gt; The <span style='color: #0000BB;'>duckplyr</span> package is configured to fall back to <span style='color: #0000BB;'>dplyr</span> when it encounters an</span></span>
@@ -353,7 +367,7 @@ The dbplyr package is a dplyr backend that connects to SQL databases, and is des
 This package also provides generics, for which other packages may then implement methods.
 
 <pre class='chroma'>
-<span><span class='kr'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='o'>(</span><span class='nv'><a href='https://tidyverse.github.io/duckplyr/'>duckplyr</a></span><span class='o'>)</span></span></pre>
+<span><span class='kr'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='o'>(</span><span class='nv'><a href='https://duckplyr.tidyverse.org'>duckplyr</a></span><span class='o'>)</span></span></pre>
 <pre class='chroma'>
 <span><span class='c'>#&gt; <span style='color: #00BB00;'>✔</span> Overwriting <span style='color: #0000BB;'>dplyr</span> methods with <span style='color: #0000BB;'>duckplyr</span> methods.</span></span>
 <span><span class='c'>#&gt; <span style='color: #00BBBB;'>ℹ</span> Turn off with `duckplyr::methods_restore()`.</span></span></pre>
