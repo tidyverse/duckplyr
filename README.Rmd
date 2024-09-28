@@ -22,7 +22,18 @@ clean_output <- function(x, options) {
   x <- gsub("0x[0-9a-f]+", "0xdeadbeef", x)
   x <- gsub("dataframe_[0-9]*_[0-9]*", "      dataframe_42_42      ", x)
   x <- gsub("[0-9]*\\.___row_number ASC", "42.___row_number ASC", x)
+
+  if (!identical(getOption("readme.target"), "README.md")) {
+    x <- gsub("─", "-", x)
+  }
+
   x
+}
+
+if (identical(getOption("readme.target"), "index.md")) {
+  options(cli.num_colors = 256)
+} else {
+  options(cli.num_colors = 1)
 }
 
 local({

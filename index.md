@@ -47,7 +47,8 @@ pak::pak("tidyverse/duckplyr")
 library(conflicted)
 library(dplyr)
 conflict_prefer("filter", "dplyr")
-#> [conflicted] Will prefer dplyr::filter over any other package.
+#> [1m[22m[90m[conflicted][39m Will prefer [1m[34mdplyr[39m[22m::filter over any
+#> other package.
 ```
 
 There are two ways to use duckplyr.
@@ -96,45 +97,45 @@ species.
 ``` r
 out %>%
   explain()
-#> ┌───────────────────────────┐
+#> ┌---------------------------┐
 #> │          ORDER_BY         │
-#> │    ────────────────────   │
+#> │    --------------------   │
 #> │      dataframe_42_42      │
 #> │    42.___row_number ASC   │
-#> └─────────────┬─────────────┘
-#> ┌─────────────┴─────────────┐
+#> └-------------┬-------------┘
+#> ┌-------------┴-------------┐
 #> │           FILTER          │
-#> │    ────────────────────   │
+#> │    --------------------   │
 #> │   "r_base::!="(species,   │
 #> │         'Gentoo')         │
 #> │                           │
 #> │          ~34 Rows         │
-#> └─────────────┬─────────────┘
-#> ┌─────────────┴─────────────┐
+#> └-------------┬-------------┘
+#> ┌-------------┴-------------┐
 #> │         PROJECTION        │
-#> │    ────────────────────   │
+#> │    --------------------   │
 #> │             #0            │
 #> │             #1            │
 #> │             #2            │
 #> │             #3            │
 #> │                           │
 #> │         ~172 Rows         │
-#> └─────────────┬─────────────┘
-#> ┌─────────────┴─────────────┐
+#> └-------------┬-------------┘
+#> ┌-------------┴-------------┐
 #> │      STREAMING_WINDOW     │
-#> │    ────────────────────   │
+#> │    --------------------   │
 #> │        Projections:       │
 #> │    ROW_NUMBER() OVER ()   │
-#> └─────────────┬─────────────┘
-#> ┌─────────────┴─────────────┐
+#> └-------------┬-------------┘
+#> ┌-------------┴-------------┐
 #> │          ORDER_BY         │
-#> │    ────────────────────   │
+#> │    --------------------   │
 #> │      dataframe_42_42      │
 #> │    42.___row_number ASC   │
-#> └─────────────┬─────────────┘
-#> ┌─────────────┴─────────────┐
+#> └-------------┬-------------┘
+#> ┌-------------┴-------------┐
 #> │       HASH_GROUP_BY       │
-#> │    ────────────────────   │
+#> │    --------------------   │
 #> │          Groups:          │
 #> │             #0            │
 #> │             #1            │
@@ -144,45 +145,45 @@ out %>%
 #> │          mean(#3)         │
 #> │                           │
 #> │         ~172 Rows         │
-#> └─────────────┬─────────────┘
-#> ┌─────────────┴─────────────┐
+#> └-------------┬-------------┘
+#> ┌-------------┴-------------┐
 #> │         PROJECTION        │
-#> │    ────────────────────   │
+#> │    --------------------   │
 #> │          species          │
 #> │            sex            │
 #> │       ___row_number       │
 #> │         bill_area         │
 #> │                           │
 #> │         ~344 Rows         │
-#> └─────────────┬─────────────┘
-#> ┌─────────────┴─────────────┐
+#> └-------------┬-------------┘
+#> ┌-------------┴-------------┐
 #> │         PROJECTION        │
-#> │    ────────────────────   │
+#> │    --------------------   │
 #> │             #0            │
 #> │             #1            │
 #> │             #2            │
 #> │             #3            │
 #> │                           │
 #> │         ~344 Rows         │
-#> └─────────────┬─────────────┘
-#> ┌─────────────┴─────────────┐
+#> └-------------┬-------------┘
+#> ┌-------------┴-------------┐
 #> │      STREAMING_WINDOW     │
-#> │    ────────────────────   │
+#> │    --------------------   │
 #> │        Projections:       │
 #> │    ROW_NUMBER() OVER ()   │
-#> └─────────────┬─────────────┘
-#> ┌─────────────┴─────────────┐
+#> └-------------┬-------------┘
+#> ┌-------------┴-------------┐
 #> │         PROJECTION        │
-#> │    ────────────────────   │
+#> │    --------------------   │
 #> │          species          │
 #> │            sex            │
 #> │         bill_area         │
 #> │                           │
 #> │         ~344 Rows         │
-#> └─────────────┬─────────────┘
-#> ┌─────────────┴─────────────┐
+#> └-------------┬-------------┘
+#> ┌-------------┴-------------┐
 #> │     R_DATAFRAME_SCAN      │
-#> │    ────────────────────   │
+#> │    --------------------   │
 #> │         data.frame        │
 #> │                           │
 #> │        Projections:       │
@@ -192,7 +193,7 @@ out %>%
 #> │            sex            │
 #> │                           │
 #> │         ~344 Rows         │
-#> └───────────────────────────┘
+#> └---------------------------┘
 ```
 
 All data frame operations are supported. Computation happens upon the
@@ -230,14 +231,14 @@ immediately:
 
 ``` r
 out
-#> # A tibble: 5 × 3
-#>   species   sex    mean_bill_area
-#>   <chr>     <chr>           <dbl>
-#> 1 Adelie    male             770.
-#> 2 Adelie    female           657.
-#> 3 Adelie    <NA>             695.
-#> 4 Chinstrap female           820.
-#> 5 Chinstrap male             984.
+#> [38;5;246m# A tibble: 5 × 3[39m
+#>   [1mspecies[22m   [1msex[22m    [1mmean_bill_area[22m
+#>   [3m[38;5;246m<chr>[39m[23m     [3m[38;5;246m<chr>[39m[23m           [3m[38;5;246m<dbl>[39m[23m
+#> [38;5;250m1[39m Adelie    male             770.
+#> [38;5;250m2[39m Adelie    female           657.
+#> [38;5;250m3[39m Adelie    [31mNA[39m               695.
+#> [38;5;250m4[39m Chinstrap female           820.
+#> [38;5;250m5[39m Chinstrap male             984.
 ```
 
 ### Session-wide usage
@@ -250,8 +251,8 @@ dplyr methods and enable processing with duckdb for all data frames:
 
 ``` r
 duckplyr::methods_overwrite()
-#> ✔ Overwriting dplyr methods with duckplyr methods.
-#> ℹ Turn off with `duckplyr::methods_restore()`.
+#> [1m[22m[32m✔[39m Overwriting [34mdplyr[39m methods with [34mduckplyr[39m methods.
+#> [36mℹ[39m Turn off with `duckplyr::methods_restore()`.
 ```
 
 This is the same query as above, without `as_duckplyr_tibble()`:
@@ -306,7 +307,7 @@ default dplyr implementation.
 
 ``` r
 duckplyr::methods_restore()
-#> ℹ Restoring dplyr methods.
+#> [1m[22m[36mℹ[39m Restoring [34mdplyr[39m methods.
 ```
 
 dplyr is active again:
@@ -318,14 +319,14 @@ palmerpenguins::penguins %>%
   mutate(bill_area = bill_length_mm * bill_depth_mm) %>%
   summarize(.by = c(species, sex), mean_bill_area = mean(bill_area)) %>%
   filter(species != "Gentoo")
-#> # A tibble: 5 × 3
-#>   species   sex    mean_bill_area
-#>   <chr>     <chr>           <dbl>
-#> 1 Adelie    male             770.
-#> 2 Adelie    female           657.
-#> 3 Adelie    <NA>              NA 
-#> 4 Chinstrap female           820.
-#> 5 Chinstrap male             984.
+#> [38;5;246m# A tibble: 5 × 3[39m
+#>   [1mspecies[22m   [1msex[22m    [1mmean_bill_area[22m
+#>   [3m[38;5;246m<chr>[39m[23m     [3m[38;5;246m<chr>[39m[23m           [3m[38;5;246m<dbl>[39m[23m
+#> [38;5;250m1[39m Adelie    male             770.
+#> [38;5;250m2[39m Adelie    female           657.
+#> [38;5;250m3[39m Adelie    [31mNA[39m                [31mNA[39m 
+#> [38;5;250m4[39m Chinstrap female           820.
+#> [38;5;250m5[39m Chinstrap male             984.
 ```
 
 ## Telemetry
@@ -355,11 +356,11 @@ palmerpenguins::penguins %>%
   duckplyr::as_duckplyr_tibble() %>%
   transmute(bill_area = bill_length_mm * bill_depth_mm) %>%
   head(3)
-#> The duckplyr package is configured to fall back to dplyr when it encounters
+#> [1m[22mThe [34mduckplyr[39m package is configured to fall back to [34mdplyr[39m when it encounters
 #> an incompatibility. Fallback events can be collected and uploaded for
 #> analysis to guide future development. By default, no data will be collected
 #> or uploaded.
-#> ℹ A fallback situation just occurred. The following information would have
+#> [36mℹ[39m A fallback situation just occurred. The following information would have
 #>   been recorded:
 #>   {"version":"0.4.1","message":"Can't convert columns of class <factor> to
 #>   relational. Affected\ncolumn:
@@ -371,8 +372,8 @@ palmerpenguins::penguins %>%
 #>   enable printing of fallback situations to the console.
 #> → Run `duckplyr::fallback_review()` to review the available reports, and
 #>   `duckplyr::fallback_upload()` to upload them.
-#> ℹ See `?duckplyr::fallback()` for details.
-#> ℹ This message will be displayed once every eight hours.
+#> [36mℹ[39m See `?duckplyr::fallback()` for details.
+#> [36mℹ[39m [90mThis message will be displayed once every eight hours.[39m
 #> materializing:
 #> ---------------------
 #> --- Relation Tree ---
@@ -385,12 +386,12 @@ palmerpenguins::penguins %>%
 #> ---------------------
 #> - bill_area (DOUBLE)
 #> 
-#> # A tibble: 3 × 1
-#>   bill_area
-#>       <dbl>
-#> 1      731.
-#> 2      687.
-#> 3      725.
+#> [38;5;246m# A tibble: 3 × 1[39m
+#>   [1mbill_area[22m
+#>       [3m[38;5;246m<dbl>[39m[23m
+#> [38;5;250m1[39m      731.
+#> [38;5;250m2[39m      687.
+#> [38;5;250m3[39m      725.
 ```
 
 ## How is this different from dbplyr?
@@ -420,8 +421,8 @@ implement methods.
 library(duckplyr)
 ```
 
-    #> ✔ Overwriting dplyr methods with duckplyr methods.
-    #> ℹ Turn off with `duckplyr::methods_restore()`.
+    #> [1m[22m[32m✔[39m Overwriting [34mdplyr[39m methods with [34mduckplyr[39m methods.
+    #> [36mℹ[39m Turn off with `duckplyr::methods_restore()`.
 
 ``` r
 # Create a relational to be used by examples below
@@ -531,7 +532,7 @@ rel_join.dfrel <- function(left, right, conds, join, ...) {
 }
 
 rel_join(new_dfrel(data.frame(mpg = 21)), mtcars_rel)
-#> Joining with `by = join_by(mpg)`
+#> [1m[22mJoining with `by = join_by(mpg)`
 #> Joining with `by = join_by(mpg)`
 #> [[1]]
 #>   mpg cyl disp  hp
