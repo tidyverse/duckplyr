@@ -1,7 +1,4 @@
-all: README.md .github/README.md
+all: index.md README.md
 
-README.md: README.Rmd
-	Rscript -e 'rmarkdown::render("$<")'
-
-.github/README.md: README.Rmd
-	Rscript -e 'rmarkdown::render("$<", output_format = downlit::readme_document(), output_file = normalizePath("$@"))'
+index.md README.md: README.Rmd
+	Rscript --vanilla -e 'options(readme.target = "$@", pillar.bold = TRUE); rmarkdown::render("$<", intermediates_dir = "$@.temp", output_file = normalizePath("$@", mustWork = FALSE))'
