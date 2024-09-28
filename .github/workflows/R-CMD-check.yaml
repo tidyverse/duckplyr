@@ -106,7 +106,7 @@ jobs:
           install-r: false
           cache-version: pkgdown-1
           needs: website
-          extra-packages: r-lib/pkgdown local::.
+          extra-packages: r-lib/pkgdown@f-readme-tweak local::.
 
       - uses: ./.github/workflows/custom/after-install
         if: hashFiles('.github/workflows/custom/after-install/action.yml') != ''
