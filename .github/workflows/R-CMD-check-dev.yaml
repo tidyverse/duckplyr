@@ -13,7 +13,7 @@ name: rcc dev
 
 jobs:
   matrix:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
 
@@ -101,7 +101,7 @@ jobs:
 
     runs-on: ubuntu-22.04
 
-    name: ${{ matrix.package }}
+    name: 'rcc-dev: ${{ matrix.package }}'
 
     # Begin custom: services
     # End custom: services
