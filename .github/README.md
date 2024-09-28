@@ -1,6 +1,6 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# duckplyr <a href="https://duckplyr.tidyverse.org"><img src="man/figures/logo.png" align="right" height="138" /></a>
+# duckplyr <a href="https://duckplyr.tidyverse.org"><img src="logo.png" align="right" height="138" /></a>
 
 <!-- badges: start -->
 
