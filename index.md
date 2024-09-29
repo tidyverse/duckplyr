@@ -421,8 +421,10 @@ implement methods.
 library(duckplyr)
 ```
 
-    #> [1m[22m[32m✔[39m Overwriting [34mdplyr[39m methods with [34mduckplyr[39m methods.
-    #> [36mℹ[39m Turn off with `duckplyr::methods_restore()`.
+``` r
+#> [1m[22m[32m✔[39m Overwriting [34mdplyr[39m methods with [34mduckplyr[39m methods.
+#> [36mℹ[39m Turn off with `duckplyr::methods_restore()`.
+```
 
 ``` r
 # Create a relational to be used by examples below
