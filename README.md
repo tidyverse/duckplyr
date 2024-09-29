@@ -47,7 +47,8 @@ pak::pak("tidyverse/duckplyr")
 library(conflicted)
 library(dplyr)
 conflict_prefer("filter", "dplyr")
-#> [conflicted] Will prefer dplyr::filter over any other package.
+#> [conflicted] Will prefer dplyr::filter over any
+#> other package.
 ```
 
 There are two ways to use duckplyr.
@@ -235,7 +236,7 @@ out
 #>   <chr>     <chr>           <dbl>
 #> 1 Adelie    male             770.
 #> 2 Adelie    female           657.
-#> 3 Adelie    <NA>             695.
+#> 3 Adelie    NA               695.
 #> 4 Chinstrap female           820.
 #> 5 Chinstrap male             984.
 ```
@@ -323,7 +324,7 @@ palmerpenguins::penguins %>%
 #>   <chr>     <chr>           <dbl>
 #> 1 Adelie    male             770.
 #> 2 Adelie    female           657.
-#> 3 Adelie    <NA>              NA 
+#> 3 Adelie    NA                NA 
 #> 4 Chinstrap female           820.
 #> 5 Chinstrap male             984.
 ```
@@ -355,20 +356,19 @@ palmerpenguins::penguins %>%
   duckplyr::as_duckplyr_tibble() %>%
   transmute(bill_area = bill_length_mm * bill_depth_mm) %>%
   head(3)
-#> The duckplyr package is configured to fall back to dplyr when it encounters
-#> an incompatibility. Fallback events can be collected and uploaded for
-#> analysis to guide future development. By default, no data will be collected
-#> or uploaded.
-#> ℹ A fallback situation just occurred. The following information would have
-#>   been recorded:
+#> The duckplyr package is configured to fall back to dplyr when it encounters an
+#> incompatibility. Fallback events can be collected and uploaded for analysis to
+#> guide future development. By default, no data will be collected or uploaded.
+#> ℹ A fallback situation just occurred. The following information would have been
+#>   recorded:
 #>   {"version":"0.4.1","message":"Can't convert columns of class <factor> to
-#>   relational. Affected\ncolumn:
-#>   `...1`.","name":"transmute","x":{"...1":"factor","...2":"factor","...3":"numeric","...4":"numeric","...5":"integer","...6":"integer","...7":"factor","...8":"integer"},"args":{"dots":{"...9":"...3
+#>   relational. Affected
+#>   column:\n`...1`.","name":"transmute","x":{"...1":"factor","...2":"factor","...3":"numeric","...4":"numeric","...5":"integer","...6":"integer","...7":"factor","...8":"integer"},"args":{"dots":{"...9":"...3
 #>   * ...4"}}}
 #> → Run `duckplyr::fallback_sitrep()` to review the current settings.
-#> → Run `Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)` to enable fallback
-#>   logging, and `Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = TRUE)` in addition to
-#>   enable printing of fallback situations to the console.
+#> → Run `Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)` to enable fallback logging,
+#>   and `Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = TRUE)` in addition to enable
+#>   printing of fallback situations to the console.
 #> → Run `duckplyr::fallback_review()` to review the available reports, and
 #>   `duckplyr::fallback_upload()` to upload them.
 #> ℹ See `?duckplyr::fallback()` for details.
