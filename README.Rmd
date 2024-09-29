@@ -4,7 +4,7 @@ output:
     html_preview: false
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- README.md and index.md are generated from README.Rmd. Please edit that file. -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -25,6 +25,7 @@ clean_output <- function(x, options) {
   
   index <- x
   index <- gsub("─", "-", index)
+  index <- strsplit(paste(index, collapse = "\n"), "\n---\n")[[1]][[2]]
   writeLines(index, "index.md")
   
   x <- fansi::strip_sgr(x)

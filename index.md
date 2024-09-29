@@ -1,10 +1,5 @@
----
-output: 
-  github_document:
-    html_preview: false
----
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- README.md and index.md are generated from README.Rmd. Please edit that file. -->
 
 
 
