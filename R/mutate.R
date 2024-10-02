@@ -17,6 +17,8 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
       }
 
       dots <- dplyr_quosures(...)
+      dots <- fix_auto_name(dots)
+      names_dots <- names(dots)
 
       names_used <- character()
       names_new <- character()
@@ -25,13 +27,28 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
       # FIXME: use fewer projections
       for (i in seq_along(dots)) {
         dot <- dots[[i]]
+        name_dot <- names_dots[[i]]
 
-        quos <- duckplyr_expand_across(names(.data), dot)
-        quos <- fix_auto_name(quos)
+        # TODO: `names(.data)` needs to be updated at each iteration
+        # Try expanding this `dot` if we see it is an `across()` call
+        expanded <- duckplyr_expand_across(names(.data), dot)
 
-        for (k in seq_along(quos)) {
-          quo <- quos[[k]]
-          new <- names(quos)[[k]]
+        if (is.null(expanded)) {
+          # Nothing we can expand, create a list with just the 1 expression to
+          # loop over
+          quos <- set_names(list(dot), name_dot)
+        } else {
+          # Actually expanded an `across()` call, make sure to fix up names
+          # again with the new set of dplyr quosures
+          quos <- expanded
+          quos <- fix_auto_name(quos)
+        }
+
+        names_quos <- names(quos)
+
+        for (j in seq_along(quos)) {
+          quo <- quos[[j]]
+          new <- names_quos[[j]]
 
           names_new <- c(names_new, new)
 
