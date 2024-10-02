@@ -4,7 +4,7 @@
 # mutate.duck captures a `quo(across(...))`
 # mutate.duck captures a `quo(across(...))` with `name = foo` (packed case)
 
-expand_across <- function(data, quo) {
+duckplyr_expand_across <- function(data, quo) {
   stopifnot(is.character(data))
 
   quo_data <- attr(quo, "dplyr:::data")
