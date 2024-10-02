@@ -461,23 +461,6 @@ test_that("across() works with empty data frames (#5523)", {
 })
 
 test_that("lambdas in duckplyr_mutate() + across() can use columns", {
-  # TODO: dplyr evaluates all `across()` expressions in one batch,
-  # even when expanding. The state of the data frame can't change
-  # until all of `across()` is finished.
-  #
-  # library(dplyr, warn.conflicts = FALSE)
-  # df <- tibble(x = 1, y = 2, z = 3)
-  #
-  # # Ugh
-  # mutate(df, across(x:z, ~ 1 + x))
-  #
-  # # Consistent with fallback path
-  # mutate(df, +across(x:z, ~ 1 + x))
-  #
-  # # If this was "true" expansion it would expand to
-  # mutate(df, x = 1 + x, y = 1 + x, z = 1 + x)
-  skip("TODO: Davis and Lionel need to figure this out")
-
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 2, y = 4, z = 8)
   expect_identical(
@@ -522,23 +505,6 @@ test_that("lambdas in duckplyr_summarise() + across() can use columns", {
 })
 
 test_that("lambdas in duckplyr_mutate() + across() can use columns in follow up expressions (#5717)", {
-  # TODO: dplyr evaluates all `across()` expressions in one batch,
-  # even when expanding. The state of the data frame can't change
-  # until all of `across()` is finished.
-  #
-  # library(dplyr, warn.conflicts = FALSE)
-  # df <- tibble(x = 1, y = 2, z = 3)
-  #
-  # # Ugh
-  # mutate(df, across(x:z, ~ 1 + x))
-  #
-  # # Consistent with fallback path
-  # mutate(df, +across(x:z, ~ 1 + x))
-  #
-  # # If this was "true" expansion it would expand to
-  # mutate(df, x = 1 + x, y = 1 + x, z = 1 + x)
-  skip("TODO: Davis and Lionel need to figure this out")
-
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 2, y = 4, z = 8)
   expect_identical(
