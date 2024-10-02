@@ -77,21 +77,32 @@ expand_across <- function(data, quo) {
 
   if (".fns" %in% names(expr)) {
     fns <- as_quosure(expr$.fns, env)
+    fns <- quo_eval_fns(fns, mask = env, error_call = error_call)
   } else {
     # To be deprecated, let dplyr deal with this
     return(list(quo))
   }
 
-  # TODO: inline lambdas, check for NULL
+  # duckplyr doesn't currently support >1 function so we bail if we
+  # see that potential case, but to potentially allow for this in the future we
+  # manually wrap in a list using the default name of `"1"`.
+  if (!is.function(fns)) {
+    return(list(quo))
+  }
+  fns <- list("1" = fns)
+
+  # In dplyr this evaluates in the mask to reproduce the `mutate()` or
+  # `summarise()` context. We don't have a mask here but it's probably fine in
+  # almost all cases.
+  names <- eval_tidy(expr$.names, env = env)
 
   setup <- across_setup(
-    !!cols,
+    data,
+    cols,
     fns = fns,
-    names = eval_tidy(expr$.names, mask, env = env),
+    names = names,
     .caller_env = env,
-    mask = dplyr_mask,
-    error_call = error_call,
-    across_if_fn = across_if_fn
+    error_call = error_call
   )
 
   vars <- setup$vars
@@ -103,23 +114,6 @@ expand_across <- function(data, quo) {
 
   fns <- setup$fns
   names <- setup$names %||% vars
-
-  # No functions, so just return a list of symbols
-  if (is.null(fns)) {
-    # TODO: Deprecate and remove the `.fns = NULL` path in favor of `pick()`
-    exprs <- pmap(list(vars, names, seq_along(vars)), function(var, name, k) {
-      quo <- new_quosure(sym(var), empty_env())
-      quo <- new_dplyr_quosure(
-        quo,
-        name = name,
-        is_named = TRUE,
-        index = c(quo_data$index, k),
-        column = var
-      )
-    })
-    names(exprs) <- names
-    return(exprs)
-  }
 
   n_vars <- length(vars)
   n_fns <- length(fns)
@@ -134,7 +128,8 @@ expand_across <- function(data, quo) {
     var <- vars[[i]]
 
     for (j in seq_fns) {
-      fn_call <- as_across_fn_call(fns[[j]], var, env, mask)
+      # `mask` isn't actually used inside this
+      fn_call <- as_across_fn_call(fns[[j]], var, env, mask = env)
 
       name <- names[[k]]
       exprs[[k]] <- new_dplyr_quosure(
@@ -157,15 +152,12 @@ across_setup <- function(data,
                          fns,
                          names,
                          .caller_env,
-                         mask,
-                         error_call = caller_env(),
-                         across_if_fn = "across") {
+                         error_call = caller_env()) {
   stopifnot(
     is.list(fns),
     length(fns) != 1
   )
 
-  cols <- enquo(cols)
   data <- set_names(seq_along(data), data)
 
   vars <- tidyselect::eval_select(
@@ -177,9 +169,12 @@ across_setup <- function(data,
   names_vars <- names(vars)
   vars <- names(data)[vars]
 
-  glue_mask <- across_glue_mask(.caller_env,
+  names_fns <- names(fns)
+
+  glue_mask <- across_glue_mask(
     .col = names_vars,
-    .fn  = rep("1", length(vars))
+    .fn = names_fns,
+    .caller_env = .caller_env
   )
   names <- vec_as_names(
     glue(names, .envir = glue_mask),
