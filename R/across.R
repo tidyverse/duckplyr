@@ -95,6 +95,7 @@ expand_across <- function(data, quo) {
   # `summarise()` context. We don't have a mask here but it's probably fine in
   # almost all cases.
   names <- eval_tidy(expr$.names, env = env)
+  names <- names %||% "{.col}"
 
   setup <- across_setup(
     data,
@@ -155,7 +156,7 @@ across_setup <- function(data,
                          error_call = caller_env()) {
   stopifnot(
     is.list(fns),
-    length(fns) != 1
+    length(fns) == 1
   )
 
   data <- set_names(seq_along(data), data)
