@@ -85,3 +85,5 @@ summarise_deprecate_variable_size <- dplyr$summarise_deprecate_variable_size
 the <- dplyr$the
 tick_if_needed <- dplyr$tick_if_needed
 warn_join_cross_by <- dplyr$warn_join_cross_by
+
+across_glue_mask <- dplyr$across_glue_mask
