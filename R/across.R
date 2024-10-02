@@ -1,9 +1,3 @@
-# Argument matching, dots expansion
-
-# mutate.duck captures a `quo(across(everything(), \(x) mean(x, na.rm = TRUE)))`
-# mutate.duck captures a `quo(across(...))`
-# mutate.duck captures a `quo(across(...))` with `name = foo` (packed case)
-
 duckplyr_expand_across <- function(data, quo) {
   stopifnot(is.character(data))
 
