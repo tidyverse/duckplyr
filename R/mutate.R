@@ -17,7 +17,6 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
       }
 
       dots <- dplyr_quosures(...)
-      dots <- fix_auto_name(dots)
 
       names_used <- character()
       names_new <- character()
@@ -27,20 +26,26 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
       for (i in seq_along(dots)) {
         dot <- dots[[i]]
 
-        new <- names(dots)[[i]]
+        quos <- duckplyr_expand_across(names(.data), dot)
+        quos <- fix_auto_name(quos)
 
-        names_new <- c(names_new, new)
+        for (k in seq_along(quos)) {
+          quo <- quos[[k]]
+          new <- names(quos)[[k]]
 
-        new_pos <- match(new, names_out, nomatch = length(names_out) + 1L)
-        exprs <- imap(set_names(names_out), relexpr_reference, rel = NULL)
-        new_expr <- rel_translate(dot, names_data = names_out, alias = new, partition = by_names, need_window = TRUE)
-        exprs[[new_pos]] <- new_expr
+          names_new <- c(names_new, new)
 
-        rel <- rel_project(rel, unname(exprs))
-        names_out[[new_pos]] <- new
+          new_pos <- match(new, names_out, nomatch = length(names_out) + 1L)
+          exprs <- imap(set_names(names_out), relexpr_reference, rel = NULL)
+          new_expr <- rel_translate(quo, names_data = names_out, alias = new, partition = by_names, need_window = TRUE)
+          exprs[[new_pos]] <- new_expr
 
-        new_names_used <- intersect(attr(new_expr, "used"), names(.data))
-        names_used <- c(names_used, setdiff(new_names_used, names_used))
+          rel <- rel_project(rel, unname(exprs))
+          names_out[[new_pos]] <- new
+
+          new_names_used <- intersect(attr(new_expr, "used"), names(.data))
+          names_used <- c(names_used, setdiff(new_names_used, names_used))
+        }
       }
 
       if (length(by_names) > 0) {
