@@ -9,7 +9,7 @@ duckplyr_expand_across <- function(data, quo) {
 
   quo_data <- attr(quo, "dplyr:::data")
   if (!quo_is_call(quo, "across", ns = c("", "dplyr")) || quo_data$is_named) {
-    return(list(quo))
+    return(NULL)
   }
 
   # Expand dots in lexical env
@@ -27,7 +27,7 @@ duckplyr_expand_across <- function(data, quo) {
   # if dots are delayed or only 1 evaluation if they are eagerly
   # evaluated.
   if (!is_null(expr$...)) {
-    return(list(quo))
+    return(NULL)
   }
 
   # FIXME: Needed? Can we get away with the names
@@ -46,7 +46,7 @@ duckplyr_expand_across <- function(data, quo) {
   # Abort expansion if unpacking as expansion makes named expressions and we
   # need the expressions to remain unnamed
   if (!is_false(unpack)) {
-    return(list(quo))
+    return(NULL)
   }
 
   # Differentiate between missing and null (`match.call()` doesn't
@@ -55,7 +55,7 @@ duckplyr_expand_across <- function(data, quo) {
     cols <- expr$.cols
   } else {
     # This is deprecated, let dplyr warn
-    return(list(quo))
+    return(NULL)
   }
   cols <- as_quosure(cols, env)
 
@@ -64,14 +64,14 @@ duckplyr_expand_across <- function(data, quo) {
     fns <- quo_eval_fns(fns, mask = env, error_call = error_call)
   } else {
     # To be deprecated, let dplyr deal with this
-    return(list(quo))
+    return(NULL)
   }
 
   # duckplyr doesn't currently support >1 function so we bail if we
   # see that potential case, but to potentially allow for this in the future we
   # manually wrap in a list using the default name of `"1"`.
   if (!is.function(fns)) {
-    return(list(quo))
+    return(NULL)
   }
   fns <- list("1" = fns)
 
@@ -81,7 +81,7 @@ duckplyr_expand_across <- function(data, quo) {
   names <- eval_tidy(expr$.names, env = env)
   names <- names %||% "{.col}"
 
-  setup <- across_setup(
+  setup <- duckplyr_across_setup(
     data,
     cols,
     fns = fns,
@@ -94,7 +94,7 @@ duckplyr_expand_across <- function(data, quo) {
 
   # Empty expansion
   if (length(vars) == 0L) {
-    return(list())
+    return(NULL)
   }
 
   fns <- setup$fns
@@ -138,12 +138,12 @@ duckplyr_expand_across <- function(data, quo) {
   exprs
 }
 
-across_setup <- function(data,
-                         cols,
-                         fns,
-                         names,
-                         .caller_env,
-                         error_call = caller_env()) {
+duckplyr_across_setup <- function(data,
+                                  cols,
+                                  fns,
+                                  names,
+                                  .caller_env,
+                                  error_call = caller_env()) {
   stopifnot(
     is.list(fns),
     length(fns) == 1
