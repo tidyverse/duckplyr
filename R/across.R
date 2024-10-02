@@ -114,7 +114,13 @@ expand_across <- function(data, quo) {
 
     for (j in seq_fns) {
       # `mask` isn't actually used inside this
-      fn_call <- as_across_fn_call(fns[[j]], var, env, mask = env)
+      if (is_symbol(expr$.fns)) {
+        # When we see a bare symbol like `across(x:y, mean)`, we don't
+        # want to inline the function itself, we want to inline its expression.
+        fn_call <- new_quosure(call2(expr$.fns, sym(var)), env = env)
+      } else {
+        fn_call <- as_across_fn_call(fns[[j]], var, env, mask = env)
+      }
 
       name <- names[[k]]
       exprs[[k]] <- new_dplyr_quosure(
