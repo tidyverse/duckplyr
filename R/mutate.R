@@ -29,9 +29,8 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
         dot <- dots[[i]]
         name_dot <- names_dots[[i]]
 
-        # TODO: `names(.data)` needs to be updated at each iteration
         # Try expanding this `dot` if we see it is an `across()` call
-        expanded <- duckplyr_expand_across(names(.data), dot)
+        expanded <- duckplyr_expand_across(names_out, dot)
 
         if (is.null(expanded)) {
           # Nothing we can expand, create a list with just the 1 expression to
