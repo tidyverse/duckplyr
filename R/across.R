@@ -1,19 +1,3 @@
-# Works expr by expr?
-#   duckplyr might not even call us for the next expression
-
-# Takes current state of the data (only names)
-# Returns named expressions
-#   We'll have to deal with inlining of lambdas?
-#   Or just support bare symbols for now?
-#   Nope because `...` is deprecated... Need lambdas
-#   Only support lambdas?
-
-# .fns: mutate()
-
-fn <- function(duck, ...) {
-  mutate(duck, across(...))
-}
-
 # Argument matching, dots expansion
 
 # mutate.duck captures a `quo(across(everything(), \(x) mean(x, na.rm = TRUE)))`
