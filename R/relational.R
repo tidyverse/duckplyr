@@ -77,7 +77,7 @@ rel_translate_dots <- function(dots, data, forbid_new = FALSE) {
   if (is.null(names(dots))) {
     map(dots, rel_translate, data)
   } else if (forbid_new) {
-    out <- accumulate(seq_along(dots), .init = NULL, function(.x, .y) {
+    out <- reduce(seq_along(dots), .init = NULL, function(.x, .y) {
       new <- names(dots)[[.y]]
       translation <- rel_translate(dots[[.y]], alias = new, data, names_forbidden = .x$new)
       list(
@@ -85,7 +85,7 @@ rel_translate_dots <- function(dots, data, forbid_new = FALSE) {
         translation = c(.x$translation, list(translation))
       )
     })
-    out[[length(out)]]$translation
+    out$translation
   } else {
     imap(dots, rel_translate, data = data)
   }
