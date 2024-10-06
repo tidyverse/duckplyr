@@ -138,6 +138,7 @@ infer_type_of_expr <- function(
 }
 
 types_are_comparable <- function(types) {
+  # TODO: Incomplete, written for demo
   left  = types[1]
   right = types[2]
 
@@ -164,8 +165,9 @@ rel_translate_lang <- function(
   pkg <- pkg_name[[1]]
   name <- pkg_name[[2]]
 
-  if (name %in% c(">","<","=",">=","<=")) {
-  
+
+  if (name %in% c(">","<","=",">=","<=") && !is.null(types_data)) {
+    
     types <- sapply(
         expr[2:3],
         infer_type_of_expr,
@@ -370,7 +372,11 @@ rel_translate <- function(
   }
 
   used <- character()
-  types_data <- sapply(data,typeof)
+
+  types_data = NULL
+  if (hasArg(data) && !is.null(data)) {
+    types_data <- sapply(data,typeof)
+  }
 
   do_translate <- function(expr, in_window = FALSE, top_level = FALSE) {
     stopifnot(!is_quosure(expr))
