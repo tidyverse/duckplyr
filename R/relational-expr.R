@@ -77,6 +77,22 @@ relexpr_function <- function(name, args, alias = NULL) {
   new_relexpr(list(name = name, args = args, alias = alias), class = "relational_relexpr_function")
 }
 
+#' relexpr_comparison
+#'
+#' `relexpr_comparison()` wraps a comparison expression
+#'
+#' @param exprs Expressions to compare, a list of `expr` objects.
+#' @param cmp_op Comparison operator, eg. "<" or "="
+#' @rdname new_relexpr
+#' @return an object of class `"relational_relexpr"`
+#' @export
+relexpr_comparison <- function(exprs, cmp_op) {
+  stopifnot(is_string(cmp_op))
+  stopifnot(is.list(exprs))
+  new_relexpr(list(exprs = exprs, cmp_op = cmp_op), class = "relational_relexpr_comparison")
+}
+
+
 #' relexpr_window
 #'
 #' `relexpr_window()` applies a function over a window,
