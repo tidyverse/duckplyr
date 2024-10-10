@@ -1,9 +1,25 @@
+call_stack <- collections::stack()
 pre_code_cache <- collections::queue()
 code_cache <- collections::queue()
 ext_cache <- collections::dict()
 macro_cache <- collections::dict()
 df_cache <- collections::dict()
 rel_cache <- collections::dict()
+
+meta_call_start <- function(name) {
+  call_stack$push(name)
+}
+
+meta_call_end <- function(name) {
+  call_stack$pop()
+}
+
+meta_call_current <- function() {
+  if (call_stack$size() == 0) {
+    return(NULL)
+  }
+  call_stack$peek()
+}
 
 meta_clear <- function() {
   pre_code_cache$clear()
@@ -213,8 +229,13 @@ meta_rel_register <- function(rel, rel_expr) {
   count <- rel_cache$size()
   name <- sym(paste0("rel", count + 1))
 
-  # https://github.com/cynkra/constructive/issues/102
+  current_call <- meta_call_current()
+  if (!is.null(current_call)) {
+    # FIXME: This is probably too convoluted
+    meta_record(constructive::deparse_call(expr(!!current_call)))
+  }
 
+  # https://github.com/cynkra/constructive/issues/102
   meta_record(constructive::deparse_call(expr(!!name <- !!rel_expr)))
 
   obj <- list(rel = rel, name = name, df = df)
