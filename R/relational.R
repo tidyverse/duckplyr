@@ -1,6 +1,11 @@
 rel_try <- function(rel, ..., call = NULL) {
   call_name <- as.character(sys.call(-1)[[1]])
 
+  if (!is.null(call$name)) {
+    meta_call_start(call$name)
+    withr::defer(meta_call_end())
+  }
+
   # Avoid error when called via dplyr:::filter.data.frame() (in yamlet)
   if (length(call_name) == 1 && !(call_name %in% stats$calls)) {
     stats$calls <- c(stats$calls, call_name)
