@@ -7,7 +7,9 @@ invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "<="(x, y) AS "r_base::<="(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
 df1 <- lineitem
+"select"
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+"select"
 rel2 <- duckdb$rel_project(
   rel1,
   list(
@@ -48,6 +50,7 @@ rel2 <- duckdb$rel_project(
     }
   )
 )
+"filter"
 rel3 <- duckdb$rel_project(
   rel2,
   list(
@@ -93,6 +96,7 @@ rel3 <- duckdb$rel_project(
     }
   )
 )
+"filter"
 rel4 <- duckdb$rel_filter(
   rel3,
   list(
@@ -109,7 +113,9 @@ rel4 <- duckdb$rel_filter(
     )
   )
 )
+"filter"
 rel5 <- duckdb$rel_order(rel4, list(duckdb$expr_reference("___row_number")))
+"filter"
 rel6 <- duckdb$rel_project(
   rel5,
   list(
@@ -150,6 +156,7 @@ rel6 <- duckdb$rel_project(
     }
   )
 )
+"select"
 rel7 <- duckdb$rel_project(
   rel6,
   list(
@@ -185,6 +192,7 @@ rel7 <- duckdb$rel_project(
     }
   )
 )
+"summarise"
 rel8 <- duckdb$rel_project(
   rel7,
   list(
@@ -225,6 +233,7 @@ rel8 <- duckdb$rel_project(
     }
   )
 )
+"summarise"
 rel9 <- duckdb$rel_aggregate(
   rel8,
   groups = list(duckdb$expr_reference("l_returnflag"), duckdb$expr_reference("l_linestatus")),
@@ -334,7 +343,9 @@ rel9 <- duckdb$rel_aggregate(
     }
   )
 )
+"summarise"
 rel10 <- duckdb$rel_order(rel9, list(duckdb$expr_reference("___row_number")))
+"summarise"
 rel11 <- duckdb$rel_project(
   rel10,
   list(
@@ -390,6 +401,7 @@ rel11 <- duckdb$rel_project(
     }
   )
 )
+"arrange"
 rel12 <- duckdb$rel_project(
   rel11,
   list(
@@ -450,10 +462,12 @@ rel12 <- duckdb$rel_project(
     }
   )
 )
+"arrange"
 rel13 <- duckdb$rel_order(
   rel12,
   list(duckdb$expr_reference("l_returnflag"), duckdb$expr_reference("l_linestatus"), duckdb$expr_reference("___row_number"))
 )
+"arrange"
 rel14 <- duckdb$rel_project(
   rel13,
   list(

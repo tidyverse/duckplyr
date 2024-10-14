@@ -22,7 +22,9 @@ invisible(
 invisible(DBI::dbExecute(con, 'CREATE MACRO "is.na"(x) AS (x IS NULL OR isnan(x))'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
 df1 <- orders
+"filter"
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+"filter"
 rel2 <- duckdb$rel_project(
   rel1,
   list(
@@ -78,6 +80,7 @@ rel2 <- duckdb$rel_project(
     }
   )
 )
+"filter"
 rel3 <- duckdb$rel_filter(
   rel2,
   list(
@@ -99,7 +102,9 @@ rel3 <- duckdb$rel_filter(
     )
   )
 )
+"filter"
 rel4 <- duckdb$rel_order(rel3, list(duckdb$expr_reference("___row_number")))
+"filter"
 rel5 <- duckdb$rel_project(
   rel4,
   list(
@@ -151,9 +156,13 @@ rel5 <- duckdb$rel_project(
   )
 )
 df2 <- customer
+"left_join"
 rel6 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+"left_join"
 rel7 <- duckdb$rel_set_alias(rel6, "lhs")
+"left_join"
 rel8 <- duckdb$rel_set_alias(rel5, "rhs")
+"left_join"
 rel9 <- duckdb$rel_project(
   rel7,
   list(
@@ -204,6 +213,7 @@ rel9 <- duckdb$rel_project(
     }
   )
 )
+"left_join"
 rel10 <- duckdb$rel_project(
   rel8,
   list(
@@ -259,6 +269,7 @@ rel10 <- duckdb$rel_project(
     }
   )
 )
+"left_join"
 rel11 <- duckdb$rel_join(
   rel9,
   rel10,
@@ -270,10 +281,12 @@ rel11 <- duckdb$rel_join(
   ),
   "left"
 )
+"left_join"
 rel12 <- duckdb$rel_order(
   rel11,
   list(duckdb$expr_reference("___row_number_x", rel9), duckdb$expr_reference("___row_number_y", rel10))
 )
+"left_join"
 rel13 <- duckdb$rel_project(
   rel12,
   list(
@@ -362,6 +375,7 @@ rel13 <- duckdb$rel_project(
     }
   )
 )
+"summarise"
 rel14 <- duckdb$rel_project(
   rel13,
   list(
@@ -452,6 +466,7 @@ rel14 <- duckdb$rel_project(
     }
   )
 )
+"summarise"
 rel15 <- duckdb$rel_aggregate(
   rel14,
   groups = list(duckdb$expr_reference("c_custkey")),
@@ -488,7 +503,9 @@ rel15 <- duckdb$rel_aggregate(
     }
   )
 )
+"summarise"
 rel16 <- duckdb$rel_order(rel15, list(duckdb$expr_reference("___row_number")))
+"summarise"
 rel17 <- duckdb$rel_project(
   rel16,
   list(
@@ -504,6 +521,7 @@ rel17 <- duckdb$rel_project(
     }
   )
 )
+"summarise"
 rel18 <- duckdb$rel_project(
   rel17,
   list(
@@ -524,6 +542,7 @@ rel18 <- duckdb$rel_project(
     }
   )
 )
+"summarise"
 rel19 <- duckdb$rel_aggregate(
   rel18,
   groups = list(duckdb$expr_reference("c_count")),
@@ -540,7 +559,9 @@ rel19 <- duckdb$rel_aggregate(
     }
   )
 )
+"summarise"
 rel20 <- duckdb$rel_order(rel19, list(duckdb$expr_reference("___row_number")))
+"summarise"
 rel21 <- duckdb$rel_project(
   rel20,
   list(
@@ -556,6 +577,7 @@ rel21 <- duckdb$rel_project(
     }
   )
 )
+"arrange"
 rel22 <- duckdb$rel_project(
   rel21,
   list(
@@ -576,10 +598,12 @@ rel22 <- duckdb$rel_project(
     }
   )
 )
+"arrange"
 rel23 <- duckdb$rel_order(
   rel22,
   list(duckdb$expr_reference("custdist"), duckdb$expr_reference("c_count"), duckdb$expr_reference("___row_number"))
 )
+"arrange"
 rel24 <- duckdb$rel_project(
   rel23,
   list(

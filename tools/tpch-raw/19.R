@@ -11,11 +11,16 @@ invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO ">="(x, y) AS "r_base::>="(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "<="(x, y) AS "r_base::<="(x, y)'))
 df1 <- lineitem
+"inner_join"
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+"inner_join"
 rel2 <- duckdb$rel_set_alias(rel1, "lhs")
 df2 <- part
+"inner_join"
 rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+"inner_join"
 rel4 <- duckdb$rel_set_alias(rel3, "rhs")
+"inner_join"
 rel5 <- duckdb$rel_join(
   rel2,
   rel4,
@@ -27,6 +32,7 @@ rel5 <- duckdb$rel_join(
   ),
   "inner"
 )
+"inner_join"
 rel6 <- duckdb$rel_project(
   rel5,
   list(
@@ -155,6 +161,7 @@ rel6 <- duckdb$rel_project(
     }
   )
 )
+"filter"
 rel7 <- duckdb$rel_filter(
   rel6,
   list(
@@ -821,6 +828,7 @@ rel7 <- duckdb$rel_filter(
     )
   )
 )
+"summarise"
 rel8 <- duckdb$rel_aggregate(
   rel7,
   groups = list(),
@@ -853,6 +861,7 @@ rel8 <- duckdb$rel_aggregate(
     }
   )
 )
+"summarise"
 rel9 <- duckdb$rel_distinct(rel8)
 rel9
 duckdb$rel_to_altrep(rel9)

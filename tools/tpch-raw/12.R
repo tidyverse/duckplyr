@@ -18,7 +18,9 @@ invisible(
 invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "!="(x, y) AS "r_base::!="(x, y)'))
 df1 <- lineitem
+"filter"
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+"filter"
 rel2 <- duckdb$rel_filter(
   rel1,
   list(
@@ -91,10 +93,14 @@ rel2 <- duckdb$rel_filter(
     )
   )
 )
+"inner_join"
 rel3 <- duckdb$rel_set_alias(rel2, "lhs")
 df2 <- orders
+"inner_join"
 rel4 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+"inner_join"
 rel5 <- duckdb$rel_set_alias(rel4, "rhs")
+"inner_join"
 rel6 <- duckdb$rel_join(
   rel3,
   rel5,
@@ -106,6 +112,7 @@ rel6 <- duckdb$rel_join(
   ),
   "inner"
 )
+"inner_join"
 rel7 <- duckdb$rel_project(
   rel6,
   list(
@@ -234,6 +241,7 @@ rel7 <- duckdb$rel_project(
     }
   )
 )
+"summarise"
 rel8 <- duckdb$rel_aggregate(
   rel7,
   groups = list(duckdb$expr_reference("l_shipmode")),
@@ -342,6 +350,7 @@ rel8 <- duckdb$rel_aggregate(
     }
   )
 )
+"arrange"
 rel9 <- duckdb$rel_order(rel8, list(duckdb$expr_reference("l_shipmode")))
 rel9
 duckdb$rel_to_altrep(rel9)

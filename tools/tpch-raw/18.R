@@ -8,7 +8,9 @@ invisible(DBI::dbExecute(con, 'CREATE MACRO ">"(x, y) AS "r_base::>"(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 df1 <- lineitem
+"summarise"
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+"summarise"
 rel2 <- duckdb$rel_aggregate(
   rel1,
   groups = list(duckdb$expr_reference("l_orderkey")),
@@ -20,6 +22,7 @@ rel2 <- duckdb$rel_aggregate(
     }
   )
 )
+"filter"
 rel3 <- duckdb$rel_filter(
   rel2,
   list(
@@ -37,9 +40,13 @@ rel3 <- duckdb$rel_filter(
   )
 )
 df2 <- orders
+"inner_join"
 rel4 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+"inner_join"
 rel5 <- duckdb$rel_set_alias(rel4, "lhs")
+"inner_join"
 rel6 <- duckdb$rel_set_alias(rel3, "rhs")
+"inner_join"
 rel7 <- duckdb$rel_join(
   rel5,
   rel6,
@@ -51,6 +58,7 @@ rel7 <- duckdb$rel_join(
   ),
   "inner"
 )
+"inner_join"
 rel8 <- duckdb$rel_project(
   rel7,
   list(
@@ -109,10 +117,14 @@ rel8 <- duckdb$rel_project(
     }
   )
 )
+"inner_join"
 rel9 <- duckdb$rel_set_alias(rel8, "lhs")
 df3 <- customer
+"inner_join"
 rel10 <- duckdb$rel_from_df(con, df3, experimental = experimental)
+"inner_join"
 rel11 <- duckdb$rel_set_alias(rel10, "rhs")
+"inner_join"
 rel12 <- duckdb$rel_join(
   rel9,
   rel11,
@@ -124,6 +136,7 @@ rel12 <- duckdb$rel_join(
   ),
   "inner"
 )
+"inner_join"
 rel13 <- duckdb$rel_project(
   rel12,
   list(
@@ -217,6 +230,7 @@ rel13 <- duckdb$rel_project(
     }
   )
 )
+"select"
 rel14 <- duckdb$rel_project(
   rel13,
   list(
@@ -252,10 +266,12 @@ rel14 <- duckdb$rel_project(
     }
   )
 )
+"arrange"
 rel15 <- duckdb$rel_order(
   rel14,
   list(duckdb$expr_reference("o_totalprice"), duckdb$expr_reference("o_orderdate"))
 )
+"head"
 rel16 <- duckdb$rel_limit(rel15, 100)
 rel16
 duckdb$rel_to_altrep(rel16)

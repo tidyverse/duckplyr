@@ -8,7 +8,9 @@ invisible(DBI::dbExecute(con, 'CREATE MACRO ">="(x, y) AS "r_base::>="(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "<"(x, y) AS "r_base::<"(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "<="(x, y) AS "r_base::<="(x, y)'))
 df1 <- lineitem
+"select"
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+"select"
 rel2 <- duckdb$rel_project(
   rel1,
   list(
@@ -34,6 +36,7 @@ rel2 <- duckdb$rel_project(
     }
   )
 )
+"filter"
 rel3 <- duckdb$rel_project(
   rel2,
   list(
@@ -64,6 +67,7 @@ rel3 <- duckdb$rel_project(
     }
   )
 )
+"filter"
 rel4 <- duckdb$rel_filter(
   rel3,
   list(
@@ -124,7 +128,9 @@ rel4 <- duckdb$rel_filter(
     )
   )
 )
+"filter"
 rel5 <- duckdb$rel_order(rel4, list(duckdb$expr_reference("___row_number")))
+"filter"
 rel6 <- duckdb$rel_project(
   rel5,
   list(
@@ -150,6 +156,7 @@ rel6 <- duckdb$rel_project(
     }
   )
 )
+"select"
 rel7 <- duckdb$rel_project(
   rel6,
   list(
@@ -165,6 +172,7 @@ rel7 <- duckdb$rel_project(
     }
   )
 )
+"summarise"
 rel8 <- duckdb$rel_aggregate(
   rel7,
   groups = list(),
@@ -184,6 +192,7 @@ rel8 <- duckdb$rel_aggregate(
     }
   )
 )
+"summarise"
 rel9 <- duckdb$rel_distinct(rel8)
 rel9
 duckdb$rel_to_altrep(rel9)

@@ -16,7 +16,9 @@ invisible(DBI::dbExecute(con, 'CREATE MACRO ">="(x, y) AS "r_base::>="(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "<"(x, y) AS "r_base::<"(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO ">"(x, y) AS "r_base::>"(x, y)'))
 df1 <- nation
+"filter"
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+"filter"
 rel2 <- duckdb$rel_filter(
   rel1,
   list(
@@ -34,9 +36,13 @@ rel2 <- duckdb$rel_filter(
   )
 )
 df2 <- supplier
+"inner_join"
 rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+"inner_join"
 rel4 <- duckdb$rel_set_alias(rel3, "lhs")
+"inner_join"
 rel5 <- duckdb$rel_set_alias(rel2, "rhs")
+"inner_join"
 rel6 <- duckdb$rel_join(
   rel4,
   rel5,
@@ -48,6 +54,7 @@ rel6 <- duckdb$rel_join(
   ),
   "inner"
 )
+"inner_join"
 rel7 <- duckdb$rel_project(
   rel6,
   list(
@@ -106,6 +113,7 @@ rel7 <- duckdb$rel_project(
     }
   )
 )
+"select"
 rel8 <- duckdb$rel_project(
   rel7,
   list(
@@ -127,7 +135,9 @@ rel8 <- duckdb$rel_project(
   )
 )
 df3 <- part
+"filter"
 rel9 <- duckdb$rel_from_df(con, df3, experimental = experimental)
+"filter"
 rel10 <- duckdb$rel_filter(
   rel9,
   list(
@@ -145,9 +155,13 @@ rel10 <- duckdb$rel_filter(
   )
 )
 df4 <- partsupp
+"semi_join"
 rel11 <- duckdb$rel_from_df(con, df4, experimental = experimental)
+"semi_join"
 rel12 <- duckdb$rel_set_alias(rel11, "lhs")
+"semi_join"
 rel13 <- duckdb$rel_set_alias(rel8, "rhs")
+"semi_join"
 rel14 <- duckdb$rel_join(
   rel12,
   rel13,
@@ -159,8 +173,11 @@ rel14 <- duckdb$rel_join(
   ),
   "semi"
 )
+"semi_join"
 rel15 <- duckdb$rel_set_alias(rel14, "lhs")
+"semi_join"
 rel16 <- duckdb$rel_set_alias(rel10, "rhs")
+"semi_join"
 rel17 <- duckdb$rel_join(
   rel15,
   rel16,
@@ -173,7 +190,9 @@ rel17 <- duckdb$rel_join(
   "semi"
 )
 df5 <- lineitem
+"filter"
 rel18 <- duckdb$rel_from_df(con, df5, experimental = experimental)
+"filter"
 rel19 <- duckdb$rel_filter(
   rel18,
   list(
@@ -201,8 +220,11 @@ rel19 <- duckdb$rel_filter(
     )
   )
 )
+"semi_join"
 rel20 <- duckdb$rel_set_alias(rel19, "lhs")
+"semi_join"
 rel21 <- duckdb$rel_set_alias(rel17, "rhs")
+"semi_join"
 rel22 <- duckdb$rel_join(
   rel20,
   rel21,
@@ -218,6 +240,7 @@ rel22 <- duckdb$rel_join(
   ),
   "semi"
 )
+"summarise"
 rel23 <- duckdb$rel_aggregate(
   rel22,
   groups = list(duckdb$expr_reference("l_suppkey")),
@@ -239,8 +262,11 @@ rel23 <- duckdb$rel_aggregate(
     }
   )
 )
+"inner_join"
 rel24 <- duckdb$rel_set_alias(rel17, "lhs")
+"inner_join"
 rel25 <- duckdb$rel_set_alias(rel23, "rhs")
+"inner_join"
 rel26 <- duckdb$rel_join(
   rel24,
   rel25,
@@ -252,6 +278,7 @@ rel26 <- duckdb$rel_join(
   ),
   "inner"
 )
+"inner_join"
 rel27 <- duckdb$rel_project(
   rel26,
   list(
@@ -290,6 +317,7 @@ rel27 <- duckdb$rel_project(
     }
   )
 )
+"filter"
 rel28 <- duckdb$rel_filter(
   rel27,
   list(
@@ -299,8 +327,11 @@ rel28 <- duckdb$rel_filter(
     )
   )
 )
+"semi_join"
 rel29 <- duckdb$rel_set_alias(rel8, "lhs")
+"semi_join"
 rel30 <- duckdb$rel_set_alias(rel28, "rhs")
+"semi_join"
 rel31 <- duckdb$rel_join(
   rel29,
   rel30,
@@ -312,6 +343,7 @@ rel31 <- duckdb$rel_join(
   ),
   "semi"
 )
+"select"
 rel32 <- duckdb$rel_project(
   rel31,
   list(
@@ -327,6 +359,7 @@ rel32 <- duckdb$rel_project(
     }
   )
 )
+"arrange"
 rel33 <- duckdb$rel_order(rel32, list(duckdb$expr_reference("s_name")))
 rel33
 duckdb$rel_to_altrep(rel33)
