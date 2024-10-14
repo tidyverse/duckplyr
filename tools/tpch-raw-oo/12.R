@@ -18,7 +18,9 @@ invisible(
 invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "!="(x, y) AS "r_base::!="(x, y)'))
 df1 <- lineitem
+"filter"
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+"filter"
 rel2 <- duckdb$rel_project(
   rel1,
   list(
@@ -109,6 +111,7 @@ rel2 <- duckdb$rel_project(
     }
   )
 )
+"filter"
 rel3 <- duckdb$rel_filter(
   rel2,
   list(
@@ -181,7 +184,9 @@ rel3 <- duckdb$rel_filter(
     )
   )
 )
+"filter"
 rel4 <- duckdb$rel_order(rel3, list(duckdb$expr_reference("___row_number")))
+"filter"
 rel5 <- duckdb$rel_project(
   rel4,
   list(
@@ -267,10 +272,14 @@ rel5 <- duckdb$rel_project(
     }
   )
 )
+"inner_join"
 rel6 <- duckdb$rel_set_alias(rel5, "lhs")
 df2 <- orders
+"inner_join"
 rel7 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+"inner_join"
 rel8 <- duckdb$rel_set_alias(rel7, "rhs")
+"inner_join"
 rel9 <- duckdb$rel_project(
   rel6,
   list(
@@ -361,6 +370,7 @@ rel9 <- duckdb$rel_project(
     }
   )
 )
+"inner_join"
 rel10 <- duckdb$rel_project(
   rel8,
   list(
@@ -416,6 +426,7 @@ rel10 <- duckdb$rel_project(
     }
   )
 )
+"inner_join"
 rel11 <- duckdb$rel_join(
   rel9,
   rel10,
@@ -427,10 +438,12 @@ rel11 <- duckdb$rel_join(
   ),
   "inner"
 )
+"inner_join"
 rel12 <- duckdb$rel_order(
   rel11,
   list(duckdb$expr_reference("___row_number_x", rel9), duckdb$expr_reference("___row_number_y", rel10))
 )
+"inner_join"
 rel13 <- duckdb$rel_project(
   rel12,
   list(
@@ -559,6 +572,7 @@ rel13 <- duckdb$rel_project(
     }
   )
 )
+"summarise"
 rel14 <- duckdb$rel_project(
   rel13,
   list(
@@ -689,6 +703,7 @@ rel14 <- duckdb$rel_project(
     }
   )
 )
+"summarise"
 rel15 <- duckdb$rel_aggregate(
   rel14,
   groups = list(duckdb$expr_reference("l_shipmode")),
@@ -802,7 +817,9 @@ rel15 <- duckdb$rel_aggregate(
     }
   )
 )
+"summarise"
 rel16 <- duckdb$rel_order(rel15, list(duckdb$expr_reference("___row_number")))
+"summarise"
 rel17 <- duckdb$rel_project(
   rel16,
   list(
@@ -823,6 +840,7 @@ rel17 <- duckdb$rel_project(
     }
   )
 )
+"arrange"
 rel18 <- duckdb$rel_project(
   rel17,
   list(
@@ -848,10 +866,12 @@ rel18 <- duckdb$rel_project(
     }
   )
 )
+"arrange"
 rel19 <- duckdb$rel_order(
   rel18,
   list(duckdb$expr_reference("l_shipmode"), duckdb$expr_reference("___row_number"))
 )
+"arrange"
 rel20 <- duckdb$rel_project(
   rel19,
   list(

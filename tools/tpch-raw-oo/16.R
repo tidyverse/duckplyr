@@ -17,7 +17,9 @@ invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "n_distinct"(x) AS (COUNT(DISTINCT x))'))
 df1 <- part
+"filter"
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+"filter"
 rel2 <- duckdb$rel_project(
   rel1,
   list(
@@ -73,6 +75,7 @@ rel2 <- duckdb$rel_project(
     }
   )
 )
+"filter"
 rel3 <- duckdb$rel_filter(
   rel2,
   list(
@@ -238,7 +241,9 @@ rel3 <- duckdb$rel_filter(
     )
   )
 )
+"filter"
 rel4 <- duckdb$rel_order(rel3, list(duckdb$expr_reference("___row_number")))
+"filter"
 rel5 <- duckdb$rel_project(
   rel4,
   list(
@@ -290,7 +295,9 @@ rel5 <- duckdb$rel_project(
   )
 )
 df2 <- supplier
+"filter"
 rel6 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+"filter"
 rel7 <- duckdb$rel_project(
   rel6,
   list(
@@ -336,6 +343,7 @@ rel7 <- duckdb$rel_project(
     }
   )
 )
+"filter"
 rel8 <- duckdb$rel_filter(
   rel7,
   list(
@@ -357,7 +365,9 @@ rel8 <- duckdb$rel_filter(
     )
   )
 )
+"filter"
 rel9 <- duckdb$rel_order(rel8, list(duckdb$expr_reference("___row_number")))
+"filter"
 rel10 <- duckdb$rel_project(
   rel9,
   list(
@@ -399,9 +409,13 @@ rel10 <- duckdb$rel_project(
   )
 )
 df3 <- partsupp
+"inner_join"
 rel11 <- duckdb$rel_from_df(con, df3, experimental = experimental)
+"inner_join"
 rel12 <- duckdb$rel_set_alias(rel11, "lhs")
+"inner_join"
 rel13 <- duckdb$rel_set_alias(rel10, "rhs")
+"inner_join"
 rel14 <- duckdb$rel_project(
   rel12,
   list(
@@ -437,6 +451,7 @@ rel14 <- duckdb$rel_project(
     }
   )
 )
+"inner_join"
 rel15 <- duckdb$rel_project(
   rel13,
   list(
@@ -482,6 +497,7 @@ rel15 <- duckdb$rel_project(
     }
   )
 )
+"inner_join"
 rel16 <- duckdb$rel_join(
   rel14,
   rel15,
@@ -493,10 +509,12 @@ rel16 <- duckdb$rel_join(
   ),
   "inner"
 )
+"inner_join"
 rel17 <- duckdb$rel_order(
   rel16,
   list(duckdb$expr_reference("___row_number_x", rel14), duckdb$expr_reference("___row_number_y", rel15))
 )
+"inner_join"
 rel18 <- duckdb$rel_project(
   rel17,
   list(
@@ -560,6 +578,7 @@ rel18 <- duckdb$rel_project(
     }
   )
 )
+"select"
 rel19 <- duckdb$rel_project(
   rel18,
   list(
@@ -575,8 +594,11 @@ rel19 <- duckdb$rel_project(
     }
   )
 )
+"inner_join"
 rel20 <- duckdb$rel_set_alias(rel5, "lhs")
+"inner_join"
 rel21 <- duckdb$rel_set_alias(rel19, "rhs")
+"inner_join"
 rel22 <- duckdb$rel_project(
   rel20,
   list(
@@ -632,6 +654,7 @@ rel22 <- duckdb$rel_project(
     }
   )
 )
+"inner_join"
 rel23 <- duckdb$rel_project(
   rel21,
   list(
@@ -652,6 +675,7 @@ rel23 <- duckdb$rel_project(
     }
   )
 )
+"inner_join"
 rel24 <- duckdb$rel_join(
   rel22,
   rel23,
@@ -663,10 +687,12 @@ rel24 <- duckdb$rel_join(
   ),
   "inner"
 )
+"inner_join"
 rel25 <- duckdb$rel_order(
   rel24,
   list(duckdb$expr_reference("___row_number_x", rel22), duckdb$expr_reference("___row_number_y", rel23))
 )
+"inner_join"
 rel26 <- duckdb$rel_project(
   rel25,
   list(
@@ -725,6 +751,7 @@ rel26 <- duckdb$rel_project(
     }
   )
 )
+"summarise"
 rel27 <- duckdb$rel_project(
   rel26,
   list(
@@ -785,6 +812,7 @@ rel27 <- duckdb$rel_project(
     }
   )
 )
+"summarise"
 rel28 <- duckdb$rel_aggregate(
   rel27,
   groups = list(duckdb$expr_reference("p_brand"), duckdb$expr_reference("p_type"), duckdb$expr_reference("p_size")),
@@ -801,7 +829,9 @@ rel28 <- duckdb$rel_aggregate(
     }
   )
 )
+"summarise"
 rel29 <- duckdb$rel_order(rel28, list(duckdb$expr_reference("___row_number")))
+"summarise"
 rel30 <- duckdb$rel_project(
   rel29,
   list(
@@ -827,6 +857,7 @@ rel30 <- duckdb$rel_project(
     }
   )
 )
+"select"
 rel31 <- duckdb$rel_project(
   rel30,
   list(
@@ -852,6 +883,7 @@ rel31 <- duckdb$rel_project(
     }
   )
 )
+"arrange"
 rel32 <- duckdb$rel_project(
   rel31,
   list(
@@ -882,10 +914,12 @@ rel32 <- duckdb$rel_project(
     }
   )
 )
+"arrange"
 rel33 <- duckdb$rel_order(
   rel32,
   list(duckdb$expr_reference("supplier_cnt"), duckdb$expr_reference("p_brand"), duckdb$expr_reference("p_type"), duckdb$expr_reference("p_size"), duckdb$expr_reference("___row_number"))
 )
+"arrange"
 rel34 <- duckdb$rel_project(
   rel33,
   list(

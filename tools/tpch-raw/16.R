@@ -17,7 +17,9 @@ invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "n_distinct"(x) AS (COUNT(DISTINCT x))'))
 df1 <- part
+"filter"
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+"filter"
 rel2 <- duckdb$rel_filter(
   rel1,
   list(
@@ -184,7 +186,9 @@ rel2 <- duckdb$rel_filter(
   )
 )
 df2 <- supplier
+"filter"
 rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+"filter"
 rel4 <- duckdb$rel_filter(
   rel3,
   list(
@@ -207,9 +211,13 @@ rel4 <- duckdb$rel_filter(
   )
 )
 df3 <- partsupp
+"inner_join"
 rel5 <- duckdb$rel_from_df(con, df3, experimental = experimental)
+"inner_join"
 rel6 <- duckdb$rel_set_alias(rel5, "lhs")
+"inner_join"
 rel7 <- duckdb$rel_set_alias(rel4, "rhs")
+"inner_join"
 rel8 <- duckdb$rel_join(
   rel6,
   rel7,
@@ -221,6 +229,7 @@ rel8 <- duckdb$rel_join(
   ),
   "inner"
 )
+"inner_join"
 rel9 <- duckdb$rel_project(
   rel8,
   list(
@@ -284,6 +293,7 @@ rel9 <- duckdb$rel_project(
     }
   )
 )
+"select"
 rel10 <- duckdb$rel_project(
   rel9,
   list(
@@ -299,8 +309,11 @@ rel10 <- duckdb$rel_project(
     }
   )
 )
+"inner_join"
 rel11 <- duckdb$rel_set_alias(rel2, "lhs")
+"inner_join"
 rel12 <- duckdb$rel_set_alias(rel10, "rhs")
+"inner_join"
 rel13 <- duckdb$rel_join(
   rel11,
   rel12,
@@ -312,6 +325,7 @@ rel13 <- duckdb$rel_join(
   ),
   "inner"
 )
+"inner_join"
 rel14 <- duckdb$rel_project(
   rel13,
   list(
@@ -370,6 +384,7 @@ rel14 <- duckdb$rel_project(
     }
   )
 )
+"summarise"
 rel15 <- duckdb$rel_aggregate(
   rel14,
   groups = list(duckdb$expr_reference("p_brand"), duckdb$expr_reference("p_type"), duckdb$expr_reference("p_size")),
@@ -381,6 +396,7 @@ rel15 <- duckdb$rel_aggregate(
     }
   )
 )
+"select"
 rel16 <- duckdb$rel_project(
   rel15,
   list(
@@ -406,6 +422,7 @@ rel16 <- duckdb$rel_project(
     }
   )
 )
+"arrange"
 rel17 <- duckdb$rel_order(
   rel16,
   list(duckdb$expr_reference("supplier_cnt"), duckdb$expr_reference("p_brand"), duckdb$expr_reference("p_type"), duckdb$expr_reference("p_size"))
