@@ -8,6 +8,10 @@ rel_try <- function(rel, ..., call = NULL) {
 
   stats$attempts <- stats$attempts + 1L
 
+  if (Sys.getenv("DUCKPLYR_TELEMETRY_PREP_TEST") == "TRUE") {
+    force(call)
+  }
+
   if (Sys.getenv("DUCKPLYR_TELEMETRY_TEST") == "TRUE") {
     force(call)
     json <- call_to_json(
