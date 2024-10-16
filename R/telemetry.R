@@ -248,15 +248,11 @@ expr_scrub <- function(x, name_map) {
       return(xx)
     } else if (is.atomic(xx)) {
       return(xx)
+    } else if (is_missing(xx)) {
+      # Arguments without default values are empty
+      return(xx)
     } else if (is_symbol(xx)) {
       if (callee) {
-        return(xx)
-      }
-
-
-      if (nchar(as.character(xx)) == 0) {
-        # Parameters without default arguments are empty
-        # so we can return early
         return(xx)
       }
 
@@ -269,22 +265,10 @@ expr_scrub <- function(x, name_map) {
 
       sym(unname(match))
     } else if (is_call(xx)) {
-
-      if (xx[[1]] == 'function') {
-
-        # Scrub function parameters
-        param_names <- names(xx[[2]])
-        xx[[2]] <- as.pairlist(map(xx[[2]],  do_scrub))
-        names(xx[[2]]) <- param_names
-
-        # Scrub function body
-        xx[[3]] <- do_scrub(xx[[3]])
-
-        return(call2(xx))
-      }
-
       args <- map(as.list(xx)[-1], do_scrub)
       call2(do_scrub(xx[[1]], callee = TRUE), !!!args)
+    } else if (is_pairlist(xx)) {
+      as.pairlist(map(as.list(xx), do_scrub))
     } else {
       paste0("Don't know how to scrub ", paste(class(xx), collapse = "/"))
     }
