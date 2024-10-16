@@ -22,7 +22,9 @@ invisible(
 invisible(DBI::dbExecute(con, 'CREATE MACRO "is.na"(x) AS (x IS NULL OR isnan(x))'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
 df1 <- orders
+"filter"
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+"filter"
 rel2 <- duckdb$rel_filter(
   rel1,
   list(
@@ -45,9 +47,13 @@ rel2 <- duckdb$rel_filter(
   )
 )
 df2 <- customer
+"left_join"
 rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+"left_join"
 rel4 <- duckdb$rel_set_alias(rel3, "lhs")
+"left_join"
 rel5 <- duckdb$rel_set_alias(rel2, "rhs")
+"left_join"
 rel6 <- duckdb$rel_join(
   rel4,
   rel5,
@@ -59,6 +65,7 @@ rel6 <- duckdb$rel_join(
   ),
   "left"
 )
+"left_join"
 rel7 <- duckdb$rel_project(
   rel6,
   list(
@@ -147,6 +154,7 @@ rel7 <- duckdb$rel_project(
     }
   )
 )
+"summarise"
 rel8 <- duckdb$rel_aggregate(
   rel7,
   groups = list(duckdb$expr_reference("c_custkey")),
@@ -178,6 +186,7 @@ rel8 <- duckdb$rel_aggregate(
     }
   )
 )
+"summarise"
 rel9 <- duckdb$rel_aggregate(
   rel8,
   groups = list(duckdb$expr_reference("c_count")),
@@ -189,6 +198,7 @@ rel9 <- duckdb$rel_aggregate(
     }
   )
 )
+"arrange"
 rel10 <- duckdb$rel_order(rel9, list(duckdb$expr_reference("custdist"), duckdb$expr_reference("c_count")))
 rel10
 duckdb$rel_to_altrep(rel10)

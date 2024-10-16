@@ -8,7 +8,9 @@ invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO ">"(x, y) AS "r_base::>"(x, y)'))
 df1 <- nation
+"filter"
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+"filter"
 rel2 <- duckdb$rel_filter(
   rel1,
   list(
@@ -26,11 +28,16 @@ rel2 <- duckdb$rel_filter(
   )
 )
 df2 <- partsupp
+"inner_join"
 rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+"inner_join"
 rel4 <- duckdb$rel_set_alias(rel3, "lhs")
 df3 <- supplier
+"inner_join"
 rel5 <- duckdb$rel_from_df(con, df3, experimental = experimental)
+"inner_join"
 rel6 <- duckdb$rel_set_alias(rel5, "rhs")
+"inner_join"
 rel7 <- duckdb$rel_join(
   rel4,
   rel6,
@@ -42,6 +49,7 @@ rel7 <- duckdb$rel_join(
   ),
   "inner"
 )
+"inner_join"
 rel8 <- duckdb$rel_project(
   rel7,
   list(
@@ -105,8 +113,11 @@ rel8 <- duckdb$rel_project(
     }
   )
 )
+"inner_join"
 rel9 <- duckdb$rel_set_alias(rel8, "lhs")
+"inner_join"
 rel10 <- duckdb$rel_set_alias(rel2, "rhs")
+"inner_join"
 rel11 <- duckdb$rel_join(
   rel9,
   rel10,
@@ -118,6 +129,7 @@ rel11 <- duckdb$rel_join(
   ),
   "inner"
 )
+"inner_join"
 rel12 <- duckdb$rel_project(
   rel11,
   list(
@@ -196,6 +208,7 @@ rel12 <- duckdb$rel_project(
     }
   )
 )
+"summarise"
 rel13 <- duckdb$rel_aggregate(
   rel12,
   groups = list(),
@@ -225,7 +238,9 @@ rel13 <- duckdb$rel_aggregate(
     }
   )
 )
+"summarise"
 rel14 <- duckdb$rel_distinct(rel13)
+"mutate"
 rel15 <- duckdb$rel_project(
   rel14,
   list(
@@ -245,6 +260,7 @@ rel15 <- duckdb$rel_project(
     }
   )
 )
+"summarise"
 rel16 <- duckdb$rel_aggregate(
   rel12,
   groups = list(duckdb$expr_reference("ps_partkey")),
@@ -264,6 +280,7 @@ rel16 <- duckdb$rel_aggregate(
     }
   )
 )
+"mutate"
 rel17 <- duckdb$rel_project(
   rel16,
   list(
@@ -288,8 +305,11 @@ rel17 <- duckdb$rel_project(
     }
   )
 )
+"inner_join"
 rel18 <- duckdb$rel_set_alias(rel17, "lhs")
+"inner_join"
 rel19 <- duckdb$rel_set_alias(rel15, "rhs")
+"inner_join"
 rel20 <- duckdb$rel_project(
   rel18,
   list(
@@ -310,6 +330,7 @@ rel20 <- duckdb$rel_project(
     }
   )
 )
+"inner_join"
 rel21 <- duckdb$rel_project(
   rel19,
   list(
@@ -325,6 +346,7 @@ rel21 <- duckdb$rel_project(
     }
   )
 )
+"inner_join"
 rel22 <- duckdb$rel_join(
   rel20,
   rel21,
@@ -336,6 +358,7 @@ rel22 <- duckdb$rel_join(
   ),
   "inner"
 )
+"inner_join"
 rel23 <- duckdb$rel_project(
   rel22,
   list(
@@ -364,13 +387,16 @@ rel23 <- duckdb$rel_project(
     }
   )
 )
+"filter"
 rel24 <- duckdb$rel_filter(
   rel23,
   list(
     duckdb$expr_function(">", list(duckdb$expr_reference("value"), duckdb$expr_reference("global_value")))
   )
 )
+"arrange"
 rel25 <- duckdb$rel_order(rel24, list(duckdb$expr_reference("value")))
+"select"
 rel26 <- duckdb$rel_project(
   rel25,
   list(

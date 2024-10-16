@@ -14,7 +14,9 @@ invisible(
   )
 )
 df1 <- part
+"filter"
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+"filter"
 rel2 <- duckdb$rel_project(
   rel1,
   list(
@@ -70,6 +72,7 @@ rel2 <- duckdb$rel_project(
     }
   )
 )
+"filter"
 rel3 <- duckdb$rel_filter(
   rel2,
   list(
@@ -97,7 +100,9 @@ rel3 <- duckdb$rel_filter(
     )
   )
 )
+"filter"
 rel4 <- duckdb$rel_order(rel3, list(duckdb$expr_reference("___row_number")))
+"filter"
 rel5 <- duckdb$rel_project(
   rel4,
   list(
@@ -149,9 +154,13 @@ rel5 <- duckdb$rel_project(
   )
 )
 df2 <- lineitem
+"inner_join"
 rel6 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+"inner_join"
 rel7 <- duckdb$rel_set_alias(rel6, "lhs")
+"inner_join"
 rel8 <- duckdb$rel_set_alias(rel5, "rhs")
+"inner_join"
 rel9 <- duckdb$rel_project(
   rel7,
   list(
@@ -242,6 +251,7 @@ rel9 <- duckdb$rel_project(
     }
   )
 )
+"inner_join"
 rel10 <- duckdb$rel_project(
   rel8,
   list(
@@ -297,6 +307,7 @@ rel10 <- duckdb$rel_project(
     }
   )
 )
+"inner_join"
 rel11 <- duckdb$rel_join(
   rel9,
   rel10,
@@ -308,10 +319,12 @@ rel11 <- duckdb$rel_join(
   ),
   "inner"
 )
+"inner_join"
 rel12 <- duckdb$rel_order(
   rel11,
   list(duckdb$expr_reference("___row_number_x", rel9), duckdb$expr_reference("___row_number_y", rel10))
 )
+"inner_join"
 rel13 <- duckdb$rel_project(
   rel12,
   list(
@@ -440,6 +453,7 @@ rel13 <- duckdb$rel_project(
     }
   )
 )
+"summarise"
 rel14 <- duckdb$rel_project(
   rel13,
   list(
@@ -570,6 +584,7 @@ rel14 <- duckdb$rel_project(
     }
   )
 )
+"summarise"
 rel15 <- duckdb$rel_aggregate(
   rel14,
   groups = list(duckdb$expr_reference("l_partkey")),
@@ -596,7 +611,9 @@ rel15 <- duckdb$rel_aggregate(
     }
   )
 )
+"summarise"
 rel16 <- duckdb$rel_order(rel15, list(duckdb$expr_reference("___row_number")))
+"summarise"
 rel17 <- duckdb$rel_project(
   rel16,
   list(
@@ -612,8 +629,11 @@ rel17 <- duckdb$rel_project(
     }
   )
 )
+"inner_join"
 rel18 <- duckdb$rel_set_alias(rel13, "lhs")
+"inner_join"
 rel19 <- duckdb$rel_set_alias(rel17, "rhs")
+"inner_join"
 rel20 <- duckdb$rel_project(
   rel18,
   list(
@@ -739,6 +759,7 @@ rel20 <- duckdb$rel_project(
     }
   )
 )
+"inner_join"
 rel21 <- duckdb$rel_project(
   rel19,
   list(
@@ -754,6 +775,7 @@ rel21 <- duckdb$rel_project(
     }
   )
 )
+"inner_join"
 rel22 <- duckdb$rel_project(
   rel20,
   list(
@@ -884,6 +906,7 @@ rel22 <- duckdb$rel_project(
     }
   )
 )
+"inner_join"
 rel23 <- duckdb$rel_project(
   rel21,
   list(
@@ -904,6 +927,7 @@ rel23 <- duckdb$rel_project(
     }
   )
 )
+"inner_join"
 rel24 <- duckdb$rel_join(
   rel22,
   rel23,
@@ -915,10 +939,12 @@ rel24 <- duckdb$rel_join(
   ),
   "inner"
 )
+"inner_join"
 rel25 <- duckdb$rel_order(
   rel24,
   list(duckdb$expr_reference("___row_number_x", rel22), duckdb$expr_reference("___row_number_y", rel23))
 )
+"inner_join"
 rel26 <- duckdb$rel_project(
   rel25,
   list(
@@ -1052,6 +1078,7 @@ rel26 <- duckdb$rel_project(
     }
   )
 )
+"filter"
 rel27 <- duckdb$rel_project(
   rel26,
   list(
@@ -1187,6 +1214,7 @@ rel27 <- duckdb$rel_project(
     }
   )
 )
+"filter"
 rel28 <- duckdb$rel_filter(
   rel27,
   list(
@@ -1196,7 +1224,9 @@ rel28 <- duckdb$rel_filter(
     )
   )
 )
+"filter"
 rel29 <- duckdb$rel_order(rel28, list(duckdb$expr_reference("___row_number")))
+"filter"
 rel30 <- duckdb$rel_project(
   rel29,
   list(
@@ -1327,6 +1357,7 @@ rel30 <- duckdb$rel_project(
     }
   )
 )
+"summarise"
 rel31 <- duckdb$rel_aggregate(
   rel30,
   groups = list(),
@@ -1348,6 +1379,7 @@ rel31 <- duckdb$rel_aggregate(
     }
   )
 )
+"summarise"
 rel32 <- duckdb$rel_distinct(rel31)
 rel32
 duckdb$rel_to_altrep(rel32)
