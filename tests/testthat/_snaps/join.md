@@ -184,61 +184,18 @@
     Code
       duckplyr_left_join(df1, df2, by = character(), unmatched = "error")
     Condition
-      Error in `left_join()`:
-      ! Each row of `y` must be matched by `x`.
-      i Row 1 of `y` was not matched.
+      Error in `finalise_equi_join_by()`:
+      ! Backwards compatible support for cross joins should have been caught earlier.
+      i This is an internal error that was detected in the dplyr package.
+        Please report it at <https://github.com/tidyverse/dplyr/issues> with a reprex (<https://tidyverse.org/help/>) and the full backtrace.
 
 # `by = character()` technically respects `relationship`
 
     Code
       duckplyr_left_join(df, df, by = character(), relationship = "many-to-one")
     Condition
-      Error in `left_join()`:
-      ! Each row in `x` must match at most 1 row in `y`.
-      i Row 1 of `x` matches multiple rows in `y`.
-
-# `by = character()` for a cross join is deprecated (#6604)
-
-    Code
-      out <- duckplyr_left_join(df1, df2, by = character())
-    Condition
-      Warning:
-      Using `by = character()` to perform a cross join was deprecated in dplyr 1.1.0.
-      i Please use `cross_join()` instead.
-
----
-
-    Code
-      out <- duckplyr_semi_join(df1, df2, by = character())
-    Condition
-      Warning:
-      Using `by = character()` to perform a cross join was deprecated in dplyr 1.1.0.
-      i Please use `cross_join()` instead.
-
----
-
-    Code
-      out <- duckplyr_nest_join(df1, df2, by = character())
-    Condition
-      Warning:
-      Using `by = character()` to perform a cross join was deprecated in dplyr 1.1.0.
-      i Please use `cross_join()` instead.
-
-# `by = named character()` for a cross join works
-
-    Code
-      out <- duckplyr_left_join(df1, df2, by = by)
-    Condition
-      Warning:
-      Using `by = character()` to perform a cross join was deprecated in dplyr 1.1.0.
-      i Please use `cross_join()` instead.
-
-# `by = list(x = character(), y = character())` for a cross join is deprecated (#6604)
-
-    Code
-      out <- duckplyr_left_join(df1, df2, by = list(x = character(), y = character()))
-    Condition
-      Warning:
-      Using `by = character()` to perform a cross join was deprecated in dplyr 1.1.0.
-      i Please use `cross_join()` instead.
+      Error in `finalise_equi_join_by()`:
+      ! Backwards compatible support for cross joins should have been caught earlier.
+      i This is an internal error that was detected in the dplyr package.
+        Please report it at <https://github.com/tidyverse/dplyr/issues> with a reprex (<https://tidyverse.org/help/>) and the full backtrace.
 

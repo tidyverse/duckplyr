@@ -3,16 +3,16 @@
     Code
       duckplyr_count(df, x, name = 1)
     Condition
-      Error in `tally()`:
-      ! `name` must be a single string, not the number 1.
+      Error in `sym()`:
+      ! Can't convert a double vector to a symbol.
 
 ---
 
     Code
       duckplyr_count(df, x, name = letters)
     Condition
-      Error in `tally()`:
-      ! `name` must be a single string, not a character vector.
+      Error in `sym()`:
+      ! Can't convert a character vector to a symbol.
 
 # can only explicitly chain together multiple tallies
 
