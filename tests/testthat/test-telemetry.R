@@ -326,3 +326,13 @@ test_that("telemetry and union_all()", {
       union_all(tibble(a = 1:3, b = 4:6))
   })
 })
+
+test_that("scrubbing function declarations", {
+  expect_snapshot({
+    expr <- expr(
+      across(x:y, function(arg) mean(arg, na.rm = TRUE))
+    )
+
+    expr_scrub(expr)
+  })
+})

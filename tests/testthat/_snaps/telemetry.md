@@ -327,3 +327,11 @@
       Error in `rel_try()`:
       ! union_all: {"version":"0.3.1","message":"Error in union_all","name":"union_all","x":{"...1":"integer","...2":"integer"},"y":{"...1":"integer","...2":"integer"}}
 
+# scrubbing function declarations
+
+    Code
+      expr <- expr(across(x:y, function(arg) mean(arg, na.rm = TRUE)))
+      expr_scrub(expr)
+    Output
+      across(...1:...2, function(arg) mean(...3, na.rm = TRUE))
+

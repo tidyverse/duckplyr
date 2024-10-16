@@ -237,7 +237,7 @@ expr_to_json <- function(x, name_map) {
   expr_deparse(scrubbed, width = 500L)
 }
 
-expr_scrub <- function(x, name_map) {
+expr_scrub <- function(x, name_map = character()) {
   do_scrub <- function(xx, callee = FALSE) {
     if (is.character(xx))  {
       return("<character>")
