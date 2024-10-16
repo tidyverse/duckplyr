@@ -237,7 +237,7 @@ expr_to_json <- function(x, name_map) {
   expr_deparse(scrubbed, width = 500L)
 }
 
-expr_scrub <- function(x, name_map) {
+expr_scrub <- function(x, name_map = character()) {
   do_scrub <- function(xx, callee = FALSE) {
     if (is.character(xx))  {
       return("<character>")
@@ -247,6 +247,9 @@ expr_scrub <- function(x, name_map) {
       # Needed for R 4.4
       return(xx)
     } else if (is.atomic(xx)) {
+      return(xx)
+    } else if (is_missing(xx)) {
+      # Arguments without default values are empty
       return(xx)
     } else if (is_symbol(xx)) {
       if (callee) {
@@ -264,6 +267,8 @@ expr_scrub <- function(x, name_map) {
     } else if (is_call(xx)) {
       args <- map(as.list(xx)[-1], do_scrub)
       call2(do_scrub(xx[[1]], callee = TRUE), !!!args)
+    } else if (is_pairlist(xx)) {
+      as.pairlist(map(as.list(xx), do_scrub))
     } else {
       paste0("Don't know how to scrub ", paste(class(xx), collapse = "/"))
     }
