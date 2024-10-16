@@ -3,7 +3,7 @@
     Code
       duckplyr_count(df, x, name = 1)
     Condition
-      Error in `tally()`:
+      Error in `count()`:
       ! `name` must be a single string, not the number 1.
 
 ---
@@ -11,7 +11,7 @@
     Code
       duckplyr_count(df, x, name = letters)
     Condition
-      Error in `tally()`:
+      Error in `count()`:
       ! `name` must be a single string, not a character vector.
 
 # can only explicitly chain together multiple tallies
@@ -45,11 +45,9 @@
     Code
       (expect_error(duckplyr_count(mtcars, new = 1 + "")))
     Output
-      <error/dplyr:::mutate_error>
-      Error in `group_by()`:
-      i In argument: `new = 1 + ""`.
-      Caused by error in `1 + ""`:
-      ! non-numeric argument to binary operator
+      <error/rlang_error>
+      Error in `FUN()`:
+      ! Can't convert a call to a string.
     Code
       (expect_error(duckplyr_count(mtcars, wt = 1 + "")))
     Output
