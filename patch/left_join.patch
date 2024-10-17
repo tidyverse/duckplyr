@@ -1,5 +1,5 @@
 diff --git b/R/left_join.R a/R/left_join.R
-index d5e954be..aec81a64 100644
+index d5e954be..c527d647 100644
 --- b/R/left_join.R
 +++ a/R/left_join.R
 @@ -1,17 +1,22 @@
@@ -13,7 +13,7 @@ index d5e954be..aec81a64 100644
    # Our implementation
 -  rel_try(
 -    "No relational implementation for left_join()" = TRUE,
-+  rel_try(call = list(name = "left_join", x = x, y = y, args = list(by = if(!is.null(by)) as_join_by(by), copy = copy, keep = keep, na_matches = na_matches, multiple = multiple, unmatched = unmatched, relationship = relationship)),
++  rel_try(call = list(name = "left_join", x = x, y = y, args = list(by = if(!is.null(by) && !is_cross_by(by)) as_join_by(by), copy = copy, keep = keep, na_matches = na_matches, multiple = multiple, unmatched = unmatched, relationship = relationship)),
 +    "No implicit cross joins for left_join()" = is_cross_by(by),
      {
 +      out <- rel_join_impl(x, y, by, "left", na_matches, suffix, keep, error_call)
