@@ -166,7 +166,7 @@ duckplyr_tests <- head(n = -1, list(
 
 dplyr_only_tests <- head(n = -1, list(
   "test-count-tally.R" = c(
-    "ouput preserves grouping",
+    "output preserves grouping",
     NULL
   ),
   "test-deprec-do.R" = c(
