@@ -124,6 +124,9 @@ duckplyr_tests <- head(n = -1, list(
     NULL
   ),
   "test-mutate.R" = c(
+    # Appeared again after https://github.com/tidyverse/duckplyr/pull/276
+    # without a good reason
+    "no utf8 invasion (#722)",
     NULL
   ),
   "test-pull.R" = c(
