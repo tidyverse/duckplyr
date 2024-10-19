@@ -1,0 +1,13 @@
+diff --git b/R/group_nest.R a/R/group_nest.R
+index ba2561f8..3755e9cf 100644
+--- b/R/group_nest.R
++++ a/R/group_nest.R
+@@ -2,7 +2,7 @@
+ #' @export
+ group_nest.duckplyr_df <- function(.tbl, ..., .key = "data", keep = FALSE) {
+   # Our implementation
+-  rel_try(
++  rel_try(NULL,
+     # Always fall back to dplyr
+     "No relational implementation for group_nest()" = TRUE,
+     {

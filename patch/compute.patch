@@ -1,0 +1,13 @@
+diff --git b/R/compute.R a/R/compute.R
+index 4bb1cf8b..31287154 100644
+--- b/R/compute.R
++++ a/R/compute.R
+@@ -2,7 +2,7 @@
+ #' @export
+ compute.duckplyr_df <- function(x, ...) {
+   # Our implementation
+-  rel_try(
++  rel_try(NULL,
+     "No relational implementation for compute()" = TRUE,
+     {
+       return(out)

@@ -1,0 +1,13 @@
+diff --git b/R/rows_insert.R a/R/rows_insert.R
+index 28d188a5..d9b7fc0d 100644
+--- b/R/rows_insert.R
++++ a/R/rows_insert.R
+@@ -2,7 +2,7 @@
+ #' @export
+ rows_insert.duckplyr_df <- function(x, y, by = NULL, ..., conflict = c("error", "ignore"), copy = FALSE, in_place = FALSE) {
+   # Our implementation
+-  rel_try(
++  rel_try(NULL,
+     "No relational implementation for rows_insert()" = TRUE,
+     {
+       return(out)

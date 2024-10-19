@@ -1,0 +1,13 @@
+diff --git b/R/rows_patch.R a/R/rows_patch.R
+index b7611f83..4c55815e 100644
+--- b/R/rows_patch.R
++++ a/R/rows_patch.R
+@@ -2,7 +2,7 @@
+ #' @export
+ rows_patch.duckplyr_df <- function(x, y, by = NULL, ..., unmatched = c("error", "ignore"), copy = FALSE, in_place = FALSE) {
+   # Our implementation
+-  rel_try(
++  rel_try(NULL,
+     "No relational implementation for rows_patch()" = TRUE,
+     {
+       return(out)

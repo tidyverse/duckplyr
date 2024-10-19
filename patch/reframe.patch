@@ -1,0 +1,13 @@
+diff --git b/R/reframe.R a/R/reframe.R
+index f3930289..17403868 100644
+--- b/R/reframe.R
++++ a/R/reframe.R
+@@ -2,7 +2,7 @@
+ #' @export
+ reframe.duckplyr_df <- function(.data, ..., .by = NULL) {
+   # Our implementation
+-  rel_try(
++  rel_try(NULL,
+     "No relational implementation for reframe()" = TRUE,
+     {
+       return(out)

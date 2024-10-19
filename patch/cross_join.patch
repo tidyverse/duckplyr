@@ -1,0 +1,13 @@
+diff --git b/R/cross_join.R a/R/cross_join.R
+index 4b23bfe3..47045fb3 100644
+--- b/R/cross_join.R
++++ a/R/cross_join.R
+@@ -2,7 +2,7 @@
+ #' @export
+ cross_join.duckplyr_df <- function(x, y, ..., copy = FALSE, suffix = c(".x", ".y")) {
+   # Our implementation
+-  rel_try(
++  rel_try(NULL,
+     "No relational implementation for cross_join()" = TRUE,
+     {
+       return(out)

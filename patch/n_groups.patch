@@ -1,0 +1,13 @@
+diff --git b/R/n_groups.R a/R/n_groups.R
+index dedcc5e8..57a8eced 100644
+--- b/R/n_groups.R
++++ a/R/n_groups.R
+@@ -2,7 +2,7 @@
+ #' @export
+ n_groups.duckplyr_df <- function(x) {
+   # Our implementation
+-  rel_try(
++  rel_try(NULL,
+     # Always fall back to dplyr
+     "No relational implementation for n_groups()" = TRUE,
+     {
