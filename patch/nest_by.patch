@@ -1,7 +1,16 @@
 diff --git b/R/nest_by.R a/R/nest_by.R
-index c98c02e1..b57f329c 100644
+index c98c02e1..e18cf3dc 100644
 --- b/R/nest_by.R
 +++ a/R/nest_by.R
+@@ -2,7 +2,7 @@
+ #' @export
+ nest_by.duckplyr_df <- function(.data, ..., .key = "data", .keep = FALSE) {
+   # Our implementation
+-  rel_try(
++  rel_try(NULL,
+     "No relational implementation for nest_by()" = TRUE,
+     {
+       return(out)
 @@ -16,7 +16,7 @@ nest_by.duckplyr_df <- function(.data, ..., .key = "data", .keep = FALSE) {
  
    # dplyr implementation

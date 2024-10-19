@@ -1,0 +1,13 @@
+diff --git b/R/ungroup.R a/R/ungroup.R
+index b73fdb83..f5b230ea 100644
+--- b/R/ungroup.R
++++ a/R/ungroup.R
+@@ -2,7 +2,7 @@
+ #' @export
+ ungroup.duckplyr_df <- function(x, ...) {
+   # Our implementation
+-  rel_try(
++  rel_try(NULL,
+     "No relational implementation for ungroup()" = TRUE,
+     {
+       return(out)

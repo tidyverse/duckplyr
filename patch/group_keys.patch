@@ -1,0 +1,13 @@
+diff --git b/R/group_keys.R a/R/group_keys.R
+index 88a5daa4..2ccd14a5 100644
+--- b/R/group_keys.R
++++ a/R/group_keys.R
+@@ -2,7 +2,7 @@
+ #' @export
+ group_keys.duckplyr_df <- function(.tbl, ...) {
+   # Our implementation
+-  rel_try(
++  rel_try(NULL,
+     # Always fall back to dplyr
+     "No relational implementation for group_keys()" = TRUE,
+     {

@@ -45,9 +45,11 @@
     Code
       (expect_error(duckplyr_count(mtcars, new = 1 + "")))
     Output
-      <error/rlang_error>
-      Error in `FUN()`:
-      ! Can't convert a call to a string.
+      <error/dplyr:::mutate_error>
+      Error in `group_by()`:
+      i In argument: `new = 1 + ""`.
+      Caused by error in `1 + ""`:
+      ! non-numeric argument to binary operator
     Code
       (expect_error(duckplyr_count(mtcars, wt = 1 + "")))
     Output

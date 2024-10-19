@@ -1,5 +1,5 @@
 diff --git b/R/intersect.R a/R/intersect.R
-index e080cd61..925a5273 100644
+index e080cd61..cf9fd035 100644
 --- b/R/intersect.R
 +++ a/R/intersect.R
 @@ -2,9 +2,37 @@
@@ -18,7 +18,7 @@ index e080cd61..925a5273 100644
 +    y_names <- x_names
 +  }
 +
-+  rel_try(call = list(name = "intersect", x = x, y = y),
++  rel_try(list(name = "intersect", x = x, y = y),
 +    "No duplicate names" = !identical(x_names, y_names) && anyDuplicated(x_names) && anyDuplicated(y_names),
 +    "Tables of different width" = length(x_names) != length(y_names),
 +    "Name mismatch" = !identical(x_names, y_names) && !all(y_names %in% x_names),

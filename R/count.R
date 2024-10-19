@@ -11,19 +11,27 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
   by_exprs <- unname(map(by, quo_get_expr))
   is_name <- map_lgl(by_exprs, is_symbol)
 
-  by_chr <- map_chr(by_exprs, as_string)
-  name_was_null <- is.null(name)
-  name <- check_n_name(name, by_chr, call = dplyr_error_call())
+  # For better error message
+  if (!is.null(name)) {
+    check_string(name, call = dplyr_error_call())
+  }
 
-  n <- tally_n(x, {{ wt }})
-
-  rel_try(list(name = "count", x = x, args = list(dots = enquos(...), wt = enquo(wt), sort = sort, name = if (!name_was_null) sym(name), .drop = .drop)),
+  # Passing `name` reliably is surprisingly complicated.
+  rel_try(list(name = "count", x = x, args = list(dots = enquos(...), wt = enquo(wt), sort = sort, .drop = .drop)),
     "count() needs all(is_name)" = !all(is_name),
     "count() only implemented for .drop = TRUE" = !.drop,
     "count() only implemented for sort = FALSE" = sort,
-    "Name clash in count()" = (name %in% by_chr),
     {
       rel <- duckdb_rel_from_df(x)
+
+      by_chr <- map_chr(by_exprs, as_string)
+      name_was_null <- is.null(name)
+      name <- check_n_name(name, by_chr, call = dplyr_error_call())
+
+      if (name %in% by_chr) {
+        cli::cli_abort("Name clash in `count()`")
+      }
+      n <- tally_n(x, {{ wt }})
 
       groups <- rel_translate_dots(by, x)
       aggregates <- list(rel_translate(n, x, alias = name))
