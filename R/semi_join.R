@@ -10,6 +10,7 @@ semi_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches
 
   # Our implementation
   rel_try(list(name = "semi_join", x = x, y = y, args = list(by = if (!is.null(by) && !is_cross_by(by)) as_join_by(by), copy = copy, na_matches = na_matches)),
+    "No restrictions" = FALSE,
     {
       out <- rel_join_impl(x, y, by, "semi", na_matches, error_call = error_call)
       return(out)
