@@ -17,7 +17,7 @@ get_default_duckdb_connection <- function() {
 duckplyr_macros <- c(
   # https://github.com/duckdb/duckdb-r/pull/156
   "___null" = "() AS CAST(NULL AS BOOLEAN)",
-
+  #
   "<" = '(x, y) AS "r_base::<"(x, y)',
   "<=" = '(x, y) AS "r_base::<="(x, y)',
   ">" = '(x, y) AS "r_base::>"(x, y)',

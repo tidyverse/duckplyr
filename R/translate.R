@@ -74,7 +74,7 @@ rel_find_call <- function(fun, env) {
     # "sqrt" = "base",
     # "abs" = "base",
     "if_else" = c("dplyr", "duckplyr"),
-
+    #
     "any" = "base",
     "suppressWarnings" = "base",
     "lag" = c("dplyr", "duckplyr"),

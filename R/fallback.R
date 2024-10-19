@@ -71,7 +71,7 @@ fallback_sitrep <- function() {
 
   msg <- c(
     fallback_txt_header(),
-
+    #
     if (is.na(fallback_logging)) {
       c("i" = "Fallback logging is not controlled and therefore disabled. Enable it with {.run Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)}, disable it with {.run Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)}.")
     } else if (fallback_logging) {
@@ -89,15 +89,15 @@ fallback_sitrep <- function() {
     } else {
       c("x" = "Fallback logging is disabled.")
     },
-
+    #
     fallback_txt_uploading(fallback_uploading),
-
+    #
     if (isTRUE(fallback_logging)) {
       fallback_txt_sitrep_logs(fallback_logs)
     },
-
+    #
     fallback_txt_help(),
-
+    #
     NULL
   )
 
