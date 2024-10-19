@@ -214,7 +214,7 @@
       tibble(a = 1) %>% as_duckplyr_df() %>% count(a, .drop = FALSE, name = "n")
     Message
       i dplyr fallback recorded
-        {"version":"0.3.1","message":"count() only implemented for .drop = TRUE","name":"count","x":{"...1":"numeric"},"args":{"dots":{"1":"...1"},"wt":"NULL","sort":false,"name":"...3",".drop":false}}
+        {"version":"0.3.1","message":"count() only implemented for .drop = TRUE","name":"count","x":{"...1":"numeric"},"args":{"dots":{"1":"...1"},"wt":"NULL","sort":false,".drop":false}}
       i dplyr fallback recorded
         {"version":"0.3.1","message":"No relational implementation for group_by()"}
     Output

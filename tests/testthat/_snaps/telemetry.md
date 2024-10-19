@@ -65,7 +65,7 @@
         name = "nn", .drop = FALSE)
     Condition
       Error in `rel_try()`:
-      ! count: {"version":"0.3.1","message":"Error in count","name":"count","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"1":"...1"},"wt":"...2","sort":true,"name":"...4",".drop":false}}
+      ! count: {"version":"0.3.1","message":"Error in count","name":"count","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"1":"...1"},"wt":"...2","sort":true,".drop":false}}
 
 # telemetry and distinct()
 
