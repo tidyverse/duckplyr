@@ -4,12 +4,14 @@ Sys.setenv(DUCKPLYR_FORCE = TRUE)
 Sys.setenv(DUCKPLYR_EXPERIMENTAL = FALSE)
 Sys.setenv(DUCKPLYR_META_GLOBAL = TRUE)
 
+# Sys.setenv(DUCKPLYR_FALLBACK_FORCE = TRUE)
+
 # Sys.setenv(DUCKPLYR_OUTPUT_ORDER = TRUE)
 
 qloadm("tools/tpch/001.qs")
 answer <- "tpch-sf0.01"
 
-# load("tools/tpch/100.qs")
+# qloadm("tools/tpch/100.qs")
 # answer <- "tpch-sf1"
 
 customer <- as_duckplyr_df(customer)
@@ -28,6 +30,7 @@ stopifnot(isTRUE(all.equal(as.data.frame(res), correct, tolerance = 4e-12)))
 res <- tpch_02()
 correct <- read.delim(fs::path("tests/testthat", answer, "q02.csv"), sep = "|")
 stopifnot(isTRUE(all.equal(as.data.frame(res), correct, tolerance = 4e-12)))
+# write.table(as.data.frame(res), fs::path("tests/testthat", answer, "q02.csv"), sep = "|", quote = FALSE, row.names = FALSE)
 
 res <- tpch_03()
 correct <- read.delim(fs::path("tests/testthat", answer, "q03.csv"), sep = "|")
@@ -61,6 +64,7 @@ stopifnot(isTRUE(all.equal(as.data.frame(res), correct, tolerance = 4e-12)))
 res <- tpch_10()
 correct <- read.delim(fs::path("tests/testthat", answer, "q10.csv"), sep = "|")
 stopifnot(isTRUE(all.equal(as.data.frame(res), correct, tolerance = 4e-12)))
+# write.table(as.data.frame(res), fs::path("tests/testthat", answer, "q10.csv"), sep = "|", quote = FALSE, row.names = FALSE)
 
 res <- tpch_11()
 correct <- read.delim(fs::path("tests/testthat", answer, "q11.csv"), sep = "|")
@@ -73,6 +77,7 @@ stopifnot(isTRUE(all.equal(as.data.frame(res), correct, tolerance = 4e-12)))
 res <- tpch_13()
 correct <- read.delim(fs::path("tests/testthat", answer, "q13.csv"), sep = "|")
 stopifnot(isTRUE(all.equal(as.data.frame(res), correct, tolerance = 4e-12)))
+# write.table(as.data.frame(res), fs::path("tests/testthat", answer, "q13.csv"), sep = "|", quote = FALSE, row.names = FALSE)
 
 res <- tpch_14()
 correct <- read.delim(fs::path("tests/testthat", answer, "q14.csv"), sep = "|")
