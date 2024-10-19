@@ -47,7 +47,7 @@ duckplyr_macros <- c(
   #
   "wday" = "(x) AS CAST(weekday(CAST (x AS DATE)) + 1 AS int32)",
   #
-  "___eq_na_matches_na" = '(x, y) AS (x IS NOT DISTINCT FROM y)',
+  "___eq_na_matches_na" = "(x, y) AS (x IS NOT DISTINCT FROM y)",
   "___coalesce" = "(x, y) AS COALESCE(x, y)",
   #
   # FIXME: Need a better way?
@@ -238,7 +238,6 @@ rel_aggregate.duckdb_relation <- function(rel, groups, aggregates, ...) {
 
 #' @export
 rel_order.duckdb_relation <- function(rel, orders, ascending = NULL, ...) {
-
   duckdb_orders <- to_duckdb_exprs(orders)
 
   out <- duckdb$rel_order(rel, duckdb_orders, ascending)
@@ -360,8 +359,7 @@ rel_explain.duckdb_relation <- function(rel, ...) {
 }
 
 #' @export
-rel_alias.duckdb_relation <- function(rel, ...) {
-}
+rel_alias.duckdb_relation <- function(rel, ...) {}
 
 #' @export
 rel_set_alias.duckdb_relation <- function(rel, alias, ...) {

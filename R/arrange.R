@@ -17,9 +17,9 @@ arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
         return(.data)
       }
 
-      dots_ascending  <- handle_desc(dots)
-      dots            <- dots_ascending$dots
-      ascending       <- dots_ascending$ascending
+      dots_ascending <- handle_desc(dots)
+      dots <- dots_ascending$dots
+      ascending <- dots_ascending$ascending
 
       exprs <- rel_translate_dots(dots, .data)
 
