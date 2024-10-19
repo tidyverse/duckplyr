@@ -12,7 +12,6 @@ rel_find_call <- function(fun, env) {
 
   # Order from https://docs.google.com/spreadsheets/d/1j3AFOKiAknTGpXU1uSH7JzzscgYjVbUEwmdRHS7268E/edit?gid=769885824#gid=769885824,
   # generated as `expr_result` by 63-gh-detail.R
-
   pkgs <- switch(name,
     # Handled in a special way, not mentioned here
     # "desc" = c("dplyr", "duckplyr"),
@@ -124,11 +123,38 @@ rel_find_call <- function(fun, env) {
   }
 }
 
+infer_type_of_expr <- function(
+    expr,
+    types_data,
+    names_data
+) {
+  if (typeof(expr) == 'symbol') {
+    name <- as.character(expr)
+    col_idx <- which(name == names_data)
+    if (col_idx == 0) stop(paste0("Unable to find column '",name,"'"))
+    return(types_data[col_idx])
+  }
+  return(typeof(expr))
+}
+
+types_are_comparable <- function(types) {
+  # TODO: Incomplete, written for demo
+  left  = types[1]
+  right = types[2]
+
+  if (left == right) return(TRUE)
+  if (left == "integer" && right == "double") return(TRUE)
+  if (left == "double"  && right == "integer") return(TRUE)
+
+  return(FALSE)
+}
+
 rel_translate_lang <- function(
     expr,
     do_translate,
     # FIXME: Perform constant folding instead
     names_data,
+    types_data,
     env,
     # FIXME: Perform constant folding instead
     partition,
@@ -138,6 +164,27 @@ rel_translate_lang <- function(
   pkg_name <- rel_find_call(expr[[1]], env)
   pkg <- pkg_name[[1]]
   name <- pkg_name[[2]]
+
+
+  if (name %in% c(">","<","=",">=","<=") && !is.null(types_data)) {
+    
+    types <- sapply(
+        expr[2:3],
+        infer_type_of_expr,
+        types_data,
+        names_data
+    )
+
+    if (types_are_comparable(types)) {
+      return(
+        relexpr_comparison(
+          list(do_translate(expr[[2]]), do_translate(expr[[3]]))
+          ,name
+        )
+      )  
+    }
+  }
+
 
   if (!(name %in% c("wday", "strftime", "lag", "lead"))) {
     if (!is.null(names(expr)) && any(names(expr) != "")) {
@@ -316,6 +363,11 @@ rel_translate <- function(
 
   used <- character()
 
+  types_data = NULL
+  if (hasArg(data) && !is.null(data)) {
+    types_data <- sapply(data,typeof)
+  }
+
   do_translate <- function(expr, in_window = FALSE, top_level = FALSE) {
     stopifnot(!is_quosure(expr))
     switch(typeof(expr),
@@ -345,6 +397,7 @@ rel_translate <- function(
         expr,
         do_translate,
         names_data,
+        types_data,
         env,
         partition,
         in_window,
