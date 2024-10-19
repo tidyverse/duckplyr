@@ -2,7 +2,7 @@
 #' @export
 setequal.duckplyr_df <- function(x, y, ...) {
   # Our implementation
-  rel_try(
+  rel_try(NULL,
     "No relational implementation for setequal()" = TRUE,
     {
       return(out)

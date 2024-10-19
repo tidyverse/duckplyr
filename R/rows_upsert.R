@@ -2,7 +2,7 @@
 #' @export
 rows_upsert.duckplyr_df <- function(x, y, by = NULL, ..., copy = FALSE, in_place = FALSE) {
   # Our implementation
-  rel_try(
+  rel_try(NULL,
     "No relational implementation for rows_upsert()" = TRUE,
     {
       return(out)

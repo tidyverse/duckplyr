@@ -2,7 +2,7 @@
 #' @export
 group_nest.duckplyr_df <- function(.tbl, ..., .key = "data", keep = FALSE) {
   # Our implementation
-  rel_try(
+  rel_try(NULL,
     # Always fall back to dplyr
     "No relational implementation for group_nest()" = TRUE,
     {

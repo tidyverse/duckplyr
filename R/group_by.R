@@ -2,7 +2,7 @@
 #' @export
 group_by.duckplyr_df <- function(.data, ..., .add = FALSE, .drop = group_by_drop_default(.data)) {
   # Our implementation
-  rel_try(
+  rel_try(NULL,
     # Always fall back to dplyr
     "No relational implementation for group_by()" = TRUE,
     {

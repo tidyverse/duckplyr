@@ -6,7 +6,7 @@ full_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
   y <- auto_copy(x, y, copy = copy)
 
   # Our implementation
-  rel_try(call = list(name = "full_join", x = x, y = y, args = list(by = if(!is.null(by) && !is_cross_by(by)) as_join_by(by), copy = copy, keep = keep, na_matches = na_matches, multiple = multiple, relationship = relationship)),
+  rel_try(list(name = "full_join", x = x, y = y, args = list(by = if(!is.null(by) && !is_cross_by(by)) as_join_by(by), copy = copy, keep = keep, na_matches = na_matches, multiple = multiple, relationship = relationship)),
     "No implicit cross joins for full_join()" = is_cross_by(by),
     {
       out <- rel_join_impl(x, y, by, "full", na_matches, suffix, keep, error_call)

@@ -6,7 +6,7 @@ arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
   dots <- enquos(...)
   dots <- unname(dots)
 
-  rel_try(call = list(name = "arrange", x = .data, args = list(dots = dots, .by_group = .by_group)),
+  rel_try(list(name = "arrange", x = .data, args = list(dots = dots, .by_group = .by_group)),
     ".by_group = TRUE not supported" = !identical(.by_group, FALSE),
     ".locale argument not supported" = !is.null(.locale),
     "dplyr.legacy_locale not supported" = isTRUE(getOption("dplyr.legacy_locale")),

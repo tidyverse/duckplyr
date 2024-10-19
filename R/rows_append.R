@@ -2,7 +2,7 @@
 #' @export
 rows_append.duckplyr_df <- function(x, y, ..., copy = FALSE, in_place = FALSE) {
   # Our implementation
-  rel_try(
+  rel_try(NULL,
     "No relational implementation for rows_append()" = TRUE,
     {
       return(out)
