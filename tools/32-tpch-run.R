@@ -19,6 +19,7 @@ supplier <- as_duckplyr_df(supplier)
 
 run <- identity
 # run <- invisible
+# run <- collect
 
 run(tpch_01())
 run(tpch_02())
