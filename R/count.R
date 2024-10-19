@@ -11,6 +11,11 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
   by_exprs <- unname(map(by, quo_get_expr))
   is_name <- map_lgl(by_exprs, is_symbol)
 
+  # For better error message
+  if (!is.null(name)) {
+    check_string(name, call = dplyr_error_call())
+  }
+
   # Passing `name` reliably is surprisingly complicated.
   rel_try(list(name = "count", x = x, args = list(dots = enquos(...), wt = enquo(wt), sort = sort, .drop = .drop)),
     "count() needs all(is_name)" = !all(is_name),
