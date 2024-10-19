@@ -2,7 +2,7 @@
 #' @export
 reframe.duckplyr_df <- function(.data, ..., .by = NULL) {
   # Our implementation
-  rel_try(
+  rel_try(NULL,
     "No relational implementation for reframe()" = TRUE,
     {
       return(out)

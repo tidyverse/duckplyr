@@ -21,7 +21,9 @@ opts_relational_relexpr_function <- function(constructor = c("relexpr_function",
 .cstr_construct.relational_relexpr_function <- function(x, ...) {
   # There is probably no need for you to modify this function at all
   opts <- list(...)$opts$relational_relexpr_function %||% opts_relational_relexpr_function()
-  if (is_corrupted_relational_relexpr_function(x) || opts$constructor == "next") return(NextMethod())
+  if (is_corrupted_relational_relexpr_function(x) || opts$constructor == "next") {
+    return(NextMethod())
+  }
   # This odd looking code dispatches to a method based on the name of
   # the constructor rather than the class
   UseMethod(".cstr_construct.relational_relexpr_function", structure(NA, class = opts$constructor))

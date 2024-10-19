@@ -2,7 +2,7 @@
 #' @export
 nest_by.duckplyr_df <- function(.data, ..., .key = "data", .keep = FALSE) {
   # Our implementation
-  rel_try(
+  rel_try(NULL,
     "No relational implementation for nest_by()" = TRUE,
     {
       return(out)

@@ -1,12 +1,12 @@
 rel_join_impl <- function(
-    x,
-    y,
-    by,
-    join,
-    na_matches,
-    suffix = c(".x", ".y"),
-    keep = NULL,
-    error_call = caller_env()
+  x,
+  y,
+  by,
+  join,
+  na_matches,
+  suffix = c(".x", ".y"),
+  keep = NULL,
+  error_call = caller_env()
 ) {
   mutating <- !(join %in% c("semi", "anti"))
 

@@ -2,7 +2,7 @@
 #' @export
 ungroup.duckplyr_df <- function(x, ...) {
   # Our implementation
-  rel_try(
+  rel_try(NULL,
     "No relational implementation for ungroup()" = TRUE,
     {
       return(out)

@@ -2,7 +2,7 @@
 #' @export
 do.duckplyr_df <- function(.data, ...) {
   # Our implementation
-  rel_try(
+  rel_try(NULL,
     "No relational implementation for do()" = TRUE,
     {
       return(out)

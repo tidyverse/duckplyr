@@ -74,7 +74,7 @@ rel_find_call <- function(fun, env) {
     # "sqrt" = "base",
     # "abs" = "base",
     "if_else" = c("dplyr", "duckplyr"),
-
+    #
     "any" = "base",
     "suppressWarnings" = "base",
     "lag" = c("dplyr", "duckplyr"),
@@ -125,15 +125,15 @@ rel_find_call <- function(fun, env) {
 }
 
 rel_translate_lang <- function(
-    expr,
-    do_translate,
-    # FIXME: Perform constant folding instead
-    names_data,
-    env,
-    # FIXME: Perform constant folding instead
-    partition,
-    in_window,
-    need_window
+  expr,
+  do_translate,
+  # FIXME: Perform constant folding instead
+  names_data,
+  env,
+  # FIXME: Perform constant folding instead
+  partition,
+  in_window,
+  need_window
 ) {
   pkg_name <- rel_find_call(expr[[1]], env)
   pkg <- pkg_name[[1]]

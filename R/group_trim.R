@@ -2,7 +2,7 @@
 #' @export
 group_trim.duckplyr_df <- function(.tbl, .drop = group_by_drop_default(.tbl)) {
   # Our implementation
-  rel_try(
+  rel_try(NULL,
     # Always fall back to dplyr
     "No relational implementation for group_trim()" = TRUE,
     {

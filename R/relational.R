@@ -1,4 +1,4 @@
-rel_try <- function(rel, ..., call = NULL) {
+rel_try <- function(call, rel, ...) {
   call_name <- as.character(sys.call(-1)[[1]])
 
   if (!is.null(call$name)) {

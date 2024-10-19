@@ -2,7 +2,7 @@
 #' @export
 rowwise.duckplyr_df <- function(data, ...) {
   # Our implementation
-  rel_try(
+  rel_try(NULL,
     # Always fall back to dplyr
     "No relational implementation for rowwise()" = TRUE,
     {

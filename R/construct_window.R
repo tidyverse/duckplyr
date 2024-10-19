@@ -16,7 +16,9 @@ opts_relational_relexpr_window <- function(constructor = c("relexpr_window", "ne
 
 .cstr_construct.relational_relexpr_window <- function(x, ...) {
   opts <- list(...)$opts$relational_relexpr_window %||% opts_relational_relexpr_window()
-  if (is_corrupted_relational_relexpr_window(x) || opts$constructor == "next") return(NextMethod())
+  if (is_corrupted_relational_relexpr_window(x) || opts$constructor == "next") {
+    return(NextMethod())
+  }
   UseMethod(".cstr_construct.relational_relexpr_window", structure(NA, class = opts$constructor))
 }
 

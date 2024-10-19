@@ -16,7 +16,9 @@ opts_relational_relexpr_constant <- function(constructor = c("relexpr_constant",
 
 .cstr_construct.relational_relexpr_constant <- function(x, ...) {
   opts <- list(...)$opts$relational_relexpr_constant %||% opts_relational_relexpr_constant()
-  if (is_corrupted_relational_relexpr_constant(x) || opts$constructor == "next") return(NextMethod())
+  if (is_corrupted_relational_relexpr_constant(x) || opts$constructor == "next") {
+    return(NextMethod())
+  }
   UseMethod(".cstr_construct.relational_relexpr_constant", structure(NA, class = opts$constructor))
 }
 

@@ -2,7 +2,7 @@
 #' @export
 group_size.duckplyr_df <- function(x) {
   # Our implementation
-  rel_try(
+  rel_try(NULL,
     # Always fall back to dplyr
     "No relational implementation for group_size()" = TRUE,
     {

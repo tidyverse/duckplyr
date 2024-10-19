@@ -16,7 +16,9 @@ opts_relational_relexpr_reference <- function(constructor = c("relexpr_reference
 
 .cstr_construct.relational_relexpr_reference <- function(x, ...) {
   opts <- list(...)$opts$relational_relexpr_reference %||% opts_relational_relexpr_reference()
-  if (is_corrupted_relational_relexpr_reference(x) || opts$constructor == "next") return(NextMethod())
+  if (is_corrupted_relational_relexpr_reference(x) || opts$constructor == "next") {
+    return(NextMethod())
+  }
   UseMethod(".cstr_construct.relational_relexpr_reference", structure(NA, class = opts$constructor))
 }
 
