@@ -235,13 +235,19 @@ meta_rel_register <- function(rel, rel_expr) {
     meta_record(constructive::deparse_call(expr(!!current_call)))
   }
 
-  # https://github.com/cynkra/constructive/issues/102
-  meta_record(constructive::deparse_call(expr(!!name <- !!rel_expr)))
+  # Will be NULL if the computation fails
+  if (is.null(rel)) {
+    # Multi-expressions not there yet:
+    # https://github.com/cynkra/constructive/issues/102
+    meta_record(constructive::deparse_call(expr(try(!!name <- !!rel_expr))))
+  } else {
+    meta_record(constructive::deparse_call(expr(!!name <- !!rel_expr)))
 
-  obj <- list(rel = rel, name = name, df = df)
-  hash <- deparse(rel)
+    obj <- list(rel = rel, name = name)
+    hash <- deparse(rel)
 
-  rel_cache$set(hash, obj)
+    rel_cache$set(hash, obj)
+  }
   invisible()
 }
 
