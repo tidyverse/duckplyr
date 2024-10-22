@@ -48,7 +48,7 @@ res <- bench::mark(
   invisible(NULL)
 )
 
-res |>
+res %>%
   arrange(desc(median))
 
 # profvis::profvis(for (i in 1:20) run(tpch_08()))

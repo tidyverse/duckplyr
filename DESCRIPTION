@@ -16,7 +16,7 @@ License: MIT + file LICENSE
 URL: https://duckplyr.tidyverse.org, https://github.com/tidyverse/duckplyr
 BugReports: https://github.com/tidyverse/duckplyr/issues
 Depends: 
-    R (>= 4.1.0)
+    R (>= 4.0.0)
 Imports: 
     cli,
     collections,

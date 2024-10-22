@@ -109,7 +109,7 @@ rel_find_call <- function(fun, env) {
     return(c("dplyr", "n"))
   }
 
-  fun_val <- get0(fun, env, mode = "function", inherits = TRUE)
+  fun_val <- get0(as.character(fun), env, mode = "function", inherits = TRUE)
 
   for (pkg in pkgs) {
     if (identical(fun_val, get(name, envir = asNamespace(pkg)))) {

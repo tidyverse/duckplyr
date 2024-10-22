@@ -9,11 +9,11 @@ dplyr <- read_csv("res-dplyr.csv")
 # FIXME: Where does res-relational-duckdb.csv come from?
 
 all <-
-  bind_rows(dplyr, duckplyr, relational) |>
-  mutate(query = gsub("tpch_", "q", ...1), .keep = "unused") |>
+  bind_rows(dplyr, duckplyr, relational) %>%
+  mutate(query = gsub("tpch_", "q", ...1), .keep = "unused") %>%
   mutate(speedup = time[[1]] / time, .by = query)
 
-graph <- all |>
+graph <- all %>%
   ggplot(aes(x = query, y = time * 1000, fill = pkg)) +
   geom_col(position = "dodge") +
   ggtitle("Tpch duckplyr vs dplyr (sf=1), log scale") +
@@ -27,7 +27,7 @@ graph
 
 ggsave('tpch-results.pdf', plot = last_plot(), scale = 1, width = 15, height = 5, dpi=300)
 
-graph <- all |>
+graph <- all %>%
   ggplot(aes(x = query, y = speedup, fill = pkg)) +
   geom_col(position = "dodge") +
   ggtitle("Tpch duckplyr vs dplyr (sf=1), speedup, log scale") +
@@ -41,8 +41,8 @@ graph
 
 ggsave('tpch-speedup.pdf', plot = last_plot(), scale = 1, width = 15, height = 5, dpi=300)
 
-graph <- all |>
-  filter(query != "q21") |>
+graph <- all %>%
+  filter(query != "q21") %>%
   ggplot(aes(x = pkg, y = time, fill = query)) +
   scale_fill_paletteer_d("Polychrome::green_armytage", direction = 1, dynamic = FALSE) +
   geom_col(position = "stack") +
@@ -55,8 +55,8 @@ graph
 
 ggsave('tpch-stacked-results.pdf', plot = last_plot(), scale = 1, width = 5, height = 6, dpi=300)
 
-graph <- all |>
-  summarise(total_time=sum(time), .by=pkg) |>
+graph <- all %>%
+  summarise(total_time=sum(time), .by=pkg) %>%
   ggplot(aes(x = pkg, y = total_time, fill = pkg)) +
   geom_col(position = "dodge") +
   ggtitle("Tpch duckplyr vs dplyr (sf=1) Aggregate") +
