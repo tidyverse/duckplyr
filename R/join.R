@@ -42,11 +42,12 @@ rel_join_impl <- function(
     error_call = error_call
   )
 
-  x_in <- vec_ptype(x)
-  y_in <- vec_ptype(y)
+  # vec_ptype_safe: https://github.com/r-lib/vctrs/issues/1956
+  x_in <- map(as.list(x)[vars$x$key], vec_ptype_safe)
+  y_in <- map(as.list(y)[vars$y$key], vec_ptype_safe)
 
-  x_key <- set_names(x_in[vars$x$key], names(vars$x$key))
-  y_key <- set_names(y_in[vars$y$key], names(vars$x$key))
+  x_key <- as.data.frame(set_names(x_in, names(vars$x$key)))
+  y_key <- as.data.frame(set_names(y_in, names(vars$x$key)))
 
   # Side effect: check join compatibility
   join_ptype_common(x_key, y_key, vars, error_call = error_call)
