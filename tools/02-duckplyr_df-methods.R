@@ -90,7 +90,7 @@ func_decl_chr <- function(
 
   rel_try_chr <- paste0(
     "  # Our implementation\n",
-    "  rel_try(\n",
+    "  rel_try(NULL,\n",
     if (always_fallback) "    # Always fall back to dplyr\n",
     '    "No relational implementation for ', generic, '()" = TRUE,\n',
     "    {\n",

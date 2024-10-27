@@ -1,5 +1,5 @@
 diff --git b/R/full_join.R a/R/full_join.R
-index ef65f78a..efce308e 100644
+index bedc34c2..efce308e 100644
 --- b/R/full_join.R
 +++ a/R/full_join.R
 @@ -1,17 +1,22 @@
@@ -11,7 +11,7 @@ index ef65f78a..efce308e 100644
 +  y <- auto_copy(x, y, copy = copy)
 +
    # Our implementation
--  rel_try(
+-  rel_try(NULL,
 -    "No relational implementation for full_join()" = TRUE,
 +  rel_try(list(name = "full_join", x = x, y = y, args = list(by = if (!is.null(by) && !is_cross_by(by)) as_join_by(by), copy = copy, keep = keep, na_matches = na_matches, multiple = multiple, relationship = relationship)),
 +    "No implicit cross joins for full_join()" = is_cross_by(by),

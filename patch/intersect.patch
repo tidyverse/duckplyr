@@ -1,12 +1,12 @@
 diff --git b/R/intersect.R a/R/intersect.R
-index e080cd61..cf9fd035 100644
+index ccdee010..cf9fd035 100644
 --- b/R/intersect.R
 +++ a/R/intersect.R
 @@ -2,9 +2,37 @@
  #' @export
  intersect.duckplyr_df <- function(x, y, ...) {
    # Our implementation
--  rel_try(
+-  rel_try(NULL,
 -    "No relational implementation for intersect()" = TRUE,
 +  check_dots_empty()
 +  check_compatible(x, y)

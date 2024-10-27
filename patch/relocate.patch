@@ -1,5 +1,5 @@
 diff --git b/R/relocate.R a/R/relocate.R
-index 418426eb..f48edf59 100644
+index 28fb2a82..f48edf59 100644
 --- b/R/relocate.R
 +++ a/R/relocate.R
 @@ -1,10 +1,23 @@
@@ -7,7 +7,7 @@ index 418426eb..f48edf59 100644
  #' @export
  relocate.duckplyr_df <- function(.data, ..., .before = NULL, .after = NULL) {
 -  # Our implementation
--  rel_try(
+-  rel_try(NULL,
 -    "No relational implementation for relocate()" = TRUE,
 +  loc <- eval_relocate(
 +    expr = expr(c(...)),

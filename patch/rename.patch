@@ -1,5 +1,5 @@
 diff --git b/R/rename.R a/R/rename.R
-index e429ebb9..e91958ca 100644
+index 0f7d2aad..e91958ca 100644
 --- b/R/rename.R
 +++ a/R/rename.R
 @@ -1,10 +1,21 @@
@@ -7,7 +7,7 @@ index e429ebb9..e91958ca 100644
  #' @export
  rename.duckplyr_df <- function(.data, ...) {
 -  # Our implementation
--  rel_try(
+-  rel_try(NULL,
 -    "No relational implementation for rename()" = TRUE,
 +  loc <- tidyselect::eval_rename(expr(c(...)), .data)
 +  dupes <- duplicated(loc, fromLast = TRUE)
