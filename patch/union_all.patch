@@ -1,12 +1,12 @@
 diff --git b/R/union_all.R a/R/union_all.R
-index ed860f18..1265ddd9 100644
+index b4368cd2..1265ddd9 100644
 --- b/R/union_all.R
 +++ a/R/union_all.R
 @@ -2,9 +2,39 @@
  #' @export
  union_all.duckplyr_df <- function(x, y, ...) {
    # Our implementation
--  rel_try(
+-  rel_try(NULL,
 -    "No relational implementation for union_all()" = TRUE,
 +  check_dots_empty()
 +  check_compatible(x, y)

@@ -1,5 +1,5 @@
 diff --git b/R/mutate.R a/R/mutate.R
-index 50437cc6..4b7d69ca 100644
+index 38a32ec1..4b7d69ca 100644
 --- b/R/mutate.R
 +++ a/R/mutate.R
 @@ -1,10 +1,76 @@
@@ -12,7 +12,7 @@ index 50437cc6..4b7d69ca 100644
 +  by_names <- eval_select_by(by_arg, .data)
 +
    # Our implementation
--  rel_try(
+-  rel_try(NULL,
 -    "No relational implementation for mutate()" = TRUE,
 +  rel_try(list(name = "mutate", x = .data, args = list(dots = enquos(...), .by = by_arg, .keep = .keep)),
 +    "Implemented for all cases?" = FALSE,

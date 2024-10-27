@@ -1,5 +1,5 @@
 diff --git b/R/distinct.R a/R/distinct.R
-index 8628a27d..6ea79719 100644
+index 1e20283f..6ea79719 100644
 --- b/R/distinct.R
 +++ a/R/distinct.R
 @@ -1,10 +1,69 @@
@@ -11,7 +11,7 @@ index 8628a27d..6ea79719 100644
 +  dots <- enquos(..., .named = TRUE)
 +
    # Our implementation
--  rel_try(
+-  rel_try(NULL,
 -    "No relational implementation for distinct()" = TRUE,
 +  rel_try(list(name = "distinct", x = .data, args = list(dots = dots, .keep_all = .keep_all)),
 +    "Implemented for all cases?" = FALSE,

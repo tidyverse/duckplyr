@@ -1,12 +1,12 @@
 diff --git b/R/union.R a/R/union.R
-index 94e7bc2..05657d3 100644
+index 2a0b730f..05657d3f 100644
 --- b/R/union.R
 +++ a/R/union.R
 @@ -2,12 +2,10 @@
  #' @export
  union.duckplyr_df <- function(x, y, ...) {
    # Our implementation
--  rel_try(
+-  rel_try(NULL,
 -    "No relational implementation for union()" = TRUE,
 -    {
 -      return(out)

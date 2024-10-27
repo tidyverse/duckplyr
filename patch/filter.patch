@@ -1,5 +1,5 @@
 diff --git b/R/filter.R a/R/filter.R
-index 787a3742..35904214 100644
+index e43c56ef..35904214 100644
 --- b/R/filter.R
 +++ a/R/filter.R
 @@ -1,10 +1,31 @@
@@ -8,7 +8,7 @@ index 787a3742..35904214 100644
 +
  filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
 -  # Our implementation
--  rel_try(
+-  rel_try(NULL,
 -    "No relational implementation for filter()" = TRUE,
 +  force(.data)
 +

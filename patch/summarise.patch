@@ -1,5 +1,5 @@
 diff --git b/R/summarise.R a/R/summarise.R
-index 79ffb8a2..c83f1168 100644
+index 7f335ebd..c83f1168 100644
 --- b/R/summarise.R
 +++ a/R/summarise.R
 @@ -1,10 +1,54 @@
@@ -9,7 +9,7 @@ index 79ffb8a2..c83f1168 100644
  #' @export
  summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
 -  # Our implementation
--  rel_try(
+-  rel_try(NULL,
 -    "No relational implementation for summarise()" = TRUE,
 +  force(.data)
 +

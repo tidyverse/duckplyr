@@ -1,5 +1,5 @@
 diff --git b/R/pull.R a/R/pull.R
-index 826b7c60..94da7d2a 100644
+index 7828c35a..94da7d2a 100644
 --- b/R/pull.R
 +++ a/R/pull.R
 @@ -1,10 +1,25 @@
@@ -7,7 +7,7 @@ index 826b7c60..94da7d2a 100644
  #' @export
  pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
 -  # Our implementation
--  rel_try(
+-  rel_try(NULL,
 -    "No relational implementation for pull()" = TRUE,
 +  # dplyr implementation
 +  my_var <- tidyselect::vars_pull(names(.data), !!enquo(var))
