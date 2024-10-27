@@ -58,7 +58,7 @@ tpch_raw_02 <- function(con, experimental) {
     rel4,
     list(
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("p_size"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -320,7 +320,7 @@ tpch_raw_02 <- function(con, experimental) {
     rel18,
     list(
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("r_name"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {

@@ -20,7 +20,7 @@ tpch_raw_18 <- function(con, experimental) {
     rel2,
     list(
       duckdb$expr_function(
-        ">",
+        "r_base::>",
         list(
           duckdb$expr_reference("sum"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {

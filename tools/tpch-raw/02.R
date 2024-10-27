@@ -4,13 +4,13 @@ drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
 invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
 invisible(
   DBI::dbExecute(
     con,
     'CREATE MACRO "grepl"(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)'
   )
 )
+invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(
   DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
@@ -73,7 +73,7 @@ rel5 <- duckdb$rel_filter(
   rel4,
   list(
     duckdb$expr_function(
-      "==",
+      "r_base::==",
       list(
         duckdb$expr_reference("p_size"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -335,7 +335,7 @@ rel19 <- duckdb$rel_filter(
   rel18,
   list(
     duckdb$expr_function(
-      "==",
+      "r_base::==",
       list(
         duckdb$expr_reference("r_name"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {

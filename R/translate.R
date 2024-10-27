@@ -226,6 +226,12 @@ rel_translate_lang <- function(
     "log10" = "___log10",
     "log" = "___log",
     "as.integer" = "r_base::as.integer",
+    "<" = "r_base::<",
+    "<=" = "r_base::<=",
+    ">" = "r_base::>",
+    ">=" = "r_base::>=",
+    "==" = "r_base::==",
+    "!=" = "r_base::!=",
     NULL
   )
 

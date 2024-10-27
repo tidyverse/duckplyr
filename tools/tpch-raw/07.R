@@ -3,12 +3,10 @@ duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
-invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
 invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO ">="(x, y) AS "r_base::>="(x, y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "<="(x, y) AS "r_base::<="(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
 df1 <- supplier
 "select"
@@ -56,7 +54,7 @@ rel5 <- duckdb$rel_filter(
       "|",
       list(
         duckdb$expr_function(
-          "==",
+          "r_base::==",
           list(
             duckdb$expr_reference("n1_name"),
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -67,7 +65,7 @@ rel5 <- duckdb$rel_filter(
           )
         ),
         duckdb$expr_function(
-          "==",
+          "r_base::==",
           list(
             duckdb$expr_reference("n1_name"),
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -182,7 +180,7 @@ rel15 <- duckdb$rel_filter(
       "|",
       list(
         duckdb$expr_function(
-          "==",
+          "r_base::==",
           list(
             duckdb$expr_reference("n2_name"),
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -193,7 +191,7 @@ rel15 <- duckdb$rel_filter(
           )
         ),
         duckdb$expr_function(
-          "==",
+          "r_base::==",
           list(
             duckdb$expr_reference("n2_name"),
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -377,7 +375,7 @@ rel30 <- duckdb$rel_filter(
   rel29,
   list(
     duckdb$expr_function(
-      ">=",
+      "r_base::>=",
       list(
         duckdb$expr_reference("l_shipdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -388,7 +386,7 @@ rel30 <- duckdb$rel_filter(
       )
     ),
     duckdb$expr_function(
-      "<=",
+      "r_base::<=",
       list(
         duckdb$expr_reference("l_shipdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -552,7 +550,7 @@ rel40 <- duckdb$rel_filter(
           "&",
           list(
             duckdb$expr_function(
-              "==",
+              "r_base::==",
               list(
                 duckdb$expr_reference("n1_name"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -563,7 +561,7 @@ rel40 <- duckdb$rel_filter(
               )
             ),
             duckdb$expr_function(
-              "==",
+              "r_base::==",
               list(
                 duckdb$expr_reference("n2_name"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -579,7 +577,7 @@ rel40 <- duckdb$rel_filter(
           "&",
           list(
             duckdb$expr_function(
-              "==",
+              "r_base::==",
               list(
                 duckdb$expr_reference("n1_name"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -590,7 +588,7 @@ rel40 <- duckdb$rel_filter(
               )
             ),
             duckdb$expr_function(
-              "==",
+              "r_base::==",
               list(
                 duckdb$expr_reference("n2_name"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {

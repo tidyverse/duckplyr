@@ -4,9 +4,7 @@ drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
 invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "<"(x, y) AS "r_base::<"(x, y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO ">="(x, y) AS "r_base::>="(x, y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
 df1 <- lineitem
@@ -38,7 +36,7 @@ rel3 <- duckdb$rel_filter(
   rel2,
   list(
     duckdb$expr_function(
-      "<",
+      "r_base::<",
       list(duckdb$expr_reference("l_commitdate"), duckdb$expr_reference("l_receiptdate"))
     )
   )
@@ -83,7 +81,7 @@ rel7 <- duckdb$rel_filter(
   rel6,
   list(
     duckdb$expr_function(
-      ">=",
+      "r_base::>=",
       list(
         duckdb$expr_reference("o_orderdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -94,7 +92,7 @@ rel7 <- duckdb$rel_filter(
       )
     ),
     duckdb$expr_function(
-      "<",
+      "r_base::<",
       list(
         duckdb$expr_reference("o_orderdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {

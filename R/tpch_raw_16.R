@@ -8,7 +8,7 @@ tpch_raw_16 <- function(con, experimental) {
     rel1,
     list(
       duckdb$expr_function(
-        "!=",
+        "r_base::!=",
         list(
           duckdb$expr_reference("p_brand"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {

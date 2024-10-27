@@ -466,7 +466,7 @@ tpch_raw_oo_19 <- function(con, experimental) {
                                         "&",
                                         list(
                                           duckdb$expr_function(
-                                            "==",
+                                            "r_base::==",
                                             list(
                                               duckdb$expr_reference("p_brand"),
                                               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -548,7 +548,7 @@ tpch_raw_oo_19 <- function(con, experimental) {
                                         )
                                       ),
                                       duckdb$expr_function(
-                                        ">=",
+                                        "r_base::>=",
                                         list(
                                           duckdb$expr_reference("l_quantity"),
                                           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -561,7 +561,7 @@ tpch_raw_oo_19 <- function(con, experimental) {
                                     )
                                   ),
                                   duckdb$expr_function(
-                                    "<=",
+                                    "r_base::<=",
                                     list(
                                       duckdb$expr_reference("l_quantity"),
                                       duckdb$expr_function(
@@ -584,7 +584,7 @@ tpch_raw_oo_19 <- function(con, experimental) {
                                 )
                               ),
                               duckdb$expr_function(
-                                ">=",
+                                "r_base::>=",
                                 list(
                                   duckdb$expr_reference("p_size"),
                                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -597,7 +597,7 @@ tpch_raw_oo_19 <- function(con, experimental) {
                             )
                           ),
                           duckdb$expr_function(
-                            "<=",
+                            "r_base::<=",
                             list(
                               duckdb$expr_reference("p_size"),
                               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -649,7 +649,7 @@ tpch_raw_oo_19 <- function(con, experimental) {
                     )
                   ),
                   duckdb$expr_function(
-                    "==",
+                    "r_base::==",
                     list(
                       duckdb$expr_reference("l_shipinstruct"),
                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -683,7 +683,7 @@ tpch_raw_oo_19 <- function(con, experimental) {
                                         "&",
                                         list(
                                           duckdb$expr_function(
-                                            "==",
+                                            "r_base::==",
                                             list(
                                               duckdb$expr_reference("p_brand"),
                                               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -765,7 +765,7 @@ tpch_raw_oo_19 <- function(con, experimental) {
                                         )
                                       ),
                                       duckdb$expr_function(
-                                        ">=",
+                                        "r_base::>=",
                                         list(
                                           duckdb$expr_reference("l_quantity"),
                                           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -778,7 +778,7 @@ tpch_raw_oo_19 <- function(con, experimental) {
                                     )
                                   ),
                                   duckdb$expr_function(
-                                    "<=",
+                                    "r_base::<=",
                                     list(
                                       duckdb$expr_reference("l_quantity"),
                                       duckdb$expr_function(
@@ -801,7 +801,7 @@ tpch_raw_oo_19 <- function(con, experimental) {
                                 )
                               ),
                               duckdb$expr_function(
-                                ">=",
+                                "r_base::>=",
                                 list(
                                   duckdb$expr_reference("p_size"),
                                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -814,7 +814,7 @@ tpch_raw_oo_19 <- function(con, experimental) {
                             )
                           ),
                           duckdb$expr_function(
-                            "<=",
+                            "r_base::<=",
                             list(
                               duckdb$expr_reference("p_size"),
                               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -866,7 +866,7 @@ tpch_raw_oo_19 <- function(con, experimental) {
                     )
                   ),
                   duckdb$expr_function(
-                    "==",
+                    "r_base::==",
                     list(
                       duckdb$expr_reference("l_shipinstruct"),
                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -902,7 +902,7 @@ tpch_raw_oo_19 <- function(con, experimental) {
                                     "&",
                                     list(
                                       duckdb$expr_function(
-                                        "==",
+                                        "r_base::==",
                                         list(
                                           duckdb$expr_reference("p_brand"),
                                           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -984,7 +984,7 @@ tpch_raw_oo_19 <- function(con, experimental) {
                                     )
                                   ),
                                   duckdb$expr_function(
-                                    ">=",
+                                    "r_base::>=",
                                     list(
                                       duckdb$expr_reference("l_quantity"),
                                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -997,7 +997,7 @@ tpch_raw_oo_19 <- function(con, experimental) {
                                 )
                               ),
                               duckdb$expr_function(
-                                "<=",
+                                "r_base::<=",
                                 list(
                                   duckdb$expr_reference("l_quantity"),
                                   duckdb$expr_function(
@@ -1020,7 +1020,7 @@ tpch_raw_oo_19 <- function(con, experimental) {
                             )
                           ),
                           duckdb$expr_function(
-                            ">=",
+                            "r_base::>=",
                             list(
                               duckdb$expr_reference("p_size"),
                               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1033,7 +1033,7 @@ tpch_raw_oo_19 <- function(con, experimental) {
                         )
                       ),
                       duckdb$expr_function(
-                        "<=",
+                        "r_base::<=",
                         list(
                           duckdb$expr_reference("p_size"),
                           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1085,7 +1085,7 @@ tpch_raw_oo_19 <- function(con, experimental) {
                 )
               ),
               duckdb$expr_function(
-                "==",
+                "r_base::==",
                 list(
                   duckdb$expr_reference("l_shipinstruct"),
                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {

@@ -8,7 +8,7 @@ tpch_raw_15 <- function(con, experimental) {
     rel1,
     list(
       duckdb$expr_function(
-        ">=",
+        "r_base::>=",
         list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -19,7 +19,7 @@ tpch_raw_15 <- function(con, experimental) {
         )
       ),
       duckdb$expr_function(
-        "<",
+        "r_base::<",
         list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -213,7 +213,7 @@ tpch_raw_15 <- function(con, experimental) {
     rel12,
     list(
       duckdb$expr_function(
-        "<",
+        "r_base::<",
         list(
           duckdb$expr_function(
             "abs",
