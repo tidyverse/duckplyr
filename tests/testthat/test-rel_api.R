@@ -3496,8 +3496,6 @@ test_that("relational filter(a %in% 2:3, g == 2) order-preserving", {
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "filter"
@@ -3533,39 +3531,13 @@ test_that("relational filter(a %in% 2:3, g == 2) order-preserving", {
     rel2,
     list(
       duckdb$expr_function(
-        "___coalesce",
+        "r_base::%in%",
         list(
-          duckdb$expr_function(
-            "|",
-            list(
-              duckdb$expr_function(
-                "r_base::==",
-                list(
-                  duckdb$expr_reference("a"),
-                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                    duckdb$expr_constant(2L, experimental = experimental)
-                  } else {
-                    duckdb$expr_constant(2L)
-                  }
-                )
-              ),
-              duckdb$expr_function(
-                "r_base::==",
-                list(
-                  duckdb$expr_reference("a"),
-                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                    duckdb$expr_constant(3L, experimental = experimental)
-                  } else {
-                    duckdb$expr_constant(3L)
-                  }
-                )
-              )
-            )
-          ),
+          duckdb$expr_reference("a"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(FALSE, experimental = experimental)
+            duckdb$expr_constant(list(2:3), experimental = experimental)
           } else {
-            duckdb$expr_constant(FALSE)
+            duckdb$expr_constant(list(2:3))
           }
         )
       ),
@@ -3622,8 +3594,6 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-preserving", {
   experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "filter"
@@ -3662,39 +3632,13 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-preserving", {
         "&",
         list(
           duckdb$expr_function(
-            "___coalesce",
+            "r_base::%in%",
             list(
-              duckdb$expr_function(
-                "|",
-                list(
-                  duckdb$expr_function(
-                    "r_base::==",
-                    list(
-                      duckdb$expr_reference("a"),
-                      if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                        duckdb$expr_constant(2L, experimental = experimental)
-                      } else {
-                        duckdb$expr_constant(2L)
-                      }
-                    )
-                  ),
-                  duckdb$expr_function(
-                    "r_base::==",
-                    list(
-                      duckdb$expr_reference("a"),
-                      if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                        duckdb$expr_constant(3L, experimental = experimental)
-                      } else {
-                        duckdb$expr_constant(3L)
-                      }
-                    )
-                  )
-                )
-              ),
+              duckdb$expr_reference("a"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                duckdb$expr_constant(FALSE, experimental = experimental)
+                duckdb$expr_constant(list(2:3), experimental = experimental)
               } else {
-                duckdb$expr_constant(FALSE)
+                duckdb$expr_constant(list(2:3))
               }
             )
           ),
@@ -3899,8 +3843,6 @@ test_that("relational filter(a %in% 2:3, g == 2) order-enforcing", {
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "filter"
@@ -3910,39 +3852,13 @@ test_that("relational filter(a %in% 2:3, g == 2) order-enforcing", {
     rel1,
     list(
       duckdb$expr_function(
-        "___coalesce",
+        "r_base::%in%",
         list(
-          duckdb$expr_function(
-            "|",
-            list(
-              duckdb$expr_function(
-                "r_base::==",
-                list(
-                  duckdb$expr_reference("a"),
-                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                    duckdb$expr_constant(2L, experimental = experimental)
-                  } else {
-                    duckdb$expr_constant(2L)
-                  }
-                )
-              ),
-              duckdb$expr_function(
-                "r_base::==",
-                list(
-                  duckdb$expr_reference("a"),
-                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                    duckdb$expr_constant(3L, experimental = experimental)
-                  } else {
-                    duckdb$expr_constant(3L)
-                  }
-                )
-              )
-            )
-          ),
+          duckdb$expr_reference("a"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(FALSE, experimental = experimental)
+            duckdb$expr_constant(list(2:3), experimental = experimental)
           } else {
-            duckdb$expr_constant(FALSE)
+            duckdb$expr_constant(list(2:3))
           }
         )
       ),
@@ -3981,8 +3897,6 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-enforcing", {
   experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "filter"
@@ -3995,39 +3909,13 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-enforcing", {
         "&",
         list(
           duckdb$expr_function(
-            "___coalesce",
+            "r_base::%in%",
             list(
-              duckdb$expr_function(
-                "|",
-                list(
-                  duckdb$expr_function(
-                    "r_base::==",
-                    list(
-                      duckdb$expr_reference("a"),
-                      if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                        duckdb$expr_constant(2L, experimental = experimental)
-                      } else {
-                        duckdb$expr_constant(2L)
-                      }
-                    )
-                  ),
-                  duckdb$expr_function(
-                    "r_base::==",
-                    list(
-                      duckdb$expr_reference("a"),
-                      if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                        duckdb$expr_constant(3L, experimental = experimental)
-                      } else {
-                        duckdb$expr_constant(3L)
-                      }
-                    )
-                  )
-                )
-              ),
+              duckdb$expr_reference("a"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                duckdb$expr_constant(FALSE, experimental = experimental)
+                duckdb$expr_constant(list(2:3), experimental = experimental)
               } else {
-                duckdb$expr_constant(FALSE)
+                duckdb$expr_constant(list(2:3))
               }
             )
           ),
@@ -9069,7 +8957,6 @@ test_that("relational mutate(d = a %in% NA_real_) order-preserving", {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "is.na"(x) AS (x IS NULL OR isnan(x))'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
@@ -9094,7 +8981,17 @@ test_that("relational mutate(d = a %in% NA_real_) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function("is.na", list(duckdb$expr_reference("a")))
+        tmp_expr <- duckdb$expr_function(
+          "r_base::%in%",
+          list(
+            duckdb$expr_reference("a"),
+            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+              duckdb$expr_constant(list(NA_real_), experimental = experimental)
+            } else {
+              duckdb$expr_constant(list(NA_real_))
+            }
+          )
+        )
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
       }
@@ -13142,7 +13039,6 @@ test_that("relational mutate(d = a %in% NA_real_) order-enforcing", {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "is.na"(x) AS (x IS NULL OR isnan(x))'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
@@ -13167,7 +13063,17 @@ test_that("relational mutate(d = a %in% NA_real_) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function("is.na", list(duckdb$expr_reference("a")))
+        tmp_expr <- duckdb$expr_function(
+          "r_base::%in%",
+          list(
+            duckdb$expr_reference("a"),
+            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+              duckdb$expr_constant(list(NA_real_), experimental = experimental)
+            } else {
+              duckdb$expr_constant(list(NA_real_))
+            }
+          )
+        )
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
       }

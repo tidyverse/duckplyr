@@ -495,14 +495,20 @@ to_duckdb_expr_meta <- function(x) {
       out
     },
     relational_relexpr_constant = {
+      if (is.atomic(x$val)) {
+        val <- x$val
+      } else {
+        val <- parse(text = constructive::construct(x$val))[[1]]
+      }
+
       out <- expr(
         # FIXME: always pass experimental flag once it's merged
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           # experimental is set at the top,
           # the sym() gymnastics are to satisfy R CMD check
-          duckdb$expr_constant(!!x$val, experimental = !!sym("experimental"))
+          duckdb$expr_constant(!!val, experimental = !!sym("experimental"))
         } else {
-          duckdb$expr_constant(!!x$val)
+          duckdb$expr_constant(!!val)
         }
       )
 
