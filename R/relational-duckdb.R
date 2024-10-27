@@ -18,12 +18,12 @@ duckplyr_macros <- c(
   # https://github.com/duckdb/duckdb-r/pull/156
   "___null" = "() AS CAST(NULL AS BOOLEAN)",
   #
-  "<" = '(x, y) AS "r_base::<"(x, y)',
-  "<=" = '(x, y) AS "r_base::<="(x, y)',
-  ">" = '(x, y) AS "r_base::>"(x, y)',
-  ">=" = '(x, y) AS "r_base::>="(x, y)',
-  "==" = '(x, y) AS "r_base::=="(x, y)',
-  "!=" = '(x, y) AS "r_base::!="(x, y)',
+  "<" = '(x, y) AS (x < y)',
+  "<=" = '(x, y) AS (x <= y)',
+  ">" = '(x, y) AS (x > y)',
+  ">=" = '(x, y) AS (x >= y)',
+  "==" = '(x, y) AS (x == y)',
+  "!=" = '(x, y) AS (x != y)',
   #
   "___divide" = "(x, y) AS CASE WHEN y = 0 THEN CASE WHEN x = 0 THEN CAST('NaN' AS double) WHEN x > 0 THEN CAST('+Infinity' AS double) ELSE CAST('-Infinity' AS double) END ELSE CAST(x AS double) / y END",
   #

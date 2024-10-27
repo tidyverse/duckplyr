@@ -103,8 +103,6 @@ test_that("duckdb_rel_from_df() uses materialized results", {
 
   transform <- function(x) {
     x <- gsub("0x[0-9a-f]+", "0xdeadbeef", x)
-    # FIXME: Remove when duckdb 1.1.0 is out
-    x <- gsub('"=="', "==", x)
     x
   }
 
