@@ -199,7 +199,7 @@ rel_to_df.duckdb_relation <- function(rel, ...) {
     cli::cli_abort("Column names are case-insensitive in duckdb, fallback required.")
   }
 
-  duckdb$rel_to_altrep(rel)
+  duckdb$rel_to_altrep(rel, allow_materialization = FALSE)
 }
 
 #' @export
