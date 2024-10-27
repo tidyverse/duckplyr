@@ -128,7 +128,11 @@ check_df_for_rel <- function(df) {
     if (isS4(col)) {
       cli::cli_abort("Can't convert S4 columns to relational. Affected column: {.var {names(df)[[i]]}}.")
     }
-    # https://github.com/duckdb/duckdb/issues/8561
+
+    # Factors: https://github.com/duckdb/duckdb/issues/8561
+
+    # When adding new classes, make sure to adapt the first test in test-relational-duckdb.R
+
     col_class <- class(col)
     if (length(col_class) == 1) {
       valid <- col_class %in% c("logical", "integer", "numeric", "character", "Date", "difftime")
@@ -178,6 +182,15 @@ check_df_for_rel <- function(df) {
   }
 
   out
+}
+
+# https://github.com/r-lib/vctrs/issues/1956
+vec_ptype_safe <- function(x) {
+  if (inherits(x, "Date")) {
+    return(new_date())
+  }
+
+  exec(structure, vec_ptype(unclass(x)), !!!attributes(x))
 }
 
 #' @export

@@ -24,11 +24,14 @@ test_that("duckdb_rel_from_df()", {
     # Ingestion only
     df$DATE_INTEGER <- NULL
     df$TIME_SECONDS_INTEGER <- NULL
-    # https://github.com/duckdb/duckdb/issues/8585
-    df$TIMESTAMP[] <- round(as.numeric(df$TIMESTAMP))
   }
 
   expect_silent(duckdb_rel_from_df(df))
+
+  expect_identical(
+    map(df, vec_ptype_safe),
+    map(df, vec_ptype)
+  )
 
   skip_if(Sys.getenv("DUCKPLYR_CHECK_ROUNDTRIP") == "TRUE")
 
