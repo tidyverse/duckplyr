@@ -8957,6 +8957,7 @@ test_that("relational mutate(d = a %in% NA_real_) order-preserving", {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
+  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
@@ -13039,6 +13040,7 @@ test_that("relational mutate(d = a %in% NA_real_) order-enforcing", {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
+  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
