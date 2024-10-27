@@ -1,16 +1,7 @@
 diff --git b/R/slice_sample.R a/R/slice_sample.R
-index 246d325c..203f9738 100644
+index e46518e3..203f9738 100644
 --- b/R/slice_sample.R
 +++ a/R/slice_sample.R
-@@ -2,7 +2,7 @@
- #' @export
- slice_sample.duckplyr_df <- function(.data, ..., n, prop, by = NULL, weight_by = NULL, replace = FALSE) {
-   # Our implementation
--  rel_try(
-+  rel_try(NULL,
-     "No relational implementation for slice_sample()" = TRUE,
-     {
-       return(out)
 @@ -11,7 +11,7 @@ slice_sample.duckplyr_df <- function(.data, ..., n, prop, by = NULL, weight_by =
  
    # dplyr forward

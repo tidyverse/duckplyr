@@ -1,16 +1,7 @@
 diff --git b/R/group_indices.R a/R/group_indices.R
-index 48bcf3e7..26d93d5c 100644
+index 99ba176e..26d93d5c 100644
 --- b/R/group_indices.R
 +++ a/R/group_indices.R
-@@ -2,7 +2,7 @@
- #' @export
- group_indices.duckplyr_df <- function(.data, ...) {
-   # Our implementation
--  rel_try(
-+  rel_try(NULL,
-     # Always fall back to dplyr
-     "No relational implementation for group_indices()" = TRUE,
-     {
 @@ -25,7 +25,7 @@ group_indices.duckplyr_df <- function(.data, ...) {
      .data <- group_by(.data, ...)
    }
