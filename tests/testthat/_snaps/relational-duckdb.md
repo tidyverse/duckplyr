@@ -44,21 +44,7 @@
     Code
       nrow(df)
     Output
-      materializing:
-      ---------------------
-      --- Relation Tree ---
-      ---------------------
-      Projection [a as a]
-        Order [___row_number ASC]
-          Filter [==(a, 1.0)]
-            Projection [a as a, row_number() OVER () as ___row_number]
-              r_dataframe_scan(0xdeadbeef)
-      
-      ---------------------
-      -- Result Columns  --
-      ---------------------
-      - a (DOUBLE)
-      
+      duckplyr: materializing, review details with duckplyr::last_rel_mat()
       [1] 1
     Code
       duckdb_rel_from_df(df)

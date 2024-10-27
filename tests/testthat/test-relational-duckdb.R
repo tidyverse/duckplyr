@@ -108,6 +108,8 @@ test_that("duckdb_rel_from_df() uses materialized results", {
     x
   }
 
+  skip_if_not_installed("duckdb", "1.1.2")
+
   expect_snapshot(transform = transform, {
     duckdb_rel_from_df(df)
     nrow(df)
