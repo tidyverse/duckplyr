@@ -136,15 +136,15 @@ tpch_raw_oo_12 <- function(con, experimental) {
         )
       ),
       duckdb$expr_function(
-        "<",
+        "r_base::<",
         list(duckdb$expr_reference("l_commitdate"), duckdb$expr_reference("l_receiptdate"))
       ),
       duckdb$expr_function(
-        "<",
+        "r_base::<",
         list(duckdb$expr_reference("l_shipdate"), duckdb$expr_reference("l_commitdate"))
       ),
       duckdb$expr_function(
-        ">=",
+        "r_base::>=",
         list(
           duckdb$expr_reference("l_receiptdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -155,7 +155,7 @@ tpch_raw_oo_12 <- function(con, experimental) {
         )
       ),
       duckdb$expr_function(
-        "<",
+        "r_base::<",
         list(
           duckdb$expr_reference("l_receiptdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -707,7 +707,7 @@ tpch_raw_oo_12 <- function(con, experimental) {
                   "|",
                   list(
                     duckdb$expr_function(
-                      "==",
+                      "r_base::==",
                       list(
                         duckdb$expr_reference("o_orderpriority"),
                         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -718,7 +718,7 @@ tpch_raw_oo_12 <- function(con, experimental) {
                       )
                     ),
                     duckdb$expr_function(
-                      "==",
+                      "r_base::==",
                       list(
                         duckdb$expr_reference("o_orderpriority"),
                         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -758,7 +758,7 @@ tpch_raw_oo_12 <- function(con, experimental) {
                   "&",
                   list(
                     duckdb$expr_function(
-                      "!=",
+                      "r_base::!=",
                       list(
                         duckdb$expr_reference("o_orderpriority"),
                         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -769,7 +769,7 @@ tpch_raw_oo_12 <- function(con, experimental) {
                       )
                     ),
                     duckdb$expr_function(
-                      "!=",
+                      "r_base::!=",
                       list(
                         duckdb$expr_reference("o_orderpriority"),
                         if ("experimental" %in% names(formals(duckdb$expr_constant))) {

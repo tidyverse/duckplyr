@@ -67,7 +67,7 @@ tpch_raw_oo_07 <- function(con, experimental) {
         "|",
         list(
           duckdb$expr_function(
-            "==",
+            "r_base::==",
             list(
               duckdb$expr_reference("n1_name"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -78,7 +78,7 @@ tpch_raw_oo_07 <- function(con, experimental) {
             )
           ),
           duckdb$expr_function(
-            "==",
+            "r_base::==",
             list(
               duckdb$expr_reference("n1_name"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -279,7 +279,7 @@ tpch_raw_oo_07 <- function(con, experimental) {
         "|",
         list(
           duckdb$expr_function(
-            "==",
+            "r_base::==",
             list(
               duckdb$expr_reference("n2_name"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -290,7 +290,7 @@ tpch_raw_oo_07 <- function(con, experimental) {
             )
           ),
           duckdb$expr_function(
-            "==",
+            "r_base::==",
             list(
               duckdb$expr_reference("n2_name"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -622,7 +622,7 @@ tpch_raw_oo_07 <- function(con, experimental) {
     rel45,
     list(
       duckdb$expr_function(
-        ">=",
+        "r_base::>=",
         list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -633,7 +633,7 @@ tpch_raw_oo_07 <- function(con, experimental) {
         )
       ),
       duckdb$expr_function(
-        "<=",
+        "r_base::<=",
         list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -995,7 +995,7 @@ tpch_raw_oo_07 <- function(con, experimental) {
             "&",
             list(
               duckdb$expr_function(
-                "==",
+                "r_base::==",
                 list(
                   duckdb$expr_reference("n1_name"),
                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1006,7 +1006,7 @@ tpch_raw_oo_07 <- function(con, experimental) {
                 )
               ),
               duckdb$expr_function(
-                "==",
+                "r_base::==",
                 list(
                   duckdb$expr_reference("n2_name"),
                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1022,7 +1022,7 @@ tpch_raw_oo_07 <- function(con, experimental) {
             "&",
             list(
               duckdb$expr_function(
-                "==",
+                "r_base::==",
                 list(
                   duckdb$expr_reference("n1_name"),
                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1033,7 +1033,7 @@ tpch_raw_oo_07 <- function(con, experimental) {
                 )
               ),
               duckdb$expr_function(
-                "==",
+                "r_base::==",
                 list(
                   duckdb$expr_reference("n2_name"),
                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {

@@ -10,8 +10,7 @@ invisible(
     'CREATE MACRO "grepl"(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)'
   )
 )
-invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(
   DBI::dbExecute(

@@ -43,7 +43,7 @@ tpch_raw_08 <- function(con, experimental) {
     rel4,
     list(
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("r_name"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -206,7 +206,7 @@ tpch_raw_08 <- function(con, experimental) {
     rel20,
     list(
       duckdb$expr_function(
-        ">=",
+        "r_base::>=",
         list(
           duckdb$expr_reference("o_orderdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -217,7 +217,7 @@ tpch_raw_08 <- function(con, experimental) {
         )
       ),
       duckdb$expr_function(
-        "<=",
+        "r_base::<=",
         list(
           duckdb$expr_reference("o_orderdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -429,7 +429,7 @@ tpch_raw_08 <- function(con, experimental) {
     rel35,
     list(
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("p_type"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -893,7 +893,7 @@ tpch_raw_08 <- function(con, experimental) {
                   "if_else",
                   list(
                     duckdb$expr_function(
-                      "==",
+                      "r_base::==",
                       list(
                         duckdb$expr_reference("nation"),
                         if ("experimental" %in% names(formals(duckdb$expr_constant))) {

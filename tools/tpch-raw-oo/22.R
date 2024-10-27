@@ -7,8 +7,7 @@ invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO ">"(x, y) AS "r_base::>"(x, y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
 df1 <- customer
 "filter"
@@ -294,7 +293,7 @@ rel3 <- duckdb$rel_filter(
           )
         ),
         duckdb$expr_function(
-          ">",
+          "r_base::>",
           list(
             duckdb$expr_reference("c_acctbal"),
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -936,7 +935,7 @@ rel21 <- duckdb$rel_filter(
             }
           )
         ),
-        duckdb$expr_function(">", list(duckdb$expr_reference("c_acctbal"), duckdb$expr_reference("acctbal_min")))
+        duckdb$expr_function("r_base::>", list(duckdb$expr_reference("c_acctbal"), duckdb$expr_reference("acctbal_min")))
       )
     )
   )

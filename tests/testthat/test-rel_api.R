@@ -1179,7 +1179,6 @@ test_that("relational distinct() order-preserving", {
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
@@ -1264,7 +1263,7 @@ test_that("relational distinct() order-preserving", {
     rel3,
     list(
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1315,7 +1314,6 @@ test_that("relational distinct(a) order-preserving", {
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
@@ -1380,7 +1378,7 @@ test_that("relational distinct(a) order-preserving", {
     rel3,
     list(
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1421,7 +1419,6 @@ test_that("relational distinct(a, b) order-preserving", {
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
@@ -1496,7 +1493,7 @@ test_that("relational distinct(a, b) order-preserving", {
     rel3,
     list(
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1542,7 +1539,6 @@ test_that("relational distinct(b, b) order-preserving", {
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
@@ -1607,7 +1603,7 @@ test_that("relational distinct(b, b) order-preserving", {
     rel3,
     list(
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1648,7 +1644,6 @@ test_that("relational distinct(g) order-preserving", {
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
@@ -1713,7 +1708,7 @@ test_that("relational distinct(g) order-preserving", {
     rel3,
     list(
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1754,7 +1749,6 @@ test_that("relational union_all(data.frame(a = 1L, b = 3, g = 2L)) %>% distinct(
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "union_all"
@@ -1921,7 +1915,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 3, g = 2L)) %>% distinct(
     rel9,
     list(
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1962,7 +1956,6 @@ test_that("relational union_all(data.frame(a = 1L, b = 4, g = 2L)) %>% distinct(
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "union_all"
@@ -2129,7 +2122,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 4, g = 2L)) %>% distinct(
     rel9,
     list(
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -2170,7 +2163,6 @@ test_that("relational union_all(data.frame(a = 1L, b = 5, g = 2L)) %>% distinct(
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "union_all"
@@ -2337,7 +2329,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 5, g = 2L)) %>% distinct(
     rel9,
     list(
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -2378,7 +2370,6 @@ test_that("relational union_all(data.frame(a = 1L, b = 6, g = 2L)) %>% distinct(
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "union_all"
@@ -2545,7 +2536,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 6, g = 2L)) %>% distinct(
     rel9,
     list(
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -2586,7 +2577,6 @@ test_that("relational union_all(data.frame(a = 1L, b = 7, g = 2L)) %>% distinct(
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "union_all"
@@ -2753,7 +2743,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 7, g = 2L)) %>% distinct(
     rel9,
     list(
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -2794,7 +2784,6 @@ test_that("relational distinct(g, .keep_all = TRUE) order-preserving", {
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
@@ -2869,7 +2858,7 @@ test_that("relational distinct(g, .keep_all = TRUE) order-preserving", {
     rel3,
     list(
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -3289,7 +3278,6 @@ test_that("relational distinct(g, .keep_all = TRUE) order-enforcing", {
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
@@ -3364,7 +3352,7 @@ test_that("relational distinct(g, .keep_all = TRUE) order-enforcing", {
     rel3,
     list(
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -3422,7 +3410,6 @@ test_that("relational filter(a == 1) order-preserving", {
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "filter"
@@ -3458,7 +3445,7 @@ test_that("relational filter(a == 1) order-preserving", {
     rel2,
     list(
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("a"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -3511,7 +3498,6 @@ test_that("relational filter(a %in% 2:3, g == 2) order-preserving", {
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "filter"
@@ -3584,7 +3570,7 @@ test_that("relational filter(a %in% 2:3, g == 2) order-preserving", {
         )
       ),
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("g"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -3638,7 +3624,6 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-preserving", {
   invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "filter"
@@ -3714,7 +3699,7 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-preserving", {
             )
           ),
           duckdb$expr_function(
-            "==",
+            "r_base::==",
             list(
               duckdb$expr_reference("g"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -3766,9 +3751,8 @@ test_that("relational filter(a != 2 | g != 2) order-preserving", {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "!="(x, y) AS "r_base::!="(x, y)'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "filter"
@@ -3807,7 +3791,7 @@ test_that("relational filter(a != 2 | g != 2) order-preserving", {
         "|",
         list(
           duckdb$expr_function(
-            "!=",
+            "r_base::!=",
             list(
               duckdb$expr_reference("a"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -3818,7 +3802,7 @@ test_that("relational filter(a != 2 | g != 2) order-preserving", {
             )
           ),
           duckdb$expr_function(
-            "!=",
+            "r_base::!=",
             list(
               duckdb$expr_reference("g"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -3873,7 +3857,6 @@ test_that("relational filter(a == 1) order-enforcing", {
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "filter"
@@ -3883,7 +3866,7 @@ test_that("relational filter(a == 1) order-enforcing", {
     rel1,
     list(
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("a"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -3918,7 +3901,6 @@ test_that("relational filter(a %in% 2:3, g == 2) order-enforcing", {
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "filter"
@@ -3965,7 +3947,7 @@ test_that("relational filter(a %in% 2:3, g == 2) order-enforcing", {
         )
       ),
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("g"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -4001,7 +3983,6 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-enforcing", {
   invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "filter"
@@ -4051,7 +4032,7 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-enforcing", {
             )
           ),
           duckdb$expr_function(
-            "==",
+            "r_base::==",
             list(
               duckdb$expr_reference("g"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -4085,9 +4066,8 @@ test_that("relational filter(a != 2 | g != 2) order-enforcing", {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "!="(x, y) AS "r_base::!="(x, y)'))
+  invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "filter"
@@ -4100,7 +4080,7 @@ test_that("relational filter(a != 2 | g != 2) order-enforcing", {
         "|",
         list(
           duckdb$expr_function(
-            "!=",
+            "r_base::!=",
             list(
               duckdb$expr_reference("a"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -4111,7 +4091,7 @@ test_that("relational filter(a != 2 | g != 2) order-enforcing", {
             )
           ),
           duckdb$expr_function(
-            "!=",
+            "r_base::!=",
             list(
               duckdb$expr_reference("g"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -4635,7 +4615,6 @@ test_that("relational intersect() order-preserving", {
     DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = 1:4, b = rep(2, 4L))
 
   "semi_join"
@@ -4762,7 +4741,7 @@ test_that("relational intersect() order-preserving", {
     rel10,
     list(
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -9852,14 +9831,13 @@ test_that("relational mutate(d = if_else(a > 1, \"ok\", NA)) order-preserving", 
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
+  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   invisible(
     DBI::dbExecute(
       con,
       'CREATE MACRO "if_else"(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)'
     )
   )
-  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO ">"(x, y) AS "r_base::>"(x, y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
@@ -9888,7 +9866,7 @@ test_that("relational mutate(d = if_else(a > 1, \"ok\", NA)) order-preserving", 
           "if_else",
           list(
             duckdb$expr_function(
-              ">",
+              "r_base::>",
               list(
                 duckdb$expr_reference("a"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -13927,14 +13905,13 @@ test_that("relational mutate(d = if_else(a > 1, \"ok\", NA)) order-enforcing", {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
+  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   invisible(
     DBI::dbExecute(
       con,
       'CREATE MACRO "if_else"(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)'
     )
   )
-  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO ">"(x, y) AS "r_base::>"(x, y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = rep(2, 6L), g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
@@ -13963,7 +13940,7 @@ test_that("relational mutate(d = if_else(a > 1, \"ok\", NA)) order-enforcing", {
           "if_else",
           list(
             duckdb$expr_function(
-              ">",
+              "r_base::>",
               list(
                 duckdb$expr_reference("a"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -15125,7 +15102,6 @@ test_that("relational setdiff() order-preserving", {
     DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = 1:4, b = rep(2, 4L))
 
   "anti_join"
@@ -15252,7 +15228,7 @@ test_that("relational setdiff() order-preserving", {
     rel10,
     list(
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -16052,7 +16028,6 @@ test_that("relational symdiff() order-preserving", {
     DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = 1:4, b = rep(2, 4L))
 
   "anti_join"
@@ -16270,7 +16245,7 @@ test_that("relational symdiff() order-preserving", {
     rel17,
     list(
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -16569,7 +16544,6 @@ test_that("relational union() order-preserving", {
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-  invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
   df1 <- data.frame(a = 1:4, b = rep(2, 4L))
 
   "union_all"
@@ -16726,7 +16700,7 @@ test_that("relational union() order-preserving", {
     rel9,
     list(
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {

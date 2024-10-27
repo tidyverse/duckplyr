@@ -4,9 +4,7 @@ drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
 invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-invisible(DBI::dbExecute(con, 'CREATE MACRO ">="(x, y) AS "r_base::>="(x, y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "<"(x, y) AS "r_base::<"(x, y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(
   DBI::dbExecute(
@@ -125,7 +123,7 @@ rel3 <- duckdb$rel_filter(
   rel2,
   list(
     duckdb$expr_function(
-      ">=",
+      "r_base::>=",
       list(
         duckdb$expr_reference("l_shipdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -136,7 +134,7 @@ rel3 <- duckdb$rel_filter(
       )
     ),
     duckdb$expr_function(
-      "<",
+      "r_base::<",
       list(
         duckdb$expr_reference("l_shipdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {

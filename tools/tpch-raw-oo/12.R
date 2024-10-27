@@ -6,9 +6,7 @@ experimental <- FALSE
 invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "<"(x, y) AS "r_base::<"(x, y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO ">="(x, y) AS "r_base::>="(x, y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS "r_base::=="(x, y)'))
+invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(
   DBI::dbExecute(
     con,
@@ -16,7 +14,6 @@ invisible(
   )
 )
 invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "!="(x, y) AS "r_base::!="(x, y)'))
 df1 <- lineitem
 "filter"
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -153,15 +150,15 @@ rel3 <- duckdb$rel_filter(
       )
     ),
     duckdb$expr_function(
-      "<",
+      "r_base::<",
       list(duckdb$expr_reference("l_commitdate"), duckdb$expr_reference("l_receiptdate"))
     ),
     duckdb$expr_function(
-      "<",
+      "r_base::<",
       list(duckdb$expr_reference("l_shipdate"), duckdb$expr_reference("l_commitdate"))
     ),
     duckdb$expr_function(
-      ">=",
+      "r_base::>=",
       list(
         duckdb$expr_reference("l_receiptdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -172,7 +169,7 @@ rel3 <- duckdb$rel_filter(
       )
     ),
     duckdb$expr_function(
-      "<",
+      "r_base::<",
       list(
         duckdb$expr_reference("l_receiptdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -724,7 +721,7 @@ rel15 <- duckdb$rel_aggregate(
                 "|",
                 list(
                   duckdb$expr_function(
-                    "==",
+                    "r_base::==",
                     list(
                       duckdb$expr_reference("o_orderpriority"),
                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -735,7 +732,7 @@ rel15 <- duckdb$rel_aggregate(
                     )
                   ),
                   duckdb$expr_function(
-                    "==",
+                    "r_base::==",
                     list(
                       duckdb$expr_reference("o_orderpriority"),
                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -775,7 +772,7 @@ rel15 <- duckdb$rel_aggregate(
                 "&",
                 list(
                   duckdb$expr_function(
-                    "!=",
+                    "r_base::!=",
                     list(
                       duckdb$expr_reference("o_orderpriority"),
                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -786,7 +783,7 @@ rel15 <- duckdb$rel_aggregate(
                     )
                   ),
                   duckdb$expr_function(
-                    "!=",
+                    "r_base::!=",
                     list(
                       duckdb$expr_reference("o_orderpriority"),
                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {

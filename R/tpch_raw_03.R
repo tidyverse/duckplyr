@@ -34,7 +34,7 @@ tpch_raw_03 <- function(con, experimental) {
     rel2,
     list(
       duckdb$expr_function(
-        "<",
+        "r_base::<",
         list(
           duckdb$expr_reference("o_orderdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -70,7 +70,7 @@ tpch_raw_03 <- function(con, experimental) {
     rel5,
     list(
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("c_mktsegment"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -187,7 +187,7 @@ tpch_raw_03 <- function(con, experimental) {
     rel13,
     list(
       duckdb$expr_function(
-        ">",
+        "r_base::>",
         list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {

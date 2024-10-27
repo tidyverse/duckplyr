@@ -39,7 +39,7 @@ tpch_raw_oo_11 <- function(con, experimental) {
     rel2,
     list(
       duckdb$expr_function(
-        "==",
+        "r_base::==",
         list(
           duckdb$expr_reference("n_name"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -819,7 +819,7 @@ tpch_raw_oo_11 <- function(con, experimental) {
   rel40 <- duckdb$rel_filter(
     rel39,
     list(
-      duckdb$expr_function(">", list(duckdb$expr_reference("value"), duckdb$expr_reference("global_value")))
+      duckdb$expr_function("r_base::>", list(duckdb$expr_reference("value"), duckdb$expr_reference("global_value")))
     )
   )
   "filter"
