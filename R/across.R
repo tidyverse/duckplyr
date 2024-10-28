@@ -24,10 +24,6 @@ duckplyr_expand_across <- function(data, quo) {
     return(NULL)
   }
 
-  # FIXME: Needed? Can we get away with the names
-  # dplyr_mask <- peek_mask()
-  # mask <- dplyr_mask$get_rlang_mask()
-
   if (".unpack" %in% names(expr)) {
     # In dplyr this evaluates in the mask to reproduce the `mutate()` or
     # `summarise()` context. We don't have a mask here but it's probably fine in
@@ -68,6 +64,7 @@ duckplyr_expand_across <- function(data, quo) {
     return(NULL)
   }
   fns <- list("1" = fns)
+  fn_exprs <- list(expr$.fns)
 
   # In dplyr this evaluates in the mask to reproduce the `mutate()` or
   # `summarise()` context. We don't have a mask here but it's probably fine in
@@ -107,16 +104,19 @@ duckplyr_expand_across <- function(data, quo) {
     var <- vars[[i]]
 
     for (j in seq_fns) {
-      # `mask` isn't actually used inside this
-      if (is_symbol(expr$.fns)) {
+      fn_expr <- fn_exprs[[j]]
+
+      if (is_symbol(fn_expr)) {
         # When we see a bare symbol like `across(x:y, mean)`, we don't
         # want to inline the function itself, we want to inline its expression.
-        fn_call <- new_quosure(call2(expr$.fns, sym(var)), env = env)
+        fn_call <- new_quosure(call2(fn_expr, sym(var)), env = env)
       } else {
+        # Note: `mask` isn't actually used inside this helper
         fn_call <- as_across_fn_call(fns[[j]], var, env, mask = env)
       }
 
       name <- names[[k]]
+
       exprs[[k]] <- new_dplyr_quosure(
         fn_call,
         name = name,
