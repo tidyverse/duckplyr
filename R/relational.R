@@ -73,7 +73,7 @@ rel_try <- function(call, rel, ...) {
   cli::cli_abort("Must use a return() in rel_try().")
 }
 
-rel_translate_dots <- function(dots, data, forbid_new = FALSE) {
+rel_translate_dots <- function(dots, data) {
   if (is.null(names(dots))) {
     map(dots, rel_translate, data)
   } else {
