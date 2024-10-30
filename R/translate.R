@@ -123,30 +123,11 @@ rel_find_call <- function(fun, env) {
   }
 }
 
-infer_type_of_expr <- function(
-    expr,
-    types_data,
-    names_data
-) {
-  if (typeof(expr) == 'symbol') {
-    name <- as.character(expr)
-    col_idx <- which(name == names_data)
-    if (col_idx == 0) stop(paste0("Unable to find column '",name,"'"))
-    return(types_data[col_idx])
+infer_class_of_expr <- function(expr, names_data, classes_data) {
+  if (typeof(expr) == 'symbol' && as.character(expr) %in% names_data) {
+      return(classes_data[which(as.character(expr) == names_data)][[1]])
   }
-  return(typeof(expr))
-}
-
-types_are_comparable <- function(types) {
-  # TODO: Incomplete, written for demo
-  left  = types[1]
-  right = types[2]
-
-  if (left == right) return(TRUE)
-  if (left == "integer" && right == "double") return(TRUE)
-  if (left == "double"  && right == "integer") return(TRUE)
-
-  return(FALSE)
+  return(class(expr))
 }
 
 rel_translate_lang <- function(
@@ -154,7 +135,7 @@ rel_translate_lang <- function(
   do_translate,
   # FIXME: Perform constant folding instead
   names_data,
-  types_data,
+  classes_data,
   env,
   # FIXME: Perform constant folding instead
   partition,
@@ -166,16 +147,15 @@ rel_translate_lang <- function(
   name <- pkg_name[[2]]
 
 
-  if (name %in% c(">","<","=",">=","<=") && !is.null(types_data)) {
-    
-    types <- sapply(
-        expr[2:3],
-        infer_type_of_expr,
-        types_data,
-        names_data
-    )
+  if (name %in% c(">","<","=",">=","<=") && !is.null(classes_data)) {
 
-    if (types_are_comparable(types)) {
+    if (length(expr) != 3) cli::cli_abort("Expected three expressions for comparison. Got {length(expr)}")
+
+    class_left <-  infer_class_of_expr(expr[[2]], names_data, classes_data)
+    class_right <- infer_class_of_expr(expr[[3]], names_data, classes_data)
+
+    if (class_left == class_right) {
+
       return(
         relexpr_comparison(
           list(do_translate(expr[[2]]), do_translate(expr[[3]]))
@@ -370,13 +350,14 @@ rel_translate <- function(
     expr <- quo_get_expr(quo)
     env <- quo_get_env(quo)
   }
-
   used <- character()
 
-  types_data = NULL
+  classes_data = NULL
   if (hasArg(data) && !is.null(data)) {
-    types_data <- sapply(data,typeof)
-  }
+    classes_data <- map(data,class)
+  } 
+
+
 
   do_translate <- function(expr, in_window = FALSE, top_level = FALSE) {
     stopifnot(!is_quosure(expr))
@@ -407,7 +388,7 @@ rel_translate <- function(
         expr,
         do_translate,
         names_data,
-        types_data,
+        classes_data,
         env,
         partition,
         in_window,
