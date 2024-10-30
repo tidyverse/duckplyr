@@ -38,7 +38,7 @@ duckplyr_macros <- c(
   # "as.Date" = '(x) AS strptime(x, \'%Y-%m-%d\')',
 
   "grepl" = "(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)",
-  "if_else" = "(test, yes, no) AS (CASE WHEN test THEN yes ELSE no END)",
+  "if_else" = "(test, yes, no) AS (CASE WHEN test IS NULL THEN NULL ELSE CASE WHEN test THEN yes ELSE no END END)",
   "|" = "(x, y) AS (x OR y)",
   "&" = "(x, y) AS (x AND y)",
   "!" = "(x) AS (NOT x)",
