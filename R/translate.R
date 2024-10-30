@@ -354,7 +354,7 @@ rel_translate <- function(
   used <- character()
 
   classes_data <- NULL
-  if (hasArg(data) && !is.null(data)) {
+  if (!missing(data) && !is.null(data)) {
     classes_data <- map(data, class)
   }
 
