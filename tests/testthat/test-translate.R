@@ -20,7 +20,8 @@ test_that("a %in% b", {
 
 test_that("comparison expression translated", {
   df <- data.frame(a = 1L)
-  expect_snapshot(error = FALSE,
+  expect_snapshot(
+    error = FALSE,
     rel_translate(quo(a > 123L), df)
   )
 })

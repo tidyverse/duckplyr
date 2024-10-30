@@ -73,7 +73,10 @@ rel_find_call <- function(fun, env) {
     # "sqrt" = "base",
     # "abs" = "base",
     "if_else" = c("dplyr", "duckplyr"),
+<<<<<<< HEAD
     #
+=======
+>>>>>>> cb20a86 (apply styler)
     "any" = "base",
     "suppressWarnings" = "base",
     "lag" = c("dplyr", "duckplyr"),
@@ -124,8 +127,8 @@ rel_find_call <- function(fun, env) {
 }
 
 infer_class_of_expr <- function(expr, names_data, classes_data) {
-  if (typeof(expr) == 'symbol' && as.character(expr) %in% names_data) {
-      return(classes_data[which(as.character(expr) == names_data)][[1]])
+  if (typeof(expr) == "symbol" && as.character(expr) %in% names_data) {
+    return(classes_data[which(as.character(expr) == names_data)][[1]])
   }
   return(class(expr))
 }
@@ -147,21 +150,19 @@ rel_translate_lang <- function(
   name <- pkg_name[[2]]
 
 
-  if (name %in% c(">","<","=",">=","<=") && !is.null(classes_data)) {
-
+  if (name %in% c(">", "<", "=", ">=", "<=") && !is.null(classes_data)) {
     if (length(expr) != 3) cli::cli_abort("Expected three expressions for comparison. Got {length(expr)}")
 
-    class_left <-  infer_class_of_expr(expr[[2]], names_data, classes_data)
+    class_left <- infer_class_of_expr(expr[[2]], names_data, classes_data)
     class_right <- infer_class_of_expr(expr[[3]], names_data, classes_data)
 
     if (class_left == class_right) {
-
       return(
         relexpr_comparison(
-          list(do_translate(expr[[2]]), do_translate(expr[[3]]))
-          ,name
+          list(do_translate(expr[[2]]), do_translate(expr[[3]])),
+          name
         )
-      )  
+      )
     }
   }
 
@@ -352,10 +353,10 @@ rel_translate <- function(
   }
   used <- character()
 
-  classes_data = NULL
+  classes_data <- NULL
   if (hasArg(data) && !is.null(data)) {
-    classes_data <- map(data,class)
-  } 
+    classes_data <- map(data, class)
+  }
 
 
 
