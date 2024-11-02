@@ -61,11 +61,15 @@ df_methods <-
   mutate(code = unname(mget(fun, dplyr)))
 
 # FIXME: c(a = list(...), NULL) instead of head(...)
+# "*" means "don't include file"
 duckplyr_tests <- head(n = -1, list(
   "helper-s3.R" = c(
     NULL
   ),
   "helper-encoding.R" = c(
+    NULL
+  ),
+  "helper-pick.R" = c(
     NULL
   ),
   "test-across.R" = c(
@@ -82,16 +86,96 @@ duckplyr_tests <- head(n = -1, list(
   "test-arrange.R" = c(
     NULL
   ),
+  "test-bind-cols.R" = c(
+    NULL
+  ),
+  "test-bind-rows.R" = c(
+    NULL
+  ),
+  "test-by.R" = c(
+    NULL
+  ),
+  "test-case-match.R" = c(
+    NULL
+  ),
+  "test-case-when.R" = c(
+    NULL
+  ),
+  "test-coalesce.R" = c(
+    NULL
+  ),
+  "test-colwise-arrange.R" = c(
+    "*" # deprecated
+  ),
+  "test-colwise-distinct.R" = c(
+    "*" # deprecated
+  ),
+  "test-colwise-filter.R" = c(
+    "*" # deprecated
+  ),
+  "test-colwise-funs.R" = c(
+    NULL
+  ),
+  "test-colwise-group-by.R" = c(
+    "*" # deprecated
+  ),
+  "test-colwise-mutate.R" = c(
+    "*" # deprecated
+  ),
   "test-colwise-select.R" = c(
+    "*" # deprecated
+  ),
+  "test-colwise.R" = c(
+    "*" # deprecated
+  ),
+  "test-conditions.R" = c(
+    NULL
+  ),
+  "test-consecutive-id.R" = c(
+    NULL
+  ),
+  "test-context.R" = c(
+    NULL
+  ),
+  "test-copy-to.R" = c(
+    # Extra duckplyr_df class from our test
+    "`duckplyr_auto_copy()` is a no-op when they share the same source",
     NULL
   ),
   "test-count-tally.R" = c(
     NULL
   ),
+  "test-data-mask.R" = c(
+    "*" # internals
+  ),
+  "test-defunct.R" = c(
+    "*" # deprecated
+  ),
+  "test-deprec-combine.R" = c(
+    "*" # deprecated
+  ),
+  "test-deprec-context.R" = c(
+    "*" # deprecated
+  ),
+  "test-deprec-dbi.R" = c(
+    "*" # deprecated
+  ),
   "test-deprec-do.R" = c(
-    NULL
+    "*" # deprecated
   ),
   "test-deprec-funs.R" = c(
+    "*" # deprecated
+  ),
+  "test-deprec-lazyeval.R" = c(
+    "*" # deprecated
+  ),
+  "test-deprec-src-local.R" = c(
+    "*" # deprecated
+  ),
+  "test-deprec-tibble.R" = c(
+    "*" # deprecated
+  ),
+  "test-desc.R" = c(
     NULL
   ),
   "test-distinct.R" = c(
@@ -100,15 +184,61 @@ duckplyr_tests <- head(n = -1, list(
   "test-filter.R" = c(
     NULL
   ),
+  "test-funs.R" = c(
+    # Needs dplyr > 1.1.4
+    "ptype argument works as expected with non-alphabetical ordered factors",
+    NULL
+  ),
   "test-generics.R" = c(
     # https://github.com/tidyverse/dplyr/pull/7022
     "`dplyr_reconstruct()`, which gets and sets attributes, doesn't touch `row.names` (#6525)",
     NULL
   ),
+  "test-group-by.R" = c(
+    # duckplyr_group_vars() does not exist
+    "implicit duckplyr_mutate() operates on ungrouped data (#5598)",
+    NULL
+  ),
+  "test-group-data.R" = c(
+    NULL
+  ),
   "test-group-map.R" = c(
     NULL
   ),
+  "test-group-nest.R" = c(
+    # Extra duckplyr_df class from our test
+    "duckplyr_group_nest() works if no grouping column",
+    NULL
+  ),
+  "test-group-split.R" = c(
+    NULL
+  ),
+  "test-group-trim.R" = c(
+    NULL
+  ),
+  "test-grouped-df.R" = c(
+    NULL
+  ),
   "test-groups-with.R" = c(
+    NULL
+  ),
+  "test-if-else.R" = c(
+    NULL
+  ),
+  "test-join-by.R" = c(
+    NULL
+  ),
+  "test-join-cols.R" = c(
+    NULL
+  ),
+  "test-join-cross.R" = c(
+    NULL
+  ),
+  "test-join-rows.R" = c(
+    "join_rows() gives meaningful many-to-many warnings",
+    "`multiple = 'error'` is deprecated (#6731)",
+    "`multiple = NULL` is deprecated and results in `'all'` (#6731)",
+    "`multiple = 'warning'` is deprecated (#6731)",
     NULL
   ),
   "test-join.R" = c(
@@ -119,12 +249,11 @@ duckplyr_tests <- head(n = -1, list(
     "mutating joins don't trigger many-to-many warning when called indirectly",
     NULL
   ),
-  "test-join-rows.R" = c(
-    "join_rows() gives meaningful many-to-many warnings",
-    "`multiple = 'error'` is deprecated (#6731)",
-    "`multiple = NULL` is deprecated and results in `'all'` (#6731)",
-    "`multiple = 'warning'` is deprecated (#6731)",
+  "test-lead-lag.R" = c(
     NULL
+  ),
+  "test-locale.R" = c(
+    "*" # internals
   ),
   "test-mutate.R" = c(
     # Appeared again after https://github.com/tidyverse/duckplyr/pull/276
@@ -132,13 +261,55 @@ duckplyr_tests <- head(n = -1, list(
     "no utf8 invasion (#722)",
     NULL
   ),
+  "test-n-distinct.R" = c(
+    NULL
+  ),
+  "test-na-if.R" = c(
+    NULL
+  ),
+  "test-near.R" = c(
+    NULL
+  ),
+  "test-nest-by.R" = c(
+    NULL
+  ),
+  "test-nth-value.R" = c(
+    NULL
+  ),
+  "test-order-by.R" = c(
+    NULL
+  ),
+  "test-pick.R" = c(
+    NULL
+  ),
   "test-pull.R" = c(
+    NULL
+  ),
+  "test-rank.R" = c(
+    NULL
+  ),
+  "test-recode.R" = c(
+    "*" # deprecated
+  ),
+  "test-reframe.R" = c(
     NULL
   ),
   "test-relocate.R" = c(
     NULL
   ),
   "test-rename.R" = c(
+    NULL
+  ),
+  "test-rows.R" = c(
+    NULL
+  ),
+  "test-rowwise.R" = c(
+    NULL
+  ),
+  "test-sample.R" = c(
+    NULL
+  ),
+  "test-select-helpers.R" = c(
     NULL
   ),
   "test-select.R" = c(
@@ -149,6 +320,9 @@ duckplyr_tests <- head(n = -1, list(
   ),
   "test-slice.R" = c(
     NULL
+  ),
+  "test-src-dbi.R" = c(
+    "*" # not relevant
   ),
   "test-summarise.R" = c(
     # Will be fixed by extension
@@ -162,8 +336,23 @@ duckplyr_tests <- head(n = -1, list(
 
     NULL
   ),
+  "test-tbl.R" = c(
+    "*" # not relevant
+  ),
+  "test-top-n.R" = c(
+    "*" # deprecated
+  ),
   "test-transmute.R" = c(
     NULL
+  ),
+  "test-utils.R" = c(
+    "*" # internals
+  ),
+  "test-vec-case-match.R" = c(
+    "*" # internals
+  ),
+  "test-vec-case-when.R" = c(
+    "*" # internals
   ),
   NULL
 ))
@@ -197,6 +386,8 @@ dplyr_only_tests <- head(n = -1, list(
   ),
   NULL
 ))
+
+duckplyr_tests <- duckplyr_tests[!map_lgl(duckplyr_tests, identical, "*")]
 
 # non_force_only_tests --------------------------------------------------------------------
 
