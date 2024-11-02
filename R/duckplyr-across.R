@@ -58,13 +58,8 @@ duckplyr_expand_across <- function(data, quo) {
   fns <- as_quosure(expr$.fns, env)
   fns <- quo_eval_fns(fns, mask = env, error_call = error_call)
 
-  # duckplyr doesn't currently support >1 function so we bail if we
-  # see that potential case, but to potentially allow for this in the future we
-  # manually wrap in a list using the default name of `"1"`.
-  if (is.function(fns)) {
-    fns <- list("1" = fns)
-  }
-  if (length(fns) != 1) {
+  # duckplyr doesn't currently support >1 function.
+  if (!is.function(fns) && length(fns) != 1) {
     return(NULL)
   }
 
@@ -72,7 +67,6 @@ duckplyr_expand_across <- function(data, quo) {
   # `summarise()` context. We don't have a mask here but it's probably fine in
   # almost all cases.
   names <- eval_tidy(expr$.names, env = env)
-  names <- names %||% "{.col}"
 
   setup <- duckplyr_across_setup(
     data,
@@ -132,10 +126,7 @@ duckplyr_across_setup <- function(data,
                                   names,
                                   .caller_env,
                                   error_call = caller_env()) {
-  stopifnot(
-    is.list(fns),
-    length(fns) == 1
-  )
+  stopifnot(is.function(fns) || length(fns) == 1)
 
   data <- set_names(seq_along(data), data)
 
@@ -149,6 +140,29 @@ duckplyr_across_setup <- function(data,
   vars <- names(data)[vars]
 
   names_fns <- names(fns)
+
+  # apply `.names` smart default
+  if (is.function(fns)) {
+    names <- names %||% "{.col}"
+    fns <- list("1" = fns)
+  } else {
+    names <- names %||% "{.col}_{.fn}"
+  }
+
+  if (!is.list(fns)) {
+    abort("Expected a list.", .internal = TRUE)
+  }
+
+  # make sure fns has names, use number to replace unnamed
+  if (is.null(names(fns))) {
+    names_fns <- seq_along(fns)
+  } else {
+    names_fns <- names(fns)
+    empties <- which(names_fns == "")
+    if (length(empties)) {
+      names_fns[empties] <- empties
+    }
+  }
 
   glue_mask <- across_glue_mask(
     .col = names_vars,

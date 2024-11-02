@@ -70,7 +70,6 @@ test_that("duckplyr_expand_across() successful", {
   })
 
   expect_snapshot({
-    "This isn't quite right yet"
     test_duckplyr_expand_across(
       c("x", "y"),
       across(x:y, list(mean = mean))

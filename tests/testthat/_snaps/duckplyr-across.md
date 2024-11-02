@@ -68,13 +68,12 @@
     Code
       test_duckplyr_expand_across(c("x", "y"), across(x:y, list(mean)))
     Output
-      tibble(x = base::mean(x), y = base::mean(y))
+      tibble(x_1 = base::mean(x), y_1 = base::mean(y))
 
 ---
 
     Code
-      # This isn't quite right yet
       test_duckplyr_expand_across(c("x", "y"), across(x:y, list(mean = mean)))
     Output
-      tibble(x = base::mean(x), y = base::mean(y))
+      tibble(x_mean = base::mean(x), y_mean = base::mean(y))
 
