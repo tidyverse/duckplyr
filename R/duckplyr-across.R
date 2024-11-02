@@ -58,11 +58,6 @@ duckplyr_expand_across <- function(data, quo) {
   fns <- as_quosure(expr$.fns, env)
   fns <- quo_eval_fns(fns, mask = env, error_call = error_call)
 
-  # duckplyr doesn't currently support >1 function.
-  if (!is.function(fns) && length(fns) != 1) {
-    return(NULL)
-  }
-
   # In dplyr this evaluates in the mask to reproduce the `mutate()` or
   # `summarise()` context. We don't have a mask here but it's probably fine in
   # almost all cases.
@@ -126,8 +121,6 @@ duckplyr_across_setup <- function(data,
                                   names,
                                   .caller_env,
                                   error_call = caller_env()) {
-  stopifnot(is.function(fns) || length(fns) == 1)
-
   data <- set_names(seq_along(data), data)
 
   vars <- tidyselect::eval_select(
@@ -164,10 +157,9 @@ duckplyr_across_setup <- function(data,
     }
   }
 
-  glue_mask <- across_glue_mask(
-    .col = names_vars,
-    .fn = names_fns,
-    .caller_env = .caller_env
+  glue_mask <- across_glue_mask(.caller_env,
+    .col = rep(names_vars, each = length(fns)),
+    .fn  = rep(names_fns , length(vars))
   )
   names <- vec_as_names(
     glue(names, .envir = glue_mask),

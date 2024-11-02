@@ -77,3 +77,11 @@
     Output
       tibble(x_mean = base::mean(x), y_mean = base::mean(y))
 
+---
+
+    Code
+      test_duckplyr_expand_across(c("x", "y"), across(x:y, list(mean = mean, median = median)))
+    Output
+      tibble(x_mean = base::mean(x), x_median = stats::median(x), y_mean = base::mean(y), 
+          y_median = stats::median(y))
+
