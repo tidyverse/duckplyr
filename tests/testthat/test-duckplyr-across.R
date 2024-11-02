@@ -24,6 +24,10 @@ test_that("duckplyr_expand_across() successful", {
       c("x", "y", "a"),
       across(c(a, x), function(x) x + 1)
     )
+    test_duckplyr_expand_across(
+      c("x", "y", "a"),
+      across(c(a, x), function(x) x * 2 + 1)
+    )
   })
 })
 
