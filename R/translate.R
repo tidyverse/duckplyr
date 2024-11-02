@@ -127,7 +127,7 @@ infer_class_of_expr <- function(expr, names_data, classes_data) {
   if (typeof(expr) == "symbol" && as.character(expr) %in% names_data) {
     return(classes_data[which(as.character(expr) == names_data)][[1]])
   }
-  return(class(expr))
+  return(class(expr)[[1]])
 }
 
 classes_are_comparable <- function(left, right) {
