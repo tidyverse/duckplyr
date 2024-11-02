@@ -65,7 +65,6 @@ duckplyr_expand_across <- function(data, quo) {
     return(NULL)
   }
   fns <- list("1" = fns)
-  fn_exprs <- list(expr$.fns)
 
   # In dplyr this evaluates in the mask to reproduce the `mutate()` or
   # `summarise()` context. We don't have a mask here but it's probably fine in
@@ -105,16 +104,8 @@ duckplyr_expand_across <- function(data, quo) {
     var <- vars[[i]]
 
     for (j in seq_fns) {
-      fn_expr <- fn_exprs[[j]]
-
-      if (is_symbol(fn_expr)) {
-        # When we see a bare symbol like `across(x:y, mean)`, we don't
-        # want to inline the function itself, we want to inline its expression.
-        fn_call <- new_quosure(call2(fn_expr, sym(var)), env = env)
-      } else {
-        # Note: `mask` isn't actually used inside this helper
-        fn_call <- as_across_fn_call(fns[[j]], var, env, mask = env)
-      }
+      # Note: `mask` isn't actually used inside this helper
+      fn_call <- as_across_fn_call(fn_to_expr(fns[[j]], env), var, env, mask = env)
 
       name <- names[[k]]
 
@@ -173,6 +164,41 @@ duckplyr_across_setup <- function(data,
     fns = fns,
     names = names
   )
+}
+
+fn_to_expr <- function(fn, env) {
+  fn_env <- environment(fn)
+  if (!is_namespace(fn_env)) {
+    return(fn)
+  }
+
+  # This is an environment that maps hashes to function names
+  ns_exports_lookup <- get_ns_exports_lookup(fn_env)
+
+  # Can we find the function among the exports in the namespace?
+  fun_name <- ns_exports_lookup[[hash(fn)]]
+  if (is.null(fun_name)) {
+    return(fn)
+  }
+
+  # Triple-check: Does the expression actually evaluate to fn?
+  ns_name <- getNamespaceName(fn_env)
+  out <- call2("::", sym(ns_name), sym(fun_name))
+  if (!identical(eval(out, env), fn)) {
+    return(fn)
+  }
+
+  out
+}
+
+get_ns_exports_lookup <- function(ns) {
+  names <- getNamespaceExports(ns)
+  objs <- mget(names, ns)
+  funs <- objs[map_lgl(objs, is.function)]
+
+  hashes <- map_chr(funs, hash)
+  # Reverse, return as environment
+  new_environment(set_names(as.list(names(hashes)), hashes))
 }
 
 test_duckplyr_expand_across <- function(data, expr) {

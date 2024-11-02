@@ -56,7 +56,6 @@ test_that("duckplyr_expand_across() successful", {
   })
 
   expect_snapshot({
-    "Is this intended?"
     test_duckplyr_expand_across(
       c("x", "y"),
       across(x:y, base::mean)
