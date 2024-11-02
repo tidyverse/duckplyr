@@ -23,7 +23,7 @@ test_that("distinct works for 0-sized columns (#1437)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:10) %>% duckplyr_select(-x)
   ddf <- duckplyr_distinct(df)
-  expect_equal(ncol(ddf), 0L)
+  expect_equal(df_n_col(ddf), 0L)
 })
 
 test_that("if no variables specified, uses all", {

@@ -11,6 +11,9 @@ test_that("no homonyms", {
     # https://github.com/tidyverse/dplyr/pull/7029
     "join_ptype_common",
 
+    # needs dplyr > 1.1.4
+    "ncol", "df_n_col", "mat_n_col",
+
     "map", "walk", "map_lgl", "map_int", "map_dbl", "map_chr",
     ".rlang_purrr_map_mold", "map2", "map2_lgl", "map2_int",
     "map2_dbl", "map2_chr", "imap", "pmap", ".rlang_purrr_args_recycle",
