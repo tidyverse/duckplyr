@@ -73,10 +73,7 @@ rel_find_call <- function(fun, env) {
     # "sqrt" = "base",
     # "abs" = "base",
     "if_else" = c("dplyr", "duckplyr"),
-<<<<<<< HEAD
     #
-=======
->>>>>>> cb20a86 (apply styler)
     "any" = "base",
     "suppressWarnings" = "base",
     "lag" = c("dplyr", "duckplyr"),
