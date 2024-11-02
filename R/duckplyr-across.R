@@ -191,6 +191,12 @@ fn_to_expr <- function(fn, env) {
   out
 }
 
+# Memoize get_ns_exports_lookup() to avoid recomputing the hash of
+# every function in every namespace every time
+on_load({
+  get_ns_exports_lookup <<- memoise::memoise(get_ns_exports_lookup)
+})
+
 get_ns_exports_lookup <- function(ns) {
   names <- getNamespaceExports(ns)
   objs <- mget(names, ns)

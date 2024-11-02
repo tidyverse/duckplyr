@@ -26,6 +26,7 @@ Imports:
     glue,
     jsonlite,
     lifecycle,
+    memoise,
     rlang (>= 1.0.6),
     tibble,
     tidyselect,

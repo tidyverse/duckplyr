@@ -23,3 +23,8 @@
     packageStartupMessage(msg)
   }
 }
+
+# Avoid R CMD check warning
+dummy <- function() {
+  memoise::memoise()
+}
