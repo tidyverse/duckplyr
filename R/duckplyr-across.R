@@ -58,20 +58,10 @@ duckplyr_expand_across <- function(data, quo) {
   fns <- as_quosure(expr$.fns, env)
   fns <- quo_eval_fns(fns, mask = env, error_call = error_call)
 
-  # duckplyr doesn't currently support >1 function so we bail if we
-  # see that potential case, but to potentially allow for this in the future we
-  # manually wrap in a list using the default name of `"1"`.
-  if (!is.function(fns)) {
-    return(NULL)
-  }
-  fns <- list("1" = fns)
-  fn_exprs <- list(expr$.fns)
-
   # In dplyr this evaluates in the mask to reproduce the `mutate()` or
   # `summarise()` context. We don't have a mask here but it's probably fine in
   # almost all cases.
   names <- eval_tidy(expr$.names, env = env)
-  names <- names %||% "{.col}"
 
   setup <- duckplyr_across_setup(
     data,
@@ -105,16 +95,8 @@ duckplyr_expand_across <- function(data, quo) {
     var <- vars[[i]]
 
     for (j in seq_fns) {
-      fn_expr <- fn_exprs[[j]]
-
-      if (is_symbol(fn_expr)) {
-        # When we see a bare symbol like `across(x:y, mean)`, we don't
-        # want to inline the function itself, we want to inline its expression.
-        fn_call <- new_quosure(call2(fn_expr, sym(var)), env = env)
-      } else {
-        # Note: `mask` isn't actually used inside this helper
-        fn_call <- as_across_fn_call(fns[[j]], var, env, mask = env)
-      }
+      # Note: `mask` isn't actually used inside this helper
+      fn_call <- as_across_fn_call(fn_to_expr(fns[[j]], env), var, env, mask = env)
 
       name <- names[[k]]
 
@@ -139,11 +121,6 @@ duckplyr_across_setup <- function(data,
                                   names,
                                   .caller_env,
                                   error_call = caller_env()) {
-  stopifnot(
-    is.list(fns),
-    length(fns) == 1
-  )
-
   data <- set_names(seq_along(data), data)
 
   vars <- tidyselect::eval_select(
@@ -157,10 +134,32 @@ duckplyr_across_setup <- function(data,
 
   names_fns <- names(fns)
 
-  glue_mask <- across_glue_mask(
-    .col = names_vars,
-    .fn = names_fns,
-    .caller_env = .caller_env
+  # apply `.names` smart default
+  if (is.function(fns)) {
+    names <- names %||% "{.col}"
+    fns <- list("1" = fns)
+  } else {
+    names <- names %||% "{.col}_{.fn}"
+  }
+
+  if (!is.list(fns)) {
+    abort("Expected a list.", .internal = TRUE)
+  }
+
+  # make sure fns has names, use number to replace unnamed
+  if (is.null(names(fns))) {
+    names_fns <- seq_along(fns)
+  } else {
+    names_fns <- names(fns)
+    empties <- which(names_fns == "")
+    if (length(empties)) {
+      names_fns[empties] <- empties
+    }
+  }
+
+  glue_mask <- across_glue_mask(.caller_env,
+    .col = rep(names_vars, each = length(fns)),
+    .fn  = rep(names_fns , length(vars))
   )
   names <- vec_as_names(
     glue(names, .envir = glue_mask),
@@ -173,6 +172,47 @@ duckplyr_across_setup <- function(data,
     fns = fns,
     names = names
   )
+}
+
+fn_to_expr <- function(fn, env) {
+  fn_env <- environment(fn)
+  if (!is_namespace(fn_env)) {
+    return(fn)
+  }
+
+  # This is an environment that maps hashes to function names
+  ns_exports_lookup <- get_ns_exports_lookup(fn_env)
+
+  # Can we find the function among the exports in the namespace?
+  fun_name <- ns_exports_lookup[[hash(fn)]]
+  if (is.null(fun_name)) {
+    return(fn)
+  }
+
+  # Triple-check: Does the expression actually evaluate to fn?
+  ns_name <- getNamespaceName(fn_env)
+  out <- call2("::", sym(ns_name), sym(fun_name))
+  if (!identical(eval(out, env), fn)) {
+    return(fn)
+  }
+
+  out
+}
+
+# Memoize get_ns_exports_lookup() to avoid recomputing the hash of
+# every function in every namespace every time
+on_load({
+  get_ns_exports_lookup <<- memoise::memoise(get_ns_exports_lookup)
+})
+
+get_ns_exports_lookup <- function(ns) {
+  names <- getNamespaceExports(ns)
+  objs <- mget(names, ns)
+  funs <- objs[map_lgl(objs, is.function)]
+
+  hashes <- map_chr(funs, hash)
+  # Reverse, return as environment
+  new_environment(set_names(as.list(names(hashes)), hashes))
 }
 
 test_duckplyr_expand_across <- function(data, expr) {
