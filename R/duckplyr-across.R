@@ -43,21 +43,20 @@ duckplyr_expand_across <- function(data, quo) {
 
   # Differentiate between missing and null (`match.call()` doesn't
   # expand default argument)
-  if (".cols" %in% names(expr)) {
-    cols <- expr$.cols
-  } else {
+  if (!(".cols" %in% names(expr))) {
     # This is deprecated, let dplyr warn
     return(NULL)
   }
-  cols <- as_quosure(cols, env)
 
-  if (".fns" %in% names(expr)) {
-    fns <- as_quosure(expr$.fns, env)
-    fns <- quo_eval_fns(fns, mask = env, error_call = error_call)
-  } else {
+  if (!(".fns" %in% names(expr))) {
     # To be deprecated, let dplyr deal with this
     return(NULL)
   }
+
+  cols <- as_quosure(expr$.cols, env)
+
+  fns <- as_quosure(expr$.fns, env)
+  fns <- quo_eval_fns(fns, mask = env, error_call = error_call)
 
   # duckplyr doesn't currently support >1 function so we bail if we
   # see that potential case, but to potentially allow for this in the future we
