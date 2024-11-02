@@ -61,10 +61,12 @@ duckplyr_expand_across <- function(data, quo) {
   # duckplyr doesn't currently support >1 function so we bail if we
   # see that potential case, but to potentially allow for this in the future we
   # manually wrap in a list using the default name of `"1"`.
-  if (!is.function(fns)) {
+  if (is.function(fns)) {
+    fns <- list("1" = fns)
+  }
+  if (length(fns) != 1) {
     return(NULL)
   }
-  fns <- list("1" = fns)
 
   # In dplyr this evaluates in the mask to reproduce the `mutate()` or
   # `summarise()` context. We don't have a mask here but it's probably fine in

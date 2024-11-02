@@ -61,6 +61,21 @@ test_that("duckplyr_expand_across() successful", {
       across(x:y, base::mean)
     )
   })
+
+  expect_snapshot({
+    test_duckplyr_expand_across(
+      c("x", "y"),
+      across(x:y, list(mean))
+    )
+  })
+
+  expect_snapshot({
+    "This isn't quite right yet"
+    test_duckplyr_expand_across(
+      c("x", "y"),
+      across(x:y, list(mean = mean))
+    )
+  })
 })
 
 test_that("duckplyr_expand_across() failing", {
@@ -71,14 +86,6 @@ test_that("duckplyr_expand_across() failing", {
   expect_null(test_duckplyr_expand_across(
     c("x", "y"),
     across(x:y, mean, na.rm = TRUE)
-  ))
-  expect_null(test_duckplyr_expand_across(
-    c("x", "y"),
-    across(x:y, list(mean))
-  ))
-  expect_null(test_duckplyr_expand_across(
-    c("x", "y"),
-    across(x:y, list(mean = mean))
   ))
   expect_null(test_duckplyr_expand_across(
     c("x", "y"),
