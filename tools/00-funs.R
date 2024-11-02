@@ -69,6 +69,9 @@ duckplyr_tests <- head(n = -1, list(
     NULL
   ),
   "test-across.R" = c(
+    # Needs dplyr > 1.1.4
+    "if_any() and if_all() expansions deal with no inputs or single inputs",
+    "if_any() on zero-column selection behaves like any() (#7059)",
     NULL
   ),
   "test-all-equal.R" = c(

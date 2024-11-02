@@ -64,6 +64,7 @@
 #' @importFrom vctrs new_date
 #' @importFrom vctrs new_list_of
 #' @importFrom vctrs new_rcrd
+#' @importFrom vctrs obj_check_list
 #' @importFrom vctrs unspecified
 #' @importFrom vctrs vec_as_names
 #' @importFrom vctrs vec_assign
