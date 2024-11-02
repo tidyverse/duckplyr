@@ -130,6 +130,16 @@ infer_class_of_expr <- function(expr, names_data, classes_data) {
   return(class(expr))
 }
 
+classes_are_comparable <- function(left, right) {
+  if (left == "integer" && right == "numeric") {
+    return(TRUE)
+  }
+  if (left == "numeric" && right == "integer") {
+    return(TRUE)
+  }
+  left == right
+}
+
 rel_translate_lang <- function(
   expr,
   do_translate,
@@ -153,7 +163,7 @@ rel_translate_lang <- function(
     class_left <- infer_class_of_expr(expr[[2]], names_data, classes_data)
     class_right <- infer_class_of_expr(expr[[3]], names_data, classes_data)
 
-    if (class_left == class_right) {
+    if (classes_are_comparable(class_left, class_right)) {
       return(
         relexpr_comparison(
           list(do_translate(expr[[2]]), do_translate(expr[[3]])),

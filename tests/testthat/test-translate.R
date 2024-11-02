@@ -24,4 +24,9 @@ test_that("comparison expression translated", {
     error = FALSE,
     rel_translate(quo(a > 123L), df)
   )
+  
+  expect_snapshot(
+    error = FALSE,
+    rel_translate(quo(a > 123.0), df)
+  )
 })
