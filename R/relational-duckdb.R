@@ -425,6 +425,10 @@ to_duckdb_expr <- function(x) {
       out
     },
     relational_relexpr_constant = {
+      # FIXME: Should be duckdb's responsibility
+      # Example: https://github.com/dschafer/activatr/issues/18
+      check_df_for_rel(tibble(constant = x$val))
+
       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
         experimental <- (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE")
         out <- duckdb$expr_constant(x$val, experimental = experimental)
