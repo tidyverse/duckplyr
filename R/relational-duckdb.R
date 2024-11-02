@@ -410,7 +410,7 @@ to_duckdb_expr <- function(x) {
       out <- duckdb$expr_comparison(to_duckdb_exprs(x$exprs), x$cmp_op)
       if (!is.null(x$alias)) {
         out <- expr({
-          duckdb$expr_set_alias(tmp_expr, x$alias)
+          duckdb$expr_set_alias(out, x$alias)
         })
       }
       out
