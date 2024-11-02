@@ -56,3 +56,13 @@
     Output
       tibble(x = x * x, y = y * y)
 
+---
+
+    Code
+      # Is this intended?
+      test_duckplyr_expand_across(c("x", "y"), across(x:y, base::mean))
+    Output
+      tibble(x = (function (x, ...) 
+      UseMethod("mean"))(x), y = (function (x, ...) 
+      UseMethod("mean"))(y))
+

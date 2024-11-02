@@ -54,6 +54,14 @@ test_that("duckplyr_expand_across() successful", {
       across(-a, function(x) x * x)
     )
   })
+
+  expect_snapshot({
+    "Is this intended?"
+    test_duckplyr_expand_across(
+      c("x", "y"),
+      across(x:y, base::mean)
+    )
+  })
 })
 
 test_that("duckplyr_expand_across() failing", {
