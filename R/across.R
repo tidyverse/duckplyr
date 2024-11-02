@@ -1,3 +1,5 @@
+# A simplified version of functions in dplyr's across.R
+
 duckplyr_expand_across <- function(data, quo) {
   stopifnot(is.character(data))
 
