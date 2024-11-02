@@ -175,3 +175,12 @@ duckplyr_across_setup <- function(data,
     names = names
   )
 }
+
+test_duckplyr_expand_across <- function(data, expr) {
+  quo <- new_dplyr_quosure(enquo(expr), is_named = FALSE, index = 1L)
+  out <- duckplyr_expand_across(data, quo)
+  if (is.null(out)) {
+    return(NULL)
+  }
+  call2(rlang::expr(tibble), !!!map(out, quo_get_expr))
+}
