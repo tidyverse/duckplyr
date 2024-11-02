@@ -25,4 +25,9 @@
       test_duckplyr_expand_across(c("x", "y", "a"), across(c(a, x), function(x) x + 1))
     Output
       tibble(a = a + 1, x = x + 1)
+    Code
+      test_duckplyr_expand_across(c("x", "y", "a"), across(c(a, x), function(x) x *
+      2 + 1))
+    Output
+      tibble(a = a * 2 + 1, x = x * 2 + 1)
 
