@@ -80,9 +80,11 @@ rows_check_y_unmatched <- dplyr$rows_check_y_unmatched
 rows_df_in_place <- dplyr$rows_df_in_place
 rowwise_df <- dplyr$rowwise_df
 slice_rows <- dplyr$slice_rows
+stop_join <- dplyr$stop_join
 summarise_build <- dplyr$summarise_build
 summarise_cols <- dplyr$summarise_cols
 summarise_deprecate_variable_size <- dplyr$summarise_deprecate_variable_size
 the <- dplyr$the
 tick_if_needed <- dplyr$tick_if_needed
+warn_join <- dplyr$warn_join
 warn_join_cross_by <- dplyr$warn_join_cross_by

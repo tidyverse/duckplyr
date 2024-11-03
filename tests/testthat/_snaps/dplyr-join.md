@@ -50,6 +50,15 @@
       Error:
       ! `na_matches` must be one of "na" or "never", not "foo".
 
+# mutating joins trigger many-to-many warning
+
+    Code
+      out <- duckplyr_left_join(df, df, join_by(x))
+    Condition
+      Warning in `duckplyr_left_join()`:
+      Detected an unexpected many-to-many relationship between `x` and `y`.
+      i If a many-to-many relationship is expected, set `relationship = "many-to-many"` to silence this warning.
+
 # mutating joins compute common columns
 
     Code

@@ -20,7 +20,7 @@ left_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
     "{.arg multiple} not supported" = !identical(multiple, "all"),
     "{.arg unmatched} not supported" = !identical(unmatched, "drop"),
     {
-      out <- rel_join_impl(x, y, by, "left", na_matches, suffix, keep, error_call)
+      out <- rel_join_impl(x, y, by, "left", na_matches, suffix, keep, relationship, error_call)
       return(out)
     }
   )

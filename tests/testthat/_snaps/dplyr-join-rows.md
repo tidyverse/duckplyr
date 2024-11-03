@@ -65,6 +65,39 @@
       ! Each row in `x` must match at most 1 row in `y`.
       i Row 1 of `x` matches multiple rows in `y`.
 
+# join_rows() gives meaningful many-to-many warnings
+
+    Code
+      join_rows(c(1, 1), c(1, 1))
+    Condition
+      Warning:
+      Detected an unexpected many-to-many relationship between `x` and `y`.
+      i Row 1 of `x` matches multiple rows in `y`.
+      i Row 1 of `y` matches multiple rows in `x`.
+      i If a many-to-many relationship is expected, set `relationship = "many-to-many"` to silence this warning.
+    Output
+      $x
+      [1] 1 1 2 2
+      
+      $y
+      [1] 1 2 1 2
+      
+
+---
+
+    Code
+      duckplyr_left_join(df, df, by = join_by(x))
+    Condition
+      Warning in `duckplyr_left_join()`:
+      Detected an unexpected many-to-many relationship between `x` and `y`.
+      i If a many-to-many relationship is expected, set `relationship = "many-to-many"` to silence this warning.
+    Output
+        x
+      1 1
+      2 1
+      3 1
+      4 1
+
 # join_rows() gives meaningful error message on unmatched rows
 
     Code
