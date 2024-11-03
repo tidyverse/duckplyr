@@ -202,7 +202,8 @@ fn_to_expr <- function(fn, env) {
 # Memoize get_ns_exports_lookup() to avoid recomputing the hash of
 # every function in every namespace every time
 on_load({
-  get_ns_exports_lookup <<- memoise::memoise(get_ns_exports_lookup)
+  env <- environment()
+  assign("get_ns_exports_lookup", memoise::memoise(get_ns_exports_lookup), envir = env)
 })
 
 get_ns_exports_lookup <- function(ns) {
