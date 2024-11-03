@@ -1,5 +1,20 @@
 telemetry <- new_environment()
 
+try_list <- function(...) {
+  out <- vector("list", length = ...length())
+  for (i in seq_len(...length())) {
+    # Single-bracket assignment for the handling of NULLs
+    out[i] <- list(tryCatch(
+      ...elt(i),
+      error = function(e) {
+        paste0("<Error: ", conditionMessage(e), ">")
+      }
+    ))
+  }
+  names(out) <- ...names()
+  out
+}
+
 tel_fallback_logging <- function() {
   val <- Sys.getenv("DUCKPLYR_FALLBACK_COLLECT")
   if (val == "") {

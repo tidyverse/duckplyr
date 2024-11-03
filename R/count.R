@@ -17,7 +17,7 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
   }
 
   # Passing `name` reliably is surprisingly complicated.
-  rel_try(list(name = "count", x = x, args = list(dots = enquos(...), wt = enquo(wt), sort = sort, .drop = .drop)),
+  rel_try(list(name = "count", x = x, args = try_list(dots = enquos(...), wt = enquo(wt), sort = sort, .drop = .drop)),
     "count() needs all(is_name)" = !all(is_name),
     "count() only implemented for .drop = TRUE" = !.drop,
     "count() only implemented for sort = FALSE" = sort,

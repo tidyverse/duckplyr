@@ -6,7 +6,7 @@ distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
   dots <- enquos(..., .named = TRUE)
 
   # Our implementation
-  rel_try(list(name = "distinct", x = .data, args = list(dots = dots, .keep_all = .keep_all)),
+  rel_try(list(name = "distinct", x = .data, args = try_list(dots = dots, .keep_all = .keep_all)),
     "Implemented for all cases?" = FALSE,
     {
       # FIXME: avoid column duplication in a cleaner way
