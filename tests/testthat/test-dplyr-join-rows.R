@@ -197,7 +197,6 @@ test_that("join_rows() gives meaningful many-to-one errors", {
 })
 
 test_that("join_rows() gives meaningful many-to-many warnings", {
-  skip("TODO duckdb")
   expect_snapshot({
     join_rows(c(1, 1), c(1, 1))
   })

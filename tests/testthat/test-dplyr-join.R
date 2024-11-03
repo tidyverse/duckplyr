@@ -360,7 +360,6 @@ test_that("join_filter() validates arguments", {
 })
 
 test_that("mutating joins trigger many-to-many warning", {
-  skip("TODO duckdb")
   df <- tibble(x = c(1, 1))
   expect_snapshot(out <- duckplyr_left_join(df, df, join_by(x)))
 })
