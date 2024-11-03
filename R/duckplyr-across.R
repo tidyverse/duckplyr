@@ -208,7 +208,7 @@ on_load({
 
 get_ns_exports_lookup <- function(ns) {
   names <- getNamespaceExports(ns)
-  objs <- mget(names, ns)
+  objs <- mget(names, ns, ifnotfound = list(NULL))
   funs <- objs[map_lgl(objs, is.function)]
 
   hashes <- map_chr(funs, hash)
