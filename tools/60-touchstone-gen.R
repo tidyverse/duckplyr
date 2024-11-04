@@ -1,3 +1,5 @@
+library(tidyverse)
+
 pre <- 'library(touchstone)
 
 source("tools/30-tpch-export.R")
@@ -30,10 +32,23 @@ body <- function(sf, test) paste0('benchmark_run(
 
 footer <- 'benchmark_analyze()'
 
+bodies <-
+  crossing(
+    sf = c("001", "010"),
+    test = c("01", "02", "03"),
+    # sf = c("001", "010", "100"),
+    # test = c("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22"),
+  ) |>
+  rowwise() |>
+  mutate(code = body(sf, test)) |>
+  ungroup() |>
+  summarize(code = paste(code, collapse = "")) |>
+  pull(code)
+
 code <- paste0(
   header,
   pre,
-  body("001", "01"),
+  bodies,
   footer
 )
 
