@@ -1,40 +1,27 @@
 library(touchstone)
 
+source("tools/30-tpch-export.R")
+source("tools/31-tpch-load-qs.R")
+
 branch_install()
 
 benchmark_run(
   expr_before_benchmark = {
-    library(styler)
-    cache_deactivate()
+    library(duckplyr)
+    data <- qs::qread("tools/tpch/001.qs")
+    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
+
+    customer <- as_duckplyr_df(customer)
+    lineitem <- as_duckplyr_df(lineitem)
+    nation <- as_duckplyr_df(nation)
+    orders <- as_duckplyr_df(orders)
+    part <- as_duckplyr_df(part)
+    partsupp <- as_duckplyr_df(partsupp)
+    region <- as_duckplyr_df(region)
+    supplier <- as_duckplyr_df(supplier)
   },
-  without_cache = style_pkg("touchstone/sources/here", filetype = c("R", "rmd")),
-  n = 30
+  tpch_01 = nrow(duckplyr:::tpch_01()),
+  n = 10
 )
-
-clear_branch_caches()
-benchmark_run(
-  expr_before_benchmark = {
-    library(styler)
-    cache_activate(gert::git_branch())
-  },
-  cache_applying = style_pkg("touchstone/sources/here", filetype = c("R", "rmd")),
-  n = 30
-)
-
-clear_branch_caches()
-
-benchmark_run(
-  expr_before_benchmark = {
-    library(styler)
-    cache_activate(gert::git_branch())
-  },
-  cache_recording = {
-    gert::git_reset_hard(repo = "touchstone/sources/here")
-    style_pkg("touchstone/sources/here", filetype = c("R", "rmd"))
-  },
-  n = 30
-)
-
-clear_branch_caches()
 
 benchmark_analyze()

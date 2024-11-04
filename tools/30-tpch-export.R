@@ -2,9 +2,9 @@ DBI::dbExecute(duckdb:::default_connection(), "INSTALL tpch")
 
 generate_tpch <- function(sf, target_dir) {
   fs::dir_create(target_dir)
-  con <- DBI::dbConnect(duckdb::duckdb())
+  con <- DBI::dbConnect(duckdb::duckdb(), ":memory:")
   DBI::dbExecute(con, "LOAD tpch")
-  DBI::dbExecute(con, "CALL dbgen(sf=?)", list(sf))
+  DBI::dbExecute(con, paste0("CALL dbgen(sf=", DBI::dbQuoteLiteral(con, sf), ")"))
   for (table in DBI::dbListTables(con)) {
       DBI::dbExecute(con, sprintf("COPY (FROM %s) TO '%s/%s.parquet'", table, target_dir, table))
   }
