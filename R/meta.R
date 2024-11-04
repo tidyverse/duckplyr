@@ -6,6 +6,11 @@ macro_cache <- collections::dict()
 df_cache <- collections::dict()
 rel_cache <- collections::dict()
 
+meta_call <- function(name) {
+  meta_call_start(name)
+  withr::defer_parent(meta_call_end())
+}
+
 meta_call_start <- function(name) {
   call_stack$push(name)
 }
