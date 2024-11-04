@@ -18,11 +18,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-          - ${{ fromJson(needs.prepare.outputs.config) }}
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       RSPM: "https://packagemanager.rstudio.com/all/__linux__/jammy/latest"
