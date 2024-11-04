@@ -22,8 +22,8 @@ benchmark_run(
     region <- as_duckplyr_df(region)
     supplier <- as_duckplyr_df(supplier)
   },
-  `001_tpch_01` = nrow(duckplyr:::tpch_01()),
-  n = 10
+  `001_tpch_01` = collect(duckplyr:::tpch_01()),
+  n = 30
 )
 
 benchmark_run(
@@ -41,8 +41,8 @@ benchmark_run(
     region <- as_duckplyr_df(region)
     supplier <- as_duckplyr_df(supplier)
   },
-  `001_tpch_02` = nrow(duckplyr:::tpch_02()),
-  n = 10
+  `001_tpch_02` = collect(duckplyr:::tpch_02()),
+  n = 30
 )
 
 benchmark_run(
@@ -60,8 +60,8 @@ benchmark_run(
     region <- as_duckplyr_df(region)
     supplier <- as_duckplyr_df(supplier)
   },
-  `001_tpch_03` = nrow(duckplyr:::tpch_03()),
-  n = 10
+  `001_tpch_03` = collect(duckplyr:::tpch_03()),
+  n = 30
 )
 
 benchmark_run(
@@ -79,8 +79,8 @@ benchmark_run(
     region <- as_duckplyr_df(region)
     supplier <- as_duckplyr_df(supplier)
   },
-  `010_tpch_01` = nrow(duckplyr:::tpch_01()),
-  n = 10
+  `010_tpch_01` = collect(duckplyr:::tpch_01()),
+  n = 30
 )
 
 benchmark_run(
@@ -98,8 +98,8 @@ benchmark_run(
     region <- as_duckplyr_df(region)
     supplier <- as_duckplyr_df(supplier)
   },
-  `010_tpch_02` = nrow(duckplyr:::tpch_02()),
-  n = 10
+  `010_tpch_02` = collect(duckplyr:::tpch_02()),
+  n = 30
 )
 
 benchmark_run(
@@ -117,8 +117,8 @@ benchmark_run(
     region <- as_duckplyr_df(region)
     supplier <- as_duckplyr_df(supplier)
   },
-  `010_tpch_03` = nrow(duckplyr:::tpch_03()),
-  n = 10
+  `010_tpch_03` = collect(duckplyr:::tpch_03()),
+  n = 30
 )
 
 benchmark_analyze()

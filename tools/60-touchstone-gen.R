@@ -26,8 +26,8 @@ body <- function(sf, test) paste0('benchmark_run(
     region <- as_duckplyr_df(region)
     supplier <- as_duckplyr_df(supplier)
   },
-  `', sf, '_tpch_', test, '` = nrow(duckplyr:::tpch_', test, '()),
-  n = 10
+  `', sf, '_tpch_', test, '` = collect(duckplyr:::tpch_', test, '()),
+  n = 30
 )\n\n')
 
 footer <- 'benchmark_analyze()'
