@@ -26,7 +26,7 @@ body <- function(sf, test, n) glue::glue('benchmark_run(
     region <- as_duckplyr_df(region)
     supplier <- as_duckplyr_df(supplier)
   }},
-  `{sf}_tpch_{test}` = collect(duckplyr:::tpch_', test, '()),
+  `{sf}_tpch_{test}` = collect(duckplyr:::tpch_{test}()),
   n = {n}
 )\n\n')
 
