@@ -1,3 +1,5 @@
+pkgload::load_all()
+
 tables <- c("lineitem", "partsupp", "part", "supplier", "nation", "orders", "customer", "region")
 
 data <- lapply(tables, function(t) {
