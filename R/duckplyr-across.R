@@ -95,8 +95,14 @@ duckplyr_expand_across <- function(data, quo) {
     var <- vars[[i]]
 
     for (j in seq_fns) {
+      fn_expr <- fn_to_expr(fns[[j]], env)
+      if (is.function(fn_expr)) {
+        # We can't translate spliced functions
+        return(NULL)
+      }
+
       # Note: `mask` isn't actually used inside this helper
-      fn_call <- as_across_fn_call(fn_to_expr(fns[[j]], env), var, env, mask = env)
+      fn_call <- as_across_fn_call(fn_expr, var, env, mask = env)
 
       name <- names[[k]]
 
