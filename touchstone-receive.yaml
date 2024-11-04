@@ -1,0 +1,28 @@
+name: Continuous Benchmarks (Receive)
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    paths:
+      # Directories with source code and benchmarking code
+      - "R/**"
+      - "touchstone/**"
+      # Benchmarking config file
+      - ".github/workflows/touchstone-*.yaml"
+      # Package metadata
+      - DESCRIPTION
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      RSPM: "https://packagemanager.rstudio.com/all/__linux__/jammy/latest"
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: lorenzwalthert/touchstone/actions/receive@main
+        with:
+          cache-version: 1
