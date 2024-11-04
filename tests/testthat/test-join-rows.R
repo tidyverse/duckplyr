@@ -427,7 +427,6 @@ test_that("join_rows() rethrows overflow error nicely (#6912)", {
 # Deprecated behavior ----------------------------------------------------------
 
 test_that("`multiple = NULL` is deprecated and results in `'all'` (#6731)", {
-  skip("TODO duckdb")
   df1 <- tibble(x = c(1, 2))
   df2 <- tibble(x = c(2, 1, 2))
 
@@ -443,7 +442,6 @@ test_that("`multiple = NULL` is deprecated and results in `'all'` (#6731)", {
 })
 
 test_that("`multiple = 'error'` is deprecated (#6731)", {
-  skip("TODO duckdb")
   df1 <- tibble(x = c(1, 2))
   df2 <- tibble(x = c(2, 1, 2))
 
@@ -456,7 +454,6 @@ test_that("`multiple = 'error'` is deprecated (#6731)", {
 })
 
 test_that("`multiple = 'warning'` is deprecated (#6731)", {
-  skip("TODO duckdb")
   df1 <- tibble(x = c(1, 2))
   df2 <- tibble(x = c(2, 1, 2))
 

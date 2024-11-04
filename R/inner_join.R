@@ -8,6 +8,8 @@ inner_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x
   # Our implementation
   rel_try(list(name = "inner_join", x = x, y = y, args = list(by = if (!is.null(by) && !is_cross_by(by)) as_join_by(by), copy = copy, keep = keep, na_matches = na_matches, multiple = multiple, unmatched = unmatched, relationship = relationship)),
     "No implicit cross joins for inner_join()" = is_cross_by(by),
+    "`multiple` not supported" = !identical(multiple, "all"),
+    "`unmatched` not supported" = !identical(unmatched, "drop"),
     {
       out <- rel_join_impl(x, y, by, "inner", na_matches, suffix, keep, error_call)
       return(out)
