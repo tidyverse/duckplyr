@@ -195,10 +195,6 @@ vec_ptype_safe <- function(x) {
 
 #' @export
 rel_to_df.duckdb_relation <- function(rel, ...) {
-  if (anyDuplicated(tolower(names(rel)))) {
-    cli::cli_abort("Column names are case-insensitive in duckdb, fallback required.")
-  }
-
   duckdb$rel_to_altrep(rel)
 }
 
@@ -226,6 +222,8 @@ rel_project.duckdb_relation <- function(rel, exprs, ...) {
     list(!!!to_duckdb_exprs_meta(exprs))
   )))
 
+  check_duplicate_names(out)
+
   out
 }
 
@@ -245,6 +243,8 @@ rel_aggregate.duckdb_relation <- function(rel, groups, aggregates, ...) {
     groups = list(!!!to_duckdb_exprs_meta(groups)),
     aggregates = list(!!!to_duckdb_exprs_meta(aggregates))
   )))
+
+  check_duplicate_names(out)
 
   out
 }
@@ -291,6 +291,8 @@ rel_join.duckdb_relation <- function(left, right, conds, join, join_ref_type, ..
       !!join_ref_type
     )))
   }
+
+  check_duplicate_names(out)
 
   out
 }
@@ -519,4 +521,11 @@ to_duckdb_expr_meta <- function(x) {
     NULL = expr(NULL),
     cli::cli_abort("Unknown expr class: {.cls {class(x)}}")
   )
+}
+
+check_duplicate_names <- function(rel) {
+  # https://github.com/duckdb/duckdb/discussions/14682
+  if (anyDuplicated(tolower(duckdb$rel_names(rel)))) {
+    cli::cli_abort("Column names are case-insensitive in duckdb, fallback required.")
+  }
 }
