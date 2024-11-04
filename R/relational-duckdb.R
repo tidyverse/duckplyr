@@ -205,12 +205,15 @@ rel_to_df.duckdb_relation <- function(rel, ...) {
 #' @export
 rel_filter.duckdb_relation <- function(rel, exprs, ...) {
   duckdb_exprs <- to_duckdb_exprs(exprs)
-  out <- duckdb$rel_filter(rel, duckdb_exprs)
+  
+  out <- NULL
 
-  meta_rel_register(out, expr(duckdb$rel_filter(
+  withr::defer(meta_rel_register(out, expr(duckdb$rel_filter(
     !!meta_rel_get(rel)$name,
     list(!!!to_duckdb_exprs_meta(exprs))
-  )))
+  ))))
+
+  out <- duckdb$rel_filter(rel, duckdb_exprs)
 
   out
 }
@@ -219,12 +222,14 @@ rel_filter.duckdb_relation <- function(rel, exprs, ...) {
 rel_project.duckdb_relation <- function(rel, exprs, ...) {
   duckdb_exprs <- to_duckdb_exprs(exprs)
 
-  out <- duckdb$rel_project(rel, duckdb_exprs)
+  out <- NULL
 
-  meta_rel_register(out, expr(duckdb$rel_project(
+  withr::defer(meta_rel_register(out, expr(duckdb$rel_project(
     !!meta_rel_get(rel)$name,
     list(!!!to_duckdb_exprs_meta(exprs))
-  )))
+  ))))
+
+  out <- duckdb$rel_project(rel, duckdb_exprs)
 
   out
 }
@@ -234,17 +239,19 @@ rel_aggregate.duckdb_relation <- function(rel, groups, aggregates, ...) {
   duckdb_groups <- to_duckdb_exprs(groups)
   duckdb_aggregates <- to_duckdb_exprs(aggregates)
 
+  out <- NULL
+
+  withr::defer(meta_rel_register(out, expr(duckdb$rel_aggregate(
+    !!meta_rel_get(rel)$name,
+    groups = list(!!!to_duckdb_exprs_meta(groups)),
+    aggregates = list(!!!to_duckdb_exprs_meta(aggregates))
+  ))))
+
   out <- duckdb$rel_aggregate(
     rel,
     groups = duckdb_groups,
     aggregates = duckdb_aggregates
   )
-
-  meta_rel_register(out, expr(duckdb$rel_aggregate(
-    !!meta_rel_get(rel)$name,
-    groups = list(!!!to_duckdb_exprs_meta(groups)),
-    aggregates = list(!!!to_duckdb_exprs_meta(aggregates))
-  )))
 
   out
 }
@@ -253,12 +260,14 @@ rel_aggregate.duckdb_relation <- function(rel, groups, aggregates, ...) {
 rel_order.duckdb_relation <- function(rel, orders, ascending = NULL, ...) {
   duckdb_orders <- to_duckdb_exprs(orders)
 
-  out <- duckdb$rel_order(rel, duckdb_orders, ascending)
+  out <- NULL
 
-  meta_rel_register(out, expr(duckdb$rel_order(
+  withr::defer(meta_rel_register(out, expr(duckdb$rel_order(
     !!meta_rel_get(rel)$name,
     list(!!!to_duckdb_exprs_meta(orders))
-  )))
+  ))))
+
+  out <- duckdb$rel_order(rel, duckdb_orders, ascending)
 
   out
 }
@@ -270,26 +279,30 @@ rel_join.duckdb_relation <- function(left, right, conds, join, join_ref_type, ..
     join <- "outer"
   }
 
+  out <- NULL
+  
   if (join_ref_type == "regular") {
     # Compatibility with older duckdb versions
-    out <- duckdb$rel_join(left, right, duckdb_conds, join)
 
-    meta_rel_register(out, expr(duckdb$rel_join(
+    withr::defer(meta_rel_register(out, expr(duckdb$rel_join(
       !!meta_rel_get(left)$name,
       !!meta_rel_get(right)$name,
       list(!!!to_duckdb_exprs_meta(conds)),
       !!join
-    )))
-  } else {
-    out <- duckdb$rel_join(left, right, duckdb_conds, join, join_ref_type)
+    ))))
 
-    meta_rel_register(out, expr(duckdb$rel_join(
+    out <- duckdb$rel_join(left, right, duckdb_conds, join)
+  } else {
+
+    withr::defer(meta_rel_register(out, expr(duckdb$rel_join(
       !!meta_rel_get(left)$name,
       !!meta_rel_get(right)$name,
       list(!!!to_duckdb_exprs_meta(conds)),
       !!join,
       !!join_ref_type
-    )))
+    ))))
+
+    out <- duckdb$rel_join(left, right, duckdb_conds, join, join_ref_type)
   }
 
   out
@@ -297,71 +310,83 @@ rel_join.duckdb_relation <- function(left, right, conds, join, join_ref_type, ..
 
 #' @export
 rel_limit.duckdb_relation <- function(rel, n, ...) {
-  out <- duckdb$rel_limit(rel, n)
+  out <- NULL
 
-  meta_rel_register(out, expr(duckdb$rel_limit(
+  withr::defer(meta_rel_register(out, expr(duckdb$rel_limit(
     !!meta_rel_get(rel)$name,
     !!n
-  )))
+  ))))
+
+  out <- duckdb$rel_limit(rel, n)
 
   out
 }
 
 #' @export
 rel_distinct.duckdb_relation <- function(rel, ...) {
-  out <- duckdb$rel_distinct(rel)
+  out <- NULL
 
-  meta_rel_register(out, expr(duckdb$rel_distinct(
+  withr::defer(meta_rel_register(out, expr(duckdb$rel_distinct(
     !!meta_rel_get(rel)$name
-  )))
+  ))))
+
+  out <- duckdb$rel_distinct(rel)
 
   out
 }
 
 #' @export
 rel_set_intersect.duckdb_relation <- function(rel_a, rel_b, ...) {
-  out <- duckdb$rel_set_intersect(rel_a, rel_b)
+  out <- NULL
 
-  meta_rel_register(out, expr(duckdb$rel_set_intersect(
+  withr::defer(meta_rel_register(out, expr(duckdb$rel_set_intersect(
     !!meta_rel_get(rel_a)$name,
     !!meta_rel_get(rel_b)$name
-  )))
+  ))))
+
+  out <- duckdb$rel_set_intersect(rel_a, rel_b)
 
   out
 }
 
 #' @export
 rel_set_diff.duckdb_relation <- function(rel_a, rel_b, ...) {
-  out <- duckdb$rel_set_diff(rel_a, rel_b)
+  out <- NULL
 
-  meta_rel_register(out, expr(duckdb$rel_set_diff(
+  withr::defer(meta_rel_register(out, expr(duckdb$rel_set_diff(
     !!meta_rel_get(rel_a)$name,
     !!meta_rel_get(rel_b)$name
-  )))
+  ))))
+
+  out <- duckdb$rel_set_diff(rel_a, rel_b)
 
   out
 }
 
 #' @export
 rel_set_symdiff.duckdb_relation <- function(rel_a, rel_b, ...) {
-  out <- duckdb$rel_set_symdiff(rel_a, rel_b)
+  out <- NULL
 
-  meta_rel_register(out, expr(duckdb$rel_set_symdiff(
+  withr::defer(meta_rel_register(out, expr(duckdb$rel_set_symdiff(
     !!meta_rel_get(rel_a)$name,
     !!meta_rel_get(rel_b)$name
-  )))
+  ))))
+
+  out <- duckdb$rel_set_symdiff(rel_a, rel_b)
 
   out
 }
 
 #' @export
 rel_union_all.duckdb_relation <- function(rel_a, rel_b, ...) {
-  out <- duckdb$rel_union_all(rel_a, rel_b)
+  out <- NULL
 
-  meta_rel_register(out, expr(duckdb$rel_union_all(
+  withr::defer(meta_rel_register(out, expr(duckdb$rel_union_all(
     !!meta_rel_get(rel_a)$name,
     !!meta_rel_get(rel_b)$name
-  )))
+  ))))
+
+  out <- duckdb$rel_union_all(rel_a, rel_b)
 
   out
 }
@@ -376,12 +401,14 @@ rel_alias.duckdb_relation <- function(rel, ...) {}
 
 #' @export
 rel_set_alias.duckdb_relation <- function(rel, alias, ...) {
-  out <- duckdb$rel_set_alias(rel, alias)
+  out <- NULL
 
-  meta_rel_register(out, expr(duckdb$rel_set_alias(
+  withr::defer(meta_rel_register(out, expr(duckdb$rel_set_alias(
     !!meta_rel_get(rel)$name,
     !!alias
-  )))
+  ))))
+
+  out <- duckdb$rel_set_alias(rel, alias)
 
   out
 }
