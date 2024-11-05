@@ -66,10 +66,18 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Check status of this workflow
+          set -x
           state="pending"
-          sha=${{ inputs.ref }}
+          sha=""
           if [ -z "${sha}" ]; then
-            sha=${{ github.head_ref }}
+            if git rev_parse ${{ inputs.ref }}; then
+              sha=${{ inputs.ref }}
+            fi
+          fi
+          if [ -z "${sha}" ]; then
+            if git rev_parse ${{ github.head_ref }}; then
+              sha=${{ github.head_ref }}
+            fi
           fi
           if [ -z "${sha}" ]; then
             sha=${{ github.sha }}
@@ -171,6 +179,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Check status of this workflow
+          set -x
           if [ "${{ job.status }}" == "success" ]; then
             state="success"
           else
@@ -179,10 +188,14 @@ jobs:
 
           sha=${{ steps.commit.outputs.sha }}
           if [ -z "${sha}" ]; then
-            sha=${{ inputs.ref }}
+            if git rev_parse ${{ inputs.ref }}; then
+              sha=${{ inputs.ref }}
+            fi
           fi
           if [ -z "${sha}" ]; then
-            sha=${{ github.head_ref }}
+            if git rev_parse ${{ github.head_ref }}; then
+              sha=${{ github.head_ref }}
+            fi
           fi
           if [ -z "${sha}" ]; then
             sha=${{ github.sha }}
@@ -274,6 +287,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Check status of this workflow
+          set -x
           if [ "${{ job.status }}" == "success" ]; then
             state="success"
           else
@@ -282,10 +296,14 @@ jobs:
 
           sha=${{ steps.commit.outputs.sha }}
           if [ -z "${sha}" ]; then
-            sha=${{ inputs.ref }}
+            if git rev_parse ${{ inputs.ref }}; then
+              sha=${{ inputs.ref }}
+            fi
           fi
           if [ -z "${sha}" ]; then
-            sha=${{ github.head_ref }}
+            if git rev_parse ${{ github.head_ref }}; then
+              sha=${{ github.head_ref }}
+            fi
           fi
           if [ -z "${sha}" ]; then
             sha=${{ github.sha }}
@@ -388,6 +406,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Check status of this workflow
+          set -x
           if [ "${{ job.status }}" == "success" ]; then
             state="success"
           else
@@ -396,10 +415,14 @@ jobs:
 
           sha=${{ steps.commit.outputs.sha }}
           if [ -z "${sha}" ]; then
-            sha=${{ inputs.ref }}
+            if git rev_parse ${{ inputs.ref }}; then
+              sha=${{ inputs.ref }}
+            fi
           fi
           if [ -z "${sha}" ]; then
-            sha=${{ github.head_ref }}
+            if git rev_parse ${{ github.head_ref }}; then
+              sha=${{ github.head_ref }}
+            fi
           fi
           if [ -z "${sha}" ]; then
             sha=${{ github.sha }}
