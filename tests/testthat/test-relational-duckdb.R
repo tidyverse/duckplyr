@@ -33,6 +33,9 @@ test_that("duckdb_rel_from_df()", {
     map(df, vec_ptype)
   )
 
+  # FIXME: Test that vec_ptype_safe() does not materialize (#149),
+  # remove test-altrep.R
+
   skip_if(Sys.getenv("DUCKPLYR_CHECK_ROUNDTRIP") == "TRUE")
 
   # If this is no longer an eror, we need to make sure that subsetting

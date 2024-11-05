@@ -95,8 +95,14 @@ duckplyr_expand_across <- function(data, quo) {
     var <- vars[[i]]
 
     for (j in seq_fns) {
+      fn_expr <- fn_to_expr(fns[[j]], env)
       # Note: `mask` isn't actually used inside this helper
-      fn_call <- as_across_fn_call(fn_to_expr(fns[[j]], env), var, env, mask = env)
+      fn_call <- as_across_fn_call(fn_expr, var, env, mask = env)
+
+      # We can't translate spliced functions:
+      if (is.function(quo_get_expr(fn_call)[[1]])) {
+        return(NULL)
+      }
 
       name <- names[[k]]
 
@@ -202,12 +208,13 @@ fn_to_expr <- function(fn, env) {
 # Memoize get_ns_exports_lookup() to avoid recomputing the hash of
 # every function in every namespace every time
 on_load({
-  get_ns_exports_lookup <<- memoise::memoise(get_ns_exports_lookup)
+  env <- environment()
+  assign("get_ns_exports_lookup", memoise::memoise(get_ns_exports_lookup), envir = env)
 })
 
 get_ns_exports_lookup <- function(ns) {
   names <- getNamespaceExports(ns)
-  objs <- mget(names, ns)
+  objs <- mget(names, ns, ifnotfound = list(NULL))
   funs <- objs[map_lgl(objs, is.function)]
 
   hashes <- map_chr(funs, hash)

@@ -31,7 +31,7 @@ df_from_file <- function(path,
                          class = NULL) {
   check_dots_empty()
 
-  if (!rlang::is_bare_character(path)) {
+  if (!rlang::is_character(path)) {
     cli::cli_abort("{.arg path} must be a character vector.")
   }
 
