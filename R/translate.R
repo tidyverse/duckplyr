@@ -157,7 +157,7 @@ rel_translate_lang <- function(
   name <- pkg_name[[2]]
 
 
-  if (name %in% c(">", "<", "=", ">=", "<=") && !is.null(classes_data)) {
+  if (name %in% c(">", "<", "==", ">=", "<=") && !is.null(classes_data)) {
     if (length(expr) != 3) cli::cli_abort("Expected three expressions for comparison. Got {length(expr)}")
 
     class_left <- infer_class_of_expr(expr[[2]], names_data, classes_data)
