@@ -15,6 +15,14 @@ try_list <- function(...) {
   out
 }
 
+on_load({
+  # ...names() needs R 4.1:
+  if (getRversion() < "4.1") {
+    env <- environment()
+    assign("try_list", list, env)
+  }
+})
+
 tel_fallback_logging <- function() {
   val <- Sys.getenv("DUCKPLYR_FALLBACK_COLLECT")
   if (val == "") {
