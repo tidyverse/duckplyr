@@ -66,18 +66,10 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Check status of this workflow
-          set -x
           state="pending"
-          sha=""
+          sha=${{ inputs.ref }}
           if [ -z "${sha}" ]; then
-            if git rev_parse ${{ inputs.ref }}; then
-              sha=${{ inputs.ref }}
-            fi
-          fi
-          if [ -z "${sha}" ]; then
-            if git rev_parse ${{ github.head_ref }}; then
-              sha=${{ github.head_ref }}
-            fi
+            sha=${{ github.head_ref }}
           fi
           if [ -z "${sha}" ]; then
             sha=${{ github.sha }}
@@ -179,7 +171,6 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Check status of this workflow
-          set -x
           if [ "${{ job.status }}" == "success" ]; then
             state="success"
           else
@@ -188,19 +179,15 @@ jobs:
 
           sha=${{ steps.commit.outputs.sha }}
           if [ -z "${sha}" ]; then
-            if git rev_parse ${{ inputs.ref }}; then
-              sha=${{ inputs.ref }}
-            fi
+            sha=${{ inputs.ref }}
           fi
           if [ -z "${sha}" ]; then
-            if git rev_parse ${{ github.head_ref }}; then
-              sha=${{ github.head_ref }}
-            fi
+            sha=${{ github.head_ref }}
           fi
           if [ -z "${sha}" ]; then
             sha=${{ github.sha }}
           fi
-          sha=$(git rev-parse ${sha})
+            sha=$(git rev-parse ${sha})
 
           html_url=$(gh api \
             -H "Accept: application/vnd.github+json" \
@@ -280,50 +267,7 @@ jobs:
         with:
           results: ${{ runner.os }}-r${{ matrix.r }}
 
-      - name: Update status for rcc
-        # FIXME: Wrap into action
-        if: always()
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          # Check status of this workflow
-          set -x
-          if [ "${{ job.status }}" == "success" ]; then
-            state="success"
-          else
-            state="failure"
-          fi
-
-          sha=${{ steps.commit.outputs.sha }}
-          if [ -z "${sha}" ]; then
-            if git rev_parse ${{ inputs.ref }}; then
-              sha=${{ inputs.ref }}
-            fi
-          fi
-          if [ -z "${sha}" ]; then
-            if git rev_parse ${{ github.head_ref }}; then
-              sha=${{ github.head_ref }}
-            fi
-          fi
-          if [ -z "${sha}" ]; then
-            sha=${{ github.sha }}
-          fi
-          sha=$(git rev-parse ${sha})
-
-          html_url=$(gh api \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            repos/${{ github.repository }}/actions/runs/${{ github.run_id }} | jq -r .html_url)
-
-          description="${{ github.workflow }} / ${{ github.job }}"
-
-          gh api \
-            --method POST \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            repos/${{ github.repository }}/statuses/${sha} \
-            -f "state=${state}" -f "target_url=${html_url}" -f "description=${description}" -f "context=rcc"
-        shell: bash
+# The status update is taken care of by R-CMD-check-status.yaml
 
   rcc-suggests:
     needs:
@@ -399,47 +343,4 @@ jobs:
         with:
           results: ${{ matrix.package }}
 
-      - name: Update status for rcc
-        # FIXME: Wrap into action
-        if: always()
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          # Check status of this workflow
-          set -x
-          if [ "${{ job.status }}" == "success" ]; then
-            state="success"
-          else
-            state="failure"
-          fi
-
-          sha=${{ steps.commit.outputs.sha }}
-          if [ -z "${sha}" ]; then
-            if git rev_parse ${{ inputs.ref }}; then
-              sha=${{ inputs.ref }}
-            fi
-          fi
-          if [ -z "${sha}" ]; then
-            if git rev_parse ${{ github.head_ref }}; then
-              sha=${{ github.head_ref }}
-            fi
-          fi
-          if [ -z "${sha}" ]; then
-            sha=${{ github.sha }}
-          fi
-          sha=$(git rev-parse ${sha})
-
-          html_url=$(gh api \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            repos/${{ github.repository }}/actions/runs/${{ github.run_id }} | jq -r .html_url)
-
-          description="${{ github.workflow }} / ${{ github.job }}"
-
-          gh api \
-            --method POST \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            repos/${{ github.repository }}/statuses/${sha} \
-            -f "state=${state}" -f "target_url=${html_url}" -f "description=${description}" -f "context=rcc"
-        shell: bash
+# The status update is taken care of by R-CMD-check-status.yaml
