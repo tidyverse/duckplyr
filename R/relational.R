@@ -1,10 +1,7 @@
 rel_try <- function(call, rel, ...) {
   call_name <- as.character(sys.call(-1)[[1]])
 
-  if (!is.null(call$name)) {
-    meta_call_start(call$name)
-    withr::defer(meta_call_end())
-  }
+  meta_call(call_name)
 
   # Avoid error when called via dplyr:::filter.data.frame() (in yamlet)
   if (length(call_name) == 1 && !(call_name %in% stats$calls)) {
@@ -73,22 +70,41 @@ rel_try <- function(call, rel, ...) {
   cli::cli_abort("Must use a return() in rel_try().")
 }
 
-rel_translate_dots <- function(dots, data, forbid_new = FALSE) {
+rel_translate_dots <- function(dots, data) {
   if (is.null(names(dots))) {
     map(dots, rel_translate, data)
-  } else if (forbid_new) {
-    out <- accumulate(seq_along(dots), .init = NULL, function(.x, .y) {
-      new <- names(dots)[[.y]]
-      translation <- rel_translate(dots[[.y]], alias = new, data, names_forbidden = .x$new)
-      list(
-        new = c(.x$new, new),
-        translation = c(.x$translation, list(translation))
-      )
-    })
-    out[[length(out)]]$translation
   } else {
     imap(dots, rel_translate, data = data)
   }
+}
+
+# Currently does not support referring to names created during the `summarise()` call.
+# Also has specific support for `across()`.
+rel_translate_dots_summarise <- function(dots, data) {
+  stopifnot(
+    !is.null(names(dots))
+  )
+
+  out <- reduce(seq_along(dots), .init = NULL, function(.x, .y) {
+    current_names <- c(names(data), .x$new)
+
+    dot <- dots[[.y]]
+    expanded <- duckplyr_expand_across(current_names, dot)
+
+    if (is.null(expanded)) {
+      new <- names(dots)[[.y]]
+      translation <- list(rel_translate(dots[[.y]], alias = new, data, names_forbidden = .x$new))
+    } else {
+      new <- names(expanded)
+      translation <- imap(expanded, function(expr, name) rel_translate(expr, alias = name, data, names_forbidden = .x$new))
+    }
+
+    list(
+      new = c(.x$new, new),
+      translation = c(.x$translation, translation)
+    )
+  })
+  out$translation
 }
 
 new_failing_mask <- function(names_data) {

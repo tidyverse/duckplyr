@@ -195,6 +195,10 @@ rel_translate_lang <- function(
         has_na <- FALSE
       }
 
+      if (length(values) > 100) {
+        cli::cli_abort("Can't translate {.code {name}} with more than 100 values.")
+      }
+
       consts <- map(values, do_translate)
       ops <- map(consts, ~ list(lhs, .x))
       cmp <- map(ops, relexpr_function, name = "r_base::==")

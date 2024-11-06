@@ -7,7 +7,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
   by_names <- eval_select_by(by_arg, .data)
 
   # Our implementation
-  rel_try(list(name = "mutate", x = .data, args = list(dots = enquos(...), .by = by_arg, .keep = .keep)),
+  rel_try(list(name = "mutate", x = .data, args = try_list(dots = enquos(...), .by = by_arg, .keep = .keep)),
     "Implemented for all cases?" = FALSE,
     {
       rel <- duckdb_rel_from_df(.data)
@@ -18,6 +18,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
 
       dots <- dplyr_quosures(...)
       dots <- fix_auto_name(dots)
+      names_dots <- names(dots)
 
       names_used <- character()
       names_new <- character()
@@ -26,21 +27,45 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
       # FIXME: use fewer projections
       for (i in seq_along(dots)) {
         dot <- dots[[i]]
+        name_dot <- names_dots[[i]]
 
-        new <- names(dots)[[i]]
+        # Try expanding this `dot` if we see it is an `across()` call
+        expanded <- duckplyr_expand_across(names_out, dot)
 
-        names_new <- c(names_new, new)
+        if (is.null(expanded)) {
+          # Nothing we can expand, create a list with just the 1 expression to
+          # loop over
+          quos <- set_names(list(dot), name_dot)
+        } else {
+          # Actually expanded an `across()` call, make sure to fix up names
+          # again with the new set of dplyr quosures
+          quos <- expanded
+          quos <- fix_auto_name(quos)
+        }
 
-        new_pos <- match(new, names_out, nomatch = length(names_out) + 1L)
+        names_quos <- names(quos)
+
+        # Set up `exprs` outside the loop. All expressions expanded from an
+        # `across()` are evaluated together using the same projection.
         exprs <- imap(set_names(names_out), relexpr_reference, rel = NULL)
-        new_expr <- rel_translate(dot, names_data = names_out, alias = new, partition = by_names, need_window = TRUE)
-        exprs[[new_pos]] <- new_expr
+
+        for (j in seq_along(quos)) {
+          quo <- quos[[j]]
+          new <- names_quos[[j]]
+
+          names_new <- c(names_new, new)
+
+          new_pos <- match(new, names_out, nomatch = length(names_out) + 1L)
+          new_expr <- rel_translate(quo, names_data = names_out, alias = new, partition = by_names, need_window = TRUE)
+          exprs[[new_pos]] <- new_expr
+
+          names_out[[new_pos]] <- new
+
+          new_names_used <- intersect(attr(new_expr, "used"), names(.data))
+          names_used <- c(names_used, setdiff(new_names_used, names_used))
+        }
 
         rel <- rel_project(rel, unname(exprs))
-        names_out[[new_pos]] <- new
-
-        new_names_used <- intersect(attr(new_expr, "used"), names(.data))
-        names_used <- c(names_used, setdiff(new_names_used, names_used))
       }
 
       if (length(by_names) > 0) {

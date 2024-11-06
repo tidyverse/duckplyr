@@ -7,7 +7,7 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
 
   by <- eval_select_by(enquo(.by), .data)
 
-  rel_try(list(name = "summarise", x = .data, args = list(dots = enquos(...), by = syms(by), .groups = .groups)),
+  rel_try(list(name = "summarise", x = .data, args = try_list(dots = enquos(...), by = syms(by), .groups = .groups)),
     'summarize(.groups = "rowwise") not supported' = identical(.groups, "rowwise"),
     {
       rel <- duckdb_rel_from_df(.data)
@@ -22,7 +22,7 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
       }
 
       groups <- lapply(by, relexpr_reference)
-      aggregates <- rel_translate_dots(dots, .data, forbid_new = TRUE)
+      aggregates <- rel_translate_dots_summarise(dots, .data)
 
       if (oo) {
         aggregates <- c(

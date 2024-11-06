@@ -13,7 +13,7 @@ relocate.duckplyr_df <- function(.data, ..., .before = NULL, .after = NULL) {
   exprs <- exprs_from_loc(.data, loc)
 
   # Ensure `relocate()` appears in call stack
-  rel_try(list(name = "relocate", x = .data, args = list(dots = enquos(...), .before = enquo(.before), .after = enquo(.after))),
+  rel_try(list(name = "relocate", x = .data, args = try_list(dots = enquos(...), .before = enquo(.before), .after = enquo(.after))),
     "Can't use relational with zero-column result set." = (length(exprs) == 0),
     {
       rel <- duckdb_rel_from_df(.data)

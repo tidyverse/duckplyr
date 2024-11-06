@@ -1,6 +1,5 @@
 # Overwritten in meta.R
-meta_call_start <- function(...) {}
-meta_call_end <- function(...) {}
+meta_call <- function(...) {}
 meta_ext_register <- function(...) {}
 meta_rel_register <- function(...) {}
 meta_rel_register_df <- function(...) {}

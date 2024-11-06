@@ -366,7 +366,7 @@
 ---
 
     Code
-      left_join(df1, df2, by = join_by(x), multiple = NULL)
+      duckplyr_left_join(df1, df2, by = join_by(x), multiple = NULL)
     Condition
       Warning:
       Specifying `multiple = NULL` was deprecated in dplyr 1.1.1.
@@ -391,6 +391,18 @@
       ! Each row in `x` must match at most 1 row in `y`.
       i Row 2 of `x` matches multiple rows in `y`.
 
+---
+
+    Code
+      duckplyr_left_join(df1, df2, by = join_by(x), multiple = "error")
+    Condition
+      Warning:
+      Specifying `multiple = "error"` was deprecated in dplyr 1.1.1.
+      i Please use `relationship = "many-to-one"` instead.
+      Error in `left_join()`:
+      ! Each row in `x` must match at most 1 row in `y`.
+      i Row 2 of `x` matches multiple rows in `y`.
+
 # `multiple = 'warning'` is deprecated (#6731)
 
     Code
@@ -406,7 +418,7 @@
 ---
 
     Code
-      left_join(df1, df2, by = join_by(x), multiple = "warning")
+      duckplyr_left_join(df1, df2, by = join_by(x), multiple = "warning")
     Condition
       Warning:
       Specifying `multiple = "warning"` was deprecated in dplyr 1.1.1.
