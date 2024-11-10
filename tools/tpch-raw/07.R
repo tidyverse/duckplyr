@@ -3,11 +3,11 @@ duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
-invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
+invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 df1 <- supplier
 "select"
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -53,8 +53,7 @@ rel5 <- duckdb$rel_filter(
     duckdb$expr_function(
       "|",
       list(
-        duckdb$expr_function(
-          "r_base::==",
+        duckdb$expr_comparison(
           list(
             duckdb$expr_reference("n1_name"),
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -62,10 +61,10 @@ rel5 <- duckdb$rel_filter(
             } else {
               duckdb$expr_constant("FRANCE")
             }
-          )
+          ),
+          "=="
         ),
-        duckdb$expr_function(
-          "r_base::==",
+        duckdb$expr_comparison(
           list(
             duckdb$expr_reference("n1_name"),
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -73,7 +72,8 @@ rel5 <- duckdb$rel_filter(
             } else {
               duckdb$expr_constant("GERMANY")
             }
-          )
+          ),
+          "=="
         )
       )
     )
@@ -179,8 +179,7 @@ rel15 <- duckdb$rel_filter(
     duckdb$expr_function(
       "|",
       list(
-        duckdb$expr_function(
-          "r_base::==",
+        duckdb$expr_comparison(
           list(
             duckdb$expr_reference("n2_name"),
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -188,10 +187,10 @@ rel15 <- duckdb$rel_filter(
             } else {
               duckdb$expr_constant("FRANCE")
             }
-          )
+          ),
+          "=="
         ),
-        duckdb$expr_function(
-          "r_base::==",
+        duckdb$expr_comparison(
           list(
             duckdb$expr_reference("n2_name"),
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -199,7 +198,8 @@ rel15 <- duckdb$rel_filter(
             } else {
               duckdb$expr_constant("GERMANY")
             }
-          )
+          ),
+          "=="
         )
       )
     )
@@ -374,8 +374,7 @@ rel29 <- duckdb$rel_project(
 rel30 <- duckdb$rel_filter(
   rel29,
   list(
-    duckdb$expr_function(
-      "r_base::>=",
+    duckdb$expr_comparison(
       list(
         duckdb$expr_reference("l_shipdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -383,10 +382,10 @@ rel30 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant(as.Date("1995-01-01"))
         }
-      )
+      ),
+      ">="
     ),
-    duckdb$expr_function(
-      "r_base::<=",
+    duckdb$expr_comparison(
       list(
         duckdb$expr_reference("l_shipdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -394,7 +393,8 @@ rel30 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant(as.Date("1996-12-31"))
         }
-      )
+      ),
+      "<="
     )
   )
 )
@@ -549,8 +549,7 @@ rel40 <- duckdb$rel_filter(
         duckdb$expr_function(
           "&",
           list(
-            duckdb$expr_function(
-              "r_base::==",
+            duckdb$expr_comparison(
               list(
                 duckdb$expr_reference("n1_name"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -558,10 +557,10 @@ rel40 <- duckdb$rel_filter(
                 } else {
                   duckdb$expr_constant("FRANCE")
                 }
-              )
+              ),
+              "=="
             ),
-            duckdb$expr_function(
-              "r_base::==",
+            duckdb$expr_comparison(
               list(
                 duckdb$expr_reference("n2_name"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -569,15 +568,15 @@ rel40 <- duckdb$rel_filter(
                 } else {
                   duckdb$expr_constant("GERMANY")
                 }
-              )
+              ),
+              "=="
             )
           )
         ),
         duckdb$expr_function(
           "&",
           list(
-            duckdb$expr_function(
-              "r_base::==",
+            duckdb$expr_comparison(
               list(
                 duckdb$expr_reference("n1_name"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -585,10 +584,10 @@ rel40 <- duckdb$rel_filter(
                 } else {
                   duckdb$expr_constant("GERMANY")
                 }
-              )
+              ),
+              "=="
             ),
-            duckdb$expr_function(
-              "r_base::==",
+            duckdb$expr_comparison(
               list(
                 duckdb$expr_reference("n2_name"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -596,7 +595,8 @@ rel40 <- duckdb$rel_filter(
                 } else {
                   duckdb$expr_constant("FRANCE")
                 }
-              )
+              ),
+              "=="
             )
           )
         )

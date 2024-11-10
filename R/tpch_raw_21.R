@@ -58,8 +58,7 @@ tpch_raw_21 <- function(con, experimental) {
   rel5 <- duckdb$rel_filter(
     rel4,
     list(
-      duckdb$expr_function(
-        "r_base::>",
+      duckdb$expr_comparison(
         list(
           duckdb$expr_reference("n_supplier"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -67,7 +66,8 @@ tpch_raw_21 <- function(con, experimental) {
           } else {
             duckdb$expr_constant(1)
           }
-        )
+        ),
+        ">"
       )
     )
   )
@@ -241,8 +241,7 @@ tpch_raw_21 <- function(con, experimental) {
   rel15 <- duckdb$rel_filter(
     rel14,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
         list(
           duckdb$expr_reference("o_orderstatus"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -250,7 +249,8 @@ tpch_raw_21 <- function(con, experimental) {
           } else {
             duckdb$expr_constant("F")
           }
-        )
+        ),
+        "=="
       )
     )
   )
@@ -263,9 +263,9 @@ tpch_raw_21 <- function(con, experimental) {
         tmp_expr <- duckdb$expr_function(
           "any",
           list(
-            duckdb$expr_function(
-              "r_base::>",
-              list(duckdb$expr_reference("l_receiptdate"), duckdb$expr_reference("l_commitdate"))
+            duckdb$expr_comparison(
+              list(duckdb$expr_reference("l_receiptdate"), duckdb$expr_reference("l_commitdate")),
+              ">"
             )
           )
         )
@@ -318,8 +318,7 @@ tpch_raw_21 <- function(con, experimental) {
       duckdb$expr_function(
         "&",
         list(
-          duckdb$expr_function(
-            "r_base::>",
+          duckdb$expr_comparison(
             list(
               duckdb$expr_reference("n_supplier"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -327,10 +326,10 @@ tpch_raw_21 <- function(con, experimental) {
               } else {
                 duckdb$expr_constant(1)
               }
-            )
+            ),
+            ">"
           ),
-          duckdb$expr_function(
-            "r_base::==",
+          duckdb$expr_comparison(
             list(
               duckdb$expr_reference("num_failed"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -338,7 +337,8 @@ tpch_raw_21 <- function(con, experimental) {
               } else {
                 duckdb$expr_constant(1)
               }
-            )
+            ),
+            "=="
           )
         )
       )
@@ -504,9 +504,9 @@ tpch_raw_21 <- function(con, experimental) {
   rel28 <- duckdb$rel_filter(
     rel27,
     list(
-      duckdb$expr_function(
-        "r_base::>",
-        list(duckdb$expr_reference("l_receiptdate"), duckdb$expr_reference("l_commitdate"))
+      duckdb$expr_comparison(
+        list(duckdb$expr_reference("l_receiptdate"), duckdb$expr_reference("l_commitdate")),
+        ">"
       )
     )
   )
@@ -667,8 +667,7 @@ tpch_raw_21 <- function(con, experimental) {
   rel34 <- duckdb$rel_filter(
     rel33,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
         list(
           duckdb$expr_reference("n_name"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -676,7 +675,8 @@ tpch_raw_21 <- function(con, experimental) {
           } else {
             duckdb$expr_constant("SAUDI ARABIA")
           }
-        )
+        ),
+        "=="
       )
     )
   )

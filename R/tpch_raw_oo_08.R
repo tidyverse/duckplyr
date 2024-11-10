@@ -63,8 +63,7 @@ tpch_raw_oo_08 <- function(con, experimental) {
   rel6 <- duckdb$rel_filter(
     rel5,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
         list(
           duckdb$expr_reference("r_name"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -72,7 +71,8 @@ tpch_raw_oo_08 <- function(con, experimental) {
           } else {
             duckdb$expr_constant("AMERICA")
           }
-        )
+        ),
+        "=="
       )
     )
   )
@@ -354,8 +354,7 @@ tpch_raw_oo_08 <- function(con, experimental) {
   rel31 <- duckdb$rel_filter(
     rel30,
     list(
-      duckdb$expr_function(
-        "r_base::>=",
+      duckdb$expr_comparison(
         list(
           duckdb$expr_reference("o_orderdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -363,10 +362,10 @@ tpch_raw_oo_08 <- function(con, experimental) {
           } else {
             duckdb$expr_constant(as.Date("1995-01-01"))
           }
-        )
+        ),
+        ">="
       ),
-      duckdb$expr_function(
-        "r_base::<=",
+      duckdb$expr_comparison(
         list(
           duckdb$expr_reference("o_orderdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -374,7 +373,8 @@ tpch_raw_oo_08 <- function(con, experimental) {
           } else {
             duckdb$expr_constant(as.Date("1996-12-31"))
           }
-        )
+        ),
+        "<="
       )
     )
   )
@@ -730,8 +730,7 @@ tpch_raw_oo_08 <- function(con, experimental) {
   rel55 <- duckdb$rel_filter(
     rel54,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
         list(
           duckdb$expr_reference("p_type"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -739,7 +738,8 @@ tpch_raw_oo_08 <- function(con, experimental) {
           } else {
             duckdb$expr_constant("ECONOMY ANODIZED STEEL")
           }
-        )
+        ),
+        "=="
       )
     )
   )
@@ -1414,8 +1414,7 @@ tpch_raw_oo_08 <- function(con, experimental) {
                 duckdb$expr_function(
                   "if_else",
                   list(
-                    duckdb$expr_function(
-                      "r_base::==",
+                    duckdb$expr_comparison(
                       list(
                         duckdb$expr_reference("nation"),
                         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1423,7 +1422,8 @@ tpch_raw_oo_08 <- function(con, experimental) {
                         } else {
                           duckdb$expr_constant("BRAZIL")
                         }
-                      )
+                      ),
+                      "=="
                     ),
                     duckdb$expr_reference("volume"),
                     if ("experimental" %in% names(formals(duckdb$expr_constant))) {

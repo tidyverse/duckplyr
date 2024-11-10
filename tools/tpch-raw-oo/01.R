@@ -3,7 +3,6 @@ duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
-invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
 df1 <- lineitem
 "select"
@@ -99,8 +98,7 @@ rel3 <- duckdb$rel_project(
 rel4 <- duckdb$rel_filter(
   rel3,
   list(
-    duckdb$expr_function(
-      "r_base::<=",
+    duckdb$expr_comparison(
       list(
         duckdb$expr_reference("l_shipdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -108,7 +106,8 @@ rel4 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant(as.Date("1998-09-02"))
         }
-      )
+      ),
+      "<="
     )
   )
 )

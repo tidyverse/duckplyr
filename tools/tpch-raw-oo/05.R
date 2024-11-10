@@ -3,7 +3,6 @@ duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
-invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 df1 <- nation
@@ -74,8 +73,7 @@ rel5 <- duckdb$rel_project(
 rel6 <- duckdb$rel_filter(
   rel5,
   list(
-    duckdb$expr_function(
-      "r_base::==",
+    duckdb$expr_comparison(
       list(
         duckdb$expr_reference("r_name"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -83,7 +81,8 @@ rel6 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant("ASIA")
         }
-      )
+      ),
+      "=="
     )
   )
 )
@@ -545,8 +544,7 @@ rel38 <- duckdb$rel_project(
 rel39 <- duckdb$rel_filter(
   rel38,
   list(
-    duckdb$expr_function(
-      "r_base::>=",
+    duckdb$expr_comparison(
       list(
         duckdb$expr_reference("o_orderdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -554,10 +552,10 @@ rel39 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant(as.Date("1994-01-01"))
         }
-      )
+      ),
+      ">="
     ),
-    duckdb$expr_function(
-      "r_base::<",
+    duckdb$expr_comparison(
       list(
         duckdb$expr_reference("o_orderdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -565,7 +563,8 @@ rel39 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant(as.Date("1995-01-01"))
         }
-      )
+      ),
+      "<"
     )
   )
 )

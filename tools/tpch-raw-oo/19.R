@@ -473,8 +473,7 @@ rel11 <- duckdb$rel_filter(
                                     duckdb$expr_function(
                                       "&",
                                       list(
-                                        duckdb$expr_function(
-                                          "r_base::==",
+                                        duckdb$expr_comparison(
                                           list(
                                             duckdb$expr_reference("p_brand"),
                                             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -482,7 +481,8 @@ rel11 <- duckdb$rel_filter(
                                             } else {
                                               duckdb$expr_constant("Brand#12")
                                             }
-                                          )
+                                          ),
+                                          "=="
                                         ),
                                         duckdb$expr_function(
                                           "___coalesce",
@@ -555,8 +555,7 @@ rel11 <- duckdb$rel_filter(
                                         )
                                       )
                                     ),
-                                    duckdb$expr_function(
-                                      "r_base::>=",
+                                    duckdb$expr_comparison(
                                       list(
                                         duckdb$expr_reference("l_quantity"),
                                         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -564,7 +563,8 @@ rel11 <- duckdb$rel_filter(
                                         } else {
                                           duckdb$expr_constant(1)
                                         }
-                                      )
+                                      ),
+                                      ">="
                                     )
                                   )
                                 ),
@@ -591,8 +591,7 @@ rel11 <- duckdb$rel_filter(
                                 )
                               )
                             ),
-                            duckdb$expr_function(
-                              "r_base::>=",
+                            duckdb$expr_comparison(
                               list(
                                 duckdb$expr_reference("p_size"),
                                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -600,12 +599,12 @@ rel11 <- duckdb$rel_filter(
                                 } else {
                                   duckdb$expr_constant(1)
                                 }
-                              )
+                              ),
+                              ">="
                             )
                           )
                         ),
-                        duckdb$expr_function(
-                          "r_base::<=",
+                        duckdb$expr_comparison(
                           list(
                             duckdb$expr_reference("p_size"),
                             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -613,7 +612,8 @@ rel11 <- duckdb$rel_filter(
                             } else {
                               duckdb$expr_constant(5)
                             }
-                          )
+                          ),
+                          "<="
                         )
                       )
                     ),
@@ -656,8 +656,7 @@ rel11 <- duckdb$rel_filter(
                     )
                   )
                 ),
-                duckdb$expr_function(
-                  "r_base::==",
+                duckdb$expr_comparison(
                   list(
                     duckdb$expr_reference("l_shipinstruct"),
                     if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -665,7 +664,8 @@ rel11 <- duckdb$rel_filter(
                     } else {
                       duckdb$expr_constant("DELIVER IN PERSON")
                     }
-                  )
+                  ),
+                  "=="
                 )
               )
             ),
@@ -690,8 +690,7 @@ rel11 <- duckdb$rel_filter(
                                     duckdb$expr_function(
                                       "&",
                                       list(
-                                        duckdb$expr_function(
-                                          "r_base::==",
+                                        duckdb$expr_comparison(
                                           list(
                                             duckdb$expr_reference("p_brand"),
                                             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -699,7 +698,8 @@ rel11 <- duckdb$rel_filter(
                                             } else {
                                               duckdb$expr_constant("Brand#23")
                                             }
-                                          )
+                                          ),
+                                          "=="
                                         ),
                                         duckdb$expr_function(
                                           "___coalesce",
@@ -772,8 +772,7 @@ rel11 <- duckdb$rel_filter(
                                         )
                                       )
                                     ),
-                                    duckdb$expr_function(
-                                      "r_base::>=",
+                                    duckdb$expr_comparison(
                                       list(
                                         duckdb$expr_reference("l_quantity"),
                                         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -781,7 +780,8 @@ rel11 <- duckdb$rel_filter(
                                         } else {
                                           duckdb$expr_constant(10)
                                         }
-                                      )
+                                      ),
+                                      ">="
                                     )
                                   )
                                 ),
@@ -808,8 +808,7 @@ rel11 <- duckdb$rel_filter(
                                 )
                               )
                             ),
-                            duckdb$expr_function(
-                              "r_base::>=",
+                            duckdb$expr_comparison(
                               list(
                                 duckdb$expr_reference("p_size"),
                                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -817,12 +816,12 @@ rel11 <- duckdb$rel_filter(
                                 } else {
                                   duckdb$expr_constant(1)
                                 }
-                              )
+                              ),
+                              ">="
                             )
                           )
                         ),
-                        duckdb$expr_function(
-                          "r_base::<=",
+                        duckdb$expr_comparison(
                           list(
                             duckdb$expr_reference("p_size"),
                             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -830,7 +829,8 @@ rel11 <- duckdb$rel_filter(
                             } else {
                               duckdb$expr_constant(10)
                             }
-                          )
+                          ),
+                          "<="
                         )
                       )
                     ),
@@ -873,8 +873,7 @@ rel11 <- duckdb$rel_filter(
                     )
                   )
                 ),
-                duckdb$expr_function(
-                  "r_base::==",
+                duckdb$expr_comparison(
                   list(
                     duckdb$expr_reference("l_shipinstruct"),
                     if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -882,7 +881,8 @@ rel11 <- duckdb$rel_filter(
                     } else {
                       duckdb$expr_constant("DELIVER IN PERSON")
                     }
-                  )
+                  ),
+                  "=="
                 )
               )
             )
@@ -909,8 +909,7 @@ rel11 <- duckdb$rel_filter(
                                 duckdb$expr_function(
                                   "&",
                                   list(
-                                    duckdb$expr_function(
-                                      "r_base::==",
+                                    duckdb$expr_comparison(
                                       list(
                                         duckdb$expr_reference("p_brand"),
                                         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -918,7 +917,8 @@ rel11 <- duckdb$rel_filter(
                                         } else {
                                           duckdb$expr_constant("Brand#34")
                                         }
-                                      )
+                                      ),
+                                      "=="
                                     ),
                                     duckdb$expr_function(
                                       "___coalesce",
@@ -991,8 +991,7 @@ rel11 <- duckdb$rel_filter(
                                     )
                                   )
                                 ),
-                                duckdb$expr_function(
-                                  "r_base::>=",
+                                duckdb$expr_comparison(
                                   list(
                                     duckdb$expr_reference("l_quantity"),
                                     if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1000,7 +999,8 @@ rel11 <- duckdb$rel_filter(
                                     } else {
                                       duckdb$expr_constant(20)
                                     }
-                                  )
+                                  ),
+                                  ">="
                                 )
                               )
                             ),
@@ -1027,8 +1027,7 @@ rel11 <- duckdb$rel_filter(
                             )
                           )
                         ),
-                        duckdb$expr_function(
-                          "r_base::>=",
+                        duckdb$expr_comparison(
                           list(
                             duckdb$expr_reference("p_size"),
                             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1036,12 +1035,12 @@ rel11 <- duckdb$rel_filter(
                             } else {
                               duckdb$expr_constant(1)
                             }
-                          )
+                          ),
+                          ">="
                         )
                       )
                     ),
-                    duckdb$expr_function(
-                      "r_base::<=",
+                    duckdb$expr_comparison(
                       list(
                         duckdb$expr_reference("p_size"),
                         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1049,7 +1048,8 @@ rel11 <- duckdb$rel_filter(
                         } else {
                           duckdb$expr_constant(15)
                         }
-                      )
+                      ),
+                      "<="
                     )
                   )
                 ),
@@ -1092,8 +1092,7 @@ rel11 <- duckdb$rel_filter(
                 )
               )
             ),
-            duckdb$expr_function(
-              "r_base::==",
+            duckdb$expr_comparison(
               list(
                 duckdb$expr_reference("l_shipinstruct"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1101,7 +1100,8 @@ rel11 <- duckdb$rel_filter(
                 } else {
                   duckdb$expr_constant("DELIVER IN PERSON")
                 }
-              )
+              ),
+              "=="
             )
           )
         )

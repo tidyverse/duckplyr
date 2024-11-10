@@ -47,8 +47,7 @@ tpch_raw_05 <- function(con, experimental) {
   rel5 <- duckdb$rel_filter(
     rel4,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
         list(
           duckdb$expr_reference("r_name"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -56,7 +55,8 @@ tpch_raw_05 <- function(con, experimental) {
           } else {
             duckdb$expr_constant("ASIA")
           }
-        )
+        ),
+        "=="
       )
     )
   )
@@ -313,8 +313,7 @@ tpch_raw_05 <- function(con, experimental) {
   rel26 <- duckdb$rel_filter(
     rel25,
     list(
-      duckdb$expr_function(
-        "r_base::>=",
+      duckdb$expr_comparison(
         list(
           duckdb$expr_reference("o_orderdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -322,10 +321,10 @@ tpch_raw_05 <- function(con, experimental) {
           } else {
             duckdb$expr_constant(as.Date("1994-01-01"))
           }
-        )
+        ),
+        ">="
       ),
-      duckdb$expr_function(
-        "r_base::<",
+      duckdb$expr_comparison(
         list(
           duckdb$expr_reference("o_orderdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -333,7 +332,8 @@ tpch_raw_05 <- function(con, experimental) {
           } else {
             duckdb$expr_constant(as.Date("1995-01-01"))
           }
-        )
+        ),
+        "<"
       )
     )
   )

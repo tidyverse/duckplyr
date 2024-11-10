@@ -33,8 +33,7 @@ tpch_raw_03 <- function(con, experimental) {
   rel3 <- duckdb$rel_filter(
     rel2,
     list(
-      duckdb$expr_function(
-        "r_base::<",
+      duckdb$expr_comparison(
         list(
           duckdb$expr_reference("o_orderdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -42,7 +41,8 @@ tpch_raw_03 <- function(con, experimental) {
           } else {
             duckdb$expr_constant(as.Date("1995-03-15"))
           }
-        )
+        ),
+        "<"
       )
     )
   )
@@ -69,8 +69,7 @@ tpch_raw_03 <- function(con, experimental) {
   rel6 <- duckdb$rel_filter(
     rel5,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
         list(
           duckdb$expr_reference("c_mktsegment"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -78,7 +77,8 @@ tpch_raw_03 <- function(con, experimental) {
           } else {
             duckdb$expr_constant("BUILDING")
           }
-        )
+        ),
+        "=="
       )
     )
   )
@@ -186,8 +186,7 @@ tpch_raw_03 <- function(con, experimental) {
   rel14 <- duckdb$rel_filter(
     rel13,
     list(
-      duckdb$expr_function(
-        "r_base::>",
+      duckdb$expr_comparison(
         list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -195,7 +194,8 @@ tpch_raw_03 <- function(con, experimental) {
           } else {
             duckdb$expr_constant(as.Date("1995-03-15"))
           }
-        )
+        ),
+        ">"
       )
     )
   )

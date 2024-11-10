@@ -241,8 +241,7 @@ rel2 <- duckdb$rel_filter(
             }
           )
         ),
-        duckdb$expr_function(
-          "r_base::>",
+        duckdb$expr_comparison(
           list(
             duckdb$expr_reference("c_acctbal"),
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -250,7 +249,8 @@ rel2 <- duckdb$rel_filter(
             } else {
               duckdb$expr_constant(0)
             }
-          )
+          ),
+          ">"
         )
       )
     )
@@ -683,7 +683,7 @@ rel14 <- duckdb$rel_filter(
             }
           )
         ),
-        duckdb$expr_function("r_base::>", list(duckdb$expr_reference("c_acctbal"), duckdb$expr_reference("acctbal_min")))
+        duckdb$expr_comparison(list(duckdb$expr_reference("c_acctbal"), duckdb$expr_reference("acctbal_min")), ">")
       )
     )
   )

@@ -3,9 +3,9 @@ duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
-invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
+invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 invisible(
   DBI::dbExecute(
     con,
@@ -60,8 +60,7 @@ rel4 <- duckdb$rel_project(
 rel5 <- duckdb$rel_filter(
   rel4,
   list(
-    duckdb$expr_function(
-      "r_base::==",
+    duckdb$expr_comparison(
       list(
         duckdb$expr_reference("r_name"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -69,7 +68,8 @@ rel5 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant("AMERICA")
         }
-      )
+      ),
+      "=="
     )
   )
 )
@@ -223,8 +223,7 @@ rel20 <- duckdb$rel_project(
 rel21 <- duckdb$rel_filter(
   rel20,
   list(
-    duckdb$expr_function(
-      "r_base::>=",
+    duckdb$expr_comparison(
       list(
         duckdb$expr_reference("o_orderdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -232,10 +231,10 @@ rel21 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant(as.Date("1995-01-01"))
         }
-      )
+      ),
+      ">="
     ),
-    duckdb$expr_function(
-      "r_base::<=",
+    duckdb$expr_comparison(
       list(
         duckdb$expr_reference("o_orderdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -243,7 +242,8 @@ rel21 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant(as.Date("1996-12-31"))
         }
-      )
+      ),
+      "<="
     )
   )
 )
@@ -446,8 +446,7 @@ rel35 <- duckdb$rel_project(
 rel36 <- duckdb$rel_filter(
   rel35,
   list(
-    duckdb$expr_function(
-      "r_base::==",
+    duckdb$expr_comparison(
       list(
         duckdb$expr_reference("p_type"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -455,7 +454,8 @@ rel36 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant("ECONOMY ANODIZED STEEL")
         }
-      )
+      ),
+      "=="
     )
   )
 )
@@ -910,8 +910,7 @@ rel61 <- duckdb$rel_aggregate(
               duckdb$expr_function(
                 "if_else",
                 list(
-                  duckdb$expr_function(
-                    "r_base::==",
+                  duckdb$expr_comparison(
                     list(
                       duckdb$expr_reference("nation"),
                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -919,7 +918,8 @@ rel61 <- duckdb$rel_aggregate(
                       } else {
                         duckdb$expr_constant("BRAZIL")
                       }
-                    )
+                    ),
+                    "=="
                   ),
                   duckdb$expr_reference("volume"),
                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {

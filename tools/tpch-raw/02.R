@@ -3,7 +3,6 @@ duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
-invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 invisible(
   DBI::dbExecute(
     con,
@@ -72,8 +71,7 @@ rel4 <- duckdb$rel_project(
 rel5 <- duckdb$rel_filter(
   rel4,
   list(
-    duckdb$expr_function(
-      "r_base::==",
+    duckdb$expr_comparison(
       list(
         duckdb$expr_reference("p_size"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -81,7 +79,8 @@ rel5 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant(15)
         }
-      )
+      ),
+      "=="
     ),
     duckdb$expr_function(
       "grepl",
@@ -334,8 +333,7 @@ rel18 <- duckdb$rel_from_df(con, df4, experimental = experimental)
 rel19 <- duckdb$rel_filter(
   rel18,
   list(
-    duckdb$expr_function(
-      "r_base::==",
+    duckdb$expr_comparison(
       list(
         duckdb$expr_reference("r_name"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -343,7 +341,8 @@ rel19 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant("EUROPE")
         }
-      )
+      ),
+      "=="
     )
   )
 )

@@ -33,8 +33,7 @@ tpch_raw_06 <- function(con, experimental) {
   rel3 <- duckdb$rel_filter(
     rel2,
     list(
-      duckdb$expr_function(
-        "r_base::>=",
+      duckdb$expr_comparison(
         list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -42,10 +41,10 @@ tpch_raw_06 <- function(con, experimental) {
           } else {
             duckdb$expr_constant(as.Date("1994-01-01"))
           }
-        )
+        ),
+        ">="
       ),
-      duckdb$expr_function(
-        "r_base::<",
+      duckdb$expr_comparison(
         list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -53,10 +52,10 @@ tpch_raw_06 <- function(con, experimental) {
           } else {
             duckdb$expr_constant(as.Date("1995-01-01"))
           }
-        )
+        ),
+        "<"
       ),
-      duckdb$expr_function(
-        "r_base::>=",
+      duckdb$expr_comparison(
         list(
           duckdb$expr_reference("l_discount"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -64,10 +63,10 @@ tpch_raw_06 <- function(con, experimental) {
           } else {
             duckdb$expr_constant(0.05)
           }
-        )
+        ),
+        ">="
       ),
-      duckdb$expr_function(
-        "r_base::<=",
+      duckdb$expr_comparison(
         list(
           duckdb$expr_reference("l_discount"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -75,10 +74,10 @@ tpch_raw_06 <- function(con, experimental) {
           } else {
             duckdb$expr_constant(0.07)
           }
-        )
+        ),
+        "<="
       ),
-      duckdb$expr_function(
-        "r_base::<",
+      duckdb$expr_comparison(
         list(
           duckdb$expr_reference("l_quantity"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -86,7 +85,8 @@ tpch_raw_06 <- function(con, experimental) {
           } else {
             duckdb$expr_constant(24)
           }
-        )
+        ),
+        "<"
       )
     )
   )

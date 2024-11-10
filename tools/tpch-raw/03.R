@@ -3,7 +3,6 @@ duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
-invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 invisible(
   DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
 )
@@ -41,8 +40,7 @@ rel2 <- duckdb$rel_project(
 rel3 <- duckdb$rel_filter(
   rel2,
   list(
-    duckdb$expr_function(
-      "r_base::<",
+    duckdb$expr_comparison(
       list(
         duckdb$expr_reference("o_orderdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -50,7 +48,8 @@ rel3 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant(as.Date("1995-03-15"))
         }
-      )
+      ),
+      "<"
     )
   )
 )
@@ -77,8 +76,7 @@ rel5 <- duckdb$rel_project(
 rel6 <- duckdb$rel_filter(
   rel5,
   list(
-    duckdb$expr_function(
-      "r_base::==",
+    duckdb$expr_comparison(
       list(
         duckdb$expr_reference("c_mktsegment"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -86,7 +84,8 @@ rel6 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant("BUILDING")
         }
-      )
+      ),
+      "=="
     )
   )
 )
@@ -194,8 +193,7 @@ rel13 <- duckdb$rel_project(
 rel14 <- duckdb$rel_filter(
   rel13,
   list(
-    duckdb$expr_function(
-      "r_base::>",
+    duckdb$expr_comparison(
       list(
         duckdb$expr_reference("l_shipdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -203,7 +201,8 @@ rel14 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant(as.Date("1995-03-15"))
         }
-      )
+      ),
+      ">"
     )
   )
 )
