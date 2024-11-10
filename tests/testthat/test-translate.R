@@ -19,14 +19,20 @@ test_that("a %in% b", {
 })
 
 test_that("comparison expression translated", {
-  df <- data.frame(a = 1L)
-  expect_snapshot(
-    error = FALSE,
+  df <- data.frame(a = 1L, b = 2L, c = 3)
+  expect_snapshot({
     rel_translate(quo(a > 123L), df)
-  )
-  
-  expect_snapshot(
-    error = FALSE,
+  })
+
+  expect_snapshot({
     rel_translate(quo(a > 123.0), df)
-  )
+  })
+
+  expect_snapshot({
+    rel_translate(quo(a == b), df)
+  })
+
+  expect_snapshot({
+    rel_translate(quo(a <= c), df)
+  })
 })
