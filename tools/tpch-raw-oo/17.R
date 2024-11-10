@@ -3,7 +3,6 @@ duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
-invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(
   DBI::dbExecute(
@@ -310,7 +309,7 @@ rel11 <- duckdb$rel_join(
   rel9,
   rel10,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("l_partkey", rel9), duckdb$expr_reference("p_partkey", rel10))
     )
@@ -930,7 +929,7 @@ rel24 <- duckdb$rel_join(
   rel22,
   rel23,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("l_partkey_x", rel22), duckdb$expr_reference("l_partkey_y", rel23))
     )

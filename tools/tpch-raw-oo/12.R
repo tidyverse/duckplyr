@@ -6,7 +6,6 @@ experimental <- FALSE
 invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(
   DBI::dbExecute(
     con,
@@ -428,7 +427,7 @@ rel11 <- duckdb$rel_join(
   rel9,
   rel10,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("l_orderkey", rel9), duckdb$expr_reference("o_orderkey", rel10))
     )

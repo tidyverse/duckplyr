@@ -4,7 +4,6 @@ drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
 invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
 invisible(duckdb$rapi_load_rfuns(drv@database_ref))
@@ -88,7 +87,7 @@ rel8 <- duckdb$rel_join(
   rel6,
   rel7,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("s_nationkey", rel6), duckdb$expr_reference("n1_nationkey", rel7))
     )
@@ -214,7 +213,7 @@ rel18 <- duckdb$rel_join(
   rel16,
   rel17,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("c_nationkey", rel16), duckdb$expr_reference("n2_nationkey", rel17))
     )
@@ -289,7 +288,7 @@ rel25 <- duckdb$rel_join(
   rel23,
   rel24,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("o_custkey", rel23), duckdb$expr_reference("c_custkey", rel24))
     )
@@ -407,7 +406,7 @@ rel33 <- duckdb$rel_join(
   rel31,
   rel32,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("l_orderkey", rel31), duckdb$expr_reference("o_orderkey", rel32))
     )
@@ -493,7 +492,7 @@ rel38 <- duckdb$rel_join(
   rel36,
   rel37,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("l_suppkey", rel36), duckdb$expr_reference("s_suppkey", rel37))
     )

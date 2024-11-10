@@ -3,7 +3,6 @@ duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
-invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 df1 <- lineitem
 "summarise"
@@ -279,7 +278,7 @@ rel15 <- duckdb$rel_join(
   rel13,
   rel14,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("o_orderkey", rel13), duckdb$expr_reference("l_orderkey", rel14))
     )
@@ -474,7 +473,7 @@ rel23 <- duckdb$rel_join(
   rel21,
   rel22,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("o_custkey", rel21), duckdb$expr_reference("c_custkey", rel22))
     )

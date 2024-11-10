@@ -486,7 +486,7 @@ tpch_raw_oo_16 <- function(con, experimental) {
     rel14,
     rel15,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("ps_suppkey", rel14), duckdb$expr_reference("s_suppkey", rel15))
       )
@@ -664,7 +664,7 @@ tpch_raw_oo_16 <- function(con, experimental) {
     rel22,
     rel23,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("p_partkey", rel22), duckdb$expr_reference("ps_partkey", rel23))
       )

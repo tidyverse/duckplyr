@@ -69,7 +69,7 @@ tpch_raw_05 <- function(con, experimental) {
     rel6,
     rel7,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("n_regionkey", rel6), duckdb$expr_reference("r_regionkey", rel7))
       )
@@ -149,7 +149,7 @@ tpch_raw_05 <- function(con, experimental) {
     rel13,
     rel14,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("s_nationkey", rel13), duckdb$expr_reference("n_nationkey", rel14))
       )
@@ -239,7 +239,7 @@ tpch_raw_05 <- function(con, experimental) {
     rel20,
     rel21,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("l_suppkey", rel20), duckdb$expr_reference("s_suppkey", rel21))
       )
@@ -381,7 +381,7 @@ tpch_raw_05 <- function(con, experimental) {
     rel30,
     rel31,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("o_custkey", rel30), duckdb$expr_reference("c_custkey", rel31))
       )
@@ -437,11 +437,11 @@ tpch_raw_05 <- function(con, experimental) {
     rel35,
     rel36,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("l_orderkey", rel35), duckdb$expr_reference("o_orderkey", rel36))
       ),
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("s_nationkey", rel35), duckdb$expr_reference("c_nationkey", rel36))
       )

@@ -162,7 +162,7 @@ tpch_raw_oo_19 <- function(con, experimental) {
     rel5,
     rel6,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("l_partkey", rel5), duckdb$expr_reference("p_partkey", rel6))
       )

@@ -660,7 +660,7 @@ tpch_raw_oo_22 <- function(con, experimental) {
     rel15,
     rel16,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("join_id_x", rel15), duckdb$expr_reference("join_id_y", rel16))
       )
@@ -1075,7 +1075,7 @@ tpch_raw_oo_22 <- function(con, experimental) {
     rel27,
     rel26,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("c_custkey", rel27), duckdb$expr_reference("o_custkey", rel26))
       )

@@ -88,7 +88,7 @@ tpch_raw_12 <- function(con, experimental) {
     rel3,
     rel5,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("l_orderkey", rel3), duckdb$expr_reference("o_orderkey", rel5))
       )

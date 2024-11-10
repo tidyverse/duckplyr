@@ -561,7 +561,7 @@ tpch_raw_oo_15 <- function(con, experimental) {
     rel20,
     rel21,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("global_agr_key_x", rel20), duckdb$expr_reference("global_agr_key_y", rel21))
       )
@@ -775,7 +775,7 @@ tpch_raw_oo_15 <- function(con, experimental) {
     rel32,
     rel33,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("l_suppkey", rel32), duckdb$expr_reference("s_suppkey", rel33))
       )

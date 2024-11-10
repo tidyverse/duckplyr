@@ -9,7 +9,6 @@ invisible(
     'CREATE MACRO "grepl"(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)'
   )
 )
-invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 df1 <- part
@@ -173,7 +172,7 @@ rel14 <- duckdb$rel_join(
   rel12,
   rel13,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("ps_partkey", rel12), duckdb$expr_reference("p_partkey", rel13))
     )
@@ -298,7 +297,7 @@ rel25 <- duckdb$rel_join(
   rel23,
   rel24,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("s_nationkey", rel23), duckdb$expr_reference("n_nationkey", rel24))
     )
@@ -406,7 +405,7 @@ rel33 <- duckdb$rel_join(
   rel31,
   rel32,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("ps_suppkey", rel31), duckdb$expr_reference("s_suppkey", rel32))
     )
@@ -567,11 +566,11 @@ rel42 <- duckdb$rel_join(
   rel40,
   rel41,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("l_suppkey", rel40), duckdb$expr_reference("ps_suppkey", rel41))
     ),
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("l_partkey", rel40), duckdb$expr_reference("ps_partkey", rel41))
     )
@@ -761,7 +760,7 @@ rel52 <- duckdb$rel_join(
   rel50,
   rel51,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("o_orderkey", rel50), duckdb$expr_reference("l_orderkey", rel51))
     )

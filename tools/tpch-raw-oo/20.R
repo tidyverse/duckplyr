@@ -3,7 +3,6 @@ duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
-invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(
   DBI::dbExecute(
@@ -179,7 +178,7 @@ rel11 <- duckdb$rel_join(
   rel9,
   rel10,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("s_nationkey", rel9), duckdb$expr_reference("n_nationkey", rel10))
     )
@@ -448,7 +447,7 @@ rel24 <- duckdb$rel_join(
   rel23,
   rel22,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("ps_suppkey", rel23), duckdb$expr_reference("s_suppkey", rel22))
     )
@@ -533,7 +532,7 @@ rel30 <- duckdb$rel_join(
   rel29,
   rel28,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("ps_partkey", rel29), duckdb$expr_reference("p_partkey", rel28))
     )
@@ -883,11 +882,11 @@ rel41 <- duckdb$rel_join(
   rel40,
   rel39,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("l_partkey", rel40), duckdb$expr_reference("ps_partkey", rel39))
     ),
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("l_suppkey", rel40), duckdb$expr_reference("ps_suppkey", rel39))
     )
@@ -1184,7 +1183,7 @@ rel52 <- duckdb$rel_join(
   rel50,
   rel51,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("ps_suppkey", rel50), duckdb$expr_reference("l_suppkey", rel51))
     )
@@ -1359,7 +1358,7 @@ rel62 <- duckdb$rel_join(
   rel61,
   rel60,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("s_suppkey", rel61), duckdb$expr_reference("ps_suppkey", rel60))
     )

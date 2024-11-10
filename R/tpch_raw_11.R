@@ -35,7 +35,7 @@ tpch_raw_11 <- function(con, experimental) {
     rel4,
     rel6,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("ps_suppkey", rel4), duckdb$expr_reference("s_suppkey", rel6))
       )
@@ -115,7 +115,7 @@ tpch_raw_11 <- function(con, experimental) {
     rel9,
     rel10,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("s_nationkey", rel9), duckdb$expr_reference("n_nationkey", rel10))
       )
@@ -344,7 +344,7 @@ tpch_raw_11 <- function(con, experimental) {
     rel20,
     rel21,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("global_agr_key_x", rel20), duckdb$expr_reference("global_agr_key_y", rel21))
       )

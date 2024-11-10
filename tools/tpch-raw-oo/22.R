@@ -7,7 +7,6 @@ invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
 df1 <- customer
 "filter"
@@ -669,7 +668,7 @@ rel17 <- duckdb$rel_join(
   rel15,
   rel16,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("join_id_x", rel15), duckdb$expr_reference("join_id_y", rel16))
     )
@@ -1084,7 +1083,7 @@ rel28 <- duckdb$rel_join(
   rel27,
   rel26,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("c_custkey", rel27), duckdb$expr_reference("o_custkey", rel26))
     )
