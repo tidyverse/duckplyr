@@ -22,7 +22,7 @@ Imports:
     collections,
     DBI,
     dplyr (>= 1.1.4),
-    duckdb (>= 1.1.2),
+    duckdb (>= 1.1.2.9901),
     glue,
     jsonlite,
     lifecycle,
@@ -51,6 +51,8 @@ Suggests:
     testthat (>= 3.1.5),
     usethis,
     withr
+Remotes: 
+    duckdb=duckdb/duckdb-r@f-compare-flip
 Config/Needs/check: anthonynorth/roxyglobals
 Config/testthat/edition: 3
 Config/testthat/parallel: false

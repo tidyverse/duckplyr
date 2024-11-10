@@ -407,7 +407,7 @@ to_duckdb_expr <- function(x) {
       out
     },
     relational_relexpr_comparison = {
-      out <- duckdb$expr_comparison(to_duckdb_exprs(x$exprs), x$cmp_op)
+      out <- duckdb$expr_comparison(x$cmp_op, to_duckdb_exprs(x$exprs))
       if (!is.null(x$alias)) {
         out <- expr({
           duckdb$expr_set_alias(out, x$alias)
@@ -478,7 +478,7 @@ to_duckdb_expr_meta <- function(x) {
       out
     },
     relational_relexpr_comparison = {
-      out <- expr(duckdb$expr_comparison(list(!!!to_duckdb_exprs_meta(x$exprs)), !!x$cmp_op))
+      out <- expr(duckdb$expr_comparison(!!x$cmp_op, list(!!!to_duckdb_exprs_meta(x$exprs))))
       if (!is.null(x$alias)) {
         out <- expr({
           tmp_expr <- !!out
