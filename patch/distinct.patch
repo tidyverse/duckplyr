@@ -1,5 +1,5 @@
 diff --git b/R/distinct.R a/R/distinct.R
-index 1e20283f..6ea79719 100644
+index 1e20283f..e7b9765e 100644
 --- b/R/distinct.R
 +++ a/R/distinct.R
 @@ -1,10 +1,69 @@
@@ -13,7 +13,7 @@ index 1e20283f..6ea79719 100644
    # Our implementation
 -  rel_try(NULL,
 -    "No relational implementation for distinct()" = TRUE,
-+  rel_try(list(name = "distinct", x = .data, args = list(dots = dots, .keep_all = .keep_all)),
++  rel_try(list(name = "distinct", x = .data, args = try_list(dots = dots, .keep_all = .keep_all)),
 +    "Implemented for all cases?" = FALSE,
      {
 +      # FIXME: avoid column duplication in a cleaner way

@@ -1,7 +1,7 @@
 rel_try <- function(call, rel, ...) {
   call_name <- as.character(sys.call(-1)[[1]])
 
-  meta_call(call_name)
+  meta_call(gsub("[.]duckplyr_df$", "", call_name))
 
   # Avoid error when called via dplyr:::filter.data.frame() (in yamlet)
   if (length(call_name) == 1 && !(call_name %in% stats$calls)) {
