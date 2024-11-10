@@ -34,6 +34,7 @@ tpch_raw_10 <- function(con, experimental) {
     rel2,
     list(
       duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("l_returnflag"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -41,8 +42,7 @@ tpch_raw_10 <- function(con, experimental) {
           } else {
             duckdb$expr_constant("R")
           }
-        ),
-        "=="
+        )
       )
     )
   )
@@ -96,6 +96,7 @@ tpch_raw_10 <- function(con, experimental) {
     rel6,
     list(
       duckdb$expr_comparison(
+        ">=",
         list(
           duckdb$expr_reference("o_orderdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -103,10 +104,10 @@ tpch_raw_10 <- function(con, experimental) {
           } else {
             duckdb$expr_constant(as.Date("1993-10-01"))
           }
-        ),
-        ">="
+        )
       ),
       duckdb$expr_comparison(
+        "<",
         list(
           duckdb$expr_reference("o_orderdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -114,8 +115,7 @@ tpch_raw_10 <- function(con, experimental) {
           } else {
             duckdb$expr_constant(as.Date("1994-01-01"))
           }
-        ),
-        "<"
+        )
       )
     )
   )

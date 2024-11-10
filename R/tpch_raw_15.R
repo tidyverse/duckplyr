@@ -8,6 +8,7 @@ tpch_raw_15 <- function(con, experimental) {
     rel1,
     list(
       duckdb$expr_comparison(
+        ">=",
         list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -15,10 +16,10 @@ tpch_raw_15 <- function(con, experimental) {
           } else {
             duckdb$expr_constant(as.Date("1996-01-01"))
           }
-        ),
-        ">="
+        )
       ),
       duckdb$expr_comparison(
+        "<",
         list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -26,8 +27,7 @@ tpch_raw_15 <- function(con, experimental) {
           } else {
             duckdb$expr_constant(as.Date("1996-04-01"))
           }
-        ),
-        "<"
+        )
       )
     )
   )

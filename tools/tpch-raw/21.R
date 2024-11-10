@@ -73,6 +73,7 @@ rel5 <- duckdb$rel_filter(
   rel4,
   list(
     duckdb$expr_comparison(
+      ">",
       list(
         duckdb$expr_reference("n_supplier"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -80,8 +81,7 @@ rel5 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant(1)
         }
-      ),
-      ">"
+      )
     )
   )
 )
@@ -256,6 +256,7 @@ rel15 <- duckdb$rel_filter(
   rel14,
   list(
     duckdb$expr_comparison(
+      "==",
       list(
         duckdb$expr_reference("o_orderstatus"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -263,8 +264,7 @@ rel15 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant("F")
         }
-      ),
-      "=="
+      )
     )
   )
 )
@@ -278,8 +278,8 @@ rel16 <- duckdb$rel_aggregate(
         "any",
         list(
           duckdb$expr_comparison(
-            list(duckdb$expr_reference("l_receiptdate"), duckdb$expr_reference("l_commitdate")),
-            ">"
+            ">",
+            list(duckdb$expr_reference("l_receiptdate"), duckdb$expr_reference("l_commitdate"))
           )
         )
       )
@@ -333,6 +333,7 @@ rel18 <- duckdb$rel_filter(
       "&",
       list(
         duckdb$expr_comparison(
+          ">",
           list(
             duckdb$expr_reference("n_supplier"),
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -340,10 +341,10 @@ rel18 <- duckdb$rel_filter(
             } else {
               duckdb$expr_constant(1)
             }
-          ),
-          ">"
+          )
         ),
         duckdb$expr_comparison(
+          "==",
           list(
             duckdb$expr_reference("num_failed"),
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -351,8 +352,7 @@ rel18 <- duckdb$rel_filter(
             } else {
               duckdb$expr_constant(1)
             }
-          ),
-          "=="
+          )
         )
       )
     )
@@ -519,8 +519,8 @@ rel28 <- duckdb$rel_filter(
   rel27,
   list(
     duckdb$expr_comparison(
-      list(duckdb$expr_reference("l_receiptdate"), duckdb$expr_reference("l_commitdate")),
-      ">"
+      ">",
+      list(duckdb$expr_reference("l_receiptdate"), duckdb$expr_reference("l_commitdate"))
     )
   )
 )
@@ -682,6 +682,7 @@ rel34 <- duckdb$rel_filter(
   rel33,
   list(
     duckdb$expr_comparison(
+      "==",
       list(
         duckdb$expr_reference("n_name"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -689,8 +690,7 @@ rel34 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant("SAUDI ARABIA")
         }
-      ),
-      "=="
+      )
     )
   )
 )

@@ -46,6 +46,7 @@ tpch_raw_07 <- function(con, experimental) {
         "|",
         list(
           duckdb$expr_comparison(
+            "==",
             list(
               duckdb$expr_reference("n1_name"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -53,10 +54,10 @@ tpch_raw_07 <- function(con, experimental) {
               } else {
                 duckdb$expr_constant("FRANCE")
               }
-            ),
-            "=="
+            )
           ),
           duckdb$expr_comparison(
+            "==",
             list(
               duckdb$expr_reference("n1_name"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -64,8 +65,7 @@ tpch_raw_07 <- function(con, experimental) {
               } else {
                 duckdb$expr_constant("GERMANY")
               }
-            ),
-            "=="
+            )
           )
         )
       )
@@ -172,6 +172,7 @@ tpch_raw_07 <- function(con, experimental) {
         "|",
         list(
           duckdb$expr_comparison(
+            "==",
             list(
               duckdb$expr_reference("n2_name"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -179,10 +180,10 @@ tpch_raw_07 <- function(con, experimental) {
               } else {
                 duckdb$expr_constant("FRANCE")
               }
-            ),
-            "=="
+            )
           ),
           duckdb$expr_comparison(
+            "==",
             list(
               duckdb$expr_reference("n2_name"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -190,8 +191,7 @@ tpch_raw_07 <- function(con, experimental) {
               } else {
                 duckdb$expr_constant("GERMANY")
               }
-            ),
-            "=="
+            )
           )
         )
       )
@@ -367,6 +367,7 @@ tpch_raw_07 <- function(con, experimental) {
     rel29,
     list(
       duckdb$expr_comparison(
+        ">=",
         list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -374,10 +375,10 @@ tpch_raw_07 <- function(con, experimental) {
           } else {
             duckdb$expr_constant(as.Date("1995-01-01"))
           }
-        ),
-        ">="
+        )
       ),
       duckdb$expr_comparison(
+        "<=",
         list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -385,8 +386,7 @@ tpch_raw_07 <- function(con, experimental) {
           } else {
             duckdb$expr_constant(as.Date("1996-12-31"))
           }
-        ),
-        "<="
+        )
       )
     )
   )
@@ -542,6 +542,7 @@ tpch_raw_07 <- function(con, experimental) {
             "&",
             list(
               duckdb$expr_comparison(
+                "==",
                 list(
                   duckdb$expr_reference("n1_name"),
                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -549,10 +550,10 @@ tpch_raw_07 <- function(con, experimental) {
                   } else {
                     duckdb$expr_constant("FRANCE")
                   }
-                ),
-                "=="
+                )
               ),
               duckdb$expr_comparison(
+                "==",
                 list(
                   duckdb$expr_reference("n2_name"),
                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -560,8 +561,7 @@ tpch_raw_07 <- function(con, experimental) {
                   } else {
                     duckdb$expr_constant("GERMANY")
                   }
-                ),
-                "=="
+                )
               )
             )
           ),
@@ -569,6 +569,7 @@ tpch_raw_07 <- function(con, experimental) {
             "&",
             list(
               duckdb$expr_comparison(
+                "==",
                 list(
                   duckdb$expr_reference("n1_name"),
                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -576,10 +577,10 @@ tpch_raw_07 <- function(con, experimental) {
                   } else {
                     duckdb$expr_constant("GERMANY")
                   }
-                ),
-                "=="
+                )
               ),
               duckdb$expr_comparison(
+                "==",
                 list(
                   duckdb$expr_reference("n2_name"),
                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -587,8 +588,7 @@ tpch_raw_07 <- function(con, experimental) {
                   } else {
                     duckdb$expr_constant("FRANCE")
                   }
-                ),
-                "=="
+                )
               )
             )
           )

@@ -183,6 +183,7 @@ tpch_raw_19 <- function(con, experimental) {
                                         "&",
                                         list(
                                           duckdb$expr_comparison(
+                                            "==",
                                             list(
                                               duckdb$expr_reference("p_brand"),
                                               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -190,8 +191,7 @@ tpch_raw_19 <- function(con, experimental) {
                                               } else {
                                                 duckdb$expr_constant("Brand#12")
                                               }
-                                            ),
-                                            "=="
+                                            )
                                           ),
                                           duckdb$expr_function(
                                             "___coalesce",
@@ -265,6 +265,7 @@ tpch_raw_19 <- function(con, experimental) {
                                         )
                                       ),
                                       duckdb$expr_comparison(
+                                        ">=",
                                         list(
                                           duckdb$expr_reference("l_quantity"),
                                           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -272,8 +273,7 @@ tpch_raw_19 <- function(con, experimental) {
                                           } else {
                                             duckdb$expr_constant(1)
                                           }
-                                        ),
-                                        ">="
+                                        )
                                       )
                                     )
                                   ),
@@ -301,6 +301,7 @@ tpch_raw_19 <- function(con, experimental) {
                                 )
                               ),
                               duckdb$expr_comparison(
+                                ">=",
                                 list(
                                   duckdb$expr_reference("p_size"),
                                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -308,12 +309,12 @@ tpch_raw_19 <- function(con, experimental) {
                                   } else {
                                     duckdb$expr_constant(1)
                                   }
-                                ),
-                                ">="
+                                )
                               )
                             )
                           ),
                           duckdb$expr_comparison(
+                            "<=",
                             list(
                               duckdb$expr_reference("p_size"),
                               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -321,8 +322,7 @@ tpch_raw_19 <- function(con, experimental) {
                               } else {
                                 duckdb$expr_constant(5)
                               }
-                            ),
-                            "<="
+                            )
                           )
                         )
                       ),
@@ -366,6 +366,7 @@ tpch_raw_19 <- function(con, experimental) {
                     )
                   ),
                   duckdb$expr_comparison(
+                    "==",
                     list(
                       duckdb$expr_reference("l_shipinstruct"),
                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -373,8 +374,7 @@ tpch_raw_19 <- function(con, experimental) {
                       } else {
                         duckdb$expr_constant("DELIVER IN PERSON")
                       }
-                    ),
-                    "=="
+                    )
                   )
                 )
               ),
@@ -400,6 +400,7 @@ tpch_raw_19 <- function(con, experimental) {
                                         "&",
                                         list(
                                           duckdb$expr_comparison(
+                                            "==",
                                             list(
                                               duckdb$expr_reference("p_brand"),
                                               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -407,8 +408,7 @@ tpch_raw_19 <- function(con, experimental) {
                                               } else {
                                                 duckdb$expr_constant("Brand#23")
                                               }
-                                            ),
-                                            "=="
+                                            )
                                           ),
                                           duckdb$expr_function(
                                             "___coalesce",
@@ -482,6 +482,7 @@ tpch_raw_19 <- function(con, experimental) {
                                         )
                                       ),
                                       duckdb$expr_comparison(
+                                        ">=",
                                         list(
                                           duckdb$expr_reference("l_quantity"),
                                           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -489,8 +490,7 @@ tpch_raw_19 <- function(con, experimental) {
                                           } else {
                                             duckdb$expr_constant(10)
                                           }
-                                        ),
-                                        ">="
+                                        )
                                       )
                                     )
                                   ),
@@ -518,6 +518,7 @@ tpch_raw_19 <- function(con, experimental) {
                                 )
                               ),
                               duckdb$expr_comparison(
+                                ">=",
                                 list(
                                   duckdb$expr_reference("p_size"),
                                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -525,12 +526,12 @@ tpch_raw_19 <- function(con, experimental) {
                                   } else {
                                     duckdb$expr_constant(1)
                                   }
-                                ),
-                                ">="
+                                )
                               )
                             )
                           ),
                           duckdb$expr_comparison(
+                            "<=",
                             list(
                               duckdb$expr_reference("p_size"),
                               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -538,8 +539,7 @@ tpch_raw_19 <- function(con, experimental) {
                               } else {
                                 duckdb$expr_constant(10)
                               }
-                            ),
-                            "<="
+                            )
                           )
                         )
                       ),
@@ -583,6 +583,7 @@ tpch_raw_19 <- function(con, experimental) {
                     )
                   ),
                   duckdb$expr_comparison(
+                    "==",
                     list(
                       duckdb$expr_reference("l_shipinstruct"),
                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -590,8 +591,7 @@ tpch_raw_19 <- function(con, experimental) {
                       } else {
                         duckdb$expr_constant("DELIVER IN PERSON")
                       }
-                    ),
-                    "=="
+                    )
                   )
                 )
               )
@@ -619,6 +619,7 @@ tpch_raw_19 <- function(con, experimental) {
                                     "&",
                                     list(
                                       duckdb$expr_comparison(
+                                        "==",
                                         list(
                                           duckdb$expr_reference("p_brand"),
                                           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -626,8 +627,7 @@ tpch_raw_19 <- function(con, experimental) {
                                           } else {
                                             duckdb$expr_constant("Brand#34")
                                           }
-                                        ),
-                                        "=="
+                                        )
                                       ),
                                       duckdb$expr_function(
                                         "___coalesce",
@@ -701,6 +701,7 @@ tpch_raw_19 <- function(con, experimental) {
                                     )
                                   ),
                                   duckdb$expr_comparison(
+                                    ">=",
                                     list(
                                       duckdb$expr_reference("l_quantity"),
                                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -708,8 +709,7 @@ tpch_raw_19 <- function(con, experimental) {
                                       } else {
                                         duckdb$expr_constant(20)
                                       }
-                                    ),
-                                    ">="
+                                    )
                                   )
                                 )
                               ),
@@ -737,6 +737,7 @@ tpch_raw_19 <- function(con, experimental) {
                             )
                           ),
                           duckdb$expr_comparison(
+                            ">=",
                             list(
                               duckdb$expr_reference("p_size"),
                               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -744,12 +745,12 @@ tpch_raw_19 <- function(con, experimental) {
                               } else {
                                 duckdb$expr_constant(1)
                               }
-                            ),
-                            ">="
+                            )
                           )
                         )
                       ),
                       duckdb$expr_comparison(
+                        "<=",
                         list(
                           duckdb$expr_reference("p_size"),
                           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -757,8 +758,7 @@ tpch_raw_19 <- function(con, experimental) {
                           } else {
                             duckdb$expr_constant(15)
                           }
-                        ),
-                        "<="
+                        )
                       )
                     )
                   ),
@@ -802,6 +802,7 @@ tpch_raw_19 <- function(con, experimental) {
                 )
               ),
               duckdb$expr_comparison(
+                "==",
                 list(
                   duckdb$expr_reference("l_shipinstruct"),
                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -809,8 +810,7 @@ tpch_raw_19 <- function(con, experimental) {
                   } else {
                     duckdb$expr_constant("DELIVER IN PERSON")
                   }
-                ),
-                "=="
+                )
               )
             )
           )

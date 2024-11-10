@@ -3444,6 +3444,7 @@ test_that("relational filter(a == 1) order-preserving", {
     rel2,
     list(
       duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("a"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -3451,8 +3452,7 @@ test_that("relational filter(a == 1) order-preserving", {
           } else {
             duckdb$expr_constant(1)
           }
-        ),
-        "=="
+        )
       )
     )
   )
@@ -3569,6 +3569,7 @@ test_that("relational filter(a %in% 2:3, g == 2) order-preserving", {
         )
       ),
       duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("g"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -3576,8 +3577,7 @@ test_that("relational filter(a %in% 2:3, g == 2) order-preserving", {
           } else {
             duckdb$expr_constant(2)
           }
-        ),
-        "=="
+        )
       )
     )
   )
@@ -3698,6 +3698,7 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-preserving", {
             )
           ),
           duckdb$expr_comparison(
+            "==",
             list(
               duckdb$expr_reference("g"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -3705,8 +3706,7 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-preserving", {
               } else {
                 duckdb$expr_constant(2)
               }
-            ),
-            "=="
+            )
           )
         )
       )
@@ -3864,6 +3864,7 @@ test_that("relational filter(a == 1) order-enforcing", {
     rel1,
     list(
       duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("a"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -3871,8 +3872,7 @@ test_that("relational filter(a == 1) order-enforcing", {
           } else {
             duckdb$expr_constant(1)
           }
-        ),
-        "=="
+        )
       )
     )
   )
@@ -3945,6 +3945,7 @@ test_that("relational filter(a %in% 2:3, g == 2) order-enforcing", {
         )
       ),
       duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("g"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -3952,8 +3953,7 @@ test_that("relational filter(a %in% 2:3, g == 2) order-enforcing", {
           } else {
             duckdb$expr_constant(2)
           }
-        ),
-        "=="
+        )
       )
     )
   )
@@ -4030,6 +4030,7 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-enforcing", {
             )
           ),
           duckdb$expr_comparison(
+            "==",
             list(
               duckdb$expr_reference("g"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -4037,8 +4038,7 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-enforcing", {
               } else {
                 duckdb$expr_constant(2)
               }
-            ),
-            "=="
+            )
           )
         )
       )

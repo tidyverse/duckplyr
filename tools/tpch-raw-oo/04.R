@@ -62,8 +62,8 @@ rel4 <- duckdb$rel_filter(
   rel3,
   list(
     duckdb$expr_comparison(
-      list(duckdb$expr_reference("l_commitdate"), duckdb$expr_reference("l_receiptdate")),
-      "<"
+      "<",
+      list(duckdb$expr_reference("l_commitdate"), duckdb$expr_reference("l_receiptdate"))
     )
   )
 )
@@ -156,6 +156,7 @@ rel11 <- duckdb$rel_filter(
   rel10,
   list(
     duckdb$expr_comparison(
+      ">=",
       list(
         duckdb$expr_reference("o_orderdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -163,10 +164,10 @@ rel11 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant(as.Date("1993-07-01"))
         }
-      ),
-      ">="
+      )
     ),
     duckdb$expr_comparison(
+      "<",
       list(
         duckdb$expr_reference("o_orderdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -174,8 +175,7 @@ rel11 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant(as.Date("1993-10-01"))
         }
-      ),
-      "<"
+      )
     )
   )
 )

@@ -75,6 +75,7 @@ rel6 <- duckdb$rel_filter(
       "|",
       list(
         duckdb$expr_comparison(
+          "==",
           list(
             duckdb$expr_reference("n1_name"),
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -82,10 +83,10 @@ rel6 <- duckdb$rel_filter(
             } else {
               duckdb$expr_constant("FRANCE")
             }
-          ),
-          "=="
+          )
         ),
         duckdb$expr_comparison(
+          "==",
           list(
             duckdb$expr_reference("n1_name"),
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -93,8 +94,7 @@ rel6 <- duckdb$rel_filter(
             } else {
               duckdb$expr_constant("GERMANY")
             }
-          ),
-          "=="
+          )
         )
       )
     )
@@ -287,6 +287,7 @@ rel22 <- duckdb$rel_filter(
       "|",
       list(
         duckdb$expr_comparison(
+          "==",
           list(
             duckdb$expr_reference("n2_name"),
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -294,10 +295,10 @@ rel22 <- duckdb$rel_filter(
             } else {
               duckdb$expr_constant("FRANCE")
             }
-          ),
-          "=="
+          )
         ),
         duckdb$expr_comparison(
+          "==",
           list(
             duckdb$expr_reference("n2_name"),
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -305,8 +306,7 @@ rel22 <- duckdb$rel_filter(
             } else {
               duckdb$expr_constant("GERMANY")
             }
-          ),
-          "=="
+          )
         )
       )
     )
@@ -630,6 +630,7 @@ rel46 <- duckdb$rel_filter(
   rel45,
   list(
     duckdb$expr_comparison(
+      ">=",
       list(
         duckdb$expr_reference("l_shipdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -637,10 +638,10 @@ rel46 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant(as.Date("1995-01-01"))
         }
-      ),
-      ">="
+      )
     ),
     duckdb$expr_comparison(
+      "<=",
       list(
         duckdb$expr_reference("l_shipdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -648,8 +649,7 @@ rel46 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant(as.Date("1996-12-31"))
         }
-      ),
-      "<="
+      )
     )
   )
 )
@@ -1003,6 +1003,7 @@ rel65 <- duckdb$rel_filter(
           "&",
           list(
             duckdb$expr_comparison(
+              "==",
               list(
                 duckdb$expr_reference("n1_name"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1010,10 +1011,10 @@ rel65 <- duckdb$rel_filter(
                 } else {
                   duckdb$expr_constant("FRANCE")
                 }
-              ),
-              "=="
+              )
             ),
             duckdb$expr_comparison(
+              "==",
               list(
                 duckdb$expr_reference("n2_name"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1021,8 +1022,7 @@ rel65 <- duckdb$rel_filter(
                 } else {
                   duckdb$expr_constant("GERMANY")
                 }
-              ),
-              "=="
+              )
             )
           )
         ),
@@ -1030,6 +1030,7 @@ rel65 <- duckdb$rel_filter(
           "&",
           list(
             duckdb$expr_comparison(
+              "==",
               list(
                 duckdb$expr_reference("n1_name"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1037,10 +1038,10 @@ rel65 <- duckdb$rel_filter(
                 } else {
                   duckdb$expr_constant("GERMANY")
                 }
-              ),
-              "=="
+              )
             ),
             duckdb$expr_comparison(
+              "==",
               list(
                 duckdb$expr_reference("n2_name"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1048,8 +1049,7 @@ rel65 <- duckdb$rel_filter(
                 } else {
                   duckdb$expr_constant("FRANCE")
                 }
-              ),
-              "=="
+              )
             )
           )
         )

@@ -89,6 +89,7 @@ tpch_raw_oo_02 <- function(con, experimental) {
     rel5,
     list(
       duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("p_size"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -96,8 +97,7 @@ tpch_raw_oo_02 <- function(con, experimental) {
           } else {
             duckdb$expr_constant(15)
           }
-        ),
-        "=="
+        )
       ),
       duckdb$expr_function(
         "grepl",
@@ -539,6 +539,7 @@ tpch_raw_oo_02 <- function(con, experimental) {
     rel28,
     list(
       duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("r_name"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -546,8 +547,7 @@ tpch_raw_oo_02 <- function(con, experimental) {
           } else {
             duckdb$expr_constant("EUROPE")
           }
-        ),
-        "=="
+        )
       )
     )
   )

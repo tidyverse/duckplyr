@@ -160,6 +160,7 @@ rel7 <- duckdb$rel_filter(
   rel6,
   list(
     duckdb$expr_comparison(
+      ">",
       list(
         duckdb$expr_reference("sum"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -167,8 +168,7 @@ rel7 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant(300)
         }
-      ),
-      ">"
+      )
     )
   )
 )

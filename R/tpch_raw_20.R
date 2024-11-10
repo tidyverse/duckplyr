@@ -8,6 +8,7 @@ tpch_raw_20 <- function(con, experimental) {
     rel1,
     list(
       duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("n_name"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -15,8 +16,7 @@ tpch_raw_20 <- function(con, experimental) {
           } else {
             duckdb$expr_constant("CANADA")
           }
-        ),
-        "=="
+        )
       )
     )
   )
@@ -182,6 +182,7 @@ tpch_raw_20 <- function(con, experimental) {
     rel18,
     list(
       duckdb$expr_comparison(
+        ">=",
         list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -189,10 +190,10 @@ tpch_raw_20 <- function(con, experimental) {
           } else {
             duckdb$expr_constant(as.Date("1994-01-01"))
           }
-        ),
-        ">="
+        )
       ),
       duckdb$expr_comparison(
+        "<",
         list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -200,8 +201,7 @@ tpch_raw_20 <- function(con, experimental) {
           } else {
             duckdb$expr_constant(as.Date("1995-01-01"))
           }
-        ),
-        "<"
+        )
       )
     )
   )
@@ -307,8 +307,8 @@ tpch_raw_20 <- function(con, experimental) {
     rel27,
     list(
       duckdb$expr_comparison(
-        list(duckdb$expr_reference("ps_availqty"), duckdb$expr_reference("qty_threshold")),
-        ">"
+        ">",
+        list(duckdb$expr_reference("ps_availqty"), duckdb$expr_reference("qty_threshold"))
       )
     )
   )

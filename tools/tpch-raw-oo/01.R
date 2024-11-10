@@ -99,6 +99,7 @@ rel4 <- duckdb$rel_filter(
   rel3,
   list(
     duckdb$expr_comparison(
+      "<=",
       list(
         duckdb$expr_reference("l_shipdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -106,8 +107,7 @@ rel4 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant(as.Date("1998-09-02"))
         }
-      ),
-      "<="
+      )
     )
   )
 )

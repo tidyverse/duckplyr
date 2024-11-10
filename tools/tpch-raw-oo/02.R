@@ -103,6 +103,7 @@ rel6 <- duckdb$rel_filter(
   rel5,
   list(
     duckdb$expr_comparison(
+      "==",
       list(
         duckdb$expr_reference("p_size"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -110,8 +111,7 @@ rel6 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant(15)
         }
-      ),
-      "=="
+      )
     ),
     duckdb$expr_function(
       "grepl",
@@ -553,6 +553,7 @@ rel29 <- duckdb$rel_filter(
   rel28,
   list(
     duckdb$expr_comparison(
+      "==",
       list(
         duckdb$expr_reference("r_name"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -560,8 +561,7 @@ rel29 <- duckdb$rel_filter(
         } else {
           duckdb$expr_constant("EUROPE")
         }
-      ),
-      "=="
+      )
     )
   )
 )

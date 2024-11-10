@@ -20,6 +20,7 @@ tpch_raw_18 <- function(con, experimental) {
     rel2,
     list(
       duckdb$expr_comparison(
+        ">",
         list(
           duckdb$expr_reference("sum"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -27,8 +28,7 @@ tpch_raw_18 <- function(con, experimental) {
           } else {
             duckdb$expr_constant(300)
           }
-        ),
-        ">"
+        )
       )
     )
   )
