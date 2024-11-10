@@ -143,8 +143,8 @@ rel9 <- duckdb$rel_filter(
   rel8,
   list(
     duckdb$expr_comparison(
-      ">",
-      list(
+      cmp_op = ">",
+      exprs = list(
         duckdb$expr_reference("n_supplier"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(1, experimental = experimental)
@@ -806,8 +806,8 @@ rel28 <- duckdb$rel_filter(
   rel27,
   list(
     duckdb$expr_comparison(
-      "==",
-      list(
+      cmp_op = "==",
+      exprs = list(
         duckdb$expr_reference("o_orderstatus"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant("F", experimental = experimental)
@@ -1092,8 +1092,8 @@ rel32 <- duckdb$rel_aggregate(
         "any",
         list(
           duckdb$expr_comparison(
-            ">",
-            list(duckdb$expr_reference("l_receiptdate"), duckdb$expr_reference("l_commitdate"))
+            cmp_op = ">",
+            exprs = list(duckdb$expr_reference("l_receiptdate"), duckdb$expr_reference("l_commitdate"))
           )
         )
       )
@@ -1250,8 +1250,8 @@ rel40 <- duckdb$rel_filter(
       "&",
       list(
         duckdb$expr_comparison(
-          ">",
-          list(
+          cmp_op = ">",
+          exprs = list(
             duckdb$expr_reference("n_supplier"),
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
               duckdb$expr_constant(1, experimental = experimental)
@@ -1261,8 +1261,8 @@ rel40 <- duckdb$rel_filter(
           )
         ),
         duckdb$expr_comparison(
-          "==",
-          list(
+          cmp_op = "==",
+          exprs = list(
             duckdb$expr_reference("num_failed"),
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
               duckdb$expr_constant(1, experimental = experimental)
@@ -1901,8 +1901,8 @@ rel59 <- duckdb$rel_filter(
   rel58,
   list(
     duckdb$expr_comparison(
-      ">",
-      list(duckdb$expr_reference("l_receiptdate"), duckdb$expr_reference("l_commitdate"))
+      cmp_op = ">",
+      exprs = list(duckdb$expr_reference("l_receiptdate"), duckdb$expr_reference("l_commitdate"))
     )
   )
 )
@@ -2475,8 +2475,8 @@ rel71 <- duckdb$rel_filter(
   rel70,
   list(
     duckdb$expr_comparison(
-      "==",
-      list(
+      cmp_op = "==",
+      exprs = list(
         duckdb$expr_reference("n_name"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant("SAUDI ARABIA", experimental = experimental)

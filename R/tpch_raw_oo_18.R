@@ -155,8 +155,8 @@ tpch_raw_oo_18 <- function(con, experimental) {
     rel6,
     list(
       duckdb$expr_comparison(
-        ">",
-        list(
+        cmp_op = ">",
+        exprs = list(
           duckdb$expr_reference("sum"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(300, experimental = experimental)

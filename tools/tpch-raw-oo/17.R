@@ -75,8 +75,8 @@ rel3 <- duckdb$rel_filter(
   rel2,
   list(
     duckdb$expr_comparison(
-      "==",
-      list(
+      cmp_op = "==",
+      exprs = list(
         duckdb$expr_reference("p_brand"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant("Brand#23", experimental = experimental)
@@ -86,8 +86,8 @@ rel3 <- duckdb$rel_filter(
       )
     ),
     duckdb$expr_comparison(
-      "==",
-      list(
+      cmp_op = "==",
+      exprs = list(
         duckdb$expr_reference("p_container"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant("MED BOX", experimental = experimental)
@@ -1217,8 +1217,8 @@ rel28 <- duckdb$rel_filter(
   rel27,
   list(
     duckdb$expr_comparison(
-      "<",
-      list(duckdb$expr_reference("l_quantity"), duckdb$expr_reference("quantity_threshold"))
+      cmp_op = "<",
+      exprs = list(duckdb$expr_reference("l_quantity"), duckdb$expr_reference("quantity_threshold"))
     )
   )
 )

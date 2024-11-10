@@ -75,8 +75,8 @@ rel6 <- duckdb$rel_filter(
       "|",
       list(
         duckdb$expr_comparison(
-          "==",
-          list(
+          cmp_op = "==",
+          exprs = list(
             duckdb$expr_reference("n1_name"),
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
               duckdb$expr_constant("FRANCE", experimental = experimental)
@@ -86,8 +86,8 @@ rel6 <- duckdb$rel_filter(
           )
         ),
         duckdb$expr_comparison(
-          "==",
-          list(
+          cmp_op = "==",
+          exprs = list(
             duckdb$expr_reference("n1_name"),
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
               duckdb$expr_constant("GERMANY", experimental = experimental)
@@ -287,8 +287,8 @@ rel22 <- duckdb$rel_filter(
       "|",
       list(
         duckdb$expr_comparison(
-          "==",
-          list(
+          cmp_op = "==",
+          exprs = list(
             duckdb$expr_reference("n2_name"),
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
               duckdb$expr_constant("FRANCE", experimental = experimental)
@@ -298,8 +298,8 @@ rel22 <- duckdb$rel_filter(
           )
         ),
         duckdb$expr_comparison(
-          "==",
-          list(
+          cmp_op = "==",
+          exprs = list(
             duckdb$expr_reference("n2_name"),
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
               duckdb$expr_constant("GERMANY", experimental = experimental)
@@ -630,8 +630,8 @@ rel46 <- duckdb$rel_filter(
   rel45,
   list(
     duckdb$expr_comparison(
-      ">=",
-      list(
+      cmp_op = ">=",
+      exprs = list(
         duckdb$expr_reference("l_shipdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(as.Date("1995-01-01"), experimental = experimental)
@@ -641,8 +641,8 @@ rel46 <- duckdb$rel_filter(
       )
     ),
     duckdb$expr_comparison(
-      "<=",
-      list(
+      cmp_op = "<=",
+      exprs = list(
         duckdb$expr_reference("l_shipdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(as.Date("1996-12-31"), experimental = experimental)
@@ -1003,8 +1003,8 @@ rel65 <- duckdb$rel_filter(
           "&",
           list(
             duckdb$expr_comparison(
-              "==",
-              list(
+              cmp_op = "==",
+              exprs = list(
                 duckdb$expr_reference("n1_name"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                   duckdb$expr_constant("FRANCE", experimental = experimental)
@@ -1014,8 +1014,8 @@ rel65 <- duckdb$rel_filter(
               )
             ),
             duckdb$expr_comparison(
-              "==",
-              list(
+              cmp_op = "==",
+              exprs = list(
                 duckdb$expr_reference("n2_name"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                   duckdb$expr_constant("GERMANY", experimental = experimental)
@@ -1030,8 +1030,8 @@ rel65 <- duckdb$rel_filter(
           "&",
           list(
             duckdb$expr_comparison(
-              "==",
-              list(
+              cmp_op = "==",
+              exprs = list(
                 duckdb$expr_reference("n1_name"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                   duckdb$expr_constant("GERMANY", experimental = experimental)
@@ -1041,8 +1041,8 @@ rel65 <- duckdb$rel_filter(
               )
             ),
             duckdb$expr_comparison(
-              "==",
-              list(
+              cmp_op = "==",
+              exprs = list(
                 duckdb$expr_reference("n2_name"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                   duckdb$expr_constant("FRANCE", experimental = experimental)

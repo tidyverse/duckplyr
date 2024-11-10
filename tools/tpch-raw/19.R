@@ -191,8 +191,8 @@ rel7 <- duckdb$rel_filter(
                                       "&",
                                       list(
                                         duckdb$expr_comparison(
-                                          "==",
-                                          list(
+                                          cmp_op = "==",
+                                          exprs = list(
                                             duckdb$expr_reference("p_brand"),
                                             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                               duckdb$expr_constant("Brand#12", experimental = experimental)
@@ -273,8 +273,8 @@ rel7 <- duckdb$rel_filter(
                                       )
                                     ),
                                     duckdb$expr_comparison(
-                                      ">=",
-                                      list(
+                                      cmp_op = ">=",
+                                      exprs = list(
                                         duckdb$expr_reference("l_quantity"),
                                         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                           duckdb$expr_constant(1, experimental = experimental)
@@ -309,8 +309,8 @@ rel7 <- duckdb$rel_filter(
                               )
                             ),
                             duckdb$expr_comparison(
-                              ">=",
-                              list(
+                              cmp_op = ">=",
+                              exprs = list(
                                 duckdb$expr_reference("p_size"),
                                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                   duckdb$expr_constant(1, experimental = experimental)
@@ -322,8 +322,8 @@ rel7 <- duckdb$rel_filter(
                           )
                         ),
                         duckdb$expr_comparison(
-                          "<=",
-                          list(
+                          cmp_op = "<=",
+                          exprs = list(
                             duckdb$expr_reference("p_size"),
                             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                               duckdb$expr_constant(5, experimental = experimental)
@@ -374,8 +374,8 @@ rel7 <- duckdb$rel_filter(
                   )
                 ),
                 duckdb$expr_comparison(
-                  "==",
-                  list(
+                  cmp_op = "==",
+                  exprs = list(
                     duckdb$expr_reference("l_shipinstruct"),
                     if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                       duckdb$expr_constant("DELIVER IN PERSON", experimental = experimental)
@@ -408,8 +408,8 @@ rel7 <- duckdb$rel_filter(
                                       "&",
                                       list(
                                         duckdb$expr_comparison(
-                                          "==",
-                                          list(
+                                          cmp_op = "==",
+                                          exprs = list(
                                             duckdb$expr_reference("p_brand"),
                                             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                               duckdb$expr_constant("Brand#23", experimental = experimental)
@@ -490,8 +490,8 @@ rel7 <- duckdb$rel_filter(
                                       )
                                     ),
                                     duckdb$expr_comparison(
-                                      ">=",
-                                      list(
+                                      cmp_op = ">=",
+                                      exprs = list(
                                         duckdb$expr_reference("l_quantity"),
                                         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                           duckdb$expr_constant(10, experimental = experimental)
@@ -526,8 +526,8 @@ rel7 <- duckdb$rel_filter(
                               )
                             ),
                             duckdb$expr_comparison(
-                              ">=",
-                              list(
+                              cmp_op = ">=",
+                              exprs = list(
                                 duckdb$expr_reference("p_size"),
                                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                   duckdb$expr_constant(1, experimental = experimental)
@@ -539,8 +539,8 @@ rel7 <- duckdb$rel_filter(
                           )
                         ),
                         duckdb$expr_comparison(
-                          "<=",
-                          list(
+                          cmp_op = "<=",
+                          exprs = list(
                             duckdb$expr_reference("p_size"),
                             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                               duckdb$expr_constant(10, experimental = experimental)
@@ -591,8 +591,8 @@ rel7 <- duckdb$rel_filter(
                   )
                 ),
                 duckdb$expr_comparison(
-                  "==",
-                  list(
+                  cmp_op = "==",
+                  exprs = list(
                     duckdb$expr_reference("l_shipinstruct"),
                     if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                       duckdb$expr_constant("DELIVER IN PERSON", experimental = experimental)
@@ -627,8 +627,8 @@ rel7 <- duckdb$rel_filter(
                                   "&",
                                   list(
                                     duckdb$expr_comparison(
-                                      "==",
-                                      list(
+                                      cmp_op = "==",
+                                      exprs = list(
                                         duckdb$expr_reference("p_brand"),
                                         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                           duckdb$expr_constant("Brand#34", experimental = experimental)
@@ -709,8 +709,8 @@ rel7 <- duckdb$rel_filter(
                                   )
                                 ),
                                 duckdb$expr_comparison(
-                                  ">=",
-                                  list(
+                                  cmp_op = ">=",
+                                  exprs = list(
                                     duckdb$expr_reference("l_quantity"),
                                     if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                                       duckdb$expr_constant(20, experimental = experimental)
@@ -745,8 +745,8 @@ rel7 <- duckdb$rel_filter(
                           )
                         ),
                         duckdb$expr_comparison(
-                          ">=",
-                          list(
+                          cmp_op = ">=",
+                          exprs = list(
                             duckdb$expr_reference("p_size"),
                             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                               duckdb$expr_constant(1, experimental = experimental)
@@ -758,8 +758,8 @@ rel7 <- duckdb$rel_filter(
                       )
                     ),
                     duckdb$expr_comparison(
-                      "<=",
-                      list(
+                      cmp_op = "<=",
+                      exprs = list(
                         duckdb$expr_reference("p_size"),
                         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                           duckdb$expr_constant(15, experimental = experimental)
@@ -810,8 +810,8 @@ rel7 <- duckdb$rel_filter(
               )
             ),
             duckdb$expr_comparison(
-              "==",
-              list(
+              cmp_op = "==",
+              exprs = list(
                 duckdb$expr_reference("l_shipinstruct"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                   duckdb$expr_constant("DELIVER IN PERSON", experimental = experimental)
