@@ -166,8 +166,8 @@ rel_translate_lang <- function(
     if (classes_are_comparable(class_left, class_right)) {
       return(
         relexpr_comparison(
-          list(do_translate(expr[[2]]), do_translate(expr[[3]])),
-          name
+          name,
+          list(do_translate(expr[[2]]), do_translate(expr[[3]]))
         )
       )
     }

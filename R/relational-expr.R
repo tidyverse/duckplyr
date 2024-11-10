@@ -86,10 +86,10 @@ relexpr_function <- function(name, args, alias = NULL) {
 #' @rdname new_relexpr
 #' @return an object of class `"relational_relexpr"`
 #' @export
-relexpr_comparison <- function(exprs, cmp_op) {
+relexpr_comparison <- function(cmp_op, exprs) {
   stopifnot(is_string(cmp_op))
   stopifnot(is.list(exprs))
-  new_relexpr(list(exprs = exprs, cmp_op = cmp_op), class = "relational_relexpr_comparison")
+  new_relexpr(list(cmp_op = cmp_op, exprs = exprs), class = "relational_relexpr_comparison")
 }
 
 
