@@ -1,5 +1,5 @@
 diff --git b/R/select.R a/R/select.R
-index 8cd902b3..b9b39a47 100644
+index 8cd902b3..1939937c 100644
 --- b/R/select.R
 +++ a/R/select.R
 @@ -1,14 +1,28 @@
@@ -21,7 +21,7 @@ index 8cd902b3..b9b39a47 100644
 +
 +  exprs <- exprs_from_loc(.data, loc)
 +
-+  rel_try(list(name = "select", x = .data, args = list(dots = enquos(...))),
++  rel_try(list(name = "select", x = .data, args = try_list(dots = enquos(...))),
 +    "Can't use relational with zero-column result set." = (length(exprs) == 0),
      {
 +      rel <- duckdb_rel_from_df(.data)

@@ -1,5 +1,5 @@
 diff --git b/R/arrange.R a/R/arrange.R
-index d678d674..8dbbc6c5 100644
+index d678d674..35468095 100644
 --- b/R/arrange.R
 +++ a/R/arrange.R
 @@ -1,10 +1,45 @@
@@ -14,7 +14,7 @@ index d678d674..8dbbc6c5 100644
 +  dots <- enquos(...)
 +  dots <- unname(dots)
 +
-+  rel_try(list(name = "arrange", x = .data, args = list(dots = dots, .by_group = .by_group)),
++  rel_try(list(name = "arrange", x = .data, args = try_list(dots = dots, .by_group = .by_group)),
 +    ".by_group = TRUE not supported" = !identical(.by_group, FALSE),
 +    ".locale argument not supported" = !is.null(.locale),
 +    "dplyr.legacy_locale not supported" = isTRUE(getOption("dplyr.legacy_locale")),
