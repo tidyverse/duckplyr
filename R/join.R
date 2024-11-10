@@ -85,7 +85,11 @@ rel_join_impl <- function(
   }
 
   conds <- pmap(list(cond_by, x_by, y_by), function(...) {
-    relexpr_function(..1, list(..2, ..3))
+    if (..1 == "==") {
+      relexpr_comparison(..1, list(..2, ..3))
+    } else {
+      relexpr_function(..1, list(..2, ..3))
+    }
   })
 
   if (any(by$filter != "none")) {
