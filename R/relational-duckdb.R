@@ -410,9 +410,7 @@ to_duckdb_expr <- function(x) {
       # FIXME: Remove argument names for duckdb > 1.1.2
       out <- duckdb$expr_comparison(cmp_op = x$cmp_op, exprs = to_duckdb_exprs(x$exprs))
       if (!is.null(x$alias)) {
-        out <- expr({
           duckdb$expr_set_alias(out, x$alias)
-        })
       }
       out
     },
