@@ -2770,3 +2770,13 @@ test_that("as_duckplyr_df() and union_all()", {
   # Compare
   expect_identical(pre, post)
 })
+
+test_that("as_duckplyr_df() and special df", {
+  # https://github.com/tidyverse/duckplyr/issues/127
+
+  by_cyl <- dplyr::group_by(mtcars, cyl)
+  expect_snapshot(error = TRUE, {
+    as_duckplyr_df(by_cyl)
+  })
+
+})
