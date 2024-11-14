@@ -33,7 +33,10 @@ as_duckplyr_df <- function(.data) {
   }
 
   if (!identical(class(.data), "data.frame") && !identical(class(.data), c("tbl_df", "tbl", "data.frame"))) {
-    cli::cli_abort("Must pass a plain data frame or a tibble to `as_duckplyr_df()`.")
+    cli::cli_abort(c(
+      "Must pass a plain data frame or a tibble to `as_duckplyr_df()`, not {.obj_type_friendly { .data}}.",
+      i = "Convert it with {.fun as.data.frame} or {.fun tibble::as_tibble}."
+    ))
   }
 
   if (anyNA(names(.data)) || any(names(.data) == "")) {
