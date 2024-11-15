@@ -23,33 +23,6 @@ on_load({
   }
 })
 
-tel_fallback_logging <- function() {
-  val <- Sys.getenv("DUCKPLYR_FALLBACK_COLLECT")
-  if (val == "") {
-    return(NA)
-  }
-  if (!grepl("^[0-9]+$", val)) {
-    return(FALSE)
-  }
-  as.integer(val) >= 1
-}
-
-tel_fallback_verbose <- function() {
-  val <- Sys.getenv("DUCKPLYR_FALLBACK_VERBOSE")
-  val == "TRUE"
-}
-
-tel_fallback_uploading <- function() {
-  val <- Sys.getenv("DUCKPLYR_FALLBACK_AUTOUPLOAD")
-  if (val == "") {
-    return(NA)
-  }
-  if (!grepl("^[0-9]+$", val)) {
-    return(FALSE)
-  }
-  as.integer(val) >= 1
-}
-
 tel_fallback_log_dir <- function() {
   if (nzchar(Sys.getenv("DUCKPLYR_FALLBACK_LOG_DIR"))) {
     return(Sys.getenv("DUCKPLYR_FALLBACK_LOG_DIR"))
@@ -98,31 +71,12 @@ tel_fallback_logs <- function(oldest = NULL, newest = NULL, detail = FALSE, envi
 }
 
 tel_collect <- function(cnd, call) {
-  logging <- tel_fallback_logging()
-  if (!isTRUE(logging) && !is.na(logging)) {
-    return()
-  }
 
-  if (is.na(logging)) {
-    # Deferred evaluation of call_to_json(...)
-    tel_ask(call_to_json(cnd, call))
+  if (fallback_logging_opted_out()) {
     return()
   }
 
   tel_record(call_to_json(cnd, call))
-}
-
-tel_ask <- function(call_json) {
-  time <- Sys.time()
-  old_time <- telemetry$time
-  eight_hours <- 60 * 60 * 8
-  if (!is.null(old_time) && time - old_time < eight_hours) {
-    return()
-  }
-
-  telemetry$time <- time
-
-  fallback_nudge(call_json)
 }
 
 tel_record <- function(call_json) {
@@ -131,7 +85,7 @@ tel_record <- function(call_json) {
 
   cat(call_json, "\n", sep = "", file = telemetry_file, append = TRUE)
 
-  if (tel_fallback_verbose()) {
+  if (fallback_verbose_opted_in()) {
     cli::cli_inform(c(
       "i" = "dplyr fallback recorded",
       " " = "{call_json}"

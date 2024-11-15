@@ -13,19 +13,13 @@
 #' The functions and environment variables on this page control the process.
 #'
 #' @details
-#' Logging and uploading are both opt-in.
-#' By default, for logging, a message is printed to the console
-#' for the first time in a session and then once every 8 hours.
+#' Logging is opt-out but uploading is opt-in.
 #'
-#' The following environment variables control the logging and uploading:
+#' The following functions control the logging and uploading:
 #'
-#' - \code{DUCKPLYR_FALLBACK_COLLECT} controls logging, set it
-#'   to 1 or greater to enable logging.
-#'   If the value is 0, logging is disabled.
-#'   Future versions of duckplyr may start logging additional data
-#'   and thus require a higher value to enable logging.
-#'   Set to 99 to enable logging for all future versions.
-#'   Use [usethis::edit_r_environ()] to edit the environment file.
+#' - To opt the current machine out of logging, run [`fallback_logging_optout()`].
+#'
+#' - To opt in again for logging, run [`fallback_logging_optin()`].
 #'
 #' - \code{DUCKPLYR_FALLBACK_VERBOSE} controls printing, set it
 #'   to \code{TRUE} or \code{FALSE} to enable or disable printing.
@@ -33,14 +27,9 @@
 #'   for each fallback situation.
 #'   This setting is only relevant if logging is enabled.
 #'
-#' - \code{DUCKPLYR_FALLBACK_AUTOUPLOAD} controls uploading, set it
-#'   to 1 or greater to enable uploading.
-#'   If the value is 0, uploading is disabled.
-#'   Currently, uploading is active if the value is 1 or greater.
-#'   Future versions of duckplyr may start logging additional data
-#'   and thus require a higher value to enable uploading.
-#'   Set to 99 to enable uploading for all future versions.
-#'   Use [usethis::edit_r_environ()] to edit the environment file.
+#' - To opt the current machine in automatic report uploads, run [`fallback_reporting_optin()`].
+#'
+#' - To opt out again of automatic report uploads, run [`fallback_reporting_optout()`].
 #'
 #' - \code{DUCKPLYR_FALLBACK_LOG_DIR} controls the location of the logs.
 #'   It must point to a directory (existing or not) where the logs will be written.
@@ -63,31 +52,30 @@ NULL
 #' @rdname fallback
 #' @export
 fallback_sitrep <- function() {
-  fallback_logging <- tel_fallback_logging()
-  fallback_verbose <- tel_fallback_verbose()
-  fallback_uploading <- tel_fallback_uploading()
+  fallback_logging <- !fallback_logging_opted_out()
+  fallback_verbose <- fallback_verbose_opted_in()
+  fallback_uploading <- fallback_reporting_opted_in()
   fallback_log_dir <- tel_fallback_log_dir()
   fallback_logs <- tel_fallback_logs()
 
   msg <- c(
     fallback_txt_header(),
     #
-    if (is.na(fallback_logging)) {
-      c("i" = "Fallback logging is not controlled and therefore disabled. Enable it with {.run Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)}, disable it with {.run Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)}.")
-    } else if (fallback_logging) {
+    if (fallback_logging) {
       c(
-        "v" = "Fallback logging is enabled.",
-        "i" = "Logs are written to {.file {fallback_log_dir}}.",
-        if (is.na(fallback_verbose)) {
-          c("i" = "Fallback printing is not controlled and therefore disabled. Enable it with {.run Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = TRUE)}, disable it with {.run Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = FALSE)}.")
-        } else if (fallback_verbose) {
-          c("v" = "Fallback printing is enabled.")
-        } else {
-          c("x" = "Fallback printing is disabled.")
-        }
+        "v" = "Fallback logging is on. Disable it with {.fun duckplyr::fallback_logging_optout}.",
+        "i" = "Logs are written to {.file {fallback_log_dir}}. View them with {.fun duckplyr::fallback_review}."
       )
     } else {
-      c("x" = "Fallback logging is disabled.")
+      c("x" = "Fallback logging is off. Enable it with {.fun duckplyr::fallback_logging_optin}.")
+    },
+    #
+    if (fallback_verbose) {
+      c(
+        "v" = "Fallback messaging on screen is on. Disable it with {.fun duckplyr::fallback_verbose_optout}."
+      )
+    } else {
+      c("x" = "Fallback messaging on screen is off. Enable it with {.fun duckplyr::fallback_verbose_optin}.")
     },
     #
     fallback_txt_uploading(fallback_uploading),
@@ -105,16 +93,20 @@ fallback_sitrep <- function() {
 }
 
 fallback_txt_header <- function() {
-  "The {.pkg duckplyr} package is configured to fall back to {.pkg dplyr} when it encounters an incompatibility. Fallback events can be collected and uploaded for analysis to guide future development. By default, no data will be collected or uploaded."
+  "duckplyr falls back to dplyr when it encounters an incompatibility. We would like to find out about these events so we can make duckplyr better."
 }
 
 fallback_txt_uploading <- function(fallback_uploading) {
   if (is.na(fallback_uploading)) {
-    c("i" = "Fallback uploading is not controlled and therefore disabled. Enable it with {.run Sys.setenv(DUCKPLYR_FALLBACK_AUTOUPLOAD = 1)}, disable it with {.run Sys.setenv(DUCKPLYR_FALLBACK_AUTOUPLOAD = 0)}.")
+    c(
+      i = "Use {.fun duckplyr::fallback_upload} to upload this report and existing reports.",
+      i = "Use {.fun duckplyr::fallback_reporting_optin} to automatically upload future reports.",
+      i = "Use {.fun duckplyr::fallback_review} to review existing reports."
+    )
   } else if (fallback_uploading) {
-    c("v" = "Fallback uploading is enabled.")
+    c("v" = "Fallback automatic uploading is on. Disable it with {.fun duckplyr::fallback_reporting_optout}.")
   } else {
-    c("x" = "Fallback uploading is disabled.")
+    c("x" = "Fallback automatic uploading is off. Enable it with {.fun duckplyr::fallback_reporting_optin}.")
   }
 }
 
@@ -139,19 +131,6 @@ fallback_txt_help <- function() {
   c(
     "i" = "See {.help duckplyr::fallback} for details."
   )
-}
-
-fallback_nudge <- function(call_data) {
-  cli::cli_inform(c(
-    fallback_txt_header(),
-    "i" = "A fallback situation just occurred. The following information would have been recorded:",
-    " " = "{call_data}",
-    fallback_txt_run_sitrep(),
-    ">" = "Run {.run Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)} to enable fallback logging, and {.run Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = TRUE)} in addition to enable printing of fallback situations to the console.",
-    ">" = "Run {.run duckplyr::fallback_review()} to review the available reports, and {.run duckplyr::fallback_upload()} to upload them.",
-    fallback_txt_help(),
-    "i" = cli::col_silver("This message will be displayed once every eight hours.")
-  ))
 }
 
 #' fallback_review
@@ -257,18 +236,12 @@ on_load({
 })
 
 fallback_autoupload <- function() {
-  if (is.na(tel_fallback_logging())) {
-    msg <- c(
-      fallback_txt_header(),
-      fallback_txt_run_sitrep()
-    )
-
-    packageStartupMessage(cli::format_message(msg))
-    return()
+  # To opt out of messages about uploading,
+  # you opt out of logging in the first place.
+  if (fallback_logging_opted_out()) {
+    return(invisible())
   }
-
-  uploading <- tel_fallback_uploading()
-  if (isTRUE(uploading)) {
+  if (fallback_reporting_opted_in()) {
     msg <- character()
     suppressMessages(withCallingHandlers(
       fallback_upload(strict = FALSE),
@@ -279,14 +252,14 @@ fallback_autoupload <- function() {
     if (length(msg) > 0) {
       packageStartupMessage(paste(msg, collapse = "\n"))
     }
-  } else if (is.na(uploading)) {
+  } else {
     fallback_logs <- tel_fallback_logs()
     if (length(fallback_logs) > 0) {
       msg <- c(
         fallback_txt_header(),
-        fallback_txt_uploading(uploading),
+        fallback_txt_uploading(fallback_reporting_opted_in()),
         fallback_txt_sitrep_logs(fallback_logs),
-        "i" = cli::col_silver("This message can be disabled by setting {.envvar DUCKPLYR_FALLBACK_AUTOUPLOAD}.")
+        "i" = cli::col_silver("Opt out of logging with {.fun duckplyr::fallback_logging_optout}")
       )
       packageStartupMessage(cli::format_message(msg))
     }
@@ -309,4 +282,118 @@ fallback_purge <- function(oldest = NULL, newest = NULL) {
   unlink(names(fallback_logs))
   cli::cli_inform("Deleted {.strong {length(fallback_logs)}} {.pkg duckplyr} fallback report{?s}.")
   invisible()
+}
+
+#' fallback_logging_optout
+#'
+#' `fallback_logging_optout()` opts the machine out of fallback logging.
+#' @param purge Logical. Whether to delete currently available reports.
+#' @rdname fallback
+#' @export
+fallback_logging_optout <- function(purge = TRUE) {
+
+  file.create(fallback_logging_optout_path())
+  writeLines("opted out", fallback_logging_optout_path())
+
+  cli::cli_inform(c(
+    "Opted out of logging fallback reports.",
+    i = "Opt in again at any time with {.fun fallback_logging_optin()}."
+  ))
+
+  if (purge) {
+    fallback_purge()
+  }
+}
+
+#' fallback_logging_optin
+#'
+#' `fallback_logging_optin()` opts the machine in fallback logging.
+#' @rdname fallback
+#' @export
+fallback_logging_optin <- function() {
+  if (fallback_logging_opted_out()) {
+    unlink(fallback_logging_optout_path())
+  }
+}
+
+fallback_logging_opted_out <- function() {
+  file.exists(fallback_logging_optout_path())
+}
+
+fallback_logging_optout_path <- function() {
+  file.path(tools::R_user_dir("duckplyr", "cache"), "fallback-logging-optout")
+}
+
+#' fallback_reporting_optin
+#'
+#' `fallback_reporting_optin()` opts the machine in automatic report uploads.
+#' @rdname fallback
+#' @export
+fallback_reporting_optin <- function() {
+
+  file.create(fallback_reporting_optin_path())
+  writeLines("opted in", fallback_reporting_optin_path())
+
+  cli::cli_inform(c(
+    "Opted in automatically uploading fallback reports.",
+    i = "Opt out again at any time with {.fun fallback_reporting_optout}."
+  ))
+
+}
+
+#' fallback_reporting_optout
+#'
+#' `fallback_reporting_optout()` opts out the machine of automatic report uploads.
+#' @rdname fallback
+#' @export
+fallback_reporting_optout <- function() {
+  if (fallback_reporting_opted_in()) {
+    unlink(fallback_reporting_optin_path())
+  }
+}
+
+fallback_reporting_optin_path <- function() {
+  file.path(tools::R_user_dir("duckplyr", "cache"), "fallback-reporting-optin")
+}
+
+fallback_reporting_opted_in <- function() {
+  file.exists(fallback_reporting_optin_path())
+}
+
+
+
+#' fallback_verbose_optin
+#'
+#' `fallback_verbose_optin()` opts the machine in messages about fallbacks.
+#' @rdname fallback
+#' @export
+fallback_verbose_optin <- function() {
+
+  file.create(fallback_verbose_optin_path())
+  writeLines("opted in", fallback_verbose_optin_path())
+
+  cli::cli_inform(c(
+    "Opted in automatically uploading fallback reports.",
+    i = "Opt out again at any time with {.fun fallback_verbose_optout}."
+  ))
+
+}
+
+#' fallback_verbose_optout
+#'
+#' `fallback_verbose_optout()` opts out the machine of messages about fallbacks.
+#' @rdname fallback
+#' @export
+fallback_verbose_optout <- function() {
+  if (fallback_verbose_opted_in()) {
+    unlink(fallback_verbose_optin_path())
+  }
+}
+
+fallback_verbose_optin_path <- function() {
+  file.path(tools::R_user_dir("duckplyr", "cache"), "fallback-verbose-optin")
+}
+
+fallback_verbose_opted_in <- function() {
+  file.exists(fallback_verbose_optin_path())
 }

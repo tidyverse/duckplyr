@@ -399,6 +399,7 @@ test_that("duckplyr_filter() allows 1 dimension arrays", {
 
 test_that("duckplyr_filter() allows matrices with 1 column with a deprecation warning (#6091)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
+  local_mocked_bindings(fallback_verbose_opted_in = function(...) FALSE)
   df <- tibble(x = 1:2)
   expect_snapshot({
     out <- duckplyr_filter(df, matrix(c(TRUE, FALSE), nrow = 2))
@@ -416,6 +417,7 @@ test_that("duckplyr_filter() allows matrices with 1 column with a deprecation wa
 
 test_that("duckplyr_filter() disallows matrices with >1 column", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
+  local_mocked_bindings(fallback_verbose_opted_in = function(...) FALSE)
   df <- tibble(x = 1:3)
 
   expect_snapshot({
@@ -425,6 +427,7 @@ test_that("duckplyr_filter() disallows matrices with >1 column", {
 
 test_that("duckplyr_filter() disallows arrays with >2 dimensions", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
+  local_mocked_bindings(fallback_verbose_opted_in = function(...) FALSE)
   df <- tibble(x = 1:3)
 
   expect_snapshot({
@@ -688,6 +691,7 @@ test_that("transient grouping retains data frame attributes", {
 })
 
 test_that("can't use `.by` with `.preserve`", {
+  local_mocked_bindings(fallback_verbose_opted_in = function(...) FALSE)
   df <- tibble(x = 1)
 
   expect_snapshot(error = TRUE, {

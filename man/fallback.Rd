@@ -6,6 +6,12 @@
 \alias{fallback_review}
 \alias{fallback_upload}
 \alias{fallback_purge}
+\alias{fallback_logging_optout}
+\alias{fallback_logging_optin}
+\alias{fallback_reporting_optin}
+\alias{fallback_reporting_optout}
+\alias{fallback_verbose_optin}
+\alias{fallback_verbose_optout}
 \title{Fallback to dplyr}
 \usage{
 fallback_sitrep()
@@ -15,6 +21,18 @@ fallback_review(oldest = NULL, newest = NULL, detail = TRUE)
 fallback_upload(oldest = NULL, newest = NULL, strict = TRUE)
 
 fallback_purge(oldest = NULL, newest = NULL)
+
+fallback_logging_optout(purge = TRUE)
+
+fallback_logging_optin()
+
+fallback_reporting_optin()
+
+fallback_reporting_optout()
+
+fallback_verbose_optin()
+
+fallback_verbose_optout()
 }
 \arguments{
 \item{oldest, newest}{The number of oldest or newest reports to review.
@@ -25,6 +43,8 @@ Set to \code{FALSE} to only print the file names.}
 
 \item{strict}{If \code{TRUE}, the function aborts if any of the reports fail to upload.
 With \code{FALSE}, only a message is printed.}
+
+\item{purge}{Logical. Whether to delete currently available reports.}
 }
 \description{
 The \pkg{duckplyr} package aims at providing
@@ -48,34 +68,33 @@ The server is hosted on AWS and the reports are stored in a private S3 bucket.
 Only authorized personnel have access to the reports.
 
 \code{fallback_purge()} deletes some or all available reports.
+
+\code{fallback_logging_optout()} opts the machine out of fallback logging.
+
+\code{fallback_logging_optin()} opts the machine in fallback logging.
+
+\code{fallback_reporting_optin()} opts the machine in automatic report uploads.
+
+\code{fallback_reporting_optout()} opts out the machine of automatic report uploads.
+
+\code{fallback_verbose_optin()} opts the machine in messages about fallbacks.
+
+\code{fallback_verbose_optout()} opts out the machine of messages about fallbacks.
 }
 \details{
-Logging and uploading are both opt-in.
-By default, for logging, a message is printed to the console
-for the first time in a session and then once every 8 hours.
+Logging is opt-out but uploading is opt-in.
 
-The following environment variables control the logging and uploading:
+The following functions control the logging and uploading:
 \itemize{
-\item \code{DUCKPLYR_FALLBACK_COLLECT} controls logging, set it
-to 1 or greater to enable logging.
-If the value is 0, logging is disabled.
-Future versions of duckplyr may start logging additional data
-and thus require a higher value to enable logging.
-Set to 99 to enable logging for all future versions.
-Use \code{\link[usethis:edit]{usethis::edit_r_environ()}} to edit the environment file.
+\item To opt the current machine out of logging, run \code{\link[=fallback_logging_optout]{fallback_logging_optout()}}.
+\item To opt in again for logging, run \code{\link[=fallback_logging_optin]{fallback_logging_optin()}}.
 \item \code{DUCKPLYR_FALLBACK_VERBOSE} controls printing, set it
 to \code{TRUE} or \code{FALSE} to enable or disable printing.
 If the value is \code{TRUE}, a message is printed to the console
 for each fallback situation.
 This setting is only relevant if logging is enabled.
-\item \code{DUCKPLYR_FALLBACK_AUTOUPLOAD} controls uploading, set it
-to 1 or greater to enable uploading.
-If the value is 0, uploading is disabled.
-Currently, uploading is active if the value is 1 or greater.
-Future versions of duckplyr may start logging additional data
-and thus require a higher value to enable uploading.
-Set to 99 to enable uploading for all future versions.
-Use \code{\link[usethis:edit]{usethis::edit_r_environ()}} to edit the environment file.
+\item To opt the current machine in automatic report uploads, run \code{\link[=fallback_reporting_optin]{fallback_reporting_optin()}}.
+\item To opt out again of automatic report uploads, run \code{\link[=fallback_reporting_optout]{fallback_reporting_optout()}}.
 \item \code{DUCKPLYR_FALLBACK_LOG_DIR} controls the location of the logs.
 It must point to a directory (existing or not) where the logs will be written.
 By default, logs are written to a directory in the user's cache directory
