@@ -51,7 +51,7 @@ tel_fallback_uploading <- function() {
 }
 
 tel_fallback_log_dir <- function() {
-  if (Sys.getenv("DUCKPLYR_FALLBACK_LOG_DIR") != "") {
+  if (nzchar(Sys.getenv("DUCKPLYR_FALLBACK_LOG_DIR"))) {
     return(Sys.getenv("DUCKPLYR_FALLBACK_LOG_DIR"))
   }
 
@@ -71,7 +71,7 @@ tel_fallback_logs <- function(oldest = NULL, newest = NULL, detail = FALSE, envi
   }
 
   # For mocking
-  if (Sys.getenv("DUCKPLYR_TELEMETRY_FALLBACK_LOGS") != "") {
+  if (nzchar(Sys.getenv("DUCKPLYR_TELEMETRY_FALLBACK_LOGS"))) {
     return(strsplit(Sys.getenv("DUCKPLYR_TELEMETRY_FALLBACK_LOGS"), ",")[[1]])
   }
 
