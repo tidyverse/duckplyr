@@ -220,28 +220,7 @@
 <p>All data frame operations are supported. Computation happens upon the first request.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out</span><span class="op">$</span><span class="va">mean_bill_area</span></span>
-<span><span class="co">#&gt; materializing:</span></span>
-<span><span class="co">#&gt; ---------------------</span></span>
-<span><span class="co">#&gt; --- Relation Tree ---</span></span>
-<span><span class="co">#&gt; ---------------------</span></span>
-<span><span class="co">#&gt; Projection [species as species, sex as sex, mean_bill_area as mean_bill_area]</span></span>
-<span><span class="co">#&gt;   Order [___row_number ASC]</span></span>
-<span><span class="co">#&gt;     Filter ["!="(species, 'Gentoo')]</span></span>
-<span><span class="co">#&gt;       Projection [species as species, sex as sex, mean_bill_area as mean_bill_area, row_number() OVER () as ___row_number]</span></span>
-<span><span class="co">#&gt;         Projection [species as species, sex as sex, mean_bill_area as mean_bill_area]</span></span>
-<span><span class="co">#&gt;           Order [___row_number ASC]</span></span>
-<span><span class="co">#&gt;             Aggregate [species, sex, min(___row_number), mean(bill_area)]</span></span>
-<span><span class="co">#&gt;               Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, bill_area as bill_area, row_number() OVER () as ___row_number]</span></span>
-<span><span class="co">#&gt;                 Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, "*"(bill_length_mm, bill_depth_mm) as bill_area]</span></span>
-<span><span class="co">#&gt;                   r_dataframe_scan(0xdeadbeef)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ---------------------</span></span>
-<span><span class="co">#&gt; -- Result Columns  --</span></span>
-<span><span class="co">#&gt; ---------------------</span></span>
-<span><span class="co">#&gt; - species (VARCHAR)</span></span>
-<span><span class="co">#&gt; - sex (VARCHAR)</span></span>
-<span><span class="co">#&gt; - mean_bill_area (DOUBLE)</span></span>
-<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; duckplyr: materializing</span></span>
 <span><span class="co">#&gt; [1] 770.2627 656.8523 694.9360 819.7503 984.2279</span></span></code></pre></div>
 <p>After the computation has been carried out, the results are available immediately:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -280,27 +259,7 @@
 <p>Querying the number of rows also starts the computation:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
-<span><span class="co">#&gt; materializing:</span></span>
-<span><span class="co">#&gt; ---------------------</span></span>
-<span><span class="co">#&gt; --- Relation Tree ---</span></span>
-<span><span class="co">#&gt; ---------------------</span></span>
-<span><span class="co">#&gt; Projection [species as species, sex as sex, mean_bill_area as mean_bill_area]</span></span>
-<span><span class="co">#&gt;   Order [___row_number ASC]</span></span>
-<span><span class="co">#&gt;     Filter ["!="(species, 'Gentoo')]</span></span>
-<span><span class="co">#&gt;       Projection [species as species, sex as sex, mean_bill_area as mean_bill_area, row_number() OVER () as ___row_number]</span></span>
-<span><span class="co">#&gt;         Projection [species as species, sex as sex, mean_bill_area as mean_bill_area]</span></span>
-<span><span class="co">#&gt;           Order [___row_number ASC]</span></span>
-<span><span class="co">#&gt;             Aggregate [species, sex, min(___row_number), mean(bill_area)]</span></span>
-<span><span class="co">#&gt;               Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, bill_area as bill_area, row_number() OVER () as ___row_number]</span></span>
-<span><span class="co">#&gt;                 Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, "*"(bill_length_mm, bill_depth_mm) as bill_area]</span></span>
-<span><span class="co">#&gt;                   r_dataframe_scan(0xdeadbeef)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ---------------------</span></span>
-<span><span class="co">#&gt; -- Result Columns  --</span></span>
-<span><span class="co">#&gt; ---------------------</span></span>
-<span><span class="co">#&gt; - species (VARCHAR)</span></span>
-<span><span class="co">#&gt; - sex (VARCHAR)</span></span>
-<span><span class="co">#&gt; - mean_bill_area (DOUBLE)</span></span>
+<span><span class="co">#&gt; duckplyr: materializing</span></span>
 <span><span class="co">#&gt; [1] 5</span></span></code></pre></div>
 <p>Restart R, or call <code><a href="reference/methods_overwrite.html">duckplyr::methods_restore()</a></code> to revert to the default dplyr implementation.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
@@ -366,18 +325,7 @@
 <span><span class="co">#&gt;   `duckplyr::fallback_upload()` to upload them.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> See `?duckplyr::fallback()` for details.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">This message will be displayed once every eight hours.</span></span></span>
-<span><span class="co">#&gt; materializing:</span></span>
-<span><span class="co">#&gt; ---------------------</span></span>
-<span><span class="co">#&gt; --- Relation Tree ---</span></span>
-<span><span class="co">#&gt; ---------------------</span></span>
-<span><span class="co">#&gt; Limit 3</span></span>
-<span><span class="co">#&gt;   r_dataframe_scan(0xdeadbeef)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ---------------------</span></span>
-<span><span class="co">#&gt; -- Result Columns  --</span></span>
-<span><span class="co">#&gt; ---------------------</span></span>
-<span><span class="co">#&gt; - bill_area (DOUBLE)</span></span>
-<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; duckplyr: materializing</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 1</span></span></span>
 <span><span class="co">#&gt;   <span style="font-weight: bold;">bill_area</span></span></span>
 <span><span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -458,7 +406,7 @@
 <span></span>
 <span>  <span class="co"># A real implementation would evaluate the expressions defined</span></span>
 <span>  <span class="co"># by the exprs argument</span></span>
-<span>  <span class="fu">new_dfrel</span><span class="op">(</span><span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="fu">new_dfrel</span><span class="op">(</span><span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/new_relational.html">rel_project</a></span><span class="op">(</span></span>
