@@ -19,7 +19,7 @@ concurrency:
 
 jobs:
   check_fork:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       is_forked: ${{ steps.check.outputs.is_forked }}
     steps:
@@ -33,7 +33,7 @@ jobs:
         shell: bash
 
   fledge:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: check_fork
     if: needs.check_fork.outputs.is_forked == 'false'
     permissions:
