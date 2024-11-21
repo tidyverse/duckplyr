@@ -292,6 +292,7 @@ dplyr::left_join
 dplyr::min_rank
 
 #' @importFrom dplyr mutate
+#' @rdname mutate
 #' @export
 dplyr::mutate
 
