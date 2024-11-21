@@ -14,6 +14,8 @@ select.duckplyr_df <- function(.data, ...) {
   exprs <- exprs_from_loc(.data, loc)
 
   rel_try(list(name = "select", x = .data, args = try_list(dots = enquos(...))),
+    # We could count and create a zero-col data frame, but we can't
+    # create a duckplyr frame from it anyway.
     "Can't use relational with zero-column result set." = (length(exprs) == 0),
     {
       rel <- duckdb_rel_from_df(.data)
