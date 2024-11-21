@@ -58,6 +58,6 @@ Config/testthat/parallel: false
 Config/testthat/start-first: rel_api, tpch, as_duckplyr_df, mutate,
     filter, count-tally
 Encoding: UTF-8
-Roxygen: list( markdown = TRUE, roclets = c("collate", "namespace", "rd",
+Roxygen: list(markdown = TRUE, roclets = c("collate", "namespace", "rd",
     "roxyglobals::global_roclet") )
 RoxygenNote: 7.3.2.9000
