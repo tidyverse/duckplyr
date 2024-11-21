@@ -287,7 +287,7 @@ rel_project.dfrel <- function(rel, exprs, ...) {
 
   # A real implementation would evaluate the expressions defined
   # by the exprs argument
-  new_dfrel(df[seq_len(min(3, ncol(df)))])
+  new_dfrel(df[seq_len(min(3, base::ncol(df)))])
 }
 
 rel_project(
