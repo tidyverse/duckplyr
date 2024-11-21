@@ -29,6 +29,11 @@ reference:
   contents:
   - new_relational
   - new_relexpr
+- subtitle: Columns
+  desc: >
+    Verbs that principally operate on columns.
+  contents:
+  - mutate
 
 development:
   mode: auto
