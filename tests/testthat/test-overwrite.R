@@ -1,6 +1,10 @@
 test_that("methods_overwrite() works", {
-  methods_overwrite()
-  on.exit(methods_restore())
+  expect_snapshot({
+    methods_overwrite()
+  })
+  on.exit(expect_snapshot({
+    methods_restore()
+  }))
 
   out <-
     data.frame(a = 1) %>%
