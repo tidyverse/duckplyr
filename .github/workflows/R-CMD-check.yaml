@@ -43,7 +43,7 @@ name: rcc
 
 jobs:
   rcc-smoke:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       sha: ${{ steps.commit.outputs.sha }}
       versions-matrix: ${{ steps.versions-matrix.outputs.matrix }}
@@ -205,7 +205,7 @@ jobs:
         shell: bash
 
   rcc-smoke-check-matrix:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     name: "Check matrix"
 
