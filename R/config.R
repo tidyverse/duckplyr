@@ -5,9 +5,8 @@
 #'
 #' @section Options:
 #'
-#' `duckdb.materialize_message`: Set to `FALSE` to turn off diagnostic output from duckdb
-#' on data frame materialization.
-#' Currenty set to `TRUE` when duckplyr is loaded.
+#' `duckdb.materialize_callback`: Set to a function with one argument,
+#' this function is called when a duckplyr data frame is materialized.
 #'
 #' @section Environment variables:
 #'
@@ -38,12 +37,12 @@
 # `DUCKPLYR_META_SKIP`: Skip recording the operations, replay not available.
 #' @name config
 #' @examples
-#' # options(duckdb.materialize_message = FALSE)
+#' # options(duckdb.materialize_callback = NULL)
 #' data.frame(a = 3:1) %>%
 #'   as_duckplyr_df() %>%
 #'   inner_join(data.frame(a = 1:4), by = "a")
 #'
-#' rlang::with_options(duckdb.materialize_message = FALSE, {
+#' rlang::with_options(duckdb.materialize_callback = NULL, {
 #'   data.frame(a = 3:1) %>%
 #'     as_duckplyr_df() %>%
 #'     inner_join(data.frame(a = 1:4), by = "a") %>%

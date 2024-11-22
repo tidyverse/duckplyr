@@ -12,6 +12,8 @@
 #' @param table_function The name of a table-valued
 #'   DuckDB function such as `"read_parquet"`,
 #'   `"read_csv"`, `"read_csv_auto"` or `"read_json"`.
+#' @param lazy If `TRUE` (the default), [collect()] must be called
+#'   before the data can be accessed.
 #' @param options Arguments to the DuckDB function
 #'   indicated by `table_function`.
 #' @param class The class of the output.
@@ -24,11 +26,14 @@
 #'   `duckplyr_df_from_file()`, extended by the provided `class`.
 #'
 #' @export
-df_from_file <- function(path,
-                         table_function,
-                         ...,
-                         options = list(),
-                         class = NULL) {
+read_duckplyr <- function(
+  path,
+  table_function,
+  ...,
+  lazy = TRUE,
+  options = list(),
+  class = NULL
+) {
   check_dots_empty()
 
   if (!rlang::is_character(path)) {
@@ -55,26 +60,15 @@ df_from_file <- function(path,
 
   meta_rel_register_file(out, path, table_function, options)
 
-  out <- duckdb$rel_to_altrep(out)
+  out <- duckdb$rel_to_altrep(out, allow_materialization = !lazy)
   class(out) <- unique(c(class, "data.frame"), fromLast = TRUE)
+  out <- as_duckplyr_df(out)
+  if (lazy) {
+    out <- add_lazy_duckplyr_df_class(out)
+  }
   out
 }
 
-#' duckplyr_df_from_file
-#'
-#' `duckplyr_df_from_file()` is a thin wrapper around `df_from_file()`
-#' that calls `as_duckplyr_df()` on the output.
-#'
-#' @rdname df_from_file
-#' @export
-duckplyr_df_from_file <- function(
-    path,
-    table_function,
-    ...,
-    options = list(),
-    class = NULL) {
-  check_dots_empty()
-
-  out <- df_from_file(path, table_function, options = options, class = class)
-  as_duckplyr_df(out)
+default_df_class <- function() {
+  class(new_tibble(list()))
 }

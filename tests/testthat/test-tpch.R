@@ -93,7 +93,7 @@ test_that("TPCH queries can be parsed and run", {
     as_duckplyr_df()
 
   withr::local_envvar(DUCKPLYR_FORCE = TRUE)
-  local_options(duckdb.materialize_message = FALSE)
+  local_options(duckdb.materialize_callback = NULL)
 
   local_bindings(
     customer = customer,
