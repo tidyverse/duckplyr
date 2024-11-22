@@ -12,6 +12,7 @@ reference:
 - title: Using duckplyr
   contents:
   - ducktbl
+  - duckfile
 
 - title: dplyr verbs
 
@@ -61,10 +62,6 @@ reference:
 - title: Using duckplyr for all data frames
   contents:
   - methods_overwrite
-
-- title: Data ingestion
-  contents:
-  - df_from_file
 
 - title: Configuration, telemetry, and internals
   contents:

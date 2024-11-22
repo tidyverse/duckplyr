@@ -1,5 +1,8 @@
 #' Read Parquet, CSV, and other files using DuckDB
 #'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
 #' `df_from_file()` uses arbitrary table functions to read data.
 #' See <https://duckdb.org/docs/data/overview> for a documentation
 #' of the available functions and their options.
@@ -24,6 +27,7 @@
 #'   `duckplyr_df_from_file()`, extended by the provided `class`.
 #'
 #' @export
+#' @keywords internal
 df_from_file <- function(path,
                          table_function,
                          ...,
