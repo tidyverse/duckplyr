@@ -107,7 +107,7 @@ jobs:
           set -x
           gh pr create --base main --head fledge --fill-first
           gh workflow run rcc -f ref=$(git rev-parse HEAD)
-          gh pr merge --merge --auto
+          gh pr merge --squash --auto
         shell: bash
 
       - name: Check release
