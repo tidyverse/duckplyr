@@ -25,7 +25,6 @@ compute.duckplyr_df <- function(x, ..., name = NULL, temporary = TRUE) {
   # Our implementation
   rel_try(NULL,
     {
-      browser()
       sql <- paste0(
         "CREATE ",
         if (isTRUE(temporary)) "TEMPORARY ",
