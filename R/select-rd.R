@@ -1,7 +1,7 @@
 #' @title Keep or drop columns using their names and types
 #'
 #' @description  This is a method for the [`dplyr::select()`] generic.
-#' See "Caveats" section for differences in implementation.
+#' See "Fallbacks" section for differences in implementation.
 #' Select (and optionally rename) variables in a data frame,
 #' using a concise mini-language that makes it easy to refer to variables
 #' based on their name (e.g. `a:f` selects all columns from a on the left

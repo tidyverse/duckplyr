@@ -18,16 +18,17 @@ be used to select a range of variables.}
 }
 \description{
 This is a method for the \code{\link[dplyr:select]{dplyr::select()}} generic.
-See "Caveats" section for differences in implementation.
+See "Fallbacks" section for differences in implementation.
 Select (and optionally rename) variables in a data frame,
 using a concise mini-language that makes it easy to refer to variables
 based on their name (e.g. \code{a:f} selects all columns from a on the left
 to f on the right) or type
 (e.g. \code{where(is.numeric)} selects all numeric columns).
 }
-\section{Caveats}{
+\section{Fallbacks}{
 
 You cannot use \code{select.duckplyr_df} with no expression,
+nor with a selection that returns no columns:
 if you do the code will fall back to \code{dplyr::select()} without any error.
 }
 

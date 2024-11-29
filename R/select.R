@@ -17,8 +17,9 @@ select.duckplyr_df <- function(.data, ...) {
   rel_try(list(name = "select", x = .data, args = try_list(dots = enquos(...))),
     # We could count and create a zero-col data frame, but we can't
     # create a duckplyr frame from it anyway.
-    #' @section Caveats:
+    #' @section Fallbacks:
     #' You cannot use `select.duckplyr_df` with no expression,
+    #' nor with a selection that returns no columns:
     #' if you do the code will fall back to `dplyr::select()` without any error.
     "Can't use relational with zero-column result set." = (length(exprs) == 0),
     {
