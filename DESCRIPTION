@@ -52,7 +52,7 @@ Suggests:
     usethis,
     withr
 Config/Needs/check: anthonynorth/roxyglobals
-Config/Needs/website: tidyverse/tidytemplate
+Config/Needs/website: tidyverse/tidytemplate, dbplyr, Lahman
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Config/testthat/start-first: rel_api, tpch, as_duckplyr_df, mutate,
