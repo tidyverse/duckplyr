@@ -292,7 +292,6 @@ dplyr::left_join
 dplyr::min_rank
 
 #' @importFrom dplyr mutate
-#' @rdname mutate
 #' @export
 dplyr::mutate
 
@@ -401,7 +400,6 @@ dplyr::sample_frac
 dplyr::sample_n
 
 #' @importFrom dplyr select
-#' @rdname mutate
 #' @export
 dplyr::select
 
