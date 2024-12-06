@@ -17,7 +17,7 @@ This is a generic function which gives more details about an object
 than \code{print()}, and is more focused on human readable output than \code{str()}.
 }
 \examples{
-\dontshow{if (rlang::is_interactive() && rlang::is_installed("dbplyr") && rlang::is_installed("Lahman")) withAutoprint(\{ # examplesIf}
+\dontshow{if (identical(Sys.getenv("IN_PKGDOWN"), "true") || (rlang::is_interactive() && rlang::is_installed("dbplyr") && rlang::is_installed("Lahman"))) withAutoprint(\{ # examplesIf}
 lahman_s <- dbplyr::lahman_sqlite()
 batting <- tbl(lahman_s, "Batting")
 explain(batting)

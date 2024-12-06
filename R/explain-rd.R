@@ -5,7 +5,7 @@
 #' than `print()`, and is more focused on human readable output than `str()`.
 #'
 #' @inheritParams dplyr::explain
-#' @examplesIf rlang::is_interactive() && rlang::is_installed("dbplyr") && rlang::is_installed("Lahman")
+#' @examplesIf identical(Sys.getenv("IN_PKGDOWN"), "true") || (rlang::is_interactive() && rlang::is_installed("dbplyr") && rlang::is_installed("Lahman"))
 #' lahman_s <- dbplyr::lahman_sqlite()
 #' batting <- tbl(lahman_s, "Batting")
 #' explain(batting)
