@@ -182,6 +182,8 @@ rel_translate_lang <- function(
       }
 
       lhs <- do_translate(expr[[2]])
+      meta_ext_register()
+      return(relexpr_function("r_base::%in%", list(lhs, relexpr_constant(list(values)))))
 
       if (anyNA(values)) {
         has_na <- TRUE
