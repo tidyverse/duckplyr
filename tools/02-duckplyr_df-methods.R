@@ -112,6 +112,7 @@ func_decl_chr <- function(
   new_code_chr <- gsub("\n[}]", paste0("\n", dplyr_impl, collapse = ""), new_code_chr)
 
   method_code <- paste0(
+    "#' @rdname ", name, "\n",
     "#' @export\n",
     name,
     " <- ",
