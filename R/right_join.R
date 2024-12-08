@@ -11,7 +11,7 @@ right_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x
     "`multiple` not supported" = !identical(multiple, "all"),
     "`unmatched` not supported" = !identical(unmatched, "drop"),
     {
-      out <- rel_join_impl(x, y, by, "right", na_matches, suffix, keep, error_call)
+      out <- rel_join_impl(x, y, by, "right", na_matches, suffix, keep, relationship, error_call)
       return(out)
     }
   )
