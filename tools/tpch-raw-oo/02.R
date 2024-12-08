@@ -3,7 +3,6 @@ duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
-invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 invisible(
   DBI::dbExecute(
     con,
@@ -103,9 +102,9 @@ rel5 <- duckdb$rel_project(
 rel6 <- duckdb$rel_filter(
   rel5,
   list(
-    duckdb$expr_function(
-      "r_base::==",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = "==",
+      exprs = list(
         duckdb$expr_reference("p_size"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(15, experimental = experimental)
@@ -553,9 +552,9 @@ rel28 <- duckdb$rel_project(
 rel29 <- duckdb$rel_filter(
   rel28,
   list(
-    duckdb$expr_function(
-      "r_base::==",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = "==",
+      exprs = list(
         duckdb$expr_reference("r_name"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant("EUROPE", experimental = experimental)

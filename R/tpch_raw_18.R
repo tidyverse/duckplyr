@@ -19,9 +19,9 @@ tpch_raw_18 <- function(con, experimental) {
   rel3 <- duckdb$rel_filter(
     rel2,
     list(
-      duckdb$expr_function(
-        "r_base::>",
-        list(
+      duckdb$expr_comparison(
+        cmp_op = ">",
+        exprs = list(
           duckdb$expr_reference("sum"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(300, experimental = experimental)

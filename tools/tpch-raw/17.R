@@ -3,7 +3,6 @@ duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
-invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(
@@ -19,9 +18,9 @@ rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
 rel2 <- duckdb$rel_filter(
   rel1,
   list(
-    duckdb$expr_function(
-      "r_base::==",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = "==",
+      exprs = list(
         duckdb$expr_reference("p_brand"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant("Brand#23", experimental = experimental)
@@ -30,9 +29,9 @@ rel2 <- duckdb$rel_filter(
         }
       )
     ),
-    duckdb$expr_function(
-      "r_base::==",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = "==",
+      exprs = list(
         duckdb$expr_reference("p_container"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant("MED BOX", experimental = experimental)
@@ -509,9 +508,9 @@ rel14 <- duckdb$rel_project(
 rel15 <- duckdb$rel_filter(
   rel14,
   list(
-    duckdb$expr_function(
-      "r_base::<",
-      list(duckdb$expr_reference("l_quantity"), duckdb$expr_reference("quantity_threshold"))
+    duckdb$expr_comparison(
+      cmp_op = "<",
+      exprs = list(duckdb$expr_reference("l_quantity"), duckdb$expr_reference("quantity_threshold"))
     )
   )
 )
