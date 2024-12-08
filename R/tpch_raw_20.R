@@ -7,9 +7,9 @@ tpch_raw_20 <- function(con, experimental) {
   rel2 <- duckdb$rel_filter(
     rel1,
     list(
-      duckdb$expr_function(
-        "r_base::==",
-        list(
+      duckdb$expr_comparison(
+        cmp_op = "==",
+        exprs = list(
           duckdb$expr_reference("n_name"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant("CANADA", experimental = experimental)
@@ -32,7 +32,7 @@ tpch_raw_20 <- function(con, experimental) {
     rel4,
     rel5,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("s_nationkey", rel4), duckdb$expr_reference("n_nationkey", rel5))
       )
@@ -151,7 +151,7 @@ tpch_raw_20 <- function(con, experimental) {
     rel12,
     rel13,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("ps_suppkey", rel12), duckdb$expr_reference("s_suppkey", rel13))
       )
@@ -167,7 +167,7 @@ tpch_raw_20 <- function(con, experimental) {
     rel15,
     rel16,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("ps_partkey", rel15), duckdb$expr_reference("p_partkey", rel16))
       )
@@ -181,9 +181,9 @@ tpch_raw_20 <- function(con, experimental) {
   rel19 <- duckdb$rel_filter(
     rel18,
     list(
-      duckdb$expr_function(
-        "r_base::>=",
-        list(
+      duckdb$expr_comparison(
+        cmp_op = ">=",
+        exprs = list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(as.Date("1994-01-01"), experimental = experimental)
@@ -192,9 +192,9 @@ tpch_raw_20 <- function(con, experimental) {
           }
         )
       ),
-      duckdb$expr_function(
-        "r_base::<",
-        list(
+      duckdb$expr_comparison(
+        cmp_op = "<",
+        exprs = list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(as.Date("1995-01-01"), experimental = experimental)
@@ -214,11 +214,11 @@ tpch_raw_20 <- function(con, experimental) {
     rel20,
     rel21,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("l_partkey", rel20), duckdb$expr_reference("ps_partkey", rel21))
       ),
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("l_suppkey", rel20), duckdb$expr_reference("ps_suppkey", rel21))
       )
@@ -256,7 +256,7 @@ tpch_raw_20 <- function(con, experimental) {
     rel24,
     rel25,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("ps_suppkey", rel24), duckdb$expr_reference("l_suppkey", rel25))
       )
@@ -306,9 +306,9 @@ tpch_raw_20 <- function(con, experimental) {
   rel28 <- duckdb$rel_filter(
     rel27,
     list(
-      duckdb$expr_function(
-        "r_base::>",
-        list(duckdb$expr_reference("ps_availqty"), duckdb$expr_reference("qty_threshold"))
+      duckdb$expr_comparison(
+        cmp_op = ">",
+        exprs = list(duckdb$expr_reference("ps_availqty"), duckdb$expr_reference("qty_threshold"))
       )
     )
   )
@@ -321,7 +321,7 @@ tpch_raw_20 <- function(con, experimental) {
     rel29,
     rel30,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("s_suppkey", rel29), duckdb$expr_reference("ps_suppkey", rel30))
       )

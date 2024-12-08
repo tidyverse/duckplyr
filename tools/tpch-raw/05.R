@@ -3,8 +3,6 @@ duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
-invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 df1 <- nation
 "select"
@@ -53,9 +51,9 @@ rel4 <- duckdb$rel_project(
 rel5 <- duckdb$rel_filter(
   rel4,
   list(
-    duckdb$expr_function(
-      "r_base::==",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = "==",
+      exprs = list(
         duckdb$expr_reference("r_name"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant("ASIA", experimental = experimental)
@@ -75,7 +73,7 @@ rel8 <- duckdb$rel_join(
   rel6,
   rel7,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("n_regionkey", rel6), duckdb$expr_reference("r_regionkey", rel7))
     )
@@ -155,7 +153,7 @@ rel15 <- duckdb$rel_join(
   rel13,
   rel14,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("s_nationkey", rel13), duckdb$expr_reference("n_nationkey", rel14))
     )
@@ -245,7 +243,7 @@ rel22 <- duckdb$rel_join(
   rel20,
   rel21,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("l_suppkey", rel20), duckdb$expr_reference("s_suppkey", rel21))
     )
@@ -319,9 +317,9 @@ rel25 <- duckdb$rel_project(
 rel26 <- duckdb$rel_filter(
   rel25,
   list(
-    duckdb$expr_function(
-      "r_base::>=",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = ">=",
+      exprs = list(
         duckdb$expr_reference("o_orderdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(as.Date("1994-01-01"), experimental = experimental)
@@ -330,9 +328,9 @@ rel26 <- duckdb$rel_filter(
         }
       )
     ),
-    duckdb$expr_function(
-      "r_base::<",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = "<",
+      exprs = list(
         duckdb$expr_reference("o_orderdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(as.Date("1995-01-01"), experimental = experimental)
@@ -387,7 +385,7 @@ rel32 <- duckdb$rel_join(
   rel30,
   rel31,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("o_custkey", rel30), duckdb$expr_reference("c_custkey", rel31))
     )
@@ -443,11 +441,11 @@ rel37 <- duckdb$rel_join(
   rel35,
   rel36,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("l_orderkey", rel35), duckdb$expr_reference("o_orderkey", rel36))
     ),
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("s_nationkey", rel35), duckdb$expr_reference("c_nationkey", rel36))
     )

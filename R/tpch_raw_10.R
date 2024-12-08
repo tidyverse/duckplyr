@@ -33,9 +33,9 @@ tpch_raw_10 <- function(con, experimental) {
   rel3 <- duckdb$rel_filter(
     rel2,
     list(
-      duckdb$expr_function(
-        "r_base::==",
-        list(
+      duckdb$expr_comparison(
+        cmp_op = "==",
+        exprs = list(
           duckdb$expr_reference("l_returnflag"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant("R", experimental = experimental)
@@ -95,9 +95,9 @@ tpch_raw_10 <- function(con, experimental) {
   rel7 <- duckdb$rel_filter(
     rel6,
     list(
-      duckdb$expr_function(
-        "r_base::>=",
-        list(
+      duckdb$expr_comparison(
+        cmp_op = ">=",
+        exprs = list(
           duckdb$expr_reference("o_orderdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(as.Date("1993-10-01"), experimental = experimental)
@@ -106,9 +106,9 @@ tpch_raw_10 <- function(con, experimental) {
           }
         )
       ),
-      duckdb$expr_function(
-        "r_base::<",
-        list(
+      duckdb$expr_comparison(
+        cmp_op = "<",
+        exprs = list(
           duckdb$expr_reference("o_orderdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(as.Date("1994-01-01"), experimental = experimental)
@@ -144,7 +144,7 @@ tpch_raw_10 <- function(con, experimental) {
     rel9,
     rel10,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("l_orderkey", rel9), duckdb$expr_reference("o_orderkey", rel10))
       )
@@ -308,7 +308,7 @@ tpch_raw_10 <- function(con, experimental) {
     rel18,
     rel19,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("c_custkey", rel18), duckdb$expr_reference("o_custkey", rel19))
       )
@@ -392,7 +392,7 @@ tpch_raw_10 <- function(con, experimental) {
     rel24,
     rel25,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("c_nationkey", rel24), duckdb$expr_reference("n_nationkey", rel25))
       )

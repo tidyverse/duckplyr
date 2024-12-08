@@ -3,8 +3,6 @@ duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
-invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 df1 <- nation
 "filter"
@@ -44,9 +42,9 @@ rel2 <- duckdb$rel_project(
 rel3 <- duckdb$rel_filter(
   rel2,
   list(
-    duckdb$expr_function(
-      "r_base::==",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = "==",
+      exprs = list(
         duckdb$expr_reference("n_name"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant("GERMANY", experimental = experimental)
@@ -182,7 +180,7 @@ rel12 <- duckdb$rel_join(
   rel10,
   rel11,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("ps_suppkey", rel10), duckdb$expr_reference("s_suppkey", rel11))
     )
@@ -364,7 +362,7 @@ rel19 <- duckdb$rel_join(
   rel17,
   rel18,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("s_nationkey", rel17), duckdb$expr_reference("n_nationkey", rel18))
     )
@@ -749,7 +747,7 @@ rel36 <- duckdb$rel_join(
   rel34,
   rel35,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("global_agr_key_x", rel34), duckdb$expr_reference("global_agr_key_y", rel35))
     )
@@ -825,7 +823,10 @@ rel39 <- duckdb$rel_project(
 rel40 <- duckdb$rel_filter(
   rel39,
   list(
-    duckdb$expr_function("r_base::>", list(duckdb$expr_reference("value"), duckdb$expr_reference("global_value")))
+    duckdb$expr_comparison(
+      cmp_op = ">",
+      exprs = list(duckdb$expr_reference("value"), duckdb$expr_reference("global_value"))
+    )
   )
 )
 "filter"

@@ -3,9 +3,8 @@ duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
-invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
+invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 invisible(
   DBI::dbExecute(
     con,
@@ -81,9 +80,9 @@ rel5 <- duckdb$rel_project(
 rel6 <- duckdb$rel_filter(
   rel5,
   list(
-    duckdb$expr_function(
-      "r_base::==",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = "==",
+      exprs = list(
         duckdb$expr_reference("r_name"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant("AMERICA", experimental = experimental)
@@ -169,7 +168,7 @@ rel14 <- duckdb$rel_join(
   rel12,
   rel13,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("n1_regionkey", rel12), duckdb$expr_reference("r_regionkey", rel13))
     )
@@ -276,7 +275,7 @@ rel24 <- duckdb$rel_join(
   rel22,
   rel23,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("c_nationkey", rel22), duckdb$expr_reference("n1_nationkey", rel23))
     )
@@ -372,9 +371,9 @@ rel30 <- duckdb$rel_project(
 rel31 <- duckdb$rel_filter(
   rel30,
   list(
-    duckdb$expr_function(
-      "r_base::>=",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = ">=",
+      exprs = list(
         duckdb$expr_reference("o_orderdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(as.Date("1995-01-01"), experimental = experimental)
@@ -383,9 +382,9 @@ rel31 <- duckdb$rel_filter(
         }
       )
     ),
-    duckdb$expr_function(
-      "r_base::<=",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = "<=",
+      exprs = list(
         duckdb$expr_reference("o_orderdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(as.Date("1996-12-31"), experimental = experimental)
@@ -470,7 +469,7 @@ rel38 <- duckdb$rel_join(
   rel36,
   rel37,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("o_custkey", rel36), duckdb$expr_reference("c_custkey", rel37))
     )
@@ -622,7 +621,7 @@ rel48 <- duckdb$rel_join(
   rel46,
   rel47,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("l_orderkey", rel46), duckdb$expr_reference("o_orderkey", rel47))
     )
@@ -748,9 +747,9 @@ rel54 <- duckdb$rel_project(
 rel55 <- duckdb$rel_filter(
   rel54,
   list(
-    duckdb$expr_function(
-      "r_base::==",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = "==",
+      exprs = list(
         duckdb$expr_reference("p_type"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant("ECONOMY ANODIZED STEEL", experimental = experimental)
@@ -851,7 +850,7 @@ rel63 <- duckdb$rel_join(
   rel61,
   rel62,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("l_partkey", rel61), duckdb$expr_reference("p_partkey", rel62))
     )
@@ -1003,7 +1002,7 @@ rel73 <- duckdb$rel_join(
   rel71,
   rel72,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("l_suppkey", rel71), duckdb$expr_reference("s_suppkey", rel72))
     )
@@ -1154,7 +1153,7 @@ rel83 <- duckdb$rel_join(
   rel81,
   rel82,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("s_nationkey", rel81), duckdb$expr_reference("n2_nationkey", rel82))
     )
@@ -1432,9 +1431,9 @@ rel92 <- duckdb$rel_aggregate(
               duckdb$expr_function(
                 "if_else",
                 list(
-                  duckdb$expr_function(
-                    "r_base::==",
-                    list(
+                  duckdb$expr_comparison(
+                    cmp_op = "==",
+                    exprs = list(
                       duckdb$expr_reference("nation"),
                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                         duckdb$expr_constant("BRAZIL", experimental = experimental)
