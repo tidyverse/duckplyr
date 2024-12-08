@@ -101,6 +101,7 @@ relexpr_window <- function(
   stopifnot(is.null(offset_expr) || inherits(offset_expr, "relational_relexpr"))
   stopifnot(is.null(default_expr) || inherits(default_expr, "relational_relexpr"))
   stopifnot(is.null(alias) || is_string(alias))
+
   new_relexpr(
     list(
       expr = expr,
