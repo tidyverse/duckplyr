@@ -64,9 +64,9 @@ tpch_raw_oo_03 <- function(con, experimental) {
   rel4 <- duckdb$rel_filter(
     rel3,
     list(
-      duckdb$expr_function(
-        "r_base::<",
-        list(
+      duckdb$expr_comparison(
+        cmp_op = "<",
+        exprs = list(
           duckdb$expr_reference("o_orderdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(as.Date("1995-03-15"), experimental = experimental)
@@ -149,9 +149,9 @@ tpch_raw_oo_03 <- function(con, experimental) {
   rel10 <- duckdb$rel_filter(
     rel9,
     list(
-      duckdb$expr_function(
-        "r_base::==",
-        list(
+      duckdb$expr_comparison(
+        cmp_op = "==",
+        exprs = list(
           duckdb$expr_reference("c_mktsegment"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant("BUILDING", experimental = experimental)
@@ -372,9 +372,9 @@ tpch_raw_oo_03 <- function(con, experimental) {
   rel24 <- duckdb$rel_filter(
     rel23,
     list(
-      duckdb$expr_function(
-        "r_base::>",
-        list(
+      duckdb$expr_comparison(
+        cmp_op = ">",
+        exprs = list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(as.Date("1995-03-15"), experimental = experimental)
