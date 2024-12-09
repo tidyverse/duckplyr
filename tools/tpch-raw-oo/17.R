@@ -3,8 +3,6 @@ duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
-invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(
   DBI::dbExecute(
@@ -75,9 +73,9 @@ rel2 <- duckdb$rel_project(
 rel3 <- duckdb$rel_filter(
   rel2,
   list(
-    duckdb$expr_function(
-      "r_base::==",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = "==",
+      exprs = list(
         duckdb$expr_reference("p_brand"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant("Brand#23", experimental = experimental)
@@ -86,9 +84,9 @@ rel3 <- duckdb$rel_filter(
         }
       )
     ),
-    duckdb$expr_function(
-      "r_base::==",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = "==",
+      exprs = list(
         duckdb$expr_reference("p_container"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant("MED BOX", experimental = experimental)
@@ -311,7 +309,7 @@ rel11 <- duckdb$rel_join(
   rel9,
   rel10,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("l_partkey", rel9), duckdb$expr_reference("p_partkey", rel10))
     )
@@ -931,7 +929,7 @@ rel24 <- duckdb$rel_join(
   rel22,
   rel23,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("l_partkey_x", rel22), duckdb$expr_reference("l_partkey_y", rel23))
     )
@@ -1217,9 +1215,9 @@ rel27 <- duckdb$rel_project(
 rel28 <- duckdb$rel_filter(
   rel27,
   list(
-    duckdb$expr_function(
-      "r_base::<",
-      list(duckdb$expr_reference("l_quantity"), duckdb$expr_reference("quantity_threshold"))
+    duckdb$expr_comparison(
+      cmp_op = "<",
+      exprs = list(duckdb$expr_reference("l_quantity"), duckdb$expr_reference("quantity_threshold"))
     )
   )
 )

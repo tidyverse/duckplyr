@@ -3,8 +3,6 @@ duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
-invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 df1 <- lineitem
 "select"
@@ -70,9 +68,9 @@ rel3 <- duckdb$rel_project(
 rel4 <- duckdb$rel_filter(
   rel3,
   list(
-    duckdb$expr_function(
-      "r_base::==",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = "==",
+      exprs = list(
         duckdb$expr_reference("l_returnflag"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant("R", experimental = experimental)
@@ -186,9 +184,9 @@ rel10 <- duckdb$rel_project(
 rel11 <- duckdb$rel_filter(
   rel10,
   list(
-    duckdb$expr_function(
-      "r_base::>=",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = ">=",
+      exprs = list(
         duckdb$expr_reference("o_orderdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(as.Date("1993-10-01"), experimental = experimental)
@@ -197,9 +195,9 @@ rel11 <- duckdb$rel_filter(
         }
       )
     ),
-    duckdb$expr_function(
-      "r_base::<",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = "<",
+      exprs = list(
         duckdb$expr_reference("o_orderdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(as.Date("1994-01-01"), experimental = experimental)
@@ -305,7 +303,7 @@ rel19 <- duckdb$rel_join(
   rel17,
   rel18,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("l_orderkey", rel17), duckdb$expr_reference("o_orderkey", rel18))
     )
@@ -595,7 +593,7 @@ rel34 <- duckdb$rel_join(
   rel32,
   rel33,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("c_custkey", rel32), duckdb$expr_reference("o_custkey", rel33))
     )
@@ -756,7 +754,7 @@ rel43 <- duckdb$rel_join(
   rel41,
   rel42,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("c_nationkey", rel41), duckdb$expr_reference("n_nationkey", rel42))
     )

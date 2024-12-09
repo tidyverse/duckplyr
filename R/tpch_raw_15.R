@@ -7,9 +7,9 @@ tpch_raw_15 <- function(con, experimental) {
   rel2 <- duckdb$rel_filter(
     rel1,
     list(
-      duckdb$expr_function(
-        "r_base::>=",
-        list(
+      duckdb$expr_comparison(
+        cmp_op = ">=",
+        exprs = list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(as.Date("1996-01-01"), experimental = experimental)
@@ -18,9 +18,9 @@ tpch_raw_15 <- function(con, experimental) {
           }
         )
       ),
-      duckdb$expr_function(
-        "r_base::<",
-        list(
+      duckdb$expr_comparison(
+        cmp_op = "<",
+        exprs = list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(as.Date("1996-04-01"), experimental = experimental)
@@ -172,7 +172,7 @@ tpch_raw_15 <- function(con, experimental) {
     rel9,
     rel10,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("global_agr_key_x", rel9), duckdb$expr_reference("global_agr_key_y", rel10))
       )
@@ -245,7 +245,7 @@ tpch_raw_15 <- function(con, experimental) {
     rel14,
     rel16,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("l_suppkey", rel14), duckdb$expr_reference("s_suppkey", rel16))
       )

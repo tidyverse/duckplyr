@@ -44,17 +44,17 @@ tpch_raw_12 <- function(con, experimental) {
           }
         )
       ),
-      duckdb$expr_function(
-        "r_base::<",
-        list(duckdb$expr_reference("l_commitdate"), duckdb$expr_reference("l_receiptdate"))
+      duckdb$expr_comparison(
+        cmp_op = "<",
+        exprs = list(duckdb$expr_reference("l_commitdate"), duckdb$expr_reference("l_receiptdate"))
       ),
-      duckdb$expr_function(
-        "r_base::<",
-        list(duckdb$expr_reference("l_shipdate"), duckdb$expr_reference("l_commitdate"))
+      duckdb$expr_comparison(
+        cmp_op = "<",
+        exprs = list(duckdb$expr_reference("l_shipdate"), duckdb$expr_reference("l_commitdate"))
       ),
-      duckdb$expr_function(
-        "r_base::>=",
-        list(
+      duckdb$expr_comparison(
+        cmp_op = ">=",
+        exprs = list(
           duckdb$expr_reference("l_receiptdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(as.Date("1994-01-01"), experimental = experimental)
@@ -63,9 +63,9 @@ tpch_raw_12 <- function(con, experimental) {
           }
         )
       ),
-      duckdb$expr_function(
-        "r_base::<",
-        list(
+      duckdb$expr_comparison(
+        cmp_op = "<",
+        exprs = list(
           duckdb$expr_reference("l_receiptdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(as.Date("1995-01-01"), experimental = experimental)
@@ -88,7 +88,7 @@ tpch_raw_12 <- function(con, experimental) {
     rel3,
     rel5,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("l_orderkey", rel3), duckdb$expr_reference("o_orderkey", rel5))
       )
@@ -239,9 +239,9 @@ tpch_raw_12 <- function(con, experimental) {
                 duckdb$expr_function(
                   "|",
                   list(
-                    duckdb$expr_function(
-                      "r_base::==",
-                      list(
+                    duckdb$expr_comparison(
+                      cmp_op = "==",
+                      exprs = list(
                         duckdb$expr_reference("o_orderpriority"),
                         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                           duckdb$expr_constant("1-URGENT", experimental = experimental)
@@ -250,9 +250,9 @@ tpch_raw_12 <- function(con, experimental) {
                         }
                       )
                     ),
-                    duckdb$expr_function(
-                      "r_base::==",
-                      list(
+                    duckdb$expr_comparison(
+                      cmp_op = "==",
+                      exprs = list(
                         duckdb$expr_reference("o_orderpriority"),
                         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                           duckdb$expr_constant("2-HIGH", experimental = experimental)

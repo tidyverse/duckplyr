@@ -13,7 +13,6 @@ invisible(
 )
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "n_distinct"(x) AS (COUNT(DISTINCT x))'))
 df1 <- part
 "filter"
@@ -221,7 +220,7 @@ rel8 <- duckdb$rel_join(
   rel6,
   rel7,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("ps_suppkey", rel6), duckdb$expr_reference("s_suppkey", rel7))
     )
@@ -317,7 +316,7 @@ rel13 <- duckdb$rel_join(
   rel11,
   rel12,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("p_partkey", rel11), duckdb$expr_reference("ps_partkey", rel12))
     )

@@ -3,8 +3,6 @@ duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
-invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 df1 <- lineitem
 "summarise"
@@ -25,9 +23,9 @@ rel2 <- duckdb$rel_aggregate(
 rel3 <- duckdb$rel_filter(
   rel2,
   list(
-    duckdb$expr_function(
-      "r_base::>",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = ">",
+      exprs = list(
         duckdb$expr_reference("sum"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(300, experimental = experimental)
@@ -50,7 +48,7 @@ rel7 <- duckdb$rel_join(
   rel5,
   rel6,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("o_orderkey", rel5), duckdb$expr_reference("l_orderkey", rel6))
     )
@@ -128,7 +126,7 @@ rel12 <- duckdb$rel_join(
   rel9,
   rel11,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("o_custkey", rel9), duckdb$expr_reference("c_custkey", rel11))
     )

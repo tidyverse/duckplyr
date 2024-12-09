@@ -3,7 +3,6 @@ duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
-invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 df1 <- lineitem
 "select"
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -68,9 +67,9 @@ rel3 <- duckdb$rel_project(
 rel4 <- duckdb$rel_filter(
   rel3,
   list(
-    duckdb$expr_function(
-      "r_base::>=",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = ">=",
+      exprs = list(
         duckdb$expr_reference("l_shipdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(as.Date("1994-01-01"), experimental = experimental)
@@ -79,9 +78,9 @@ rel4 <- duckdb$rel_filter(
         }
       )
     ),
-    duckdb$expr_function(
-      "r_base::<",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = "<",
+      exprs = list(
         duckdb$expr_reference("l_shipdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(as.Date("1995-01-01"), experimental = experimental)
@@ -90,9 +89,9 @@ rel4 <- duckdb$rel_filter(
         }
       )
     ),
-    duckdb$expr_function(
-      "r_base::>=",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = ">=",
+      exprs = list(
         duckdb$expr_reference("l_discount"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(0.05, experimental = experimental)
@@ -101,9 +100,9 @@ rel4 <- duckdb$rel_filter(
         }
       )
     ),
-    duckdb$expr_function(
-      "r_base::<=",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = "<=",
+      exprs = list(
         duckdb$expr_reference("l_discount"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(0.07, experimental = experimental)
@@ -112,9 +111,9 @@ rel4 <- duckdb$rel_filter(
         }
       )
     ),
-    duckdb$expr_function(
-      "r_base::<",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = "<",
+      exprs = list(
         duckdb$expr_reference("l_quantity"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(24, experimental = experimental)

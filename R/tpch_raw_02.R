@@ -57,9 +57,9 @@ tpch_raw_02 <- function(con, experimental) {
   rel5 <- duckdb$rel_filter(
     rel4,
     list(
-      duckdb$expr_function(
-        "r_base::==",
-        list(
+      duckdb$expr_comparison(
+        cmp_op = "==",
+        exprs = list(
           duckdb$expr_reference("p_size"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(15, experimental = experimental)
@@ -106,7 +106,7 @@ tpch_raw_02 <- function(con, experimental) {
     rel7,
     rel8,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("p_partkey", rel7), duckdb$expr_reference("ps_partkey", rel8))
       )
@@ -319,9 +319,9 @@ tpch_raw_02 <- function(con, experimental) {
   rel19 <- duckdb$rel_filter(
     rel18,
     list(
-      duckdb$expr_function(
-        "r_base::==",
-        list(
+      duckdb$expr_comparison(
+        cmp_op = "==",
+        exprs = list(
           duckdb$expr_reference("r_name"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant("EUROPE", experimental = experimental)

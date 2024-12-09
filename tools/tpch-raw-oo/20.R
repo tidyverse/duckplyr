@@ -3,8 +3,6 @@ duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
-invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(
   DBI::dbExecute(
@@ -50,9 +48,9 @@ rel2 <- duckdb$rel_project(
 rel3 <- duckdb$rel_filter(
   rel2,
   list(
-    duckdb$expr_function(
-      "r_base::==",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = "==",
+      exprs = list(
         duckdb$expr_reference("n_name"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant("CANADA", experimental = experimental)
@@ -180,7 +178,7 @@ rel11 <- duckdb$rel_join(
   rel9,
   rel10,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("s_nationkey", rel9), duckdb$expr_reference("n_nationkey", rel10))
     )
@@ -449,7 +447,7 @@ rel24 <- duckdb$rel_join(
   rel23,
   rel22,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("ps_suppkey", rel23), duckdb$expr_reference("s_suppkey", rel22))
     )
@@ -534,7 +532,7 @@ rel30 <- duckdb$rel_join(
   rel29,
   rel28,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("ps_partkey", rel29), duckdb$expr_reference("p_partkey", rel28))
     )
@@ -672,9 +670,9 @@ rel34 <- duckdb$rel_project(
 rel35 <- duckdb$rel_filter(
   rel34,
   list(
-    duckdb$expr_function(
-      "r_base::>=",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = ">=",
+      exprs = list(
         duckdb$expr_reference("l_shipdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(as.Date("1994-01-01"), experimental = experimental)
@@ -683,9 +681,9 @@ rel35 <- duckdb$rel_filter(
         }
       )
     ),
-    duckdb$expr_function(
-      "r_base::<",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = "<",
+      exprs = list(
         duckdb$expr_reference("l_shipdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(as.Date("1995-01-01"), experimental = experimental)
@@ -884,11 +882,11 @@ rel41 <- duckdb$rel_join(
   rel40,
   rel39,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("l_partkey", rel40), duckdb$expr_reference("ps_partkey", rel39))
     ),
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("l_suppkey", rel40), duckdb$expr_reference("ps_suppkey", rel39))
     )
@@ -1185,7 +1183,7 @@ rel52 <- duckdb$rel_join(
   rel50,
   rel51,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("ps_suppkey", rel50), duckdb$expr_reference("l_suppkey", rel51))
     )
@@ -1281,9 +1279,9 @@ rel55 <- duckdb$rel_project(
 rel56 <- duckdb$rel_filter(
   rel55,
   list(
-    duckdb$expr_function(
-      "r_base::>",
-      list(duckdb$expr_reference("ps_availqty"), duckdb$expr_reference("qty_threshold"))
+    duckdb$expr_comparison(
+      cmp_op = ">",
+      exprs = list(duckdb$expr_reference("ps_availqty"), duckdb$expr_reference("qty_threshold"))
     )
   )
 )
@@ -1360,7 +1358,7 @@ rel62 <- duckdb$rel_join(
   rel61,
   rel60,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("s_suppkey", rel61), duckdb$expr_reference("ps_suppkey", rel60))
     )

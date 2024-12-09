@@ -4,8 +4,6 @@ drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
 invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
-invisible(duckdb$rapi_load_rfuns(drv@database_ref))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "any"(x) AS (bool_or(x))'))
 invisible(
@@ -143,9 +141,9 @@ rel8 <- duckdb$rel_project(
 rel9 <- duckdb$rel_filter(
   rel8,
   list(
-    duckdb$expr_function(
-      "r_base::>",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = ">",
+      exprs = list(
         duckdb$expr_reference("n_supplier"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(1, experimental = experimental)
@@ -276,7 +274,7 @@ rel16 <- duckdb$rel_join(
   rel15,
   rel14,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("l_orderkey", rel15), duckdb$expr_reference("l_orderkey", rel14))
     )
@@ -530,7 +528,7 @@ rel24 <- duckdb$rel_join(
   rel22,
   rel23,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("l_orderkey", rel22), duckdb$expr_reference("o_orderkey", rel23))
     )
@@ -806,9 +804,9 @@ rel27 <- duckdb$rel_project(
 rel28 <- duckdb$rel_filter(
   rel27,
   list(
-    duckdb$expr_function(
-      "r_base::==",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = "==",
+      exprs = list(
         duckdb$expr_reference("o_orderstatus"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant("F", experimental = experimental)
@@ -1092,9 +1090,9 @@ rel32 <- duckdb$rel_aggregate(
       tmp_expr <- duckdb$expr_function(
         "any",
         list(
-          duckdb$expr_function(
-            "r_base::>",
-            list(duckdb$expr_reference("l_receiptdate"), duckdb$expr_reference("l_commitdate"))
+          duckdb$expr_comparison(
+            cmp_op = ">",
+            exprs = list(duckdb$expr_reference("l_receiptdate"), duckdb$expr_reference("l_commitdate"))
           )
         )
       )
@@ -1250,9 +1248,9 @@ rel40 <- duckdb$rel_filter(
     duckdb$expr_function(
       "&",
       list(
-        duckdb$expr_function(
-          "r_base::>",
-          list(
+        duckdb$expr_comparison(
+          cmp_op = ">",
+          exprs = list(
             duckdb$expr_reference("n_supplier"),
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
               duckdb$expr_constant(1, experimental = experimental)
@@ -1261,9 +1259,9 @@ rel40 <- duckdb$rel_filter(
             }
           )
         ),
-        duckdb$expr_function(
-          "r_base::==",
-          list(
+        duckdb$expr_comparison(
+          cmp_op = "==",
+          exprs = list(
             duckdb$expr_reference("num_failed"),
             if ("experimental" %in% names(formals(duckdb$expr_constant))) {
               duckdb$expr_constant(1, experimental = experimental)
@@ -1401,7 +1399,7 @@ rel47 <- duckdb$rel_join(
   rel46,
   rel45,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("l_orderkey", rel46), duckdb$expr_reference("l_orderkey", rel45))
     )
@@ -1645,7 +1643,7 @@ rel55 <- duckdb$rel_join(
   rel53,
   rel54,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("s_suppkey", rel53), duckdb$expr_reference("l_suppkey", rel54))
     )
@@ -1901,9 +1899,9 @@ rel58 <- duckdb$rel_project(
 rel59 <- duckdb$rel_filter(
   rel58,
   list(
-    duckdb$expr_function(
-      "r_base::>",
-      list(duckdb$expr_reference("l_receiptdate"), duckdb$expr_reference("l_commitdate"))
+    duckdb$expr_comparison(
+      cmp_op = ">",
+      exprs = list(duckdb$expr_reference("l_receiptdate"), duckdb$expr_reference("l_commitdate"))
     )
   )
 )
@@ -2189,7 +2187,7 @@ rel67 <- duckdb$rel_join(
   rel65,
   rel66,
   list(
-    duckdb$expr_function(
+    duckdb$expr_comparison(
       "==",
       list(duckdb$expr_reference("s_nationkey", rel65), duckdb$expr_reference("n_nationkey", rel66))
     )
@@ -2475,9 +2473,9 @@ rel70 <- duckdb$rel_project(
 rel71 <- duckdb$rel_filter(
   rel70,
   list(
-    duckdb$expr_function(
-      "r_base::==",
-      list(
+    duckdb$expr_comparison(
+      cmp_op = "==",
+      exprs = list(
         duckdb$expr_reference("n_name"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant("SAUDI ARABIA", experimental = experimental)

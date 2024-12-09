@@ -283,9 +283,9 @@ tpch_raw_oo_22 <- function(con, experimental) {
               }
             )
           ),
-          duckdb$expr_function(
-            "r_base::>",
-            list(
+          duckdb$expr_comparison(
+            cmp_op = ">",
+            exprs = list(
               duckdb$expr_reference("c_acctbal"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                 duckdb$expr_constant(0, experimental = experimental)
@@ -660,7 +660,7 @@ tpch_raw_oo_22 <- function(con, experimental) {
     rel15,
     rel16,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("join_id_x", rel15), duckdb$expr_reference("join_id_y", rel16))
       )
@@ -926,7 +926,10 @@ tpch_raw_oo_22 <- function(con, experimental) {
               }
             )
           ),
-          duckdb$expr_function("r_base::>", list(duckdb$expr_reference("c_acctbal"), duckdb$expr_reference("acctbal_min")))
+          duckdb$expr_comparison(
+            cmp_op = ">",
+            exprs = list(duckdb$expr_reference("c_acctbal"), duckdb$expr_reference("acctbal_min"))
+          )
         )
       )
     )
@@ -1072,7 +1075,7 @@ tpch_raw_oo_22 <- function(con, experimental) {
     rel27,
     rel26,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("c_custkey", rel27), duckdb$expr_reference("o_custkey", rel26))
       )

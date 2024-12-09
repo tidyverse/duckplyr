@@ -154,9 +154,9 @@ tpch_raw_oo_18 <- function(con, experimental) {
   rel7 <- duckdb$rel_filter(
     rel6,
     list(
-      duckdb$expr_function(
-        "r_base::>",
-        list(
+      duckdb$expr_comparison(
+        cmp_op = ">",
+        exprs = list(
           duckdb$expr_reference("sum"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(300, experimental = experimental)
@@ -274,7 +274,7 @@ tpch_raw_oo_18 <- function(con, experimental) {
     rel13,
     rel14,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("o_orderkey", rel13), duckdb$expr_reference("l_orderkey", rel14))
       )
@@ -469,7 +469,7 @@ tpch_raw_oo_18 <- function(con, experimental) {
     rel21,
     rel22,
     list(
-      duckdb$expr_function(
+      duckdb$expr_comparison(
         "==",
         list(duckdb$expr_reference("o_custkey", rel21), duckdb$expr_reference("c_custkey", rel22))
       )
