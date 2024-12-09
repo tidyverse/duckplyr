@@ -30,6 +30,7 @@ and will fail for any other classes, including subclasses of \code{"data.frame"}
 This behavior is likely to change, do not rely on it.
 
 \code{as_duckplyr_tibble()} converts the input to a tibble and then to a duckplyr data frame.
+This function also accepts \pkg{dbplyr} lazy tables.
 }
 \details{
 Set the \code{DUCKPLYR_FALLBACK_INFO} and \code{DUCKPLYR_FORCE} environment variables

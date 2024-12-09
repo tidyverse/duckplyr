@@ -221,27 +221,9 @@ rel_translate_lang <- function(
     }
   )
 
-  aliases <- c(
-    sd = "stddev",
-    first = "first_value",
-    last = "last_value",
-    nth = "nth_value",
-    "/" = "___divide",
-    "log10" = "___log10",
-    "log" = "___log",
-    "as.integer" = "r_base::as.integer",
-    "<" = "r_base::<",
-    "<=" = "r_base::<=",
-    ">" = "r_base::>",
-    ">=" = "r_base::>=",
-    "==" = "r_base::==",
-    "!=" = "r_base::!=",
-    NULL
-  )
-
   known_window <- c(
     # Window functions
-    "rank", "dense_rank", "percent_rank",
+    "min_rank", "dense_rank", "percent_rank",
     "row_number", "first", "last", "nth",
     "cume_dist", "lead", "lag", "ntile",
 
@@ -252,14 +234,6 @@ rel_translate_lang <- function(
   )
 
   window <- need_window && (name %in% known_window)
-
-  if (name %in% names(aliases)) {
-    name <- aliases[[name]]
-    if (grepl("^r_base::", name)) {
-      meta_ext_register()
-    }
-  }
-  # name <- aliases[name] %|% name
 
   order_bys <- list()
   offset_expr <- NULL
@@ -280,6 +254,15 @@ rel_translate_lang <- function(
       order_bys <- list(do_translate(expr$order_by, in_window = TRUE))
       expr$order_by <- NULL
     }
+  } else if (name %in% c("row_number", "min_rank", "dense_rank")) {
+    if (name == "row_number" && length(expr) == 1) {
+      # Fallthrough
+    } else if (length(expr) == 2 && is.name(expr[[2]])) {
+      order_bys <- list(do_translate(expr[[2]], in_window = TRUE))
+      expr <- list(expr[[1]])
+    } else {
+      cli::cli_abort("{.fun {name}} can only be translated if it uses column names as arguments")
+    }
   }
 
   args <- map(as.list(expr[-1]), do_translate, in_window = in_window || window)
@@ -287,6 +270,33 @@ rel_translate_lang <- function(
   if (name == "grepl") {
     if (!inherits(args[[1]], "relational_relexpr_constant")) {
       cli::cli_abort("Only constant patterns are supported in {.code grepl()}")
+    }
+  }
+
+  # Aliasing comes last:
+  aliases <- c(
+    sd = "stddev",
+    first = "first_value",
+    last = "last_value",
+    nth = "nth_value",
+    min_rank = "rank",
+    "/" = "___divide",
+    log10 = "___log10",
+    log = "___log",
+    as.integer = "r_base::as.integer",
+    "<" = "r_base::<",
+    "<=" = "r_base::<=",
+    ">" = "r_base::>",
+    ">=" = "r_base::>=",
+    "==" = "r_base::==",
+    "!=" = "r_base::!=",
+    NULL
+  )
+
+  if (name %in% names(aliases)) {
+    name <- aliases[[name]]
+    if (grepl("^r_base::", name)) {
+      meta_ext_register()
     }
   }
 
@@ -325,6 +335,7 @@ rel_translate <- function(
   }
 
   used <- character()
+  reorder <- FALSE
 
   do_translate <- function(expr, in_window = FALSE, top_level = FALSE) {
     stopifnot(!is_quosure(expr))
@@ -351,15 +362,23 @@ rel_translate <- function(
         }
       },
       #
-      language = rel_translate_lang(
-        expr,
-        do_translate,
-        names_data,
-        env,
-        partition,
-        in_window,
-        need_window
-      ),
+      language = {
+        lang <- rel_translate_lang(
+          expr,
+          do_translate,
+          names_data,
+          env,
+          partition,
+          in_window,
+          need_window
+        )
+
+        if (inherits(lang, "relational_relexpr_window") && length(lang$order_bys) > 0) {
+          used <<- unique(c(used, map_chr(lang$order_bys, ~ .x$name)))
+          reorder <<- TRUE
+        }
+        lang
+      },
       #
       cli::cli_abort("Internal: Unknown type {.val {typeof(expr)}}")
     )
@@ -371,5 +390,5 @@ rel_translate <- function(
     out <- relexpr_set_alias(out, alias)
   }
 
-  structure(out, used = used)
+  structure(out, used = used, reorder = reorder)
 }
