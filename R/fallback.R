@@ -17,7 +17,7 @@
 #'
 #' The following functions control the logging and uploading:
 #'
-#' - To opt the current machine out of logging, run [`fallback_logging_optout()`].
+#' - To opt out of logging, run [`fallback_logging_optout()`].
 #'
 #' - To opt in again for logging, run [`fallback_logging_optin()`].
 #'
