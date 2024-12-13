@@ -6,7 +6,7 @@
 #' retaining all rows that satisfy your conditions.
 #' To be retained, the row must produce a value of `TRUE` for all conditions.
 #' Note that when a condition evaluates to `NA` the row will be dropped,
-#' unlike base subsetting with `]`.
+#' unlike base subsetting with `[`.
 #'
 #' @inheritParams dplyr::filter
 #' @examples

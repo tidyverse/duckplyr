@@ -17,8 +17,7 @@ relocate.duckplyr_df <- function(.data, ..., .before = NULL, .after = NULL) {
   rel_try(list(name = "relocate", x = .data, args = try_list(dots = enquos(...), .before = enquo(.before), .after = enquo(.after))),
     #' @section Fallbacks:
     #' You cannot use `relocate.duckplyr_df`
-    #' - with no expression,
-    #' - nor with a selection that returns no columns:
+    #' - with a selection that returns no columns:
     #'
     #' If you do the code will fall back to `dplyr::relocate()` without any error.
     "Can't use relational with zero-column result set." = (length(exprs) == 0),

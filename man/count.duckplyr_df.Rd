@@ -58,7 +58,7 @@ switching the summary from \code{n = n()} to \code{n = sum(wt)}.
 
 You cannot use \code{count.duckplyr_df}
 \itemize{
-\item if any of the variables provided as \code{...} is not a name,
+\item with complex expressions in \code{...},
 \item with \code{.drop = FALSE},
 \item with \code{sort = TRUE}.
 }

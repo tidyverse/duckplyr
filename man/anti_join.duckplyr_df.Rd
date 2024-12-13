@@ -2,7 +2,7 @@
 % Please edit documentation in R/anti_join-rd.R, R/anti_join.R
 \name{anti_join.duckplyr_df}
 \alias{anti_join.duckplyr_df}
-\title{Filtering joins (duckplyr)}
+\title{Anti join}
 \usage{
 \method{anti_join}{duckplyr_df}(x, y, by = NULL, copy = FALSE, ..., na_matches = c("na", "never"))
 }
