@@ -10,14 +10,13 @@ check_r_script <- function(path) {
   }
 }
 
-r_scripts <- list.files(here::here("R"), full.names = TRUE)
+r_scripts <- list.files("R", full.names = TRUE)
 
 not_implemented <- unlist(lapply(r_scripts, check_r_script))
 
 not_implemented_script <- file.path("R", "not-supported.R")
 
-suppressWarnings(file.remove(not_implemented_script))
-file.create(not_implemented_script)
+unlink(not_implemented_script, force = TRUE)
 
 lines <- c(
   "#' Verbs not implemented in duckplyr",
