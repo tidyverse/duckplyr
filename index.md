@@ -10,12 +10,13 @@
 [![R-CMD-check](https://github.com/tidyverse/duckplyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidyverse/duckplyr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-> A **drop-in replacement for [dplyr](https://dplyr.tidyverse.org/)** that uses **[DuckDB](https://duckdb.org/)** as a backend for **fast operation**.
+> A **drop-in replacement** for dplyr, powered by DuckDB for **fast operation**.
 
-[DuckDB](https://duckdb.org/) is an in-process analytical database management system, 
 [dplyr](https://dplyr.tidyverse.org/) is the grammar of data manipulation in the tidyverse.
+The duckplyr package will run all of your existing dplyr code with identical results, using [DuckDB](https://duckdb.org/) where possible to compute the results faster.
+In addition, you can analyze larger-than-memory datasets straight from files on your disk or from S3 storage.
+If you are new to dplyr, the best place to start is the [data transformation chapter](https://r4ds.hadley.nz/data-transform) in R for Data Science.
 
-If you are new to dplyr, the best place to start is the [data transformation chapter](If you are new to dplyr, the best place to start is the data transformation chapter in R for Data Science.) in R for Data Science.
 
 ## Installation
 
@@ -114,7 +115,7 @@ palmerpenguins::penguins %>%
   summarize(.by = c(species, sex), mean_bill_area = mean(bill_area)) %>%
   filter(species != "Gentoo")
 #> [38;5;246m# A tibble: 5 × 3[39m
-#>   species   sex    mean_bill_area
+#>   [1mspecies[22m   [1msex[22m    [1mmean_bill_area[22m
 #>   [3m[38;5;246m<chr>[39m[23m     [3m[38;5;246m<chr>[39m[23m           [3m[38;5;246m<dbl>[39m[23m
 #> [38;5;250m1[39m Adelie    male             770.
 #> [38;5;250m2[39m Adelie    female           657.
@@ -171,9 +172,9 @@ palmerpenguins::penguins %>%
 #>   `duckplyr::fallback_upload()` to upload them.
 #> [36mℹ[39m See `?duckplyr::fallback()` for details.
 #> [36mℹ[39m [90mThis message will be displayed once every eight hours.[39m
-#> duckplyr: materializing, review details with duckplyr::last_rel()
+#> duckplyr: materializing
 #> [38;5;246m# A tibble: 3 × 1[39m
-#>   bill_area
+#>   [1mbill_area[22m
 #>       [3m[38;5;246m<dbl>[39m[23m
 #> [38;5;250m1[39m      731.
 #> [38;5;250m2[39m      687.

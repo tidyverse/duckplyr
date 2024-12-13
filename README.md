@@ -10,18 +10,17 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![R-CMD-check](https://github.com/tidyverse/duckplyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidyverse/duckplyr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-> A **drop-in replacement for [dplyr](https://dplyr.tidyverse.org/)**
-> that uses **[DuckDB](https://duckdb.org/)** as a backend for **fast
+> A **drop-in replacement** for dplyr, powered by DuckDB for **fast
 > operation**.
 
-[DuckDB](https://duckdb.org/) is an in-process analytical database
-management system, [dplyr](https://dplyr.tidyverse.org/) is the grammar
-of data manipulation in the tidyverse.
-
-If you are new to dplyr, the best place to start is the [data
-transformation
-chapter](If%20you%20are%20new%20to%20dplyr,%20the%20best%20place%20to%20start%20is%20the%20data%20transformation%20chapter%20in%20R%20for%20Data%20Science.)
-in R for Data Science.
+[dplyr](https://dplyr.tidyverse.org/) is the grammar of data
+manipulation in the tidyverse. The duckplyr package will run all of your
+existing dplyr code with identical results, using
+[DuckDB](https://duckdb.org/) where possible to compute the results
+faster. In addition, you can analyze larger-than-memory datasets
+straight from files on your disk or from S3 storage. If you are new to
+dplyr, the best place to start is the [data transformation
+chapter](https://r4ds.hadley.nz/data-transform) in R for Data Science.
 
 ## Installation
 
@@ -171,7 +170,7 @@ palmerpenguins::penguins %>%
 #>   `duckplyr::fallback_upload()` to upload them.
 #> ℹ See `?duckplyr::fallback()` for details.
 #> ℹ This message will be displayed once every eight hours.
-#> duckplyr: materializing, review details with duckplyr::last_rel()
+#> duckplyr: materializing
 #> # A tibble: 3 × 1
 #>   bill_area
 #>       <dbl>

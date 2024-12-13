@@ -49,12 +49,13 @@ Sys.setenv(DUCKPLYR_OUTPUT_ORDER = TRUE)
 [![R-CMD-check](https://github.com/tidyverse/duckplyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidyverse/duckplyr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-> A **drop-in replacement for [dplyr](https://dplyr.tidyverse.org/)** that uses **[DuckDB](https://duckdb.org/)** as a backend for **fast operation**.
+> A **drop-in replacement** for dplyr, powered by DuckDB for **fast operation**.
 
-[DuckDB](https://duckdb.org/) is an in-process analytical database management system, 
 [dplyr](https://dplyr.tidyverse.org/) is the grammar of data manipulation in the tidyverse.
+The duckplyr package will run all of your existing dplyr code with identical results, using [DuckDB](https://duckdb.org/) where possible to compute the results faster.
+In addition, you can analyze larger-than-memory datasets straight from files on your disk or from S3 storage.
+If you are new to dplyr, the best place to start is the [data transformation chapter](https://r4ds.hadley.nz/data-transform) in R for Data Science.
 
-If you are new to dplyr, the best place to start is the [data transformation chapter](If you are new to dplyr, the best place to start is the data transformation chapter in R for Data Science.) in R for Data Science.
 
 ## Installation
 
