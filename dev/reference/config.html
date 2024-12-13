@@ -9,7 +9,7 @@ and one option."><meta property="og:image" content="https://duckplyr.tidyverse.o
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4.1.9003</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4.1.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -123,22 +123,6 @@ when the package is loaded.</p>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="as_duckplyr_df.html">as_duckplyr_df</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fu">add_one</span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The <span style="color: #0000BB;">duckplyr</span> package is configured to fall back to <span style="color: #0000BB;">dplyr</span> when it</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> encounters an incompatibility. Fallback events can be collected and</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> uploaded for analysis to guide future development. By default, no data</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> will be collected or uploaded.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> A fallback situation just occurred. The following information would</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   have been recorded:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   {"version":"0.4.1","message":"No translation for function</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   `add_one`.","name":"mutate","x":{"...1":"integer"},"args":{"dots":{"...2":"add_one(...1)"},".by":"NULL",".keep":["all","used","unused","none"]}}</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Run `duckplyr::fallback_sitrep()` to review the current settings.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Run `Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)` to enable fallback</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   logging, and `Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = TRUE)` in addition</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   to enable printing of fallback situations to the console.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Run `duckplyr::fallback_review()` to review the available reports, and</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   `duckplyr::fallback_upload()` to upload them.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> See `?duckplyr::fallback()` for details.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">This message will be displayed once every eight hours.</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   a b</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 3 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 2 3</span>

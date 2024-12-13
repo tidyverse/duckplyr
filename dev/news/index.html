@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4.1.9003</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4.1.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,6 +31,105 @@
       <small>Source: <a href="https://github.com/tidyverse/duckplyr/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.4.1.9004" id="duckplyr-0419004-2024-12-09">duckplyr 0.4.1.9004 (2024-12-09)<a class="anchor" aria-label="anchor" href="#duckplyr-0419004-2024-12-09"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-0-4-1-9004">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-4-1-9004"></a></h3>
+<ul><li><p><code>check_duplicate_names()</code> (<a href="https://github.com/tidyverse/duckplyr/issues/317" class="external-link">#317</a>).</p></li>
+<li><p>Check perfect roundtrip for constants again (<a href="https://github.com/tidyverse/duckplyr/issues/307" class="external-link">#307</a>).</p></li>
+<li><p>Correctly handle missing values in <code><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else()</a></code>.</p></li>
+<li><p>Use relational operators from the rfuns extension as aliases, not as macros (<a href="https://github.com/tidyverse/duckplyr/issues/291" class="external-link">#291</a>).</p></li>
+<li><p>Compute ptype only for join columns in a safe way without materialization, not for the entire data frame (<a href="https://github.com/tidyverse/duckplyr/issues/289" class="external-link">#289</a>).</p></li>
+<li><p>Edge case for <code><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count()</a></code> (<a href="https://github.com/tidyverse/duckplyr/issues/282" class="external-link">#282</a>).</p></li>
+<li><p>Attaching duckplyr via <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code> overwrites all dplyr methods again (<a href="https://github.com/tidyverse/duckplyr/issues/217" class="external-link">#217</a>, <a href="https://github.com/tidyverse/duckplyr/issues/276" class="external-link">#276</a>).</p></li>
+<li><p><code>expr_scrub()</code> can handle function-definitions (<a href="https://github.com/toppyy" class="external-link">@toppyy</a>, <a href="https://github.com/tidyverse/duckplyr/issues/268" class="external-link">#268</a>, <a href="https://github.com/tidyverse/duckplyr/issues/271" class="external-link">#271</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="features-0-4-1-9004">Features<a class="anchor" aria-label="anchor" href="#features-0-4-1-9004"></a></h3>
+<ul><li><p><code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> constructs intermediate data frames for each new variable (<a href="https://github.com/tidyverse/duckplyr/issues/332" class="external-link">#332</a>).</p></li>
+<li><p>Harden telemetry code against invalid arguments (<a href="https://github.com/tidyverse/duckplyr/issues/321" class="external-link">#321</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across()</a></code> tweaks (<a href="https://github.com/tidyverse/duckplyr/issues/318" class="external-link">#318</a>).</p></li>
+<li><p>Fall back to dplyr when passing <code>multiple</code> with joins (<a href="https://github.com/tidyverse/duckplyr/issues/323" class="external-link">#323</a>).</p></li>
+<li><p>Limit number of items that can be handled with <code>%in%</code> (<a href="https://github.com/tidyverse/duckplyr/issues/319" class="external-link">#319</a>).</p></li>
+<li><p>Use Ubuntu noble for touchstone (<a href="https://github.com/tidyverse/duckplyr/issues/314" class="external-link">#314</a>).</p></li>
+<li><p>Enable touchstone (<a href="https://github.com/tidyverse/duckplyr/issues/313" class="external-link">#313</a>).</p></li>
+<li><p>Use touchstone for continuous benchmarking (<a href="https://github.com/tidyverse/duckplyr/issues/311" class="external-link">#311</a>).</p></li>
+<li><p>More complete <code><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across()</a></code> (<a href="https://github.com/tidyverse/duckplyr/issues/306" class="external-link">#306</a>).</p></li>
+<li><p>Add more tests from dplyr (<a href="https://github.com/tidyverse/duckplyr/issues/305" class="external-link">#305</a>).</p></li>
+<li><p>Partial support for <code><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across()</a></code> in <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code> (<a href="https://github.com/tidyverse/duckplyr/issues/296" class="external-link">#296</a>).</p></li>
+<li><p>Rely on duckdb to check const feasibility (<a href="https://github.com/tidyverse/duckplyr/issues/293" class="external-link">#293</a>).</p></li>
+<li><p>Allow R 4.0 (<a href="https://github.com/tidyverse/duckplyr/issues/285" class="external-link">#285</a>).</p></li>
+<li><p>Avoid resetting expression depth, now in duckdb (<a href="https://github.com/tidyverse/duckplyr/issues/280" class="external-link">#280</a>).</p></li>
+<li><p>Record and replay functionality now includes the top-level function being called (<a href="https://github.com/tidyverse/duckplyr/issues/273" class="external-link">#273</a>).</p></li>
+<li><p>Set the <code>duckdb.materialize_message</code> option on load only if not previously specified (<a href="https://github.com/stefanlinner" class="external-link">@stefanlinner</a>, <a href="https://github.com/tidyverse/duckplyr/issues/220" class="external-link">#220</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="chore-0-4-1-9004">Chore<a class="anchor" aria-label="anchor" href="#chore-0-4-1-9004"></a></h3>
+<ul><li><p>Configure IDE.</p></li>
+<li><p>Add lifecycle badges (<a href="https://github.com/tidyverse/duckplyr/issues/350" class="external-link">#350</a>, <a href="https://github.com/tidyverse/duckplyr/issues/353" class="external-link">#353</a>).</p></li>
+<li><p>Comment design choice.</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain()</a></code> returns the input, invisibly (<a href="https://github.com/tidyverse/duckplyr/issues/331" class="external-link">#331</a>).</p></li>
+<li><p>Sync (<a href="https://github.com/tidyverse/duckplyr/issues/329" class="external-link">#329</a>).</p></li>
+<li><p>Nicer fallback error when function cannot be translated (<a href="https://github.com/tidyverse/duckplyr/issues/324" class="external-link">#324</a>).</p></li>
+<li><p>Fix glue syntax.</p></li>
+<li><p>Tweak workflow (<a href="https://github.com/tidyverse/duckplyr/issues/316" class="external-link">#316</a>).</p></li>
+<li><p>Test touchstone (<a href="https://github.com/tidyverse/duckplyr/issues/315" class="external-link">#315</a>).</p></li>
+<li><p>Avoid copying copy.</p></li>
+<li><p>Sync tests with dplyr dev version (<a href="https://github.com/tidyverse/duckplyr/issues/304" class="external-link">#304</a>).</p></li>
+<li><p>Update snapshots.</p></li>
+<li><p>Fix sync (<a href="https://github.com/tidyverse/duckplyr/issues/290" class="external-link">#290</a>).</p></li>
+<li><p>Apply styler (<a href="https://github.com/tidyverse/duckplyr/issues/281" class="external-link">#281</a>).</p></li>
+<li><p>Sync patches (<a href="https://github.com/tidyverse/duckplyr/issues/277" class="external-link">#277</a>).</p></li>
+<li><p>Fix typo.</p></li>
+<li><p>Sync docs.</p></li>
+<li><p>Sync docs branch (<a href="https://github.com/tidyverse/duckplyr/issues/266" class="external-link">#266</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="continuous-integration-0-4-1-9004">Continuous integration<a class="anchor" aria-label="anchor" href="#continuous-integration-0-4-1-9004"></a></h3>
+<ul><li><p>Avoid failure in fledge workflow if no changes (<a href="https://github.com/tidyverse/duckplyr/issues/368" class="external-link">#368</a>).</p></li>
+<li><p>Fetch tags for fledge workflow to avoid unnecessary NEWS entries (<a href="https://github.com/tidyverse/duckplyr/issues/366" class="external-link">#366</a>).</p></li>
+<li><p>Use styler PR (<a href="https://github.com/tidyverse/duckplyr/issues/362" class="external-link">#362</a>).</p></li>
+<li><p>Run in Ubuntu Noble to support r-universe binaries (<a href="https://github.com/tidyverse/duckplyr/issues/352" class="external-link">#352</a>).</p></li>
+<li><p>Correctly detect branch protection (<a href="https://github.com/tidyverse/duckplyr/issues/345" class="external-link">#345</a>).</p></li>
+<li><p>Use stable pak (<a href="https://github.com/tidyverse/duckplyr/issues/344" class="external-link">#344</a>).</p></li>
+<li><p>Latest changes (<a href="https://github.com/tidyverse/duckplyr/issues/328" class="external-link">#328</a>).</p></li>
+<li><p>Revert to status workflow (<a href="https://github.com/tidyverse/duckplyr/issues/326" class="external-link">#326</a>).</p></li>
+<li><p>Trigger run (<a href="https://github.com/tidyverse/duckplyr/issues/288" class="external-link">#288</a>).</p></li>
+<li><p>Trigger run (<a href="https://github.com/tidyverse/duckplyr/issues/287" class="external-link">#287</a>).</p></li>
+<li><p>Updates from duckdb (<a href="https://github.com/tidyverse/duckplyr/issues/286" class="external-link">#286</a>).</p></li>
+<li><p>Install local package for pkgdown builds (<a href="https://github.com/tidyverse/duckplyr/issues/258" class="external-link">#258</a>).</p></li>
+<li><p>Fix condition for fledge workflow (<a href="https://github.com/tidyverse/duckplyr/issues/248" class="external-link">#248</a>).</p></li>
+<li><p>Use curl.</p></li>
+<li><p>Use gh to download artifact.</p></li>
+<li><p>Don’t need to unzip artifact.</p></li>
+<li><p>Restrict commit again to own PRs.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="documentation-0-4-1-9004">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-4-1-9004"></a></h3>
+<ul><li><p>Avoid <code>\code{}</code> (<a href="https://github.com/tidyverse/duckplyr/issues/340" class="external-link">#340</a>, <a href="https://github.com/tidyverse/duckplyr/issues/354" class="external-link">#354</a>).</p></li>
+<li><p>Include section on code generation in contributing guide (<a href="https://github.com/tidyverse/duckplyr/issues/24" class="external-link">#24</a>, <a href="https://github.com/tidyverse/duckplyr/issues/348" class="external-link">#348</a>).</p></li>
+<li><p>Update README.</p></li>
+<li><p>Sync.</p></li>
+<li><p>Sync.</p></li>
+<li><p>Sync.</p></li>
+<li><p>Move logo.</p></li>
+<li><p>Need file, not link, for logo on GitHub.</p></li>
+<li><p>Fix logo on GitHub.</p></li>
+<li><p>Use downlit only for GitHub README (<a href="https://github.com/tidyverse/duckplyr/issues/262" class="external-link">#262</a>).</p></li>
+<li><p>Add logo to README (<a href="https://github.com/luisDVA" class="external-link">@luisDVA</a>, <a href="https://github.com/tidyverse/duckplyr/issues/259" class="external-link">#259</a>).</p></li>
+<li><p>Fix cut-and-paste typo (<a href="https://github.com/joakimlinde" class="external-link">@joakimlinde</a>, <a href="https://github.com/tidyverse/duckplyr/issues/240" class="external-link">#240</a>).</p></li>
+<li><p>Enable plausible (<a href="https://github.com/tidyverse/duckplyr/issues/250" class="external-link">#250</a>, <a href="https://github.com/tidyverse/duckplyr/issues/251" class="external-link">#251</a>).</p></li>
+<li><p>Use new URL for pkgdown (<a href="https://github.com/tidyverse/duckplyr/issues/247" class="external-link">#247</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="testing-0-4-1-9004">Testing<a class="anchor" aria-label="anchor" href="#testing-0-4-1-9004"></a></h3>
+<ul><li><p>Snapshot updates for rcc-smoke (null) (<a href="https://github.com/tidyverse/duckplyr/issues/356" class="external-link">#356</a>).</p></li>
+<li><p>Add snapshot instead of output (<a href="https://github.com/tidyverse/duckplyr/issues/346" class="external-link">#346</a>).</p></li>
+<li><p>Snapshot updates for rcc-smoke (null) (<a href="https://github.com/tidyverse/duckplyr/issues/302" class="external-link">#302</a>).</p></li>
+<li><p>Test telemetry code (<a href="https://github.com/tidyverse/duckplyr/issues/275" class="external-link">#275</a>).</p></li>
+<li><p>Adapt tests to duckdb release candidate (<a href="https://github.com/tidyverse/duckplyr/issues/261" class="external-link">#261</a>).</p></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.1.9003" id="duckplyr-0419003-2024-08-20">duckplyr 0.4.1.9003 (2024-08-20)<a class="anchor" aria-label="anchor" href="#duckplyr-0419003-2024-08-20"></a></h2>
 <div class="section level3">
