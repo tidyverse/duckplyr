@@ -22,9 +22,8 @@ See "Fallbacks" section for differences in implementation.
 
 You cannot use \code{intersect.duckplyr_df}
 \itemize{
-\item with duplicate names,
-\item with tables of different widths,
-\item with tables that have different names.
+\item if column names are duplicated in one of the tables
+\item if column names are different in both tables.
 }
 
 If you do the code will fall back to \code{dplyr::intersect()} without any error.

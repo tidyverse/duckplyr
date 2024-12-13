@@ -22,7 +22,7 @@ Return the first rows of a data.frame
 
 You cannot use \code{head.duckplyr_df}
 \itemize{
-\item with a negative n.
+\item with a negative \code{n}.
 }
 
 If you do the code will fall back to \code{head()} without any error.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/semi_join-rd.R, R/semi_join.R
 \name{semi_join.duckplyr_df}
 \alias{semi_join.duckplyr_df}
-\title{Filtering joins (duckplyr)}
+\title{Semi join}
 \usage{
 \method{semi_join}{duckplyr_df}(x, y, by = NULL, copy = FALSE, ..., na_matches = c("na", "never"))
 }
