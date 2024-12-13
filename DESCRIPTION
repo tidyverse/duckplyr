@@ -9,8 +9,8 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-1416-3412")),
     person("Posit Software, PBC", role = c("cph", "fnd"))
   )
-Description: A drop-in replacement for 'dplyr', powered by 'DuckDB' for performance.
-    Also defines a set of generics that provide a low-level
+Description: A drop-in replacement for 'dplyr', powered by 'DuckDB' for
+    performance.  Also defines a set of generics that provide a low-level
     implementer's interface for the high-level user interface of 'dplyr'.
 License: MIT + file LICENSE
 URL: https://duckplyr.tidyverse.org, https://github.com/tidyverse/duckplyr
@@ -54,12 +54,13 @@ Suggests:
     usethis,
     withr
 Config/Needs/check: anthonynorth/roxyglobals
+Config/Needs/website: tidyverse/tidytemplate, dbplyr, Lahman, rmarkdown
 Config/testthat/edition: 3
 Config/testthat/parallel: false
-Config/testthat/start-first: rel_api, tpch, as_duckplyr_df, mutate, filter, count-tally
+Config/testthat/start-first: rel_api, tpch, as_duckplyr_df, mutate,
+    filter, count-tally
 Encoding: UTF-8
 Roxygen: list( markdown = TRUE, roclets = c("collate", "namespace", "rd",
     "roxyglobals::global_roclet") )
 RoxygenNote: 7.3.2.9000
-Config/Needs/website: tidyverse/tidytemplate, rmarkdown
 VignetteBuilder: knitr

@@ -9,6 +9,10 @@ template:
       <script defer data-domain="duckplyr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
 
 reference:
+- title: Methods for dplyr (or base) generics
+  contents:
+  - ends_with(".duckplyr_df")
+  - not-supported
 - title: Using duckplyr for single data frames
   contents:
   - as_duckplyr_df
