@@ -31,8 +31,14 @@
     </div>
 
     <div class="section level2">
-      <h2 id="methods-for-dplyr-or-base-generics">Methods for dplyr (or base) generics<a class="anchor" aria-label="anchor" href="#methods-for-dplyr-or-base-generics"></a></h2>
+      <h2 id="dplyr-verbs">dplyr verbs<a class="anchor" aria-label="anchor" href="#dplyr-verbs"></a></h2>
 
+
+
+
+    </div><div class="section level2">
+
+      <h3 id="connecting-copying-and-retrieving-data">Connecting, copying, and retrieving data<a class="anchor" aria-label="anchor" href="#connecting-copying-and-retrieving-data"></a></h3>
 
 
 
@@ -43,28 +49,33 @@
 
       <dl><dt>
 
-          <code><a href="anti_join.duckplyr_df.html">anti_join(<i>&lt;duckplyr_df&gt;</i>)</a></code>
+          <code><a href="pull.duckplyr_df.html">pull(<i>&lt;duckplyr_df&gt;</i>)</a></code>
 
         </dt>
-        <dd>Filtering joins (duckplyr)</dd>
+        <dd>Extract a single column</dd>
       </dl><dl><dt>
+
+          <code><a href="explain.duckplyr_df.html">explain(<i>&lt;duckplyr_df&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Explain details of a tbl</dd>
+      </dl></div><div class="section level2">
+
+      <h3 id="verbs-that-affect-rows">Verbs that affect rows<a class="anchor" aria-label="anchor" href="#verbs-that-affect-rows"></a></h3>
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
 
           <code><a href="arrange.duckplyr_df.html">arrange(<i>&lt;duckplyr_df&gt;</i>)</a></code>
 
         </dt>
         <dd>Order rows using column values</dd>
-      </dl><dl><dt>
-
-          <code><a href="as_duckplyr_df.html">as_duckplyr_df()</a></code> <code><a href="as_duckplyr_df.html">as_duckplyr_tibble()</a></code>
-
-        </dt>
-        <dd>Convert to a duckplyr data frame</dd>
-      </dl><dl><dt>
-
-          <code><a href="count.duckplyr_df.html">count(<i>&lt;duckplyr_df&gt;</i>)</a></code>
-
-        </dt>
-        <dd>Count the observations in each group</dd>
       </dl><dl><dt>
 
           <code><a href="distinct.duckplyr_df.html">distinct(<i>&lt;duckplyr_df&gt;</i>)</a></code>
@@ -73,112 +84,33 @@
         <dd>Keep distinct/unique rows</dd>
       </dl><dl><dt>
 
-          <code><a href="explain.duckplyr_df.html">explain(<i>&lt;duckplyr_df&gt;</i>)</a></code>
-
-        </dt>
-        <dd>Explain details of a tbl</dd>
-      </dl><dl><dt>
-
           <code><a href="filter.duckplyr_df.html">filter(<i>&lt;duckplyr_df&gt;</i>)</a></code>
 
         </dt>
         <dd>Keep rows that match a condition</dd>
       </dl><dl><dt>
 
-          <code><a href="full_join.duckplyr_df.html">full_join(<i>&lt;duckplyr_df&gt;</i>)</a></code>
-
-        </dt>
-        <dd>Full join</dd>
-      </dl><dl><dt>
-
           <code><a href="head.duckplyr_df.html">head(<i>&lt;duckplyr_df&gt;</i>)</a></code>
 
         </dt>
         <dd>Return the First Parts of an Object</dd>
-      </dl><dl><dt>
+      </dl></div><div class="section level2">
 
-          <code><a href="inner_join.duckplyr_df.html">inner_join(<i>&lt;duckplyr_df&gt;</i>)</a></code>
+      <h3 id="verbs-that-affect-columns">Verbs that affect columns<a class="anchor" aria-label="anchor" href="#verbs-that-affect-columns"></a></h3>
 
-        </dt>
-        <dd>Inner join</dd>
-      </dl><dl><dt>
 
-          <code><a href="intersect.duckplyr_df.html">intersect(<i>&lt;duckplyr_df&gt;</i>)</a></code>
 
-        </dt>
-        <dd>Intersect</dd>
-      </dl><dl><dt>
+    </div><div class="section level2">
 
-          <code><a href="is_duckplyr_df.html">is_duckplyr_df()</a></code>
 
-        </dt>
-        <dd>Class predicate for duckplyr data frames</dd>
-      </dl><dl><dt>
 
-          <code><a href="left_join.duckplyr_df.html">left_join(<i>&lt;duckplyr_df&gt;</i>)</a></code>
 
-        </dt>
-        <dd>Left join</dd>
-      </dl><dl><dt>
+      <dl><dt>
 
           <code><a href="mutate.duckplyr_df.html">mutate(<i>&lt;duckplyr_df&gt;</i>)</a></code>
 
         </dt>
         <dd>Create, modify, and delete columns (duckplyr)</dd>
-      </dl><dl><dt>
-
-          <code><a href="pull.duckplyr_df.html">pull(<i>&lt;duckplyr_df&gt;</i>)</a></code>
-
-        </dt>
-        <dd>Extract a single column</dd>
-      </dl><dl><dt>
-
-          <code><a href="relocate.duckplyr_df.html">relocate(<i>&lt;duckplyr_df&gt;</i>)</a></code>
-
-        </dt>
-        <dd>Change column order</dd>
-      </dl><dl><dt>
-
-          <code><a href="rename.duckplyr_df.html">rename(<i>&lt;duckplyr_df&gt;</i>)</a></code>
-
-        </dt>
-        <dd>Rename columns</dd>
-      </dl><dl><dt>
-
-          <code><a href="right_join.duckplyr_df.html">right_join(<i>&lt;duckplyr_df&gt;</i>)</a></code>
-
-        </dt>
-        <dd>Right join</dd>
-      </dl><dl><dt>
-
-          <code><a href="select.duckplyr_df.html">select(<i>&lt;duckplyr_df&gt;</i>)</a></code>
-
-        </dt>
-        <dd>Keep or drop columns using their names and types</dd>
-      </dl><dl><dt>
-
-          <code><a href="semi_join.duckplyr_df.html">semi_join(<i>&lt;duckplyr_df&gt;</i>)</a></code>
-
-        </dt>
-        <dd>Filtering joins (duckplyr)</dd>
-      </dl><dl><dt>
-
-          <code><a href="setdiff.duckplyr_df.html">setdiff(<i>&lt;duckplyr_df&gt;</i>)</a></code>
-
-        </dt>
-        <dd>Set diff</dd>
-      </dl><dl><dt>
-
-          <code><a href="summarise.duckplyr_df.html">summarise(<i>&lt;duckplyr_df&gt;</i>)</a></code>
-
-        </dt>
-        <dd>Summarise each group down to one row</dd>
-      </dl><dl><dt>
-
-          <code><a href="symdiff.duckplyr_df.html">symdiff(<i>&lt;duckplyr_df&gt;</i>)</a></code>
-
-        </dt>
-        <dd>Symmetric difference</dd>
       </dl><dl><dt>
 
           <code><a href="transmute.duckplyr_df.html">transmute(<i>&lt;duckplyr_df&gt;</i>)</a></code>
@@ -187,11 +119,128 @@
         <dd>Create, modify, and delete columns</dd>
       </dl><dl><dt>
 
+          <code><a href="select.duckplyr_df.html">select(<i>&lt;duckplyr_df&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Keep or drop columns using their names and types</dd>
+      </dl><dl><dt>
+
+          <code><a href="rename.duckplyr_df.html">rename(<i>&lt;duckplyr_df&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Rename columns</dd>
+      </dl><dl><dt>
+
+          <code><a href="relocate.duckplyr_df.html">relocate(<i>&lt;duckplyr_df&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Change column order</dd>
+      </dl></div><div class="section level2">
+
+      <h3 id="grouping-and-summarising-verbs">Grouping and summarising verbs<a class="anchor" aria-label="anchor" href="#grouping-and-summarising-verbs"></a></h3>
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="count.duckplyr_df.html">count(<i>&lt;duckplyr_df&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Count the observations in each group</dd>
+      </dl><dl><dt>
+
+          <code><a href="summarise.duckplyr_df.html">summarise(<i>&lt;duckplyr_df&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Summarise each group down to one row</dd>
+      </dl></div><div class="section level2">
+
+      <h3 id="verbs-that-work-with-multiple-tables">Verbs that work with multiple tables<a class="anchor" aria-label="anchor" href="#verbs-that-work-with-multiple-tables"></a></h3>
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="left_join.duckplyr_df.html">left_join(<i>&lt;duckplyr_df&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Left join</dd>
+      </dl><dl><dt>
+
+          <code><a href="right_join.duckplyr_df.html">right_join(<i>&lt;duckplyr_df&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Right join</dd>
+      </dl><dl><dt>
+
+          <code><a href="inner_join.duckplyr_df.html">inner_join(<i>&lt;duckplyr_df&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Inner join</dd>
+      </dl><dl><dt>
+
+          <code><a href="full_join.duckplyr_df.html">full_join(<i>&lt;duckplyr_df&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Full join</dd>
+      </dl><dl><dt>
+
+          <code><a href="semi_join.duckplyr_df.html">semi_join(<i>&lt;duckplyr_df&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Filtering joins (duckplyr)</dd>
+      </dl><dl><dt>
+
+          <code><a href="anti_join.duckplyr_df.html">anti_join(<i>&lt;duckplyr_df&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Filtering joins (duckplyr)</dd>
+      </dl><dl><dt>
+
+          <code><a href="intersect.duckplyr_df.html">intersect(<i>&lt;duckplyr_df&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Intersect</dd>
+      </dl><dl><dt>
+
           <code><a href="union_all.duckplyr_df.html">union_all(<i>&lt;duckplyr_df&gt;</i>)</a></code>
 
         </dt>
         <dd>Union of all</dd>
       </dl><dl><dt>
+
+          <code><a href="setdiff.duckplyr_df.html">setdiff(<i>&lt;duckplyr_df&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Set diff</dd>
+      </dl><dl><dt>
+
+          <code><a href="symdiff.duckplyr_df.html">symdiff(<i>&lt;duckplyr_df&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Symmetric difference</dd>
+      </dl></div><div class="section level2">
+
+      <h3 id="unsupported-verbs">Unsupported verbs<a class="anchor" aria-label="anchor" href="#unsupported-verbs"></a></h3>
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
 
           <code><a href="not-supported.html">not-supported</a></code>
 
