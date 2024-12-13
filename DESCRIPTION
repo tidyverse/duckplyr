@@ -39,6 +39,7 @@ Suggests:
     curl,
     dbplyr,
     hms,
+    knitr,
     lobstr,
     lubridate,
     palmerpenguins,
@@ -47,6 +48,7 @@ Suggests:
     purrr,
     qs,
     reprex,
+    rmarkdown,
     rstudioapi,
     testthat (>= 3.1.5),
     usethis,
@@ -60,3 +62,4 @@ Roxygen: list( markdown = TRUE, roclets = c("collate", "namespace", "rd",
     "roxyglobals::global_roclet") )
 RoxygenNote: 7.3.2.9000
 Config/Needs/website: tidyverse/tidytemplate
+VignetteBuilder: knitr

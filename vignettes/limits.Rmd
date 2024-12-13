@@ -1,0 +1,40 @@
+---
+title: "Translations"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{translations}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Verbs
+
+Not all dplyr verbs are implemented within duckplyr.
+For unsupported verbs, duckplyr automatically falls back to dplyr.
+See `?not-supported` for a list of verbs for which duckplyr does not provide a method.
+
+See the [reference index](https://duckplyr.tidyverse.org/reference/index.html) for a list of verbs with corresponding duckplyr methods.
+
+Refer to [our contributing guide](https://duckplyr.tidyverse.org/CONTRIBUTING.html#new-translations-for-functions) to learn how to suggest the addition of a new verb.
+
+
+## Functions within verbs
+
+For all functions used in dplyr verbs, translations must be provided. 
+
+As of now, here are the translations provided:
+
+```{r}
+knitr::kable(
+  read.csv(system.file("translated.csv", package = "duckplyr"))
+)
+```
+
+Refer to [our contributing guide](https://duckplyr.tidyverse.org/CONTRIBUTING.html#new-translations-for-functions) to learn how to contribute new translations.
