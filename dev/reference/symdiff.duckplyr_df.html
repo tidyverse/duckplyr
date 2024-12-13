@@ -69,9 +69,8 @@ orders) and compatible types.</p></dd>
     <h2 id="fallbacks">Fallbacks<a class="anchor" aria-label="anchor" href="#fallbacks"></a></h2>
 
 
-<p>You cannot use <code>symdiff.duckplyr_df</code></p><ul><li><p>with duplicate names,</p></li>
-<li><p>with tables of different widths,</p></li>
-<li><p>with tables that have different names.</p></li>
+<p>You cannot use <code>symdiff.duckplyr_df</code></p><ul><li><p>if column names are duplicated in one of the tables</p></li>
+<li><p>if column names are different in both tables.</p></li>
 </ul><p>If you do the code will fall back to <code><a href="https://dplyr.tidyverse.org/reference/setops.html" class="external-link">dplyr::symdiff()</a></code> without any error.</p>
     </div>
     <div class="section level2">

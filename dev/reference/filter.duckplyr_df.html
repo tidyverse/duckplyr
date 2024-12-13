@@ -5,13 +5,13 @@ The filter() function is used to subset a data frame,
 retaining all rows that satisfy your conditions.
 To be retained, the row must produce a value of TRUE for all conditions.
 Note that when a condition evaluates to NA the row will be dropped,
-unlike base subsetting with ].'><meta property="og:description" content='This is a method for the dplyr::select() generic.
+unlike base subsetting with [.'><meta property="og:description" content='This is a method for the dplyr::select() generic.
 See "Fallbacks" section for differences in implementation.
 The filter() function is used to subset a data frame,
 retaining all rows that satisfy your conditions.
 To be retained, the row must produce a value of TRUE for all conditions.
 Note that when a condition evaluates to NA the row will be dropped,
-unlike base subsetting with ].'><meta property="og:image" content="https://duckplyr.tidyverse.org/logo.png"><meta name="robots" content="noindex"><script defer data-domain="duckplyr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script></head><body>
+unlike base subsetting with [.'><meta property="og:image" content="https://duckplyr.tidyverse.org/logo.png"><meta name="robots" content="noindex"><script defer data-domain="duckplyr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script></head><body>
     <a href="#container" class="visually-hidden-focusable">Skip to content</a>
 
 
@@ -51,7 +51,7 @@ The <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="ext
 retaining all rows that satisfy your conditions.
 To be retained, the row must produce a value of <code>TRUE</code> for all conditions.
 Note that when a condition evaluates to <code>NA</code> the row will be dropped,
-unlike base subsetting with <code>]</code>.</p>
+unlike base subsetting with <code>[</code>.</p>
     </div>
 
     <div class="section level2">
@@ -96,8 +96,7 @@ is recalculated based on the resulting data, otherwise the grouping is kept as i
 
 
 <p>You cannot use <code>filter.duckplyr_df</code></p><ul><li><p>with no filter conditions,</p></li>
-<li><p>nor with a selection that returns no columns,</p></li>
-<li><p>nor for a grouped operation.</p></li>
+<li><p>nor for a grouped operation (if <code>.by</code> is set).</p></li>
 </ul><p>If you do the code will fall back to <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">dplyr::filter()</a></code> without any error.</p>
     </div>
     <div class="section level2">
