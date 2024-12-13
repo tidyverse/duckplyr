@@ -1,0 +1,194 @@
+---
+title: "Use of duckplyr in other packages"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{developers}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r attach}
+library(conflicted)
+library(dplyr)
+conflict_prefer("filter", "dplyr")
+```
+
+## Use of duckplyr for individual data frames
+
+To enable duckplyr **for individual data frames instead of session wide**, 
+
+- do **not** load duckplyr with `library()`.
+- use `duckplyr::as_duckplyr_tibble()` as the first step in your pipe, without attaching the package.
+
+This example illustrates usage of duckplyr for individual data frames.
+
+Use `duckplyr::as_duckplyr_tibble()` to enable processing with duckdb:
+
+```{r}
+out <-
+  palmerpenguins::penguins %>%
+  # CAVEAT: factor columns are not supported yet
+  mutate(across(where(is.factor), as.character)) %>%
+  duckplyr::as_duckplyr_tibble() %>%
+  mutate(bill_area = bill_length_mm * bill_depth_mm) %>%
+  summarize(.by = c(species, sex), mean_bill_area = mean(bill_area)) %>%
+  filter(species != "Gentoo")
+```
+
+The result is a tibble, with its own class.
+
+```{r}
+class(out)
+names(out)
+```
+
+duckdb is responsible for eventually carrying out the operations.
+Despite the late filter, the summary is not computed for the Gentoo species.
+
+```{r}
+out %>%
+  explain()
+```
+
+All data frame operations are supported.
+Computation happens upon the first request.
+
+```{r}
+out$mean_bill_area
+```
+
+After the computation has been carried out, the results are available immediately:
+
+```{r}
+out
+```
+
+## Extensibility
+
+duckplyr also defines a set of generics that provide a low-level implementer's interface for dplyr's high-level user interface.
+Other packages may then implement methods for those generics.
+
+```{r extensibility}
+library(conflicted)
+library(dplyr)
+conflict_prefer("filter", "dplyr")
+library(duckplyr)
+```
+
+
+```{r overwrite, echo = FALSE}
+methods_overwrite()
+```
+
+```{r extensibility2}
+# Create a relational to be used by examples below
+new_dfrel <- function(x) {
+  stopifnot(is.data.frame(x))
+  new_relational(list(x), class = "dfrel")
+}
+mtcars_rel <- new_dfrel(mtcars[1:5, 1:4])
+
+# Example 1: return a data.frame
+rel_to_df.dfrel <- function(rel, ...) {
+  unclass(rel)[[1]]
+}
+rel_to_df(mtcars_rel)
+
+# Example 2: A (random) filter
+rel_filter.dfrel <- function(rel, exprs, ...) {
+  df <- unclass(rel)[[1]]
+
+  # A real implementation would evaluate the predicates defined
+  # by the exprs argument
+  new_dfrel(df[sample.int(nrow(df), 3, replace = TRUE), ])
+}
+
+rel_filter(
+  mtcars_rel,
+  list(
+    relexpr_function(
+      "gt",
+      list(relexpr_reference("cyl"), relexpr_constant("6"))
+    )
+  )
+)
+
+# Example 3: A custom projection
+rel_project.dfrel <- function(rel, exprs, ...) {
+  df <- unclass(rel)[[1]]
+
+  # A real implementation would evaluate the expressions defined
+  # by the exprs argument
+  new_dfrel(df[seq_len(min(3, base::ncol(df)))])
+}
+
+rel_project(
+  mtcars_rel,
+  list(relexpr_reference("cyl"), relexpr_reference("disp"))
+)
+
+# Example 4: A custom ordering (eg, ascending by mpg)
+rel_order.dfrel <- function(rel, exprs, ...) {
+  df <- unclass(rel)[[1]]
+
+  # A real implementation would evaluate the expressions defined
+  # by the exprs argument
+  new_dfrel(df[order(df[[1]]), ])
+}
+
+rel_order(
+  mtcars_rel,
+  list(relexpr_reference("mpg"))
+)
+
+# Example 5: A custom join
+rel_join.dfrel <- function(left, right, conds, join, ...) {
+  left_df <- unclass(left)[[1]]
+  right_df <- unclass(right)[[1]]
+
+  # A real implementation would evaluate the expressions
+  # defined by the conds argument,
+  # use different join types based on the join argument,
+  # and implement the join itself instead of relaying to left_join().
+  new_dfrel(dplyr::left_join(left_df, right_df))
+}
+
+rel_join(new_dfrel(data.frame(mpg = 21)), mtcars_rel)
+
+# Example 6: Limit the maximum rows returned
+rel_limit.dfrel <- function(rel, n, ...) {
+  df <- unclass(rel)[[1]]
+
+  new_dfrel(df[seq_len(n), ])
+}
+
+rel_limit(mtcars_rel, 3)
+
+# Example 7: Suppress duplicate rows
+#  (ignoring row names)
+rel_distinct.dfrel <- function(rel, ...) {
+  df <- unclass(rel)[[1]]
+
+  new_dfrel(df[!duplicated(df), ])
+}
+
+rel_distinct(new_dfrel(mtcars[1:3, 1:4]))
+
+# Example 8: Return column names
+rel_names.dfrel <- function(rel, ...) {
+  df <- unclass(rel)[[1]]
+
+  names(df)
+}
+
+rel_names(mtcars_rel)
+```
+
+
