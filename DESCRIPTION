@@ -35,10 +35,12 @@ Imports:
 Suggests: 
     arrow,
     brio,
+    conflicted,
     constructive (>= 1.0.0),
     curl,
     dbplyr,
     hms,
+    knitr,
     lobstr,
     lubridate,
     palmerpenguins,
@@ -47,12 +49,13 @@ Suggests:
     purrr,
     qs,
     reprex,
+    rmarkdown,
     rstudioapi,
     testthat (>= 3.1.5),
     usethis,
     withr
 Config/Needs/check: anthonynorth/roxyglobals
-Config/Needs/website: tidyverse/tidytemplate, dbplyr, Lahman
+Config/Needs/website: tidyverse/tidytemplate, dbplyr, Lahman, rmarkdown
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Config/testthat/start-first: rel_api, tpch, as_duckplyr_df, mutate,
@@ -61,3 +64,4 @@ Encoding: UTF-8
 Roxygen: list( markdown = TRUE, roclets = c("collate", "namespace", "rd",
     "roxyglobals::global_roclet") )
 RoxygenNote: 7.3.2.9000
+VignetteBuilder: knitr
