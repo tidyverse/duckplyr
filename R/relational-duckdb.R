@@ -194,8 +194,8 @@ vec_ptype_safe <- function(x) {
 }
 
 #' @export
-rel_to_df.duckdb_relation <- function(rel, ...) {
-  duckdb$rel_to_altrep(rel)
+rel_to_df.duckdb_relation <- function(rel, ..., allow_materialization = TRUE) {
+  duckdb$rel_to_altrep(rel, allow_materialization)
 }
 
 #' @export

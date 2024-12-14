@@ -51,8 +51,6 @@ duckplyr_df_from_parquet <- function(path, ..., options = list(), class = NULL) 
 #'
 #' unlink(path_parquet)
 df_to_parquet <- function(data, path) {
-  check_installed("duckdb", version = "0.10.0")
-
   rel <- duckdb_rel_from_df(data)
   duckdb$rel_to_parquet(rel, path)
 }
