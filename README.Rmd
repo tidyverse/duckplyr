@@ -32,7 +32,12 @@ clean_output <- function(x, options) {
   x
 }
 
-options(cli.num_colors = 256)
+options(
+  cli.num_colors = 256,
+  cli.width = 80,
+  width = 80,
+  pillar.bold = TRUE
+)
 
 local({
   hook_source <- knitr::knit_hooks$get("document")
