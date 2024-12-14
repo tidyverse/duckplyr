@@ -72,8 +72,8 @@ rel5 <- duckdb$rel_filter(
   rel4,
   list(
     duckdb$expr_comparison(
-      cmp_op = "==",
-      exprs = list(
+      "==",
+      list(
         duckdb$expr_reference("p_size"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(15, experimental = experimental)
@@ -334,8 +334,8 @@ rel19 <- duckdb$rel_filter(
   rel18,
   list(
     duckdb$expr_comparison(
-      cmp_op = "==",
-      exprs = list(
+      "==",
+      list(
         duckdb$expr_reference("r_name"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant("EUROPE", experimental = experimental)

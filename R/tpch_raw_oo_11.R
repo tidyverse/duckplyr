@@ -39,8 +39,8 @@ tpch_raw_oo_11 <- function(con, experimental) {
     rel2,
     list(
       duckdb$expr_comparison(
-        cmp_op = "==",
-        exprs = list(
+        "==",
+        list(
           duckdb$expr_reference("n_name"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant("GERMANY", experimental = experimental)
@@ -819,10 +819,7 @@ tpch_raw_oo_11 <- function(con, experimental) {
   rel40 <- duckdb$rel_filter(
     rel39,
     list(
-      duckdb$expr_comparison(
-        cmp_op = ">",
-        exprs = list(duckdb$expr_reference("value"), duckdb$expr_reference("global_value"))
-      )
+      duckdb$expr_comparison(">", list(duckdb$expr_reference("value"), duckdb$expr_reference("global_value")))
     )
   )
   "filter"

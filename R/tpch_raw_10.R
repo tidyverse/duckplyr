@@ -34,8 +34,8 @@ tpch_raw_10 <- function(con, experimental) {
     rel2,
     list(
       duckdb$expr_comparison(
-        cmp_op = "==",
-        exprs = list(
+        "==",
+        list(
           duckdb$expr_reference("l_returnflag"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant("R", experimental = experimental)
@@ -96,8 +96,8 @@ tpch_raw_10 <- function(con, experimental) {
     rel6,
     list(
       duckdb$expr_comparison(
-        cmp_op = ">=",
-        exprs = list(
+        ">=",
+        list(
           duckdb$expr_reference("o_orderdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(as.Date("1993-10-01"), experimental = experimental)
@@ -107,8 +107,8 @@ tpch_raw_10 <- function(con, experimental) {
         )
       ),
       duckdb$expr_comparison(
-        cmp_op = "<",
-        exprs = list(
+        "<",
+        list(
           duckdb$expr_reference("o_orderdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(as.Date("1994-01-01"), experimental = experimental)
