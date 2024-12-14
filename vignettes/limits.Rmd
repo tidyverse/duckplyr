@@ -31,10 +31,44 @@ For all functions used in dplyr verbs, translations must be provided.
 
 As of now, here are the translations provided:
 
-```{r}
-knitr::kable(
-  read.csv(system.file("translated.csv", package = "duckplyr"))
-)
-```
+- Parentheses: `(` (`?Paren`)
+
+- Comparison operators: `==`, `>`, `!=`, `<`, `>=`, `<=` (`?Comparison`)
+
+- Basic arithmetics: `+`, `/`, `-`, `*` (`?Arithmetic`)
+
+- Math functions: `log10()`, `log()`, `abs()`
+
+- Logical operators: `!`, `&`, `|`
+
+- Branching and conversion: `is.na()`, `dplyr::if_else()`, `as.integer()`, `strftime()`
+
+- String manipulation: `grepl()`, `substr()`
+
+- Date manipulation: `lubridate::hour()`, `lubridate::minute()`, `lubridate::second()`, `lubridate::wday()`
+
+- Aggregation
+
+    - `sum()`, `dplyr::n()`, `dplyr::n_distinct()`
+    - `mean()`, `median()`, `sd()`
+    - `min()`, `max()`
+    - `any()`
+    - `dplyr::first()`, `dplyr::last()`, `dplyr::nth()`
+
+- Ranking
+
+    - `dplyr::row_number()`
+    - `rank()`, `dplyr::min_rank()`, `dplyr::dense_rank()`
+    - `dplyr::percent_rank()`, `dplyr::cume_dist()`
+    - `dplyr::ntile()`
+
+- Shifting: `dplyr::lag()`, `dplyr::lead()`
+
+- Special cases
+
+    - `$` (`?Extract`) is implemented if the LHS is `.data` or `.env`
+    - `%in%` (`?match`) is implemented if the RHS is a constant with up to 100 values
+    - `dplyr::desc()` is only implemented in the context of `dplyr::arrange()`
+    - `suppressWarnings()` is a no-op
 
 Refer to [our contributing guide](https://duckplyr.tidyverse.org/CONTRIBUTING.html#new-translations-for-functions) to learn how to contribute new translations.

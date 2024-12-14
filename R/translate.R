@@ -13,6 +13,7 @@ rel_find_call <- function(fun, env) {
   # Order from https://docs.google.com/spreadsheets/d/1j3AFOKiAknTGpXU1uSH7JzzscgYjVbUEwmdRHS7268E/edit?gid=769885824#gid=769885824,
   # generated as `expr_result` by 63-gh-detail.R
 
+  # Remember to update limits.Rmd when adding new functions!
   pkgs <- switch(name,
     # Handled in a special way, not mentioned here
     # "desc" = c("dplyr", "duckplyr"),
@@ -99,6 +100,7 @@ rel_find_call <- function(fun, env) {
     "substr" = "base",
     NULL
   )
+  # Remember to update limits.Rmd when adding new functions!
 
   if (is.null(pkgs)) {
     cli::cli_abort("No translation for function {.code {name}}.")
