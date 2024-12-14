@@ -3,9 +3,9 @@ duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
-invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
+invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 invisible(
   DBI::dbExecute(
     con,
@@ -81,8 +81,8 @@ rel5 <- duckdb$rel_project(
 rel6 <- duckdb$rel_filter(
   rel5,
   list(
-    duckdb$expr_function(
-      "r_base::==",
+    duckdb$expr_comparison(
+      "==",
       list(
         duckdb$expr_reference("r_name"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -372,8 +372,8 @@ rel30 <- duckdb$rel_project(
 rel31 <- duckdb$rel_filter(
   rel30,
   list(
-    duckdb$expr_function(
-      "r_base::>=",
+    duckdb$expr_comparison(
+      ">=",
       list(
         duckdb$expr_reference("o_orderdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -383,8 +383,8 @@ rel31 <- duckdb$rel_filter(
         }
       )
     ),
-    duckdb$expr_function(
-      "r_base::<=",
+    duckdb$expr_comparison(
+      "<=",
       list(
         duckdb$expr_reference("o_orderdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -748,8 +748,8 @@ rel54 <- duckdb$rel_project(
 rel55 <- duckdb$rel_filter(
   rel54,
   list(
-    duckdb$expr_function(
-      "r_base::==",
+    duckdb$expr_comparison(
+      "==",
       list(
         duckdb$expr_reference("p_type"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1432,8 +1432,8 @@ rel92 <- duckdb$rel_aggregate(
               duckdb$expr_function(
                 "if_else",
                 list(
-                  duckdb$expr_function(
-                    "r_base::==",
+                  duckdb$expr_comparison(
+                    "==",
                     list(
                       duckdb$expr_reference("nation"),
                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {

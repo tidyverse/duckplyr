@@ -38,8 +38,8 @@ tpch_raw_oo_20 <- function(con, experimental) {
   rel3 <- duckdb$rel_filter(
     rel2,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("n_name"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -660,8 +660,8 @@ tpch_raw_oo_20 <- function(con, experimental) {
   rel35 <- duckdb$rel_filter(
     rel34,
     list(
-      duckdb$expr_function(
-        "r_base::>=",
+      duckdb$expr_comparison(
+        ">=",
         list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -671,8 +671,8 @@ tpch_raw_oo_20 <- function(con, experimental) {
           }
         )
       ),
-      duckdb$expr_function(
-        "r_base::<",
+      duckdb$expr_comparison(
+        "<",
         list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1269,8 +1269,8 @@ tpch_raw_oo_20 <- function(con, experimental) {
   rel56 <- duckdb$rel_filter(
     rel55,
     list(
-      duckdb$expr_function(
-        "r_base::>",
+      duckdb$expr_comparison(
+        ">",
         list(duckdb$expr_reference("ps_availqty"), duckdb$expr_reference("qty_threshold"))
       )
     )

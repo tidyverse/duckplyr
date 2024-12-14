@@ -12,7 +12,6 @@ rel_find_call <- function(fun, env) {
 
   # Order from https://docs.google.com/spreadsheets/d/1j3AFOKiAknTGpXU1uSH7JzzscgYjVbUEwmdRHS7268E/edit?gid=769885824#gid=769885824,
   # generated as `expr_result` by 63-gh-detail.R
-
   pkgs <- switch(name,
     # Handled in a special way, not mentioned here
     # "desc" = c("dplyr", "duckplyr"),
@@ -124,11 +123,31 @@ rel_find_call <- function(fun, env) {
   }
 }
 
+infer_class_of_expr <- function(expr, data) {
+  if (typeof(expr) == "symbol") {
+    name <- as.character(expr)
+    if (name %in% names(data)) {
+      return(class(data[[name]])[[1]])
+    }
+  }
+  return(class(expr)[[1]])
+}
+
+classes_are_comparable <- function(left, right) {
+  if (left == "integer" && right == "numeric") {
+    return(TRUE)
+  }
+  if (left == "numeric" && right == "integer") {
+    return(TRUE)
+  }
+  left == right
+}
+
 rel_translate_lang <- function(
   expr,
   do_translate,
+  data,
   # FIXME: Perform constant folding instead
-  names_data,
   env,
   # FIXME: Perform constant folding instead
   partition,
@@ -138,6 +157,24 @@ rel_translate_lang <- function(
   pkg_name <- rel_find_call(expr[[1]], env)
   pkg <- pkg_name[[1]]
   name <- pkg_name[[2]]
+
+
+  if (name %in% c(">", "<", "==", ">=", "<=")) {
+    if (length(expr) != 3) cli::cli_abort("Expected three expressions for comparison. Got {length(expr)}")
+
+    class_left <- infer_class_of_expr(expr[[2]], data)
+    class_right <- infer_class_of_expr(expr[[3]], data)
+
+    if (classes_are_comparable(class_left, class_right)) {
+      return(
+        relexpr_comparison(
+          name,
+          list(do_translate(expr[[2]]), do_translate(expr[[3]]))
+        )
+      )
+    }
+  }
+
 
   if (!(name %in% c("wday", "strftime", "lag", "lead"))) {
     if (!is.null(names(expr)) && any(names(expr) != "")) {
@@ -176,7 +213,7 @@ rel_translate_lang <- function(
       }
     },
     "%in%" = {
-      values <- eval_tidy(expr[[3]], data = new_failing_mask(names_data), env = env)
+      values <- eval_tidy(expr[[3]], data = new_failing_mask(names(data)), env = env)
       if (length(values) == 0) {
         return(relexpr_constant(FALSE))
       }
@@ -314,7 +351,6 @@ rel_translate <- function(
     alias = NULL,
     partition = NULL,
     need_window = FALSE,
-    names_data = names(data),
     names_forbidden = NULL) {
   if (is_expression(quo)) {
     expr <- quo
@@ -323,7 +359,6 @@ rel_translate <- function(
     expr <- quo_get_expr(quo)
     env <- quo_get_env(quo)
   }
-
   used <- character()
 
   do_translate <- function(expr, in_window = FALSE, top_level = FALSE) {
@@ -339,7 +374,7 @@ rel_translate <- function(
         if (as.character(expr) %in% names_forbidden) {
           cli::cli_abort("Can't reuse summary variable {.var {as.character(expr)}}.")
         }
-        if (as.character(expr) %in% names_data) {
+        if (as.character(expr) %in% names(data)) {
           ref <- as.character(expr)
           if (!(ref %in% used)) {
             used <<- c(used, ref)
@@ -354,7 +389,7 @@ rel_translate <- function(
       language = rel_translate_lang(
         expr,
         do_translate,
-        names_data,
+        data,
         env,
         partition,
         in_window,

@@ -1,5 +1,5 @@
 diff --git b/R/distinct.R a/R/distinct.R
-index 1e20283f..67b76e12 100644
+index 1e20283f..378d4890 100644
 --- b/R/distinct.R
 +++ a/R/distinct.R
 @@ -1,10 +1,70 @@
@@ -56,7 +56,7 @@ index 1e20283f..67b76e12 100644
 +
 +        expr_filter <- rel_translate(
 +          quo(`___row_number_by` == 1L),
-+          names_data = "___row_number_by"
++          tibble(`___row_number_by` = 1L)
 +        )
 +        out_rel <- rel_filter(rel, list(expr_filter))
 +

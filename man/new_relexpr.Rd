@@ -5,6 +5,7 @@
 \alias{relexpr_reference}
 \alias{relexpr_constant}
 \alias{relexpr_function}
+\alias{relexpr_comparison}
 \alias{relexpr_window}
 \alias{relexpr_set_alias}
 \title{Relational expressions}
@@ -16,6 +17,8 @@ relexpr_reference(name, rel = NULL, alias = NULL)
 relexpr_constant(val, alias = NULL)
 
 relexpr_function(name, args, alias = NULL)
+
+relexpr_comparison(cmp_op, exprs)
 
 relexpr_window(
   expr,
@@ -43,6 +46,10 @@ relexpr_set_alias(expr, alias = NULL)
 
 \item{args}{Function arguments, a list of \code{expr} objects.}
 
+\item{cmp_op}{Comparison operator, e.g., \code{"<"} or \code{"=="}.}
+
+\item{exprs}{Expressions to compare, a list of \code{expr} objects.}
+
 \item{expr}{An \code{expr} object.}
 
 \item{partitions}{Partitions, a list of \code{expr} objects.}
@@ -54,6 +61,8 @@ relexpr_set_alias(expr, alias = NULL)
 \item{default_expr}{default relational expression.}
 }
 \value{
+an object of class \code{"relational_relexpr"}
+
 an object of class \code{"relational_relexpr"}
 
 an object of class \code{"relational_relexpr"}
@@ -79,6 +88,8 @@ users should rarely need to call it directly.
 
 \code{relexpr_function()} applies a function.
 The arguments to this function are a list of other expression objects.
+
+\code{relexpr_comparison()} wraps a comparison expression.
 
 \code{relexpr_window()} applies a function over a window,
 similarly to the SQL \code{OVER} clause.

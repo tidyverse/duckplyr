@@ -66,8 +66,8 @@ tpch_raw_oo_07 <- function(con, experimental) {
       duckdb$expr_function(
         "|",
         list(
-          duckdb$expr_function(
-            "r_base::==",
+          duckdb$expr_comparison(
+            "==",
             list(
               duckdb$expr_reference("n1_name"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -77,8 +77,8 @@ tpch_raw_oo_07 <- function(con, experimental) {
               }
             )
           ),
-          duckdb$expr_function(
-            "r_base::==",
+          duckdb$expr_comparison(
+            "==",
             list(
               duckdb$expr_reference("n1_name"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -278,8 +278,8 @@ tpch_raw_oo_07 <- function(con, experimental) {
       duckdb$expr_function(
         "|",
         list(
-          duckdb$expr_function(
-            "r_base::==",
+          duckdb$expr_comparison(
+            "==",
             list(
               duckdb$expr_reference("n2_name"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -289,8 +289,8 @@ tpch_raw_oo_07 <- function(con, experimental) {
               }
             )
           ),
-          duckdb$expr_function(
-            "r_base::==",
+          duckdb$expr_comparison(
+            "==",
             list(
               duckdb$expr_reference("n2_name"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -621,8 +621,8 @@ tpch_raw_oo_07 <- function(con, experimental) {
   rel46 <- duckdb$rel_filter(
     rel45,
     list(
-      duckdb$expr_function(
-        "r_base::>=",
+      duckdb$expr_comparison(
+        ">=",
         list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -632,8 +632,8 @@ tpch_raw_oo_07 <- function(con, experimental) {
           }
         )
       ),
-      duckdb$expr_function(
-        "r_base::<=",
+      duckdb$expr_comparison(
+        "<=",
         list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -994,8 +994,8 @@ tpch_raw_oo_07 <- function(con, experimental) {
           duckdb$expr_function(
             "&",
             list(
-              duckdb$expr_function(
-                "r_base::==",
+              duckdb$expr_comparison(
+                "==",
                 list(
                   duckdb$expr_reference("n1_name"),
                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1005,8 +1005,8 @@ tpch_raw_oo_07 <- function(con, experimental) {
                   }
                 )
               ),
-              duckdb$expr_function(
-                "r_base::==",
+              duckdb$expr_comparison(
+                "==",
                 list(
                   duckdb$expr_reference("n2_name"),
                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1021,8 +1021,8 @@ tpch_raw_oo_07 <- function(con, experimental) {
           duckdb$expr_function(
             "&",
             list(
-              duckdb$expr_function(
-                "r_base::==",
+              duckdb$expr_comparison(
+                "==",
                 list(
                   duckdb$expr_reference("n1_name"),
                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1032,8 +1032,8 @@ tpch_raw_oo_07 <- function(con, experimental) {
                   }
                 )
               ),
-              duckdb$expr_function(
-                "r_base::==",
+              duckdb$expr_comparison(
+                "==",
                 list(
                   duckdb$expr_reference("n2_name"),
                   if ("experimental" %in% names(formals(duckdb$expr_constant))) {

@@ -1178,7 +1178,6 @@ test_that("relational distinct() order-preserving", {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
@@ -1262,8 +1261,8 @@ test_that("relational distinct() order-preserving", {
   rel4 <- duckdb$rel_filter(
     rel3,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1313,7 +1312,6 @@ test_that("relational distinct(a) order-preserving", {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
@@ -1377,8 +1375,8 @@ test_that("relational distinct(a) order-preserving", {
   rel4 <- duckdb$rel_filter(
     rel3,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1418,7 +1416,6 @@ test_that("relational distinct(a, b) order-preserving", {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
@@ -1492,8 +1489,8 @@ test_that("relational distinct(a, b) order-preserving", {
   rel4 <- duckdb$rel_filter(
     rel3,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1538,7 +1535,6 @@ test_that("relational distinct(b, b) order-preserving", {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
@@ -1602,8 +1598,8 @@ test_that("relational distinct(b, b) order-preserving", {
   rel4 <- duckdb$rel_filter(
     rel3,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1643,7 +1639,6 @@ test_that("relational distinct(g) order-preserving", {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
@@ -1707,8 +1702,8 @@ test_that("relational distinct(g) order-preserving", {
   rel4 <- duckdb$rel_filter(
     rel3,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1748,7 +1743,6 @@ test_that("relational union_all(data.frame(a = 1L, b = 3, g = 2L)) %>% distinct(
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "union_all"
@@ -1914,8 +1908,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 3, g = 2L)) %>% distinct(
   rel10 <- duckdb$rel_filter(
     rel9,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1955,7 +1949,6 @@ test_that("relational union_all(data.frame(a = 1L, b = 4, g = 2L)) %>% distinct(
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "union_all"
@@ -2121,8 +2114,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 4, g = 2L)) %>% distinct(
   rel10 <- duckdb$rel_filter(
     rel9,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -2162,7 +2155,6 @@ test_that("relational union_all(data.frame(a = 1L, b = 5, g = 2L)) %>% distinct(
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "union_all"
@@ -2328,8 +2320,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 5, g = 2L)) %>% distinct(
   rel10 <- duckdb$rel_filter(
     rel9,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -2369,7 +2361,6 @@ test_that("relational union_all(data.frame(a = 1L, b = 6, g = 2L)) %>% distinct(
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "union_all"
@@ -2535,8 +2526,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 6, g = 2L)) %>% distinct(
   rel10 <- duckdb$rel_filter(
     rel9,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -2576,7 +2567,6 @@ test_that("relational union_all(data.frame(a = 1L, b = 7, g = 2L)) %>% distinct(
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "union_all"
@@ -2742,8 +2732,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 7, g = 2L)) %>% distinct(
   rel10 <- duckdb$rel_filter(
     rel9,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -2783,7 +2773,6 @@ test_that("relational distinct(g, .keep_all = TRUE) order-preserving", {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
@@ -2857,8 +2846,8 @@ test_that("relational distinct(g, .keep_all = TRUE) order-preserving", {
   rel4 <- duckdb$rel_filter(
     rel3,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -3277,7 +3266,6 @@ test_that("relational distinct(g, .keep_all = TRUE) order-enforcing", {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
@@ -3351,8 +3339,8 @@ test_that("relational distinct(g, .keep_all = TRUE) order-enforcing", {
   rel4 <- duckdb$rel_filter(
     rel3,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -3409,7 +3397,6 @@ test_that("relational filter(a == 1) order-preserving", {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "filter"
@@ -3444,8 +3431,8 @@ test_that("relational filter(a == 1) order-preserving", {
   rel3 <- duckdb$rel_filter(
     rel2,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("a"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -3569,8 +3556,8 @@ test_that("relational filter(a %in% 2:3, g == 2) order-preserving", {
           }
         )
       ),
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("g"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -3698,8 +3685,8 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-preserving", {
               }
             )
           ),
-          duckdb$expr_function(
-            "r_base::==",
+          duckdb$expr_comparison(
+            "==",
             list(
               duckdb$expr_reference("g"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -3856,7 +3843,6 @@ test_that("relational filter(a == 1) order-enforcing", {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "filter"
@@ -3865,8 +3851,8 @@ test_that("relational filter(a == 1) order-enforcing", {
   rel2 <- duckdb$rel_filter(
     rel1,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("a"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -3946,8 +3932,8 @@ test_that("relational filter(a %in% 2:3, g == 2) order-enforcing", {
           }
         )
       ),
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("g"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -4031,8 +4017,8 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-enforcing", {
               }
             )
           ),
-          duckdb$expr_function(
-            "r_base::==",
+          duckdb$expr_comparison(
+            "==",
             list(
               duckdb$expr_reference("g"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -4614,7 +4600,6 @@ test_that("relational intersect() order-preserving", {
   invisible(
     DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
-  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   df1 <- data.frame(a = 1:4, b = 2)
 
   "semi_join"
@@ -4740,8 +4725,8 @@ test_that("relational intersect() order-preserving", {
   rel11 <- duckdb$rel_filter(
     rel10,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -9772,7 +9757,6 @@ test_that("relational mutate(d = if_else(a > 1, \"ok\", NA)) order-preserving", 
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   invisible(
     DBI::dbExecute(
       con,
@@ -9806,8 +9790,8 @@ test_that("relational mutate(d = if_else(a > 1, \"ok\", NA)) order-preserving", 
         tmp_expr <- duckdb$expr_function(
           "if_else",
           list(
-            duckdb$expr_function(
-              "r_base::>",
+            duckdb$expr_comparison(
+              ">",
               list(
                 duckdb$expr_reference("a"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -13787,7 +13771,6 @@ test_that("relational mutate(d = if_else(a > 1, \"ok\", NA)) order-enforcing", {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   invisible(
     DBI::dbExecute(
       con,
@@ -13821,8 +13804,8 @@ test_that("relational mutate(d = if_else(a > 1, \"ok\", NA)) order-enforcing", {
         tmp_expr <- duckdb$expr_function(
           "if_else",
           list(
-            duckdb$expr_function(
-              "r_base::>",
+            duckdb$expr_comparison(
+              ">",
               list(
                 duckdb$expr_reference("a"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -14983,7 +14966,6 @@ test_that("relational setdiff() order-preserving", {
   invisible(
     DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
-  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   df1 <- data.frame(a = 1:4, b = 2)
 
   "anti_join"
@@ -15109,8 +15091,8 @@ test_that("relational setdiff() order-preserving", {
   rel11 <- duckdb$rel_filter(
     rel10,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -15909,7 +15891,6 @@ test_that("relational symdiff() order-preserving", {
   invisible(
     DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
-  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   df1 <- data.frame(a = 1:4, b = 2)
 
   "anti_join"
@@ -15971,40 +15952,14 @@ test_that("relational symdiff() order-preserving", {
       }
     )
   )
-  df3 <- data.frame(a = 5L, b = 2)
+  df3 <- data.frame(a = 1L, b = 2)
 
   "union_all"
   rel9 <- duckdb$rel_from_df(con, df3, experimental = experimental)
+  df4 <- data.frame(a = 5L, b = 2)
+
   "union_all"
-  rel10 <- duckdb$rel_project(
-    rel8,
-    list(
-      {
-        tmp_expr <- duckdb$expr_reference("a")
-        duckdb$expr_set_alias(tmp_expr, "a")
-        tmp_expr
-      },
-      {
-        tmp_expr <- duckdb$expr_reference("b")
-        duckdb$expr_set_alias(tmp_expr, "b")
-        tmp_expr
-      },
-      {
-        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
-        duckdb$expr_set_alias(tmp_expr, "___row_number_x")
-        tmp_expr
-      },
-      {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_integer_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_integer_)
-        }
-        duckdb$expr_set_alias(tmp_expr, "___row_number_y")
-        tmp_expr
-      }
-    )
-  )
+  rel10 <- duckdb$rel_from_df(con, df4, experimental = experimental)
   "union_all"
   rel11 <- duckdb$rel_project(
     rel9,
@@ -16020,6 +15975,36 @@ test_that("relational symdiff() order-preserving", {
         tmp_expr
       },
       {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number_x")
+        tmp_expr
+      },
+      {
+        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
+          duckdb$expr_constant(NA_integer_, experimental = experimental)
+        } else {
+          duckdb$expr_constant(NA_integer_)
+        }
+        duckdb$expr_set_alias(tmp_expr, "___row_number_y")
+        tmp_expr
+      }
+    )
+  )
+  "union_all"
+  rel12 <- duckdb$rel_project(
+    rel10,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
         tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(NA_integer_, experimental = experimental)
         } else {
@@ -16036,15 +16021,15 @@ test_that("relational symdiff() order-preserving", {
     )
   )
   "union_all"
-  rel12 <- duckdb$rel_union_all(rel10, rel11)
+  rel13 <- duckdb$rel_union_all(rel11, rel12)
   "union_all"
-  rel13 <- duckdb$rel_order(
-    rel12,
+  rel14 <- duckdb$rel_order(
+    rel13,
     list(duckdb$expr_reference("___row_number_x"), duckdb$expr_reference("___row_number_y"))
   )
   "union_all"
-  rel14 <- duckdb$rel_project(
-    rel13,
+  rel15 <- duckdb$rel_project(
+    rel14,
     list(
       {
         tmp_expr <- duckdb$expr_reference("a")
@@ -16059,8 +16044,8 @@ test_that("relational symdiff() order-preserving", {
     )
   )
   "distinct"
-  rel15 <- duckdb$rel_project(
-    rel14,
+  rel16 <- duckdb$rel_project(
+    rel15,
     list(
       {
         tmp_expr <- duckdb$expr_reference("a")
@@ -16080,8 +16065,8 @@ test_that("relational symdiff() order-preserving", {
     )
   )
   "distinct"
-  rel16 <- duckdb$rel_project(
-    rel15,
+  rel17 <- duckdb$rel_project(
+    rel16,
     list(
       {
         tmp_expr <- duckdb$expr_reference("a")
@@ -16119,11 +16104,11 @@ test_that("relational symdiff() order-preserving", {
     )
   )
   "distinct"
-  rel17 <- duckdb$rel_filter(
-    rel16,
+  rel18 <- duckdb$rel_filter(
+    rel17,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -16136,10 +16121,10 @@ test_that("relational symdiff() order-preserving", {
     )
   )
   "distinct"
-  rel18 <- duckdb$rel_order(rel17, list(duckdb$expr_reference("___row_number")))
+  rel19 <- duckdb$rel_order(rel18, list(duckdb$expr_reference("___row_number")))
   "distinct"
-  rel19 <- duckdb$rel_project(
-    rel18,
+  rel20 <- duckdb$rel_project(
+    rel19,
     list(
       {
         tmp_expr <- duckdb$expr_reference("a")
@@ -16153,8 +16138,8 @@ test_that("relational symdiff() order-preserving", {
       }
     )
   )
-  rel19
-  out <- duckdb$rel_to_altrep(rel19)
+  rel20
+  out <- duckdb$rel_to_altrep(rel20)
   expect_identical(
     out,
     data.frame(a = c(1L, 5L), b = 2)
@@ -16421,7 +16406,6 @@ test_that("relational union() order-preserving", {
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
   experimental <- FALSE
-  invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   df1 <- data.frame(a = 1:4, b = 2)
 
   "union_all"
@@ -16577,8 +16561,8 @@ test_that("relational union() order-preserving", {
   rel10 <- duckdb$rel_filter(
     rel9,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
