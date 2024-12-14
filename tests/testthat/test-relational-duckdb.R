@@ -98,7 +98,10 @@ test_that("duckdb_rel_from_df() uses materialized results", {
   skip_if(identical(Sys.getenv("R_COVR"), "true"))
 
   withr::local_envvar(DUCKPLYR_FORCE = TRUE)
-  withr::local_options(duckdb.materialize_message = TRUE)
+  n_calls <- 0
+  withr::local_options(duckdb.materialize_callback = function(...) {
+    n_calls <<- n_calls + 1
+  })
 
   df <-
     data.frame(a = 1) %>%
@@ -109,11 +112,23 @@ test_that("duckdb_rel_from_df() uses materialized results", {
     x
   }
 
-  skip_if_not_installed("duckdb", "1.1.2")
+  expect_equal(n_calls, 0)
 
   expect_snapshot(transform = transform, {
     duckdb_rel_from_df(df)
+  })
+
+  expect_equal(n_calls, 0)
+
+  expect_snapshot(transform = transform, {
     nrow(df)
+  })
+
+  expect_equal(n_calls, 1)
+
+  expect_snapshot(transform = transform, {
     duckdb_rel_from_df(df)
   })
+
+  expect_equal(n_calls, 1)
 })

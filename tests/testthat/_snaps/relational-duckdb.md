@@ -41,11 +41,16 @@
       ---------------------
       - a (DOUBLE)
       
+
+---
+
     Code
       nrow(df)
     Output
-      duckplyr: materializing
       [1] 1
+
+---
+
     Code
       duckdb_rel_from_df(df)
     Message

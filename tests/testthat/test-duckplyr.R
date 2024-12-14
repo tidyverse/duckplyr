@@ -12,12 +12,18 @@ test_that("collect() works", {
   y <- as_duckplyr_df(x)
   z <- select(y, a)
 
-  local_options(duckdb.materialize_message = TRUE)
-  expect_output(collect(z))
+  n_calls <- 0
+  local_options(duckdb.materialize_callback = function(...) {
+    n_calls <<- n_calls + 1
+  })
+
+  collect(z)
+  expect_equal(n_calls, 1)
 
   expect_snapshot({
     print(z)
   })
+  expect_equal(n_calls, 1)
 })
 
 test_that("tbl_vars() works", {
@@ -27,6 +33,11 @@ test_that("tbl_vars() works", {
 
   expect_identical(tbl_vars(z), tbl_vars(x))
 
-  local_options(duckdb.materialize_message = TRUE)
-  expect_output(collect(z))
+  n_calls <- 0
+  local_options(duckdb.materialize_callback = function(...) {
+    n_calls <<- n_calls + 1
+  })
+
+  collect(z)
+  expect_equal(n_calls, 1)
 })
