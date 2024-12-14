@@ -201,28 +201,7 @@ first request.
 
 ``` r
 out$mean_bill_area
-#> materializing:
-#> ---------------------
-#> --- Relation Tree ---
-#> ---------------------
-#> Projection [species as species, sex as sex, mean_bill_area as mean_bill_area]
-#>   Order [___row_number ASC]
-#>     Filter ["!="(species, 'Gentoo')]
-#>       Projection [species as species, sex as sex, mean_bill_area as mean_bill_area, row_number() OVER () as ___row_number]
-#>         Projection [species as species, sex as sex, mean_bill_area as mean_bill_area]
-#>           Order [___row_number ASC]
-#>             Aggregate [species, sex, min(___row_number), mean(bill_area)]
-#>               Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, bill_area as bill_area, row_number() OVER () as ___row_number]
-#>                 Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, "*"(bill_length_mm, bill_depth_mm) as bill_area]
-#>                   r_dataframe_scan(0xdeadbeef)
-#> 
-#> ---------------------
-#> -- Result Columns  --
-#> ---------------------
-#> - species (VARCHAR)
-#> - sex (VARCHAR)
-#> - mean_bill_area (DOUBLE)
-#> 
+#> duckplyr: materializing
 #> [1] 770.2627 656.8523 694.9360 819.7503 984.2279
 ```
 
@@ -278,27 +257,7 @@ Querying the number of rows also starts the computation:
 
 ``` r
 nrow(out)
-#> materializing:
-#> ---------------------
-#> --- Relation Tree ---
-#> ---------------------
-#> Projection [species as species, sex as sex, mean_bill_area as mean_bill_area]
-#>   Order [___row_number ASC]
-#>     Filter ["!="(species, 'Gentoo')]
-#>       Projection [species as species, sex as sex, mean_bill_area as mean_bill_area, row_number() OVER () as ___row_number]
-#>         Projection [species as species, sex as sex, mean_bill_area as mean_bill_area]
-#>           Order [___row_number ASC]
-#>             Aggregate [species, sex, min(___row_number), mean(bill_area)]
-#>               Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, bill_area as bill_area, row_number() OVER () as ___row_number]
-#>                 Projection [species as species, island as island, bill_length_mm as bill_length_mm, bill_depth_mm as bill_depth_mm, flipper_length_mm as flipper_length_mm, body_mass_g as body_mass_g, sex as sex, "year" as year, "*"(bill_length_mm, bill_depth_mm) as bill_area]
-#>                   r_dataframe_scan(0xdeadbeef)
-#> 
-#> ---------------------
-#> -- Result Columns  --
-#> ---------------------
-#> - species (VARCHAR)
-#> - sex (VARCHAR)
-#> - mean_bill_area (DOUBLE)
+#> duckplyr: materializing
 #> [1] 5
 ```
 
@@ -373,18 +332,7 @@ palmerpenguins::penguins %>%
 #>   `duckplyr::fallback_upload()` to upload them.
 #> ℹ See `?duckplyr::fallback()` for details.
 #> ℹ This message will be displayed once every eight hours.
-#> materializing:
-#> ---------------------
-#> --- Relation Tree ---
-#> ---------------------
-#> Limit 3
-#>   r_dataframe_scan(0xdeadbeef)
-#> 
-#> ---------------------
-#> -- Result Columns  --
-#> ---------------------
-#> - bill_area (DOUBLE)
-#> 
+#> duckplyr: materializing
 #> # A tibble: 3 × 1
 #>   bill_area
 #>       <dbl>
@@ -476,7 +424,7 @@ rel_project.dfrel <- function(rel, exprs, ...) {
 
   # A real implementation would evaluate the expressions defined
   # by the exprs argument
-  new_dfrel(df[seq_len(min(3, ncol(df)))])
+  new_dfrel(df[seq_len(min(3, base::ncol(df)))])
 }
 
 rel_project(

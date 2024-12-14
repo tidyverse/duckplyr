@@ -1,5 +1,189 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.4.1.9005 (2024-12-14)
+
+## Chore
+
+- Bump duckdb dependency.
+
+## Documentation
+
+- Tweak method and behavior (#373).
+
+- Add manual pages for dplyr methods (@maelle, #214, #359).
+
+
+# duckplyr 0.4.1.9004 (2024-12-09)
+
+## Bug fixes
+
+- `check_duplicate_names()` (#317).
+
+- Check perfect roundtrip for constants again (#307).
+
+- Correctly handle missing values in `if_else()`.
+
+- Use relational operators from the rfuns extension as aliases, not as macros (#291).
+
+- Compute ptype only for join columns in a safe way without materialization, not for the entire data frame (#289).
+
+- Edge case for `count()` (#282).
+
+- Attaching duckplyr via `library()` overwrites all dplyr methods again (#217, #276).
+
+- `expr_scrub()` can handle function-definitions (@toppyy, #268, #271).
+
+## Features
+
+- `mutate()` constructs intermediate data frames for each new variable (#332).
+
+- Harden telemetry code against invalid arguments (#321).
+
+- `across()` tweaks (#318).
+
+- Fall back to dplyr when passing `multiple` with joins (#323).
+
+- Limit number of items that can be handled with `%in%` (#319).
+
+- Use Ubuntu noble for touchstone (#314).
+
+- Enable touchstone (#313).
+
+- Use touchstone for continuous benchmarking (#311).
+
+- More complete `across()` (#306).
+
+- Add more tests from dplyr (#305).
+
+- Partial support for `across()` in `mutate()` and `summarise()` (#296).
+
+- Rely on duckdb to check const feasibility (#293).
+
+- Allow R 4.0 (#285).
+
+- Avoid resetting expression depth, now in duckdb (#280).
+
+- Record and replay functionality now includes the top-level function being called (#273).
+
+- Set the `duckdb.materialize_message` option on load only if not previously specified (@stefanlinner, #220).
+
+## Chore
+
+- Configure IDE.
+
+- Add lifecycle badges (#350, #353).
+
+- Comment design choice.
+
+- `explain()` returns the input, invisibly (#331).
+
+- Sync (#329).
+
+- Nicer fallback error when function cannot be translated (#324).
+
+- Fix glue syntax.
+
+- Tweak workflow (#316).
+
+- Test touchstone (#315).
+
+- Avoid copying copy.
+
+- Sync tests with dplyr dev version (#304).
+
+- Update snapshots.
+
+- Fix sync (#290).
+
+- Apply styler (#281).
+
+- Sync patches (#277).
+
+- Fix typo.
+
+- Sync docs.
+
+- Sync docs branch (#266).
+
+## Continuous integration
+
+- Avoid failure in fledge workflow if no changes (#368).
+
+- Fetch tags for fledge workflow to avoid unnecessary NEWS entries (#366).
+
+- Use styler PR (#362).
+
+- Run in Ubuntu Noble to support r-universe binaries (#352).
+
+- Correctly detect branch protection (#345).
+
+- Use stable pak (#344).
+
+- Latest changes (#328).
+
+- Revert to status workflow (#326).
+
+- Trigger run (#288).
+
+- Trigger run (#287).
+
+- Updates from duckdb (#286).
+
+- Install local package for pkgdown builds (#258).
+
+- Fix condition for fledge workflow (#248).
+
+- Use curl.
+
+- Use gh to download artifact.
+
+- Don't need to unzip artifact.
+
+- Restrict commit again to own PRs.
+
+## Documentation
+
+- Avoid `\code{}` (#340, #354).
+
+- Include section on code generation in contributing guide (#24, #348).
+
+- Update README.
+
+- Sync.
+
+- Sync.
+
+- Sync.
+
+- Move logo.
+
+- Need file, not link, for logo on GitHub.
+
+- Fix logo on GitHub.
+
+- Use downlit only for GitHub README (#262).
+
+- Add logo to README (@luisDVA, #259).
+
+- Fix cut-and-paste typo (@joakimlinde, #240).
+
+- Enable plausible (#250, #251).
+
+- Use new URL for pkgdown (#247).
+
+## Testing
+
+- Snapshot updates for rcc-smoke (null) (#356).
+
+- Add snapshot instead of output (#346).
+
+- Snapshot updates for rcc-smoke (null) (#302).
+
+- Test telemetry code (#275).
+
+- Adapt tests to duckdb release candidate (#261).
+
+
 # duckplyr 0.4.1.9003 (2024-08-20)
 
 ## Features

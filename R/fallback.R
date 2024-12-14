@@ -19,7 +19,7 @@
 #'
 #' The following environment variables control the logging and uploading:
 #'
-#' - \code{DUCKPLYR_FALLBACK_COLLECT} controls logging, set it
+#' - `DUCKPLYR_FALLBACK_COLLECT` controls logging, set it
 #'   to 1 or greater to enable logging.
 #'   If the value is 0, logging is disabled.
 #'   Future versions of duckplyr may start logging additional data
@@ -27,13 +27,13 @@
 #'   Set to 99 to enable logging for all future versions.
 #'   Use [usethis::edit_r_environ()] to edit the environment file.
 #'
-#' - \code{DUCKPLYR_FALLBACK_VERBOSE} controls printing, set it
-#'   to \code{TRUE} or \code{FALSE} to enable or disable printing.
-#'   If the value is \code{TRUE}, a message is printed to the console
+#' - `DUCKPLYR_FALLBACK_VERBOSE` controls printing, set it
+#'   to `TRUE` or `FALSE` to enable or disable printing.
+#'   If the value is `TRUE`, a message is printed to the console
 #'   for each fallback situation.
 #'   This setting is only relevant if logging is enabled.
 #'
-#' - \code{DUCKPLYR_FALLBACK_AUTOUPLOAD} controls uploading, set it
+#' - `DUCKPLYR_FALLBACK_AUTOUPLOAD` controls uploading, set it
 #'   to 1 or greater to enable uploading.
 #'   If the value is 0, uploading is disabled.
 #'   Currently, uploading is active if the value is 1 or greater.
@@ -42,10 +42,10 @@
 #'   Set to 99 to enable uploading for all future versions.
 #'   Use [usethis::edit_r_environ()] to edit the environment file.
 #'
-#' - \code{DUCKPLYR_FALLBACK_LOG_DIR} controls the location of the logs.
+#' - `DUCKPLYR_FALLBACK_LOG_DIR` controls the location of the logs.
 #'   It must point to a directory (existing or not) where the logs will be written.
 #'   By default, logs are written to a directory in the user's cache directory
-#'   as returned by \code{tools::R_user_dir("duckplyr", "cache")}.
+#'   as returned by `tools::R_user_dir("duckplyr", "cache")`.
 #'
 #' All code related to fallback logging and uploading is in the
 #' [`fallback.R`](https://github.com/tidyverse/duckplyr/blob/main/R/fallback.R) and
@@ -161,7 +161,7 @@ fallback_nudge <- function(call_data) {
 #' @param oldest,newest The number of oldest or newest reports to review.
 #'   If not specified, all reports are dispayed.
 #' @param detail Print the full content of the reports.
-#'   Set to \code{FALSE} to only print the file names.
+#'   Set to `FALSE` to only print the file names.
 #' @rdname fallback
 #' @export
 fallback_review <- function(oldest = NULL, newest = NULL, detail = TRUE) {
@@ -189,8 +189,8 @@ fallback_review <- function(oldest = NULL, newest = NULL, detail = TRUE) {
 #' The server is hosted on AWS and the reports are stored in a private S3 bucket.
 #' Only authorized personnel have access to the reports.
 #'
-#' @param strict If \code{TRUE}, the function aborts if any of the reports fail to upload.
-#'   With \code{FALSE}, only a message is printed.
+#' @param strict If `TRUE`, the function aborts if any of the reports fail to upload.
+#'   With `FALSE`, only a message is printed.
 #'
 #' @rdname fallback
 #' @export
