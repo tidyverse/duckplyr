@@ -1262,8 +1262,8 @@ test_that("relational distinct() order-preserving", {
     rel3,
     list(
       duckdb$expr_comparison(
-        cmp_op = "==",
-        exprs = list(
+        "==",
+        list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(1L, experimental = experimental)
@@ -1376,8 +1376,8 @@ test_that("relational distinct(a) order-preserving", {
     rel3,
     list(
       duckdb$expr_comparison(
-        cmp_op = "==",
-        exprs = list(
+        "==",
+        list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(1L, experimental = experimental)
@@ -1490,8 +1490,8 @@ test_that("relational distinct(a, b) order-preserving", {
     rel3,
     list(
       duckdb$expr_comparison(
-        cmp_op = "==",
-        exprs = list(
+        "==",
+        list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(1L, experimental = experimental)
@@ -1599,8 +1599,8 @@ test_that("relational distinct(b, b) order-preserving", {
     rel3,
     list(
       duckdb$expr_comparison(
-        cmp_op = "==",
-        exprs = list(
+        "==",
+        list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(1L, experimental = experimental)
@@ -1703,8 +1703,8 @@ test_that("relational distinct(g) order-preserving", {
     rel3,
     list(
       duckdb$expr_comparison(
-        cmp_op = "==",
-        exprs = list(
+        "==",
+        list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(1L, experimental = experimental)
@@ -1909,8 +1909,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 3, g = 2L)) %>% distinct(
     rel9,
     list(
       duckdb$expr_comparison(
-        cmp_op = "==",
-        exprs = list(
+        "==",
+        list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(1L, experimental = experimental)
@@ -2115,8 +2115,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 4, g = 2L)) %>% distinct(
     rel9,
     list(
       duckdb$expr_comparison(
-        cmp_op = "==",
-        exprs = list(
+        "==",
+        list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(1L, experimental = experimental)
@@ -2321,8 +2321,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 5, g = 2L)) %>% distinct(
     rel9,
     list(
       duckdb$expr_comparison(
-        cmp_op = "==",
-        exprs = list(
+        "==",
+        list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(1L, experimental = experimental)
@@ -2527,8 +2527,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 6, g = 2L)) %>% distinct(
     rel9,
     list(
       duckdb$expr_comparison(
-        cmp_op = "==",
-        exprs = list(
+        "==",
+        list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(1L, experimental = experimental)
@@ -2733,8 +2733,8 @@ test_that("relational union_all(data.frame(a = 1L, b = 7, g = 2L)) %>% distinct(
     rel9,
     list(
       duckdb$expr_comparison(
-        cmp_op = "==",
-        exprs = list(
+        "==",
+        list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(1L, experimental = experimental)
@@ -2847,8 +2847,8 @@ test_that("relational distinct(g, .keep_all = TRUE) order-preserving", {
     rel3,
     list(
       duckdb$expr_comparison(
-        cmp_op = "==",
-        exprs = list(
+        "==",
+        list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(1L, experimental = experimental)
@@ -3340,8 +3340,8 @@ test_that("relational distinct(g, .keep_all = TRUE) order-enforcing", {
     rel3,
     list(
       duckdb$expr_comparison(
-        cmp_op = "==",
-        exprs = list(
+        "==",
+        list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(1L, experimental = experimental)
@@ -3432,8 +3432,8 @@ test_that("relational filter(a == 1) order-preserving", {
     rel2,
     list(
       duckdb$expr_comparison(
-        cmp_op = "==",
-        exprs = list(
+        "==",
+        list(
           duckdb$expr_reference("a"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(1, experimental = experimental)
@@ -3557,8 +3557,8 @@ test_that("relational filter(a %in% 2:3, g == 2) order-preserving", {
         )
       ),
       duckdb$expr_comparison(
-        cmp_op = "==",
-        exprs = list(
+        "==",
+        list(
           duckdb$expr_reference("g"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(2, experimental = experimental)
@@ -3686,8 +3686,8 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-preserving", {
             )
           ),
           duckdb$expr_comparison(
-            cmp_op = "==",
-            exprs = list(
+            "==",
+            list(
               duckdb$expr_reference("g"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                 duckdb$expr_constant(2, experimental = experimental)
@@ -3852,8 +3852,8 @@ test_that("relational filter(a == 1) order-enforcing", {
     rel1,
     list(
       duckdb$expr_comparison(
-        cmp_op = "==",
-        exprs = list(
+        "==",
+        list(
           duckdb$expr_reference("a"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(1, experimental = experimental)
@@ -3933,8 +3933,8 @@ test_that("relational filter(a %in% 2:3, g == 2) order-enforcing", {
         )
       ),
       duckdb$expr_comparison(
-        cmp_op = "==",
-        exprs = list(
+        "==",
+        list(
           duckdb$expr_reference("g"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(2, experimental = experimental)
@@ -4018,8 +4018,8 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-enforcing", {
             )
           ),
           duckdb$expr_comparison(
-            cmp_op = "==",
-            exprs = list(
+            "==",
+            list(
               duckdb$expr_reference("g"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                 duckdb$expr_constant(2, experimental = experimental)
@@ -4726,8 +4726,8 @@ test_that("relational intersect() order-preserving", {
     rel10,
     list(
       duckdb$expr_comparison(
-        cmp_op = "==",
-        exprs = list(
+        "==",
+        list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(1L, experimental = experimental)
@@ -9791,8 +9791,8 @@ test_that("relational mutate(d = if_else(a > 1, \"ok\", NA)) order-preserving", 
           "if_else",
           list(
             duckdb$expr_comparison(
-              cmp_op = ">",
-              exprs = list(
+              ">",
+              list(
                 duckdb$expr_reference("a"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                   duckdb$expr_constant(1, experimental = experimental)
@@ -13805,8 +13805,8 @@ test_that("relational mutate(d = if_else(a > 1, \"ok\", NA)) order-enforcing", {
           "if_else",
           list(
             duckdb$expr_comparison(
-              cmp_op = ">",
-              exprs = list(
+              ">",
+              list(
                 duckdb$expr_reference("a"),
                 if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                   duckdb$expr_constant(1, experimental = experimental)
@@ -15092,8 +15092,8 @@ test_that("relational setdiff() order-preserving", {
     rel10,
     list(
       duckdb$expr_comparison(
-        cmp_op = "==",
-        exprs = list(
+        "==",
+        list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(1L, experimental = experimental)
@@ -16108,8 +16108,8 @@ test_that("relational symdiff() order-preserving", {
     rel17,
     list(
       duckdb$expr_comparison(
-        cmp_op = "==",
-        exprs = list(
+        "==",
+        list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(1L, experimental = experimental)
@@ -16562,8 +16562,8 @@ test_that("relational union() order-preserving", {
     rel9,
     list(
       duckdb$expr_comparison(
-        cmp_op = "==",
-        exprs = list(
+        "==",
+        list(
           duckdb$expr_reference("___row_number_by"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(1L, experimental = experimental)
