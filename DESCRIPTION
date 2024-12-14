@@ -35,6 +35,7 @@ Imports:
 Suggests: 
     arrow,
     brio,
+    conflicted,
     constructive (>= 1.0.0),
     curl,
     dbplyr,
