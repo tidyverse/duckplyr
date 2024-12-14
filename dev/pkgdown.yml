@@ -3,7 +3,8 @@ pkgdown: 2.1.1.9000
 pkgdown_sha: 5c03b7444923f7c797b8b283e175f8eed63797a7
 articles:
   developers: developers.html
-last_built: 2024-12-14T06:23Z
+  limits: limits.html
+last_built: 2024-12-14T07:03Z
 urls:
   reference: https://duckplyr.tidyverse.org/reference
   article: https://duckplyr.tidyverse.org/articles
