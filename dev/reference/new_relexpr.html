@@ -9,6 +9,7 @@ relexpr_reference() constructs a reference to a column.
 relexpr_constant() wraps a constant value.
 relexpr_function() applies a function.
 The arguments to this function are a list of other expression objects.
+relexpr_comparison() wraps a comparison expression.
 relexpr_window() applies a function over a window,
 similarly to the SQL OVER clause.
 relexpr_set_alias() assigns an alias to an expression.'><meta property="og:description" content='These functions provide a backend-agnostic way to construct expression trees
@@ -21,6 +22,7 @@ relexpr_reference() constructs a reference to a column.
 relexpr_constant() wraps a constant value.
 relexpr_function() applies a function.
 The arguments to this function are a list of other expression objects.
+relexpr_comparison() wraps a comparison expression.
 relexpr_window() applies a function over a window,
 similarly to the SQL OVER clause.
 relexpr_set_alias() assigns an alias to an expression.'><meta property="og:image" content="https://duckplyr.tidyverse.org/logo.png"><meta name="robots" content="noindex"><script defer data-domain="duckplyr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script></head><body>
@@ -71,6 +73,7 @@ users should rarely need to call it directly.</p>
 <p><code>relexpr_constant()</code> wraps a constant value.</p>
 <p><code>relexpr_function()</code> applies a function.
 The arguments to this function are a list of other expression objects.</p>
+<p><code>relexpr_comparison()</code> wraps a comparison expression.</p>
 <p><code>relexpr_window()</code> applies a function over a window,
 similarly to the SQL <code>OVER</code> clause.</p>
 <p><code>relexpr_set_alias()</code> assigns an alias to an expression.</p>
@@ -85,6 +88,8 @@ similarly to the SQL <code>OVER</code> clause.</p>
 <span><span class="fu">relexpr_constant</span><span class="op">(</span><span class="va">val</span>, alias <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">relexpr_function</span><span class="op">(</span><span class="va">name</span>, <span class="va">args</span>, alias <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">relexpr_comparison</span><span class="op">(</span><span class="va">cmp_op</span>, <span class="va">exprs</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">relexpr_window</span><span class="op">(</span></span>
 <span>  <span class="va">expr</span>,</span>
@@ -130,6 +135,14 @@ similarly to the SQL <code>OVER</code> clause.</p>
 <dd><p>Function arguments, a list of <code>expr</code> objects.</p></dd>
 
 
+<dt id="arg-cmp-op">cmp_op<a class="anchor" aria-label="anchor" href="#arg-cmp-op"></a></dt>
+<dd><p>Comparison operator, e.g., <code>"&lt;"</code> or <code>"=="</code>.</p></dd>
+
+
+<dt id="arg-exprs">exprs<a class="anchor" aria-label="anchor" href="#arg-exprs"></a></dt>
+<dd><p>Expressions to compare, a list of <code>expr</code> objects.</p></dd>
+
+
 <dt id="arg-expr">expr<a class="anchor" aria-label="anchor" href="#arg-expr"></a></dt>
 <dd><p>An <code>expr</code> object.</p></dd>
 
@@ -153,6 +166,7 @@ similarly to the SQL <code>OVER</code> clause.</p>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>an object of class <code>"relational_relexpr"</code></p>
+<p>an object of class <code>"relational_relexpr"</code></p>
 <p>an object of class <code>"relational_relexpr"</code></p>
 <p>an object of class <code>"relational_relexpr"</code></p>
 <p>an object of class <code>"relational_relexpr"</code></p>
