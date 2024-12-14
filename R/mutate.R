@@ -57,7 +57,14 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
           names_new <- c(names_new, new)
 
           new_pos <- match(new, names(current_data), nomatch = length(current_data) + j)
-          new_expr <- rel_translate(quo, names_data = names(current_data), alias = new, partition = by_names, need_window = TRUE)
+          new_expr <- rel_translate(
+            quo,
+            current_data,
+            names_data = names(current_data),
+            alias = new,
+            partition = by_names,
+            need_window = TRUE
+          )
           exprs[[new_pos]] <- new_expr
 
           new_names_used <- intersect(attr(new_expr, "used"), names(.data))

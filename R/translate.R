@@ -123,7 +123,7 @@ rel_find_call <- function(fun, env) {
   }
 }
 
-infer_class_of_expr <- function(expr, names_data, classes_data) {
+infer_class_of_expr <- function(expr, data, names_data, classes_data) {
   if (typeof(expr) == "symbol" && as.character(expr) %in% names_data) {
     return(classes_data[which(as.character(expr) == names_data)])
   }
@@ -143,6 +143,7 @@ classes_are_comparable <- function(left, right) {
 rel_translate_lang <- function(
   expr,
   do_translate,
+  data,
   # FIXME: Perform constant folding instead
   names_data,
   classes_data,
@@ -160,8 +161,8 @@ rel_translate_lang <- function(
   if (name %in% c(">", "<", "==", ">=", "<=") && !is.null(classes_data)) {
     if (length(expr) != 3) cli::cli_abort("Expected three expressions for comparison. Got {length(expr)}")
 
-    class_left <- infer_class_of_expr(expr[[2]], names_data, classes_data)
-    class_right <- infer_class_of_expr(expr[[3]], names_data, classes_data)
+    class_left <- infer_class_of_expr(expr[[2]], data, names_data, classes_data)
+    class_right <- infer_class_of_expr(expr[[3]], data, names_data, classes_data)
 
     if (classes_are_comparable(class_left, class_right)) {
       return(
@@ -211,7 +212,7 @@ rel_translate_lang <- function(
       }
     },
     "%in%" = {
-      values <- eval_tidy(expr[[3]], data = new_failing_mask(names_data), env = env)
+      values <- eval_tidy(expr[[3]], data = new_failing_mask(names(data)), env = env)
       if (length(values) == 0) {
         return(relexpr_constant(FALSE))
       }
@@ -380,7 +381,7 @@ rel_translate <- function(
         if (as.character(expr) %in% names_forbidden) {
           cli::cli_abort("Can't reuse summary variable {.var {as.character(expr)}}.")
         }
-        if (as.character(expr) %in% names_data) {
+        if (as.character(expr) %in% names(data)) {
           ref <- as.character(expr)
           if (!(ref %in% used)) {
             used <<- c(used, ref)
@@ -395,6 +396,7 @@ rel_translate <- function(
       language = rel_translate_lang(
         expr,
         do_translate,
+        data,
         names_data,
         classes_data,
         env,
