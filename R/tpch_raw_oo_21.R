@@ -129,8 +129,8 @@ tpch_raw_oo_21 <- function(con, experimental) {
     rel8,
     list(
       duckdb$expr_comparison(
-        cmp_op = ">",
-        exprs = list(
+        ">",
+        list(
           duckdb$expr_reference("n_supplier"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant(1, experimental = experimental)
@@ -792,8 +792,8 @@ tpch_raw_oo_21 <- function(con, experimental) {
     rel27,
     list(
       duckdb$expr_comparison(
-        cmp_op = "==",
-        exprs = list(
+        "==",
+        list(
           duckdb$expr_reference("o_orderstatus"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant("F", experimental = experimental)
@@ -1078,8 +1078,8 @@ tpch_raw_oo_21 <- function(con, experimental) {
           "any",
           list(
             duckdb$expr_comparison(
-              cmp_op = ">",
-              exprs = list(duckdb$expr_reference("l_receiptdate"), duckdb$expr_reference("l_commitdate"))
+              ">",
+              list(duckdb$expr_reference("l_receiptdate"), duckdb$expr_reference("l_commitdate"))
             )
           )
         )
@@ -1236,8 +1236,8 @@ tpch_raw_oo_21 <- function(con, experimental) {
         "&",
         list(
           duckdb$expr_comparison(
-            cmp_op = ">",
-            exprs = list(
+            ">",
+            list(
               duckdb$expr_reference("n_supplier"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                 duckdb$expr_constant(1, experimental = experimental)
@@ -1247,8 +1247,8 @@ tpch_raw_oo_21 <- function(con, experimental) {
             )
           ),
           duckdb$expr_comparison(
-            cmp_op = "==",
-            exprs = list(
+            "==",
+            list(
               duckdb$expr_reference("num_failed"),
               if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                 duckdb$expr_constant(1, experimental = experimental)
@@ -1887,8 +1887,8 @@ tpch_raw_oo_21 <- function(con, experimental) {
     rel58,
     list(
       duckdb$expr_comparison(
-        cmp_op = ">",
-        exprs = list(duckdb$expr_reference("l_receiptdate"), duckdb$expr_reference("l_commitdate"))
+        ">",
+        list(duckdb$expr_reference("l_receiptdate"), duckdb$expr_reference("l_commitdate"))
       )
     )
   )
@@ -2461,8 +2461,8 @@ tpch_raw_oo_21 <- function(con, experimental) {
     rel70,
     list(
       duckdb$expr_comparison(
-        cmp_op = "==",
-        exprs = list(
+        "==",
+        list(
           duckdb$expr_reference("n_name"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
             duckdb$expr_constant("SAUDI ARABIA", experimental = experimental)

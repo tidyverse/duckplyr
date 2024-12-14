@@ -79,10 +79,10 @@ relexpr_function <- function(name, args, alias = NULL) {
 
 #' relexpr_comparison
 #'
-#' `relexpr_comparison()` wraps a comparison expression
+#' `relexpr_comparison()` wraps a comparison expression.
 #'
 #' @param exprs Expressions to compare, a list of `expr` objects.
-#' @param cmp_op Comparison operator, eg. "<" or "="
+#' @param cmp_op Comparison operator, e.g., `"<"` or `"=="`.
 #' @rdname new_relexpr
 #' @return an object of class `"relational_relexpr"`
 #' @export

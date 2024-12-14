@@ -58,16 +58,16 @@ rel2 <- duckdb$rel_filter(
       )
     ),
     duckdb$expr_comparison(
-      cmp_op = "<",
-      exprs = list(duckdb$expr_reference("l_commitdate"), duckdb$expr_reference("l_receiptdate"))
+      "<",
+      list(duckdb$expr_reference("l_commitdate"), duckdb$expr_reference("l_receiptdate"))
     ),
     duckdb$expr_comparison(
-      cmp_op = "<",
-      exprs = list(duckdb$expr_reference("l_shipdate"), duckdb$expr_reference("l_commitdate"))
+      "<",
+      list(duckdb$expr_reference("l_shipdate"), duckdb$expr_reference("l_commitdate"))
     ),
     duckdb$expr_comparison(
-      cmp_op = ">=",
-      exprs = list(
+      ">=",
+      list(
         duckdb$expr_reference("l_receiptdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(as.Date("1994-01-01"), experimental = experimental)
@@ -77,8 +77,8 @@ rel2 <- duckdb$rel_filter(
       )
     ),
     duckdb$expr_comparison(
-      cmp_op = "<",
-      exprs = list(
+      "<",
+      list(
         duckdb$expr_reference("l_receiptdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(as.Date("1995-01-01"), experimental = experimental)
@@ -253,8 +253,8 @@ rel8 <- duckdb$rel_aggregate(
                 "|",
                 list(
                   duckdb$expr_comparison(
-                    cmp_op = "==",
-                    exprs = list(
+                    "==",
+                    list(
                       duckdb$expr_reference("o_orderpriority"),
                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                         duckdb$expr_constant("1-URGENT", experimental = experimental)
@@ -264,8 +264,8 @@ rel8 <- duckdb$rel_aggregate(
                     )
                   ),
                   duckdb$expr_comparison(
-                    cmp_op = "==",
-                    exprs = list(
+                    "==",
+                    list(
                       duckdb$expr_reference("o_orderpriority"),
                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                         duckdb$expr_constant("2-HIGH", experimental = experimental)

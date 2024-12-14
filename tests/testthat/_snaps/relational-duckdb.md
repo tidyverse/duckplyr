@@ -44,7 +44,7 @@
     Code
       nrow(df)
     Output
-      duckplyr: materializing, review details with duckplyr::last_rel()
+      duckplyr: materializing
       [1] 1
     Code
       duckdb_rel_from_df(df)

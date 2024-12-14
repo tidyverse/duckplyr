@@ -52,8 +52,8 @@ rel5 <- duckdb$rel_filter(
   rel4,
   list(
     duckdb$expr_comparison(
-      cmp_op = "==",
-      exprs = list(
+      "==",
+      list(
         duckdb$expr_reference("r_name"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant("ASIA", experimental = experimental)
@@ -318,8 +318,8 @@ rel26 <- duckdb$rel_filter(
   rel25,
   list(
     duckdb$expr_comparison(
-      cmp_op = ">=",
-      exprs = list(
+      ">=",
+      list(
         duckdb$expr_reference("o_orderdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(as.Date("1994-01-01"), experimental = experimental)
@@ -329,8 +329,8 @@ rel26 <- duckdb$rel_filter(
       )
     ),
     duckdb$expr_comparison(
-      cmp_op = "<",
-      exprs = list(
+      "<",
+      list(
         duckdb$expr_reference("o_orderdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(as.Date("1995-01-01"), experimental = experimental)

@@ -12,8 +12,8 @@ rel2 <- duckdb$rel_filter(
   rel1,
   list(
     duckdb$expr_comparison(
-      cmp_op = "==",
-      exprs = list(
+      "==",
+      list(
         duckdb$expr_reference("n_name"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant("GERMANY", experimental = experimental)
@@ -388,10 +388,7 @@ rel23 <- duckdb$rel_project(
 rel24 <- duckdb$rel_filter(
   rel23,
   list(
-    duckdb$expr_comparison(
-      cmp_op = ">",
-      exprs = list(duckdb$expr_reference("value"), duckdb$expr_reference("global_value"))
-    )
+    duckdb$expr_comparison(">", list(duckdb$expr_reference("value"), duckdb$expr_reference("global_value")))
   )
 )
 "arrange"

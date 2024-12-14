@@ -46,7 +46,7 @@ relexpr_set_alias(expr, alias = NULL)
 
 \item{args}{Function arguments, a list of \code{expr} objects.}
 
-\item{cmp_op}{Comparison operator, eg. "<" or "="}
+\item{cmp_op}{Comparison operator, e.g., \code{"<"} or \code{"=="}.}
 
 \item{exprs}{Expressions to compare, a list of \code{expr} objects.}
 
@@ -89,7 +89,7 @@ users should rarely need to call it directly.
 \code{relexpr_function()} applies a function.
 The arguments to this function are a list of other expression objects.
 
-\code{relexpr_comparison()} wraps a comparison expression
+\code{relexpr_comparison()} wraps a comparison expression.
 
 \code{relexpr_window()} applies a function over a window,
 similarly to the SQL \code{OVER} clause.

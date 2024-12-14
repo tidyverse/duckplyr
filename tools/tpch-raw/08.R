@@ -60,8 +60,8 @@ rel5 <- duckdb$rel_filter(
   rel4,
   list(
     duckdb$expr_comparison(
-      cmp_op = "==",
-      exprs = list(
+      "==",
+      list(
         duckdb$expr_reference("r_name"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant("AMERICA", experimental = experimental)
@@ -223,8 +223,8 @@ rel21 <- duckdb$rel_filter(
   rel20,
   list(
     duckdb$expr_comparison(
-      cmp_op = ">=",
-      exprs = list(
+      ">=",
+      list(
         duckdb$expr_reference("o_orderdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(as.Date("1995-01-01"), experimental = experimental)
@@ -234,8 +234,8 @@ rel21 <- duckdb$rel_filter(
       )
     ),
     duckdb$expr_comparison(
-      cmp_op = "<=",
-      exprs = list(
+      "<=",
+      list(
         duckdb$expr_reference("o_orderdate"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant(as.Date("1996-12-31"), experimental = experimental)
@@ -446,8 +446,8 @@ rel36 <- duckdb$rel_filter(
   rel35,
   list(
     duckdb$expr_comparison(
-      cmp_op = "==",
-      exprs = list(
+      "==",
+      list(
         duckdb$expr_reference("p_type"),
         if ("experimental" %in% names(formals(duckdb$expr_constant))) {
           duckdb$expr_constant("ECONOMY ANODIZED STEEL", experimental = experimental)
@@ -910,8 +910,8 @@ rel61 <- duckdb$rel_aggregate(
                 "if_else",
                 list(
                   duckdb$expr_comparison(
-                    cmp_op = "==",
-                    exprs = list(
+                    "==",
+                    list(
                       duckdb$expr_reference("nation"),
                       if ("experimental" %in% names(formals(duckdb$expr_constant))) {
                         duckdb$expr_constant("BRAZIL", experimental = experimental)

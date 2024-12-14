@@ -1,3 +1,4 @@
+#' @rdname explain.duckplyr_df
 #' @export
 explain.duckplyr_df <- function(x, ...) {
   rel_try(list(name = "explain", x = x),
