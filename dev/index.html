@@ -42,6 +42,12 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/developers.html">Use of duckplyr in other packages</a></li>
+  </ul>
+</li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
@@ -64,15 +70,17 @@
 </div>
 <!-- badges: start -->
 
-<p>The goal of the duckplyr R package is to provide a drop-in replacement for <a href="https://dplyr.tidyverse.org/" class="external-link">dplyr</a> that uses <a href="https://duckdb.org/" class="external-link">DuckDB</a> as a backend for fast operation. DuckDB is an in-process OLAP database management system, dplyr is the grammar of data manipulation in the tidyverse.</p>
-<p>duckplyr also defines a set of generics that provide a low-level implementer’s interface for dplyr’s high-level user interface.</p>
+<blockquote>
+<p>A <strong>drop-in replacement</strong> for dplyr, powered by DuckDB for <strong>fast operation</strong>.</p>
+</blockquote>
+<p><a href="https://dplyr.tidyverse.org/" class="external-link">dplyr</a> is the grammar of data manipulation in the tidyverse. The duckplyr package will run all of your existing dplyr code with identical results, using <a href="https://duckdb.org/" class="external-link">DuckDB</a> where possible to compute the results faster. In addition, you can analyze larger-than-memory datasets straight from files on your disk or from S3 storage. If you are new to dplyr, the best place to start is the <a href="https://r4ds.hadley.nz/data-transform" class="external-link">data transformation chapter</a> in R for Data Science.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>Install duckplyr from CRAN with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"duckplyr"</span><span class="op">)</span></span></code></pre></div>
-<p>You can also install the development version of duckplyr from R-universe:</p>
+<p>You can also install the development version of duckplyr from <a href="https://tidyverse.r-universe.dev/builds" class="external-link">R-universe</a>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"duckplyr"</span>, repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://tidyverse.r-universe.dev"</span>, <span class="st">"https://cloud.r-project.org"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Or from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
@@ -81,169 +89,20 @@
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"tidyverse/duckplyr"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://conflicted.r-lib.org/" class="external-link">conflicted</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="fu">conflict_prefer</span><span class="op">(</span><span class="st">"filter"</span>, <span class="st">"dplyr"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[conflicted]</span> Will prefer <span style="color: #0000BB; font-weight: bold;">dplyr</span>::filter over any</span></span>
-<span><span class="co">#&gt; other package.</span></span></code></pre></div>
-<p>There are two ways to use duckplyr.</p>
-<ol style="list-style-type: decimal">
-<li>To enable duckplyr for individual data frames, use <code><a href="reference/as_duckplyr_df.html">duckplyr::as_duckplyr_tibble()</a></code> as the first step in your pipe, without attaching the package.</li>
-<li>By calling <code><a href="https://duckplyr.tidyverse.org">library(duckplyr)</a></code>, it overwrites dplyr methods and is automatically enabled for the entire session without having to call <code><a href="reference/as_duckplyr_df.html">as_duckplyr_tibble()</a></code>. To turn this off, call <code><a href="reference/methods_overwrite.html">methods_restore()</a></code>.</li>
-</ol>
-<p>The examples below illustrate both methods. See also the companion <a href="https://github.com/Tmonster/duckplyr_demo" class="external-link">demo repository</a> for a use case with a large dataset.</p>
-<div class="section level3">
-<h3 id="usage-for-individual-data-frames">Usage for individual data frames<a class="anchor" aria-label="anchor" href="#usage-for-individual-data-frames"></a>
-</h3>
-<p>This example illustrates usage of duckplyr for individual data frames.</p>
-<p>Use <code><a href="reference/as_duckplyr_df.html">duckplyr::as_duckplyr_tibble()</a></code> to enable processing with duckdb:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">palmerpenguins</span><span class="fu">::</span><span class="va"><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">penguins</a></span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="co"># CAVEAT: factor columns are not supported yet</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span>, <span class="va">as.character</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="reference/as_duckplyr_df.html">as_duckplyr_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>bill_area <span class="op">=</span> <span class="va">bill_length_mm</span> <span class="op">*</span> <span class="va">bill_depth_mm</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>.by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">species</span>, <span class="va">sex</span><span class="op">)</span>, mean_bill_area <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">bill_area</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">species</span> <span class="op">!=</span> <span class="st">"Gentoo"</span><span class="op">)</span></span></code></pre></div>
-<p>The result is a tibble, with its own class.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "duckplyr_df" "tbl_df"      "tbl"         "data.frame"</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "species"        "sex"            "mean_bill_area"</span></span></code></pre></div>
-<p>duckdb is responsible for eventually carrying out the operations. Despite the late filter, the summary is not computed for the Gentoo species.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">out</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ┌---------------------------┐</span></span>
-<span><span class="co">#&gt; │          ORDER_BY         │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │      dataframe_42_42      │</span></span>
-<span><span class="co">#&gt; │    42.___row_number ASC   │</span></span>
-<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
-<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
-<span><span class="co">#&gt; │           FILTER          │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │   "r_base::!="(species,   │</span></span>
-<span><span class="co">#&gt; │         'Gentoo')         │</span></span>
-<span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │          ~34 Rows         │</span></span>
-<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
-<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
-<span><span class="co">#&gt; │         PROJECTION        │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │             #0            │</span></span>
-<span><span class="co">#&gt; │             #1            │</span></span>
-<span><span class="co">#&gt; │             #2            │</span></span>
-<span><span class="co">#&gt; │             #3            │</span></span>
-<span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │         ~172 Rows         │</span></span>
-<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
-<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
-<span><span class="co">#&gt; │      STREAMING_WINDOW     │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │        Projections:       │</span></span>
-<span><span class="co">#&gt; │    ROW_NUMBER() OVER ()   │</span></span>
-<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
-<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
-<span><span class="co">#&gt; │          ORDER_BY         │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │      dataframe_42_42      │</span></span>
-<span><span class="co">#&gt; │    42.___row_number ASC   │</span></span>
-<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
-<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
-<span><span class="co">#&gt; │       HASH_GROUP_BY       │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │          Groups:          │</span></span>
-<span><span class="co">#&gt; │             #0            │</span></span>
-<span><span class="co">#&gt; │             #1            │</span></span>
-<span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │        Aggregates:        │</span></span>
-<span><span class="co">#&gt; │          min(#2)          │</span></span>
-<span><span class="co">#&gt; │          mean(#3)         │</span></span>
-<span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │         ~172 Rows         │</span></span>
-<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
-<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
-<span><span class="co">#&gt; │         PROJECTION        │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │          species          │</span></span>
-<span><span class="co">#&gt; │            sex            │</span></span>
-<span><span class="co">#&gt; │       ___row_number       │</span></span>
-<span><span class="co">#&gt; │         bill_area         │</span></span>
-<span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │         ~344 Rows         │</span></span>
-<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
-<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
-<span><span class="co">#&gt; │         PROJECTION        │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │             #0            │</span></span>
-<span><span class="co">#&gt; │             #1            │</span></span>
-<span><span class="co">#&gt; │             #2            │</span></span>
-<span><span class="co">#&gt; │             #3            │</span></span>
-<span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │         ~344 Rows         │</span></span>
-<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
-<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
-<span><span class="co">#&gt; │      STREAMING_WINDOW     │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │        Projections:       │</span></span>
-<span><span class="co">#&gt; │    ROW_NUMBER() OVER ()   │</span></span>
-<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
-<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
-<span><span class="co">#&gt; │         PROJECTION        │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │          species          │</span></span>
-<span><span class="co">#&gt; │            sex            │</span></span>
-<span><span class="co">#&gt; │         bill_area         │</span></span>
-<span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │         ~344 Rows         │</span></span>
-<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
-<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
-<span><span class="co">#&gt; │     R_DATAFRAME_SCAN      │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │         data.frame        │</span></span>
-<span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │        Projections:       │</span></span>
-<span><span class="co">#&gt; │          species          │</span></span>
-<span><span class="co">#&gt; │       bill_length_mm      │</span></span>
-<span><span class="co">#&gt; │       bill_depth_mm       │</span></span>
-<span><span class="co">#&gt; │            sex            │</span></span>
-<span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │         ~344 Rows         │</span></span>
-<span><span class="co">#&gt; └---------------------------┘</span></span></code></pre></div>
-<p>All data frame operations are supported. Computation happens upon the first request.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">out</span><span class="op">$</span><span class="va">mean_bill_area</span></span>
-<span><span class="co">#&gt; duckplyr: materializing</span></span>
-<span><span class="co">#&gt; [1] 770.2627 656.8523 694.9360 819.7503 984.2279</span></span></code></pre></div>
-<p>After the computation has been carried out, the results are available immediately:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">out</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 3</span></span></span>
-<span><span class="co">#&gt;   <span style="font-weight: bold;">species</span>   <span style="font-weight: bold;">sex</span>    <span style="font-weight: bold;">mean_bill_area</span></span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Adelie    male             770.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Adelie    female           657.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Adelie    <span style="color: #BB0000;">NA</span>               695.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Chinstrap female           820.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Chinstrap male             984.</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="session-wide-usage">Session-wide usage<a class="anchor" aria-label="anchor" href="#session-wide-usage"></a>
-</h3>
-<p>This example illustrates usage of duckplyr for all data frames in the R session.</p>
+<span><span class="fu"><a href="https://conflicted.r-lib.org/reference/conflict_prefer.html" class="external-link">conflict_prefer</a></span><span class="op">(</span><span class="st">"filter"</span>, <span class="st">"dplyr"</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://duckplyr.tidyverse.org">duckplyr</a></span><span class="op">)</span></span></code></pre></div>
+<p>Calling <code><a href="https://duckplyr.tidyverse.org">library(duckplyr)</a></code> overwrites dplyr methods, enabling duckplyr instead for the entire session. To turn this off, call <code><a href="reference/methods_overwrite.html">methods_restore()</a></code>.</p>
+<p>See also the companion <a href="https://github.com/Tmonster/duckplyr_demo" class="external-link">demo repository</a> for a use case with a large dataset.</p>
+<p>This example illustrates usage of duckplyr for all data frames in the R session (“session-wide”).</p>
 <p>Use <code><a href="https://duckplyr.tidyverse.org">library(duckplyr)</a></code> or <code><a href="reference/methods_overwrite.html">duckplyr::methods_overwrite()</a></code> to overwrite dplyr methods and enable processing with duckdb for all data frames:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="reference/methods_overwrite.html">methods_overwrite</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Overwriting <span style="color: #0000BB;">dplyr</span> methods with <span style="color: #0000BB;">duckplyr</span> methods.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Turn off with `duckplyr::methods_restore()`.</span></span></code></pre></div>
-<p>This is the same query as above, without <code><a href="reference/as_duckplyr_df.html">as_duckplyr_tibble()</a></code>:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="reference/methods_overwrite.html">methods_overwrite</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">palmerpenguins</span><span class="fu">::</span><span class="va"><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">penguins</a></span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co"># CAVEAT: factor columns are not supported yet</span></span>
@@ -252,20 +111,19 @@
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>.by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">species</span>, <span class="va">sex</span><span class="op">)</span>, mean_bill_area <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">bill_area</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">species</span> <span class="op">!=</span> <span class="st">"Gentoo"</span><span class="op">)</span></span></code></pre></div>
 <p>The result is a plain tibble now:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "tbl_df"     "tbl"        "data.frame"</span></span></code></pre></div>
 <p>Querying the number of rows also starts the computation:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
-<span><span class="co">#&gt; duckplyr: materializing</span></span>
 <span><span class="co">#&gt; [1] 5</span></span></code></pre></div>
 <p>Restart R, or call <code><a href="reference/methods_overwrite.html">duckplyr::methods_restore()</a></code> to revert to the default dplyr implementation.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="reference/methods_overwrite.html">methods_restore</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Restoring <span style="color: #0000BB;">dplyr</span> methods.</span></span></code></pre></div>
 <p>dplyr is active again:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">palmerpenguins</span><span class="fu">::</span><span class="va"><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">penguins</a></span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co"># CAVEAT: factor columns are not supported yet</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span>, <span class="va">as.character</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -281,6 +139,10 @@
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Chinstrap female           820.</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Chinstrap male             984.</span></span></code></pre></div>
 </div>
+<div class="section level2">
+<h2 id="using-duckplyr-in-other-packages">Using duckplyr in other packages<a class="anchor" aria-label="anchor" href="#using-duckplyr-in-other-packages"></a>
+</h2>
+<p>Refer to <code><a href="articles/developers.html">vignette("developers", package = "duckplyr")</a></code>.</p>
 </div>
 <div class="section level2">
 <h2 id="telemetry">Telemetry<a class="anchor" aria-label="anchor" href="#telemetry"></a>
@@ -302,7 +164,7 @@
 </li>
 </ul>
 <p>The first time the package encounters an unsupported function, data type, or operation, instructions are printed to the console.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">palmerpenguins</span><span class="fu">::</span><span class="va"><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">penguins</a></span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="reference/as_duckplyr_df.html">as_duckplyr_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/transmute.html" class="external-link">transmute</a></span><span class="op">(</span>bill_area <span class="op">=</span> <span class="va">bill_length_mm</span> <span class="op">*</span> <span class="va">bill_depth_mm</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -335,184 +197,14 @@
 <div class="section level2">
 <h2 id="how-is-this-different-from-dbplyr">How is this different from dbplyr?<a class="anchor" aria-label="anchor" href="#how-is-this-different-from-dbplyr"></a>
 </h2>
-<p>The duckplyr package is a dplyr backend that uses DuckDB, a high-performance, embeddable OLAP database. It is designed to be a fully compatible drop-in replacement for dplyr, with <em>exactly</em> the same syntax and semantics:</p>
+<p>The duckplyr package is a dplyr backend that uses DuckDB, a high-performance, embeddable analytical database. It is designed to be a fully compatible drop-in replacement for dplyr, with <em>exactly</em> the same syntax and semantics:</p>
 <ul>
-<li>Input and output are data frames or tibbles</li>
-<li>All dplyr verbs are supported, with fallback</li>
-<li>All R data types and functions are supported, with fallback</li>
-<li>No SQL is generated</li>
+<li>Input and output are data frames or tibbles.</li>
+<li>All dplyr verbs are supported, with fallback.</li>
+<li>All R data types and functions are supported, with fallback.</li>
+<li>No SQL is generated.</li>
 </ul>
 <p>The dbplyr package is a dplyr backend that connects to SQL databases, and is designed to work with various databases that support SQL, including DuckDB. Data must be copied into and collected from the database, and the syntax and semantics are similar but not identical to plain dplyr.</p>
-</div>
-<div class="section level2">
-<h2 id="extensibility">Extensibility<a class="anchor" aria-label="anchor" href="#extensibility"></a>
-</h2>
-<p>This package also provides generics, for which other packages may then implement methods.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://duckplyr.tidyverse.org">duckplyr</a></span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Overwriting <span style="color: #0000BB;">dplyr</span> methods with <span style="color: #0000BB;">duckplyr</span> methods.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Turn off with `duckplyr::methods_restore()`.</span></span></code></pre>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Create a relational to be used by examples below</span></span>
-<span><span class="va">new_dfrel</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">is.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="reference/new_relational.html">new_relational</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, class <span class="op">=</span> <span class="st">"dfrel"</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="va">mtcars_rel</span> <span class="op">&lt;-</span> <span class="fu">new_dfrel</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Example 1: return a data.frame</span></span>
-<span><span class="va">rel_to_df.dfrel</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rel</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="va">rel</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="op">}</span></span>
-<span><span class="fu"><a href="reference/new_relational.html">rel_to_df</a></span><span class="op">(</span><span class="va">mtcars_rel</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                    mpg cyl disp  hp</span></span>
-<span><span class="co">#&gt; Mazda RX4         21.0   6  160 110</span></span>
-<span><span class="co">#&gt; Mazda RX4 Wag     21.0   6  160 110</span></span>
-<span><span class="co">#&gt; Datsun 710        22.8   4  108  93</span></span>
-<span><span class="co">#&gt; Hornet 4 Drive    21.4   6  258 110</span></span>
-<span><span class="co">#&gt; Hornet Sportabout 18.7   8  360 175</span></span>
-<span></span>
-<span><span class="co"># Example 2: A (random) filter</span></span>
-<span><span class="va">rel_filter.dfrel</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rel</span>, <span class="va">exprs</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="va">rel</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span></span>
-<span>  <span class="co"># A real implementation would evaluate the predicates defined</span></span>
-<span>  <span class="co"># by the exprs argument</span></span>
-<span>  <span class="fu">new_dfrel</span><span class="op">(</span><span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample.int</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, <span class="fl">3</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="op">]</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu"><a href="reference/new_relational.html">rel_filter</a></span><span class="op">(</span></span>
-<span>  <span class="va">mtcars_rel</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="reference/new_relexpr.html">relexpr_function</a></span><span class="op">(</span></span>
-<span>      <span class="st">"gt"</span>,</span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="reference/new_relexpr.html">relexpr_reference</a></span><span class="op">(</span><span class="st">"cyl"</span><span class="op">)</span>, <span class="fu"><a href="reference/new_relexpr.html">relexpr_constant</a></span><span class="op">(</span><span class="st">"6"</span><span class="op">)</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt;                  mpg cyl disp  hp</span></span>
-<span><span class="co">#&gt; Mazda RX4 Wag   21.0   6  160 110</span></span>
-<span><span class="co">#&gt; Mazda RX4 Wag.1 21.0   6  160 110</span></span>
-<span><span class="co">#&gt; Datsun 710      22.8   4  108  93</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; attr(,"class")</span></span>
-<span><span class="co">#&gt; [1] "dfrel"      "relational"</span></span>
-<span></span>
-<span><span class="co"># Example 3: A custom projection</span></span>
-<span><span class="va">rel_project.dfrel</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rel</span>, <span class="va">exprs</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="va">rel</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span></span>
-<span>  <span class="co"># A real implementation would evaluate the expressions defined</span></span>
-<span>  <span class="co"># by the exprs argument</span></span>
-<span>  <span class="fu">new_dfrel</span><span class="op">(</span><span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu"><a href="reference/new_relational.html">rel_project</a></span><span class="op">(</span></span>
-<span>  <span class="va">mtcars_rel</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="reference/new_relexpr.html">relexpr_reference</a></span><span class="op">(</span><span class="st">"cyl"</span><span class="op">)</span>, <span class="fu"><a href="reference/new_relexpr.html">relexpr_reference</a></span><span class="op">(</span><span class="st">"disp"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt;                    mpg cyl disp</span></span>
-<span><span class="co">#&gt; Mazda RX4         21.0   6  160</span></span>
-<span><span class="co">#&gt; Mazda RX4 Wag     21.0   6  160</span></span>
-<span><span class="co">#&gt; Datsun 710        22.8   4  108</span></span>
-<span><span class="co">#&gt; Hornet 4 Drive    21.4   6  258</span></span>
-<span><span class="co">#&gt; Hornet Sportabout 18.7   8  360</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; attr(,"class")</span></span>
-<span><span class="co">#&gt; [1] "dfrel"      "relational"</span></span>
-<span></span>
-<span><span class="co"># Example 4: A custom ordering (eg, ascending by mpg)</span></span>
-<span><span class="va">rel_order.dfrel</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rel</span>, <span class="va">exprs</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="va">rel</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span></span>
-<span>  <span class="co"># A real implementation would evaluate the expressions defined</span></span>
-<span>  <span class="co"># by the exprs argument</span></span>
-<span>  <span class="fu">new_dfrel</span><span class="op">(</span><span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">df</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, <span class="op">]</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu"><a href="reference/new_relational.html">rel_order</a></span><span class="op">(</span></span>
-<span>  <span class="va">mtcars_rel</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="reference/new_relexpr.html">relexpr_reference</a></span><span class="op">(</span><span class="st">"mpg"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt;                    mpg cyl disp  hp</span></span>
-<span><span class="co">#&gt; Hornet Sportabout 18.7   8  360 175</span></span>
-<span><span class="co">#&gt; Mazda RX4         21.0   6  160 110</span></span>
-<span><span class="co">#&gt; Mazda RX4 Wag     21.0   6  160 110</span></span>
-<span><span class="co">#&gt; Hornet 4 Drive    21.4   6  258 110</span></span>
-<span><span class="co">#&gt; Datsun 710        22.8   4  108  93</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; attr(,"class")</span></span>
-<span><span class="co">#&gt; [1] "dfrel"      "relational"</span></span>
-<span></span>
-<span><span class="co"># Example 5: A custom join</span></span>
-<span><span class="va">rel_join.dfrel</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">left</span>, <span class="va">right</span>, <span class="va">conds</span>, <span class="va">join</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">left_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="va">left</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span>  <span class="va">right_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="va">right</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span></span>
-<span>  <span class="co"># A real implementation would evaluate the expressions</span></span>
-<span>  <span class="co"># defined by the conds argument,</span></span>
-<span>  <span class="co"># use different join types based on the join argument,</span></span>
-<span>  <span class="co"># and implement the join itself instead of relaying to left_join().</span></span>
-<span>  <span class="fu">new_dfrel</span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">left_df</span>, <span class="va">right_df</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu"><a href="reference/new_relational.html">rel_join</a></span><span class="op">(</span><span class="fu">new_dfrel</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mpg <span class="op">=</span> <span class="fl">21</span><span class="op">)</span><span class="op">)</span>, <span class="va">mtcars_rel</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Joining with `by = join_by(mpg)`</span></span>
-<span><span class="co">#&gt; Joining with `by = join_by(mpg)`</span></span>
-<span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt;   mpg cyl disp  hp</span></span>
-<span><span class="co">#&gt; 1  21   6  160 110</span></span>
-<span><span class="co">#&gt; 2  21   6  160 110</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; attr(,"class")</span></span>
-<span><span class="co">#&gt; [1] "dfrel"      "relational"</span></span>
-<span></span>
-<span><span class="co"># Example 6: Limit the maximum rows returned</span></span>
-<span><span class="va">rel_limit.dfrel</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rel</span>, <span class="va">n</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="va">rel</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span></span>
-<span>  <span class="fu">new_dfrel</span><span class="op">(</span><span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>, <span class="op">]</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu"><a href="reference/new_relational.html">rel_limit</a></span><span class="op">(</span><span class="va">mtcars_rel</span>, <span class="fl">3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt;                mpg cyl disp  hp</span></span>
-<span><span class="co">#&gt; Mazda RX4     21.0   6  160 110</span></span>
-<span><span class="co">#&gt; Mazda RX4 Wag 21.0   6  160 110</span></span>
-<span><span class="co">#&gt; Datsun 710    22.8   4  108  93</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; attr(,"class")</span></span>
-<span><span class="co">#&gt; [1] "dfrel"      "relational"</span></span>
-<span></span>
-<span><span class="co"># Example 7: Suppress duplicate rows</span></span>
-<span><span class="co">#  (ignoring row names)</span></span>
-<span><span class="va">rel_distinct.dfrel</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rel</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="va">rel</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span></span>
-<span>  <span class="fu">new_dfrel</span><span class="op">(</span><span class="va">df</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html" class="external-link">duplicated</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, <span class="op">]</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu"><a href="reference/new_relational.html">rel_distinct</a></span><span class="op">(</span><span class="fu">new_dfrel</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt;             mpg cyl disp  hp</span></span>
-<span><span class="co">#&gt; Mazda RX4  21.0   6  160 110</span></span>
-<span><span class="co">#&gt; Datsun 710 22.8   4  108  93</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; attr(,"class")</span></span>
-<span><span class="co">#&gt; [1] "dfrel"      "relational"</span></span>
-<span></span>
-<span><span class="co"># Example 8: Return column names</span></span>
-<span><span class="va">rel_names.dfrel</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rel</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="va">rel</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu"><a href="reference/new_relational.html">rel_names</a></span><span class="op">(</span><span class="va">mtcars_rel</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "mpg"  "cyl"  "disp" "hp"</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
