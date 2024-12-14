@@ -72,6 +72,7 @@ reference:
   - config
   - fallback
   - stats_show
+  - last_rel
   - duckplyr_execute
 
 - title: Relational operations and expressions
