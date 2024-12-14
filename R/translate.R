@@ -123,9 +123,12 @@ rel_find_call <- function(fun, env) {
   }
 }
 
-infer_class_of_expr <- function(expr, data, names_data, classes_data) {
-  if (typeof(expr) == "symbol" && as.character(expr) %in% names_data) {
-    return(classes_data[which(as.character(expr) == names_data)])
+infer_class_of_expr <- function(expr, data) {
+  if (typeof(expr) == "symbol") {
+    name <- as.character(expr)
+    if (name %in% names(data)) {
+      return(class(data[[name]])[[1]])
+    }
   }
   return(class(expr)[[1]])
 }
@@ -145,8 +148,6 @@ rel_translate_lang <- function(
   do_translate,
   data,
   # FIXME: Perform constant folding instead
-  names_data,
-  classes_data,
   env,
   # FIXME: Perform constant folding instead
   partition,
@@ -158,11 +159,11 @@ rel_translate_lang <- function(
   name <- pkg_name[[2]]
 
 
-  if (name %in% c(">", "<", "==", ">=", "<=") && !is.null(classes_data)) {
+  if (name %in% c(">", "<", "==", ">=", "<=")) {
     if (length(expr) != 3) cli::cli_abort("Expected three expressions for comparison. Got {length(expr)}")
 
-    class_left <- infer_class_of_expr(expr[[2]], data, names_data, classes_data)
-    class_right <- infer_class_of_expr(expr[[3]], data, names_data, classes_data)
+    class_left <- infer_class_of_expr(expr[[2]], data)
+    class_right <- infer_class_of_expr(expr[[3]], data)
 
     if (classes_are_comparable(class_left, class_right)) {
       return(
@@ -350,7 +351,6 @@ rel_translate <- function(
     alias = NULL,
     partition = NULL,
     need_window = FALSE,
-    names_data = names(data),
     names_forbidden = NULL) {
   if (is_expression(quo)) {
     expr <- quo
@@ -360,13 +360,6 @@ rel_translate <- function(
     env <- quo_get_env(quo)
   }
   used <- character()
-
-  classes_data <- NULL
-  if (!missing(data) && !is.null(data)) {
-    classes_data <- unlist(map(data,function(col) class(col)[[1]]))
-  }
-
-
 
   do_translate <- function(expr, in_window = FALSE, top_level = FALSE) {
     stopifnot(!is_quosure(expr))
@@ -397,8 +390,6 @@ rel_translate <- function(
         expr,
         do_translate,
         data,
-        names_data,
-        classes_data,
         env,
         partition,
         in_window,

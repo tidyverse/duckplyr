@@ -60,7 +60,6 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
           new_expr <- rel_translate(
             quo,
             current_data,
-            names_data = names(current_data),
             alias = new,
             partition = by_names,
             need_window = TRUE
