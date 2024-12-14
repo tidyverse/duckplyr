@@ -172,7 +172,6 @@ palmerpenguins::penguins %>%
 #>   `duckplyr::fallback_upload()` to upload them.
 #> [36mℹ[39m See `?duckplyr::fallback()` for details.
 #> [36mℹ[39m [90mThis message will be displayed once every eight hours.[39m
-#> duckplyr: materializing
 #> [38;5;246m# A tibble: 3 × 1[39m
 #>   [1mbill_area[22m
 #>       [3m[38;5;246m<dbl>[39m[23m
