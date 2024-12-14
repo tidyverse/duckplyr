@@ -34,15 +34,14 @@ The \code{filter()} function is used to subset a data frame,
 retaining all rows that satisfy your conditions.
 To be retained, the row must produce a value of \code{TRUE} for all conditions.
 Note that when a condition evaluates to \code{NA} the row will be dropped,
-unlike base subsetting with \verb{]}.
+unlike base subsetting with \code{[}.
 }
 \section{Fallbacks}{
 
 You cannot use \code{filter.duckplyr_df}
 \itemize{
 \item with no filter conditions,
-\item nor with a selection that returns no columns,
-\item nor for a grouped operation.
+\item nor for a grouped operation (if \code{.by} is set).
 }
 
 If you do the code will fall back to \code{dplyr::filter()} without any error.

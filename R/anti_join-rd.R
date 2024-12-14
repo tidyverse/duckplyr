@@ -1,4 +1,4 @@
-#' @title Filtering joins (duckplyr)
+#' @title Anti join
 #'
 #' @description  This is a method for the [`dplyr::anti_join()`] generic.
 #' `anti_join()` returns all rows from `x` with**out** a match in `y`.

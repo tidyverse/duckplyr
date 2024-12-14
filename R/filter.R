@@ -13,16 +13,14 @@ filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
     #' @section Fallbacks:
     #' You cannot use `filter.duckplyr_df`
     #' - with no filter conditions,
-    #' - nor with a selection that returns no columns,
-    #' - nor for a grouped operation.
+    #' - nor for a grouped operation (if `.by` is set).
     #'
     #' If you do the code will fall back to `dplyr::filter()` without any error.
-    "Can't use relational with zero-column result set." = (length(.data) == 0),
     "Can't use relational without filter conditions." = (length(dots) == 0),
     "Can't use relational with grouped operation." = (!quo_is_null(by)), # (length(by$names) > 0),
     {
-      exprs <- rel_translate_dots(dots, .data)
       rel <- duckdb_rel_from_df(.data)
+      exprs <- rel_translate_dots(dots, .data)
 
       # FIXME: Seems to be necessary only if alternations `|` are used in `exprs`.
       # Add only then?

@@ -9,26 +9,71 @@ template:
       <script defer data-domain="duckplyr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
 
 reference:
-- title: Methods for dplyr (or base) generics
+- title: dplyr verbs
+
+- subtitle: Connecting, copying, and retrieving data
   contents:
-  - ends_with(".duckplyr_df")
+  # - collect.duckplyr_df
+  - pull.duckplyr_df
+  - explain.duckplyr_df
+
+- subtitle: Verbs that affect rows
+  contents:
+  - arrange.duckplyr_df
+  - distinct.duckplyr_df
+  - filter.duckplyr_df
+  - head.duckplyr_df
+
+- subtitle: Verbs that affect columns
+  contents:
+  - mutate.duckplyr_df
+  - transmute.duckplyr_df
+  - select.duckplyr_df
+  - rename.duckplyr_df
+  - relocate.duckplyr_df
+
+- subtitle: Grouping and summarising verbs
+  contents:
+  - count.duckplyr_df
+  - summarise.duckplyr_df
+
+- subtitle: Verbs that work with multiple tables
+  contents:
+  - left_join.duckplyr_df
+  - right_join.duckplyr_df
+  - inner_join.duckplyr_df
+  - full_join.duckplyr_df
+  - semi_join.duckplyr_df
+  - anti_join.duckplyr_df
+  - intersect.duckplyr_df
+  - union_all.duckplyr_df
+  - setdiff.duckplyr_df
+  - symdiff.duckplyr_df
+
+- subtitle: Unsupported verbs
+  contents:
   - not-supported
+
 - title: Using duckplyr for single data frames
   contents:
   - as_duckplyr_df
   - is_duckplyr_df
+
 - title: Using duckplyr for all data frames
   contents:
   - methods_overwrite
+
 - title: Data ingestion
   contents:
   - df_from_file
+
 - title: Configuration, telemetry, and internals
   contents:
   - config
   - fallback
   - stats_show
   - duckplyr_execute
+
 - title: Relational operations and expressions
   contents:
   - new_relational

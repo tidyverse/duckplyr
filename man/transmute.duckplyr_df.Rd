@@ -33,7 +33,7 @@ It's superseded because you can perform the same job with \code{mutate(.keep = "
 
 You cannot use \code{transmute.duckplyr_df}
 \itemize{
-\item nor with a selection that returns no columns:
+\item with a selection that returns no columns:
 }
 
 If you do the code will fall back to \code{dplyr::transmute()} without any error.

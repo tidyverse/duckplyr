@@ -1,5 +1,18 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.4.1.9005 (2024-12-14)
+
+## Chore
+
+- Bump duckdb dependency.
+
+## Documentation
+
+- Tweak method and behavior (#373).
+
+- Add manual pages for dplyr methods (@maelle, #214, #359).
+
+
 # duckplyr 0.4.1.9004 (2024-12-09)
 
 ## Bug fixes

@@ -17,9 +17,8 @@ union_all.duckplyr_df <- function(x, y, ...) {
     "No duplicate names" = !identical(x_names, y_names) && anyDuplicated(x_names) && anyDuplicated(y_names),
     #' @section Fallbacks:
     #' You cannot use `union_all.duckplyr_df`
-    #' - with duplicate names,
-    #' - with tables of different widths,
-    #' - with tables that have different names.
+    #' - if column names are duplicated in one of the tables
+    #' - if column names are different in both tables.
     #'
     #' If you do the code will fall back to `dplyr::union_all()` without any error.
     "Tables of different width" = length(x_names) != length(y_names),

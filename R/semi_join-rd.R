@@ -1,4 +1,4 @@
-#' @title Filtering joins (duckplyr)
+#' @title Semi join
 #'
 #' @description  This is a method for the [`dplyr::semi_join()`] generic.
 #' `semi_join()` returns all rows from x with a match in y.

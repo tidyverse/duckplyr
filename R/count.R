@@ -21,7 +21,7 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
   rel_try(list(name = "count", x = x, args = try_list(dots = enquos(...), wt = enquo(wt), sort = sort, .drop = .drop)),
     #' @section Fallbacks:
     #' You cannot use `count.duckplyr_df`
-    #' - if any of the variables provided as `...` is not a name,
+    #' - with complex expressions in `...`,
     #' - with `.drop = FALSE`,
     #' - with `sort = TRUE`.
     #'
