@@ -1,6 +1,7 @@
 #' as_duckplyr_tibble
 #'
 #' `as_duckplyr_tibble()` converts the input to a tibble and then to a duckplyr data frame.
+#' This function also accepts \pkg{dbplyr} lazy tables.
 #'
 #' @return For `as_duckplyr_tibble()`, an object of class
 #'   `c("duckplyr_df", class(tibble()))` .

@@ -13,7 +13,9 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
     {
       rel <- duckdb_rel_from_df(.data)
 
-      if (length(by_names) > 0) {
+      need_oo <- (length(by_names) > 0)
+
+      if (need_oo) {
         rel <- oo_prep(rel)
       }
 
@@ -56,8 +58,14 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
 
           names_new <- c(names_new, new)
 
-          new_pos <- match(new, names(current_data), nomatch = length(current_data) + j)
           new_expr <- rel_translate(quo, names_data = names(current_data), alias = new, partition = by_names, need_window = TRUE)
+          if (!need_oo && isTRUE(attr(new_expr, "reorder"))) {
+            rel <- oo_prep(rel)
+            need_oo <- TRUE
+            names_out <- rel_names(rel)
+          }
+
+          new_pos <- match(new, names(current_data), nomatch = length(current_data) + j)
           exprs[[new_pos]] <- new_expr
 
           new_names_used <- intersect(attr(new_expr, "used"), names(.data))
@@ -68,7 +76,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
         current_data <- rel_to_df(rel)
       }
 
-      if (length(by_names) > 0) {
+      if (need_oo) {
         rel <- oo_restore(rel)
       }
 
