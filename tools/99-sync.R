@@ -7,6 +7,8 @@
 
 # Every time you want to sync:
 
+source("tools/80-unsupported.R", echo = TRUE)
+# From here on, dplyr is loaded from .sync/dplyr-main
 source("tools/01-dplyr-methods.R", echo = TRUE)
 source("tools/02-duckplyr_df-methods.R", echo = TRUE)
 source("tools/03-tests.R", echo = TRUE)
