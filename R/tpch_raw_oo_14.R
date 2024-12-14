@@ -98,8 +98,8 @@ tpch_raw_oo_14 <- function(con, experimental) {
   rel3 <- duckdb$rel_filter(
     rel2,
     list(
-      duckdb$expr_function(
-        "r_base::>=",
+      duckdb$expr_comparison(
+        ">=",
         list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -109,8 +109,8 @@ tpch_raw_oo_14 <- function(con, experimental) {
           }
         )
       ),
-      duckdb$expr_function(
-        "r_base::<",
+      duckdb$expr_comparison(
+        "<",
         list(
           duckdb$expr_reference("l_shipdate"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
