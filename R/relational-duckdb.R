@@ -156,7 +156,7 @@ check_df_for_rel <- function(df) {
 
   roundtrip <- duckdb$rapi_rel_to_altrep(out)
   if (Sys.getenv("DUCKPLYR_CHECK_ROUNDTRIP") == "TRUE") {
-    rlang::with_options(duckdb.materialize_message = FALSE, {
+    rlang::with_options(duckdb.materialize_callback = NULL, {
       for (i in seq_along(df)) {
         if (!identical(df[[i]], roundtrip[[i]])) {
           cli::cli_abort("Imperfect roundtrip. Affected column: {.var {names(df)[[i]]}}.")
