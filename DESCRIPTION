@@ -27,6 +27,7 @@ Imports:
     jsonlite,
     lifecycle,
     memoise,
+    pillar (>= 1.9.0.1038),
     rlang (>= 1.0.6),
     tibble,
     tidyselect,
@@ -54,6 +55,8 @@ Suggests:
     testthat (>= 3.1.5),
     usethis,
     withr
+Remotes: 
+    r-lib/pillar
 Config/Needs/check: anthonynorth/roxyglobals
 Config/Needs/website: tidyverse/tidytemplate, dbplyr, Lahman, rmarkdown
 Config/testthat/edition: 3
