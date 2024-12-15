@@ -42,7 +42,7 @@
 ducktbl <- function(...) {
   out <- tibble::tibble(...)
 
-  out <- as_duckplyr_df_(out)
+  out <- as_duckplyr_df_impl(out)
 
   out
 }

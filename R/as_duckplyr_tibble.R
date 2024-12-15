@@ -20,5 +20,5 @@ as_duckplyr_tibble <- function(.data) {
   }
 
   # Extra as.data.frame() call for good measure and perhaps https://github.com/tidyverse/tibble/issues/1556
-  as_duckplyr_df_(as_tibble(as.data.frame(.data)))
+  as_duckplyr_df_impl(as_tibble(as.data.frame(.data)))
 }

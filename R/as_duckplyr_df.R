@@ -28,10 +28,10 @@
 #'   as_duckplyr_df() %>%
 #'   mutate(b = a + 1)
 as_duckplyr_df <- function(.data) {
-  as_duckplyr_df_(.data)
+  as_duckplyr_df_impl(.data)
 }
 
-as_duckplyr_df_ <- function(x, error_call = caller_env()) {
+as_duckplyr_df_impl <- function(x, error_call = caller_env()) {
   if (inherits(x, "duckplyr_df")) {
     return(x)
   }
