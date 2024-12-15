@@ -170,7 +170,7 @@ palmerpenguins::penguins %>%
 #>   `duckplyr::fallback_upload()` to upload them.
 #> ℹ See `?duckplyr::fallback()` for details.
 #> ℹ This message will be displayed once every eight hours.
-#> # A tibble: 3 × 1
+#> # A duckplyr data frame: 1 variable
 #>   bill_area
 #>       <dbl>
 #> 1      731.
