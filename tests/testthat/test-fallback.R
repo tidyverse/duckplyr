@@ -162,7 +162,7 @@ test_that("row names", {
 
   expect_snapshot({
     mtcars[1:2, ] %>%
-      as_duckplyr_df() %>%
+      as_ducktbl() %>%
       select(mpg, cyl)
   })
 })
