@@ -76,5 +76,5 @@ as_ducktbl.default <- function(x, ...) {
   check_dots_empty()
 
   # Extra as.data.frame() call for good measure and perhaps https://github.com/tidyverse/tibble/issues/1556
-  as_duckplyr_df(as_tibble(as.data.frame(x)))
+  as_duckplyr_df_impl(as_tibble(as.data.frame(x)))
 }

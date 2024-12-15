@@ -48,7 +48,7 @@ index 63f79312..f2eac9f9 100644
 +
    try_fetch(
      {
-       x <- as_duckplyr_df(x)
+       x <- as_duckplyr_df_impl(x)
 @@ -108,7 +129,7 @@ duckplyr_nest_join <- function(x, y, ...) {
        testthat::skip(conditionMessage(e))
      }

@@ -76,7 +76,7 @@ duckplyr_df_from_file <- function(
   check_dots_empty()
 
   out <- df_from_file(path, table_function, options = options, class = class)
-  as_duckplyr_df(out)
+  as_duckplyr_df_impl(out)
 }
 
 default_df_class <- function() {
