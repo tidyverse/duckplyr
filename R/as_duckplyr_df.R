@@ -28,21 +28,25 @@
 #'   as_duckplyr_df() %>%
 #'   mutate(b = a + 1)
 as_duckplyr_df <- function(.data) {
-  if (inherits(.data, "duckplyr_df")) {
-    return(.data)
+  as_duckplyr_df_(.data)
+}
+
+as_duckplyr_df_ <- function(x, error_call = caller_env()) {
+  if (inherits(x, "duckplyr_df")) {
+    return(x)
   }
 
-  if (!identical(class(.data), "data.frame") && !identical(class(.data), c("tbl_df", "tbl", "data.frame"))) {
-    cli::cli_abort(c(
-      "Must pass a plain data frame or a tibble to `as_duckplyr_df()`, not {.obj_type_friendly { .data}}.",
+  if (!identical(class(x), "data.frame") && !identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
+    cli::cli_abort(call = error_call, c(
+      "Must pass a plain data frame or a tibble to `as_duckplyr_df()`, not {.obj_type_friendly {x}}.",
       i = "Convert it with {.fun as.data.frame} or {.fun tibble::as_tibble}."
     ))
   }
 
-  if (anyNA(names(.data)) || any(names(.data) == "")) {
-    cli::cli_abort("Missing or empty names not allowed.")
+  if (anyNA(names(x)) || any(names(x) == "")) {
+    cli::cli_abort("Missing or empty names not allowed.", call = error_call)
   }
 
-  class(.data) <- c("duckplyr_df", class(.data))
-  .data
+  class(x) <- c("duckplyr_df", class(x))
+  x
 }
