@@ -45,7 +45,6 @@ Suggests:
     lobstr,
     lubridate,
     palmerpenguins,
-    pillar,
     prettycode,
     purrr,
     qs,
