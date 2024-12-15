@@ -1,5 +1,42 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.4.1.9006 (2024-12-15)
+
+## Features
+
+- New `last_rel()` to retrieve the last relation object used in materialization (#209, #375).
+
+- Improve `as_duckplyr_df()` error message for invalid `.data` (@maelle, #339).
+
+## Chore
+
+- Add read-only markers for overwrite + restore.
+
+- Cleanup (#377).
+
+- Avoid `"duckdb.materialize_message"` option (#376).
+
+- Update TPCH outputs to account for data changes in duckdb 0.8.0 (#294).
+
+- Sync.
+
+## Documentation
+
+- Fix rendering in vanilla session.
+
+- Add vignette about missing parts (@maelle, #218, #371).
+
+- Refactor README (@maelle, #208, #334, #370).
+
+## Performance
+
+- Comparison expressions are translated in a way that allows them to be pushed down to Parquet (@toppyy, #270).
+
+## Testing
+
+- Add snapshot test for conversion error in `as_duckplyr_df()`.
+
+
 # duckplyr 0.4.1.9005 (2024-12-14)
 
 ## Chore
