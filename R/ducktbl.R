@@ -19,6 +19,7 @@
 #'
 #' @param ... For `ducktbl()`, passed on to [tibble()].
 #'   For `as_ducktbl()`, passed on to methods.
+#' @param .lazy Logical, whether to create a lazy duckplyr frame
 #'
 #' @return An object with the following classes:
 #'   - `"duckplyr_df"`
@@ -39,10 +40,14 @@
 #' try(y$a)
 #' collect(y)$a
 #' @export
-ducktbl <- function(...) {
+ducktbl <- function(..., .lazy = FALSE) {
   out <- tibble::tibble(...)
 
   out <- as_duckplyr_df_impl(out)
+
+  if (.lazy) {
+    out <- as_lazy_duckplyr_df(out)
+  }
 
   out
 }
@@ -55,7 +60,17 @@ ducktbl <- function(...) {
 #' @param x The object to convert or to test.
 #' @rdname ducktbl
 #' @export
-as_ducktbl <- function(x, ...) {
+as_ducktbl <- function(x, ..., .lazy = FALSE) {
+  out <- as_ducktbl_dispatch(x, ...)
+
+  if (.lazy) {
+    out <- as_lazy_duckplyr_df(out)
+  }
+
+  return(out)
+  UseMethod("as_ducktbl")
+}
+as_ducktbl_dispatch <- function(x, ...) {
   UseMethod("as_ducktbl")
 }
 

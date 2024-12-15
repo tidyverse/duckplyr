@@ -5,13 +5,15 @@
 \alias{as_ducktbl}
 \title{duckplyr data frames}
 \usage{
-ducktbl(...)
+ducktbl(..., .lazy = FALSE)
 
-as_ducktbl(x, ...)
+as_ducktbl(x, ..., .lazy = FALSE)
 }
 \arguments{
 \item{...}{For \code{ducktbl()}, passed on to \code{\link[=tibble]{tibble()}}.
 For \code{as_ducktbl()}, passed on to methods.}
+
+\item{.lazy}{Logical, whether to create a lazy duckplyr frame}
 
 \item{x}{The object to convert or to test.}
 }
