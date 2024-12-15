@@ -92,7 +92,7 @@ duckdb_rel_from_df <- function(df) {
   }
 
   if (!is_duckplyr_df(df)) {
-    df <- as_duckplyr_df(df)
+    df <- as_duckplyr_df_impl(df)
   }
 
   out <- check_df_for_rel(df)
