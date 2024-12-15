@@ -21,7 +21,8 @@
 #'   For `as_ducktbl()`, passed on to methods.
 #' @param .lazy Logical, whether to create a lazy duckplyr frame
 #'
-#' @return An object with the following classes:
+#' @return For `ducktbl()` and `as_ducktbl()`, an object with the following classes:
+#'   - `"lazy_duckplyr_df"` if `.lazy` is `TRUE`
 #'   - `"duckplyr_df"`
 #'   - Classes of a [tibble]
 #'
@@ -92,4 +93,15 @@ as_ducktbl.default <- function(x, ...) {
 
   # Extra as.data.frame() call for good measure and perhaps https://github.com/tidyverse/tibble/issues/1556
   as_duckplyr_df_impl(as_tibble(as.data.frame(x)))
+}
+
+#' is_ducktbl
+#'
+#' `is_ducktbl()` returns `TRUE` if `x` is a duckplyr data frame.
+#'
+#' @return For `is_ducktbl()`, a scalar logical.
+#' @rdname ducktbl
+#' @export
+is_ducktbl <- function(x) {
+  inherits(x, "duckplyr_df")
 }

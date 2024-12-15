@@ -16,3 +16,9 @@ test_that(".lazy = TRUE forbids materialization for as_ducktbl()", {
   tbl <- as_ducktbl(data.frame(a = 1), .lazy = TRUE)
   expect_error(length(tbl$a))
 })
+
+test_that("is_ducktbl()", {
+  expect_true(is_ducktbl(ducktbl(a = 1)))
+  expect_false(is_ducktbl(tibble::tibble(a = 1)))
+  expect_false(is_ducktbl(data.frame(a = 1)))
+})
