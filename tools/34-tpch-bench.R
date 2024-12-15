@@ -8,14 +8,14 @@ Sys.setenv(DUCKPLYR_META_SKIP = TRUE)
 
 qloadm("tools/tpch/100.qs")
 
-customer <- as_duckplyr_df(customer)
-lineitem <- as_duckplyr_df(lineitem)
-nation <- as_duckplyr_df(nation)
-orders <- as_duckplyr_df(orders)
-part <- as_duckplyr_df(part)
-partsupp <- as_duckplyr_df(partsupp)
-region <- as_duckplyr_df(region)
-supplier <- as_duckplyr_df(supplier)
+customer <- as_ducktbl(customer)
+lineitem <- as_ducktbl(lineitem)
+nation <- as_ducktbl(nation)
+orders <- as_ducktbl(orders)
+part <- as_ducktbl(part)
+partsupp <- as_ducktbl(partsupp)
+region <- as_ducktbl(region)
+supplier <- as_ducktbl(supplier)
 
 compiler::enableJIT(0)
 

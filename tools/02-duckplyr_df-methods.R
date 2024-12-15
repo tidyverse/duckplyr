@@ -125,15 +125,15 @@ func_decl_chr <- function(
     args <- paste0(arg_1, ", ", arg_2)
     assign_impl <- c(
       '    {',
-      '      {{{arg_1}}} <- as_duckplyr_df({{{arg_1}}})',
-      '      {{{arg_2}}} <- as_duckplyr_df({{{arg_2}}})',
+      '      {{{arg_1}}} <- as_duckplyr_df_impl({{{arg_1}}})',
+      '      {{{arg_2}}} <- as_duckplyr_df_impl({{{arg_2}}})',
       '    },'
     )
   } else {
     arg_1 <- names(formals)[[1]]
     args <- arg_1
     assign_impl <- c(
-      '    {{{arg_1}}} <- as_duckplyr_df({{{arg_1}}}),'
+      '    {{{arg_1}}} <- as_duckplyr_df_impl({{{arg_1}}}),'
     )
   }
 
