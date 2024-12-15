@@ -25,8 +25,8 @@ setequal.duckplyr_df <- function(x, y, ...) {
 duckplyr_setequal <- function(x, y, ...) {
   try_fetch(
     {
-      x <- as_duckplyr_df(x)
-      y <- as_duckplyr_df(y)
+      x <- as_duckplyr_df_impl(x)
+      y <- as_duckplyr_df_impl(y)
     },
     error = function(e) {
       testthat::skip(conditionMessage(e))

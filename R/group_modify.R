@@ -31,7 +31,7 @@ group_modify.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = depre
 
 duckplyr_group_modify <- function(.data, ...) {
   try_fetch(
-    .data <- as_duckplyr_df(.data),
+    .data <- as_duckplyr_df_impl(.data),
     error = function(e) {
       testthat::skip(conditionMessage(e))
     }

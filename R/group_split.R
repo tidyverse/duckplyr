@@ -31,7 +31,7 @@ group_split.duckplyr_df <- function(.tbl, ..., .keep = TRUE, keep = deprecated()
 
 duckplyr_group_split <- function(.tbl, ...) {
   try_fetch(
-    .tbl <- as_duckplyr_df(.tbl),
+    .tbl <- as_duckplyr_df_impl(.tbl),
     error = function(e) {
       testthat::skip(conditionMessage(e))
     }

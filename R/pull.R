@@ -47,7 +47,7 @@ pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
 
 duckplyr_pull <- function(.data, ...) {
   try_fetch(
-    .data <- as_duckplyr_df(.data),
+    .data <- as_duckplyr_df_impl(.data),
     error = function(e) {
       testthat::skip(conditionMessage(e))
     }

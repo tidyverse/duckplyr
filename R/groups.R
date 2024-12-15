@@ -21,7 +21,7 @@ groups.duckplyr_df <- function(x) {
 
 duckplyr_groups <- function(x, ...) {
   try_fetch(
-    x <- as_duckplyr_df(x),
+    x <- as_duckplyr_df_impl(x),
     error = function(e) {
       testthat::skip(conditionMessage(e))
     }

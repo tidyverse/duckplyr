@@ -51,7 +51,7 @@ relocate.duckplyr_df <- function(.data, ..., .before = NULL, .after = NULL) {
 
 duckplyr_relocate <- function(.data, ...) {
   try_fetch(
-    .data <- as_duckplyr_df(.data),
+    .data <- as_duckplyr_df_impl(.data),
     error = function(e) {
       testthat::skip(conditionMessage(e))
     }

@@ -21,7 +21,7 @@ nest_by.duckplyr_df <- function(.data, ..., .key = "data", .keep = FALSE) {
 
 duckplyr_nest_by <- function(.data, ...) {
   try_fetch(
-    .data <- as_duckplyr_df(.data),
+    .data <- as_duckplyr_df_impl(.data),
     error = function(e) {
       testthat::skip(conditionMessage(e))
     }
