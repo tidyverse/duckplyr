@@ -63,8 +63,7 @@
 # summarize()
 
     Code
-      tibble(a = 1, b = 2, c = 3) %>% as_duckplyr_df() %>% summarize(.by = a, e = sum(
-        b), f = sum(e))
+      ducktbl(a = 1, b = 2, c = 3) %>% summarize(.by = a, e = sum(b), f = sum(e))
     Message
       i dplyr fallback recorded
         {"version":"0.3.1","message":"Can't reuse summary variable `...4`.","name":"summarise","x":{"...1":"numeric","...2":"numeric","...3":"numeric"},"args":{"dots":{"...4":"sum(...2)","...5":"sum(...4)"},"by":["...1"]}}
@@ -77,8 +76,7 @@
 # wday()
 
     Code
-      tibble(a = as.Date("2024-03-08")) %>% as_duckplyr_df() %>% mutate(b = lubridate::wday(
-        a, label = TRUE))
+      ducktbl(a = as.Date("2024-03-08")) %>% mutate(b = lubridate::wday(a, label = TRUE))
     Message
       i dplyr fallback recorded
         {"version":"0.3.1","message":"wday(label = ) not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"...3::...4(...1, label = TRUE)"},".by":"NULL",".keep":["all","used","unused","none"]}}
@@ -95,8 +93,7 @@
 ---
 
     Code
-      tibble(a = as.Date("2024-03-08")) %>% as_duckplyr_df() %>% mutate(b = lubridate::wday(
-        a))
+      ducktbl(a = as.Date("2024-03-08")) %>% mutate(b = lubridate::wday(a))
     Message
       i dplyr fallback recorded
         {"version":"0.3.1","message":"`wday()` with `option(\"lubridate.week.start\")` not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"...3::...4(...1)"},".by":"NULL",".keep":["all","used","unused","none"]}}
@@ -109,8 +106,8 @@
 # strftime()
 
     Code
-      tibble(a = as.Date("2024-03-08")) %>% as_duckplyr_df() %>% mutate(b = strftime(
-        a, format = "%Y-%m-%d", tz = "CET"))
+      ducktbl(a = as.Date("2024-03-08")) %>% mutate(b = strftime(a, format = "%Y-%m-%d",
+        tz = "CET"))
     Message
       i dplyr fallback recorded
         {"version":"0.3.1","message":"strftime(tz = ) not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"strftime(...1, format = \"<character>\", tz = \"<character>\")"},".by":"NULL",".keep":["all","used","unused","none"]}}
@@ -123,7 +120,7 @@
 # $
 
     Code
-      tibble(a = 1, b = 2) %>% as_duckplyr_df() %>% mutate(c = .env$x)
+      ducktbl(a = 1, b = 2) %>% mutate(c = .env$x)
     Message
       i dplyr fallback recorded
         {"version":"0.3.1","message":"internal: object not found, should also be triggered by the dplyr fallback","name":"mutate","x":{"...1":"numeric","...2":"numeric"},"args":{"dots":{"...3":"...4$...5"},".by":"NULL",".keep":["all","used","unused","none"]}}
@@ -136,7 +133,7 @@
 # unknown function
 
     Code
-      tibble(a = 1, b = 2) %>% as_duckplyr_df() %>% mutate(c = foo(a, b))
+      ducktbl(a = 1, b = 2) %>% mutate(c = foo(a, b))
     Message
       i dplyr fallback recorded
         {"version":"0.3.1","message":"No translation for function `foo`.","name":"mutate","x":{"...1":"numeric","...2":"numeric"},"args":{"dots":{"...3":"foo(...1, ...2)"},".by":"NULL",".keep":["all","used","unused","none"]}}
@@ -161,7 +158,7 @@
 # named column
 
     Code
-      tibble(a = c(x = 1)) %>% as_duckplyr_df() %>% select(a)
+      ducktbl(a = c(x = 1)) %>% select(a)
     Message
       i dplyr fallback recorded
         {"version":"0.3.1","message":"Can't convert named vectors to relational. Affected column: `...1`.","name":"select","x":{"...1":"numeric"},"args":{"dots":{"1":"...1"}}}
@@ -178,7 +175,7 @@
 ---
 
     Code
-      tibble(a = matrix(1:4, ncol = 2)) %>% as_duckplyr_df() %>% select(a)
+      ducktbl(a = matrix(1:4, ncol = 2)) %>% select(a)
     Message
       i dplyr fallback recorded
         {"version":"0.3.1","message":"Can't convert arrays or matrices to relational. Affected column: `...1`.","name":"select","x":{"...1":"matrix/array"},"args":{"dots":{"1":"...1"}}}
@@ -196,7 +193,7 @@
 # list column
 
     Code
-      tibble(a = 1, b = 2, c = list(3)) %>% as_duckplyr_df() %>% select(a, b)
+      ducktbl(a = 1, b = 2, c = list(3)) %>% select(a, b)
     Message
       i dplyr fallback recorded
         {"version":"0.3.1","message":"Can't convert columns of class <list> to relational. Affected column: `...3`.","name":"select","x":{"...1":"numeric","...2":"numeric","...3":"list"},"args":{"dots":{"1":"...1","2":"...2"}}}
@@ -209,7 +206,7 @@
 # __row_number
 
     Code
-      tibble(`___row_number` = 1, b = 2:3) %>% as_duckplyr_df() %>% arrange(b)
+      ducktbl(`___row_number` = 1, b = 2:3) %>% arrange(b)
     Message
       i dplyr fallback recorded
         {"version":"0.3.1","message":"Can't use column `...1` already present in rel for order preservation","name":"arrange","x":{"...1":"numeric","...2":"integer"},"args":{"dots":["...2"],".by_group":false}}
@@ -223,7 +220,7 @@
 # rel_try()
 
     Code
-      tibble(a = 1) %>% as_duckplyr_df() %>% count(a, .drop = FALSE, name = "n")
+      ducktbl(a = 1) %>% count(a, .drop = FALSE, name = "n")
     Message
       i dplyr fallback recorded
         {"version":"0.3.1","message":"count() only implemented for .drop = TRUE","name":"count","x":{"...1":"numeric"},"args":{"dots":{"1":"...1"},"wt":"NULL","sort":false,".drop":false}}
