@@ -13,6 +13,6 @@ test_that(".env pronoun works", {
 
   a <- 2
   data <- data.frame(a = 1)
-  out <- data %>% as_duckplyr_df() %>% mutate(b = .env$a)
-  expect_equal(out, data.frame(a = 1, b = 2) %>% as_duckplyr_df())
+  out <- data %>% as_duckplyr_df_impl() %>% mutate(b = .env$a)
+  expect_equal(out, data.frame(a = 1, b = 2) %>% as_duckplyr_df_impl())
 })

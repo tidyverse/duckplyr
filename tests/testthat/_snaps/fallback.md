@@ -149,14 +149,13 @@
 # row names
 
     Code
-      mtcars[1:2, ] %>% as_duckplyr_df() %>% select(mpg, cyl)
-    Message
-      i dplyr fallback recorded
-        {"version":"0.3.1","message":"Need data frame without row names to convert to relational, got character row names.","name":"select","x":{"...1":"numeric","...2":"numeric","...3":"numeric","...4":"numeric","...5":"numeric","...6":"numeric","...7":"numeric","...8":"numeric","...9":"numeric","...10":"numeric","...11":"numeric"},"args":{"dots":{"1":"...1","2":"...2"}}}
+      mtcars[1:2, ] %>% as_ducktbl() %>% select(mpg, cyl)
     Output
-                    mpg cyl
-      Mazda RX4      21   6
-      Mazda RX4 Wag  21   6
+      # A duckplyr data frame: 2 variables
+          mpg   cyl
+        <dbl> <dbl>
+      1    21     6
+      2    21     6
 
 # named column
 

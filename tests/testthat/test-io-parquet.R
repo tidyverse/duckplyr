@@ -19,7 +19,7 @@ test_that("Writing to Parquet works without materialization", {
   path_parquet <- withr::local_tempfile(fileext = ".parquet")
 
   df %>%
-    as_duckplyr_df() %>%
+    as_duckplyr_df_impl() %>%
     select(b, a) %>%
     df_to_parquet(path_parquet)
 
