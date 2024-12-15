@@ -38,7 +38,7 @@ as_duckplyr_df_ <- function(x, error_call = caller_env()) {
 
   if (!identical(class(x), "data.frame") && !identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
     cli::cli_abort(call = error_call, c(
-      "Must pass a plain data frame or a tibble to `as_duckplyr_df()`, not {.obj_type_friendly {x}}.",
+      "Must pass a plain data frame or a tibble, not {.obj_type_friendly {x}}.",
       i = "Convert it with {.fun as.data.frame} or {.fun tibble::as_tibble}."
     ))
   }

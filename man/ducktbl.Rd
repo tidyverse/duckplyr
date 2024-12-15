@@ -2,12 +2,18 @@
 % Please edit documentation in R/ducktbl.R
 \name{ducktbl}
 \alias{ducktbl}
+\alias{as_ducktbl}
 \title{duckplyr data frames}
 \usage{
 ducktbl(...)
+
+as_ducktbl(x, ...)
 }
 \arguments{
-\item{...}{Passed on to \code{\link[=tibble]{tibble()}}.}
+\item{...}{For \code{ducktbl()}, passed on to \code{\link[=tibble]{tibble()}}.
+For \code{as_ducktbl()}, passed on to methods.}
+
+\item{x}{The object to convert or to test.}
 }
 \value{
 An object with the following classes:
@@ -28,6 +34,9 @@ If this is not possible, the original dplyr implementation is used.
 In contrast to dbplyr, duckplyr data frames are "eager" by default.
 To avoid unwanted expensive computation, they can be converted to "lazy" duckplyr frames
 on which \code{\link[=collect]{collect()}} needs to be called explicitly.
+
+\code{as_ducktbl()} converts a data frame or a dplyr lazy table to a duckplyr data frame.
+This is a generic function that can be overridden for custom classes.
 }
 \details{
 Set the \code{DUCKPLYR_FALLBACK_INFO} and \code{DUCKPLYR_FORCE} environment variables
