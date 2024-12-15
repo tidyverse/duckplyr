@@ -110,7 +110,12 @@ with duckdb:</p>
 <span><span class="co">#&gt; encounters an incompatibility. Fallback events can be collected and</span></span>
 <span><span class="co">#&gt; uploaded for analysis to guide future development. By default, no data</span></span>
 <span><span class="co">#&gt; will be collected or uploaded.</span></span>
-<span><span class="co">#&gt; → Run `duckplyr::fallback_sitrep()` to review the current settings.</span></span></code></pre></div>
+<span><span class="co">#&gt; → Run `duckplyr::fallback_sitrep()` to review the current settings.</span></span>
+<span><span class="co">#&gt; Warning: `as_duckplyr_tibble()` was deprecated in duckplyr 1.0.0.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `as_ducktbl()` instead.</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre></div>
 <p>The result is a tibble, with its own class.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>

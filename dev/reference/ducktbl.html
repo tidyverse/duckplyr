@@ -8,7 +8,9 @@ If this is not possible, the original dplyr implementation is used.
 ducktbl() works like tibble().
 In contrast to dbplyr, duckplyr data frames are "eager" by default.
 To avoid unwanted expensive computation, they can be converted to "lazy" duckplyr frames
-on which collect() needs to be called explicitly.'><meta property="og:description" content='Data frames backed by duckplyr have a special class, "duckplyr_df",
+on which collect() needs to be called explicitly.
+as_ducktbl() converts a data frame or a dplyr lazy table to a duckplyr data frame.
+This is a generic function that can be overridden for custom classes.'><meta property="og:description" content='Data frames backed by duckplyr have a special class, "duckplyr_df",
 in addition to the default classes.
 This ensures that dplyr methods are dispatched correctly.
 For such objects,
@@ -17,7 +19,9 @@ If this is not possible, the original dplyr implementation is used.
 ducktbl() works like tibble().
 In contrast to dbplyr, duckplyr data frames are "eager" by default.
 To avoid unwanted expensive computation, they can be converted to "lazy" duckplyr frames
-on which collect() needs to be called explicitly.'><meta property="og:image" content="https://duckplyr.tidyverse.org/logo.png"><meta name="robots" content="noindex"><script defer data-domain="duckplyr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script></head><body>
+on which collect() needs to be called explicitly.
+as_ducktbl() converts a data frame or a dplyr lazy table to a duckplyr data frame.
+This is a generic function that can be overridden for custom classes.'><meta property="og:image" content="https://duckplyr.tidyverse.org/logo.png"><meta name="robots" content="noindex"><script defer data-domain="duckplyr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script></head><body>
     <a href="#container" class="visually-hidden-focusable">Skip to content</a>
 
 
@@ -66,11 +70,15 @@ If this is not possible, the original dplyr implementation is used.</p>
 In contrast to dbplyr, duckplyr data frames are "eager" by default.
 To avoid unwanted expensive computation, they can be converted to "lazy" duckplyr frames
 on which <code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect()</a></code> needs to be called explicitly.</p>
+<p><code>as_ducktbl()</code> converts a data frame or a dplyr lazy table to a duckplyr data frame.
+This is a generic function that can be overridden for custom classes.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ducktbl</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ducktbl</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">as_ducktbl</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -78,7 +86,12 @@ on which <code><a href="https://dplyr.tidyverse.org/reference/compute.html" clas
 
 
 <dl><dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Passed on to <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble()</a></code>.</p></dd>
+<dd><p>For <code>ducktbl()</code>, passed on to <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble()</a></code>.
+For <code>as_ducktbl()</code>, passed on to methods.</p></dd>
+
+
+<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
+<dd><p>The object to convert or to test.</p></dd>
 
 </dl></div>
     <div class="section level2">
