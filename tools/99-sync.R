@@ -8,9 +8,15 @@
 # Every time you want to sync:
 
 source("tools/80-unsupported.R", echo = TRUE)
+
 # From here on, dplyr is loaded from .sync/dplyr-main
 source("tools/01-dplyr-methods.R", echo = TRUE)
+
+# If the code generation is updated, go into the script and stop in the middle
+# (search for "# Stop here to overwrite files if the code generation is updated")
+# and then rerun
 source("tools/02-duckplyr_df-methods.R", echo = TRUE)
+
 source("tools/03-tests.R", echo = TRUE)
 source("tools/04-dplyr-tests.R", echo = TRUE)
 source("tools/05-duckdb-tests.R", echo = TRUE)

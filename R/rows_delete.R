@@ -55,8 +55,8 @@ rows_delete.duckplyr_df <- function(x, y, by = NULL, ..., unmatched = c("error",
 duckplyr_rows_delete <- function(x, y, ...) {
   try_fetch(
     {
-      x <- as_duckplyr_df(x)
-      y <- as_duckplyr_df(y)
+      x <- as_duckplyr_df_impl(x)
+      y <- as_duckplyr_df_impl(y)
     },
     error = function(e) {
       testthat::skip(conditionMessage(e))

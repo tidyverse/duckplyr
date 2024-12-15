@@ -61,7 +61,7 @@ transmute.duckplyr_df <- function(.data, ...) {
 
 duckplyr_transmute <- function(.data, ...) {
   try_fetch(
-    .data <- as_duckplyr_df(.data),
+    .data <- as_duckplyr_df_impl(.data),
     error = function(e) {
       testthat::skip(conditionMessage(e))
     }

@@ -25,7 +25,7 @@ group_nest.duckplyr_df <- function(.tbl, ..., .key = "data", keep = FALSE) {
 
 duckplyr_group_nest <- function(.tbl, ...) {
   try_fetch(
-    .tbl <- as_duckplyr_df(.tbl),
+    .tbl <- as_duckplyr_df_impl(.tbl),
     error = function(e) {
       testthat::skip(conditionMessage(e))
     }
