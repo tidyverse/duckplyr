@@ -7,8 +7,8 @@
         dn, hr)) %>% arrange(desc(avg_tip_pct))
       tips_by_day_hour
     Output
-      [1] dn          hr          avg_tip_pct n          
-      <0 rows> (or 0-length row.names)
+      # A duckplyr data frame: 4 variables
+      # i 4 variables: dn <int>, hr <dbl>, avg_tip_pct <dbl>, n <int>
 
 ---
 
@@ -18,8 +18,8 @@
         tip_pct), n = n(), .by = passenger_count) %>% arrange(desc(passenger_count))
       tips_by_passenger
     Output
-      [1] passenger_count avg_tip_pct     n              
-      <0 rows> (or 0-length row.names)
+      # A duckplyr data frame: 3 variables
+      # i 3 variables: passenger_count <dbl>, avg_tip_pct <dbl>, n <int>
 
 ---
 
@@ -33,8 +33,9 @@
         desc(num_trips))
       popular_manhattan_cab_rides
     Output
-      [1] start_neighborhood end_neighborhood   num_trips         
-      <0 rows> (or 0-length row.names)
+      # A duckplyr data frame: 3 variables
+      # i 3 variables: start_neighborhood <chr>, end_neighborhood <chr>,
+      #   num_trips <int>
 
 ---
 
@@ -58,7 +59,7 @@
         num_trips, percent_zero_tips_trips) %>% arrange(desc(percent_zero_tips_trips))
       num_zero_percent_trips
     Output
-      [1] pickup_borough          dropoff_borough         num_trips              
-      [4] percent_zero_tips_trips
-      <0 rows> (or 0-length row.names)
+      # A duckplyr data frame: 4 variables
+      # i 4 variables: pickup_borough <chr>, dropoff_borough <chr>, num_trips <int>,
+      #   percent_zero_tips_trips <dbl>
 
