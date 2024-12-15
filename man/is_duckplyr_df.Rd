@@ -14,6 +14,8 @@ is_duckplyr_df(.data)
 otherwise \code{FALSE}.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
 Tests if the input object is of class \code{"duckplyr_df"}.
 }
 \examples{
@@ -24,3 +26,4 @@ tibble(a = 1:3) \%>\%
   as_duckplyr_df() \%>\%
   is_duckplyr_df()
 }
+\keyword{internal}
