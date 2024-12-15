@@ -37,8 +37,8 @@
 #'
 #' y <- ducktbl(a = 1, .lazy = TRUE)
 #' y
-#' try(y$a)
-#' collect(y)$a
+#' try(length(y$a))
+#' length(collect(y)$a)
 #' @export
 ducktbl <- function(..., .lazy = FALSE) {
   out <- tibble::tibble(...)
