@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4.1.9006</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4.1.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,6 +36,32 @@
       <small>Source: <a href="https://github.com/tidyverse/duckplyr/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.4.1.9007" id="duckplyr-0419007-2024-12-16">duckplyr 0.4.1.9007 (2024-12-16)<a class="anchor" aria-label="anchor" href="#duckplyr-0419007-2024-12-16"></a></h2>
+<div class="section level3">
+<h3 id="features-0-4-1-9007">Features<a class="anchor" aria-label="anchor" href="#features-0-4-1-9007"></a></h3>
+<ul><li><p>Use <code>as_duckplyr_df_impl()</code> in verbs (<a href="https://github.com/tidyverse/duckplyr/issues/386" class="external-link">#386</a>).</p></li>
+<li><p>Use <code><a href="../reference/ducktbl.html">as_ducktbl()</a></code> in touchstone script (<a href="https://github.com/tidyverse/duckplyr/issues/385" class="external-link">#385</a>).</p></li>
+<li><p>New <code><a href="../reference/ducktbl.html">as_ducktbl()</a></code>, replaces <code><a href="../reference/as_duckplyr_df.html">as_duckplyr_tibble()</a></code> and <code><a href="../reference/as_duckplyr_df.html">as_duckplyr_df()</a></code> (<a href="https://github.com/tidyverse/duckplyr/issues/383" class="external-link">#383</a>).</p></li>
+<li><p>New <code><a href="../reference/ducktbl.html">ducktbl()</a></code> (<a href="https://github.com/tidyverse/duckplyr/issues/382" class="external-link">#382</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="chore-0-4-1-9007">Chore<a class="anchor" aria-label="anchor" href="#chore-0-4-1-9007"></a></h3>
+<ul><li><p>Fix comment in touchstone script (<a href="https://github.com/tidyverse/duckplyr/issues/387" class="external-link">#387</a>).</p></li>
+<li><p>Use <code>as_duckplyr_df_impl()</code> in generated code (<a href="https://github.com/tidyverse/duckplyr/issues/384" class="external-link">#384</a>).</p></li>
+<li><p>Legacy duckdb script.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="performance-0-4-1-9007">Performance<a class="anchor" aria-label="anchor" href="#performance-0-4-1-9007"></a></h3>
+<ul><li>Printing a duckplyr frame no longer materializes (<a href="https://github.com/tidyverse/duckplyr/issues/255" class="external-link">#255</a>, <a href="https://github.com/tidyverse/duckplyr/issues/378" class="external-link">#378</a>).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="testing-0-4-1-9007">Testing<a class="anchor" aria-label="anchor" href="#testing-0-4-1-9007"></a></h3>
+<ul><li><p>Use <code><a href="../reference/ducktbl.html">ducktbl()</a></code> in tests (<a href="https://github.com/tidyverse/duckplyr/issues/388" class="external-link">#388</a>).</p></li>
+<li><p>Avoid <code><a href="../reference/as_duckplyr_df.html">as_duckplyr_df()</a></code> (<a href="https://github.com/tidyverse/duckplyr/issues/389" class="external-link">#389</a>).</p></li>
+<li><p>Skip test that requires dplyr &gt; 1.1.4.</p></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.1.9006" id="duckplyr-0419006-2024-12-15">duckplyr 0.4.1.9006 (2024-12-15)<a class="anchor" aria-label="anchor" href="#duckplyr-0419006-2024-12-15"></a></h2>
 <div class="section level3">
