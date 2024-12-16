@@ -57,6 +57,7 @@ New translations must change code in two places:
 
 1. Add a test for the new translation to the `mutate =` section of `test_extra_arg_map` in `00-funs.R`. (At some point we want to have more specific tests for the translations, for now, this is what it is.)
 1. Run `03-tests.R`, commit the changes to the generated code to version control.
+1. Update the list in the `limits.Rmd` vignette.
 
 ## Support more options for verbs
 
