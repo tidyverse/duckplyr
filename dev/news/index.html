@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4.1.9007</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9900</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,6 +36,61 @@
       <small>Source: <a href="https://github.com/tidyverse/duckplyr/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.99.99.9900" id="duckplyr-099999900-2024-12-16">duckplyr 0.99.99.9900 (2024-12-16)<a class="anchor" aria-label="anchor" href="#duckplyr-099999900-2024-12-16"></a></h2>
+<div class="section level3">
+<h3 id="features-0-99-99-9900">Features<a class="anchor" aria-label="anchor" href="#features-0-99-99-9900"></a></h3>
+<ul><li><p>New <code><a href="../reference/ducksql.html">ducksql()</a></code> (duckdb/duckdb-r#32, <a href="https://github.com/tidyverse/duckplyr/issues/397" class="external-link">#397</a>).</p></li>
+<li><p>New <code><a href="../reference/duckfile.html">duckparquet()</a></code>, <code><a href="../reference/duckfile.html">duckcsv()</a></code>, <code><a href="../reference/duckfile.html">duckjson()</a></code> and <code><a href="../reference/duckfile.html">duckfile()</a></code>, deprecating <code>duckplyr_df_from_*()</code> and <code>df_from_*()</code> functions (<a href="https://github.com/tidyverse/duckplyr/issues/210" class="external-link">#210</a>, <a href="https://github.com/tidyverse/duckplyr/issues/396" class="external-link">#396</a>).</p></li>
+<li><p>Deprecate <code><a href="../reference/is_duckplyr_df.html">is_duckplyr_df()</a></code> (<a href="https://github.com/tidyverse/duckplyr/issues/392" class="external-link">#392</a>).</p></li>
+<li><p>New <code><a href="../reference/ducktbl.html">is_ducktbl()</a></code> (<a href="https://github.com/tidyverse/duckplyr/issues/391" class="external-link">#391</a>).</p></li>
+<li><p>Add <code>"lazy_duckplyr_df"</code> class that requires <code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect()</a></code> (<a href="https://github.com/tidyverse/duckplyr/issues/381" class="external-link">#381</a>, <a href="https://github.com/tidyverse/duckplyr/issues/390" class="external-link">#390</a>).</p></li>
+<li><p>Use <code>as_duckplyr_df_impl()</code> in verbs (<a href="https://github.com/tidyverse/duckplyr/issues/386" class="external-link">#386</a>).</p></li>
+<li><p>Use <code><a href="../reference/ducktbl.html">as_ducktbl()</a></code> in touchstone script (<a href="https://github.com/tidyverse/duckplyr/issues/385" class="external-link">#385</a>).</p></li>
+<li><p>New <code><a href="../reference/ducktbl.html">as_ducktbl()</a></code>, replaces <code><a href="../reference/as_duckplyr_df.html">as_duckplyr_tibble()</a></code> and <code><a href="../reference/as_duckplyr_df.html">as_duckplyr_df()</a></code> (<a href="https://github.com/tidyverse/duckplyr/issues/383" class="external-link">#383</a>).</p></li>
+<li><p>New <code><a href="../reference/ducktbl.html">ducktbl()</a></code> (<a href="https://github.com/tidyverse/duckplyr/issues/382" class="external-link">#382</a>).</p></li>
+<li><p>New <code><a href="../reference/last_rel.html">last_rel()</a></code> to retrieve the last relation object used in materialization (<a href="https://github.com/tidyverse/duckplyr/issues/209" class="external-link">#209</a>, <a href="https://github.com/tidyverse/duckplyr/issues/375" class="external-link">#375</a>).</p></li>
+<li><p>Improve <code><a href="../reference/as_duckplyr_df.html">as_duckplyr_df()</a></code> error message for invalid <code>.data</code> (<a href="https://github.com/maelle" class="external-link">@maelle</a>, <a href="https://github.com/tidyverse/duckplyr/issues/339" class="external-link">#339</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="chore-0-99-99-9900">Chore<a class="anchor" aria-label="anchor" href="#chore-0-99-99-9900"></a></h3>
+<ul><li><p>Tweak <code><a href="../reference/ducktbl.html">as_ducktbl()</a></code> for dbplyr lazy tables (<a href="https://github.com/tidyverse/duckplyr/issues/395" class="external-link">#395</a>).</p></li>
+<li><p>Fix comment in touchstone script (<a href="https://github.com/tidyverse/duckplyr/issues/387" class="external-link">#387</a>).</p></li>
+<li><p>Use <code>as_duckplyr_df_impl()</code> in generated code (<a href="https://github.com/tidyverse/duckplyr/issues/384" class="external-link">#384</a>).</p></li>
+<li><p>Legacy duckdb script.</p></li>
+<li><p>Add read-only markers for overwrite + restore.</p></li>
+<li><p>Cleanup (<a href="https://github.com/tidyverse/duckplyr/issues/377" class="external-link">#377</a>).</p></li>
+<li><p>Avoid <code>"duckdb.materialize_message"</code> option (<a href="https://github.com/tidyverse/duckplyr/issues/376" class="external-link">#376</a>).</p></li>
+<li><p>Update TPCH outputs to account for data changes in duckdb 0.8.0 (<a href="https://github.com/tidyverse/duckplyr/issues/294" class="external-link">#294</a>).</p></li>
+<li><p>Sync.</p></li>
+<li><p>Bump duckdb dependency.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="continuous-integration-0-99-99-9900">Continuous integration<a class="anchor" aria-label="anchor" href="#continuous-integration-0-99-99-9900"></a></h3>
+<ul><li>Avoid failure in fledge workflow if no changes (<a href="https://github.com/tidyverse/duckplyr/issues/368" class="external-link">#368</a>).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="documentation-0-99-99-9900">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-99-99-9900"></a></h3>
+<ul><li><p>Add link to DuckDB configuration (<a href="https://github.com/tidyverse/duckplyr/issues/174" class="external-link">#174</a>, <a href="https://github.com/tidyverse/duckplyr/issues/398" class="external-link">#398</a>).</p></li>
+<li><p>Fix rendering in vanilla session.</p></li>
+<li><p>Add vignette about missing parts (<a href="https://github.com/maelle" class="external-link">@maelle</a>, <a href="https://github.com/tidyverse/duckplyr/issues/218" class="external-link">#218</a>, <a href="https://github.com/tidyverse/duckplyr/issues/371" class="external-link">#371</a>).</p></li>
+<li><p>Refactor README (<a href="https://github.com/maelle" class="external-link">@maelle</a>, <a href="https://github.com/tidyverse/duckplyr/issues/208" class="external-link">#208</a>, <a href="https://github.com/tidyverse/duckplyr/issues/334" class="external-link">#334</a>, <a href="https://github.com/tidyverse/duckplyr/issues/370" class="external-link">#370</a>).</p></li>
+<li><p>Tweak method and behavior (<a href="https://github.com/tidyverse/duckplyr/issues/373" class="external-link">#373</a>).</p></li>
+<li><p>Add manual pages for dplyr methods (<a href="https://github.com/maelle" class="external-link">@maelle</a>, <a href="https://github.com/tidyverse/duckplyr/issues/214" class="external-link">#214</a>, <a href="https://github.com/tidyverse/duckplyr/issues/359" class="external-link">#359</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="performance-0-99-99-9900">Performance<a class="anchor" aria-label="anchor" href="#performance-0-99-99-9900"></a></h3>
+<ul><li><p>Printing a duckplyr frame no longer materializes (<a href="https://github.com/tidyverse/duckplyr/issues/255" class="external-link">#255</a>, <a href="https://github.com/tidyverse/duckplyr/issues/378" class="external-link">#378</a>).</p></li>
+<li><p>Comparison expressions are translated in a way that allows them to be pushed down to Parquet (<a href="https://github.com/toppyy" class="external-link">@toppyy</a>, <a href="https://github.com/tidyverse/duckplyr/issues/270" class="external-link">#270</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="testing-0-99-99-9900">Testing<a class="anchor" aria-label="anchor" href="#testing-0-99-99-9900"></a></h3>
+<ul><li><p>Use <code><a href="../reference/ducktbl.html">ducktbl()</a></code> in tests (<a href="https://github.com/tidyverse/duckplyr/issues/388" class="external-link">#388</a>).</p></li>
+<li><p>Avoid <code><a href="../reference/as_duckplyr_df.html">as_duckplyr_df()</a></code> (<a href="https://github.com/tidyverse/duckplyr/issues/389" class="external-link">#389</a>).</p></li>
+<li><p>Skip test that requires dplyr &gt; 1.1.4.</p></li>
+<li><p>Add snapshot test for conversion error in <code><a href="../reference/as_duckplyr_df.html">as_duckplyr_df()</a></code>.</p></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.1.9007" id="duckplyr-0419007-2024-12-16">duckplyr 0.4.1.9007 (2024-12-16)<a class="anchor" aria-label="anchor" href="#duckplyr-0419007-2024-12-16"></a></h2>
 <div class="section level3">
