@@ -1,7 +1,7 @@
 Type: Package
 Package: duckplyr
 Title: A 'DuckDB'-Backed Version of 'dplyr'
-Version: 0.4.1.9003
+Version: 0.99.99.9900
 Authors@R: c(
     person("Hannes", "Mühleisen", role = "aut",
            comment = c(ORCID = "0000-0001-8552-0029")),
@@ -9,8 +9,8 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-1416-3412")),
     person("Posit Software, PBC", role = c("cph", "fnd"))
   )
-Description: A drop-in replacement for 'dplyr', powered by 'DuckDB' for performance.
-    Also defines a set of generics that provide a low-level
+Description: A drop-in replacement for 'dplyr', powered by 'DuckDB' for
+    performance.  Also defines a set of generics that provide a low-level
     implementer's interface for the high-level user interface of 'dplyr'.
 License: MIT + file LICENSE
 URL: https://duckplyr.tidyverse.org, https://github.com/tidyverse/duckplyr
@@ -22,11 +22,12 @@ Imports:
     collections,
     DBI,
     dplyr (>= 1.1.4),
-    duckdb (>= 1.1.2),
+    duckdb (>= 1.1.3-1),
     glue,
     jsonlite,
     lifecycle,
     memoise,
+    pillar (>= 1.9.0.1038),
     rlang (>= 1.0.6),
     tibble,
     tidyselect,
@@ -35,28 +36,34 @@ Imports:
 Suggests: 
     arrow,
     brio,
+    conflicted,
     constructive (>= 1.0.0),
     curl,
     dbplyr,
     hms,
+    knitr,
     lobstr,
     lubridate,
     palmerpenguins,
-    pillar,
     prettycode,
     purrr,
     qs,
     reprex,
+    rmarkdown,
     rstudioapi,
     testthat (>= 3.1.5),
     usethis,
     withr
+Remotes: 
+    r-lib/pillar
 Config/Needs/check: anthonynorth/roxyglobals
+Config/Needs/website: tidyverse/tidytemplate, dbplyr, Lahman, rmarkdown
 Config/testthat/edition: 3
 Config/testthat/parallel: false
-Config/testthat/start-first: rel_api, tpch, as_duckplyr_df, mutate, filter, count-tally
+Config/testthat/start-first: rel_api, tpch, as_duckplyr_df, mutate,
+    filter, count-tally
 Encoding: UTF-8
 Roxygen: list( markdown = TRUE, roclets = c("collate", "namespace", "rd",
     "roxyglobals::global_roclet") )
 RoxygenNote: 7.3.2.9000
-Config/Needs/website: tidyverse/tidytemplate
+VignetteBuilder: knitr

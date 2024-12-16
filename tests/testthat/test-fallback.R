@@ -74,8 +74,7 @@ test_that("summarize()", {
   ))
 
   expect_snapshot({
-    tibble(a = 1, b = 2, c = 3) %>%
-      as_duckplyr_df() %>%
+    ducktbl(a = 1, b = 2, c = 3) %>%
       summarize(
         .by = a,
         e = sum(b),
@@ -98,8 +97,7 @@ test_that("wday()", {
   ))
 
   expect_snapshot({
-    tibble(a = as.Date("2024-03-08")) %>%
-      as_duckplyr_df() %>%
+    ducktbl(a = as.Date("2024-03-08")) %>%
       mutate(
         b = lubridate::wday(a, label = TRUE)
       )
@@ -108,8 +106,7 @@ test_that("wday()", {
   local_options(lubridate.week.start = 1)
 
   expect_snapshot({
-    tibble(a = as.Date("2024-03-08")) %>%
-      as_duckplyr_df() %>%
+    ducktbl(a = as.Date("2024-03-08")) %>%
       mutate(
         b = lubridate::wday(a)
       )
@@ -128,8 +125,7 @@ test_that("strftime()", {
   ))
 
   expect_snapshot({
-    tibble(a = as.Date("2024-03-08")) %>%
-      as_duckplyr_df() %>%
+    ducktbl(a = as.Date("2024-03-08")) %>%
       mutate(
         b = strftime(a, format = "%Y-%m-%d", tz = "CET")
       )
@@ -150,8 +146,7 @@ test_that("$", {
   ))
 
   expect_snapshot(error = TRUE, {
-    tibble(a = 1, b = 2) %>%
-      as_duckplyr_df() %>%
+    ducktbl(a = 1, b = 2) %>%
       mutate(c = .env$x)
   })
 })
@@ -171,8 +166,7 @@ test_that("unknown function", {
   foo <- function(...) 3
 
   expect_snapshot({
-    tibble(a = 1, b = 2) %>%
-      as_duckplyr_df() %>%
+    ducktbl(a = 1, b = 2) %>%
       mutate(c = foo(a, b))
   })
 })
@@ -191,7 +185,7 @@ test_that("row names", {
 
   expect_snapshot({
     mtcars[1:2, ] %>%
-      as_duckplyr_df() %>%
+      as_ducktbl() %>%
       select(mpg, cyl)
   })
 })
@@ -209,8 +203,7 @@ test_that("named column", {
   ))
 
   expect_snapshot({
-    tibble(a = c(x = 1)) %>%
-      as_duckplyr_df() %>%
+    ducktbl(a = c(x = 1)) %>%
       select(a)
   })
 })
@@ -228,8 +221,7 @@ test_that("named column", {
   ))
 
   expect_snapshot({
-    tibble(a = matrix(1:4, ncol = 2)) %>%
-      as_duckplyr_df() %>%
+    ducktbl(a = matrix(1:4, ncol = 2)) %>%
       select(a)
   })
 })
@@ -247,8 +239,7 @@ test_that("list column", {
   ))
 
   expect_snapshot({
-    tibble(a = 1, b = 2, c = list(3)) %>%
-      as_duckplyr_df() %>%
+    ducktbl(a = 1, b = 2, c = list(3)) %>%
       select(a, b)
   })
 })
@@ -266,8 +257,7 @@ test_that("__row_number", {
   ))
 
   expect_snapshot({
-    tibble(`___row_number` = 1, b = 2:3) %>%
-      as_duckplyr_df() %>%
+    ducktbl(`___row_number` = 1, b = 2:3) %>%
       arrange(b)
   })
 })
@@ -285,8 +275,7 @@ test_that("rel_try()", {
   ))
 
   expect_snapshot({
-    tibble(a = 1) %>%
-      as_duckplyr_df() %>%
+    ducktbl(a = 1) %>%
       count(a, .drop = FALSE, name = "n")
   })
 })

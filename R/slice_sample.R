@@ -39,7 +39,7 @@ slice_sample.duckplyr_df <- function(.data, ..., n, prop, by = NULL, weight_by =
 
 duckplyr_slice_sample <- function(.data, ...) {
   try_fetch(
-    .data <- as_duckplyr_df(.data),
+    .data <- as_duckplyr_df_impl(.data),
     error = function(e) {
       testthat::skip(conditionMessage(e))
     }

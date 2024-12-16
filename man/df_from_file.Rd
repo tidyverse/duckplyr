@@ -55,6 +55,8 @@ A data frame for \code{df_from_file()}, or a \code{duckplyr_df} for
 \code{duckplyr_df_from_file()}, extended by the provided \code{class}.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
 \code{df_from_file()} uses arbitrary table functions to read data.
 See \url{https://duckdb.org/docs/data/overview} for a documentation
 of the available functions and their options.
@@ -125,3 +127,4 @@ duckplyr_df_from_parquet(path_parquet)
 
 unlink(path_parquet)
 }
+\keyword{internal}

@@ -1,6 +1,8 @@
 #' Convert to a duckplyr data frame
 #'
 #' @description
+#' `r lifecycle::badge("deprecated")`
+#'
 #' These functions convert a data-frame-like input to an object of class `"duckpylr_df"`.
 #' For such objects,
 #' dplyr verbs such as [mutate()], [select()] or [filter()]  will attempt to use DuckDB.
@@ -19,6 +21,7 @@
 #' @return For `as_duckplyr_df()`, an object of class `"duckplyr_df"`,
 #'   inheriting from the classes of the `.data` argument.
 #'
+#' @keywords internal
 #' @export
 #' @examples
 #' tibble(a = 1:3) %>%
@@ -28,18 +31,19 @@
 #'   as_duckplyr_df() %>%
 #'   mutate(b = a + 1)
 as_duckplyr_df <- function(.data) {
-  if (inherits(.data, "duckplyr_df")) {
-    return(.data)
+  lifecycle::deprecate_soft("1.0.0", "as_duckplyr_df()", "as_ducktbl()")
+
+  as_duckplyr_df_impl(.data)
+}
+
+as_duckplyr_df_impl <- function(x, error_call = caller_env()) {
+  # FIXME: Move to as_ducktbl()
+  if (!identical(class(x), "data.frame") && !identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
+    cli::cli_abort(call = error_call, c(
+      "Must pass a plain data frame or a tibble, not {.obj_type_friendly {x}}.",
+      i = "Convert it with {.fun as.data.frame} or {.fun tibble::as_tibble}."
+    ))
   }
 
-  if (!identical(class(.data), "data.frame") && !identical(class(.data), c("tbl_df", "tbl", "data.frame"))) {
-    cli::cli_abort("Must pass a plain data frame or a tibble to `as_duckplyr_df()`.")
-  }
-
-  if (anyNA(names(.data)) || any(names(.data) == "")) {
-    cli::cli_abort("Missing or empty names not allowed.")
-  }
-
-  class(.data) <- c("duckplyr_df", class(.data))
-  .data
+  new_ducktbl(x, class = class(x), error_call = error_call)
 }

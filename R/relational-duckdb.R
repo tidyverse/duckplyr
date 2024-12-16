@@ -77,6 +77,9 @@ duckdb_rel_from_df <- function(df) {
   # FIXME: make generic
   stopifnot(is.data.frame(df))
 
+  # Avoid weird recursions
+  class(df) <- "data.frame"
+
   rel <- duckdb$rel_from_altrep_df(df, strict = FALSE, allow_materialized = FALSE)
   if (!is.null(rel)) {
     # Once we're here, we know it's an ALTREP data frame
@@ -91,8 +94,8 @@ duckdb_rel_from_df <- function(df) {
     return(rel)
   }
 
-  if (!is_duckplyr_df(df)) {
-    df <- as_duckplyr_df(df)
+  if (!is_ducktbl(df)) {
+    df <- as_duckplyr_df_impl(df)
   }
 
   out <- check_df_for_rel(df)
@@ -156,7 +159,7 @@ check_df_for_rel <- function(df) {
 
   roundtrip <- duckdb$rapi_rel_to_altrep(out)
   if (Sys.getenv("DUCKPLYR_CHECK_ROUNDTRIP") == "TRUE") {
-    rlang::with_options(duckdb.materialize_message = FALSE, {
+    rlang::with_options(duckdb.materialize_callback = NULL, {
       for (i in seq_along(df)) {
         if (!identical(df[[i]], roundtrip[[i]])) {
           cli::cli_abort("Imperfect roundtrip. Affected column: {.var {names(df)[[i]]}}.")
@@ -194,8 +197,8 @@ vec_ptype_safe <- function(x) {
 }
 
 #' @export
-rel_to_df.duckdb_relation <- function(rel, ...) {
-  duckdb$rel_to_altrep(rel)
+rel_to_df.duckdb_relation <- function(rel, ..., allow_materialization = TRUE) {
+  duckdb$rel_to_altrep(rel, allow_materialization)
 }
 
 #' @export
@@ -406,6 +409,13 @@ to_duckdb_expr <- function(x) {
       }
       out
     },
+    relational_relexpr_comparison = {
+      out <- duckdb$expr_comparison(x$cmp_op, to_duckdb_exprs(x$exprs))
+      if (!is.null(x$alias)) {
+          duckdb$expr_set_alias(out, x$alias)
+      }
+      out
+    },
     relational_relexpr_function = {
       out <- duckdb$expr_function(x$name, to_duckdb_exprs(x$args))
       if (!is.null(x$alias)) {
@@ -459,6 +469,17 @@ to_duckdb_expr_meta <- function(x) {
         args <- c(args, meta_rel_get(x$rel)$name)
       }
       out <- expr(duckdb$expr_reference(!!!args))
+      if (!is.null(x$alias)) {
+        out <- expr({
+          tmp_expr <- !!out
+          duckdb$expr_set_alias(tmp_expr, !!x$alias)
+          tmp_expr
+        })
+      }
+      out
+    },
+    relational_relexpr_comparison = {
+      out <- expr(duckdb$expr_comparison(!!x$cmp_op, list(!!!to_duckdb_exprs_meta(x$exprs))))
       if (!is.null(x$alias)) {
         out <- expr({
           tmp_expr <- !!out

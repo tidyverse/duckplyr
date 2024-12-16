@@ -63,8 +63,8 @@ tpch_raw_oo_17 <- function(con, experimental) {
   rel3 <- duckdb$rel_filter(
     rel2,
     list(
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("p_brand"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -74,8 +74,8 @@ tpch_raw_oo_17 <- function(con, experimental) {
           }
         )
       ),
-      duckdb$expr_function(
-        "r_base::==",
+      duckdb$expr_comparison(
+        "==",
         list(
           duckdb$expr_reference("p_container"),
           if ("experimental" %in% names(formals(duckdb$expr_constant))) {
@@ -1205,8 +1205,8 @@ tpch_raw_oo_17 <- function(con, experimental) {
   rel28 <- duckdb$rel_filter(
     rel27,
     list(
-      duckdb$expr_function(
-        "r_base::<",
+      duckdb$expr_comparison(
+        "<",
         list(duckdb$expr_reference("l_quantity"), duckdb$expr_reference("quantity_threshold"))
       )
     )

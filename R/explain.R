@@ -1,3 +1,4 @@
+#' @rdname explain.duckplyr_df
 #' @export
 explain.duckplyr_df <- function(x, ...) {
   rel_try(list(name = "explain", x = x),
@@ -15,7 +16,7 @@ explain.duckplyr_df <- function(x, ...) {
 
 duckplyr_explain <- function(.data, ...) {
   try_fetch(
-    .data <- as_duckplyr_df(.data),
+    .data <- as_duckplyr_df_impl(.data),
     error = function(e) {
       testthat::skip(conditionMessage(e))
     }

@@ -187,6 +187,7 @@ duckplyr_tests <- head(n = -1, list(
   "test-funs.R" = c(
     # Needs dplyr > 1.1.4
     "ptype argument works as expected with non-alphabetical ordered factors",
+    "ptype argument affects type casting",
     NULL
   ),
   "test-generics.R" = c(

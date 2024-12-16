@@ -1,0 +1,153 @@
+#' duckplyr data frames
+#'
+#' @description
+#' Data frames backed by duckplyr have a special class, `"duckplyr_df"`,
+#' in addition to the default classes.
+#' This ensures that dplyr methods are dispatched correctly.
+#' For such objects,
+#' dplyr verbs such as [mutate()], [select()] or [filter()]  will attempt to use DuckDB.
+#' If this is not possible, the original dplyr implementation is used.
+#'
+#' `ducktbl()` works like [tibble()].
+#' In contrast to dbplyr, duckplyr data frames are "eager" by default.
+#' To avoid unwanted expensive computation, they can be converted to "lazy" duckplyr frames
+#' on which [collect()] needs to be called explicitly.
+#'
+#' @details
+#' Set the `DUCKPLYR_FALLBACK_INFO` and `DUCKPLYR_FORCE` environment variables
+#' for more control over the behavior, see [config] for more details.
+#'
+#' @param ... For `ducktbl()`, passed on to [tibble()].
+#'   For `as_ducktbl()`, passed on to methods.
+#' @param .lazy Logical, whether to create a lazy duckplyr frame.
+#'   If `TRUE`, [collect()] must be called before the data can be accessed.
+#'
+#' @return For `ducktbl()` and `as_ducktbl()`, an object with the following classes:
+#'   - `"lazy_duckplyr_df"` if `.lazy` is `TRUE`
+#'   - `"duckplyr_df"`
+#'   - Classes of a [tibble]
+#'
+#' @examples
+#' x <- ducktbl(a = 1)
+#' x
+#'
+#' library(dplyr)
+#' x %>%
+#'   mutate(b = 2)
+#'
+#' x$a
+#'
+#' y <- ducktbl(a = 1, .lazy = TRUE)
+#' y
+#' try(length(y$a))
+#' length(collect(y)$a)
+#' @export
+ducktbl <- function(..., .lazy = FALSE) {
+  out <- tibble::tibble(...)
+  as_ducktbl(out, .lazy = .lazy)
+}
+
+#' as_ducktbl
+#'
+#' `as_ducktbl()` converts a data frame or a dplyr lazy table to a duckplyr data frame.
+#' This is a generic function that can be overridden for custom classes.
+#'
+#' @param x The object to convert or to test.
+#' @rdname ducktbl
+#' @export
+as_ducktbl <- function(x, ..., .lazy = FALSE) {
+  out <- as_ducktbl_dispatch(x, ...)
+
+  if (.lazy) {
+    out <- as_lazy_duckplyr_df(out)
+  }
+
+  return(out)
+  UseMethod("as_ducktbl")
+}
+as_ducktbl_dispatch <- function(x, ...) {
+  UseMethod("as_ducktbl")
+}
+
+#' @export
+as_ducktbl.tbl_duckdb_connection <- function(x, ...) {
+  check_dots_empty()
+
+  con <- dbplyr::remote_con(x)
+  sql <- dbplyr::remote_query(x)
+
+  ducksql(sql, lazy = FALSE, con = con)
+}
+
+#' @export
+as_ducktbl.data.frame <- function(x, ...) {
+  check_dots_empty()
+
+  # - as_tibble() to remove row names
+  new_ducktbl(as_tibble(x))
+}
+
+#' @export
+as_ducktbl.default <- function(x, ...) {
+  check_dots_empty()
+
+  # - as.data.frame() call for good measure and perhaps https://github.com/tidyverse/tibble/issues/1556
+  # - as_tibble() to remove row names
+  # Could call as_ducktbl(as.data.frame(x)) here, but that would be slower
+  new_ducktbl(as_tibble(as.data.frame(x)))
+}
+
+#' @export
+as_ducktbl.grouped_df <- function(x, ...) {
+  check_dots_empty()
+
+  cli::cli_abort(c(
+    "duckplyr does not support {.code group_by()}.",
+    i = "Use `.by` instead.",
+    i = "To proceed with dplyr, use {.code as_tibble()} or {.code as.data.frame()}."
+  ))
+}
+
+#' @export
+as_ducktbl.rowwise_df <- function(x, ...) {
+  check_dots_empty()
+
+  cli::cli_abort(c(
+    "duckplyr does not support {.code rowwise()}.",
+    i = "To proceed with dplyr, use {.code as_tibble()} or {.code as.data.frame()}."
+  ))
+}
+
+#' is_ducktbl
+#'
+#' `is_ducktbl()` returns `TRUE` if `x` is a duckplyr data frame.
+#'
+#' @return For `is_ducktbl()`, a scalar logical.
+#' @rdname ducktbl
+#' @export
+is_ducktbl <- function(x) {
+  inherits(x, "duckplyr_df")
+}
+
+
+#' @param lazy Only adds the class, does not recreate the relation object!
+#' @noRd
+new_ducktbl <- function(x, class = NULL, lazy = FALSE, error_call = caller_env()) {
+  if (is.null(class)) {
+    class <- c("tbl_df", "tbl", "data.frame")
+  }
+
+  if (!inherits(x, "duckplyr_df")) {
+    if (anyNA(names(x)) || any(names(x) == "")) {
+      cli::cli_abort("Missing or empty names not allowed.", call = error_call)
+    }
+  }
+
+  class(x) <- unique(c(
+    if (lazy) "lazy_duckplyr_df",
+    "duckplyr_df",
+    class
+  ))
+
+  x
+}

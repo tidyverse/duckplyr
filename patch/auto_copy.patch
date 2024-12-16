@@ -18,7 +18,7 @@ index 31e9d9c1..af60dff9 100644
 -  auto_copy <- dplyr$auto_copy.data.frame
 -  out <- auto_copy(x, y, copy, ...)
 -  return(out)
-+  return(as_duckplyr_df(as.data.frame(y)))
++  return(as_duckplyr_df_impl(as.data.frame(y)))
  
    # dplyr implementation
    as.data.frame(y)

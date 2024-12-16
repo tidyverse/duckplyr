@@ -3,12 +3,6 @@
 #' The behavior of duckplyr can be fine-tuned with several environment variables,
 #' and one option.
 #'
-#' @section Options:
-#'
-#' `duckdb.materialize_message`: Set to `FALSE` to turn off diagnostic output from duckdb
-#' on data frame materialization.
-#' Currenty set to `TRUE` when duckplyr is loaded.
-#'
 #' @section Environment variables:
 #'
 #' `DUCKPLYR_OUTPUT_ORDER`: If `TRUE`, row output order is preserved.
@@ -38,18 +32,6 @@
 # `DUCKPLYR_META_SKIP`: Skip recording the operations, replay not available.
 #' @name config
 #' @examples
-#' # options(duckdb.materialize_message = FALSE)
-#' data.frame(a = 3:1) %>%
-#'   as_duckplyr_df() %>%
-#'   inner_join(data.frame(a = 1:4), by = "a")
-#'
-#' rlang::with_options(duckdb.materialize_message = FALSE, {
-#'   data.frame(a = 3:1) %>%
-#'     as_duckplyr_df() %>%
-#'     inner_join(data.frame(a = 1:4), by = "a") %>%
-#'     print()
-#' })
-#'
 #' # Sys.setenv(DUCKPLYR_OUTPUT_ORDER = TRUE)
 #' data.frame(a = 3:1) %>%
 #'   as_duckplyr_df() %>%

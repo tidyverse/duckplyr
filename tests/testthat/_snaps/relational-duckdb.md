@@ -32,7 +32,7 @@
       ---------------------
       Projection [a as a]
         Order [___row_number ASC]
-          Filter ["r_base::=="(a, 1.0)]
+          Filter [(a = 1.0)]
             Projection [a as a, row_number() OVER () as ___row_number]
               r_dataframe_scan(0xdeadbeef)
       
@@ -41,11 +41,16 @@
       ---------------------
       - a (DOUBLE)
       
+
+---
+
     Code
       nrow(df)
     Output
-      duckplyr: materializing, review details with duckplyr::last_rel()
       [1] 1
+
+---
+
     Code
       duckdb_rel_from_df(df)
     Message

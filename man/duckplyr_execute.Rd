@@ -18,6 +18,8 @@ to an in-memory database.
 The \code{duckplyr_execute()} function allows running SQL statements
 with this connection to, e.g., set up credentials
 or attach other databases.
+See \url{https://duckdb.org/docs/configuration/overview.html}
+for more information on the configuration options.
 }
 \examples{
 duckplyr_execute("SET threads TO 2")
