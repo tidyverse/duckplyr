@@ -75,9 +75,14 @@ as_ducktbl.tbl_duckdb_connection <- function(x, ...) {
   con <- dbplyr::remote_con(x)
   sql <- dbplyr::remote_query(x)
   rel <- duckdb$rel_from_sql(con, sql)
+
+  # This isn't accurate, but the best that we can do
+  meta_rel_register(rel, expr(
+    duckdb$rel_from_sql(con, !!sql)
+  ))
+
   out <- rel_to_df(rel)
-  class(out) <- c("duckplyr_df", class(new_tibble(list())))
-  return(out)
+  new_ducktbl(out)
 }
 
 #' @export
