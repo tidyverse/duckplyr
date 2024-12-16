@@ -43,14 +43,7 @@
 #' @export
 ducktbl <- function(..., .lazy = FALSE) {
   out <- tibble::tibble(...)
-
-  out <- as_duckplyr_df_impl(out)
-
-  if (.lazy) {
-    out <- as_lazy_duckplyr_df(out)
-  }
-
-  out
+  as_ducktbl(out, .lazy = .lazy)
 }
 
 #' as_ducktbl
@@ -82,17 +75,32 @@ as_ducktbl.tbl_duckdb_connection <- function(x, ...) {
   con <- dbplyr::remote_con(x)
   sql <- dbplyr::remote_query(x)
   rel <- duckdb$rel_from_sql(con, sql)
+
+  # This isn't accurate, but the best that we can do
+  meta_rel_register(rel, expr(
+    duckdb$rel_from_sql(con, !!sql)
+  ))
+
   out <- rel_to_df(rel)
-  class(out) <- c("duckplyr_df", class(new_tibble(list())))
-  return(out)
+  new_ducktbl(out)
+}
+
+#' @export
+as_ducktbl.data.frame <- function(x, ...) {
+  check_dots_empty()
+
+  # - as_tibble() to remove row names
+  new_ducktbl(as_tibble(x))
 }
 
 #' @export
 as_ducktbl.default <- function(x, ...) {
   check_dots_empty()
 
-  # Extra as.data.frame() call for good measure and perhaps https://github.com/tidyverse/tibble/issues/1556
-  as_duckplyr_df_impl(as_tibble(as.data.frame(x)))
+  # - as.data.frame() call for good measure and perhaps https://github.com/tidyverse/tibble/issues/1556
+  # - as_tibble() to remove row names
+  # Could call as_ducktbl(as.data.frame(x)) here, but that would be slower
+  new_ducktbl(as_tibble(as.data.frame(x)))
 }
 
 #' @export
@@ -125,4 +133,27 @@ as_ducktbl.rowwise_df <- function(x, ...) {
 #' @export
 is_ducktbl <- function(x) {
   inherits(x, "duckplyr_df")
+}
+
+
+#' @param lazy Only adds the class, does not recreate the relation object!
+#' @noRd
+new_ducktbl <- function(x, class = NULL, lazy = FALSE, error_call = caller_env()) {
+  if (is.null(class)) {
+    class <- c("tbl_df", "tbl", "data.frame")
+  }
+
+  if (!inherits(x, "duckplyr_df")) {
+    if (anyNA(names(x)) || any(names(x) == "")) {
+      cli::cli_abort("Missing or empty names not allowed.", call = error_call)
+    }
+  }
+
+  class(x) <- unique(c(
+    if (lazy) "lazy_duckplyr_df",
+    "duckplyr_df",
+    class
+  ))
+
+  x
 }
