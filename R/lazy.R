@@ -29,14 +29,14 @@ collect.lazy_duckplyr_df <- function(x, ...) {
 }
 
 #' @export
-as.data.frame.duckplyr_df <- function(x, row.names, optional, ...) {
+as.data.frame.duckplyr_df <- function(x, row.names = NULL, optional = FALSE, ...) {
   out <- collect(x)
   class(out) <- setdiff(class(out), c("duckplyr_df", "tbl_df", "tbl"))
   as.data.frame(out, row.names = row.names, optional = optional, ...)
 }
 
 #' @export
-as.data.frame.lazy_duckplyr_df <- function(x, row.names, optional, ...) {
+as.data.frame.lazy_duckplyr_df <- function(x, row.names = NULL, optional = FALSE, ...) {
   out <- collect(x)
   as.data.frame(out, row.names = row.names, optional = optional, ...)
 }
