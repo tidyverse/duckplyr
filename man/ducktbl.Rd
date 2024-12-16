@@ -3,11 +3,14 @@
 \name{ducktbl}
 \alias{ducktbl}
 \alias{as_ducktbl}
+\alias{is_ducktbl}
 \title{duckplyr data frames}
 \usage{
 ducktbl(..., .lazy = FALSE)
 
 as_ducktbl(x, ..., .lazy = FALSE)
+
+is_ducktbl(x)
 }
 \arguments{
 \item{...}{For \code{ducktbl()}, passed on to \code{\link[=tibble]{tibble()}}.
@@ -18,11 +21,14 @@ For \code{as_ducktbl()}, passed on to methods.}
 \item{x}{The object to convert or to test.}
 }
 \value{
-An object with the following classes:
+For \code{ducktbl()} and \code{as_ducktbl()}, an object with the following classes:
 \itemize{
+\item \code{"lazy_duckplyr_df"} if \code{.lazy} is \code{TRUE}
 \item \code{"duckplyr_df"}
 \item Classes of a \link{tibble}
 }
+
+For \code{is_ducktbl()}, a scalar logical.
 }
 \description{
 Data frames backed by duckplyr have a special class, \code{"duckplyr_df"},
@@ -39,6 +45,8 @@ on which \code{\link[=collect]{collect()}} needs to be called explicitly.
 
 \code{as_ducktbl()} converts a data frame or a dplyr lazy table to a duckplyr data frame.
 This is a generic function that can be overridden for custom classes.
+
+\code{is_ducktbl()} returns \code{TRUE} if \code{x} is a duckplyr data frame.
 }
 \details{
 Set the \code{DUCKPLYR_FALLBACK_INFO} and \code{DUCKPLYR_FORCE} environment variables
