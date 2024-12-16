@@ -126,3 +126,26 @@ as_ducktbl.rowwise_df <- function(x, ...) {
 is_ducktbl <- function(x) {
   inherits(x, "duckplyr_df")
 }
+
+
+#' @param lazy Only adds the class, does not recreate the relation object!
+#' @noRd
+new_ducktbl <- function(x, class = NULL, lazy = FALSE, error_call = caller_env()) {
+  if (is.null(class)) {
+    class <- c("tbl_df", "tbl", "data.frame")
+  }
+
+  if (!inherits(x, "duckplyr_df")) {
+    if (anyNA(names(x)) || any(names(x) == "")) {
+      cli::cli_abort("Missing or empty names not allowed.", call = error_call)
+    }
+  }
+
+  class(x) <- unique(c(
+    if (lazy) "lazy_duckplyr_df",
+    "duckplyr_df",
+    class
+  ))
+
+  x
+}

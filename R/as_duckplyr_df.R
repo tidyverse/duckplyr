@@ -37,10 +37,7 @@ as_duckplyr_df <- function(.data) {
 }
 
 as_duckplyr_df_impl <- function(x, error_call = caller_env()) {
-  if (inherits(x, "duckplyr_df")) {
-    return(x)
-  }
-
+  # FIXME: Move to as_ducktbl()
   if (!identical(class(x), "data.frame") && !identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
     cli::cli_abort(call = error_call, c(
       "Must pass a plain data frame or a tibble, not {.obj_type_friendly {x}}.",
@@ -48,10 +45,5 @@ as_duckplyr_df_impl <- function(x, error_call = caller_env()) {
     ))
   }
 
-  if (anyNA(names(x)) || any(names(x) == "")) {
-    cli::cli_abort("Missing or empty names not allowed.", call = error_call)
-  }
-
-  class(x) <- c("duckplyr_df", class(x))
-  x
+  new_ducktbl(x, class = class(x), error_call = error_call)
 }
