@@ -1,5 +1,5 @@
 ---
-output: 
+output:
   github_document:
     html_preview: false
 ---
@@ -79,10 +79,9 @@ install.packages("duckplyr", repos = c("https://tidyverse.r-universe.dev", "http
 Or from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("pak", repos = sprintf("https://r-lib.github.io/p/pak/stable/%s/%s/%s", .Platform$pkgType, R.Version()$os, R.Version()$arch))
+# install.packages("pak")
 pak::pak("tidyverse/duckplyr")
 ```
-
 
 ## Example
 
@@ -94,20 +93,7 @@ library(duckplyr)
 ```
 
 Calling `library(duckplyr)` overwrites dplyr methods,
-enabling duckplyr instead for the entire session. 
-To turn this off, call `methods_restore()`.
-
-See also the companion [demo repository](https://github.com/Tmonster/duckplyr_demo) for a use case with a large dataset.
-
-This example illustrates usage of duckplyr for all data frames in the R session 
-("session-wide").
-
-Use `library(duckplyr)` or `duckplyr::methods_overwrite()` to overwrite dplyr methods and enable processing with duckdb for all data frames:
-
-```{r, eval=FALSE}
-duckplyr::methods_overwrite()
-```
-
+enabling duckplyr instead for the entire session.
 
 ```{r echo = FALSE}
 Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
@@ -123,7 +109,7 @@ out <-
   filter(species != "Gentoo")
 ```
 
-The result is a plain tibble now:
+The result is a plain tibble:
 
 ```{r}
 class(out)
@@ -140,18 +126,6 @@ Restart R, or call `duckplyr::methods_restore()` to revert to the default dplyr 
 ```{r}
 duckplyr::methods_restore()
 ```
-
-dplyr is active again:
-
-```{r}
-palmerpenguins::penguins %>%
-  # CAVEAT: factor columns are not supported yet
-  mutate(across(where(is.factor), as.character)) %>%
-  mutate(bill_area = bill_length_mm * bill_depth_mm) %>%
-  summarize(.by = c(species, sex), mean_bill_area = mean(bill_area)) %>%
-  filter(species != "Gentoo")
-```
-
 
 ## Using duckplyr in other packages
 

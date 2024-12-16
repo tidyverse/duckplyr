@@ -35,10 +35,9 @@ install.packages("duckplyr", repos = c("https://tidyverse.r-universe.dev", "http
 Or from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("pak", repos = sprintf("https://r-lib.github.io/p/pak/stable/%s/%s/%s", .Platform$pkgType, R.Version()$os, R.Version()$arch))
+# install.packages("pak")
 pak::pak("tidyverse/duckplyr")
 ```
-
 
 ## Example
 
@@ -51,21 +50,7 @@ library(duckplyr)
 ```
 
 Calling `library(duckplyr)` overwrites dplyr methods,
-enabling duckplyr instead for the entire session. 
-To turn this off, call `methods_restore()`.
-
-See also the companion [demo repository](https://github.com/Tmonster/duckplyr_demo) for a use case with a large dataset.
-
-This example illustrates usage of duckplyr for all data frames in the R session 
-("session-wide").
-
-Use `library(duckplyr)` or `duckplyr::methods_overwrite()` to overwrite dplyr methods and enable processing with duckdb for all data frames:
-
-
-``` r
-duckplyr::methods_overwrite()
-```
-
+enabling duckplyr instead for the entire session.
 
 
 
@@ -80,7 +65,7 @@ out <-
   filter(species != "Gentoo")
 ```
 
-The result is a plain tibble now:
+The result is a plain tibble:
 
 
 ``` r
@@ -103,27 +88,6 @@ Restart R, or call `duckplyr::methods_restore()` to revert to the default dplyr 
 duckplyr::methods_restore()
 #> [1m[22m[36mℹ[39m Restoring [34mdplyr[39m methods.
 ```
-
-dplyr is active again:
-
-
-``` r
-palmerpenguins::penguins %>%
-  # CAVEAT: factor columns are not supported yet
-  mutate(across(where(is.factor), as.character)) %>%
-  mutate(bill_area = bill_length_mm * bill_depth_mm) %>%
-  summarize(.by = c(species, sex), mean_bill_area = mean(bill_area)) %>%
-  filter(species != "Gentoo")
-#> [38;5;246m# A tibble: 5 × 3[39m
-#>   [1mspecies[22m   [1msex[22m    [1mmean_bill_area[22m
-#>   [3m[38;5;246m<chr>[39m[23m     [3m[38;5;246m<chr>[39m[23m           [3m[38;5;246m<dbl>[39m[23m
-#> [38;5;250m1[39m Adelie    male             770.
-#> [38;5;250m2[39m Adelie    female           657.
-#> [38;5;250m3[39m Adelie    [31mNA[39m                [31mNA[39m 
-#> [38;5;250m4[39m Chinstrap female           820.
-#> [38;5;250m5[39m Chinstrap male             984.
-```
-
 
 ## Using duckplyr in other packages
 
@@ -155,12 +119,17 @@ palmerpenguins::penguins %>%
   duckplyr::as_duckplyr_tibble() %>%
   transmute(bill_area = bill_length_mm * bill_depth_mm) %>%
   head(3)
+#> Warning: [1m[22m`as_duckplyr_tibble()` was deprecated in duckplyr 1.0.0.
+#> [36mℹ[39m Please use `as_ducktbl()` instead.
+#> [90mThis warning is displayed once every 8 hours.[39m
+#> [90mCall `lifecycle::last_lifecycle_warnings()` to see where this warning was[39m
+#> [90mgenerated.[39m
 #> [1m[22mThe [34mduckplyr[39m package is configured to fall back to [34mdplyr[39m when it encounters an
 #> incompatibility. Fallback events can be collected and uploaded for analysis to
 #> guide future development. By default, no data will be collected or uploaded.
 #> [36mℹ[39m A fallback situation just occurred. The following information would have been
 #>   recorded:
-#>   {"version":"0.4.1","message":"Can't convert columns of class <factor> to
+#>   {"version":"0.99.99","message":"Can't convert columns of class <factor> to
 #>   relational. Affected
 #>   column:\n`...1`.","name":"transmute","x":{"...1":"factor","...2":"factor","...3":"numeric","...4":"numeric","...5":"integer","...6":"integer","...7":"factor","...8":"integer"},"args":{"dots":{"...9":"...3
 #>   * ...4"}}}

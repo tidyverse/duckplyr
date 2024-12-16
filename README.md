@@ -40,7 +40,7 @@ install.packages("duckplyr", repos = c("https://tidyverse.r-universe.dev", "http
 Or from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("pak", repos = sprintf("https://r-lib.github.io/p/pak/stable/%s/%s/%s", .Platform$pkgType, R.Version()$os, R.Version()$arch))
+# install.packages("pak")
 pak::pak("tidyverse/duckplyr")
 ```
 
@@ -54,22 +54,7 @@ library(duckplyr)
 ```
 
 Calling `library(duckplyr)` overwrites dplyr methods, enabling duckplyr
-instead for the entire session. To turn this off, call
-`methods_restore()`.
-
-See also the companion [demo
-repository](https://github.com/Tmonster/duckplyr_demo) for a use case
-with a large dataset.
-
-This example illustrates usage of duckplyr for all data frames in the R
-session (“session-wide”).
-
-Use `library(duckplyr)` or `duckplyr::methods_overwrite()` to overwrite
-dplyr methods and enable processing with duckdb for all data frames:
-
-``` r
-duckplyr::methods_overwrite()
-```
+instead for the entire session.
 
 ``` r
 out <-
@@ -81,7 +66,7 @@ out <-
   filter(species != "Gentoo")
 ```
 
-The result is a plain tibble now:
+The result is a plain tibble:
 
 ``` r
 class(out)
@@ -101,25 +86,6 @@ default dplyr implementation.
 ``` r
 duckplyr::methods_restore()
 #> ℹ Restoring dplyr methods.
-```
-
-dplyr is active again:
-
-``` r
-palmerpenguins::penguins %>%
-  # CAVEAT: factor columns are not supported yet
-  mutate(across(where(is.factor), as.character)) %>%
-  mutate(bill_area = bill_length_mm * bill_depth_mm) %>%
-  summarize(.by = c(species, sex), mean_bill_area = mean(bill_area)) %>%
-  filter(species != "Gentoo")
-#> # A tibble: 5 × 3
-#>   species   sex    mean_bill_area
-#>   <chr>     <chr>           <dbl>
-#> 1 Adelie    male             770.
-#> 2 Adelie    female           657.
-#> 3 Adelie    NA                NA 
-#> 4 Chinstrap female           820.
-#> 5 Chinstrap male             984.
 ```
 
 ## Using duckplyr in other packages
@@ -153,12 +119,17 @@ palmerpenguins::penguins %>%
   duckplyr::as_duckplyr_tibble() %>%
   transmute(bill_area = bill_length_mm * bill_depth_mm) %>%
   head(3)
+#> Warning: `as_duckplyr_tibble()` was deprecated in duckplyr 1.0.0.
+#> ℹ Please use `as_ducktbl()` instead.
+#> This warning is displayed once every 8 hours.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
 #> The duckplyr package is configured to fall back to dplyr when it encounters an
 #> incompatibility. Fallback events can be collected and uploaded for analysis to
 #> guide future development. By default, no data will be collected or uploaded.
 #> ℹ A fallback situation just occurred. The following information would have been
 #>   recorded:
-#>   {"version":"0.4.1","message":"Can't convert columns of class <factor> to
+#>   {"version":"0.99.99","message":"Can't convert columns of class <factor> to
 #>   relational. Affected
 #>   column:\n`...1`.","name":"transmute","x":{"...1":"factor","...2":"factor","...3":"numeric","...4":"numeric","...5":"integer","...6":"integer","...7":"factor","...8":"integer"},"args":{"dots":{"...9":"...3
 #>   * ...4"}}}
