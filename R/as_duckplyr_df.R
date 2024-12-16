@@ -1,6 +1,8 @@
 #' Convert to a duckplyr data frame
 #'
 #' @description
+#' `r lifecycle::badge("deprecated")`
+#'
 #' These functions convert a data-frame-like input to an object of class `"duckpylr_df"`.
 #' For such objects,
 #' dplyr verbs such as [mutate()], [select()] or [filter()]  will attempt to use DuckDB.
@@ -19,6 +21,7 @@
 #' @return For `as_duckplyr_df()`, an object of class `"duckplyr_df"`,
 #'   inheriting from the classes of the `.data` argument.
 #'
+#' @keywords internal
 #' @export
 #' @examples
 #' tibble(a = 1:3) %>%
@@ -28,6 +31,8 @@
 #'   as_duckplyr_df() %>%
 #'   mutate(b = a + 1)
 as_duckplyr_df <- function(.data) {
+  lifecycle::deprecate_soft("1.0.0", "as_duckplyr_df()", "as_ducktbl()")
+
   as_duckplyr_df_impl(.data)
 }
 

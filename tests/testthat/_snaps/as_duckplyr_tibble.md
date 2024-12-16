@@ -17,6 +17,9 @@
     Code
       as_duckplyr_df(by_cyl)
     Condition
+      Warning:
+      `as_duckplyr_df()` was deprecated in duckplyr 1.0.0.
+      i Please use `as_ducktbl()` instead.
       Error in `as_duckplyr_df()`:
       ! Must pass a plain data frame or a tibble, not a <grouped_df> object.
       i Convert it with `as.data.frame()` or `tibble::as_tibble()`.

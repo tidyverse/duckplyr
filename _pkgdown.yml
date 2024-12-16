@@ -12,8 +12,6 @@ reference:
 - title: Using duckplyr
   contents:
   - ducktbl
-  - as_duckplyr_df
-  - is_duckplyr_df
 
 - title: dplyr verbs
 

@@ -95,6 +95,27 @@ as_ducktbl.default <- function(x, ...) {
   as_duckplyr_df_impl(as_tibble(as.data.frame(x)))
 }
 
+#' @export
+as_ducktbl.grouped_df <- function(x, ...) {
+  check_dots_empty()
+
+  cli::cli_abort(c(
+    "duckplyr does not support {.code group_by()}.",
+    i = "Use `.by` instead.",
+    i = "To proceed with dplyr, use {.code as_tibble()} or {.code as.data.frame()}."
+  ))
+}
+
+#' @export
+as_ducktbl.rowwise_df <- function(x, ...) {
+  check_dots_empty()
+
+  cli::cli_abort(c(
+    "duckplyr does not support {.code rowwise()}.",
+    i = "To proceed with dplyr, use {.code as_tibble()} or {.code as.data.frame()}."
+  ))
+}
+
 #' is_ducktbl
 #'
 #' `is_ducktbl()` returns `TRUE` if `x` is a duckplyr data frame.
