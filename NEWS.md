@@ -1,5 +1,38 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.4.1.9007 (2024-12-16)
+
+## Features
+
+- Use `as_duckplyr_df_impl()` in verbs (#386).
+
+- Use `as_ducktbl()` in touchstone script (#385).
+
+- New `as_ducktbl()`, replaces `as_duckplyr_tibble()` and `as_duckplyr_df()` (#383).
+
+- New `ducktbl()` (#382).
+
+## Chore
+
+- Fix comment in touchstone script (#387).
+
+- Use `as_duckplyr_df_impl()` in generated code (#384).
+
+- Legacy duckdb script.
+
+## Performance
+
+- Printing a duckplyr frame no longer materializes (#255, #378).
+
+## Testing
+
+- Use `ducktbl()` in tests (#388).
+
+- Avoid `as_duckplyr_df()` (#389).
+
+- Skip test that requires dplyr \> 1.1.4.
+
+
 # duckplyr 0.4.1.9006 (2024-12-15)
 
 ## Features
