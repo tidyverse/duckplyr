@@ -213,7 +213,7 @@ meta_rel_register_df <- function(rel, df) {
   meta_rel_register(rel, rel_expr)
 }
 
-meta_rel_register_file <- function(rel, path, table_function, options) {
+meta_rel_register_file <- function(rel, table_function, path, options) {
   if (Sys.getenv("DUCKPLYR_META_SKIP") == "TRUE") {
     return(invisible())
   }

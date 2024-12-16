@@ -19,7 +19,8 @@
 #'
 #' @param ... For `ducktbl()`, passed on to [tibble()].
 #'   For `as_ducktbl()`, passed on to methods.
-#' @param .lazy Logical, whether to create a lazy duckplyr frame
+#' @param .lazy Logical, whether to create a lazy duckplyr frame.
+#'   If `TRUE`, [collect()] must be called before the data can be accessed.
 #'
 #' @return For `ducktbl()` and `as_ducktbl()`, an object with the following classes:
 #'   - `"lazy_duckplyr_df"` if `.lazy` is `TRUE`

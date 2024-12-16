@@ -16,7 +16,8 @@ is_ducktbl(x)
 \item{...}{For \code{ducktbl()}, passed on to \code{\link[=tibble]{tibble()}}.
 For \code{as_ducktbl()}, passed on to methods.}
 
-\item{.lazy}{Logical, whether to create a lazy duckplyr frame}
+\item{.lazy}{Logical, whether to create a lazy duckplyr frame.
+If \code{TRUE}, \code{\link[=collect]{collect()}} must be called before the data can be accessed.}
 
 \item{x}{The object to convert or to test.}
 }
