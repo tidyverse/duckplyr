@@ -2,19 +2,18 @@
 % Please edit documentation in R/io2.R
 \name{duckfile}
 \alias{duckfile}
-\alias{duckparquet_read}
-\alias{duckcsv_read}
-\alias{duckjson_read}
-\alias{duckfile_read}
+\alias{duckparquet}
+\alias{duckcsv}
+\alias{duckjson}
 \title{Read Parquet, CSV, and other files using DuckDB}
 \usage{
-duckparquet_read(path, ..., lazy = TRUE, options = list())
+duckparquet(path, ..., lazy = TRUE, options = list())
 
-duckcsv_read(path, ..., lazy = TRUE, options = list())
+duckcsv(path, ..., lazy = TRUE, options = list())
 
-duckjson_read(path, ..., lazy = TRUE, options = list())
+duckjson(path, ..., lazy = TRUE, options = list())
 
-duckfile_read(path, table_function, ..., lazy = TRUE, options = list())
+duckfile(path, table_function, ..., lazy = TRUE, options = list())
 }
 \arguments{
 \item{path}{Path to files, glob patterns \code{*} and \verb{?} are supported.}
@@ -39,13 +38,13 @@ These functions ingest data from a file.
 In many cases, these functions return immediately because they only read the metadata.
 The actual data is only read when it is actually processed.
 
-\code{duckparquet_read()} reads a CSV file using DuckDB's \code{read_parquet()} table function.
+\code{duckparquet()} reads a CSV file using DuckDB's \code{read_parquet()} table function.
 
-\code{duckcsv_read()} reads a CSV file using DuckDB's \code{read_csv_auto()} table function.
+\code{duckcsv()} reads a CSV file using DuckDB's \code{read_csv_auto()} table function.
 
-\code{duckjson_read()} reads a JSON file using DuckDB's \code{read_json()} table function.
+\code{duckjson()} reads a JSON file using DuckDB's \code{read_json()} table function.
 
-\code{duckfile_read()} uses arbitrary readers to read data.
+\code{duckfile()} uses arbitrary readers to read data.
 See \url{https://duckdb.org/docs/data/overview} for a documentation
 of the available functions and their options.
 To read multiple files with the same schema,
@@ -65,7 +64,7 @@ path <- tempfile("duckplyr_test_", fileext = ".csv")
 write.csv(data.frame(a = 1:3, b = letters[4:6]), path, row.names = FALSE)
 
 # Reading is immediate
-df <- duckcsv_read(path)
+df <- duckcsv(path)
 
 # Names are always available
 names(df)
@@ -77,11 +76,11 @@ try(print(df$a))
 collect(df)$a
 
 # Automatic materialization with lazy = FALSE
-df <- duckcsv_read(path, lazy = FALSE)
+df <- duckcsv(path, lazy = FALSE)
 df$a
 
 # Specify column types
-duckcsv_read(
+duckcsv(
   path,
   options = list(delim = ",", types = list(c("DOUBLE", "VARCHAR")))
 )
@@ -93,5 +92,5 @@ writeLines('[{"a": 1, "b": "x"}, {"a": 2, "b": "y"}]', path)
 # Reading needs the json extension
 duckplyr_execute("INSTALL json")
 duckplyr_execute("LOAD json")
-duckjson_read(path)
+duckjson(path)
 }
