@@ -1,5 +1,88 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9900 (2024-12-16)
+
+## Features
+
+- New `ducksql()` (duckdb/duckdb-r#32, #397).
+
+- New `duckparquet()`, `duckcsv()`, `duckjson()` and `duckfile()`, deprecating `duckplyr_df_from_*()` and `df_from_*()` functions (#210, #396).
+
+- Deprecate `is_duckplyr_df()` (#392).
+
+- New `is_ducktbl()` (#391).
+
+- Add `"lazy_duckplyr_df"` class that requires `collect()` (#381, #390).
+
+- Use `as_duckplyr_df_impl()` in verbs (#386).
+
+- Use `as_ducktbl()` in touchstone script (#385).
+
+- New `as_ducktbl()`, replaces `as_duckplyr_tibble()` and `as_duckplyr_df()` (#383).
+
+- New `ducktbl()` (#382).
+
+- New `last_rel()` to retrieve the last relation object used in materialization (#209, #375).
+
+- Improve `as_duckplyr_df()` error message for invalid `.data` (@maelle, #339).
+
+## Chore
+
+- Tweak `as_ducktbl()` for dbplyr lazy tables (#395).
+
+- Fix comment in touchstone script (#387).
+
+- Use `as_duckplyr_df_impl()` in generated code (#384).
+
+- Legacy duckdb script.
+
+- Add read-only markers for overwrite + restore.
+
+- Cleanup (#377).
+
+- Avoid `"duckdb.materialize_message"` option (#376).
+
+- Update TPCH outputs to account for data changes in duckdb 0.8.0 (#294).
+
+- Sync.
+
+- Bump duckdb dependency.
+
+## Continuous integration
+
+- Avoid failure in fledge workflow if no changes (#368).
+
+## Documentation
+
+- Add link to DuckDB configuration (#174, #398).
+
+- Fix rendering in vanilla session.
+
+- Add vignette about missing parts (@maelle, #218, #371).
+
+- Refactor README (@maelle, #208, #334, #370).
+
+- Tweak method and behavior (#373).
+
+- Add manual pages for dplyr methods (@maelle, #214, #359).
+
+## Performance
+
+- Printing a duckplyr frame no longer materializes (#255, #378).
+
+- Comparison expressions are translated in a way that allows them to be pushed down to Parquet (@toppyy, #270).
+
+## Testing
+
+- Use `ducktbl()` in tests (#388).
+
+- Avoid `as_duckplyr_df()` (#389).
+
+- Skip test that requires dplyr \> 1.1.4.
+
+- Add snapshot test for conversion error in `as_duckplyr_df()`.
+
+
 # duckplyr 0.4.1.9007 (2024-12-16)
 
 ## Features
