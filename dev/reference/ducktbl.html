@@ -10,7 +10,8 @@ In contrast to dbplyr, duckplyr data frames are "eager" by default.
 To avoid unwanted expensive computation, they can be converted to "lazy" duckplyr frames
 on which collect() needs to be called explicitly.
 as_ducktbl() converts a data frame or a dplyr lazy table to a duckplyr data frame.
-This is a generic function that can be overridden for custom classes.'><meta property="og:description" content='Data frames backed by duckplyr have a special class, "duckplyr_df",
+This is a generic function that can be overridden for custom classes.
+is_ducktbl() returns TRUE if x is a duckplyr data frame.'><meta property="og:description" content='Data frames backed by duckplyr have a special class, "duckplyr_df",
 in addition to the default classes.
 This ensures that dplyr methods are dispatched correctly.
 For such objects,
@@ -21,7 +22,8 @@ In contrast to dbplyr, duckplyr data frames are "eager" by default.
 To avoid unwanted expensive computation, they can be converted to "lazy" duckplyr frames
 on which collect() needs to be called explicitly.
 as_ducktbl() converts a data frame or a dplyr lazy table to a duckplyr data frame.
-This is a generic function that can be overridden for custom classes.'><meta property="og:image" content="https://duckplyr.tidyverse.org/logo.png"><meta name="robots" content="noindex"><script defer data-domain="duckplyr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script></head><body>
+This is a generic function that can be overridden for custom classes.
+is_ducktbl() returns TRUE if x is a duckplyr data frame.'><meta property="og:image" content="https://duckplyr.tidyverse.org/logo.png"><meta name="robots" content="noindex"><script defer data-domain="duckplyr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script></head><body>
     <a href="#container" class="visually-hidden-focusable">Skip to content</a>
 
 
@@ -72,13 +74,16 @@ To avoid unwanted expensive computation, they can be converted to "lazy" duckply
 on which <code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect()</a></code> needs to be called explicitly.</p>
 <p><code>as_ducktbl()</code> converts a data frame or a dplyr lazy table to a duckplyr data frame.
 This is a generic function that can be overridden for custom classes.</p>
+<p><code>is_ducktbl()</code> returns <code>TRUE</code> if <code>x</code> is a duckplyr data frame.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ducktbl</span><span class="op">(</span><span class="va">...</span>, .lazy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">as_ducktbl</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, .lazy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">as_ducktbl</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, .lazy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">is_ducktbl</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -100,9 +105,11 @@ For <code>as_ducktbl()</code>, passed on to methods.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object with the following classes:</p><ul><li><p><code>"duckplyr_df"</code></p></li>
+    <p>For <code>ducktbl()</code> and <code>as_ducktbl()</code>, an object with the following classes:</p><ul><li><p><code>"lazy_duckplyr_df"</code> if <code>.lazy</code> is <code>TRUE</code></p></li>
+<li><p><code>"duckplyr_df"</code></p></li>
 <li><p>Classes of a <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></p></li>
-</ul></div>
+</ul><p>For <code>is_ducktbl()</code>, a scalar logical.</p>
+    </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Set the <code>DUCKPLYR_FALLBACK_INFO</code> and <code>DUCKPLYR_FORCE</code> environment variables
