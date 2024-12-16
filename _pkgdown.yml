@@ -13,6 +13,7 @@ reference:
   contents:
   - ducktbl
   - duckfile
+  - ducksql
 
 - title: dplyr verbs
 
