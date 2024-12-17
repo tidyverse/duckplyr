@@ -21,7 +21,7 @@ duck_file(path, table_function, ..., lazy = TRUE, options = list())
 \item{...}{These dots are for future extensions and must be empty.}
 
 \item{lazy}{Logical, whether to create a lazy duckplyr frame.
-If \code{TRUE} (the default), \code{\link[=collect]{collect()}} must be called before the data can be accessed.}
+If \code{TRUE} (the default), \code{\link[dplyr:compute]{dplyr::collect()}} must be called before the data can be accessed.}
 
 \item{options}{Arguments to the DuckDB function
 indicated by \code{table_function}.}
@@ -56,7 +56,7 @@ This means that all the data can be shown and all dplyr verbs can be used,
 but attempting to access the columns of the data frame or using an unsupported verb,
 data type, or function will result in an error.
 Pass \code{lazy = FALSE} to transparently switch to local processing as needed,
-or use \code{\link[=collect]{collect()}} to explicitly materialize and continue local processing.
+or use \code{\link[dplyr:compute]{dplyr::collect()}} to explicitly materialize and continue local processing.
 }
 \examples{
 # Create simple CSV file
