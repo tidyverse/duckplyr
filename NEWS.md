@@ -4,7 +4,7 @@
 
 ## Features
 
-- New `ducksql()` (duckdb/duckdb-r#32, #397).
+- New `duck_sql()` (duckdb/duckdb-r#32, #397).
 
 - New `duckparquet()`, `duckcsv()`, `duckjson()` and `duckfile()`, deprecating `duckplyr_df_from_*()` and `df_from_*()` functions (#210, #396).
 
@@ -29,7 +29,7 @@
 
 ## Features
 
-- New `ducksql()` (duckdb/duckdb-r#32, #397).
+- New `duck_sql()` (duckdb/duckdb-r#32, #397).
 
 - New `duckparquet()`, `duckcsv()`, `duckjson()` and `duckfile()`, deprecating `duckplyr_df_from_*()` and `df_from_*()` functions (#210, #396).
 

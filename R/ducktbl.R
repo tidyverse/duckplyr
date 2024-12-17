@@ -76,7 +76,7 @@ as_ducktbl.tbl_duckdb_connection <- function(x, ...) {
   con <- dbplyr::remote_con(x)
   sql <- dbplyr::remote_query(x)
 
-  ducksql(sql, lazy = FALSE, con = con)
+  duck_sql(sql, lazy = FALSE, con = con)
 }
 
 #' @export

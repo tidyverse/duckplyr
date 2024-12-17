@@ -15,8 +15,8 @@
 #'
 #' @export
 #' @examples
-#' ducksql("FROM duckdb_settings()")
-ducksql <- function(sql, ..., lazy = TRUE, con = NULL) {
+#' duck_sql("FROM duckdb_settings()")
+duck_sql <- function(sql, ..., lazy = TRUE, con = NULL) {
   if (!is_string(sql)) {
     cli::cli_abort("{.arg sql} must be a string.")
   }
