@@ -3,7 +3,9 @@
     Code
       (expect_error(validate_grouped_df(df1)))
     Output
-      <simpleError in validate_grouped_df(df1): could not find function "validate_grouped_df">
+      <error/rlang_error>
+      Error in `validate_grouped_df()`:
+      ! The `.rows` column must be list of one-based integer vectors.
     Code
       (expect_error(group_data(df1)))
     Output
@@ -15,43 +17,64 @@
     Code
       (expect_error(validate_grouped_df(df2)))
     Output
-      <simpleError in validate_grouped_df(df2): could not find function "validate_grouped_df">
+      <error/rlang_error>
+      Error in `validate_grouped_df()`:
+      ! The last column of the `groups` attribute must be called `.rows`.
     Code
       (expect_error(validate_grouped_df(df2)))
     Output
-      <simpleError in validate_grouped_df(df2): could not find function "validate_grouped_df">
+      <error/rlang_error>
+      Error in `validate_grouped_df()`:
+      ! The last column of the `groups` attribute must be called `.rows`.
     Code
       (expect_error(validate_grouped_df(df3)))
     Output
-      <simpleError in validate_grouped_df(df3): could not find function "validate_grouped_df">
+      <error/rlang_error>
+      Error in `validate_grouped_df()`:
+      ! The `groups` attribute must be a data frame.
     Code
       (expect_error(validate_grouped_df(df4)))
     Output
-      <simpleError in validate_grouped_df(df4): could not find function "validate_grouped_df">
+      <error/rlang_error>
+      Error in `validate_grouped_df()`:
+      ! The `groups` attribute must be a data frame.
     Code
       (expect_error(validate_grouped_df(df5)))
     Output
-      <simpleError in validate_grouped_df(df5): could not find function "validate_grouped_df">
+      <error/rlang_error>
+      Error in `validate_grouped_df()`:
+      ! Corrupt `grouped_df` using old (< 0.8.0) format.
+      i Strip off old grouping with `ungroup()`.
     Code
       (expect_error(validate_grouped_df(df6, check_bounds = TRUE)))
     Output
-      <simpleError in validate_grouped_df(df6, check_bounds = TRUE): could not find function "validate_grouped_df">
+      <error/rlang_error>
+      Error in `validate_grouped_df()`:
+      ! out of bounds indices.
     Code
       (expect_error(validate_grouped_df(df7, check_bounds = TRUE)))
     Output
-      <simpleError in validate_grouped_df(df7, check_bounds = TRUE): could not find function "validate_grouped_df">
+      <error/rlang_error>
+      Error in `validate_grouped_df()`:
+      ! out of bounds indices.
     Code
       (expect_error(validate_grouped_df(df8, check_bounds = TRUE)))
     Output
-      <simpleError in validate_grouped_df(df8, check_bounds = TRUE): could not find function "validate_grouped_df">
+      <error/rlang_error>
+      Error in `validate_grouped_df()`:
+      ! out of bounds indices.
     Code
       (expect_error(validate_grouped_df(df10)))
     Output
-      <simpleError in validate_grouped_df(df10): could not find function "validate_grouped_df">
+      <error/rlang_error>
+      Error in `validate_grouped_df()`:
+      ! The `groups` attribute must be a data frame.
     Code
       (expect_error(validate_grouped_df(df11)))
     Output
-      <simpleError in validate_grouped_df(df11): could not find function "validate_grouped_df">
+      <error/rlang_error>
+      Error in `validate_grouped_df()`:
+      ! The `groups` attribute must be a data frame.
     Code
       (expect_error(new_grouped_df(tibble(x = 1:10), tibble(other = list(1:2)))))
     Output
