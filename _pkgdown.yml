@@ -12,7 +12,7 @@ reference:
 - title: Using duckplyr
   contents:
   - ducktbl
-  - duckfile
+  - duck_file
   - ducksql
 
 - title: dplyr verbs

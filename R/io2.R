@@ -5,13 +5,13 @@
 #' In many cases, these functions return immediately because they only read the metadata.
 #' The actual data is only read when it is actually processed.
 #'
-#' @name duckfile
+#' @name duck_file
 NULL
 
 #' @description
 #' `duck_parquet()` reads a CSV file using DuckDB's `read_parquet()` table function.
 #'
-#' @rdname duckfile
+#' @rdname duck_file
 #' @export
 duck_parquet <- function(path, ..., lazy = TRUE, options = list()) {
   check_dots_empty()
@@ -22,7 +22,7 @@ duck_parquet <- function(path, ..., lazy = TRUE, options = list()) {
 #' @description
 #' `duck_csv()` reads a CSV file using DuckDB's `read_csv_auto()` table function.
 #'
-#' @rdname duckfile
+#' @rdname duck_file
 #' @export
 #' @examples
 #' # Create simple CSV file
@@ -59,7 +59,7 @@ duck_csv <- function(path, ..., lazy = TRUE, options = list()) {
 #' @description
 #' `duck_json()` reads a JSON file using DuckDB's `read_json()` table function.
 #'
-#' @rdname duckfile
+#' @rdname duck_file
 #' @export
 #' @examples
 #'
@@ -105,7 +105,7 @@ duck_json <- function(path, ..., lazy = TRUE, options = list()) {
 #'
 #' @return A duckplyr frame, see [as_ducktbl()] for details.
 #'
-#' @rdname duckfile
+#' @rdname duck_file
 #' @export
 duck_file <- function(
   path,
