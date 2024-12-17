@@ -3,6 +3,6 @@ test_that("duck_sql() works", {
 
   expect_identical(
     duck_sql("SELECT 1 AS a", con = con, lazy = FALSE),
-    ducktbl(a = 1L)
+    duck_tbl(a = 1L)
   )
 })

@@ -103,7 +103,7 @@ duck_json <- function(path, ..., lazy = TRUE, options = list()) {
 #' @param options Arguments to the DuckDB function
 #'   indicated by `table_function`.
 #'
-#' @return A duckplyr frame, see [as_ducktbl()] for details.
+#' @return A duckplyr frame, see [as_duck_tbl()] for details.
 #'
 #' @rdname duck_file
 #' @export
@@ -152,5 +152,5 @@ duckfun <- function(table_function, args, ..., lazy = TRUE) {
   meta_rel_register_file(rel, table_function, path, options)
 
   out <- duckdb$rel_to_altrep(rel)
-  as_ducktbl(out, .lazy = lazy)
+  as_duck_tbl(out, .lazy = lazy)
 }

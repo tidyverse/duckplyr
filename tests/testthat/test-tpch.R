@@ -1,5 +1,5 @@
 test_that("TPCH queries can be parsed and run", {
-  customer <- ducktbl(
+  customer <- duck_tbl(
     c_custkey = integer(0),
     c_name = character(0),
     c_address = character(0),
@@ -10,7 +10,7 @@ test_that("TPCH queries can be parsed and run", {
     c_comment = character(0),
   )
 
-  lineitem <- ducktbl(
+  lineitem <- duck_tbl(
     l_orderkey = integer(0),
     l_partkey = integer(0),
     l_suppkey = integer(0),
@@ -29,14 +29,14 @@ test_that("TPCH queries can be parsed and run", {
     l_comment = character(0),
   )
 
-  nation <- ducktbl(
+  nation <- duck_tbl(
     n_nationkey = integer(0),
     n_name = character(0),
     n_regionkey = integer(0),
     n_comment = character(0),
   )
 
-  orders <- ducktbl(
+  orders <- duck_tbl(
     o_orderkey = integer(0),
     o_custkey = integer(0),
     o_orderstatus = character(0),
@@ -48,7 +48,7 @@ test_that("TPCH queries can be parsed and run", {
     o_comment = character(0),
   )
 
-  part <- ducktbl(
+  part <- duck_tbl(
     p_partkey = integer(0),
     p_name = character(0),
     p_mfgr = character(0),
@@ -60,7 +60,7 @@ test_that("TPCH queries can be parsed and run", {
     p_comment = character(0),
   )
 
-  partsupp <- ducktbl(
+  partsupp <- duck_tbl(
     ps_partkey = integer(0),
     ps_suppkey = integer(0),
     ps_availqty = integer(0),
@@ -68,13 +68,13 @@ test_that("TPCH queries can be parsed and run", {
     ps_comment = character(0),
   )
 
-  region <- ducktbl(
+  region <- duck_tbl(
     r_regionkey = integer(0),
     r_name = character(0),
     r_comment = character(0),
   )
 
-  supplier <- ducktbl(
+  supplier <- duck_tbl(
     s_suppkey = integer(0),
     s_name = character(0),
     s_address = character(0),

@@ -32,7 +32,7 @@ DuckDB function such as \code{"read_parquet"},
 \code{"read_csv"}, \code{"read_csv_auto"} or \code{"read_json"}.}
 }
 \value{
-A duckplyr frame, see \code{\link[=as_ducktbl]{as_ducktbl()}} for details.
+A duckplyr frame, see \code{\link[=as_duck_tbl]{as_duck_tbl()}} for details.
 }
 \description{
 These functions ingest data from a file.

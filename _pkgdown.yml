@@ -11,7 +11,7 @@ template:
 reference:
 - title: Using duckplyr
   contents:
-  - ducktbl
+  - duck_tbl
   - duck_file
   - duck_sql
 

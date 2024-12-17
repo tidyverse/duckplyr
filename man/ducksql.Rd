@@ -2,7 +2,7 @@
 % Please edit documentation in R/sql.R
 \name{duck_sql}
 \alias{duck_sql}
-\title{Return SQL query as ducktbl}
+\title{Return SQL query as duck_tbl}
 \usage{
 duck_sql(sql, ..., lazy = TRUE, con = NULL)
 }
