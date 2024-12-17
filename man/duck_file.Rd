@@ -5,7 +5,6 @@
 \alias{duck_parquet}
 \alias{duck_csv}
 \alias{duck_json}
-\alias{duck_file}
 \title{Read Parquet, CSV, and other files using DuckDB}
 \usage{
 duck_parquet(path, ..., lazy = TRUE, options = list())
