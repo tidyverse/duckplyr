@@ -11,9 +11,9 @@ template:
 reference:
 - title: Using duckplyr
   contents:
-  - ducktbl
-  - duckfile
-  - ducksql
+  - duck_tbl
+  - duck_file
+  - duck_sql
 
 - title: dplyr verbs
 

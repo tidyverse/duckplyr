@@ -20,7 +20,7 @@
 #'   as_duckplyr_df() %>%
 #'   is_duckplyr_df()
 is_duckplyr_df <- function(.data) {
-  lifecycle::deprecate_soft("1.0.0", "is_duckplyr_df()", "is_ducktbl()")
+  lifecycle::deprecate_soft("1.0.0", "is_duckplyr_df()", "is_duck_tbl()")
 
   inherits(.data, "duckplyr_df")
 }
