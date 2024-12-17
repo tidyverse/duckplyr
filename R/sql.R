@@ -9,6 +9,8 @@
 #' Using data frames from the calling environment is not supported yet,
 #' see <https://github.com/duckdb/duckdb-r/issues/645> for details.
 #'
+#' @seealso [duck_exec()]
+#'
 #' @inheritParams duck_file
 #' @param sql The SQL to run.
 #' @param con The connection, defaults to the default connection.

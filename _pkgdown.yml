@@ -70,7 +70,7 @@ reference:
   - fallback
   - stats_show
   - last_rel
-  - duckplyr_execute
+  - duck_exec
 
 - title: Relational operations and expressions
   contents:

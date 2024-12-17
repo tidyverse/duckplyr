@@ -28,3 +28,6 @@ see \url{https://github.com/duckdb/duckdb-r/issues/645} for details.
 \examples{
 duck_sql("FROM duckdb_settings()")
 }
+\seealso{
+\code{\link[=duck_exec]{duck_exec()}}
+}
