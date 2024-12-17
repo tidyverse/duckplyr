@@ -60,7 +60,8 @@
 ---
 
     Code
-      duck_tbl(a = 1:3, b = 4:6) %>% count(a, wt = b, sort = TRUE, name = "nn", .drop = FALSE)
+      duck_tbl(a = 1:3, b = 4:6) %>% count(a, wt = b, sort = TRUE, name = "nn",
+        .drop = FALSE)
     Condition
       Error in `rel_try()`:
       ! count: {"version":"0.3.1","message":"Error in count","name":"count","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"1":"...1"},"wt":"...2","sort":true,".drop":false}}
