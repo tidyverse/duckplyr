@@ -1,4 +1,4 @@
-#' Return SQL query as ducktbl
+#' Return SQL query as duck_tbl
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -9,14 +9,16 @@
 #' Using data frames from the calling environment is not supported yet,
 #' see <https://github.com/duckdb/duckdb-r/issues/645> for details.
 #'
-#' @inheritParams duckfile
+#' @seealso [duck_exec()]
+#'
+#' @inheritParams duck_file
 #' @param sql The SQL to run.
 #' @param con The connection, defaults to the default connection.
 #'
 #' @export
 #' @examples
-#' ducksql("FROM duckdb_settings()")
-ducksql <- function(sql, ..., lazy = TRUE, con = NULL) {
+#' duck_sql("FROM duckdb_settings()")
+duck_sql <- function(sql, ..., lazy = TRUE, con = NULL) {
   if (!is_string(sql)) {
     cli::cli_abort("{.arg sql} must be a string.")
   }
@@ -31,5 +33,5 @@ ducksql <- function(sql, ..., lazy = TRUE, con = NULL) {
   meta_rel_register(rel, expr(duckdb$rel_from_sql(con, !!sql)))
 
   out <- duckdb$rel_to_altrep(rel)
-  as_ducktbl(out, .lazy = lazy)
+  as_duck_tbl(out, .lazy = lazy)
 }

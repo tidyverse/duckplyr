@@ -1,10 +1,49 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9902 (2024-12-18)
+
+## Features
+
+- New `duck_exec()`, replaces `duckplyr_execute()` (#404).
+
+- `duck_tbl()` and similar (#402).
+
+
+## Chore
+
+- IDE.
+
+
+# duckplyr 0.99.99.9901 (2024-12-17)
+
+## Features
+
+- New `duck_sql()` (duckdb/duckdb-r#32, #397).
+
+- New `duckparquet()`, `duckcsv()`, `duckjson()` and `duckfile()`, deprecating `duckplyr_df_from_*()` and `df_from_*()` functions (#210, #396).
+
+- Deprecate `is_duckplyr_df()` (#392).
+
+- New `is_ducktbl()` (#391).
+
+- Add `"lazy_duckplyr_df"` class that requires `collect()` (#381, #390).
+
+## Chore
+
+- Tweak `as_ducktbl()` for dbplyr lazy tables (#395).
+
+## Documentation
+
+- Add item in checklist when adding a new translation (@maelle, #399).
+
+- Add link to DuckDB configuration (#174, #398).
+
+
 # duckplyr 0.99.99.9900 (2024-12-16)
 
 ## Features
 
-- New `ducksql()` (duckdb/duckdb-r#32, #397).
+- New `duck_sql()` (duckdb/duckdb-r#32, #397).
 
 - New `duckparquet()`, `duckcsv()`, `duckjson()` and `duckfile()`, deprecating `duckplyr_df_from_*()` and `df_from_*()` functions (#210, #396).
 

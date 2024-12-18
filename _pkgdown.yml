@@ -11,9 +11,9 @@ template:
 reference:
 - title: Using duckplyr
   contents:
-  - ducktbl
-  - duckfile
-  - ducksql
+  - duck_tbl
+  - duck_file
+  - duck_sql
 
 - title: dplyr verbs
 
@@ -70,7 +70,7 @@ reference:
   - fallback
   - stats_show
   - last_rel
-  - duckplyr_execute
+  - duck_exec
 
 - title: Relational operations and expressions
   contents:

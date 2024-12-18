@@ -67,7 +67,7 @@ test_that("summarize()", {
   ))
 
   expect_snapshot({
-    ducktbl(a = 1, b = 2, c = 3) %>%
+    duck_tbl(a = 1, b = 2, c = 3) %>%
       summarize(
         .by = a,
         e = sum(b),
@@ -86,7 +86,7 @@ test_that("wday()", {
   ))
 
   expect_snapshot({
-    ducktbl(a = as.Date("2024-03-08")) %>%
+    duck_tbl(a = as.Date("2024-03-08")) %>%
       mutate(
         b = lubridate::wday(a, label = TRUE)
       )
@@ -95,7 +95,7 @@ test_that("wday()", {
   local_options(lubridate.week.start = 1)
 
   expect_snapshot({
-    ducktbl(a = as.Date("2024-03-08")) %>%
+    duck_tbl(a = as.Date("2024-03-08")) %>%
       mutate(
         b = lubridate::wday(a)
       )
@@ -110,7 +110,7 @@ test_that("strftime()", {
   ))
 
   expect_snapshot({
-    ducktbl(a = as.Date("2024-03-08")) %>%
+    duck_tbl(a = as.Date("2024-03-08")) %>%
       mutate(
         b = strftime(a, format = "%Y-%m-%d", tz = "CET")
       )
@@ -127,7 +127,7 @@ test_that("$", {
   ))
 
   expect_snapshot(error = TRUE, {
-    ducktbl(a = 1, b = 2) %>%
+    duck_tbl(a = 1, b = 2) %>%
       mutate(c = .env$x)
   })
 })
@@ -142,7 +142,7 @@ test_that("unknown function", {
   foo <- function(...) 3
 
   expect_snapshot({
-    ducktbl(a = 1, b = 2) %>%
+    duck_tbl(a = 1, b = 2) %>%
       mutate(c = foo(a, b))
   })
 })
@@ -156,7 +156,7 @@ test_that("row names", {
 
   expect_snapshot({
     mtcars[1:2, ] %>%
-      as_ducktbl() %>%
+      as_duck_tbl() %>%
       select(mpg, cyl)
   })
 })
@@ -169,7 +169,7 @@ test_that("named column", {
   ))
 
   expect_snapshot({
-    ducktbl(a = c(x = 1)) %>%
+    duck_tbl(a = c(x = 1)) %>%
       select(a)
   })
 })
@@ -182,7 +182,7 @@ test_that("named column", {
   ))
 
   expect_snapshot({
-    ducktbl(a = matrix(1:4, ncol = 2)) %>%
+    duck_tbl(a = matrix(1:4, ncol = 2)) %>%
       select(a)
   })
 })
@@ -195,7 +195,7 @@ test_that("list column", {
   ))
 
   expect_snapshot({
-    ducktbl(a = 1, b = 2, c = list(3)) %>%
+    duck_tbl(a = 1, b = 2, c = list(3)) %>%
       select(a, b)
   })
 })
@@ -209,7 +209,7 @@ test_that("__row_number", {
   ))
 
   expect_snapshot({
-    ducktbl(`___row_number` = 1, b = 2:3) %>%
+    duck_tbl(`___row_number` = 1, b = 2:3) %>%
       arrange(b)
   })
 })
@@ -223,7 +223,7 @@ test_that("rel_try()", {
   ))
 
   expect_snapshot({
-    ducktbl(a = 1) %>%
+    duck_tbl(a = 1) %>%
       count(a, .drop = FALSE, name = "n")
   })
 })
