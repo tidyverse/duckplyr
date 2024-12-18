@@ -40,8 +40,7 @@ union_all.duckplyr_df <- function(x, y, ...) {
       # NULLs sort first in duckdb!
       rel <- oo_restore(rel, c("___row_number_x", "___row_number_y"))
 
-      out <- rel_to_df(rel)
-      out <- dplyr_reconstruct(out, x)
+      out <- duckplyr_reconstruct(rel, x)
       return(out)
     }
   )
