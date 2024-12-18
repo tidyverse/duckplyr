@@ -8,11 +8,26 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
+clean_output <- function(x, options) {
+  x <- gsub("0x[0-9a-f]+", "0xdeadbeef", x)
+  x <- gsub("dataframe_[0-9]*_[0-9]*", "      dataframe_42_42      ", x)
+  x <- gsub("[0-9]*\\.___row_number ASC", "42.___row_number ASC", x)
+  x <- gsub("─", "-", x)
+  x
+}
+
+local({
+  hook_source <- knitr::knit_hooks$get("document")
+  knitr::knit_hooks$set(document = clean_output)
+})
+
 knitr::opts_chunk$set(
   collapse = TRUE,
   eval = identical(Sys.getenv("IN_PKGDOWN"), "true") || rlang::is_installed(c("conflicted", "nycflights13")),
   comment = "#>"
 )
+
+Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
 ```
 
 ```{r attach}
@@ -49,7 +64,7 @@ class(eager)
 names(eager)
 ```
 
-duckdb is responsible for eventually carrying out the operations.
+DuckDB is responsible for eventually carrying out the operations.
 Despite the late filter, the summary is not computed for the months in the second half of the year.
 
 ```{r}
@@ -64,7 +79,7 @@ Computation happens upon the first request.
 eager$mean_inflight_delay
 ```
 
-After the computation has been carried out, the results are available immediately:
+After the computation has been carried out, the results are preserved and available immediately:
 
 ```{r}
 eager
