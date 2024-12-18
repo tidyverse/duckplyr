@@ -45,6 +45,7 @@ Suggests:
     knitr,
     lobstr,
     lubridate,
+    nycflights13,
     palmerpenguins,
     prettycode,
     purrr,
