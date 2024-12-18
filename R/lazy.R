@@ -17,6 +17,12 @@ remove_lazy_duckplyr_df_class <- function(x) {
   x
 }
 
+duckplyr_reconstruct <- function(rel, template) {
+  lazy <- inherits(template, "lazy_duckplyr_df")
+  out <- rel_to_df(rel, allow_materialization = !lazy)
+  dplyr_reconstruct(out, template)
+}
+
 #' @export
 collect.lazy_duckplyr_df <- function(x, ...) {
   rel <- duckdb_rel_from_df(x)
