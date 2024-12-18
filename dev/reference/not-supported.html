@@ -52,9 +52,9 @@ please refer to our contributing guide <a href="https://duckplyr.tidyverse.org/C
     <h2 id="unsupported-verbs">Unsupported verbs<a class="anchor" aria-label="anchor" href="#unsupported-verbs"></a></h2>
 
 
-<p>For these verbs, duckplyr will fall back to dplyr.</p><ul><li><p><code><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">add_count()</a></code></p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">compute()</a></code></p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/cross_join.html" class="external-link">cross_join()</a></code></p></li>
+<p>For these verbs, duckplyr will fall back to dplyr.</p><ul><li><p><code><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">dplyr::add_count()</a></code></p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">dplyr::compute()</a></code></p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/cross_join.html" class="external-link">dplyr::cross_join()</a></code></p></li>
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/do.html" class="external-link">dplyr::do()</a></code></p></li>
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">dplyr::group_by()</a></code></p></li>
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/group_data.html" class="external-link">dplyr::group_indices()</a></code></p></li>
@@ -67,23 +67,23 @@ please refer to our contributing guide <a href="https://duckplyr.tidyverse.org/C
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/group_trim.html" class="external-link">dplyr::group_trim()</a></code></p></li>
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/group_data.html" class="external-link">dplyr::groups()</a></code></p></li>
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/group_data.html" class="external-link">dplyr::n_groups()</a></code></p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/nest_by.html" class="external-link">nest_by()</a></code></p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/nest_join.html" class="external-link">nest_join()</a></code></p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/reframe.html" class="external-link">reframe()</a></code></p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename_with()</a></code></p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/rows.html" class="external-link">rows_append()</a></code></p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/rows.html" class="external-link">rows_delete()</a></code></p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/rows.html" class="external-link">rows_insert()</a></code></p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/rows.html" class="external-link">rows_patch()</a></code></p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/rows.html" class="external-link">rows_update()</a></code></p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/rows.html" class="external-link">rows_upsert()</a></code></p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/nest_by.html" class="external-link">dplyr::nest_by()</a></code></p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/nest_join.html" class="external-link">dplyr::nest_join()</a></code></p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/reframe.html" class="external-link">dplyr::reframe()</a></code></p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">dplyr::rename_with()</a></code></p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/rows.html" class="external-link">dplyr::rows_append()</a></code></p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/rows.html" class="external-link">dplyr::rows_delete()</a></code></p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/rows.html" class="external-link">dplyr::rows_insert()</a></code></p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/rows.html" class="external-link">dplyr::rows_patch()</a></code></p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/rows.html" class="external-link">dplyr::rows_update()</a></code></p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/rows.html" class="external-link">dplyr::rows_upsert()</a></code></p></li>
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/rowwise.html" class="external-link">dplyr::rowwise()</a></code></p></li>
-<li><p><code><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">setequal()</a></code></p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head()</a></code></p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_sample()</a></code></p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_tail()</a></code></p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice()</a></code></p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup()</a></code></p></li>
+<li><p><code><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">generics::setequal()</a></code></p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">dplyr::slice_head()</a></code></p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">dplyr::slice_sample()</a></code></p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">dplyr::slice_tail()</a></code></p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">dplyr::slice()</a></code></p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">dplyr::ungroup()</a></code></p></li>
 </ul></div>
 
   </main></div>

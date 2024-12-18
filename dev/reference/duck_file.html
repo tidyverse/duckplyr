@@ -96,7 +96,7 @@ pass a wildcard or a character vector to the <code>path</code> argument,</p>
 
 <dt id="arg-lazy">lazy<a class="anchor" aria-label="anchor" href="#arg-lazy"></a></dt>
 <dd><p>Logical, whether to create a lazy duckplyr frame.
-If <code>TRUE</code> (the default), <code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect()</a></code> must be called before the data can be accessed.</p></dd>
+If <code>TRUE</code> (the default), <code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">dplyr::collect()</a></code> must be called before the data can be accessed.</p></dd>
 
 
 <dt id="arg-options">options<a class="anchor" aria-label="anchor" href="#arg-options"></a></dt>
@@ -121,7 +121,7 @@ This means that all the data can be shown and all dplyr verbs can be used,
 but attempting to access the columns of the data frame or using an unsupported verb,
 data type, or function will result in an error.
 Pass <code>lazy = FALSE</code> to transparently switch to local processing as needed,
-or use <code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect()</a></code> to explicitly materialize and continue local processing.</p>
+or use <code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">dplyr::collect()</a></code> to explicitly materialize and continue local processing.</p>
     </div>
 
     <div class="section level2">

@@ -3,24 +3,24 @@
 in addition to the default classes.
 This ensures that dplyr methods are dispatched correctly.
 For such objects,
-dplyr verbs such as mutate(), select() or filter()  will attempt to use DuckDB.
+dplyr verbs such as dplyr::mutate(), dplyr::select() or dplyr::filter()  will attempt to use DuckDB.
 If this is not possible, the original dplyr implementation is used.
-duck_tbl() works like tibble().
+duck_tbl() works like tibble::tibble().
 In contrast to dbplyr, duckplyr data frames are "eager" by default.
 To avoid unwanted expensive computation, they can be converted to "lazy" duckplyr frames
-on which collect() needs to be called explicitly.
+on which dplyr::collect() needs to be called explicitly.
 as_duck_tbl() converts a data frame or a dplyr lazy table to a duckplyr data frame.
 This is a generic function that can be overridden for custom classes.
 is_duck_tbl() returns TRUE if x is a duckplyr data frame.'><meta property="og:description" content='Data frames backed by duckplyr have a special class, "duckplyr_df",
 in addition to the default classes.
 This ensures that dplyr methods are dispatched correctly.
 For such objects,
-dplyr verbs such as mutate(), select() or filter()  will attempt to use DuckDB.
+dplyr verbs such as dplyr::mutate(), dplyr::select() or dplyr::filter()  will attempt to use DuckDB.
 If this is not possible, the original dplyr implementation is used.
-duck_tbl() works like tibble().
+duck_tbl() works like tibble::tibble().
 In contrast to dbplyr, duckplyr data frames are "eager" by default.
 To avoid unwanted expensive computation, they can be converted to "lazy" duckplyr frames
-on which collect() needs to be called explicitly.
+on which dplyr::collect() needs to be called explicitly.
 as_duck_tbl() converts a data frame or a dplyr lazy table to a duckplyr data frame.
 This is a generic function that can be overridden for custom classes.
 is_duck_tbl() returns TRUE if x is a duckplyr data frame.'><meta property="og:image" content="https://duckplyr.tidyverse.org/logo.png"><meta name="robots" content="noindex"><script defer data-domain="duckplyr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script></head><body>
@@ -66,12 +66,12 @@ is_duck_tbl() returns TRUE if x is a duckplyr data frame.'><meta property="og:im
 in addition to the default classes.
 This ensures that dplyr methods are dispatched correctly.
 For such objects,
-dplyr verbs such as <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code> or <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code>  will attempt to use DuckDB.
+dplyr verbs such as <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">dplyr::mutate()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code> or <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">dplyr::filter()</a></code>  will attempt to use DuckDB.
 If this is not possible, the original dplyr implementation is used.</p>
-<p><code>duck_tbl()</code> works like <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble()</a></code>.
+<p><code>duck_tbl()</code> works like <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble()</a></code>.
 In contrast to dbplyr, duckplyr data frames are "eager" by default.
 To avoid unwanted expensive computation, they can be converted to "lazy" duckplyr frames
-on which <code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect()</a></code> needs to be called explicitly.</p>
+on which <code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">dplyr::collect()</a></code> needs to be called explicitly.</p>
 <p><code>as_duck_tbl()</code> converts a data frame or a dplyr lazy table to a duckplyr data frame.
 This is a generic function that can be overridden for custom classes.</p>
 <p><code>is_duck_tbl()</code> returns <code>TRUE</code> if <code>x</code> is a duckplyr data frame.</p>
@@ -91,13 +91,13 @@ This is a generic function that can be overridden for custom classes.</p>
 
 
 <dl><dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>For <code>duck_tbl()</code>, passed on to <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble()</a></code>.
+<dd><p>For <code>duck_tbl()</code>, passed on to <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble()</a></code>.
 For <code>as_duck_tbl()</code>, passed on to methods.</p></dd>
 
 
 <dt id="arg--lazy">.lazy<a class="anchor" aria-label="anchor" href="#arg--lazy"></a></dt>
 <dd><p>Logical, whether to create a lazy duckplyr frame.
-If <code>TRUE</code>, <code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect()</a></code> must be called before the data can be accessed.</p></dd>
+If <code>TRUE</code>, <code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">dplyr::collect()</a></code> must be called before the data can be accessed.</p></dd>
 
 
 <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
@@ -108,7 +108,7 @@ If <code>TRUE</code>, <code><a href="https://dplyr.tidyverse.org/reference/compu
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>For <code>duck_tbl()</code> and <code>as_duck_tbl()</code>, an object with the following classes:</p><ul><li><p><code>"lazy_duckplyr_df"</code> if <code>.lazy</code> is <code>TRUE</code></p></li>
 <li><p><code>"duckplyr_df"</code></p></li>
-<li><p>Classes of a <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></p></li>
+<li><p>Classes of a <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble</a></p></li>
 </ul><p>For <code>is_duck_tbl()</code>, a scalar logical.</p>
     </div>
     <div class="section level2">
