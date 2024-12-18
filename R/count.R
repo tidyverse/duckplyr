@@ -50,9 +50,7 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
         out_rel <- rel_order(out_rel, sort_cols)
       }
 
-      out <- rel_to_df(out_rel)
-      out <- dplyr_reconstruct(out, x)
-
+      out <- duckplyr_reconstruct(out_rel, x)
       return(out)
     }
   )
