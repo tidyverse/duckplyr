@@ -56,7 +56,7 @@ local({
 
 [dplyr](https://dplyr.tidyverse.org/) is the grammar of data manipulation in the tidyverse.
 The duckplyr package will run all of your existing dplyr code with identical results, using [DuckDB](https://duckdb.org/) where possible to compute the results faster.
-In addition, you can analyze larger-than-memory datasets straight from files on your disk or from S3 storage.
+In addition, you can analyze larger-than-memory datasets straight from files on your disk or from the web.
 If you are new to dplyr, the best place to start is the [data transformation chapter](https://r4ds.hadley.nz/data-transform) in R for Data Science.
 
 
@@ -81,10 +81,9 @@ Or from [GitHub](https://github.com/) with:
 pak::pak("tidyverse/duckplyr")
 ```
 
-## Example
+## Drop-in replacement for dplyr
 
-Calling `library(duckplyr)` overwrites dplyr methods,
-enabling duckplyr instead for the entire session.
+Calling `library(duckplyr)` overwrites dplyr methods, enabling duckplyr for the entire session.
 
 ```{r attach}
 library(conflicted)
@@ -103,7 +102,7 @@ conflict_prefer("filter", "dplyr", quiet = TRUE)
 ```
 
 The following code aggregates the inflight delay by year and month for the first half of the year.
-We use a variant of the `nycflights13::flights` dataset that removes an incompatibility with duckplyr.
+We use a variant of the `nycflights13::flights` dataset that works around an incompatibility with duckplyr.
 
 ```{r}
 flights_df()
@@ -130,7 +129,7 @@ Nothing has been computed yet.
 Querying the number of rows, or a column, starts the computation:
 
 ```{r}
-system.time(print(out$month))
+out$month
 ```
 
 Note that, unlike dplyr, the results are not ordered, see `?config` for details.
@@ -145,6 +144,72 @@ Restart R, or call `duckplyr::methods_restore()` to revert to the default dplyr 
 ```{r}
 duckplyr::methods_restore()
 ```
+
+## Analyzing larger-than-memory data
+
+An extended variant of this dataset is also available for download as Parquet files.
+
+```{r}
+year <- 2022:2024
+base_url <- "https://blobs.duckdb.org/flight-data-partitioned/"
+files <- paste0("Year=", year, "/data_0.parquet")
+urls <- paste0(base_url, files)
+urls
+```
+
+Using the httpfs DuckDB extension, we can query these files directly from R, without even downloading them first.
+
+```{r}
+duck_exec("INSTALL httpfs")
+duck_exec("LOAD httpfs")
+
+flights <- duck_parquet(urls)
+```
+
+Unlike with local data frames, the default is to disallow automatic materialization of the results on access.
+
+```{r error = TRUE}
+nrow(flights)
+```
+
+Queries on the remote data are executed lazily, and the results are not materialized until explicitly requested.
+For printing, only the first few rows of the result are fetched.
+
+```{r cache = TRUE}
+flights
+```
+
+```{r cache = TRUE}
+flights |> 
+  count(Year)
+```
+
+Complex queries can be executed on the remote data.
+Note how only the relevant columns are fetched and the 2024 data isn't even touched, as it's not needed for the result.
+
+```{r cache = TRUE}
+out <-
+  flights |>
+  filter(!is.na(DepDelay), !is.na(ArrDelay)) |>
+  mutate(InFlightDelay = ArrDelay - DepDelay) |>
+  summarize(
+    .by = c(Year, Month),
+    MeanInFlightDelay = mean(InFlightDelay),
+    MedianInFlightDelay = median(InFlightDelay),
+  ) |> 
+  filter(Year < 2024)
+
+out |>
+  explain()
+
+out |>
+  print() |>
+  system.time()
+```
+
+Over 10M rows analyzed in about 10 seconds over the internet, that's not bad.
+Of course, working with Parquet, CSV, or JSON files downloaded locally is possible as well.
+
 
 ## Using duckplyr in other packages
 
