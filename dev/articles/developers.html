@@ -104,12 +104,7 @@ pipe, without attaching the package.</li>
 <span>    mean_inflight_delay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">inflight_delay</span><span class="op">)</span>,</span>
 <span>    median_inflight_delay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">inflight_delay</span><span class="op">)</span>,</span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">month</span> <span class="op">&lt;=</span> <span class="fl">6</span><span class="op">)</span></span>
-<span><span class="co">#&gt; The <span style="color: #0000BB;">duckplyr</span> package is configured to fall back to <span style="color: #0000BB;">dplyr</span> when it</span></span>
-<span><span class="co">#&gt; encounters an incompatibility. Fallback events can be collected and</span></span>
-<span><span class="co">#&gt; uploaded for analysis to guide future development. By default, no data</span></span>
-<span><span class="co">#&gt; will be collected or uploaded.</span></span>
-<span><span class="co">#&gt; → Run `duckplyr::fallback_sitrep()` to review the current settings.</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">month</span> <span class="op">&lt;=</span> <span class="fl">6</span><span class="op">)</span></span></code></pre></div>
 <p>The result is a tibble, with its own class.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">eager</span><span class="op">)</span></span>
@@ -117,15 +112,15 @@ pipe, without attaching the package.</li>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">eager</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "year"                  "month"                </span></span>
 <span><span class="co">#&gt; [3] "mean_inflight_delay"   "median_inflight_delay"</span></span></code></pre></div>
-<p>duckdb is responsible for eventually carrying out the operations.
+<p>DuckDB is responsible for eventually carrying out the operations.
 Despite the late filter, the summary is not computed for the months in
 the second half of the year.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eager</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ┌───────────────────────────┐</span></span>
+<span><span class="co">#&gt; ┌---------------------------┐</span></span>
 <span><span class="co">#&gt; │       HASH_GROUP_BY       │</span></span>
-<span><span class="co">#&gt; │    ────────────────────   │</span></span>
+<span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │          Groups:          │</span></span>
 <span><span class="co">#&gt; │             #0            │</span></span>
 <span><span class="co">#&gt; │             #1            │</span></span>
@@ -135,29 +130,29 @@ the second half of the year.</p>
 <span><span class="co">#&gt; │         median(#3)        │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │        ~33677 Rows        │</span></span>
-<span><span class="co">#&gt; └─────────────┬─────────────┘</span></span>
-<span><span class="co">#&gt; ┌─────────────┴─────────────┐</span></span>
+<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
+<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │         PROJECTION        │</span></span>
-<span><span class="co">#&gt; │    ────────────────────   │</span></span>
+<span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │            year           │</span></span>
 <span><span class="co">#&gt; │           month           │</span></span>
 <span><span class="co">#&gt; │       inflight_delay      │</span></span>
 <span><span class="co">#&gt; │       inflight_delay      │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │        ~67355 Rows        │</span></span>
-<span><span class="co">#&gt; └─────────────┬─────────────┘</span></span>
-<span><span class="co">#&gt; ┌─────────────┴─────────────┐</span></span>
+<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
+<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │         PROJECTION        │</span></span>
-<span><span class="co">#&gt; │    ────────────────────   │</span></span>
+<span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │            year           │</span></span>
 <span><span class="co">#&gt; │           month           │</span></span>
 <span><span class="co">#&gt; │       inflight_delay      │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │        ~67355 Rows        │</span></span>
-<span><span class="co">#&gt; └─────────────┬─────────────┘</span></span>
-<span><span class="co">#&gt; ┌─────────────┴─────────────┐</span></span>
+<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
+<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │           FILTER          │</span></span>
-<span><span class="co">#&gt; │    ────────────────────   │</span></span>
+<span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │ ((CAST(month AS DOUBLE) &lt;=│</span></span>
 <span><span class="co">#&gt; │  6.0) AND (NOT ((arr_delay│</span></span>
 <span><span class="co">#&gt; │      IS NULL) OR isnan    │</span></span>
@@ -166,10 +161,10 @@ the second half of the year.</p>
 <span><span class="co">#&gt; │     isnan(dep_delay))))   │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │        ~67355 Rows        │</span></span>
-<span><span class="co">#&gt; └─────────────┬─────────────┘</span></span>
-<span><span class="co">#&gt; ┌─────────────┴─────────────┐</span></span>
+<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
+<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │     R_DATAFRAME_SCAN      │</span></span>
-<span><span class="co">#&gt; │    ────────────────────   │</span></span>
+<span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │         data.frame        │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │        Projections:       │</span></span>
@@ -179,25 +174,25 @@ the second half of the year.</p>
 <span><span class="co">#&gt; │         arr_delay         │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │        ~336776 Rows       │</span></span>
-<span><span class="co">#&gt; └───────────────────────────┘</span></span></code></pre></div>
+<span><span class="co">#&gt; └---------------------------┘</span></span></code></pre></div>
 <p>All data frame operations are supported. Computation happens upon the
 first request.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eager</span><span class="op">$</span><span class="va">mean_inflight_delay</span></span>
-<span><span class="co">#&gt; [1] -3.855519 -5.147220 -9.370201 -7.356713 -2.673124 -4.244284</span></span></code></pre></div>
-<p>After the computation has been carried out, the results are available
-immediately:</p>
+<span><span class="co">#&gt; [1] -3.855519 -7.356713 -2.673124 -4.244284 -5.147220 -9.370201</span></span></code></pre></div>
+<p>After the computation has been carried out, the results are preserved
+and available immediately:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eager</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 4 variables</span></span></span>
 <span><span class="co">#&gt;    year month mean_inflight_delay median_inflight_delay</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>  <span style="text-decoration: underline;">2</span>013     1               -<span style="color: #BB0000;">3.86</span>                    -<span style="color: #BB0000;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>  <span style="text-decoration: underline;">2</span>013     2               -<span style="color: #BB0000;">5.15</span>                    -<span style="color: #BB0000;">6</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>  <span style="text-decoration: underline;">2</span>013     5               -<span style="color: #BB0000;">9.37</span>                   -<span style="color: #BB0000;">10</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>  <span style="text-decoration: underline;">2</span>013     3               -<span style="color: #BB0000;">7.36</span>                    -<span style="color: #BB0000;">9</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>  <span style="text-decoration: underline;">2</span>013     4               -<span style="color: #BB0000;">2.67</span>                    -<span style="color: #BB0000;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>  <span style="text-decoration: underline;">2</span>013     6               -<span style="color: #BB0000;">4.24</span>                    -<span style="color: #BB0000;">7</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>  <span style="text-decoration: underline;">2</span>013     3               -<span style="color: #BB0000;">7.36</span>                    -<span style="color: #BB0000;">9</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>  <span style="text-decoration: underline;">2</span>013     4               -<span style="color: #BB0000;">2.67</span>                    -<span style="color: #BB0000;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>  <span style="text-decoration: underline;">2</span>013     6               -<span style="color: #BB0000;">4.24</span>                    -<span style="color: #BB0000;">7</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>  <span style="text-decoration: underline;">2</span>013     2               -<span style="color: #BB0000;">5.15</span>                    -<span style="color: #BB0000;">6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>  <span style="text-decoration: underline;">2</span>013     5               -<span style="color: #BB0000;">9.37</span>                   -<span style="color: #BB0000;">10</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="eager-and-lazy-modes">Eager and lazy modes<a class="anchor" aria-label="anchor" href="#eager-and-lazy-modes"></a>
@@ -227,25 +222,6 @@ mode:</p>
 <span>    mean_inflight_delay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">inflight_delay</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>    median_inflight_delay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">inflight_delay</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; The <span style="color: #0000BB;">duckplyr</span> package is configured to fall back to <span style="color: #0000BB;">dplyr</span> when it</span></span>
-<span><span class="co">#&gt; encounters an incompatibility. Fallback events can be collected and</span></span>
-<span><span class="co">#&gt; uploaded for analysis to guide future development. By default, no data</span></span>
-<span><span class="co">#&gt; will be collected or uploaded.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> A fallback situation just occurred. The following information would</span></span>
-<span><span class="co">#&gt;   have been recorded:</span></span>
-<span><span class="co">#&gt;   {"version":"0.99.99","message":"Can't translate named argument</span></span>
-<span><span class="co">#&gt;   `mean(na.rm =</span></span>
-<span><span class="co">#&gt;   )`.","name":"summarise","x":{"...1":"integer","...2":"integer","...3":"integer","...4":"integer","...5":"integer","...6":"numeric","...7":"integer","...8":"integer","...9":"numeric","...10":"character","...11":"integer","...12":"character","...13":"character","...14":"character","...15":"numeric","...16":"numeric","...17":"numeric","...18":"numeric","...19":"POSIXct/POSIXt","...20":"numeric"},"args":{"dots":{"...21":"mean(...20,</span></span>
-<span><span class="co">#&gt;   na.rm = TRUE)","...22":"median(...20, na.rm =</span></span>
-<span><span class="co">#&gt;   TRUE)"},"by":["...1","...2"]}}</span></span>
-<span><span class="co">#&gt; → Run `duckplyr::fallback_sitrep()` to review the current settings.</span></span>
-<span><span class="co">#&gt; → Run `Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)` to enable fallback</span></span>
-<span><span class="co">#&gt;   logging, and `Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = TRUE)` in addition</span></span>
-<span><span class="co">#&gt;   to enable printing of fallback situations to the console.</span></span>
-<span><span class="co">#&gt; → Run `duckplyr::fallback_review()` to review the available reports, and</span></span>
-<span><span class="co">#&gt;   `duckplyr::fallback_upload()` to upload them.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> See `?duckplyr::fallback()` for details.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">This message will be displayed once every eight hours.</span></span></span>
 <span><span class="co">#&gt; Error: Materialization is disabled, use collect() or as_tibble() to materialize</span></span></code></pre></div>
 <p>See <code><a href="../articles/limits.html">vignette("limits")</a></code> for current limitations, and the
 contributing guide for how to add support for additional operations.</p>
