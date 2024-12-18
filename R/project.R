@@ -13,6 +13,5 @@ nexprs <- function(names) {
 
 exprs_project <- function(rel, exprs, .data) {
   out_rel <- rel_project(rel, exprs)
-  out <- rel_to_df(out_rel)
-  dplyr_reconstruct(out, .data)
+  duckplyr_reconstruct(out_rel, .data)
 }
