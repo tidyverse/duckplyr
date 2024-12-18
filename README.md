@@ -97,47 +97,6 @@ out <-
     median_inflight_delay = median(inflight_delay),
   ) %>%
   filter(month <= 6)
-#> DuckDB Relation: 
-#> ---------------------
-#> --- Relation Tree ---
-#> ---------------------
-#> r_dataframe_scan(0xdeadbeef)
-#> 
-#> ---------------------
-#> -- Result Columns  --
-#> ---------------------
-#> - year (INTEGER)
-#> - month (INTEGER)
-#> - day (INTEGER)
-#> - dep_time (INTEGER)
-#> - sched_dep_time (INTEGER)
-#> - dep_delay (DOUBLE)
-#> - arr_time (INTEGER)
-#> - sched_arr_time (INTEGER)
-#> - arr_delay (DOUBLE)
-#> - carrier (VARCHAR)
-#> - flight (INTEGER)
-#> - tailnum (VARCHAR)
-#> - origin (VARCHAR)
-#> - dest (VARCHAR)
-#> - air_time (DOUBLE)
-#> - distance (DOUBLE)
-#> - hour (DOUBLE)
-#> - minute (DOUBLE)
-#> - time_hour (TIMESTAMP)
-#> DuckDB Relation: 
-#> ---------------------
-#> --- Relation Tree ---
-#> ---------------------
-#> r_dataframe_scan(0xdeadbeef)
-#> 
-#> ---------------------
-#> -- Result Columns  --
-#> ---------------------
-#> - year (INTEGER)
-#> - month (INTEGER)
-#> - mean_inflight_delay (DOUBLE)
-#> - median_inflight_delay (DOUBLE)
 ```
 
 The result is a plain tibble:
