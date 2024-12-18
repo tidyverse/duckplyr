@@ -12,6 +12,8 @@ and one option.
 
 \code{DUCKPLYR_OUTPUT_ORDER}: If \code{TRUE}, row output order is preserved.
 The default may change the row order where dplyr would keep it stable.
+Preserving the order leads to more complicated execution plans
+with less potential for optimization, and thus may be slower.
 
 \code{DUCKPLYR_FORCE}: If \code{TRUE}, fail if duckdb cannot handle a request.
 
