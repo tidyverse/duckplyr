@@ -213,7 +213,7 @@ rel_order(
   mtcars_rel,
   list(relexpr_reference("mpg"))
 )
-\dontshow{if (requireNamespace("dplyr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{if (requireNamespace("dplyr", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 rel_join.dfrel <- function(left, right, conds, join, ...) {
   left_df <- unclass(left)[[1]]
   right_df <- unclass(right)[[1]]
