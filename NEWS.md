@@ -6,6 +6,9 @@
 
 - New `duck_exec()`, replaces `duckplyr_execute()` (#404).
 
+- `duck_tbl()` and similar (#402).
+
+
 ## Chore
 
 - IDE.
