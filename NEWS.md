@@ -1,5 +1,16 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9902 (2024-12-18)
+
+## Features
+
+- New `duck_exec()`, replaces `duckplyr_execute()` (#404).
+
+## Chore
+
+- IDE.
+
+
 # duckplyr 0.99.99.9901 (2024-12-17)
 
 ## Features
