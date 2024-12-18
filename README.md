@@ -116,14 +116,9 @@ type, or operation, instructions are printed to the console.
 
 ``` r
 palmerpenguins::penguins %>%
-  duckplyr::as_duckplyr_tibble() %>%
+  duckplyr::as_duck_tbl() %>%
   transmute(bill_area = bill_length_mm * bill_depth_mm) %>%
   head(3)
-#> Warning: `as_duckplyr_tibble()` was deprecated in duckplyr 1.0.0.
-#> ℹ Please use `as_ducktbl()` instead.
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
 #> The duckplyr package is configured to fall back to dplyr when it encounters an
 #> incompatibility. Fallback events can be collected and uploaded for analysis to
 #> guide future development. By default, no data will be collected or uploaded.

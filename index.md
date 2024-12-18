@@ -116,14 +116,9 @@ The first time the package encounters an unsupported function, data type, or ope
 
 ``` r
 palmerpenguins::penguins %>%
-  duckplyr::as_duckplyr_tibble() %>%
+  duckplyr::as_duck_tbl() %>%
   transmute(bill_area = bill_length_mm * bill_depth_mm) %>%
   head(3)
-#> Warning: [1m[22m`as_duckplyr_tibble()` was deprecated in duckplyr 1.0.0.
-#> [36mℹ[39m Please use `as_ducktbl()` instead.
-#> [90mThis warning is displayed once every 8 hours.[39m
-#> [90mCall `lifecycle::last_lifecycle_warnings()` to see where this warning was[39m
-#> [90mgenerated.[39m
 #> [1m[22mThe [34mduckplyr[39m package is configured to fall back to [34mdplyr[39m when it encounters an
 #> incompatibility. Fallback events can be collected and uploaded for analysis to
 #> guide future development. By default, no data will be collected or uploaded.

@@ -155,7 +155,7 @@ Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = "")
 
 ```{r}
 palmerpenguins::penguins %>%
-  duckplyr::as_duckplyr_tibble() %>%
+  duckplyr::as_duck_tbl() %>%
   transmute(bill_area = bill_length_mm * bill_depth_mm) %>%
   head(3)
 ```
