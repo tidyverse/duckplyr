@@ -39,8 +39,7 @@ symdiff.duckplyr_df <- function(x, y, ...) {
         }
 
         rel <- rel_set_symdiff(x_rel, y_rel)
-        out <- rel_to_df(rel)
-        out <- dplyr_reconstruct(out, x)
+        out <- duckplyr_reconstruct(rel, x)
       }
       return(out)
     }

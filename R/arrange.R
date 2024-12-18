@@ -46,8 +46,7 @@ arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
         out_rel <- rel
       }
 
-      out <- rel_to_df(out_rel)
-      out <- dplyr_reconstruct(out, .data)
+      out <- duckplyr_reconstruct(out_rel, .data)
       return(out)
     }
   )

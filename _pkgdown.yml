@@ -64,6 +64,10 @@ reference:
   contents:
   - methods_overwrite
 
+- subtitle: Datasets
+  contents:
+  - flights_df
+
 - title: Configuration, telemetry, and internals
   contents:
   - config

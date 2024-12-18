@@ -132,8 +132,7 @@ rel_join_impl <- function(
     out <- oo_restore(joined, "___row_number_x", list(x_rel))
   } # if (mutating)
 
-  out <- rel_to_df(out)
-  out <- dplyr_reconstruct(out, x)
+  out <- duckplyr_reconstruct(out, x)
 
   return(out)
 }
