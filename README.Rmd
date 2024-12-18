@@ -1,5 +1,5 @@
 ---
-output: 
+output:
   github_document:
     html_preview: false
 ---
@@ -43,8 +43,6 @@ local({
   hook_source <- knitr::knit_hooks$get("document")
   knitr::knit_hooks$set(document = clean_output)
 })
-
-Sys.setenv(DUCKPLYR_OUTPUT_ORDER = TRUE)
 ```
 
 # duckplyr <a href="https://duckplyr.tidyverse.org"><img src="man/figures/logo.png" align="right" height="138" /></a>
@@ -79,60 +77,67 @@ install.packages("duckplyr", repos = c("https://tidyverse.r-universe.dev", "http
 Or from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("pak", repos = sprintf("https://r-lib.github.io/p/pak/stable/%s/%s/%s", .Platform$pkgType, R.Version()$os, R.Version()$arch))
+# install.packages("pak")
 pak::pak("tidyverse/duckplyr")
 ```
 
-
 ## Example
+
+Calling `library(duckplyr)` overwrites dplyr methods,
+enabling duckplyr instead for the entire session.
 
 ```{r attach}
 library(conflicted)
-library(dplyr)
-conflict_prefer("filter", "dplyr", quiet = TRUE)
 library(duckplyr)
 ```
 
-Calling `library(duckplyr)` overwrites dplyr methods,
-enabling duckplyr instead for the entire session. 
-To turn this off, call `methods_restore()`.
-
-See also the companion [demo repository](https://github.com/Tmonster/duckplyr_demo) for a use case with a large dataset.
-
-This example illustrates usage of duckplyr for all data frames in the R session 
-("session-wide").
-
-Use `library(duckplyr)` or `duckplyr::methods_overwrite()` to overwrite dplyr methods and enable processing with duckdb for all data frames:
-
-```{r, eval=FALSE}
-duckplyr::methods_overwrite()
-```
-
-
 ```{r echo = FALSE}
+# Needed exactly because we use pkgload::load_all() above
+# and because we want to show the "Overwriting" message
+methods_overwrite()
 Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
 ```
 
-```{r}
-out <-
-  palmerpenguins::penguins %>%
-  # CAVEAT: factor columns are not supported yet
-  mutate(across(where(is.factor), as.character)) %>%
-  mutate(bill_area = bill_length_mm * bill_depth_mm) %>%
-  summarize(.by = c(species, sex), mean_bill_area = mean(bill_area)) %>%
-  filter(species != "Gentoo")
+```{r dplyr}
+conflict_prefer("filter", "dplyr", quiet = TRUE)
 ```
 
-The result is a plain tibble now:
+The following code aggregates the inflight delay by year and month for the first half of the year.
+We use a variant of the `nycflights13::flights` dataset that removes an incompatibility with duckplyr.
+
+```{r}
+flights_df()
+
+out <-
+  flights_df() %>%
+  filter(!is.na(arr_delay), !is.na(dep_delay)) %>%
+  mutate(inflight_delay = arr_delay - dep_delay) %>%
+  summarize(
+    .by = c(year, month),
+    mean_inflight_delay = mean(inflight_delay),
+    median_inflight_delay = median(inflight_delay),
+  ) %>%
+  filter(month <= 6)
+```
+
+The result is a plain tibble:
 
 ```{r}
 class(out)
 ```
 
-Querying the number of rows also starts the computation:
+Nothing has been computed yet.
+Querying the number of rows, or a column, starts the computation:
 
 ```{r}
-nrow(out)
+system.time(print(out$month))
+```
+
+Note that, unlike dplyr, the results are not ordered, see `?config` for details.
+However, once materialized, the results are stable:
+
+```{r}
+out
 ```
 
 Restart R, or call `duckplyr::methods_restore()` to revert to the default dplyr implementation.
@@ -140,18 +145,6 @@ Restart R, or call `duckplyr::methods_restore()` to revert to the default dplyr 
 ```{r}
 duckplyr::methods_restore()
 ```
-
-dplyr is active again:
-
-```{r}
-palmerpenguins::penguins %>%
-  # CAVEAT: factor columns are not supported yet
-  mutate(across(where(is.factor), as.character)) %>%
-  mutate(bill_area = bill_length_mm * bill_depth_mm) %>%
-  summarize(.by = c(species, sex), mean_bill_area = mean(bill_area)) %>%
-  filter(species != "Gentoo")
-```
-
 
 ## Using duckplyr in other packages
 
@@ -180,10 +173,9 @@ Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = "")
 ```
 
 ```{r}
-palmerpenguins::penguins %>%
-  duckplyr::as_duckplyr_tibble() %>%
-  transmute(bill_area = bill_length_mm * bill_depth_mm) %>%
-  head(3)
+out <-
+  nycflights13::flights %>%
+  duckplyr::as_duck_tbl()
 ```
 
 ## How is this different from dbplyr?

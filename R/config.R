@@ -7,6 +7,8 @@
 #'
 #' `DUCKPLYR_OUTPUT_ORDER`: If `TRUE`, row output order is preserved.
 #' The default may change the row order where dplyr would keep it stable.
+#' Preserving the order leads to more complicated execution plans
+#' with less potential for optimization, and thus may be slower.
 #'
 #' `DUCKPLYR_FORCE`: If `TRUE`, fail if duckdb cannot handle a request.
 #'
