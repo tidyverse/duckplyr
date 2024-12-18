@@ -207,6 +207,9 @@ meta_rel_register_df <- function(rel, df) {
     return(invisible())
   }
 
+  # This seems necessary now
+  force(rel_expr)
+
   if (inherits(df, "duckplyr_df")) {
     return(invisible())
   }
