@@ -151,6 +151,13 @@ duckfun <- function(table_function, args, ..., lazy = TRUE) {
 
   meta_rel_register_file(rel, table_function, path, options)
 
-  out <- duckdb$rel_to_altrep(rel)
-  as_duck_tbl(out, .lazy = lazy)
+  # Start with lazy, to avoid unwanted materialization
+  df <- duckdb$rel_to_altrep(rel, allow_materialization = FALSE)
+  out <- new_duck_tbl(df, lazy = TRUE)
+
+  if (!lazy) {
+    out <- as_duck_tbl(out, .lazy = lazy)
+  }
+
+  out
 }

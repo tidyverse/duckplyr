@@ -207,6 +207,10 @@ meta_rel_register_df <- function(rel, df) {
     return(invisible())
   }
 
+  if (inherits(df, "duckplyr_df")) {
+    return(invisible())
+  }
+
   df_name <- meta_df_register(df)
   # Expect experimental argument from outside
   rel_expr <- expr(duckdb$rel_from_df(con, !!df_name, experimental = experimental))
