@@ -24,7 +24,7 @@ For \code{as_duckplyr_tibble()}, an object of class
 
 These functions convert a data-frame-like input to an object of class \code{"duckpylr_df"}.
 For such objects,
-dplyr verbs such as \code{\link[=mutate]{mutate()}}, \code{\link[=select]{select()}} or \code{\link[=filter]{filter()}}  will attempt to use DuckDB.
+dplyr verbs such as \code{\link[dplyr:mutate]{dplyr::mutate()}}, \code{\link[dplyr:select]{dplyr::select()}} or \code{\link[dplyr:filter]{dplyr::filter()}}  will attempt to use DuckDB.
 If this is not possible, the original dplyr implementation is used.
 
 \code{as_duckplyr_df()} requires the input to be a plain data frame or a tibble,
