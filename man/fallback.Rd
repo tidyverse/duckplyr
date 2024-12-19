@@ -86,7 +86,7 @@ Logging is opt-out but uploading is opt-in.
 
 The following functions control the logging and uploading:
 \itemize{
-\item To opt the current machine out of logging, run \code{\link[=fallback_logging_optout]{fallback_logging_optout()}}.
+\item To opt out of logging, run \code{\link[=fallback_logging_optout]{fallback_logging_optout()}}.
 \item To opt in again for logging, run \code{\link[=fallback_logging_optin]{fallback_logging_optin()}}.
 \item \code{DUCKPLYR_FALLBACK_VERBOSE} controls printing, set it
 to \code{TRUE} or \code{FALSE} to enable or disable printing.
