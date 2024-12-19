@@ -1,4 +1,8 @@
 as_lazy_duckplyr_df <- function(x) {
+  if (inherits(x, "lazy_duckplyr_df")) {
+    return(x)
+  }
+
   rel <- duckdb_rel_from_df(x)
 
   out <- rel_to_df(rel, allow_materialization = FALSE)
@@ -10,6 +14,19 @@ as_lazy_duckplyr_df <- function(x) {
 add_lazy_duckplyr_df_class <- function(x) {
   class(x) <- unique(c("lazy_duckplyr_df", class(x)))
   x
+}
+
+as_eager_duckplyr_df <- function(x) {
+  if (!inherits(x, "lazy_duckplyr_df")) {
+    return(x)
+  }
+
+  rel <- duckdb_rel_from_df(x)
+
+  out <- rel_to_df(rel, allow_materialization = TRUE)
+
+  out <- dplyr_reconstruct(out, x)
+  remove_lazy_duckplyr_df_class(out)
 }
 
 remove_lazy_duckplyr_df_class <- function(x) {
