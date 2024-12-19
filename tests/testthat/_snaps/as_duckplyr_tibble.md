@@ -8,6 +8,19 @@
       i Please use `as_duck_tbl()` instead.
     Output
       # A duckplyr data frame: 1 variable
+    Message
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      r_dataframe_scan(0x5650c704bd30)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - a (DOUBLE)
+      
+    Output
             a
         <dbl>
       1     1

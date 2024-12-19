@@ -55,6 +55,21 @@
 
     Code
       duckplyr_summarise(df, across(everything(), fn()), .by = g)
+    Message
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      r_dataframe_scan(0x5650c197c2b8)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - g (DOUBLE)
+      - x (DOUBLE)
+      - y (DOUBLE)
+      - z (DOUBLE)
+      
     Condition
       Error in `summarise()`:
       i In argument: `across(everything(), fn())`.

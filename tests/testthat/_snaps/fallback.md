@@ -65,10 +65,40 @@
     Code
       duck_tbl(a = 1, b = 2, c = 3) %>% summarize(.by = a, e = sum(b), f = sum(e))
     Message
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      r_dataframe_scan(0x5650c82315b8)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - a (DOUBLE)
+      - b (DOUBLE)
+      - c (DOUBLE)
+      
       i dplyr fallback recorded
-        {"version":"0.3.1","message":"Can't reuse summary variable `...4`.","name":"summarise","x":{"...1":"numeric","...2":"numeric","...3":"numeric"},"args":{"dots":{"...4":"sum(...2)","...5":"sum(...4)"},"by":["...1"]}}
+        {"version":"0.3.1","message":"duckplyr: internal: hash not found\ni hash: <pointer: 0x5650c8162f70>\ni relation:","name":"summarise","x":{"...1":"numeric","...2":"numeric","...3":"numeric"},"args":{"dots":{"...4":"sum(...2)","...5":"sum(...4)"},"by":["...1"]}}
     Output
       # A duckplyr data frame: 3 variables
+    Message
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      r_dataframe_scan(0x5650c868f0c8)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - a (DOUBLE)
+      - e (DOUBLE)
+      - f (DOUBLE)
+      
+      i dplyr fallback recorded
+        {"version":"0.3.1","message":"duckplyr: internal: hash not found\ni hash: <pointer: 0x5650c40bc1a0>\ni relation:","name":"head","x":{"...1":"numeric","...2":"numeric","...3":"numeric"},"args":{"n":11}}
+    Output
             a     e     f
         <dbl> <dbl> <dbl>
       1     1     2     2
@@ -99,6 +129,22 @@
         {"version":"0.3.1","message":"`wday()` with `option(\"lubridate.week.start\")` not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"...3::...4(...1)"},".by":"NULL",".keep":["all","used","unused","none"]}}
     Output
       # A duckplyr data frame: 2 variables
+    Message
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      r_dataframe_scan(0x5650c89d6088)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - a (DATE)
+      - b (DOUBLE)
+      
+      i dplyr fallback recorded
+        {"version":"0.3.1","message":"duckplyr: internal: hash not found\ni hash: <pointer: 0x5650c2960470>\ni relation:","name":"head","x":{"...1":"Date","...2":"numeric"},"args":{"n":11}}
+    Output
         a              b
         <date>     <dbl>
       1 2024-03-08     5
@@ -113,6 +159,22 @@
         {"version":"0.3.1","message":"strftime(tz = ) not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"strftime(...1, format = \"<character>\", tz = \"<character>\")"},".by":"NULL",".keep":["all","used","unused","none"]}}
     Output
       # A duckplyr data frame: 2 variables
+    Message
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      r_dataframe_scan(0x5650c8b0f858)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - a (DATE)
+      - b (VARCHAR)
+      
+      i dplyr fallback recorded
+        {"version":"0.3.1","message":"duckplyr: internal: hash not found\ni hash: <pointer: 0x5650bfd96250>\ni relation:","name":"head","x":{"...1":"Date","...2":"character"},"args":{"n":11}}
+    Output
         a          b         
         <date>     <chr>     
       1 2024-03-08 2024-03-08
@@ -139,6 +201,23 @@
         {"version":"0.3.1","message":"No translation for function `foo`.","name":"mutate","x":{"...1":"numeric","...2":"numeric"},"args":{"dots":{"...3":"foo(...1, ...2)"},".by":"NULL",".keep":["all","used","unused","none"]}}
     Output
       # A duckplyr data frame: 3 variables
+    Message
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      r_dataframe_scan(0x5650ca1fa8b8)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - a (DOUBLE)
+      - b (DOUBLE)
+      - c (DOUBLE)
+      
+      i dplyr fallback recorded
+        {"version":"0.3.1","message":"duckplyr: internal: hash not found\ni hash: <pointer: 0x5650c4d68740>\ni relation:","name":"head","x":{"...1":"numeric","...2":"numeric","...3":"numeric"},"args":{"n":11}}
+    Output
             a     b     c
         <dbl> <dbl> <dbl>
       1     1     2     3
@@ -147,8 +226,48 @@
 
     Code
       mtcars[1:2, ] %>% as_duck_tbl() %>% select(mpg, cyl)
+    Message
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      r_dataframe_scan(0x5650c4eda4a8)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - mpg (DOUBLE)
+      - cyl (DOUBLE)
+      - disp (DOUBLE)
+      - hp (DOUBLE)
+      - drat (DOUBLE)
+      - wt (DOUBLE)
+      - qsec (DOUBLE)
+      - vs (DOUBLE)
+      - am (DOUBLE)
+      - gear (DOUBLE)
+      - carb (DOUBLE)
+      
+      i dplyr fallback recorded
+        {"version":"0.3.1","message":"duckplyr: internal: hash not found\ni hash: <pointer: 0x5650c75f3bc0>\ni relation:","name":"select","x":{"...1":"numeric","...2":"numeric","...3":"numeric","...4":"numeric","...5":"numeric","...6":"numeric","...7":"numeric","...8":"numeric","...9":"numeric","...10":"numeric","...11":"numeric"},"args":{"dots":{"1":"...1","2":"...2"}}}
     Output
       # A duckplyr data frame: 2 variables
+    Message
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      r_dataframe_scan(0x5650c89b0418)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - mpg (DOUBLE)
+      - cyl (DOUBLE)
+      
+      i dplyr fallback recorded
+        {"version":"0.3.1","message":"duckplyr: internal: hash not found\ni hash: <pointer: 0x5650bfcbd5d0>\ni relation:","name":"head","x":{"...1":"numeric","...2":"numeric"},"args":{"n":11}}
+    Output
           mpg   cyl
         <dbl> <dbl>
       1    21     6
@@ -198,6 +317,22 @@
         {"version":"0.3.1","message":"Can't convert columns of class <list> to relational. Affected column: `...3`.","name":"select","x":{"...1":"numeric","...2":"numeric","...3":"list"},"args":{"dots":{"1":"...1","2":"...2"}}}
     Output
       # A duckplyr data frame: 2 variables
+    Message
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      r_dataframe_scan(0x5650c17b48c8)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - a (DOUBLE)
+      - b (DOUBLE)
+      
+      i dplyr fallback recorded
+        {"version":"0.3.1","message":"duckplyr: internal: hash not found\ni hash: <pointer: 0x5650c4276410>\ni relation:","name":"head","x":{"...1":"numeric","...2":"numeric"},"args":{"n":11}}
+    Output
             a     b
         <dbl> <dbl>
       1     1     2
@@ -211,6 +346,22 @@
         {"version":"0.3.1","message":"Can't use column `...1` already present in rel for order preservation","name":"arrange","x":{"...1":"numeric","...2":"integer"},"args":{"dots":["...2"],".by_group":false}}
     Output
       # A duckplyr data frame: 2 variables
+    Message
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      r_dataframe_scan(0x5650c8a19988)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - ___row_number (DOUBLE)
+      - b (INTEGER)
+      
+      i dplyr fallback recorded
+        {"version":"0.3.1","message":"duckplyr: internal: hash not found\ni hash: <pointer: 0x5650c48f0ad0>\ni relation:","name":"head","x":{"...1":"numeric","...2":"integer"},"args":{"n":11}}
+    Output
         `___row_number`     b
                   <dbl> <int>
       1               1     2
@@ -227,6 +378,22 @@
         {"version":"0.3.1","message":"No relational implementation for group_by()"}
     Output
       # A duckplyr data frame: 2 variables
+    Message
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      r_dataframe_scan(0x5650c9e3f428)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - a (DOUBLE)
+      - n (INTEGER)
+      
+      i dplyr fallback recorded
+        {"version":"0.3.1","message":"duckplyr: internal: hash not found\ni hash: <pointer: 0x5650c3ef9b50>\ni relation:","name":"head","x":{"...1":"numeric","...2":"integer"},"args":{"n":11}}
+    Output
             a     n
         <dbl> <int>
       1     1     1
