@@ -58,8 +58,10 @@ duck_tbl <- function(..., .lazy = FALSE) {
 as_duck_tbl <- function(x, ..., .lazy = FALSE) {
   out <- as_duck_tbl_dispatch(x, ...)
 
-  if (.lazy) {
+  if (isTRUE(.lazy)) {
     out <- as_lazy_duckplyr_df(out)
+  } else {
+    out <- as_eager_duckplyr_df(out)
   }
 
   return(out)
@@ -80,11 +82,19 @@ as_duck_tbl.tbl_duckdb_connection <- function(x, ...) {
 }
 
 #' @export
+as_duck_tbl.duckplyr_df <- function(x, ...) {
+  check_dots_empty()
+  x
+}
+
+#' @export
 as_duck_tbl.data.frame <- function(x, ...) {
   check_dots_empty()
 
+  tbl <- as_tibble(x)
+
   # - as_tibble() to remove row names
-  new_duck_tbl(as_tibble(x))
+  new_duck_tbl(tbl)
 }
 
 #' @export
