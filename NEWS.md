@@ -1,5 +1,24 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9903 (2024-12-19)
+
+## Features
+
+- Depend on dplyr instead of reexporting all generics (#405).
+
+## Chore
+
+- NEWS.
+
+## Documentation
+
+- Clarify usage by reducing duplication (#400).
+
+- Tweak developer vignette.
+
+- New `flights_df()` used instead of `palmerpenguins::penguins` (#408).
+
+
 # duckplyr 0.99.99.9902 (2024-12-18)
 
 ## Features
