@@ -40,59 +40,96 @@ install.packages("duckplyr", repos = c("https://tidyverse.r-universe.dev", "http
 Or from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("pak", repos = sprintf("https://r-lib.github.io/p/pak/stable/%s/%s/%s", .Platform$pkgType, R.Version()$os, R.Version()$arch))
+# install.packages("pak")
 pak::pak("tidyverse/duckplyr")
 ```
 
 ## Example
 
+Calling `library(duckplyr)` overwrites dplyr methods, enabling duckplyr
+instead for the entire session.
+
 ``` r
 library(conflicted)
-library(dplyr)
-conflict_prefer("filter", "dplyr", quiet = TRUE)
 library(duckplyr)
 ```
 
-Calling `library(duckplyr)` overwrites dplyr methods, enabling duckplyr
-instead for the entire session. To turn this off, call
-`methods_restore()`.
-
-See also the companion [demo
-repository](https://github.com/Tmonster/duckplyr_demo) for a use case
-with a large dataset.
-
-This example illustrates usage of duckplyr for all data frames in the R
-session (“session-wide”).
-
-Use `library(duckplyr)` or `duckplyr::methods_overwrite()` to overwrite
-dplyr methods and enable processing with duckdb for all data frames:
+    #> ✔ Overwriting dplyr methods with duckplyr methods.
+    #> ℹ Turn off with `duckplyr::methods_restore()`.
 
 ``` r
-duckplyr::methods_overwrite()
+conflict_prefer("filter", "dplyr", quiet = TRUE)
 ```
 
+The following code aggregates the inflight delay by year and month for
+the first half of the year. We use a variant of the
+`nycflights13::flights` dataset that removes an incompatibility with
+duckplyr.
+
 ``` r
+flights_df()
+#> # A tibble: 336,776 × 19
+#>     year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier
+#>    <int> <int> <int>    <int>      <int>   <dbl>   <int>   <int>   <dbl> <chr>  
+#>  1  2013     1     1      517        515       2     830     819      11 UA     
+#>  2  2013     1     1      533        529       4     850     830      20 UA     
+#>  3  2013     1     1      542        540       2     923     850      33 AA     
+#>  4  2013     1     1      544        545      -1    1004    1022     -18 B6     
+#>  5  2013     1     1      554        600      -6     812     837     -25 DL     
+#>  6  2013     1     1      554        558      -4     740     728      12 UA     
+#>  7  2013     1     1      555        600      -5     913     854      19 B6     
+#>  8  2013     1     1      557        600      -3     709     723     -14 EV     
+#>  9  2013     1     1      557        600      -3     838     846      -8 B6     
+#> 10  2013     1     1      558        600      -2     753     745       8 AA     
+#> # ℹ 336,766 more rows
+#> # ℹ abbreviated names: ¹​sched_dep_time, ²​dep_delay, ³​arr_time, ⁴​sched_arr_time,
+#> #   ⁵​arr_delay
+#> # ℹ 9 more variables: flight <int>, tailnum <chr>, origin <chr>, dest <chr>,
+#> #   air_time <dbl>, distance <dbl>, hour <dbl>, minute <dbl>, time_hour <dttm>
+
 out <-
-  palmerpenguins::penguins %>%
-  # CAVEAT: factor columns are not supported yet
-  mutate(across(where(is.factor), as.character)) %>%
-  mutate(bill_area = bill_length_mm * bill_depth_mm) %>%
-  summarize(.by = c(species, sex), mean_bill_area = mean(bill_area)) %>%
-  filter(species != "Gentoo")
+  flights_df() %>%
+  filter(!is.na(arr_delay), !is.na(dep_delay)) %>%
+  mutate(inflight_delay = arr_delay - dep_delay) %>%
+  summarize(
+    .by = c(year, month),
+    mean_inflight_delay = mean(inflight_delay),
+    median_inflight_delay = median(inflight_delay),
+  ) %>%
+  filter(month <= 6)
 ```
 
-The result is a plain tibble now:
+The result is a plain tibble:
 
 ``` r
 class(out)
 #> [1] "tbl_df"     "tbl"        "data.frame"
 ```
 
-Querying the number of rows also starts the computation:
+Nothing has been computed yet. Querying the number of rows, or a column,
+starts the computation:
 
 ``` r
-nrow(out)
-#> [1] 5
+system.time(print(out$month))
+#> [1] 2 4 1 5 3 6
+#>    user  system elapsed 
+#>   0.011   0.001   0.009
+```
+
+Note that, unlike dplyr, the results are not ordered, see `?config` for
+details. However, once materialized, the results are stable:
+
+``` r
+out
+#> # A tibble: 6 × 4
+#>    year month mean_inflight_delay median_inflight_delay
+#>   <int> <int>               <dbl>                 <dbl>
+#> 1  2013     2               -5.15                    -6
+#> 2  2013     4               -2.67                    -5
+#> 3  2013     1               -3.86                    -5
+#> 4  2013     5               -9.37                   -10
+#> 5  2013     3               -7.36                    -9
+#> 6  2013     6               -4.24                    -7
 ```
 
 Restart R, or call `duckplyr::methods_restore()` to revert to the
@@ -101,25 +138,6 @@ default dplyr implementation.
 ``` r
 duckplyr::methods_restore()
 #> ℹ Restoring dplyr methods.
-```
-
-dplyr is active again:
-
-``` r
-palmerpenguins::penguins %>%
-  # CAVEAT: factor columns are not supported yet
-  mutate(across(where(is.factor), as.character)) %>%
-  mutate(bill_area = bill_length_mm * bill_depth_mm) %>%
-  summarize(.by = c(species, sex), mean_bill_area = mean(bill_area)) %>%
-  filter(species != "Gentoo")
-#> # A tibble: 5 × 3
-#>   species   sex    mean_bill_area
-#>   <chr>     <chr>           <dbl>
-#> 1 Adelie    male             770.
-#> 2 Adelie    female           657.
-#> 3 Adelie    NA                NA 
-#> 4 Chinstrap female           820.
-#> 5 Chinstrap male             984.
 ```
 
 ## Using duckplyr in other packages
@@ -149,33 +167,9 @@ The first time the package encounters an unsupported function, data
 type, or operation, instructions are printed to the console.
 
 ``` r
-palmerpenguins::penguins %>%
-  duckplyr::as_duckplyr_tibble() %>%
-  transmute(bill_area = bill_length_mm * bill_depth_mm) %>%
-  head(3)
-#> The duckplyr package is configured to fall back to dplyr when it encounters an
-#> incompatibility. Fallback events can be collected and uploaded for analysis to
-#> guide future development. By default, no data will be collected or uploaded.
-#> ℹ A fallback situation just occurred. The following information would have been
-#>   recorded:
-#>   {"version":"0.4.1","message":"Can't convert columns of class <factor> to
-#>   relational. Affected
-#>   column:\n`...1`.","name":"transmute","x":{"...1":"factor","...2":"factor","...3":"numeric","...4":"numeric","...5":"integer","...6":"integer","...7":"factor","...8":"integer"},"args":{"dots":{"...9":"...3
-#>   * ...4"}}}
-#> → Run `duckplyr::fallback_sitrep()` to review the current settings.
-#> → Run `Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)` to enable fallback logging,
-#>   and `Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = TRUE)` in addition to enable
-#>   printing of fallback situations to the console.
-#> → Run `duckplyr::fallback_review()` to review the available reports, and
-#>   `duckplyr::fallback_upload()` to upload them.
-#> ℹ See `?duckplyr::fallback()` for details.
-#> ℹ This message will be displayed once every eight hours.
-#> # A duckplyr data frame: 1 variable
-#>   bill_area
-#>       <dbl>
-#> 1      731.
-#> 2      687.
-#> 3      725.
+out <-
+  nycflights13::flights %>%
+  duckplyr::as_duck_tbl()
 ```
 
 ## How is this different from dbplyr?

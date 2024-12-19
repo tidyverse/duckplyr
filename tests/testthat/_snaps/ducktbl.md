@@ -1,19 +1,19 @@
-# as_ducktbl() and grouped df
+# as_duck_tbl() and grouped df
 
     Code
-      as_ducktbl(dplyr::group_by(mtcars, cyl))
+      as_duck_tbl(dplyr::group_by(mtcars, cyl))
     Condition
-      Error in `as_ducktbl_dispatch()`:
+      Error in `as_duck_tbl_dispatch()`:
       ! duckplyr does not support `group_by()`.
       i Use `.by` instead.
       i To proceed with dplyr, use `as_tibble()` or `as.data.frame()`.
 
-# as_ducktbl() and rowwise df
+# as_duck_tbl() and rowwise df
 
     Code
-      as_ducktbl(dplyr::rowwise(mtcars))
+      as_duck_tbl(dplyr::rowwise(mtcars))
     Condition
-      Error in `as_ducktbl_dispatch()`:
+      Error in `as_duck_tbl_dispatch()`:
       ! duckplyr does not support `rowwise()`.
       i To proceed with dplyr, use `as_tibble()` or `as.data.frame()`.
 

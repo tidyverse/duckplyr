@@ -18,23 +18,33 @@
     Code
       (expect_error(validate_rowwise_df(df1)))
     Output
-      <simpleError in validate_rowwise_df(df1): could not find function "validate_rowwise_df">
+      <error/rlang_error>
+      Error in `validate_rowwise_df()`:
+      ! The `.rows` column must be a list of size 1, one-based integer vectors with the right value.
     Code
       (expect_error(validate_rowwise_df(df2)))
     Output
-      <simpleError in validate_rowwise_df(df2): could not find function "validate_rowwise_df">
+      <error/rlang_error>
+      Error in `validate_rowwise_df()`:
+      ! The last column of the `groups` attribute must be called `.rows`.
     Code
       (expect_error(validate_rowwise_df(df3)))
     Output
-      <simpleError in validate_rowwise_df(df3): could not find function "validate_rowwise_df">
+      <error/rlang_error>
+      Error in `validate_rowwise_df()`:
+      ! The `groups` attribute must be a data frame.
     Code
       (expect_error(validate_rowwise_df(df4)))
     Output
-      <simpleError in validate_rowwise_df(df4): could not find function "validate_rowwise_df">
+      <error/rlang_error>
+      Error in `validate_rowwise_df()`:
+      ! The `groups` attribute must be a data frame.
     Code
       (expect_error(validate_rowwise_df(df7)))
     Output
-      <simpleError in validate_rowwise_df(df7): could not find function "validate_rowwise_df">
+      <error/rlang_error>
+      Error in `validate_rowwise_df()`:
+      ! The `.rows` column must be a list of size 1, one-based integer vectors with the right value.
     Code
       (expect_error(attr(df8, "groups")$.rows <- 1:8))
     Output
@@ -49,11 +59,15 @@
     Code
       (expect_error(validate_rowwise_df(df10)))
     Output
-      <simpleError in validate_rowwise_df(df10): could not find function "validate_rowwise_df">
+      <error/rlang_error>
+      Error in `validate_rowwise_df()`:
+      ! The `groups` attribute must be a data frame.
     Code
       (expect_error(validate_rowwise_df(df11)))
     Output
-      <simpleError in validate_rowwise_df(df11): could not find function "validate_rowwise_df">
+      <error/rlang_error>
+      Error in `validate_rowwise_df()`:
+      ! The `groups` attribute must be a data frame.
     Code
       (expect_error(new_rowwise_df(tibble(x = 1:10), tibble(".rows" := list(1:5, -1L))))
       )

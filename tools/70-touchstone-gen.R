@@ -17,14 +17,14 @@ body <- function(sf, test, n) glue::glue('benchmark_run(
     data <- qs::qread("tools/tpch/{sf}.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
-    customer <- as_ducktbl(customer)
-    lineitem <- as_ducktbl(lineitem)
-    nation <- as_ducktbl(nation)
-    orders <- as_ducktbl(orders)
-    part <- as_ducktbl(part)
-    partsupp <- as_ducktbl(partsupp)
-    region <- as_ducktbl(region)
-    supplier <- as_ducktbl(supplier)
+    customer <- as_duck_tbl(customer)
+    lineitem <- as_duck_tbl(lineitem)
+    nation <- as_duck_tbl(nation)
+    orders <- as_duck_tbl(orders)
+    part <- as_duck_tbl(part)
+    partsupp <- as_duck_tbl(partsupp)
+    region <- as_duck_tbl(region)
+    supplier <- as_duck_tbl(supplier)
   }},
   `{sf}_tpch_{test}` = collect(duckplyr:::tpch_{test}()),
   n = {n}

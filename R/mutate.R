@@ -78,9 +78,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
         rel <- oo_restore(rel)
       }
 
-      out <- rel_to_df(rel)
-
-      out <- dplyr_reconstruct(out, .data)
+      out <- duckplyr_reconstruct(rel, .data)
 
       names_original <- names(.data)
 

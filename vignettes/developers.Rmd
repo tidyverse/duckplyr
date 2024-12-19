@@ -8,11 +8,26 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
+clean_output <- function(x, options) {
+  x <- gsub("0x[0-9a-f]+", "0xdeadbeef", x)
+  x <- gsub("dataframe_[0-9]*_[0-9]*", "      dataframe_42_42      ", x)
+  x <- gsub("[0-9]*\\.___row_number ASC", "42.___row_number ASC", x)
+  x <- gsub("─", "-", x)
+  x
+}
+
+local({
+  hook_source <- knitr::knit_hooks$get("document")
+  knitr::knit_hooks$set(document = clean_output)
+})
+
 knitr::opts_chunk$set(
   collapse = TRUE,
-  eval = identical(Sys.getenv("IN_PKGDOWN"), "true") || rlang::is_installed(c("conflicted", "palmerpenguins")),
+  eval = identical(Sys.getenv("IN_PKGDOWN"), "true") || rlang::is_installed(c("conflicted", "nycflights13")),
   comment = "#>"
 )
+
+Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
 ```
 
 ```{r attach}
@@ -26,35 +41,34 @@ conflict_prefer("filter", "dplyr")
 To enable duckplyr **for individual data frames instead of session wide**, 
 
 - do **not** load duckplyr with `library()`.
-- use `duckplyr::as_duckplyr_tibble()` as the first step in your pipe, without attaching the package.
-
-This example illustrates usage of duckplyr for individual data frames.
-
-Use `duckplyr::as_duckplyr_tibble()` to enable processing with duckdb:
+- use `duckplyr::as_duck_tbl()` as the first step in your pipe, without attaching the package.
 
 ```{r}
-out <-
-  palmerpenguins::penguins %>%
-  # CAVEAT: factor columns are not supported yet
-  mutate(across(where(is.factor), as.character)) %>%
-  duckplyr::as_duckplyr_tibble() %>%
-  mutate(bill_area = bill_length_mm * bill_depth_mm) %>%
-  summarize(.by = c(species, sex), mean_bill_area = mean(bill_area)) %>%
-  filter(species != "Gentoo")
+eager <-
+  duckplyr::flights_df() |>
+  duckplyr::as_duck_tbl() |>
+  filter(!is.na(arr_delay), !is.na(dep_delay)) |>
+  mutate(inflight_delay = arr_delay - dep_delay) |>
+  summarize(
+    .by = c(year, month), 
+    mean_inflight_delay = mean(inflight_delay),
+    median_inflight_delay = median(inflight_delay),
+  ) |>
+  filter(month <= 6)
 ```
 
 The result is a tibble, with its own class.
 
 ```{r}
-class(out)
-names(out)
+class(eager)
+names(eager)
 ```
 
-duckdb is responsible for eventually carrying out the operations.
-Despite the late filter, the summary is not computed for the Gentoo species.
+DuckDB is responsible for eventually carrying out the operations.
+Despite the late filter, the summary is not computed for the months in the second half of the year.
 
 ```{r}
-out %>%
+eager |>
   explain()
 ```
 
@@ -62,14 +76,48 @@ All data frame operations are supported.
 Computation happens upon the first request.
 
 ```{r}
-out$mean_bill_area
+eager$mean_inflight_delay
 ```
 
-After the computation has been carried out, the results are available immediately:
+After the computation has been carried out, the results are preserved and available immediately:
 
 ```{r}
-out
+eager
 ```
+
+## Eager and lazy modes
+
+The default mode for `as_duck_tbl()` is eager.
+This allows applying all data frame operations on the results, including column subsetting or retrieving the number of rows.
+In addition, if an operation cannot be carried out by duckdb, the dplyr fallback is used transparently.
+Use `.lazy = TRUE` to ensure that all operations are carried out by DuckDB, or fail.
+This is also the default for the ingestion functions such as `duck_parquet()`.
+
+```{r}
+lazy <-
+  duckplyr::flights_df() |>
+  duckplyr::as_duck_tbl(.lazy = TRUE)
+```
+
+Columns or the row count cannot be accessed directly in this mode:
+
+```{r error = TRUE}
+nrow(lazy)
+```
+
+Also, operations that are not (yet) supported will fail:
+
+```{r error = TRUE}
+lazy |>
+  mutate(inflight_delay = arr_delay - dep_delay) |>
+  summarize(
+    .by = c(year, month), 
+    mean_inflight_delay = mean(inflight_delay, na.rm = TRUE),
+    median_inflight_delay = median(inflight_delay, na.rm = TRUE),
+  )
+```
+
+See `vignette("limits")` for current limitations, and the contributing guide for how to add support for additional operations.
 
 ## Extensibility
 

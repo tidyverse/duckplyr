@@ -8,7 +8,7 @@
 #' dplyr verbs such as [mutate()], [select()] or [filter()]  will attempt to use DuckDB.
 #' If this is not possible, the original dplyr implementation is used.
 #'
-#' `ducktbl()` works like [tibble()].
+#' `duck_tbl()` works like [tibble()].
 #' In contrast to dbplyr, duckplyr data frames are "eager" by default.
 #' To avoid unwanted expensive computation, they can be converted to "lazy" duckplyr frames
 #' on which [collect()] needs to be called explicitly.
@@ -17,18 +17,18 @@
 #' Set the `DUCKPLYR_FALLBACK_INFO` and `DUCKPLYR_FORCE` environment variables
 #' for more control over the behavior, see [config] for more details.
 #'
-#' @param ... For `ducktbl()`, passed on to [tibble()].
-#'   For `as_ducktbl()`, passed on to methods.
+#' @param ... For `duck_tbl()`, passed on to [tibble()].
+#'   For `as_duck_tbl()`, passed on to methods.
 #' @param .lazy Logical, whether to create a lazy duckplyr frame.
 #'   If `TRUE`, [collect()] must be called before the data can be accessed.
 #'
-#' @return For `ducktbl()` and `as_ducktbl()`, an object with the following classes:
+#' @return For `duck_tbl()` and `as_duck_tbl()`, an object with the following classes:
 #'   - `"lazy_duckplyr_df"` if `.lazy` is `TRUE`
 #'   - `"duckplyr_df"`
 #'   - Classes of a [tibble]
 #'
 #' @examples
-#' x <- ducktbl(a = 1)
+#' x <- duck_tbl(a = 1)
 #' x
 #'
 #' library(dplyr)
@@ -37,68 +37,68 @@
 #'
 #' x$a
 #'
-#' y <- ducktbl(a = 1, .lazy = TRUE)
+#' y <- duck_tbl(a = 1, .lazy = TRUE)
 #' y
 #' try(length(y$a))
 #' length(collect(y)$a)
 #' @export
-ducktbl <- function(..., .lazy = FALSE) {
+duck_tbl <- function(..., .lazy = FALSE) {
   out <- tibble::tibble(...)
-  as_ducktbl(out, .lazy = .lazy)
+  as_duck_tbl(out, .lazy = .lazy)
 }
 
-#' as_ducktbl
+#' as_duck_tbl
 #'
-#' `as_ducktbl()` converts a data frame or a dplyr lazy table to a duckplyr data frame.
+#' `as_duck_tbl()` converts a data frame or a dplyr lazy table to a duckplyr data frame.
 #' This is a generic function that can be overridden for custom classes.
 #'
 #' @param x The object to convert or to test.
-#' @rdname ducktbl
+#' @rdname duck_tbl
 #' @export
-as_ducktbl <- function(x, ..., .lazy = FALSE) {
-  out <- as_ducktbl_dispatch(x, ...)
+as_duck_tbl <- function(x, ..., .lazy = FALSE) {
+  out <- as_duck_tbl_dispatch(x, ...)
 
   if (.lazy) {
     out <- as_lazy_duckplyr_df(out)
   }
 
   return(out)
-  UseMethod("as_ducktbl")
+  UseMethod("as_duck_tbl")
 }
-as_ducktbl_dispatch <- function(x, ...) {
-  UseMethod("as_ducktbl")
+as_duck_tbl_dispatch <- function(x, ...) {
+  UseMethod("as_duck_tbl")
 }
 
 #' @export
-as_ducktbl.tbl_duckdb_connection <- function(x, ...) {
+as_duck_tbl.tbl_duckdb_connection <- function(x, ...) {
   check_dots_empty()
 
   con <- dbplyr::remote_con(x)
   sql <- dbplyr::remote_query(x)
 
-  ducksql(sql, lazy = FALSE, con = con)
+  duck_sql(sql, lazy = FALSE, con = con)
 }
 
 #' @export
-as_ducktbl.data.frame <- function(x, ...) {
+as_duck_tbl.data.frame <- function(x, ...) {
   check_dots_empty()
 
   # - as_tibble() to remove row names
-  new_ducktbl(as_tibble(x))
+  new_duck_tbl(as_tibble(x))
 }
 
 #' @export
-as_ducktbl.default <- function(x, ...) {
+as_duck_tbl.default <- function(x, ...) {
   check_dots_empty()
 
   # - as.data.frame() call for good measure and perhaps https://github.com/tidyverse/tibble/issues/1556
   # - as_tibble() to remove row names
-  # Could call as_ducktbl(as.data.frame(x)) here, but that would be slower
-  new_ducktbl(as_tibble(as.data.frame(x)))
+  # Could call as_duck_tbl(as.data.frame(x)) here, but that would be slower
+  new_duck_tbl(as_tibble(as.data.frame(x)))
 }
 
 #' @export
-as_ducktbl.grouped_df <- function(x, ...) {
+as_duck_tbl.grouped_df <- function(x, ...) {
   check_dots_empty()
 
   cli::cli_abort(c(
@@ -109,7 +109,7 @@ as_ducktbl.grouped_df <- function(x, ...) {
 }
 
 #' @export
-as_ducktbl.rowwise_df <- function(x, ...) {
+as_duck_tbl.rowwise_df <- function(x, ...) {
   check_dots_empty()
 
   cli::cli_abort(c(
@@ -118,21 +118,21 @@ as_ducktbl.rowwise_df <- function(x, ...) {
   ))
 }
 
-#' is_ducktbl
+#' is_duck_tbl
 #'
-#' `is_ducktbl()` returns `TRUE` if `x` is a duckplyr data frame.
+#' `is_duck_tbl()` returns `TRUE` if `x` is a duckplyr data frame.
 #'
-#' @return For `is_ducktbl()`, a scalar logical.
-#' @rdname ducktbl
+#' @return For `is_duck_tbl()`, a scalar logical.
+#' @rdname duck_tbl
 #' @export
-is_ducktbl <- function(x) {
+is_duck_tbl <- function(x) {
   inherits(x, "duckplyr_df")
 }
 
 
 #' @param lazy Only adds the class, does not recreate the relation object!
 #' @noRd
-new_ducktbl <- function(x, class = NULL, lazy = FALSE, error_call = caller_env()) {
+new_duck_tbl <- function(x, class = NULL, lazy = FALSE, error_call = caller_env()) {
   if (is.null(class)) {
     class <- c("tbl_df", "tbl", "data.frame")
   }
