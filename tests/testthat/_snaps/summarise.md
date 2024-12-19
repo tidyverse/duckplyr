@@ -18,6 +18,19 @@
         x <<- x + 2L
         mean(x)
       })
+    Message
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      r_dataframe_scan(0x5650c8a56828)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - g (DOUBLE)
+      - x (INTEGER)
+      
     Condition
       Error in `summarise()`:
       i In argument: `y = { ... }`.
@@ -47,6 +60,19 @@
 
     Code
       out <- duckplyr_summarise(df, x = which(x < 3), .by = g)
+    Message
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      r_dataframe_scan(0x5650c7499748)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - g (DOUBLE)
+      - x (INTEGER)
+      
     Condition
       Warning:
       Returning more (or less) than 1 row per `summarise()` group was deprecated in dplyr 1.1.0.

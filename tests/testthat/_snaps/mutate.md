@@ -18,6 +18,19 @@
         x <<- 2
         x
       })
+    Message
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      r_dataframe_scan(0x5650c2daf308)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - g (INTEGER)
+      - x (INTEGER)
+      
     Condition
       Error in `mutate()`:
       i In argument: `y = { ... }`.
@@ -39,12 +52,4 @@
       i In argument: `y2 = { ... }`.
       Caused by error:
       ! object 'foo' not found
-
-# `duckplyr_mutate()` doesn't allow data frames with missing or empty names (#6758)
-
-    Code
-      duckplyr_mutate(df2)
-    Condition
-      Error in `mutate()`:
-      ! Can't transform a data frame with `NA` or `""` names.
 

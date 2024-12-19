@@ -33,6 +33,18 @@
     Message
       Storing counts in `nn`, as `n` already present in input
       i Use `name = "new_name"` to pick a new name.
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      r_dataframe_scan(0x5650c3344b48)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - g (DOUBLE)
+      - n (INTEGER)
+      
     Output
         n nn
       1 1  1

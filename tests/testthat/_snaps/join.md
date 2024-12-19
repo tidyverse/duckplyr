@@ -2,6 +2,19 @@
 
     Code
       duckplyr_left_join(df1, df2, join_by(overlaps(xl, xu, yl, yu)), keep = FALSE)
+    Message
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      r_dataframe_scan(0x5650c99da9a8)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - xl (DOUBLE)
+      - xu (DOUBLE)
+      
     Condition
       Error in `left_join()`:
       ! Can't set `keep = FALSE` when using an inequality, rolling, or overlap join.
@@ -10,6 +23,19 @@
 
     Code
       duckplyr_full_join(df1, df2, join_by(overlaps(xl, xu, yl, yu)), keep = FALSE)
+    Message
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      r_dataframe_scan(0x5650c93fbc88)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - xl (DOUBLE)
+      - xu (DOUBLE)
+      
     Condition
       Error in `full_join()`:
       ! Can't set `keep = FALSE` when using an inequality, rolling, or overlap join.
@@ -56,6 +82,19 @@
       out <- duckplyr_left_join(df1, df2)
     Message
       Joining with `by = join_by(x)`
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      r_dataframe_scan(0x5650c8835478)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - x (DOUBLE)
+      - y (DOUBLE)
+      
+      Joining with `by = join_by(x)`
 
 # filtering joins compute common columns
 
@@ -63,11 +102,36 @@
       out <- duckplyr_semi_join(df1, df2)
     Message
       Joining with `by = join_by(x)`
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      r_dataframe_scan(0x5650c9ed4cd8)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - x (DOUBLE)
+      - y (DOUBLE)
+      
+      Joining with `by = join_by(x)`
 
 # mutating joins reference original column in `y` when there are type errors (#6465)
 
     Code
       (expect_error(duckplyr_left_join(x, y, by = join_by(a == b))))
+    Message
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      r_dataframe_scan(0x5650c4f82848)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - a (DOUBLE)
+      
     Output
       <error/dplyr_error_join_incompatible_type>
       Error in `left_join()`:
@@ -79,6 +143,18 @@
 
     Code
       (expect_error(duckplyr_semi_join(x, y, by = join_by(a == b))))
+    Message
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      r_dataframe_scan(0x5650c62c1f38)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - a (DOUBLE)
+      
     Output
       <error/dplyr_error_join_incompatible_type>
       Error in `semi_join()`:
