@@ -1,8 +1,10 @@
 test_that("fallback_sitrep() default", {
+  local_mocked_bindings(
+    fallback_logging_opted_out = function(...) FALSE,
+    fallback_verbose_opted_in = function(...) TRUE,
+    fallback_reporting_opted_in = function(...) FALSE
+  )
   withr::local_envvar(c(
-    "DUCKPLYR_FALLBACK_COLLECT" = "",
-    "DUCKPLYR_FALLBACK_VERBOSE" = "",
-    "DUCKPLYR_FALLBACK_AUTOUPLOAD" = "",
     "DUCKPLYR_FALLBACK_LOG_DIR" = "fallback/log/dir",
     "DUCKPLYR_TELEMETRY_FALLBACK_LOGS" = ""
   ))
@@ -13,10 +15,12 @@ test_that("fallback_sitrep() default", {
 })
 
 test_that("fallback_sitrep() enabled", {
+  local_mocked_bindings(
+    fallback_logging_opted_out = function(...) FALSE,
+    fallback_verbose_opted_in = function(...) TRUE,
+    fallback_reporting_opted_in = function(...) TRUE
+  )
   withr::local_envvar(c(
-    "DUCKPLYR_FALLBACK_COLLECT" = "1",
-    "DUCKPLYR_FALLBACK_VERBOSE" = "",
-    "DUCKPLYR_FALLBACK_AUTOUPLOAD" = "1",
     "DUCKPLYR_FALLBACK_LOG_DIR" = "fallback/log/dir",
     "DUCKPLYR_TELEMETRY_FALLBACK_LOGS" = "1,2,3"
   ))
@@ -27,10 +31,12 @@ test_that("fallback_sitrep() enabled", {
 })
 
 test_that("fallback_sitrep() enabled silent", {
+  local_mocked_bindings(
+    fallback_logging_opted_out = function(...) FALSE,
+    fallback_verbose_opted_in = function(...) FALSE,
+    fallback_reporting_opted_in = function(...) TRUE
+  )
   withr::local_envvar(c(
-    "DUCKPLYR_FALLBACK_COLLECT" = "1",
-    "DUCKPLYR_FALLBACK_VERBOSE" = "FALSE",
-    "DUCKPLYR_FALLBACK_AUTOUPLOAD" = "1",
     "DUCKPLYR_FALLBACK_LOG_DIR" = "fallback/log/dir",
     "DUCKPLYR_TELEMETRY_FALLBACK_LOGS" = "1,2,3"
   ))
@@ -41,9 +47,12 @@ test_that("fallback_sitrep() enabled silent", {
 })
 
 test_that("fallback_sitrep() disabled", {
+  local_mocked_bindings(
+    fallback_logging_opted_out = function(...) TRUE,
+    fallback_verbose_opted_in = function(...) FALSE,
+    fallback_reporting_opted_in = function(...) FALSE
+  )
   withr::local_envvar(c(
-    "DUCKPLYR_FALLBACK_COLLECT" = "0",
-    "DUCKPLYR_FALLBACK_AUTOUPLOAD" = "0",
     "DUCKPLYR_FALLBACK_LOG_DIR" = "fallback/log/dir",
     "DUCKPLYR_TELEMETRY_FALLBACK_LOGS" = "1,2,3"
   ))
@@ -53,16 +62,14 @@ test_that("fallback_sitrep() disabled", {
   })
 })
 
-test_that("fallback_nudge()", {
-  expect_snapshot({
-    fallback_nudge("{foo:1, bar:2}")
-  })
-})
-
 test_that("summarize()", {
+  local_mocked_bindings(
+    fallback_logging_opted_out = function(...) FALSE,
+    fallback_verbose_opted_in = function(...) TRUE,
+    fallback_reporting_opted_in = function(...) FALSE
+  )
+
   withr::local_envvar(c(
-    "DUCKPLYR_FALLBACK_COLLECT" = "1",
-    "DUCKPLYR_FALLBACK_VERBOSE" = "TRUE",
     "DUCKPLYR_FALLBACK_LOG_DIR" = tempdir()
   ))
 
@@ -79,9 +86,13 @@ test_that("summarize()", {
 test_that("wday()", {
   skip_if_not_installed("lubridate")
 
+  local_mocked_bindings(
+    fallback_logging_opted_out = function(...) FALSE,
+    fallback_verbose_opted_in = function(...) TRUE,
+    fallback_reporting_opted_in = function(...) FALSE
+  )
+
   withr::local_envvar(c(
-    "DUCKPLYR_FALLBACK_COLLECT" = "1",
-    "DUCKPLYR_FALLBACK_VERBOSE" = "TRUE",
     "DUCKPLYR_FALLBACK_LOG_DIR" = tempdir()
   ))
 
@@ -103,9 +114,13 @@ test_that("wday()", {
 })
 
 test_that("strftime()", {
+  local_mocked_bindings(
+    fallback_logging_opted_out = function(...) FALSE,
+    fallback_verbose_opted_in = function(...) TRUE,
+    fallback_reporting_opted_in = function(...) FALSE
+  )
+
   withr::local_envvar(c(
-    "DUCKPLYR_FALLBACK_COLLECT" = "1",
-    "DUCKPLYR_FALLBACK_VERBOSE" = "TRUE",
     "DUCKPLYR_FALLBACK_LOG_DIR" = tempdir()
   ))
 
@@ -120,9 +135,13 @@ test_that("strftime()", {
 test_that("$", {
   skip_if_not(getRversion() >= "4.3")
 
+  local_mocked_bindings(
+    fallback_logging_opted_out = function(...) FALSE,
+    fallback_verbose_opted_in = function(...) TRUE,
+    fallback_reporting_opted_in = function(...) FALSE
+  )
+
   withr::local_envvar(c(
-    "DUCKPLYR_FALLBACK_COLLECT" = "1",
-    "DUCKPLYR_FALLBACK_VERBOSE" = "TRUE",
     "DUCKPLYR_FALLBACK_LOG_DIR" = tempdir()
   ))
 
@@ -133,9 +152,14 @@ test_that("$", {
 })
 
 test_that("unknown function", {
+
+  local_mocked_bindings(
+    fallback_logging_opted_out = function(...) FALSE,
+    fallback_verbose_opted_in = function(...) TRUE,
+    fallback_reporting_opted_in = function(...) FALSE
+  )
+
   withr::local_envvar(c(
-    "DUCKPLYR_FALLBACK_COLLECT" = "1",
-    "DUCKPLYR_FALLBACK_VERBOSE" = "TRUE",
     "DUCKPLYR_FALLBACK_LOG_DIR" = tempdir()
   ))
 
@@ -148,9 +172,14 @@ test_that("unknown function", {
 })
 
 test_that("row names", {
+
+  local_mocked_bindings(
+    fallback_logging_opted_out = function(...) FALSE,
+    fallback_verbose_opted_in = function(...) TRUE,
+    fallback_reporting_opted_in = function(...) FALSE
+  )
+
   withr::local_envvar(c(
-    "DUCKPLYR_FALLBACK_COLLECT" = "1",
-    "DUCKPLYR_FALLBACK_VERBOSE" = "TRUE",
     "DUCKPLYR_FALLBACK_LOG_DIR" = tempdir()
   ))
 
@@ -162,9 +191,14 @@ test_that("row names", {
 })
 
 test_that("named column", {
+
+  local_mocked_bindings(
+    fallback_logging_opted_out = function(...) FALSE,
+    fallback_verbose_opted_in = function(...) TRUE,
+    fallback_reporting_opted_in = function(...) FALSE
+  )
+
   withr::local_envvar(c(
-    "DUCKPLYR_FALLBACK_COLLECT" = "1",
-    "DUCKPLYR_FALLBACK_VERBOSE" = "TRUE",
     "DUCKPLYR_FALLBACK_LOG_DIR" = tempdir()
   ))
 
@@ -175,9 +209,14 @@ test_that("named column", {
 })
 
 test_that("named column", {
+
+  local_mocked_bindings(
+    fallback_logging_opted_out = function(...) FALSE,
+    fallback_verbose_opted_in = function(...) TRUE,
+    fallback_reporting_opted_in = function(...) FALSE
+  )
+
   withr::local_envvar(c(
-    "DUCKPLYR_FALLBACK_COLLECT" = "1",
-    "DUCKPLYR_FALLBACK_VERBOSE" = "TRUE",
     "DUCKPLYR_FALLBACK_LOG_DIR" = tempdir()
   ))
 
@@ -188,9 +227,14 @@ test_that("named column", {
 })
 
 test_that("list column", {
+
+  local_mocked_bindings(
+    fallback_logging_opted_out = function(...) FALSE,
+    fallback_verbose_opted_in = function(...) TRUE,
+    fallback_reporting_opted_in = function(...) FALSE
+  )
+
   withr::local_envvar(c(
-    "DUCKPLYR_FALLBACK_COLLECT" = "1",
-    "DUCKPLYR_FALLBACK_VERBOSE" = "TRUE",
     "DUCKPLYR_FALLBACK_LOG_DIR" = tempdir()
   ))
 
@@ -201,11 +245,15 @@ test_that("list column", {
 })
 
 test_that("__row_number", {
+
+  local_mocked_bindings(
+    fallback_logging_opted_out = function(...) FALSE,
+    fallback_verbose_opted_in = function(...) TRUE,
+    fallback_reporting_opted_in = function(...) FALSE
+  )
+
   withr::local_envvar(c(
-    "DUCKPLYR_FALLBACK_COLLECT" = "1",
-    "DUCKPLYR_FALLBACK_VERBOSE" = "TRUE",
-    "DUCKPLYR_FALLBACK_LOG_DIR" = tempdir(),
-    "DUCKPLYR_OUTPUT_ORDER" = "TRUE"
+    "DUCKPLYR_FALLBACK_LOG_DIR" = tempdir()
   ))
 
   expect_snapshot({
@@ -215,9 +263,13 @@ test_that("__row_number", {
 })
 
 test_that("rel_try()", {
+  local_mocked_bindings(
+    fallback_logging_opted_out = function(...) FALSE,
+    fallback_verbose_opted_in = function(...) TRUE,
+    fallback_reporting_opted_in = function(...) FALSE
+  )
+
   withr::local_envvar(c(
-    "DUCKPLYR_FALLBACK_COLLECT" = "1",
-    "DUCKPLYR_FALLBACK_VERBOSE" = "TRUE",
     "DUCKPLYR_FALLBACK_LOG_DIR" = tempdir(),
     "DUCKPLYR_OUTPUT_ORDER" = "TRUE"
   ))
