@@ -86,12 +86,10 @@
 ---
 
     Code
-      left_join(df, df, by = join_by(x))
+      duckplyr_left_join(df, df, by = join_by(x))
     Condition
-      Warning in `left_join()`:
+      Warning in `duckplyr_left_join()`:
       Detected an unexpected many-to-many relationship between `x` and `y`.
-      i Row 1 of `x` matches multiple rows in `y`.
-      i Row 1 of `y` matches multiple rows in `x`.
       i If a many-to-many relationship is expected, set `relationship = "many-to-many"` to silence this warning.
     Output
         x
