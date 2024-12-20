@@ -38,6 +38,19 @@
 
     Code
       duckplyr_mutate(df, if (cur_group_id() == 1L) pick(x) else "x", .by = g)
+    Message
+      DuckDB Relation: 
+      ---------------------
+      --- Relation Tree ---
+      ---------------------
+      r_dataframe_scan(0x5650c9907028)
+      
+      ---------------------
+      -- Result Columns  --
+      ---------------------
+      - g (DOUBLE)
+      - x (DOUBLE)
+      
     Condition
       Error in `mutate()`:
       i In argument: `if (cur_group_id() == 1L) pick(x) else "x"`.
