@@ -38,3 +38,13 @@ runs:
       run: |
         ccache -s
       shell: bash
+
+    # Must happen after R is installed...
+    - name: Define R CMD check error condition
+      # https://github.com/tidyverse/duckplyr/issues/417
+      run: |
+        if (getRversion() < "4.3") {
+          message("Setting RCMDCHECK_ERROR_ON")
+          cat('RCMDCHECK_ERROR_ON="error"\n', file = Sys.getenv("GITHUB_ENV"), append = TRUE)
+        }
+      shell: Rscript {0}
