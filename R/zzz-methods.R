@@ -1,8 +1,3 @@
-# Needed for R <= 4.2, can't use @export here:
-on_load({
-  vctrs::s3_register("dplyr::filter", "duckplyr_df")
-})
-
 #' Forward all dplyr methods to duckplyr
 #'
 #' After calling `methods_overwrite()`, all dplyr methods are redirected to duckplyr
