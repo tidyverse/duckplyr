@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9904 (2024-12-20)
+
+## Continuous integration
+
+- Disable vignette evaluation for R \< 4.1.
+
+
 # duckplyr 0.99.99.9903 (2024-12-19)
 
 ## Features
