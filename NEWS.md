@@ -1,5 +1,20 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9905 (2024-12-21)
+
+## Bug fixes
+
+- Avoid workaround for R \< 4.3 (#417, #418).
+
+## Chore
+
+- Update patches.
+
+## Documentation
+
+- Add example for working with remote data (#260, #411).
+
+
 # duckplyr 0.99.99.9904 (2024-12-20)
 
 ## Continuous integration
