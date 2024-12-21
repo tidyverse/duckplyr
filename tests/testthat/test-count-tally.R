@@ -22,6 +22,7 @@ test_that("count can rename grouping columns", {
 
 test_that("informs if n column already present, unless overridden", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
+  local_mocked_bindings(fallback_verbose_opted_in = function(...) FALSE)
   df1 <- tibble(n = c(1, 1, 2, 2, 2))
   expect_message(out <- duckplyr_count(df1, n), "already present")
   expect_named(out, c("n", "nn"))
@@ -117,6 +118,7 @@ test_that("dbplyr `duckplyr_count()` method has transient internal grouping (#63
 })
 
 test_that("can only explicitly chain together multiple tallies", {
+  local_mocked_bindings(fallback_verbose_opted_in = function(...) FALSE)
   expect_snapshot({
     df <- data.frame(g = c(1, 1, 2, 2), n = 1:4)
 
@@ -132,6 +134,7 @@ test_that("wt = n() is deprecated", {
 })
 
 test_that("duckplyr_count() owns errors (#6139)", {
+  local_mocked_bindings(fallback_verbose_opted_in = function(...) FALSE)
   expect_snapshot({
     (expect_error(duckplyr_count(mtcars, new = 1 + "")))
     (expect_error(duckplyr_count(mtcars, wt = 1 + "")))
@@ -153,6 +156,7 @@ test_that("weighted tally drops NAs (#1145)", {
 })
 
 test_that("tally() drops last group (#5199) ", {
+  local_mocked_bindings(fallback_verbose_opted_in = function(...) FALSE)
   df <- data.frame(x = 1, y = 2, z = 3)
 
   res <- expect_message(df %>% duckplyr_group_by(x, y) %>% tally(wt = z), NA)
@@ -160,6 +164,7 @@ test_that("tally() drops last group (#5199) ", {
 })
 
 test_that("tally() owns errors (#6139)", {
+  local_mocked_bindings(fallback_verbose_opted_in = function(...) FALSE)
   expect_snapshot({
     (expect_error(tally(mtcars, wt = 1 + "")))
   })
@@ -184,6 +189,7 @@ test_that(".drop is deprecated",  {
 })
 
 test_that("duckplyr_add_count() owns errors (#6139)", {
+  local_mocked_bindings(fallback_verbose_opted_in = function(...) FALSE)
   expect_snapshot({
     (expect_error(duckplyr_add_count(mtcars, new = 1 + "")))
     (expect_error(duckplyr_add_count(mtcars, wt = 1 + "")))
@@ -216,6 +222,7 @@ test_that("can override output column", {
 })
 
 test_that("add_tally() owns errors (#6139)", {
+  local_mocked_bindings(fallback_verbose_opted_in = function(...) FALSE)
   expect_snapshot({
     (expect_error(add_tally(mtcars, wt = 1 + "")))
   })

@@ -128,6 +128,7 @@ test_that("duckplyr_mutate() supports constants (#6056, #6305)", {
 test_that("can't overwrite column active bindings (#6666)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   skip_if(getRversion() < "3.6.3", message = "Active binding error changed")
+  local_mocked_bindings(fallback_verbose_opted_in = function(...) FALSE)
 
   df <- tibble(g = 1:2, x = 3:4)
   gdf <- duckplyr_group_by(df, g)
@@ -192,6 +193,7 @@ test_that("`across()` inline expansions that use `<-` don't affect the mask (#66
 
 test_that("can't share local variables across expressions (#6666)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
+  local_mocked_bindings(fallback_verbose_opted_in = function(...) FALSE)
   df <- tibble(x = 1:2, y = 3:4)
 
   expect_snapshot(error = TRUE, {
