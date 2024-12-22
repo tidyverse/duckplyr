@@ -47,6 +47,8 @@ rel_find_call <- function(fun, env) {
     # "^" = "base",
     "min" = "base",
     # "replace" = "base",
+    "sub" = "base",
+    "gsub" = "base",
     "grepl" = "base",
     # ":" = "base",
     # "as.character" = "base",

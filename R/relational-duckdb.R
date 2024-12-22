@@ -37,6 +37,8 @@ duckplyr_macros <- c(
   # https://github.com/duckdb/duckdb/discussions/8599
   # "as.Date" = '(x) AS strptime(x, \'%Y-%m-%d\')',
 
+  "sub" = "(pattern, replacement, x) AS (regexp_replace(x, pattern, replacement))",
+  "gsub" = "(pattern, replacement, x) AS (regexp_replace(x, pattern, replacement, 'g'))",
   "grepl" = "(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)",
   "if_else" = "(test, yes, no) AS (CASE WHEN test IS NULL THEN NULL ELSE CASE WHEN test THEN yes ELSE no END END)",
   "|" = "(x, y) AS (x OR y)",

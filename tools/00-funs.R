@@ -807,6 +807,14 @@ test_extra_arg_map <- list(
     # grepl() with NA
     "c = NA_character_, d = grepl('.', c)",
 
+    # sub and gsub
+    "c = 'abbc', d = gsub('(b|c)', 'z' , c)",
+    "c = 'abbc', d = sub('(b|c)', 'z' , c)",
+
+    # sub and gsub with NA
+    "c = NA_character_, d = gsub('.', '-' , c)",
+    "c = NA_character_, d = sub('.', '-' , c)",
+
     # %in% with NA
     "d = a %in% NA_real_",
     # https://github.com/hannes/duckdb-rfuns/issues/89

@@ -1535,6 +1535,58 @@ test_that("as_duckplyr_df_impl() and mutate(c = NA_character_, d = grepl('.', c)
 })
 
 
+test_that("as_duckplyr_df_impl() and mutate(c = 'abbc', d = gsub('(b|c)', 'z' , c))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(c = 'abbc', d = gsub('(b|c)', 'z' , c))
+  post <- test_df %>% mutate(c = 'abbc', d = gsub('(b|c)', 'z' , c)) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df_impl() and mutate(c = 'abbc', d = sub('(b|c)', 'z' , c))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(c = 'abbc', d = sub('(b|c)', 'z' , c))
+  post <- test_df %>% mutate(c = 'abbc', d = sub('(b|c)', 'z' , c)) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df_impl() and mutate(c = NA_character_, d = gsub('.', '-' , c))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(c = NA_character_, d = gsub('.', '-' , c))
+  post <- test_df %>% mutate(c = NA_character_, d = gsub('.', '-' , c)) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df_impl() and mutate(c = NA_character_, d = sub('.', '-' , c))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(c = NA_character_, d = sub('.', '-' , c))
+  post <- test_df %>% mutate(c = NA_character_, d = sub('.', '-' , c)) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
 test_that("as_duckplyr_df_impl() and mutate(d = a %in% NA_real_)", {
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
