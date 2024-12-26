@@ -43,7 +43,7 @@ As of now, here are the translations provided:
 
 - Branching and conversion: `is.na()`, `dplyr::if_else()`, `as.integer()`, `strftime()`
 
-- String manipulation: `grepl()`, `substr()`
+- String manipulation: `grepl()`, `substr()`, `sub()`, `gsub()`
 
 - Date manipulation: `lubridate::hour()`, `lubridate::minute()`, `lubridate::second()`, `lubridate::wday()`
 
