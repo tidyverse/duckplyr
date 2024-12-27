@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9906 (2024-12-27)
+
+## Features
+
+- Add support for `sub()` and `gsub()` (@toppyy, #420).
+
+
 # duckplyr 0.99.99.9905 (2024-12-21)
 
 ## Bug fixes
