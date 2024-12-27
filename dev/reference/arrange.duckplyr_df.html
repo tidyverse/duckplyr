@@ -21,7 +21,7 @@ once per data frame, not once per group.'><meta property="og:image" content="htt
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9905</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9906</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -123,23 +123,6 @@ help page under the <code>Default locale</code> section.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://duckplyr.tidyverse.org">"duckplyr"</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="va">cyl</span>, <span class="va">disp</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The <span style="color: #0000BB;">duckplyr</span> package is configured to fall back to <span style="color: #0000BB;">dplyr</span> when it</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> encounters an incompatibility. Fallback events can be collected and</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> uploaded for analysis to guide future development. By default, no data</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> will be collected or uploaded.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> A fallback situation just occurred. The following information would</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   have been recorded:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   {"version":"0.99.99","message":"Need data frame without row names to</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   convert to relational, got\ncharacter row</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   names.","name":"arrange","x":{"...1":"numeric","...2":"numeric","...3":"numeric","...4":"numeric","...5":"numeric","...6":"numeric","...7":"numeric","...8":"numeric","...9":"numeric","...10":"numeric","...11":"numeric"},"args":{"dots":["...2","...3"],".by_group":false}}</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Run `duckplyr::fallback_sitrep()` to review the current settings.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Run `Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)` to enable fallback</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   logging, and `Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = TRUE)` in addition</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   to enable printing of fallback situations to the console.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Run `duckplyr::fallback_review()` to review the available reports, and</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   `duckplyr::fallback_upload()` to upload them.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> See `?duckplyr::fallback()` for details.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">This message will be displayed once every eight hours.</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2</span>

@@ -37,7 +37,7 @@ fallback_purge() deletes some or all available reports."><meta property="og:imag
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9905</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9906</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -157,12 +157,15 @@ as returned by <code>tools::R_user_dir("duckplyr", "cache")</code>.</p></li>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> encounters an incompatibility. Fallback events can be collected and</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> uploaded for analysis to guide future development. By default, no data</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> will be collected or uploaded.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Fallback logging is not controlled and therefore disabled. Enable it</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   with `Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)`, disable it with</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   `Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Fallback uploading is not controlled and therefore disabled. Enable it</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   with `Sys.setenv(DUCKPLYR_FALLBACK_AUTOUPLOAD = 1)`, disable it with</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   `Sys.setenv(DUCKPLYR_FALLBACK_AUTOUPLOAD = 0)`.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Fallback logging is enabled.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Fallback logging is not controlled, see `?duckplyr::fallback()`.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Logs are written to <span style="color: #0000BB;">/home/runner/.cache/R/duckplyr/telemetry</span>.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> Fallback printing is disabled.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Fallback uploading is not controlled and therefore disabled, see</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   `?duckplyr::fallback()`.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Number of reports ready for upload: <span style="font-weight: bold;">2</span>.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Review with `duckplyr::fallback_review()`, upload with</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   `duckplyr::fallback_upload()`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> See `?duckplyr::fallback()` for details.</span>
 </code></pre></div>
     </div>
