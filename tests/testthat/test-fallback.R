@@ -53,12 +53,6 @@ test_that("fallback_sitrep() disabled", {
   })
 })
 
-test_that("fallback_nudge()", {
-  expect_snapshot({
-    fallback_nudge("{foo:1, bar:2}")
-  })
-})
-
 test_that("summarize()", {
   withr::local_envvar(c(
     "DUCKPLYR_FALLBACK_COLLECT" = "1",

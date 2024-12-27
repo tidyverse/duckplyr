@@ -72,14 +72,15 @@ fallback_sitrep <- function() {
   msg <- c(
     fallback_txt_header(),
     #
-    if (is.na(fallback_logging)) {
-      c("i" = "Fallback logging is not controlled and therefore disabled. Enable it with {.run Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)}, disable it with {.run Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)}.")
-    } else if (fallback_logging) {
+    if (isTRUE(fallback_logging)) {
       c(
         "v" = "Fallback logging is enabled.",
+        if (is.null(attr(fallback_logging, "val"))) {
+          c("i" = "Fallback logging is not controlled, see {.help duckplyr::fallback}.")
+        },
         "i" = "Logs are written to {.file {fallback_log_dir}}.",
         if (is.na(fallback_verbose)) {
-          c("i" = "Fallback printing is not controlled and therefore disabled. Enable it with {.run Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = TRUE)}, disable it with {.run Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = FALSE)}.")
+          c("i" = "Fallback printing is not controlled and therefore disabled, see {.help duckplyr::fallback}.")
         } else if (fallback_verbose) {
           c("v" = "Fallback printing is enabled.")
         } else {
@@ -110,7 +111,7 @@ fallback_txt_header <- function() {
 
 fallback_txt_uploading <- function(fallback_uploading) {
   if (is.na(fallback_uploading)) {
-    c("i" = "Fallback uploading is not controlled and therefore disabled. Enable it with {.run Sys.setenv(DUCKPLYR_FALLBACK_AUTOUPLOAD = 1)}, disable it with {.run Sys.setenv(DUCKPLYR_FALLBACK_AUTOUPLOAD = 0)}.")
+    c("i" = "Fallback uploading is not controlled and therefore disabled, see {.help duckplyr::fallback}.")
   } else if (fallback_uploading) {
     c("v" = "Fallback uploading is enabled.")
   } else {
@@ -139,19 +140,6 @@ fallback_txt_help <- function() {
   c(
     "i" = "See {.help duckplyr::fallback} for details."
   )
-}
-
-fallback_nudge <- function(call_data) {
-  cli::cli_inform(c(
-    fallback_txt_header(),
-    "i" = "A fallback situation just occurred. The following information would have been recorded:",
-    " " = "{call_data}",
-    fallback_txt_run_sitrep(),
-    ">" = "Run {.run Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 1)} to enable fallback logging, and {.run Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = TRUE)} in addition to enable printing of fallback situations to the console.",
-    ">" = "Run {.run duckplyr::fallback_review()} to review the available reports, and {.run duckplyr::fallback_upload()} to upload them.",
-    fallback_txt_help(),
-    "i" = cli::col_silver("This message will be displayed once every eight hours.")
-  ))
 }
 
 #' fallback_review
@@ -257,16 +245,6 @@ on_load({
 })
 
 fallback_autoupload <- function() {
-  if (is.na(tel_fallback_logging())) {
-    msg <- c(
-      fallback_txt_header(),
-      fallback_txt_run_sitrep()
-    )
-
-    packageStartupMessage(cli::format_message(msg))
-    return()
-  }
-
   uploading <- tel_fallback_uploading()
   if (isTRUE(uploading)) {
     msg <- character()
