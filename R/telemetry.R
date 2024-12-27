@@ -26,12 +26,14 @@ on_load({
 tel_fallback_logging <- function() {
   val <- Sys.getenv("DUCKPLYR_FALLBACK_COLLECT")
   if (val == "") {
-    return(NA)
+    return(TRUE)
   }
-  if (!grepl("^[0-9]+$", val)) {
-    return(FALSE)
+  if (grepl("^[0-9]+$", val)) {
+    out <- (as.integer(val) >= 1)
+  } else {
+    out <- FALSE
   }
-  as.integer(val) >= 1
+  structure(out, val = val)
 }
 
 tel_fallback_verbose <- function() {
@@ -99,33 +101,12 @@ tel_fallback_logs <- function(oldest = NULL, newest = NULL, detail = FALSE, envi
 
 tel_collect <- function(cnd, call) {
   logging <- tel_fallback_logging()
-  if (!isTRUE(logging) && !is.na(logging)) {
+  if (!isTRUE(logging)) {
     return()
   }
 
-  if (is.na(logging)) {
-    # Deferred evaluation of call_to_json(...)
-    tel_ask(call_to_json(cnd, call))
-    return()
-  }
+  call_json <- call_to_json(cnd, call)
 
-  tel_record(call_to_json(cnd, call))
-}
-
-tel_ask <- function(call_json) {
-  time <- Sys.time()
-  old_time <- telemetry$time
-  eight_hours <- 60 * 60 * 8
-  if (!is.null(old_time) && time - old_time < eight_hours) {
-    return()
-  }
-
-  telemetry$time <- time
-
-  fallback_nudge(call_json)
-}
-
-tel_record <- function(call_json) {
   telemetry_path <- tel_fallback_log_dir()
   telemetry_file <- file.path(telemetry_path, paste0(Sys.getpid(), ".ndjson"))
 
