@@ -338,11 +338,15 @@ Refer to `vignette("developers", package = "duckplyr")`.
 
 ## Telemetry
 
-We would like to guide our efforts towards improving duckplyr, focusing
-on the features with the most impact. To this end, duckplyr collects and
-uploads telemetry data, but only if permitted by the user:
+As a drop-in replacement for dplyr, duckplyr will use DuckDB for the
+operations only if it can, and fall back to dplyr otherwise. A fallback
+will not change the correctness of the results, but it may be slower or
+consume more memory. We would like to guide our efforts towards
+improving duckplyr, focusing on the features with the most impact. To
+this end, duckplyr collects and uploads telemetry data about fallback
+situations, but only if permitted by the user:
 
-- No collection will happen unless the user explicitly opts in.
+- Collection is on by default, but can be turned off.
 - Uploads are done upon request only.
 - There is an option to automatically upload when the package is loaded,
   this is also opt-in.
@@ -355,14 +359,35 @@ The data collected contains:
   - For the input data frames, only the structure is included (column
     types only), no column names or data
 
-The first time the package encounters an unsupported function, data
-type, or operation, instructions are printed to the console.
+Fallback is silent by default, but can be made verbose.
 
 ``` r
+Sys.setenv(DUCKPLYR_FALLBACK_INFO = TRUE)
 out <-
   nycflights13::flights %>%
-  duckplyr::as_duck_tbl()
+  duckplyr::as_duck_tbl() %>%
+  mutate(inflight_delay = arr_delay - dep_delay)
+#> Cannot process duckplyr query with DuckDB, falling back to dplyr.
+#> Caused by error in `check_df_for_rel()` at duckplyr/R/relational-duckdb.R:103:3:
+#> ! Attributes are lost during conversion. Affected column: `time_hour`.
 ```
+
+After logs have been collected, the upload options are displayed the
+next time the duckplyr package is loaded in an R session.
+
+    #> The duckplyr package is configured to fall back to dplyr when it encounters an
+    #> incompatibility. Fallback events can be collected and uploaded for analysis to
+    #> guide future development. By default, data will be collected but no data will
+    #> be uploaded.
+    #> ℹ Fallback uploading is not controlled and therefore disabled, see
+    #>   `?duckplyr::fallback()`.
+    #> ✔ Number of reports ready for upload: 1.
+    #> → Review with `duckplyr::fallback_review()`, upload with
+    #>   `duckplyr::fallback_upload()`.
+    #> ℹ This message can be disabled by setting `DUCKPLYR_FALLBACK_AUTOUPLOAD`.
+
+The `fallback_sitrep()` function describes the current configuration and
+the available options.
 
 ## How is this different from dbplyr?
 

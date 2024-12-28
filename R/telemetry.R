@@ -1,5 +1,3 @@
-telemetry <- new_environment()
-
 try_list <- function(...) {
   out <- vector("list", length = ...length())
   for (i in seq_len(...length())) {

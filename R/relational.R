@@ -58,9 +58,8 @@ rel_try <- function(call, rel, ...) {
   if (inherits(out, "error")) {
     tel_collect(out, call)
 
-    # FIXME: enable always
     if (Sys.getenv("DUCKPLYR_FALLBACK_INFO") == "TRUE") {
-      rlang::cnd_signal(rlang::message_cnd(message = "Error processing with relational.", parent = out))
+      rlang::cnd_signal(rlang::message_cnd(message = "Cannot process duckplyr query with DuckDB, falling back to dplyr.", parent = out))
     }
     stats$fallback <- stats$fallback + 1L
     return()

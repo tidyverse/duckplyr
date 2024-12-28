@@ -106,7 +106,7 @@ fallback_sitrep <- function() {
 }
 
 fallback_txt_header <- function() {
-  "The {.pkg duckplyr} package is configured to fall back to {.pkg dplyr} when it encounters an incompatibility. Fallback events can be collected and uploaded for analysis to guide future development. By default, no data will be collected or uploaded."
+  "The {.pkg duckplyr} package is configured to fall back to {.pkg dplyr} when it encounters an incompatibility. Fallback events can be collected and uploaded for analysis to guide future development. By default, data will be collected but no data will be uploaded."
 }
 
 fallback_txt_uploading <- function(fallback_uploading) {
