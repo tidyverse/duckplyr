@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9907 (2024-12-28)
+
+## Features
+
+- Fallback logging is now on by default, can be disabled with configuration (#422).
+
+
 # duckplyr 0.99.99.9906 (2024-12-27)
 
 ## Features
