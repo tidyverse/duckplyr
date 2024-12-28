@@ -39,8 +39,8 @@ to the console or to a local file and uploaded for analysis.
 By default, \pkg{duckplyr} will not log or upload anything.
 The functions and environment variables on this page control the process.
 
-\code{fallback_sitrep()} prints the current settings for fallback logging and uploading,
-the number of reports ready for upload, and the location of the logs.
+\code{fallback_sitrep()} prints the current settings for fallback printing, logging,
+and uploading, the number of reports ready for upload, and the location of the logs.
 
 \code{fallback_review()} prints the available reports for review to the console.
 

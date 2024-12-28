@@ -65,14 +65,14 @@ NULL
 
 #' fallback_sitrep
 #'
-#' `fallback_sitrep()` prints the current settings for fallback logging and uploading,
-#' the number of reports ready for upload, and the location of the logs.
+#' `fallback_sitrep()` prints the current settings for fallback printing, logging,
+#' and uploading, the number of reports ready for upload, and the location of the logs.
 #' @rdname fallback
 #' @export
 fallback_sitrep <- function() {
   fallback_logging <- tel_fallback_logging()
   fallback_info <- (Sys.getenv("DUCKPLYR_FALLBACK_INFO") == TRUE)
-  fallback_uploading <- tel_fallback_uploading()
+  fallback_autoupload <- tel_fallback_autoupload()
   fallback_log_dir <- tel_fallback_log_dir()
   fallback_logs <- tel_fallback_logs()
 
@@ -96,7 +96,7 @@ fallback_sitrep <- function() {
       c("x" = "Fallback logging is disabled.")
     },
     #
-    fallback_txt_uploading(fallback_uploading),
+    fallback_txt_autoupload(fallback_autoupload),
     #
     if (isTRUE(fallback_logging)) {
       fallback_txt_sitrep_logs(fallback_logs)
@@ -114,13 +114,13 @@ fallback_txt_header <- function() {
   "The {.pkg duckplyr} package is configured to fall back to {.pkg dplyr} when it encounters an incompatibility. Fallback events can be collected and uploaded for analysis to guide future development. By default, data will be collected but no data will be uploaded."
 }
 
-fallback_txt_uploading <- function(fallback_uploading) {
-  if (is.na(fallback_uploading)) {
-    c("i" = "Fallback uploading is not controlled and therefore disabled, see {.help duckplyr::fallback}.")
-  } else if (fallback_uploading) {
-    c("v" = "Fallback uploading is enabled.")
+fallback_txt_autoupload <- function(fallback_autoupload) {
+  if (is.na(fallback_autoupload)) {
+    c("i" = "Automatic fallback uploading is not controlled and therefore disabled, see {.help duckplyr::fallback}.")
+  } else if (fallback_autoupload) {
+    c("v" = "Automatic fallback uploading is enabled.")
   } else {
-    c("x" = "Fallback uploading is disabled.")
+    c("x" = "Automatic fallback uploading is disabled.")
   }
 }
 
@@ -250,8 +250,8 @@ on_load({
 })
 
 fallback_autoupload <- function() {
-  uploading <- tel_fallback_uploading()
-  if (isTRUE(uploading)) {
+  autoupload <- tel_fallback_autoupload()
+  if (isTRUE(autoupload)) {
     msg <- character()
     suppressMessages(withCallingHandlers(
       fallback_upload(strict = FALSE),
@@ -262,12 +262,12 @@ fallback_autoupload <- function() {
     if (length(msg) > 0) {
       packageStartupMessage(paste(msg, collapse = "\n"))
     }
-  } else if (is.na(uploading)) {
+  } else if (is.na(autoupload)) {
     fallback_logs <- tel_fallback_logs()
     if (length(fallback_logs) > 0) {
       msg <- c(
         fallback_txt_header(),
-        fallback_txt_uploading(uploading),
+        fallback_txt_autoupload(autoupload),
         fallback_txt_sitrep_logs(fallback_logs),
         "i" = cli::col_silver("This message can be disabled by setting {.envvar DUCKPLYR_FALLBACK_AUTOUPLOAD}.")
       )

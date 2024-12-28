@@ -39,7 +39,7 @@ tel_fallback_verbose <- function() {
   val == "TRUE"
 }
 
-tel_fallback_uploading <- function() {
+tel_fallback_autoupload <- function() {
   val <- Sys.getenv("DUCKPLYR_FALLBACK_AUTOUPLOAD")
   if (val == "") {
     return(NA)
