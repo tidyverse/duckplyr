@@ -10,7 +10,7 @@
       i Logs are written to 'fallback/log/dir'.
       i Automatic fallback uploading is not controlled and therefore disabled, see `?duckplyr::fallback()`.
       i No reports ready for upload.
-      i See `?duckplyr::fallback()` for details.
+      i See `?duckplyr::fallback_config()` for details.
 
 # fallback_sitrep() enabled
 
@@ -24,7 +24,7 @@
       v Automatic fallback uploading is enabled.
       v Number of reports ready for upload: 3.
       > Review with `duckplyr::fallback_review()`, upload with `duckplyr::fallback_upload()`.
-      i See `?duckplyr::fallback()` for details.
+      i See `?duckplyr::fallback_config()` for details.
 
 # fallback_sitrep() enabled silent
 
@@ -38,7 +38,7 @@
       v Automatic fallback uploading is enabled.
       v Number of reports ready for upload: 3.
       > Review with `duckplyr::fallback_review()`, upload with `duckplyr::fallback_upload()`.
-      i See `?duckplyr::fallback()` for details.
+      i See `?duckplyr::fallback_config()` for details.
 
 # fallback_sitrep() disabled
 
@@ -49,7 +49,7 @@
       x Fallback printing is disabled.
       x Fallback logging is disabled.
       x Automatic fallback uploading is disabled.
-      i See `?duckplyr::fallback()` for details.
+      i See `?duckplyr::fallback_config()` for details.
 
 # summarize()
 

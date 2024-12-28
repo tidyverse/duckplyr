@@ -3,12 +3,23 @@
 \name{fallback}
 \alias{fallback}
 \alias{fallback_sitrep}
+\alias{fallback_config}
 \alias{fallback_review}
 \alias{fallback_upload}
 \alias{fallback_purge}
 \title{Fallback to dplyr}
 \usage{
 fallback_sitrep()
+
+fallback_config(
+  ...,
+  reset_all = FALSE,
+  info = NULL,
+  logging = NULL,
+  autoupload = NULL,
+  log_dir = NULL,
+  verbose = NULL
+)
 
 fallback_review(oldest = NULL, newest = NULL, detail = TRUE)
 
@@ -17,6 +28,24 @@ fallback_upload(oldest = NULL, newest = NULL, strict = TRUE)
 fallback_purge(oldest = NULL, newest = NULL)
 }
 \arguments{
+\item{...}{These dots are for future extensions and must be empty.}
+
+\item{reset_all}{Set to \code{TRUE} to reset all settings to their defaults.
+The R session must be restarted for the changes to take effect.}
+
+\item{info}{Set to \code{TRUE} to enable fallback printing.}
+
+\item{logging}{Set to \code{FALSE} to disable fallback logging,
+set to \code{TRUE} to explicitly enable it.}
+
+\item{autoupload}{Set to \code{TRUE} to enable automatic fallback uploading,
+set to \code{FALSE} to disable it.}
+
+\item{log_dir}{Set the location of the logs in the file system.
+The directory will be created if it does not exist.}
+
+\item{verbose}{Set to \code{TRUE} to enable verbose logging.}
+
 \item{oldest, newest}{The number of oldest or newest reports to review.
 If not specified, all reports are dispayed.}
 
@@ -41,6 +70,14 @@ The functions and environment variables on this page control the process.
 
 \code{fallback_sitrep()} prints the current settings for fallback printing, logging,
 and uploading, the number of reports ready for upload, and the location of the logs.
+
+\code{fallback_config()} configures the current settings for fallback printing,
+logging, and uploading.
+Only settings that do not affect computation results can be configured,
+this is by design.
+The configuration is stored in a file under \code{tools::R_user_dir("duckplyr", "config")} .
+When the \pkg{duckplyr} package is loaded, the configuration is read from this file,
+and the corresponding environment variables are set.
 
 \code{fallback_review()} prints the available reports for review to the console.
 
