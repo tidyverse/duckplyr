@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9906</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9907</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -334,9 +334,9 @@
 <div class="section level2">
 <h2 id="telemetry">Telemetry<a class="anchor" aria-label="anchor" href="#telemetry"></a>
 </h2>
-<p>We would like to guide our efforts towards improving duckplyr, focusing on the features with the most impact. To this end, duckplyr collects and uploads telemetry data, but only if permitted by the user:</p>
+<p>As a drop-in replacement for dplyr, duckplyr will use DuckDB for the operations only if it can, and fall back to dplyr otherwise. A fallback will not change the correctness of the results, but it may be slower or consume more memory. We would like to guide our efforts towards improving duckplyr, focusing on the features with the most impact. To this end, duckplyr collects and uploads telemetry data about fallback situations, but only if permitted by the user:</p>
 <ul>
-<li>No collection will happen unless the user explicitly opts in.</li>
+<li>Collection is on by default, but can be turned off.</li>
 <li>Uploads are done upon request only.</li>
 <li>There is an option to automatically upload when the package is loaded, this is also opt-in.</li>
 </ul>
@@ -350,11 +350,28 @@
 </ul>
 </li>
 </ul>
-<p>The first time the package encounters an unsupported function, data type, or operation, instructions are printed to the console.</p>
+<p>Fallback is silent by default, but can be made verbose.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>DUCKPLYR_FALLBACK_INFO <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">out</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">nycflights13</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/nycflights13/man/flights.html" class="external-link">flights</a></span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="reference/duck_tbl.html">as_duck_tbl</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="reference/duck_tbl.html">as_duck_tbl</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>inflight_delay <span class="op">=</span> <span class="va">arr_delay</span> <span class="op">-</span> <span class="va">dep_delay</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Cannot process duckplyr query with DuckDB, falling back to dplyr.</span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Caused by error in `check_df_for_rel()` at duckplyr/R/relational-duckdb.R:103:3:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Attributes are lost during conversion. Affected column: `time_hour`.</span></span></code></pre></div>
+<p>After logs have been collected, the upload options are displayed the next time the duckplyr package is loaded in an R session.</p>
+<pre><code><span><span class="co">#&gt; The <span style="color: #0000BB;">duckplyr</span> package is configured to fall back to <span style="color: #0000BB;">dplyr</span> when it encounters an</span></span>
+<span><span class="co">#&gt; incompatibility. Fallback events can be collected and uploaded for analysis to</span></span>
+<span><span class="co">#&gt; guide future development. By default, data will be collected but no data will</span></span>
+<span><span class="co">#&gt; be uploaded.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Fallback uploading is not controlled and therefore disabled, see</span></span>
+<span><span class="co">#&gt;   `?duckplyr::fallback()`.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Number of reports ready for upload: <span style="font-weight: bold;">1</span>.</span></span>
+<span><span class="co">#&gt; → Review with `duckplyr::fallback_review()`, upload with</span></span>
+<span><span class="co">#&gt;   `duckplyr::fallback_upload()`.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">This message can be disabled by setting `DUCKPLYR_FALLBACK_AUTOUPLOAD`.</span></span></span></code></pre>
+<p>The <code><a href="reference/fallback.html">fallback_sitrep()</a></code> function describes the current configuration and the available options.</p>
 </div>
 <div class="section level2">
 <h2 id="how-is-this-different-from-dbplyr">How is this different from dbplyr?<a class="anchor" aria-label="anchor" href="#how-is-this-different-from-dbplyr"></a>
