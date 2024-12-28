@@ -3,7 +3,8 @@
 a fully compatible drop-in replacement for dplyr.
 To achieve this, only a carefully selected subset of dplyr's operations,
 R functions, and R data types are implemented.
-Whenever duckplyr encounters an incompatibility, it falls back to dplyr.
+Whenever a request cannot be handled by DuckDB,
+duckplyr falls back to dplyr.
 To assist future development, the fallback situations can be logged
 to the console or to a local file and uploaded for analysis.
 By default, duckplyr will not log or upload anything.
@@ -18,7 +19,8 @@ fallback_purge() deletes some or all available reports."><meta property="og:desc
 a fully compatible drop-in replacement for dplyr.
 To achieve this, only a carefully selected subset of dplyr's operations,
 R functions, and R data types are implemented.
-Whenever duckplyr encounters an incompatibility, it falls back to dplyr.
+Whenever a request cannot be handled by DuckDB,
+duckplyr falls back to dplyr.
 To assist future development, the fallback situations can be logged
 to the console or to a local file and uploaded for analysis.
 By default, duckplyr will not log or upload anything.
@@ -70,9 +72,10 @@ fallback_purge() deletes some or all available reports."><meta property="og:imag
     <div class="ref-description section level2">
     <p>The <span class="pkg">duckplyr</span> package aims at providing
 a fully compatible drop-in replacement for <span class="pkg">dplyr</span>.
-To achieve this, only a carefully selected subset of dplyr's operations,
+To achieve this, only a carefully selected subset of <span class="pkg">dplyr</span>'s operations,
 R functions, and R data types are implemented.
-Whenever duckplyr encounters an incompatibility, it falls back to dplyr.</p>
+Whenever a request cannot be handled by DuckDB,
+<span class="pkg">duckplyr</span> falls back to <span class="pkg">dplyr</span>.</p>
 <p>To assist future development, the fallback situations can be logged
 to the console or to a local file and uploaded for analysis.
 By default, <span class="pkg">duckplyr</span> will not log or upload anything.
@@ -118,26 +121,25 @@ With <code>FALSE</code>, only a message is printed.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Logging and uploading are both opt-in.
-By default, for logging, a message is printed to the console
-for the first time in a session and then once every 8 hours.</p>
-<p>The following environment variables control the logging and uploading:</p><ul><li><p><code>DUCKPLYR_FALLBACK_COLLECT</code> controls logging, set it
+    <p>Logging is on by default, but can be turned off.
+Uploading is opt-in.</p>
+<p>The following environment variables control the logging and uploading:</p><ul><li><p><code>DUCKPLYR_FALLBACK_INFO</code> controls human-friendly alerts
+for fallback events.
+If <code>TRUE</code>, a message is printed when a fallback to dplyr occurs
+because DuckDB cannot handle a request.
+These messages are never logged.</p></li>
+<li><p><code>DUCKPLYR_FALLBACK_COLLECT</code> controls logging, set it
 to 1 or greater to enable logging.
 If the value is 0, logging is disabled.
-Future versions of duckplyr may start logging additional data
+Future versions of <span class="pkg">duckplyr</span> may start logging additional data
 and thus require a higher value to enable logging.
 Set to 99 to enable logging for all future versions.
 Use <code><a href="https://usethis.r-lib.org/reference/edit.html" class="external-link">usethis::edit_r_environ()</a></code> to edit the environment file.</p></li>
-<li><p><code>DUCKPLYR_FALLBACK_VERBOSE</code> controls printing, set it
-to <code>TRUE</code> or <code>FALSE</code> to enable or disable printing.
-If the value is <code>TRUE</code>, a message is printed to the console
-for each fallback situation.
-This setting is only relevant if logging is enabled.</p></li>
 <li><p><code>DUCKPLYR_FALLBACK_AUTOUPLOAD</code> controls uploading, set it
 to 1 or greater to enable uploading.
 If the value is 0, uploading is disabled.
 Currently, uploading is active if the value is 1 or greater.
-Future versions of duckplyr may start logging additional data
+Future versions of <span class="pkg">duckplyr</span> may start logging additional data
 and thus require a higher value to enable uploading.
 Set to 99 to enable uploading for all future versions.
 Use <code><a href="https://usethis.r-lib.org/reference/edit.html" class="external-link">usethis::edit_r_environ()</a></code> to edit the environment file.</p></li>
@@ -145,6 +147,12 @@ Use <code><a href="https://usethis.r-lib.org/reference/edit.html" class="externa
 It must point to a directory (existing or not) where the logs will be written.
 By default, logs are written to a directory in the user's cache directory
 as returned by <code>tools::R_user_dir("duckplyr", "cache")</code>.</p></li>
+<li><p><code>DUCKPLYR_FALLBACK_VERBOSE</code> controls printing of log data, set it
+to <code>TRUE</code> or <code>FALSE</code> to enable or disable printing.
+If the value is <code>TRUE</code>, a message is printed to the console
+for each fallback situation.
+This setting is only relevant if logging is enabled,
+and mostly useful for <span class="pkg">duckplyr</span>'s internal tests.</p></li>
 </ul><p>All code related to fallback logging and uploading is in the
 <a href="https://github.com/tidyverse/duckplyr/blob/main/R/fallback.R" class="external-link"><code>fallback.R</code></a> and
 <a href="https://github.com/tidyverse/duckplyr/blob/main/R/telemetry.R" class="external-link"><code>telemetry.R</code></a> files.</p>
@@ -157,10 +165,10 @@ as returned by <code>tools::R_user_dir("duckplyr", "cache")</code>.</p></li>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> encounters an incompatibility. Fallback events can be collected and</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> uploaded for analysis to guide future development. By default, data will</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> be collected but no data will be uploaded.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> Fallback printing is disabled.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Fallback logging is enabled.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Fallback logging is not controlled, see `?duckplyr::fallback()`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Logs are written to <span style="color: #0000BB;">/home/runner/.cache/R/duckplyr/telemetry</span>.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> Fallback printing is disabled.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Fallback uploading is not controlled and therefore disabled, see</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   `?duckplyr::fallback()`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Number of reports ready for upload: <span style="font-weight: bold;">2</span>.</span>

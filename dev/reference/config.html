@@ -55,8 +55,6 @@ The default may change the row order where dplyr would keep it stable.
 Preserving the order leads to more complicated execution plans
 with less potential for optimization, and thus may be slower.</p>
 <p><code>DUCKPLYR_FORCE</code>: If <code>TRUE</code>, fail if duckdb cannot handle a request.</p>
-<p><code>DUCKPLYR_FALLBACK_INFO</code>: If <code>TRUE</code>, print a message when a fallback to dplyr occurs
-because DuckDB cannot handle a request.</p>
 <p><code>DUCKPLYR_CHECK_ROUNDTRIP</code>: If <code>TRUE</code>, check if all columns are roundtripped perfectly
 when creating a relational object from a data frame,
 This is slow, and mostly useful for debugging.
@@ -66,7 +64,8 @@ to certain duckdb functions.
 Currently unused.</p>
 <p><code>DUCKPLYR_METHODS_OVERWRITE</code>: If <code>TRUE</code>, call <code><a href="methods_overwrite.html">methods_overwrite()</a></code>
 when the package is loaded.</p>
-<p>See <a href="fallback.html">fallback</a> for more options related to logging and uploading of fallback events.</p>
+<p>See <a href="fallback.html">fallback</a> for more options related to printing, logging, and uploading
+of fallback events.</p>
     </div>
 
     <div class="section level2">
@@ -117,7 +116,7 @@ when the package is loaded.</p>
 <span class="r-in"><span>    <span class="fu"><a href="as_duckplyr_df.html">as_duckplyr_df</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fu">add_one</span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cannot process duckplyr query with DuckDB, falling back to dplyr.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Error processing duckplyr query with DuckDB, falling back to dplyr.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `rel_find_call()` at duckplyr/R/translate.R:162:3:</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> No translation for function `add_one`.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   a b</span>
