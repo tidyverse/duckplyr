@@ -1,7 +1,7 @@
 test_that("fallback_sitrep() default", {
   withr::local_envvar(c(
     "DUCKPLYR_FALLBACK_COLLECT" = "",
-    "DUCKPLYR_FALLBACK_VERBOSE" = "",
+    "DUCKPLYR_FALLBACK_INFO" = "",
     "DUCKPLYR_FALLBACK_AUTOUPLOAD" = "",
     "DUCKPLYR_FALLBACK_LOG_DIR" = "fallback/log/dir",
     "DUCKPLYR_TELEMETRY_FALLBACK_LOGS" = ""
@@ -15,7 +15,7 @@ test_that("fallback_sitrep() default", {
 test_that("fallback_sitrep() enabled", {
   withr::local_envvar(c(
     "DUCKPLYR_FALLBACK_COLLECT" = "1",
-    "DUCKPLYR_FALLBACK_VERBOSE" = "",
+    "DUCKPLYR_FALLBACK_INFO" = "",
     "DUCKPLYR_FALLBACK_AUTOUPLOAD" = "1",
     "DUCKPLYR_FALLBACK_LOG_DIR" = "fallback/log/dir",
     "DUCKPLYR_TELEMETRY_FALLBACK_LOGS" = "1,2,3"
@@ -29,7 +29,7 @@ test_that("fallback_sitrep() enabled", {
 test_that("fallback_sitrep() enabled silent", {
   withr::local_envvar(c(
     "DUCKPLYR_FALLBACK_COLLECT" = "1",
-    "DUCKPLYR_FALLBACK_VERBOSE" = "FALSE",
+    "DUCKPLYR_FALLBACK_INFO" = "TRUE",
     "DUCKPLYR_FALLBACK_AUTOUPLOAD" = "1",
     "DUCKPLYR_FALLBACK_LOG_DIR" = "fallback/log/dir",
     "DUCKPLYR_TELEMETRY_FALLBACK_LOGS" = "1,2,3"

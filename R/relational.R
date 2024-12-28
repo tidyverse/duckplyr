@@ -39,7 +39,7 @@ rel_try <- function(call, rel, ...) {
         }
 
         if (Sys.getenv("DUCKPLYR_FALLBACK_INFO") == "TRUE") {
-          inform(message = c("Requested fallback for relational:", i = message))
+          inform(message = c("Cannot process duckplyr query with DuckDB, falling back to dplyr.", i = message))
         }
         if (Sys.getenv("DUCKPLYR_FORCE") == "TRUE") {
           cli::cli_abort("Fallback not available with {.envvar DUCKPLYR_FORCE}.")
@@ -59,7 +59,7 @@ rel_try <- function(call, rel, ...) {
     tel_collect(out, call)
 
     if (Sys.getenv("DUCKPLYR_FALLBACK_INFO") == "TRUE") {
-      rlang::cnd_signal(rlang::message_cnd(message = "Cannot process duckplyr query with DuckDB, falling back to dplyr.", parent = out))
+      rlang::cnd_signal(rlang::message_cnd(message = "Error processing duckplyr query with DuckDB, falling back to dplyr.", parent = out))
     }
     stats$fallback <- stats$fallback + 1L
     return()
