@@ -3,9 +3,10 @@
 #' @description
 #' The \pkg{duckplyr} package aims at providing
 #' a fully compatible drop-in replacement for \pkg{dplyr}.
-#' To achieve this, only a carefully selected subset of dplyr's operations,
+#' To achieve this, only a carefully selected subset of \pkg{dplyr}'s operations,
 #' R functions, and R data types are implemented.
-#' Whenever duckplyr encounters an incompatibility, it falls back to dplyr.
+#' Whenever a request cannot be handled by DuckDB,
+#' \pkg{duckplyr} falls back to \pkg{dplyr}.
 #'
 #' To assist future development, the fallback situations can be logged
 #' to the console or to a local file and uploaded for analysis.
@@ -13,31 +14,30 @@
 #' The functions and environment variables on this page control the process.
 #'
 #' @details
-#' Logging and uploading are both opt-in.
-#' By default, for logging, a message is printed to the console
-#' for the first time in a session and then once every 8 hours.
+#' Logging is on by default, but can be turned off.
+#' Uploading is opt-in.
 #'
 #' The following environment variables control the logging and uploading:
+#'
+#' - `DUCKPLYR_FALLBACK_INFO` controls human-friendly alerts
+#'   for fallback events.
+#'   If `TRUE`, a message is printed when a fallback to dplyr occurs
+#'   because DuckDB cannot handle a request.
+#'   These messages are never logged.
 #'
 #' - `DUCKPLYR_FALLBACK_COLLECT` controls logging, set it
 #'   to 1 or greater to enable logging.
 #'   If the value is 0, logging is disabled.
-#'   Future versions of duckplyr may start logging additional data
+#'   Future versions of \pkg{duckplyr} may start logging additional data
 #'   and thus require a higher value to enable logging.
 #'   Set to 99 to enable logging for all future versions.
 #'   Use [usethis::edit_r_environ()] to edit the environment file.
-#'
-#' - `DUCKPLYR_FALLBACK_VERBOSE` controls printing, set it
-#'   to `TRUE` or `FALSE` to enable or disable printing.
-#'   If the value is `TRUE`, a message is printed to the console
-#'   for each fallback situation.
-#'   This setting is only relevant if logging is enabled.
 #'
 #' - `DUCKPLYR_FALLBACK_AUTOUPLOAD` controls uploading, set it
 #'   to 1 or greater to enable uploading.
 #'   If the value is 0, uploading is disabled.
 #'   Currently, uploading is active if the value is 1 or greater.
-#'   Future versions of duckplyr may start logging additional data
+#'   Future versions of \pkg{duckplyr} may start logging additional data
 #'   and thus require a higher value to enable uploading.
 #'   Set to 99 to enable uploading for all future versions.
 #'   Use [usethis::edit_r_environ()] to edit the environment file.
@@ -46,6 +46,13 @@
 #'   It must point to a directory (existing or not) where the logs will be written.
 #'   By default, logs are written to a directory in the user's cache directory
 #'   as returned by `tools::R_user_dir("duckplyr", "cache")`.
+#'
+#' - `DUCKPLYR_FALLBACK_VERBOSE` controls printing of log data, set it
+#'   to `TRUE` or `FALSE` to enable or disable printing.
+#'   If the value is `TRUE`, a message is printed to the console
+#'   for each fallback situation.
+#'   This setting is only relevant if logging is enabled,
+#'   and mostly useful for \pkg{duckplyr}'s internal tests.
 #'
 #' All code related to fallback logging and uploading is in the
 #' [`fallback.R`](https://github.com/tidyverse/duckplyr/blob/main/R/fallback.R) and
@@ -64,7 +71,7 @@ NULL
 #' @export
 fallback_sitrep <- function() {
   fallback_logging <- tel_fallback_logging()
-  fallback_verbose <- tel_fallback_verbose()
+  fallback_info <- (Sys.getenv("DUCKPLYR_FALLBACK_INFO") == TRUE)
   fallback_uploading <- tel_fallback_uploading()
   fallback_log_dir <- tel_fallback_log_dir()
   fallback_logs <- tel_fallback_logs()
@@ -72,20 +79,18 @@ fallback_sitrep <- function() {
   msg <- c(
     fallback_txt_header(),
     #
+    if (fallback_info) {
+      c("v" = "Fallback printing is enabled.")
+    } else {
+      c("x" = "Fallback printing is disabled.")
+    },
     if (isTRUE(fallback_logging)) {
       c(
         "v" = "Fallback logging is enabled.",
         if (is.null(attr(fallback_logging, "val"))) {
           c("i" = "Fallback logging is not controlled, see {.help duckplyr::fallback}.")
         },
-        "i" = "Logs are written to {.file {fallback_log_dir}}.",
-        if (is.na(fallback_verbose)) {
-          c("i" = "Fallback printing is not controlled and therefore disabled, see {.help duckplyr::fallback}.")
-        } else if (fallback_verbose) {
-          c("v" = "Fallback printing is enabled.")
-        } else {
-          c("x" = "Fallback printing is disabled.")
-        }
+        "i" = "Logs are written to {.file {fallback_log_dir}}."
       )
     } else {
       c("x" = "Fallback logging is disabled.")

@@ -12,9 +12,6 @@
 #'
 #' `DUCKPLYR_FORCE`: If `TRUE`, fail if duckdb cannot handle a request.
 #'
-#' `DUCKPLYR_FALLBACK_INFO`: If `TRUE`, print a message when a fallback to dplyr occurs
-#' because DuckDB cannot handle a request.
-#'
 #' `DUCKPLYR_CHECK_ROUNDTRIP`: If `TRUE`, check if all columns are roundtripped perfectly
 #' when creating a relational object from a data frame,
 #' This is slow, and mostly useful for debugging.
@@ -27,7 +24,8 @@
 #' `DUCKPLYR_METHODS_OVERWRITE`: If `TRUE`, call `methods_overwrite()`
 #' when the package is loaded.
 #'
-#' See [fallback] for more options related to logging and uploading of fallback events.
+#' See [fallback] for more options related to printing, logging, and uploading
+#' of fallback events.
 #'
 # Not available in the CRAN package:
 # `DUCKPLYR_META_GLOBAL`: Assume data frames in the global environment as "known".

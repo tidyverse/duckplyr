@@ -17,9 +17,6 @@ with less potential for optimization, and thus may be slower.
 
 \code{DUCKPLYR_FORCE}: If \code{TRUE}, fail if duckdb cannot handle a request.
 
-\code{DUCKPLYR_FALLBACK_INFO}: If \code{TRUE}, print a message when a fallback to dplyr occurs
-because DuckDB cannot handle a request.
-
 \code{DUCKPLYR_CHECK_ROUNDTRIP}: If \code{TRUE}, check if all columns are roundtripped perfectly
 when creating a relational object from a data frame,
 This is slow, and mostly useful for debugging.
@@ -32,7 +29,8 @@ Currently unused.
 \code{DUCKPLYR_METHODS_OVERWRITE}: If \code{TRUE}, call \code{methods_overwrite()}
 when the package is loaded.
 
-See \link{fallback} for more options related to logging and uploading of fallback events.
+See \link{fallback} for more options related to printing, logging, and uploading
+of fallback events.
 }
 
 \examples{
