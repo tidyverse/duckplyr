@@ -18,7 +18,7 @@ with less potential for optimization, and thus may be slower.
 \code{DUCKPLYR_FORCE}: If \code{TRUE}, fail if duckdb cannot handle a request.
 
 \code{DUCKPLYR_FALLBACK_INFO}: If \code{TRUE}, print a message when a fallback to dplyr occurs
-because duckdb cannot handle a request.
+because DuckDB cannot handle a request.
 
 \code{DUCKPLYR_CHECK_ROUNDTRIP}: If \code{TRUE}, check if all columns are roundtripped perfectly
 when creating a relational object from a data frame,

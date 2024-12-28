@@ -13,7 +13,7 @@
 #' `DUCKPLYR_FORCE`: If `TRUE`, fail if duckdb cannot handle a request.
 #'
 #' `DUCKPLYR_FALLBACK_INFO`: If `TRUE`, print a message when a fallback to dplyr occurs
-#' because duckdb cannot handle a request.
+#' because DuckDB cannot handle a request.
 #'
 #' `DUCKPLYR_CHECK_ROUNDTRIP`: If `TRUE`, check if all columns are roundtripped perfectly
 #' when creating a relational object from a data frame,
