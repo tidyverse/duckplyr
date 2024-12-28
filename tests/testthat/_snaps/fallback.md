@@ -3,7 +3,7 @@
     Code
       fallback_sitrep()
     Message
-      The duckplyr package is configured to fall back to dplyr when it encounters an incompatibility. Fallback events can be collected and uploaded for analysis to guide future development. By default, no data will be collected or uploaded.
+      The duckplyr package is configured to fall back to dplyr when it encounters an incompatibility. Fallback events can be collected and uploaded for analysis to guide future development. By default, data will be collected but no data will be uploaded.
       v Fallback logging is enabled.
       i Fallback logging is not controlled, see `?duckplyr::fallback()`.
       i Logs are written to 'fallback/log/dir'.
@@ -17,7 +17,7 @@
     Code
       fallback_sitrep()
     Message
-      The duckplyr package is configured to fall back to dplyr when it encounters an incompatibility. Fallback events can be collected and uploaded for analysis to guide future development. By default, no data will be collected or uploaded.
+      The duckplyr package is configured to fall back to dplyr when it encounters an incompatibility. Fallback events can be collected and uploaded for analysis to guide future development. By default, data will be collected but no data will be uploaded.
       v Fallback logging is enabled.
       i Logs are written to 'fallback/log/dir'.
       x Fallback printing is disabled.
@@ -31,7 +31,7 @@
     Code
       fallback_sitrep()
     Message
-      The duckplyr package is configured to fall back to dplyr when it encounters an incompatibility. Fallback events can be collected and uploaded for analysis to guide future development. By default, no data will be collected or uploaded.
+      The duckplyr package is configured to fall back to dplyr when it encounters an incompatibility. Fallback events can be collected and uploaded for analysis to guide future development. By default, data will be collected but no data will be uploaded.
       v Fallback logging is enabled.
       i Logs are written to 'fallback/log/dir'.
       x Fallback printing is disabled.
@@ -45,7 +45,7 @@
     Code
       fallback_sitrep()
     Message
-      The duckplyr package is configured to fall back to dplyr when it encounters an incompatibility. Fallback events can be collected and uploaded for analysis to guide future development. By default, no data will be collected or uploaded.
+      The duckplyr package is configured to fall back to dplyr when it encounters an incompatibility. Fallback events can be collected and uploaded for analysis to guide future development. By default, data will be collected but no data will be uploaded.
       x Fallback logging is disabled.
       x Fallback uploading is disabled.
       i See `?duckplyr::fallback()` for details.
