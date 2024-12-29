@@ -1,4 +1,8 @@
 name: "Actions to run covr for an R package"
+inputs:
+  token:
+    description: codecov token
+    required: false
 
 runs:
   using: "composite"
@@ -20,11 +24,11 @@ runs:
     - uses: codecov/codecov-action@v5
       with:
         # Fail if error if not on PR, or if on PR and token is given
-        fail_ci_if_error: ${{ github.event_name != 'pull_request' || secrets.CODECOV_TOKEN }}
+        fail_ci_if_error: ${{ github.event_name != 'pull_request' || inputs.token }}
         file: ./cobertura.xml
         plugin: noop
         disable_search: true
-        token: ${{ secrets.CODECOV_TOKEN }}
+        token: ${{ inputs.token }}
 
     - name: Show testthat output
       if: always()

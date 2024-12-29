@@ -270,6 +270,8 @@ jobs:
 
       - uses: ./.github/workflows/covr
         if: ${{ matrix.covr }}
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
 # The status update is taken care of by R-CMD-check-status.yaml
 
