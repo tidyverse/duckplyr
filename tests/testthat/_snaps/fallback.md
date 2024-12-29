@@ -222,3 +222,68 @@
         <dbl> <int>
       1     1     1
 
+# fallback_config()
+
+    Code
+      fallback_config_load()
+    Message
+      Some configuration values are set as environment variables and in the configuration file 'fallback.dcf':
+      * `info`
+      * `logging`
+      * `autoupload`
+      * `log_dir`
+      * `verbose`
+      i Use `duckplyr::fallback_config(reset_all = TRUE)` to reset the configuration.
+      i Use `usethis::edit_r_environ()` to edit '~/.Renviron'.
+
+---
+
+    Code
+      fallback_config(reset_all = TRUE, logging = FALSE)
+    Message
+      i Restart the R session to reset all values to their defaults.
+
+---
+
+    Code
+      fallback_config_load()
+    Message
+      Some configuration values are set as environment variables and in the configuration file 'fallback.dcf':
+      * `logging`
+      i Use `duckplyr::fallback_config(reset_all = TRUE)` to reset the configuration.
+      i Use `usethis::edit_r_environ()` to edit '~/.Renviron'.
+
+---
+
+    Code
+      fallback_config(reset_all = TRUE)
+    Message
+      i Restart the R session to reset all values to their defaults.
+
+---
+
+    Code
+      fallback_config(boo = FALSE)
+    Condition
+      Error in `fallback_config()`:
+      ! `...` must be empty.
+      x Problematic argument:
+      * boo = FALSE
+
+# fallback_config() failure
+
+    Code
+      fallback_config_load()
+    Message
+      Error reading duckplyr, fallback configuration, deleting file.
+      Caused by error in `read.dcf()`:
+      ! Invalid DCF format.
+      Regular lines must have a tag.
+      Offending lines start with:
+        boo
+
+---
+
+    Code
+      fallback_config_load()
+

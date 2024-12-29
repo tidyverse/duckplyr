@@ -221,3 +221,68 @@ test_that("rel_try()", {
       count(a, .drop = FALSE, name = "n")
   })
 })
+
+test_that("fallback_config()", {
+  withr::local_envvar(c(
+    "DUCKPLYR_FALLBACK_COLLECT" = NA_character_,
+    "DUCKPLYR_FALLBACK_INFO" = NA_character_,
+    "DUCKPLYR_FALLBACK_AUTOUPLOAD" = NA_character_,
+    "DUCKPLYR_FALLBACK_LOG_DIR" = NA_character_,
+    "DUCKPLYR_FALLBACK_VERBOSE" = NA_character_
+  ))
+
+  config_path <- "fallback.dcf"
+  local_mocked_bindings(fallback_config_path = function() config_path)
+
+  expect_identical(fallback_config_read(), list())
+
+  fallback_config(info = TRUE, logging = TRUE, autoupload = TRUE, log_dir = "/", verbose = TRUE)
+  expect_snapshot_file(config_path, "fallback.dcf")
+
+  expect_snapshot({
+    fallback_config_load()
+  })
+
+  expect_snapshot({
+    fallback_config(reset_all = TRUE, logging = FALSE)
+  })
+  expect_snapshot_file(config_path, "fallback-2.dcf")
+
+  expect_snapshot({
+    fallback_config_load()
+  })
+
+  expect_snapshot({
+    fallback_config(reset_all = TRUE)
+  })
+  expect_false(file.exists(config_path))
+
+  expect_snapshot(error = TRUE, {
+    fallback_config(boo = FALSE)
+  })
+})
+
+test_that("fallback_config() failure", {
+  withr::local_envvar(c(
+    "DUCKPLYR_FALLBACK_COLLECT" = NA_character_,
+    "DUCKPLYR_FALLBACK_INFO" = NA_character_,
+    "DUCKPLYR_FALLBACK_AUTOUPLOAD" = NA_character_,
+    "DUCKPLYR_FALLBACK_LOG_DIR" = NA_character_,
+    "DUCKPLYR_FALLBACK_VERBOSE" = NA_character_
+  ))
+
+  config_path <- withr::local_tempfile(lines = "boo")
+  local_mocked_bindings(fallback_config_path = function() config_path)
+
+  writeLines("boo", config_path)
+
+  expect_snapshot({
+    fallback_config_load()
+  })
+
+  expect_false(file.exists(config_path))
+
+  expect_snapshot({
+    fallback_config_load()
+  })
+})
