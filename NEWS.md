@@ -1,5 +1,14 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9908 (2024-12-29)
+
+## Documentation
+
+- Prefer `DUCKPLYR_FALLBACK_INFO` over `DUCKPLYR_FALLBACK_VERBOSE` (#425).
+
+- Adapt README and tests for telemetry (#424).
+
+
 # duckplyr 0.99.99.9907 (2024-12-28)
 
 ## Features
