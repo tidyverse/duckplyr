@@ -384,7 +384,7 @@ next time the duckplyr package is loaded in an R session.
     #> ✔ Number of reports ready for upload: 1.
     #> → Review with `duckplyr::fallback_review()`, upload with
     #>   `duckplyr::fallback_upload()`.
-    #> ℹ This message can be disabled by setting `DUCKPLYR_FALLBACK_AUTOUPLOAD`.
+    #> ℹ Configure automatic uploading with `duckplyr::fallback_config()`.
 
 The `fallback_sitrep()` function describes the current configuration and
 the available options.

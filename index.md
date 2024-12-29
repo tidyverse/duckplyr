@@ -385,7 +385,7 @@ After logs have been collected, the upload options are displayed the next time t
 #> [32m✔[39m Number of reports ready for upload: [1m1[22m.
 #> → Review with `duckplyr::fallback_review()`, upload with
 #>   `duckplyr::fallback_upload()`.
-#> [36mℹ[39m [90mThis message can be disabled by setting `DUCKPLYR_FALLBACK_AUTOUPLOAD`.[39m
+#> [36mℹ[39m [90mConfigure automatic uploading with `duckplyr::fallback_config()`.[39m
 ```
 
 The `fallback_sitrep()` function describes the current configuration and the available options.
