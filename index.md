@@ -367,7 +367,7 @@ out <-
   nycflights13::flights %>%
   duckplyr::as_duck_tbl() %>%
   mutate(inflight_delay = arr_delay - dep_delay)
-#> Cannot process duckplyr query with DuckDB, falling back to dplyr.
+#> Error processing duckplyr query with DuckDB, falling back to dplyr.
 #> [1mCaused by error in `check_df_for_rel()` at duckplyr/R/relational-duckdb.R:103:3:[22m
 #> [1m[22m[33m![39m Attributes are lost during conversion. Affected column: `time_hour`.
 ```
@@ -380,7 +380,7 @@ After logs have been collected, the upload options are displayed the next time t
 #> incompatibility. Fallback events can be collected and uploaded for analysis to
 #> guide future development. By default, data will be collected but no data will
 #> be uploaded.
-#> [36mℹ[39m Fallback uploading is not controlled and therefore disabled, see
+#> [36mℹ[39m Automatic fallback uploading is not controlled and therefore disabled, see
 #>   `?duckplyr::fallback()`.
 #> [32m✔[39m Number of reports ready for upload: [1m1[22m.
 #> → Review with `duckplyr::fallback_review()`, upload with

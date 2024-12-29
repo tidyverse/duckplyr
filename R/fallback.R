@@ -65,14 +65,14 @@ NULL
 
 #' fallback_sitrep
 #'
-#' `fallback_sitrep()` prints the current settings for fallback logging and uploading,
-#' the number of reports ready for upload, and the location of the logs.
+#' `fallback_sitrep()` prints the current settings for fallback printing, logging,
+#' and uploading, the number of reports ready for upload, and the location of the logs.
 #' @rdname fallback
 #' @export
 fallback_sitrep <- function() {
   fallback_logging <- tel_fallback_logging()
   fallback_info <- (Sys.getenv("DUCKPLYR_FALLBACK_INFO") == TRUE)
-  fallback_uploading <- tel_fallback_uploading()
+  fallback_autoupload <- tel_fallback_autoupload()
   fallback_log_dir <- tel_fallback_log_dir()
   fallback_logs <- tel_fallback_logs()
 
@@ -96,7 +96,7 @@ fallback_sitrep <- function() {
       c("x" = "Fallback logging is disabled.")
     },
     #
-    fallback_txt_uploading(fallback_uploading),
+    fallback_txt_autoupload(fallback_autoupload),
     #
     if (isTRUE(fallback_logging)) {
       fallback_txt_sitrep_logs(fallback_logs)
@@ -114,13 +114,13 @@ fallback_txt_header <- function() {
   "The {.pkg duckplyr} package is configured to fall back to {.pkg dplyr} when it encounters an incompatibility. Fallback events can be collected and uploaded for analysis to guide future development. By default, data will be collected but no data will be uploaded."
 }
 
-fallback_txt_uploading <- function(fallback_uploading) {
-  if (is.na(fallback_uploading)) {
-    c("i" = "Fallback uploading is not controlled and therefore disabled, see {.help duckplyr::fallback}.")
-  } else if (fallback_uploading) {
-    c("v" = "Fallback uploading is enabled.")
+fallback_txt_autoupload <- function(fallback_autoupload) {
+  if (is.na(fallback_autoupload)) {
+    c("i" = "Automatic fallback uploading is not controlled and therefore disabled, see {.help duckplyr::fallback}.")
+  } else if (fallback_autoupload) {
+    c("v" = "Automatic fallback uploading is enabled.")
   } else {
-    c("x" = "Fallback uploading is disabled.")
+    c("x" = "Automatic fallback uploading is disabled.")
   }
 }
 
@@ -143,8 +143,138 @@ fallback_txt_run_sitrep <- function() {
 
 fallback_txt_help <- function() {
   c(
-    "i" = "See {.help duckplyr::fallback} for details."
+    "i" = "See {.help duckplyr::fallback_config} for details."
   )
+}
+
+#' fallback_config
+#'
+#' `fallback_config()` configures the current settings for fallback printing,
+#' logging, and uploading.
+#' Only settings that do not affect computation results can be configured,
+#' this is by design.
+#' The configuration is stored in a file under `tools::R_user_dir("duckplyr", "config")` .
+#' When the \pkg{duckplyr} package is loaded, the configuration is read from this file,
+#' and the corresponding environment variables are set.
+#'
+#' @inheritParams rlang::args_dots_empty
+#' @param reset_all Set to `TRUE` to reset all settings to their defaults.
+#'   The R session must be restarted for the changes to take effect.
+#' @param info Set to `TRUE` to enable fallback printing.
+#' @param logging Set to `FALSE` to disable fallback logging,
+#'   set to `TRUE` to explicitly enable it.
+#' @param autoupload Set to `TRUE` to enable automatic fallback uploading,
+#'   set to `FALSE` to disable it.
+#' @param log_dir Set the location of the logs in the file system.
+#'   The directory will be created if it does not exist.
+#' @param verbose Set to `TRUE` to enable verbose logging.
+#' @rdname fallback
+#' @export
+fallback_config <- function(
+  ...,
+  reset_all = FALSE,
+  info = NULL,
+  logging = NULL,
+  autoupload = NULL,
+  log_dir = NULL,
+  verbose = NULL
+) {
+  check_dots_empty()
+
+  if (isTRUE(reset_all)) {
+    config <- list()
+  } else {
+    config <- fallback_config_read()
+  }
+
+  config <- fallback_config_set(config, info, "info")
+  config <- fallback_config_set(config, if (isTRUE(logging)) 1 else 0, "logging")
+  config <- fallback_config_set(config, if (isTRUE(autoupload)) 1 else 0, "autoupload")
+  config <- fallback_config_set(config, log_dir, "log_dir")
+  config <- fallback_config_set(config, verbose, "verbose")
+
+  fallback_config_write(config)
+  fallback_config_apply(config)
+
+  if (isTRUE(reset_all)) {
+    cli::cli_alert_info("Restart the R session to reset all values to their defaults.")
+  }
+}
+
+fallback_config_read <- function() {
+  config_file <- fallback_config_path()
+
+  if (!file.exists(config_file)) {
+    return(list())
+  }
+
+  tryCatch(
+    {
+      as.list(read.dcf(config_file, all = TRUE))
+    },
+    error = function(e) {
+      rlang::cnd_signal(rlang::message_cnd(message = "Error reading duckplyr, fallback configuration, deleting file.", parent = e))
+      unlink(config_file)
+      list()
+    }
+  )
+}
+
+fallback_config_write <- function(config) {
+  write.dcf(config, fallback_config_path())
+}
+
+fallback_config_set <- function(config, value, name) {
+  if (!is.null(value)) {
+    config[[name]] <- value
+  }
+  config
+}
+
+fallback_config_apply <- function(config) {
+  if (!is.null(config$info)) {
+    Sys.setenv(DUCKPLYR_FALLBACK_INFO = config$info)
+  }
+  if (!is.null(config$logging)) {
+    Sys.setenv(DUCKPLYR_FALLBACK_LOGGING = config$logging)
+  }
+  if (!is.null(config$autoupload)) {
+    Sys.setenv(DUCKPLYR_FALLBACK_AUTOUPLOAD = config$autoupload)
+  }
+  if (!is.null(config$log_dir)) {
+    Sys.setenv(DUCKPLYR_FALLBACK_LOG_DIR = config$log_dir)
+  }
+  if (!is.null(config$verbose)) {
+    Sys.setenv(DUCKPLYR_FALLBACK_VERBOSE = config$verbose)
+  }
+}
+
+on_load({
+  config <- fallback_config_read()
+  if (!is.na(Sys.getenv("DUCKPLYR_FALLBACK_INFO", unset = NA))) {
+    config$info <- NULL
+  }
+  if (!is.na(Sys.getenv("DUCKPLYR_FALLBACK_LOGGING", unset = NA))) {
+    config$logging <- NULL
+  }
+  if (!is.na(Sys.getenv("DUCKPLYR_FALLBACK_AUTOUPLOAD", unset = NA))) {
+    config$autoupload <- NULL
+  }
+  if (!is.na(Sys.getenv("DUCKPLYR_FALLBACK_LOG_DIR", unset = NA))) {
+    config$log_dir <- NULL
+  }
+  if (!is.na(Sys.getenv("DUCKPLYR_FALLBACK_VERBOSE", unset = NA))) {
+    config$verbose <- NULL
+  }
+
+  fallback_config_apply(config)
+})
+
+# Side effect: create directory if it doesn't exist
+fallback_config_path <- function() {
+  config_root <- tools::R_user_dir("duckplyr", "config")
+  dir.create(config_root, showWarnings = FALSE)
+  file.path(config_root, "fallback.dcf")
 }
 
 #' fallback_review
@@ -250,8 +380,8 @@ on_load({
 })
 
 fallback_autoupload <- function() {
-  uploading <- tel_fallback_uploading()
-  if (isTRUE(uploading)) {
+  autoupload <- tel_fallback_autoupload()
+  if (isTRUE(autoupload)) {
     msg <- character()
     suppressMessages(withCallingHandlers(
       fallback_upload(strict = FALSE),
@@ -262,14 +392,14 @@ fallback_autoupload <- function() {
     if (length(msg) > 0) {
       packageStartupMessage(paste(msg, collapse = "\n"))
     }
-  } else if (is.na(uploading)) {
+  } else if (is.na(autoupload)) {
     fallback_logs <- tel_fallback_logs()
     if (length(fallback_logs) > 0) {
       msg <- c(
         fallback_txt_header(),
-        fallback_txt_uploading(uploading),
+        fallback_txt_autoupload(autoupload),
         fallback_txt_sitrep_logs(fallback_logs),
-        "i" = cli::col_silver("This message can be disabled by setting {.envvar DUCKPLYR_FALLBACK_AUTOUPLOAD}.")
+        "i" = cli::col_silver("Configure automatic uploading with {.code duckplyr::fallback_config()}.")
       )
       packageStartupMessage(cli::format_message(msg))
     }
