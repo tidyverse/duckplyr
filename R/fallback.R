@@ -187,9 +187,25 @@ fallback_config <- function(
     config <- fallback_config_read()
   }
 
+  if (!is.null(logging)) {
+    if (isTRUE(logging)) {
+      logging <- 1
+    } else {
+      logging <- 0
+    }
+  }
+
+  if (!is.null(autoupload)) {
+    if (isTRUE(autoupload)) {
+      autoupload <- 1
+    } else {
+      autoupload <- 0
+    }
+  }
+
   config <- fallback_config_set(config, info, "info")
-  config <- fallback_config_set(config, if (isTRUE(logging)) 1 else 0, "logging")
-  config <- fallback_config_set(config, if (isTRUE(autoupload)) 1 else 0, "autoupload")
+  config <- fallback_config_set(config, logging, "logging")
+  config <- fallback_config_set(config, autoupload, "autoupload")
   config <- fallback_config_set(config, log_dir, "log_dir")
   config <- fallback_config_set(config, verbose, "verbose")
 
@@ -221,7 +237,13 @@ fallback_config_read <- function() {
 }
 
 fallback_config_write <- function(config) {
-  write.dcf(config, fallback_config_path())
+  config_path <- fallback_config_path()
+
+  if (length(config) == 0) {
+    unlink(config_path, force = TRUE)
+  } else {
+    write.dcf(config, config_path)
+  }
 }
 
 fallback_config_set <- function(config, value, name) {
@@ -250,25 +272,39 @@ fallback_config_apply <- function(config) {
 }
 
 on_load({
+  fallback_config_load()
+})
+
+fallback_config_load <- function() {
   config <- fallback_config_read()
-  if (!is.na(Sys.getenv("DUCKPLYR_FALLBACK_INFO", unset = NA))) {
-    config$info <- NULL
-  }
-  if (!is.na(Sys.getenv("DUCKPLYR_FALLBACK_LOGGING", unset = NA))) {
-    config$logging <- NULL
-  }
-  if (!is.na(Sys.getenv("DUCKPLYR_FALLBACK_AUTOUPLOAD", unset = NA))) {
-    config$autoupload <- NULL
-  }
-  if (!is.na(Sys.getenv("DUCKPLYR_FALLBACK_LOG_DIR", unset = NA))) {
-    config$log_dir <- NULL
-  }
-  if (!is.na(Sys.getenv("DUCKPLYR_FALLBACK_VERBOSE", unset = NA))) {
-    config$verbose <- NULL
+  orig_config <- config
+
+  config <- fallback_config_reset(config, "info", "DUCKPLYR_FALLBACK_INFO")
+  config <- fallback_config_reset(config, "logging", "DUCKPLYR_FALLBACK_LOGGING")
+  config <- fallback_config_reset(config, "autoupload", "DUCKPLYR_FALLBACK_AUTOUPLOAD")
+  config <- fallback_config_reset(config, "log_dir", "DUCKPLYR_FALLBACK_LOG_DIR")
+  config <- fallback_config_reset(config, "verbose", "DUCKPLYR_FALLBACK_VERBOSE")
+
+  msg <- setdiff(names(orig_config), names(config))
+  if (length(msg) > 0) {
+    msg <- set_names(paste0("{.envvar ", msg, "}"), rep_along(msg, "*"))
+    packageStartupMessage(cli::format_message(c(
+      "Some configuration values are set as environment variables and in the configuration file {.file {fallback_config_path()}}:",
+      msg,
+      i = "Use {.run duckplyr::fallback_config(reset_all = TRUE)} to reset the configuration.",
+      i = "Use {.run usethis::edit_r_environ()} to edit {.file ~/.Renviron}."
+    )))
   }
 
   fallback_config_apply(config)
-})
+}
+
+fallback_config_reset <- function(config, name, envvar) {
+  if (!is.na(Sys.getenv(envvar, unset = NA))) {
+    config[[name]] <- NULL
+  }
+  config
+}
 
 # Side effect: create directory if it doesn't exist
 fallback_config_path <- function() {
