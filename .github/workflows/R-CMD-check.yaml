@@ -265,6 +265,7 @@ jobs:
 
       - uses: ./.github/workflows/check
         with:
+          covr: ${{ matrix.config.covr }}
           results: ${{ runner.os }}-r${{ matrix.r }}
 
 # The status update is taken care of by R-CMD-check-status.yaml
