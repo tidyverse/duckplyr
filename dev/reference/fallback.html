@@ -9,8 +9,15 @@ To assist future development, the fallback situations can be logged
 to the console or to a local file and uploaded for analysis.
 By default, duckplyr will not log or upload anything.
 The functions and environment variables on this page control the process.
-fallback_sitrep() prints the current settings for fallback logging and uploading,
-the number of reports ready for upload, and the location of the logs.
+fallback_sitrep() prints the current settings for fallback printing, logging,
+and uploading, the number of reports ready for upload, and the location of the logs.
+fallback_config() configures the current settings for fallback printing,
+logging, and uploading.
+Only settings that do not affect computation results can be configured,
+this is by design.
+The configuration is stored in a file under tools::R_user_dir(&quot;duckplyr&quot;, &quot;config&quot;) .
+When the duckplyr package is loaded, the configuration is read from this file,
+and the corresponding environment variables are set.
 fallback_review() prints the available reports for review to the console.
 fallback_upload() uploads the available reports to a central server for analysis.
 The server is hosted on AWS and the reports are stored in a private S3 bucket.
@@ -25,8 +32,15 @@ To assist future development, the fallback situations can be logged
 to the console or to a local file and uploaded for analysis.
 By default, duckplyr will not log or upload anything.
 The functions and environment variables on this page control the process.
-fallback_sitrep() prints the current settings for fallback logging and uploading,
-the number of reports ready for upload, and the location of the logs.
+fallback_sitrep() prints the current settings for fallback printing, logging,
+and uploading, the number of reports ready for upload, and the location of the logs.
+fallback_config() configures the current settings for fallback printing,
+logging, and uploading.
+Only settings that do not affect computation results can be configured,
+this is by design.
+The configuration is stored in a file under tools::R_user_dir(&quot;duckplyr&quot;, &quot;config&quot;) .
+When the duckplyr package is loaded, the configuration is read from this file,
+and the corresponding environment variables are set.
 fallback_review() prints the available reports for review to the console.
 fallback_upload() uploads the available reports to a central server for analysis.
 The server is hosted on AWS and the reports are stored in a private S3 bucket.
@@ -39,7 +53,7 @@ fallback_purge() deletes some or all available reports."><meta property="og:imag
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9907</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9908</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,8 +94,15 @@ Whenever a request cannot be handled by DuckDB,
 to the console or to a local file and uploaded for analysis.
 By default, <span class="pkg">duckplyr</span> will not log or upload anything.
 The functions and environment variables on this page control the process.</p>
-<p><code>fallback_sitrep()</code> prints the current settings for fallback logging and uploading,
-the number of reports ready for upload, and the location of the logs.</p>
+<p><code>fallback_sitrep()</code> prints the current settings for fallback printing, logging,
+and uploading, the number of reports ready for upload, and the location of the logs.</p>
+<p><code>fallback_config()</code> configures the current settings for fallback printing,
+logging, and uploading.
+Only settings that do not affect computation results can be configured,
+this is by design.
+The configuration is stored in a file under <code>tools::R_user_dir("duckplyr", "config")</code> .
+When the <span class="pkg">duckplyr</span> package is loaded, the configuration is read from this file,
+and the corresponding environment variables are set.</p>
 <p><code>fallback_review()</code> prints the available reports for review to the console.</p>
 <p><code>fallback_upload()</code> uploads the available reports to a central server for analysis.
 The server is hosted on AWS and the reports are stored in a private S3 bucket.
@@ -92,6 +113,16 @@ Only authorized personnel have access to the reports.</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fallback_sitrep</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">fallback_config</span><span class="op">(</span></span>
+<span>  <span class="va">...</span>,</span>
+<span>  reset_all <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  info <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  logging <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  autoupload <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  log_dir <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">fallback_review</span><span class="op">(</span>oldest <span class="op">=</span> <span class="cn">NULL</span>, newest <span class="op">=</span> <span class="cn">NULL</span>, detail <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
@@ -104,7 +135,39 @@ Only authorized personnel have access to the reports.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-oldest-newest">oldest, newest<a class="anchor" aria-label="anchor" href="#arg-oldest-newest"></a></dt>
+<dl><dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>These dots are for future extensions and must be empty.</p></dd>
+
+
+<dt id="arg-reset-all">reset_all<a class="anchor" aria-label="anchor" href="#arg-reset-all"></a></dt>
+<dd><p>Set to <code>TRUE</code> to reset all settings to their defaults.
+The R session must be restarted for the changes to take effect.</p></dd>
+
+
+<dt id="arg-info">info<a class="anchor" aria-label="anchor" href="#arg-info"></a></dt>
+<dd><p>Set to <code>TRUE</code> to enable fallback printing.</p></dd>
+
+
+<dt id="arg-logging">logging<a class="anchor" aria-label="anchor" href="#arg-logging"></a></dt>
+<dd><p>Set to <code>FALSE</code> to disable fallback logging,
+set to <code>TRUE</code> to explicitly enable it.</p></dd>
+
+
+<dt id="arg-autoupload">autoupload<a class="anchor" aria-label="anchor" href="#arg-autoupload"></a></dt>
+<dd><p>Set to <code>TRUE</code> to enable automatic fallback uploading,
+set to <code>FALSE</code> to disable it.</p></dd>
+
+
+<dt id="arg-log-dir">log_dir<a class="anchor" aria-label="anchor" href="#arg-log-dir"></a></dt>
+<dd><p>Set the location of the logs in the file system.
+The directory will be created if it does not exist.</p></dd>
+
+
+<dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
+<dd><p>Set to <code>TRUE</code> to enable verbose logging.</p></dd>
+
+
+<dt id="arg-oldest-newest">oldest, newest<a class="anchor" aria-label="anchor" href="#arg-oldest-newest"></a></dt>
 <dd><p>The number of oldest or newest reports to review.
 If not specified, all reports are dispayed.</p></dd>
 
@@ -169,12 +232,12 @@ and mostly useful for <span class="pkg">duckplyr</span>'s internal tests.</p></l
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Fallback logging is enabled.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Fallback logging is not controlled, see `?duckplyr::fallback()`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Logs are written to <span style="color: #0000BB;">/home/runner/.cache/R/duckplyr/telemetry</span>.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Fallback uploading is not controlled and therefore disabled, see</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   `?duckplyr::fallback()`.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Automatic fallback uploading is not controlled and therefore disabled,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   see `?duckplyr::fallback()`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Number of reports ready for upload: <span style="font-weight: bold;">2</span>.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → Review with `duckplyr::fallback_review()`, upload with</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   `duckplyr::fallback_upload()`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> See `?duckplyr::fallback()` for details.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> See `?duckplyr::fallback_config()` for details.</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
