@@ -31,3 +31,14 @@ test_that("compute_csv()", {
   expect_identical(out, as_duck_tbl(df))
   expect_false(is_lazy_duckplyr_df(out))
 })
+
+test_that("compute_csv() lazy", {
+  skip_if_not_installed("duckdb", "1.1.3.9028")
+
+  df <- data.frame(x = c(1, 2))
+  withr::defer(unlink("test.csv"))
+  out <- compute_csv(df, path = "test.csv", lazy = TRUE)
+
+  expect_true(is_lazy_duckplyr_df(out))
+  expect_identical(collect(out), as_duck_tbl(df))
+})

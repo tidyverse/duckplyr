@@ -11,7 +11,7 @@ compute.duckplyr_df <- function(
 ) {
   # Our implementation
   rel_try(NULL,
-    "Needs duckdb >= 1.1.3.9028" = is_installed("duckdb", version = "1.1.3.9028"),
+    "Needs duckdb >= 1.1.3.9029" = !is_installed("duckdb", version = "1.1.3.9029"),
     {
       if (is.null(lazy)) {
         lazy <- is_lazy_duckplyr_df(x)
@@ -21,7 +21,7 @@ compute.duckplyr_df <- function(
       }
       if (is.null(name)) {
         if (isTRUE(temporary)) {
-          name <- unique_temporary_name()
+          name <- unique_table_name()
         } else {
           cli::cli_abort("{.arg name} must be provided if {.arg temporary} is {.value FALSE}")
         }
@@ -32,9 +32,9 @@ compute.duckplyr_df <- function(
       duckdb$rel_to_table(rel, schema_name, name, temporary)
 
       # API inconsistency: order of name and schema_name
-      out_rel <- duckdb$rel_from_table(name, schema_name)
+      out_rel <- duckdb$rel_from_table(get_default_duckdb_connection(), name, schema_name)
 
-      out <- duckplyr_reconstruct(rel, x)
+      out <- duckplyr_reconstruct(out_rel, x)
 
       if (is_lazy_duckplyr_df(out) != lazy) {
         out <- as_duck_tbl(out, .lazy = lazy)
