@@ -1,5 +1,36 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9909 (2024-12-30)
+
+## Features
+
+- New `fallback_config()` to create a configuration file for the settings that do not affect behavior (#216, #426).
+
+## Continuous integration
+
+- Pass secret.
+
+- Copy codecov configuration from r-lib/actions.
+
+- Install covr if needed.
+
+- Pass correct covr config.
+
+- Logic.
+
+- Fix codecov.
+
+## Documentation
+
+- Add codecov badge.
+
+- Sync README.
+
+## Testing
+
+- Add tests for fallback configuration (#428).
+
+
 # duckplyr 0.99.99.9908 (2024-12-29)
 
 ## Documentation
