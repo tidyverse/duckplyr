@@ -16,6 +16,10 @@ add_lazy_duckplyr_df_class <- function(x) {
   x
 }
 
+is_lazy_duckplyr_df <- function(x) {
+  inherits(x, "lazy_duckplyr_df")
+}
+
 as_eager_duckplyr_df <- function(x) {
   if (!inherits(x, "lazy_duckplyr_df")) {
     return(x)

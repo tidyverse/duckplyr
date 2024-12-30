@@ -19,6 +19,8 @@ reference:
 
 - subtitle: Connecting, copying, and retrieving data
   contents:
+  - compute.duckplyr_df
+  - compute_file
   # - collect.duckplyr_df
   - pull.duckplyr_df
   - explain.duckplyr_df
