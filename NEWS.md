@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9910 (2024-12-31)
+
+## Continuous integration
+
+- Adapt to codecov/codecov-action@v5.
+
+
 # duckplyr 0.99.99.9909 (2024-12-30)
 
 ## Features
