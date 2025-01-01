@@ -139,19 +139,19 @@
 <p>Nothing has been computed yet. Querying the number of rows, or a column, starts the computation:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out</span><span class="op">$</span><span class="va">month</span></span>
-<span><span class="co">#&gt; [1] 1 2 3 4 5 6</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 2 1 5 3 6 4</span></span></code></pre></div>
 <p>Note that, unlike dplyr, the results are not ordered, see <code><a href="reference/config.html">?config</a></code> for details. However, once materialized, the results are stable:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
 <span><span class="co">#&gt;    <span style="font-weight: bold;">year</span> <span style="font-weight: bold;">month</span> <span style="font-weight: bold;">mean_inflight_delay</span> <span style="font-weight: bold;">median_inflight_delay</span></span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>  <span style="text-decoration: underline;">2</span>013     1               -<span style="color: #BB0000;">3.86</span>                    -<span style="color: #BB0000;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>  <span style="text-decoration: underline;">2</span>013     2               -<span style="color: #BB0000;">5.15</span>                    -<span style="color: #BB0000;">6</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>  <span style="text-decoration: underline;">2</span>013     3               -<span style="color: #BB0000;">7.36</span>                    -<span style="color: #BB0000;">9</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>  <span style="text-decoration: underline;">2</span>013     4               -<span style="color: #BB0000;">2.67</span>                    -<span style="color: #BB0000;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>  <span style="text-decoration: underline;">2</span>013     5               -<span style="color: #BB0000;">9.37</span>                   -<span style="color: #BB0000;">10</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>  <span style="text-decoration: underline;">2</span>013     6               -<span style="color: #BB0000;">4.24</span>                    -<span style="color: #BB0000;">7</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>  <span style="text-decoration: underline;">2</span>013     2               -<span style="color: #BB0000;">5.15</span>                    -<span style="color: #BB0000;">6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>  <span style="text-decoration: underline;">2</span>013     1               -<span style="color: #BB0000;">3.86</span>                    -<span style="color: #BB0000;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>  <span style="text-decoration: underline;">2</span>013     5               -<span style="color: #BB0000;">9.37</span>                   -<span style="color: #BB0000;">10</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>  <span style="text-decoration: underline;">2</span>013     3               -<span style="color: #BB0000;">7.36</span>                    -<span style="color: #BB0000;">9</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>  <span style="text-decoration: underline;">2</span>013     6               -<span style="color: #BB0000;">4.24</span>                    -<span style="color: #BB0000;">7</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>  <span style="text-decoration: underline;">2</span>013     4               -<span style="color: #BB0000;">2.67</span>                    -<span style="color: #BB0000;">5</span></span></span></code></pre></div>
 <p>Restart R, or call <code><a href="reference/methods_overwrite.html">duckplyr::methods_restore()</a></code> to revert to the default dplyr implementation.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="reference/methods_overwrite.html">methods_restore</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -313,17 +313,17 @@
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">2</span>022    11             -<span style="color: #BB0000;">5.21</span>                  -<span style="color: #BB0000;">7</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">2</span>023    11             -<span style="color: #BB0000;">7.10</span>                  -<span style="color: #BB0000;">8</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>022     8             -<span style="color: #BB0000;">5.27</span>                  -<span style="color: #BB0000;">7</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>022     7             -<span style="color: #BB0000;">5.13</span>                  -<span style="color: #BB0000;">7</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>022     7             -<span style="color: #BB0000;">5.13</span>                  -<span style="color: #BB0000;">7</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>022     8             -<span style="color: #BB0000;">5.27</span>                  -<span style="color: #BB0000;">7</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">2</span>023     4             -<span style="color: #BB0000;">4.54</span>                  -<span style="color: #BB0000;">6</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">2</span>022     4             -<span style="color: #BB0000;">4.88</span>                  -<span style="color: #BB0000;">6</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">2</span>023     8             -<span style="color: #BB0000;">5.73</span>                  -<span style="color: #BB0000;">7</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>023     7             -<span style="color: #BB0000;">4.47</span>                  -<span style="color: #BB0000;">7</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>022     6             -<span style="color: #BB0000;">5.07</span>                  -<span style="color: #BB0000;">7</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>022    12             -<span style="color: #BB0000;">4.63</span>                  -<span style="color: #BB0000;">6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>022     1             -<span style="color: #BB0000;">6.88</span>                  -<span style="color: #BB0000;">8</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>023    12             -<span style="color: #BB0000;">7.71</span>                  -<span style="color: #BB0000;">8</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ more rows</span></span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   1.759   0.350   9.322</span></span></code></pre></div>
+<span><span class="co">#&gt;   1.822   0.510  10.065</span></span></code></pre></div>
 <p>Over 10M rows analyzed in about 10 seconds over the internet, that’s not bad. Of course, working with Parquet, CSV, or JSON files downloaded locally is possible as well.</p>
 </div>
 <div class="section level2">
@@ -358,7 +358,7 @@
 <span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="reference/duck_tbl.html">as_duck_tbl</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>inflight_delay <span class="op">=</span> <span class="va">arr_delay</span> <span class="op">-</span> <span class="va">dep_delay</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error processing duckplyr query with DuckDB, falling back to dplyr.</span></span>
-<span><span class="co">#&gt; <span style="font-weight: bold;">Caused by error in `check_df_for_rel()` at duckplyr/R/relational-duckdb.R:103:3:</span></span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Caused by error in `check_df_for_rel()` at duckplyr/R/relational-duckdb.R:100:3:</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Attributes are lost during conversion. Affected column: `time_hour`.</span></span></code></pre></div>
 <p>After logs have been collected, the upload options are displayed the next time the duckplyr package is loaded in an R session.</p>
 <pre><code><span><span class="co">#&gt; The <span style="color: #0000BB;">duckplyr</span> package is configured to fall back to <span style="color: #0000BB;">dplyr</span> when it encounters an</span></span>
