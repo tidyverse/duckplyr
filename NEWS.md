@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9911 (2025-01-01)
+
+## Features
+
+- New `compute_parquet()` and `compute_csv()`, implement `compute.duckplyr_df()` (#409, #430).
+
+
 # duckplyr 0.99.99.9910 (2024-12-31)
 
 ## Continuous integration
