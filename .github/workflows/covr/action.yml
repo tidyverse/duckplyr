@@ -25,10 +25,8 @@ runs:
       with:
         # Fail if error if not on PR, or if on PR and token is given
         fail_ci_if_error: ${{ github.event_name != 'pull_request' || inputs.token }}
-        files:
-          - ./cobertura.xml
-        plugins:
-          - noop
+        files: ./cobertura.xml
+        plugins: noop
         disable_search: true
         token: ${{ inputs.token }}
 
