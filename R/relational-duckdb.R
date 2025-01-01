@@ -79,9 +79,6 @@ duckdb_rel_from_df <- function(df) {
   # FIXME: make generic
   stopifnot(is.data.frame(df))
 
-  # Avoid weird recursions
-  class(df) <- "data.frame"
-
   rel <- duckdb$rel_from_altrep_df(df, strict = FALSE, allow_materialized = FALSE)
   if (!is.null(rel)) {
     # Once we're here, we know it's an ALTREP data frame
