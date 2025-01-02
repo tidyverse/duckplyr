@@ -1,5 +1,18 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9912 (2025-01-02)
+
+## Bug fixes
+
+- Remove unneeded cast that breaks the meta functionality (#436).
+
+## Continuous integration
+
+- Remove generated code from coverage analysis (#435).
+
+- Switch to comma-separated list of files.
+
+
 # duckplyr 0.99.99.9911 (2025-01-01)
 
 ## Features
