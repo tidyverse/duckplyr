@@ -13,7 +13,6 @@ please refer to our contributing guide \url{https://duckplyr.tidyverse.org/CONTR
 For these verbs, duckplyr will fall back to dplyr.
 \itemize{
 \item \code{\link[dplyr:count]{dplyr::add_count()}}
-\item \code{\link[dplyr:compute]{dplyr::compute()}}
 \item \code{\link[dplyr:cross_join]{dplyr::cross_join()}}
 \item \code{\link[dplyr:do]{dplyr::do()}}
 \item \code{\link[dplyr:group_by]{dplyr::group_by()}}
