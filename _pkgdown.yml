@@ -60,7 +60,7 @@ reference:
 
 - subtitle: Unsupported verbs
   contents:
-  - not-supported
+  - unsupported
 
 - title: Using duckplyr for all data frames
   contents:
