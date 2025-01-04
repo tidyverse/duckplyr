@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 Not all dplyr verbs are implemented within duckplyr.
 For unsupported verbs, duckplyr automatically falls back to dplyr.
-See `?not-supported` for a list of verbs for which duckplyr does not provide a method.
+See `?unsupported` for a list of verbs for which duckplyr does not provide a method.
 
 See the [reference index](https://duckplyr.tidyverse.org/reference/index.html) for a list of verbs with corresponding duckplyr methods.
 

@@ -1,10 +1,10 @@
 #' Verbs not implemented in duckplyr
 #'
 #' The following dplyr generics have no counterpart method in duckplyr.
-#' If you want to help add a new verb, 
+#' If you want to help add a new verb,
 #' please refer to our contributing guide <https://duckplyr.tidyverse.org/CONTRIBUTING.html#support-new-verbs>
-#' @rdname not-supported
-#' @name not-supported
+#' @rdname unsupported
+#' @name unsupported
 #' @section Unsupported verbs:
 #' For these verbs, duckplyr will fall back to dplyr.
 #' - [`add_count()`]
