@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9913 (2025-01-05)
+
+## Documentation
+
+- Rename help topic (#443).
+
+
 # duckplyr 0.99.99.9912 (2025-01-02)
 
 ## Bug fixes
