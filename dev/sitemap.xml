@@ -16,11 +16,9 @@
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/compute_file.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/config.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/count.duckplyr_df.html</loc></url>
+<url><loc>https://duckplyr.tidyverse.org/dev/reference/db_exec.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/df_from_file.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/distinct.duckplyr_df.html</loc></url>
-<url><loc>https://duckplyr.tidyverse.org/dev/reference/duck_exec.html</loc></url>
-<url><loc>https://duckplyr.tidyverse.org/dev/reference/duck_file.html</loc></url>
-<url><loc>https://duckplyr.tidyverse.org/dev/reference/duck_sql.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/duckdb_tibble.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/duckplyr-package.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/duckplyr_execute.html</loc></url>
@@ -41,6 +39,8 @@
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/new_relational.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/new_relexpr.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/pull.duckplyr_df.html</loc></url>
+<url><loc>https://duckplyr.tidyverse.org/dev/reference/read_file_duckdb.html</loc></url>
+<url><loc>https://duckplyr.tidyverse.org/dev/reference/read_sql_duckdb.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/reexports.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/relocate.duckplyr_df.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/rename.duckplyr_df.html</loc></url>
