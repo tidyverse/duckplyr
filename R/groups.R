@@ -4,7 +4,7 @@ groups.duckplyr_df <- function(x) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
     # Always fall back to dplyr
-    "No relational implementation for groups()" = TRUE,
+    "No relational implementation for {.code groups()}" = TRUE,
     {
       return(out)
     }

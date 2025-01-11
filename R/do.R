@@ -3,7 +3,7 @@
 do.duckplyr_df <- function(.data, ...) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
-    "No relational implementation for do()" = TRUE,
+    "No relational implementation for {.code do()}" = TRUE,
     {
       return(out)
     }

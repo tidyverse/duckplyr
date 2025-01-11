@@ -3,7 +3,7 @@
 nest_by.duckplyr_df <- function(.data, ..., .key = "data", .keep = FALSE) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
-    "No relational implementation for nest_by()" = TRUE,
+    "No relational implementation for {.code nest_by()}" = TRUE,
     {
       return(out)
     }

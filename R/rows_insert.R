@@ -3,7 +3,7 @@
 rows_insert.duckplyr_df <- function(x, y, by = NULL, ..., conflict = c("error", "ignore"), copy = FALSE, in_place = FALSE) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
-    "No relational implementation for rows_insert()" = TRUE,
+    "No relational implementation for {.code rows_insert()}" = TRUE,
     {
       return(out)
     }

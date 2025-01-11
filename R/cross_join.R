@@ -3,7 +3,7 @@
 cross_join.duckplyr_df <- function(x, y, ..., copy = FALSE, suffix = c(".x", ".y")) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
-    "No relational implementation for cross_join()" = TRUE,
+    "No relational implementation for {.code cross_join()}" = TRUE,
     {
       return(out)
     }

@@ -3,7 +3,7 @@
 slice_sample.duckplyr_df <- function(.data, ..., n, prop, by = NULL, weight_by = NULL, replace = FALSE) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
-    "No relational implementation for slice_sample()" = TRUE,
+    "No relational implementation for {.code slice_sample()}" = TRUE,
     {
       return(out)
     }

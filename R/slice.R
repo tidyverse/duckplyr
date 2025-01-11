@@ -3,7 +3,7 @@
 slice.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
-    "No relational implementation for slice()" = TRUE,
+    "No relational implementation for {.code slice()}" = TRUE,
     {
       return(out)
     }

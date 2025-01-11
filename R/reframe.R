@@ -3,7 +3,7 @@
 reframe.duckplyr_df <- function(.data, ..., .by = NULL) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
-    "No relational implementation for reframe()" = TRUE,
+    "No relational implementation for {.code reframe()}" = TRUE,
     {
       return(out)
     }

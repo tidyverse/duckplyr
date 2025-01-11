@@ -4,7 +4,7 @@ group_size.duckplyr_df <- function(x) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
     # Always fall back to dplyr
-    "No relational implementation for group_size()" = TRUE,
+    "No relational implementation for {.code group_size()}" = TRUE,
     {
       return(out)
     }

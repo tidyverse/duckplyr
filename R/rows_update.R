@@ -3,7 +3,7 @@
 rows_update.duckplyr_df <- function(x, y, by = NULL, ..., unmatched = c("error", "ignore"), copy = FALSE, in_place = FALSE) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
-    "No relational implementation for rows_update()" = TRUE,
+    "No relational implementation for {.code rows_update()}" = TRUE,
     {
       return(out)
     }

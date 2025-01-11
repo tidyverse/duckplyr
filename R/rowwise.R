@@ -4,7 +4,7 @@ rowwise.duckplyr_df <- function(data, ...) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
     # Always fall back to dplyr
-    "No relational implementation for rowwise()" = TRUE,
+    "No relational implementation for {.code rowwise()}" = TRUE,
     {
       return(out)
     }

@@ -3,7 +3,7 @@
 ungroup.duckplyr_df <- function(x, ...) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
-    "No relational implementation for ungroup()" = TRUE,
+    "No relational implementation for {.code ungroup()}" = TRUE,
     {
       return(out)
     }
