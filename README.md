@@ -337,7 +337,8 @@ locally is possible as well.
 
 ## Using duckplyr in other packages
 
-Refer to `vignette("developers")`.
+Refer to
+[`vignette("developers")`](https://duckplyr.tidyverse.org/dev/articles/developers.html).
 
 ## Telemetry
 

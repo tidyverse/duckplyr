@@ -29,6 +29,8 @@ clean_output <- function(x, options) {
   index <- strsplit(paste(index, collapse = "\n"), "\n---\n")[[1]][[2]]
   writeLines(index, "index.md")
 
+  # FIXME: Change to the main site after release
+  x <- gsub('(`vignette[(]"([^"]+)"[)]`)', "[\\1](https://duckplyr.tidyverse.org/dev/articles/\\2.html)", x)
   x <- fansi::strip_sgr(x)
   x
 }
