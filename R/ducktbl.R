@@ -31,7 +31,7 @@
 #' For lazy duckplyr frames, accessing a column or requesting the number of rows
 #' triggers an error.
 #' This is a good choice for large data sets where the cost of materializing the data
-#' may be prohibitive or where the cost of the computation is high,
+#' may be prohibitive due to size or computation time,
 #' and the user wants to control when the computation is carried out.
 #' This is the default for the ingestion functions like [duck_parquet()].
 #' It is safe to use `duck_parquet(lazy = FALSE)`
