@@ -114,7 +114,7 @@ starts the computation:
 
 ``` r
 out$month
-#> [1] 2 4 5 1 3 6
+#> [1] 4 1 3 6 2 5
 ```
 
 Note that, unlike dplyr, the results are not ordered, see `?config` for
@@ -125,12 +125,12 @@ out
 #> # A tibble: 6 × 4
 #>    year month mean_inflight_delay median_inflight_delay
 #>   <int> <int>               <dbl>                 <dbl>
-#> 1  2013     2               -5.15                    -6
-#> 2  2013     4               -2.67                    -5
-#> 3  2013     5               -9.37                   -10
-#> 4  2013     1               -3.86                    -5
-#> 5  2013     3               -7.36                    -9
-#> 6  2013     6               -4.24                    -7
+#> 1  2013     4               -2.67                    -5
+#> 2  2013     1               -3.86                    -5
+#> 3  2013     3               -7.36                    -9
+#> 4  2013     6               -4.24                    -7
+#> 5  2013     2               -5.15                    -6
+#> 6  2013     5               -9.37                   -10
 ```
 
 Restart R, or call `duckplyr::methods_restore()` to revert to the
@@ -172,7 +172,7 @@ materialization of the results on access.
 
 ``` r
 nrow(flights)
-#> Error: Materialization is disabled, use collect() or as_tibble() to materialize.
+#> Error: Materialization would result in 9091 rows, which exceeds the limit of 9090. Use collect() or as_tibble() to materialize.
 ```
 
 Queries on the remote data are executed lazily, and the results are not

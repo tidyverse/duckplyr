@@ -130,14 +130,14 @@ class(out)
 Nothing has been computed yet.
 Querying the number of rows, or a column, starts the computation:
 
-```{r}
+```{r cache = TRUE}
 out$month
 ```
 
 Note that, unlike dplyr, the results are not ordered, see `?config` for details.
 However, once materialized, the results are stable:
 
-```{r}
+```{r cache = TRUE}
 out
 ```
 

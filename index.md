@@ -112,7 +112,7 @@ Querying the number of rows, or a column, starts the computation:
 
 ``` r
 out$month
-#> [1] 2 4 5 1 3 6
+#> [1] 4 1 3 6 2 5
 ```
 
 Note that, unlike dplyr, the results are not ordered, see `?config` for details.
@@ -124,12 +124,12 @@ out
 #> [38;5;246m# A tibble: 6 × 4[39m
 #>    [1myear[22m [1mmonth[22m [1mmean_inflight_delay[22m [1mmedian_inflight_delay[22m
 #>   [3m[38;5;246m<int>[39m[23m [3m[38;5;246m<int>[39m[23m               [3m[38;5;246m<dbl>[39m[23m                 [3m[38;5;246m<dbl>[39m[23m
-#> [38;5;250m1[39m  [4m2[24m013     2               -[31m5[39m[31m.[39m[31m15[39m                    -[31m6[39m
-#> [38;5;250m2[39m  [4m2[24m013     4               -[31m2[39m[31m.[39m[31m67[39m                    -[31m5[39m
-#> [38;5;250m3[39m  [4m2[24m013     5               -[31m9[39m[31m.[39m[31m37[39m                   -[31m10[39m
-#> [38;5;250m4[39m  [4m2[24m013     1               -[31m3[39m[31m.[39m[31m86[39m                    -[31m5[39m
-#> [38;5;250m5[39m  [4m2[24m013     3               -[31m7[39m[31m.[39m[31m36[39m                    -[31m9[39m
-#> [38;5;250m6[39m  [4m2[24m013     6               -[31m4[39m[31m.[39m[31m24[39m                    -[31m7[39m
+#> [38;5;250m1[39m  [4m2[24m013     4               -[31m2[39m[31m.[39m[31m67[39m                    -[31m5[39m
+#> [38;5;250m2[39m  [4m2[24m013     1               -[31m3[39m[31m.[39m[31m86[39m                    -[31m5[39m
+#> [38;5;250m3[39m  [4m2[24m013     3               -[31m7[39m[31m.[39m[31m36[39m                    -[31m9[39m
+#> [38;5;250m4[39m  [4m2[24m013     6               -[31m4[39m[31m.[39m[31m24[39m                    -[31m7[39m
+#> [38;5;250m5[39m  [4m2[24m013     2               -[31m5[39m[31m.[39m[31m15[39m                    -[31m6[39m
+#> [38;5;250m6[39m  [4m2[24m013     5               -[31m9[39m[31m.[39m[31m37[39m                   -[31m10[39m
 ```
 
 Restart R, or call `duckplyr::methods_restore()` to revert to the default dplyr implementation.
@@ -171,7 +171,7 @@ Unlike with local data frames, the default is to disallow automatic materializat
 
 ``` r
 nrow(flights)
-#> Error: Materialization is disabled, use collect() or as_tibble() to materialize.
+#> Error: Materialization would result in 9091 rows, which exceeds the limit of 9090. Use collect() or as_tibble() to materialize.
 ```
 
 Queries on the remote data are executed lazily, and the results are not materialized until explicitly requested.
