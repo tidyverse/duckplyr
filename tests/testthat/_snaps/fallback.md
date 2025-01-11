@@ -67,7 +67,8 @@
 # wday()
 
     Code
-      duckdb_tibble(a = as.Date("2024-03-08")) %>% mutate(b = lubridate::wday(a, label = TRUE))
+      duckdb_tibble(a = as.Date("2024-03-08")) %>% mutate(b = lubridate::wday(a,
+        label = TRUE))
     Message
       i dplyr fallback recorded
         {"version":"0.3.1","message":"wday(label = ) not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"...3::...4(...1, label = TRUE)"},".by":"NULL",".keep":["all","used","unused","none"]}}
