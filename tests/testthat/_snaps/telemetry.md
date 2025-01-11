@@ -18,8 +18,8 @@
 ---
 
     Code
-      duckdb_tibble(a = 1:3, b = 4:6) %>% anti_join(tibble(a = 1:3, b = 4:6), by = c(a = "b"),
-      copy = FALSE, na_matches = "na")
+      duckdb_tibble(a = 1:3, b = 4:6) %>% anti_join(tibble(a = 1:3, b = 4:6), by = c(
+        a = "b"), copy = FALSE, na_matches = "na")
     Condition
       Error in `rel_try()`:
       ! anti_join: {"version":"0.3.1","message":"Error in anti_join","name":"anti_join","x":{"...1":"integer","...2":"integer"},"y":{"...1":"integer","...2":"integer"},"args":{"by":{"condition":"==","filter":"none","x":["...1"],"y":["...2"]},"copy":false,"na_matches":"na"}}
@@ -179,7 +179,8 @@
 ---
 
     Code
-      duckdb_tibble(a = 1:3, b = 4:6) %>% mutate(c = a + b, .by = a, .keep = "unused", )
+      duckdb_tibble(a = 1:3, b = 4:6) %>% mutate(c = a + b, .by = a, .keep = "unused",
+      )
     Condition
       Error in `rel_try()`:
       ! mutate: {"version":"0.3.1","message":"Error in mutate","name":"mutate","x":{"...1":"integer","...2":"integer"},"args":{"dots":{"...3":"...1 + ...2"},".by":"...1",".keep":"unused"}}
