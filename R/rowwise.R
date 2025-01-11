@@ -11,6 +11,8 @@ rowwise.duckplyr_df <- function(data, ...) {
   )
 
   # dplyr forward
+  check_lazy(data, duckplyr_error)
+
   rowwise <- dplyr$rowwise.data.frame
   out <- rowwise(data, ...)
   return(out)

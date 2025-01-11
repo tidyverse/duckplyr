@@ -11,6 +11,8 @@ group_keys.duckplyr_df <- function(.tbl, ...) {
   )
 
   # dplyr forward
+  check_lazy(.tbl, duckplyr_error)
+
   group_keys <- dplyr$group_keys.data.frame
   out <- group_keys(.tbl, ...)
   return(out)

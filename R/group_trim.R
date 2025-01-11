@@ -11,6 +11,8 @@ group_trim.duckplyr_df <- function(.tbl, .drop = group_by_drop_default(.tbl)) {
   )
 
   # dplyr forward
+  check_lazy(.tbl, duckplyr_error)
+
   group_trim <- dplyr$group_trim.data.frame
   out <- group_trim(.tbl, .drop)
   return(out)

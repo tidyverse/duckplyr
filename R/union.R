@@ -8,6 +8,8 @@ union.duckplyr_df <- function(x, y, ...) {
   return(distinct(union_all(x, y)))
 
   # dplyr forward
+  check_lazy(x, duckplyr_error)
+
   union <- dplyr$union.data.frame
   out <- union(x, y, ...)
   return(out)

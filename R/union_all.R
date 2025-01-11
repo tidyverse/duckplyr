@@ -47,6 +47,8 @@ union_all.duckplyr_df <- function(x, y, ...) {
   )
 
   # dplyr forward
+  check_lazy(x, duckplyr_error)
+
   union_all <- dplyr$union_all.data.frame
   out <- union_all(x, y, ...)
   return(out)

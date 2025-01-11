@@ -10,6 +10,8 @@ do.duckplyr_df <- function(.data, ...) {
   )
 
   # dplyr forward
+  check_lazy(.data, duckplyr_error)
+
   do <- dplyr$do.data.frame
   out <- do(.data, ...)
   return(out)

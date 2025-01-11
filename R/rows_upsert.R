@@ -10,6 +10,8 @@ rows_upsert.duckplyr_df <- function(x, y, by = NULL, ..., copy = FALSE, in_place
   )
 
   # dplyr forward
+  check_lazy(x, duckplyr_error)
+
   rows_upsert <- dplyr$rows_upsert.data.frame
   out <- rows_upsert(x, y, by, ..., copy = copy, in_place = in_place)
   return(out)
