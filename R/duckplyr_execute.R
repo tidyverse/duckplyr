@@ -18,7 +18,7 @@
 #' @examples
 #' duckplyr_execute("SET threads TO 2")
 duckplyr_execute <- function(sql) {
-  lifecycle::deprecate_soft("1.0.0", "duckplyr_execute()", "duck_exec()")
+  lifecycle::deprecate_soft("1.0.0", "duckplyr_execute()", "db_exec()")
 
   con <- get_default_duckdb_connection()
   invisible(DBI::dbExecute(con, sql))

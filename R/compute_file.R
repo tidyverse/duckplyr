@@ -51,7 +51,7 @@ compute_parquet <- function(x, path, ..., lazy = NULL, options = NULL) {
     path <- file.path(path, "**", "**.parquet")
   }
 
-  duck_parquet(path, lazy = lazy)
+  read_parquet_duckdb(path, lazy = lazy)
 }
 
 #' compute_csv()
@@ -81,5 +81,5 @@ compute_csv <- function(x, path, ..., lazy = NULL, options = NULL) {
     path <- file.path(path, "**", "**.csv")
   }
 
-  duck_csv(path, lazy = lazy)
+  read_csv_duckdb(path, lazy = lazy)
 }

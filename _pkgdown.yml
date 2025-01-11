@@ -12,8 +12,8 @@ reference:
 - title: Using duckplyr
   contents:
   - duckdb_tibble
-  - duck_file
-  - duck_sql
+  - read_file_duckdb
+  - read_sql_duckdb
 
 - title: dplyr verbs
 
@@ -76,7 +76,7 @@ reference:
   - fallback
   - stats_show
   - last_rel
-  - duck_exec
+  - db_exec
 
 - title: Relational operations and expressions
   contents:
