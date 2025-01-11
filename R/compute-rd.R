@@ -1,6 +1,6 @@
 #' @title Compute results (duckplyr)
 #'
-#' @description  This is a method for the [`dplyr::compute()`] generic.
+#' @description  This is a method for the [dplyr::compute()] generic.
 #' For a (lazy) duckplyr frame,
 #' `compute()` executes a query but stores it in a (temporary) table,
 #' or in a Parquet or CSV file.
@@ -19,7 +19,7 @@
 #' df <- mutate(df, y = 2)
 #' df <- compute(df)
 #' explain(df)
-#' @seealso [`dplyr::collect()`]
+#' @seealso [dplyr::collect()]
 #' @rdname compute.duckplyr_df
 #' @name compute.duckplyr_df
 NULL

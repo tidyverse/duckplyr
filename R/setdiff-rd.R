@@ -1,6 +1,6 @@
 #' @title Set diff
 #'
-#' @description  This is a method for the [`dplyr::setdiff()`] generic.
+#' @description  This is a method for the [dplyr::setdiff()] generic.
 #' See "Fallbacks" section for differences in implementation.
 #' `setdiff(x, y)` finds all rows in `x` that aren't in `y`.
 #'
@@ -10,7 +10,7 @@
 #' df2 <- tibble(x = 3:5)
 #' setdiff(df1, df2)
 #' setdiff(df2, df1)
-#' @seealso [`dplyr::setdiff()`]
+#' @seealso [dplyr::setdiff()]
 #' @rdname setdiff.duckplyr_df
 #' @name setdiff.duckplyr_df
 NULL

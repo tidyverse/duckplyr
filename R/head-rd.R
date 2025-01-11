@@ -1,6 +1,6 @@
 #' @title Return the First Parts of an Object
 #'
-#' @description  This is a method for the [`head()`] generic.
+#' @description  This is a method for the [head()] generic.
 #' See "Fallbacks" section for differences in implementation.
 #' Return the first rows of a data.frame
 #'
@@ -9,7 +9,7 @@
 #' @param ... Not used yet.
 #' @examples
 #' head(mtcars, 2)
-#' @seealso [`head()`]
+#' @seealso [head()]
 #' @rdname head.duckplyr_df
 #' @name head.duckplyr_df
 NULL

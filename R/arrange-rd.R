@@ -1,6 +1,6 @@
 #' @title Order rows using column values
 #'
-#' @description  This is a method for the [`dplyr::arrange()`] generic.
+#' @description  This is a method for the [dplyr::arrange()] generic.
 #' See "Fallbacks" section for differences in implementation.
 #' `arrange()` orders the rows of a data frame by the values of selected
 #' columns.
@@ -16,7 +16,7 @@
 #' library("duckplyr")
 #' arrange(mtcars, cyl, disp)
 #' arrange(mtcars, desc(disp))
-#' @seealso [`dplyr::arrange()`]
+#' @seealso [dplyr::arrange()]
 #' @rdname arrange.duckplyr_df
 #' @name arrange.duckplyr_df
 NULL

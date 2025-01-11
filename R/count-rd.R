@@ -1,6 +1,6 @@
 #' @title Count the observations in each group
 #'
-#' @description  This is a method for the [`dplyr::count()`] generic.
+#' @description  This is a method for the [dplyr::count()] generic.
 #' See "Fallbacks" section for differences in implementation.
 #' `count()` lets you quickly count the unique values of one or more variables:
 #' `df %>% count(a, b)` is roughly equivalent to
@@ -13,7 +13,7 @@
 #' @examples
 #' library("duckplyr")
 #' count(mtcars, am)
-#' @seealso [`dplyr::count()`]
+#' @seealso [dplyr::count()]
 #' @rdname count.duckplyr_df
 #' @name count.duckplyr_df
 NULL

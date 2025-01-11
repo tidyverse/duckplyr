@@ -28,7 +28,7 @@ lines <- c(
   "#' @name not-supported",
   "#' @section Unsupported verbs:",
   "#' For these verbs, duckplyr will fall back to dplyr.",
-  paste(paste0("#' - [`", not_implemented, "()`]"), collapse = "\n"),
+  paste(paste0("#' - [", not_implemented, "()]"), collapse = "\n"),
   "NULL"
 )
 
