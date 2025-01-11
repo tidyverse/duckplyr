@@ -10,7 +10,8 @@
 #'
 #' @inheritParams dplyr::filter
 #' @examples
-#' filter(mtcars, mpg > 30)
+#' df <- tibble(x = 1:3, y = 3:1)
+#' filter(df, x >= 2)
 #' @seealso [`dplyr::filter()`]
 #' @rdname filter.duckplyr_df
 #' @name filter.duckplyr_df

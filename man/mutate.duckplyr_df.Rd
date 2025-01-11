@@ -62,7 +62,7 @@ and delete columns (by setting their value to \code{NULL}).
 }
 \examples{
 library("duckplyr")
-df <- data.frame(x = c(1, 2), row.names = c("a", "b"))
+df <- data.frame(x = c(1, 2))
 df <- mutate(df, y = 2)
 df
 }

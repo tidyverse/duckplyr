@@ -39,12 +39,12 @@ of fallback events.
 \examples{
 # Sys.setenv(DUCKPLYR_OUTPUT_ORDER = TRUE)
 data.frame(a = 3:1) \%>\%
-  as_duckplyr_df() \%>\%
+  as_duckdb_tibble() \%>\%
   inner_join(data.frame(a = 1:4), by = "a")
 
 withr::with_envvar(c(DUCKPLYR_OUTPUT_ORDER = "TRUE"), {
   data.frame(a = 3:1) \%>\%
-    as_duckplyr_df() \%>\%
+    as_duckdb_tibble() \%>\%
     inner_join(data.frame(a = 1:4), by = "a")
 })
 
@@ -54,19 +54,19 @@ add_one <- function(x) {
 }
 
 data.frame(a = 3:1) \%>\%
-  as_duckplyr_df() \%>\%
+  as_duckdb_tibble() \%>\%
   mutate(b = add_one(a))
 
 try(withr::with_envvar(c(DUCKPLYR_FORCE = "TRUE"), {
   data.frame(a = 3:1) \%>\%
-    as_duckplyr_df() \%>\%
+    as_duckdb_tibble() \%>\%
     mutate(b = add_one(a))
 }))
 
 # Sys.setenv(DUCKPLYR_FALLBACK_INFO = TRUE)
 withr::with_envvar(c(DUCKPLYR_FALLBACK_INFO = "TRUE"), {
   data.frame(a = 3:1) \%>\%
-    as_duckplyr_df() \%>\%
+    as_duckdb_tibble() \%>\%
     mutate(b = add_one(a))
 })
 }

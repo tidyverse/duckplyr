@@ -26,10 +26,6 @@
 #' @examples
 #' tibble(a = 1:3) %>%
 #'   mutate(b = a + 1)
-#'
-#' tibble(a = 1:3) %>%
-#'   as_duckplyr_df() %>%
-#'   mutate(b = a + 1)
 as_duckplyr_df <- function(.data) {
   lifecycle::deprecate_soft("1.0.0", "as_duckplyr_df()", "as_duckdb_tibble()")
 

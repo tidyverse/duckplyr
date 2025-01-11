@@ -5,10 +5,11 @@
 #' than `print()`, and is more focused on human readable output than `str()`.
 #'
 #' @inheritParams dplyr::explain
-#' @examplesIf identical(Sys.getenv("IN_PKGDOWN"), "true") || (rlang::is_interactive() && rlang::is_installed("dbplyr") && rlang::is_installed("Lahman"))
-#' lahman_s <- dbplyr::lahman_sqlite()
-#' batting <- tbl(lahman_s, "Batting")
-#' explain(batting)
+#' @examples
+#' library("duckplyr")
+#' df <- tibble(x = c(1, 2))
+#' df <- mutate(df, y = 2)
+#' explain(df)
 #' @seealso [`dplyr::explain()`]
 #' @rdname explain.duckplyr_df
 #' @name explain.duckplyr_df

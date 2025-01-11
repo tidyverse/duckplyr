@@ -18,7 +18,7 @@ split by fallbacks to dplyr and requests handled by duckdb.
 stats_show()
 
 tibble(a = 1:3) \%>\%
-  as_duckplyr_df() \%>\%
+  as_duckplyr_tibble() \%>\%
   mutate(b = a + 1)
 
 stats_show()
