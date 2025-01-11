@@ -210,7 +210,7 @@ test_that("as_duckplyr_df_impl() and collect()", {
 
   # Run
   pre <- test_df %>% as_duckplyr_df_impl() %>% collect()
-  post <- test_df %>% collect() %>% as_duckplyr_df_impl()
+  post <- test_df %>% collect()
 
   # Compare
   expect_identical(pre, post)
@@ -225,7 +225,7 @@ test_that("as_duckplyr_df_impl() and collect()", {
 
   # Run
   pre <- test_df %>% as_duckplyr_df_impl() %>% collect()
-  post <- test_df %>% collect() %>% as_duckplyr_df_impl()
+  post <- test_df %>% collect()
 
   # Compare
   expect_identical(pre, post)
