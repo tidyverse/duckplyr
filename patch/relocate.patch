@@ -7,7 +7,7 @@ diff --git b/R/relocate.R a/R/relocate.R
  #' @export
  relocate.duckplyr_df <- function(.data, ..., .before = NULL, .after = NULL) {
 -  # Our implementation
--  rel_try(NULL,
+-  duckplyr_error <- rel_try(NULL,
 -    "No relational implementation for relocate()" = TRUE,
 +  loc <- eval_relocate(
 +    expr = expr(c(...)),

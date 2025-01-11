@@ -7,7 +7,7 @@ diff --git b/R/arrange.R a/R/arrange.R
  #' @export
  arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
 -  # Our implementation
--  rel_try(NULL,
+-  duckplyr_error <- rel_try(NULL,
 -    "No relational implementation for arrange()" = TRUE,
 +  force(.data)
 +

@@ -11,7 +11,7 @@ diff --git b/R/distinct.R a/R/distinct.R
 +  dots <- enquos(..., .named = TRUE)
 +
    # Our implementation
--  rel_try(NULL,
+-  duckplyr_error <- rel_try(NULL,
 -    "No relational implementation for distinct()" = TRUE,
 +  rel_try(list(name = "distinct", x = .data, args = try_list(dots = dots, .keep_all = .keep_all)),
 +    "Implemented for all cases?" = FALSE,

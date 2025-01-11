@@ -7,7 +7,7 @@ diff --git b/R/count.R a/R/count.R
  #' @export
  count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .drop = group_by_drop_default(x)) {
 -  # Our implementation
--  rel_try(NULL,
+-  duckplyr_error <- rel_try(NULL,
 -    "No relational implementation for count()" = TRUE,
 +  force(x)
 +

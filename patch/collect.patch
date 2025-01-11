@@ -6,7 +6,7 @@ diff --git b/R/collect.R a/R/collect.R
  #' @export
  collect.duckplyr_df <- function(x, ...) {
 -  # Our implementation
--  rel_try(NULL,
+-  duckplyr_error <- rel_try(NULL,
 -    "No relational implementation for collect()" = TRUE,
 -    {
 -      return(out)

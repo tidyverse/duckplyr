@@ -7,7 +7,7 @@ diff --git b/R/select.R a/R/select.R
  #' @export
  select.duckplyr_df <- function(.data, ...) {
 -  # Our implementation
--  rel_try(NULL,
+-  duckplyr_error <- rel_try(NULL,
 -    "No relational implementation for select()" = TRUE,
 +  force(.data)
 +

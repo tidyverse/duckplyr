@@ -11,14 +11,14 @@ diff --git b/R/group_split.R a/R/group_split.R
 +  }
 +
    # Our implementation
-   rel_try(NULL,
+   duckplyr_error <- rel_try(NULL,
      # Always fall back to dplyr
 @@ -12,7 +17,7 @@ group_split.duckplyr_df <- function(.tbl, ..., .keep = TRUE, keep = deprecated()
- 
+
    # dplyr forward
    group_split <- dplyr$group_split.data.frame
 -  out <- group_split(.tbl, ..., .keep = .keep, keep = keep)
 +  out <- group_split(.tbl, ..., .keep = .keep)
    return(out)
- 
+
    # dplyr implementation

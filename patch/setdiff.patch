@@ -7,7 +7,7 @@ diff --git b/R/setdiff.R a/R/setdiff.R
  #' @export
  setdiff.duckplyr_df <- function(x, y, ...) {
    # Our implementation
--  rel_try(NULL,
+-  duckplyr_error <- rel_try(NULL,
 -    "No relational implementation for setdiff()" = TRUE,
 +  check_dots_empty()
 +  check_compatible(x, y)

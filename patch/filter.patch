@@ -7,7 +7,7 @@ diff --git b/R/filter.R a/R/filter.R
  #' @export
  filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
 -  # Our implementation
--  rel_try(NULL,
+-  duckplyr_error <- rel_try(NULL,
 -    "No relational implementation for filter()" = TRUE,
 +  force(.data)
 +

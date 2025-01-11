@@ -11,14 +11,14 @@ diff --git b/R/group_modify.R a/R/group_modify.R
 +  }
 +
    # Our implementation
-   rel_try(NULL,
+   duckplyr_error <- rel_try(NULL,
      # Always fall back to dplyr
 @@ -12,7 +17,7 @@ group_modify.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = depre
- 
+
    # dplyr forward
    group_modify <- dplyr$group_modify.data.frame
 -  out <- group_modify(.data, .f, ..., .keep = .keep, keep = keep)
 +  out <- group_modify(.data, .f, ..., .keep = .keep)
    return(out)
- 
+
    # dplyr implementation

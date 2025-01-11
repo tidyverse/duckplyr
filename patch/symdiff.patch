@@ -7,7 +7,7 @@ diff --git b/R/symdiff.R a/R/symdiff.R
  #' @export
  symdiff.duckplyr_df <- function(x, y, ...) {
    # Our implementation
--  rel_try(NULL,
+-  duckplyr_error <- rel_try(NULL,
 -    "No relational implementation for symdiff()" = TRUE,
 +  check_dots_empty()
 +  check_compatible(x, y)

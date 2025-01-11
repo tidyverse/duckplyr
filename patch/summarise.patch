@@ -9,7 +9,7 @@ diff --git b/R/summarise.R a/R/summarise.R
  #' @export
  summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
 -  # Our implementation
--  rel_try(NULL,
+-  duckplyr_error <- rel_try(NULL,
 -    "No relational implementation for summarise()" = TRUE,
 +  force(.data)
 +
