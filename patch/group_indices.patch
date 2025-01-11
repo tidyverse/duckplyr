@@ -1,5 +1,4 @@
 diff --git b/R/group_indices.R a/R/group_indices.R
-index 99ba176e..26d93d5c 100644
 --- b/R/group_indices.R
 +++ a/R/group_indices.R
 @@ -25,7 +25,7 @@ group_indices.duckplyr_df <- function(.data, ...) {

@@ -1,5 +1,4 @@
 diff --git b/R/slice_sample.R a/R/slice_sample.R
-index e46518e3..203f9738 100644
 --- b/R/slice_sample.R
 +++ a/R/slice_sample.R
 @@ -11,7 +11,7 @@ slice_sample.duckplyr_df <- function(.data, ..., n, prop, by = NULL, weight_by =

@@ -230,6 +230,6 @@ walk(r_status, function(file) {
   if (fs::file_exists(patch_path)) {
     system(paste0("patch -p1 -R < ", patch_path))
   }
-  system(paste0("git diff -R -- ", file, " > ", patch_path))
+  system(paste0("git diff -R -- ", file, " | grep -v '^index' > ", patch_path))
   system(paste0("git checkout -- ", file))
 })

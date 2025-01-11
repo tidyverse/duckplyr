@@ -1,5 +1,4 @@
 diff --git b/R/nest_by.R a/R/nest_by.R
-index 75fdf19f..e18cf3dc 100644
 --- b/R/nest_by.R
 +++ a/R/nest_by.R
 @@ -16,7 +16,7 @@ nest_by.duckplyr_df <- function(.data, ..., .key = "data", .keep = FALSE) {

@@ -1,5 +1,4 @@
 diff --git b/R/select.R a/R/select.R
-index 8cd902b3..9c6fffe5 100644
 --- b/R/select.R
 +++ a/R/select.R
 @@ -1,14 +1,37 @@

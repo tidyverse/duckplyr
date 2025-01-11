@@ -1,5 +1,4 @@
 diff --git b/R/intersect.R a/R/intersect.R
-index 56c4da18..be33146d 100644
 --- b/R/intersect.R
 +++ a/R/intersect.R
 @@ -1,10 +1,44 @@

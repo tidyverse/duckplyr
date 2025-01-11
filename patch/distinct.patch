@@ -1,5 +1,4 @@
 diff --git b/R/distinct.R a/R/distinct.R
-index aa7db69a..bf18ef6d 100644
 --- b/R/distinct.R
 +++ a/R/distinct.R
 @@ -1,10 +1,69 @@

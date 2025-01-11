@@ -1,5 +1,4 @@
 diff --git b/R/compute.R a/R/compute.R
-index 1d755809..d3593903 100644
 --- b/R/compute.R
 +++ a/R/compute.R
 @@ -1,10 +1,45 @@

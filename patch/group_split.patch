@@ -1,5 +1,4 @@
 diff --git b/R/group_split.R a/R/group_split.R
-index 9f6147a8..efe84f45 100644
 --- b/R/group_split.R
 +++ a/R/group_split.R
 @@ -1,6 +1,11 @@

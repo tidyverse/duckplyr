@@ -1,5 +1,4 @@
 diff --git b/R/full_join.R a/R/full_join.R
-index bedc34c2..4ed707a5 100644
 --- b/R/full_join.R
 +++ a/R/full_join.R
 @@ -1,17 +1,30 @@

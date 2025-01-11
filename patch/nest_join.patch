@@ -1,5 +1,4 @@
 diff --git b/R/nest_join.R a/R/nest_join.R
-index 63f79312..f2eac9f9 100644
 --- b/R/nest_join.R
 +++ a/R/nest_join.R
 @@ -1,6 +1,16 @@

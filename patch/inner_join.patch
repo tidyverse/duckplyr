@@ -1,5 +1,4 @@
 diff --git b/R/inner_join.R a/R/inner_join.R
-index f6d93b45..d913172d 100644
 --- b/R/inner_join.R
 +++ a/R/inner_join.R
 @@ -1,17 +1,32 @@

@@ -1,5 +1,4 @@
 diff --git b/R/collect.R a/R/collect.R
-index c0f8122f..64014d75 100644
 --- b/R/collect.R
 +++ a/R/collect.R
 @@ -1,20 +1,8 @@

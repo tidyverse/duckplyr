@@ -1,5 +1,4 @@
 diff --git b/R/left_join.R a/R/left_join.R
-index e06f3dbb..c622e040 100644
 --- b/R/left_join.R
 +++ a/R/left_join.R
 @@ -1,17 +1,33 @@

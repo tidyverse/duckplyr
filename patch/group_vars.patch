@@ -1,5 +1,4 @@
 diff --git b/R/group_vars.R a/R/group_vars.R
-index b672d469..10a150b1 100644
 --- b/R/group_vars.R
 +++ a/R/group_vars.R
 @@ -1,21 +1,12 @@
