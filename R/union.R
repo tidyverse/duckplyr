@@ -7,6 +7,8 @@ union.duckplyr_df <- function(x, y, ...) {
   # This is difficult to do manually due to order preservation
   return(distinct(union_all(x, y)))
 
+  duckplyr_error <- NULL
+
   # dplyr forward
   check_lazy(x, duckplyr_error)
 
