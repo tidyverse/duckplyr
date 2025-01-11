@@ -1,5 +1,16 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9914 (2025-01-11)
+
+## Features
+
+- `collect()` returns a tibble (#438, #447).
+
+## Chore
+
+- Sync tests (#446).
+
+
 # duckplyr 0.99.99.9913 (2025-01-05)
 
 ## Documentation
