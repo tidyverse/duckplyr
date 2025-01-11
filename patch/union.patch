@@ -5,7 +5,7 @@ diff --git b/R/union.R a/R/union.R
  #' @export
  union.duckplyr_df <- function(x, y, ...) {
    # Our implementation
--  rel_try(NULL,
+-  duckplyr_error <- rel_try(NULL,
 -    "No relational implementation for union()" = TRUE,
 -    {
 -      return(out)

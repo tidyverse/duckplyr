@@ -9,7 +9,7 @@ filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
 
   by <- enquo(.by)
 
-  rel_try(list(name = "filter", x = .data, args = try_list(dots = dots, by = by, preserve = .preserve)),
+  duckplyr_error <- rel_try(list(name = "filter", x = .data, args = try_list(dots = dots, by = by, preserve = .preserve)),
     #' @section Fallbacks:
     #' You cannot use `filter.duckplyr_df()`
     #' - with no filter conditions,

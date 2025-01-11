@@ -8,7 +8,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
   by_names <- eval_select_by(by_arg, .data)
 
   # Our implementation
-  rel_try(list(name = "mutate", x = .data, args = try_list(dots = enquos(...), .by = by_arg, .keep = .keep)),
+  duckplyr_error <- rel_try(list(name = "mutate", x = .data, args = try_list(dots = enquos(...), .by = by_arg, .keep = .keep)),
     "Implemented for all cases?" = FALSE,
     {
       rel <- duckdb_rel_from_df(.data)

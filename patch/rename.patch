@@ -7,7 +7,7 @@ diff --git b/R/rename.R a/R/rename.R
  #' @export
  rename.duckplyr_df <- function(.data, ...) {
 -  # Our implementation
--  rel_try(NULL,
+-  duckplyr_error <- rel_try(NULL,
 -    "No relational implementation for rename()" = TRUE,
 +  loc <- tidyselect::eval_rename(expr(c(...)), .data)
 +  dupes <- duplicated(loc, fromLast = TRUE)
@@ -19,7 +19,7 @@ diff --git b/R/rename.R a/R/rename.R
 +
 +  exprs <- exprs_from_loc(.data, proj)
 +
-+  rel_try(list(name = "rename", x = .data, args = try_list(dots = enquos(...))),
++  duckplyr_error <- rel_try(list(name = "rename", x = .data, args = try_list(dots = enquos(...))),
 +    #' @section Fallbacks:
 +    #' You cannot use `rename.duckplyr_df()`
 +    #' - with a selection that returns no columns.

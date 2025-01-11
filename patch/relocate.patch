@@ -7,7 +7,7 @@ diff --git b/R/relocate.R a/R/relocate.R
  #' @export
  relocate.duckplyr_df <- function(.data, ..., .before = NULL, .after = NULL) {
 -  # Our implementation
--  rel_try(NULL,
+-  duckplyr_error <- rel_try(NULL,
 -    "No relational implementation for relocate()" = TRUE,
 +  loc <- eval_relocate(
 +    expr = expr(c(...)),
@@ -21,7 +21,7 @@ diff --git b/R/relocate.R a/R/relocate.R
 +  exprs <- exprs_from_loc(.data, loc)
 +
 +  # Ensure `relocate()` appears in call stack
-+  rel_try(list(name = "relocate", x = .data, args = try_list(dots = enquos(...), .before = enquo(.before), .after = enquo(.after))),
++  duckplyr_error <- rel_try(list(name = "relocate", x = .data, args = try_list(dots = enquos(...), .before = enquo(.before), .after = enquo(.after))),
 +    #' @section Fallbacks:
 +    #' You cannot use `relocate.duckplyr_df()`
 +    #' - with a selection that returns no columns.

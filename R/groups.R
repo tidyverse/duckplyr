@@ -2,7 +2,7 @@
 #' @export
 groups.duckplyr_df <- function(x) {
   # Our implementation
-  rel_try(NULL,
+  duckplyr_error <- rel_try(NULL,
     # Always fall back to dplyr
     "No relational implementation for groups()" = TRUE,
     {

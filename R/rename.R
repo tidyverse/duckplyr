@@ -12,7 +12,7 @@ rename.duckplyr_df <- function(.data, ...) {
 
   exprs <- exprs_from_loc(.data, proj)
 
-  rel_try(list(name = "rename", x = .data, args = try_list(dots = enquos(...))),
+  duckplyr_error <- rel_try(list(name = "rename", x = .data, args = try_list(dots = enquos(...))),
     #' @section Fallbacks:
     #' You cannot use `rename.duckplyr_df()`
     #' - with a selection that returns no columns.

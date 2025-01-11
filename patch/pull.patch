@@ -7,7 +7,7 @@ diff --git b/R/pull.R a/R/pull.R
  #' @export
  pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
 -  # Our implementation
--  rel_try(NULL,
+-  duckplyr_error <- rel_try(NULL,
 -    "No relational implementation for pull()" = TRUE,
 +  # dplyr implementation
 +  my_var <- tidyselect::vars_pull(names(.data), !!enquo(var))
@@ -21,7 +21,7 @@ diff --git b/R/pull.R a/R/pull.R
 +
 +  exprs <- exprs_from_loc(.data, loc)
 +
-+  rel_try(list(name = "pull", .data = .data),
++  duckplyr_error <- rel_try(list(name = "pull", .data = .data),
 +    #' @section Fallbacks:
 +    #' You cannot use `pull.duckplyr_df()`
 +    #' - with a selection that returns no columns.

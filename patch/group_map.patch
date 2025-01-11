@@ -11,7 +11,7 @@ diff --git b/R/group_map.R a/R/group_map.R
 +  }
 +
    # Our implementation
-   rel_try(NULL,
+   duckplyr_error <- rel_try(NULL,
      # Always fall back to dplyr
 @@ -12,7 +17,7 @@ group_map.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = deprecat
  

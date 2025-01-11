@@ -13,7 +13,7 @@ intersect.duckplyr_df <- function(x, y, ...) {
     y_names <- x_names
   }
 
-  rel_try(list(name = "intersect", x = x, y = y),
+  duckplyr_error <- rel_try(list(name = "intersect", x = x, y = y),
     #' @section Fallbacks:
     #' You cannot use `intersect.duckplyr_df()`
     #' - if column names are duplicated in one of the tables,

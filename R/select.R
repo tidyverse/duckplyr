@@ -14,7 +14,7 @@ select.duckplyr_df <- function(.data, ...) {
 
   exprs <- exprs_from_loc(.data, loc)
 
-  rel_try(list(name = "select", x = .data, args = try_list(dots = enquos(...))),
+  duckplyr_error <- rel_try(list(name = "select", x = .data, args = try_list(dots = enquos(...))),
     # We could count and create a zero-col data frame, but we can't
     # create a duckplyr frame from it anyway.
     #' @section Fallbacks:

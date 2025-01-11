@@ -3,7 +3,7 @@
 head.duckplyr_df <- function(x, n = 6L, ...) {
   stopifnot(is_integerish(n))
 
-  rel_try(list(name = "head", x = x, args = try_list(n = n)),
+  duckplyr_error <- rel_try(list(name = "head", x = x, args = try_list(n = n)),
     #' @section Fallbacks:
     #' You cannot use `head.duckplyr_df()`
     #' - with a negative `n`.

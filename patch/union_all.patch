@@ -7,7 +7,7 @@ diff --git b/R/union_all.R a/R/union_all.R
  #' @export
  union_all.duckplyr_df <- function(x, y, ...) {
    # Our implementation
--  rel_try(NULL,
+-  duckplyr_error <- rel_try(NULL,
 -    "No relational implementation for union_all()" = TRUE,
 +  check_dots_empty()
 +  check_compatible(x, y)
@@ -19,7 +19,7 @@ diff --git b/R/union_all.R a/R/union_all.R
 +    y_names <- x_names
 +  }
 +
-+  rel_try(list(name = "union_all", x = x, y = y),
++  duckplyr_error <- rel_try(list(name = "union_all", x = x, y = y),
 +    "No duplicate names" = !identical(x_names, y_names) && anyDuplicated(x_names) && anyDuplicated(y_names),
 +    #' @section Fallbacks:
 +    #' You cannot use `union_all.duckplyr_df()`

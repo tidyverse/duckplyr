@@ -8,7 +8,7 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
 
   by <- eval_select_by(enquo(.by), .data)
 
-  rel_try(list(name = "summarise", x = .data, args = try_list(dots = enquos(...), by = syms(by), .groups = .groups)),
+  duckplyr_error <- rel_try(list(name = "summarise", x = .data, args = try_list(dots = enquos(...), by = syms(by), .groups = .groups)),
     #' @section Fallbacks:
     #' You cannot use `summarise.duckplyr_df()`
     #' - with `.groups = "rowwise"`.

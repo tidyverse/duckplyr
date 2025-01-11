@@ -14,9 +14,9 @@ diff --git b/R/anti_join.R a/R/anti_join.R
 +  na_matches <- check_na_matches(na_matches, error_call = error_call)
 +
    # Our implementation
--  rel_try(NULL,
+-  duckplyr_error <- rel_try(NULL,
 -    "No relational implementation for anti_join()" = TRUE,
-+  rel_try(list(name = "anti_join", x = x, y = y, args = try_list(by = if (!is.null(by) && !is_cross_by(by)) as_join_by(by), copy = copy, na_matches = na_matches)),
++  duckplyr_error <- rel_try(list(name = "anti_join", x = x, y = y, args = try_list(by = if (!is.null(by) && !is_cross_by(by)) as_join_by(by), copy = copy, na_matches = na_matches)),
 +    "No restrictions" = FALSE,
      {
 +      out <- rel_join_impl(x, y, by, "anti", na_matches, error_call = error_call)

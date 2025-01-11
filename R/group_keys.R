@@ -2,7 +2,7 @@
 #' @export
 group_keys.duckplyr_df <- function(.tbl, ...) {
   # Our implementation
-  rel_try(NULL,
+  duckplyr_error <- rel_try(NULL,
     # Always fall back to dplyr
     "No relational implementation for group_keys()" = TRUE,
     {

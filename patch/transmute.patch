@@ -7,7 +7,7 @@ diff --git b/R/transmute.R a/R/transmute.R
  #' @export
  transmute.duckplyr_df <- function(.data, ...) {
 -  # Our implementation
--  rel_try(NULL,
+-  duckplyr_error <- rel_try(NULL,
 -    "No relational implementation for transmute()" = TRUE,
 +  force(.data)
 +
@@ -15,7 +15,7 @@ diff --git b/R/transmute.R a/R/transmute.R
 +  dots <- dplyr_quosures(!!!dots)
 +  dots <- fix_auto_name(dots)
 +
-+  rel_try(list(name = "transmute", x = .data, args = try_list(dots = enquos(...))),
++  duckplyr_error <- rel_try(list(name = "transmute", x = .data, args = try_list(dots = enquos(...))),
 +    #' @section Fallbacks:
 +    #' You cannot use `transmute.duckplyr_df()`
 +    #' - with a selection that returns no columns:
