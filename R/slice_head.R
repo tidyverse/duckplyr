@@ -2,7 +2,7 @@
 #' @export
 slice_head.duckplyr_df <- function(.data, ..., n, prop, by = NULL) {
   # Our implementation
-  rel_try(NULL,
+  duckplyr_error <- rel_try(NULL,
     "No relational implementation for slice_head()" = TRUE,
     {
       return(out)

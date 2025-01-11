@@ -12,7 +12,7 @@ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, na
   }
 
   # Our implementation
-  rel_try(NULL,
+  duckplyr_error <- rel_try(NULL,
     "No relational implementation for nest_join()" = TRUE,
     {
       return(out)

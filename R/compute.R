@@ -10,7 +10,7 @@ compute.duckplyr_df <- function(
   temporary = TRUE
 ) {
   # Our implementation
-  rel_try(NULL,
+  duckplyr_error <- rel_try(NULL,
     "Needs duckdb >= 1.1.3.9029" = !is_installed("duckdb", version = "1.1.3.9029"),
     {
       if (is.null(lazy)) {

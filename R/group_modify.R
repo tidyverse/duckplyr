@@ -7,7 +7,7 @@ group_modify.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = depre
   }
 
   # Our implementation
-  rel_try(NULL,
+  duckplyr_error <- rel_try(NULL,
     # Always fall back to dplyr
     "No relational implementation for group_modify()" = TRUE,
     {

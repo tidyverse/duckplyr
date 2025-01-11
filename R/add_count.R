@@ -2,7 +2,7 @@
 #' @export
 add_count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .drop = deprecated()) {
   # Our implementation
-  rel_try(NULL,
+  duckplyr_error <- rel_try(NULL,
     "No relational implementation for add_count()" = TRUE,
     {
       return(out)

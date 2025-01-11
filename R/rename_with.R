@@ -2,7 +2,7 @@
 #' @export
 rename_with.duckplyr_df <- function(.data, .fn, .cols = everything(), ...) {
   # Our implementation
-  rel_try(NULL,
+  duckplyr_error <- rel_try(NULL,
     "No relational implementation for rename_with()" = TRUE,
     {
       return(out)
