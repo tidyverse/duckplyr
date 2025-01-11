@@ -12,8 +12,8 @@ reference:
 - title: Using duckplyr
   contents:
   - duckdb_tibble
-  - duck_file
-  - duck_sql
+  - read_file_duckdb
+  - read_sql_duckdb
 
 - title: dplyr verbs
 

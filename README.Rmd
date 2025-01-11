@@ -166,7 +166,7 @@ Using the httpfs DuckDB extension, we can query these files directly from R, wit
 duck_exec("INSTALL httpfs")
 duck_exec("LOAD httpfs")
 
-flights <- duck_parquet(urls)
+flights <- read_parquet_duckdb(urls)
 ```
 
 Unlike with local data frames, the default is to disallow automatic materialization of the results on access.

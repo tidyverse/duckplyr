@@ -33,8 +33,8 @@
 #' This is a good choice for large data sets where the cost of materializing the data
 #' may be prohibitive due to size or computation time,
 #' and the user wants to control when the computation is carried out.
-#' This is the default for the ingestion functions like [duck_parquet()].
-#' It is safe to use `duck_parquet(lazy = FALSE)`
+#' This is the default for the ingestion functions like [read_parquet_duckdb()].
+#' It is safe to use `read_parquet_duckdb(lazy = FALSE)`
 #' if the data is small enough to be materialized at any stage.
 #'
 #' A lazy duckplyr frame can be converted to an eager one with `as_duckdb_tibble(.lazy = FALSE)`.
@@ -115,7 +115,7 @@ as_duckdb_tibble.tbl_duckdb_connection <- function(x, ...) {
   con <- dbplyr::remote_con(x)
   sql <- dbplyr::remote_query(x)
 
-  duck_sql(sql, lazy = FALSE, con = con)
+  read_sql_duckdb(sql, lazy = FALSE, con = con)
 }
 
 #' @export

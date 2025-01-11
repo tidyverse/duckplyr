@@ -70,8 +70,8 @@ triggers an error.
 This is a good choice for large data sets where the cost of materializing the data
 may be prohibitive due to size or computation time,
 and the user wants to control when the computation is carried out.
-This is the default for the ingestion functions like \code{\link[=duck_parquet]{duck_parquet()}}.
-It is safe to use \code{duck_parquet(lazy = FALSE)}
+This is the default for the ingestion functions like \code{\link[=read_parquet_duckdb]{read_parquet_duckdb()}}.
+It is safe to use \code{read_parquet_duckdb(lazy = FALSE)}
 if the data is small enough to be materialized at any stage.
 
 A lazy duckplyr frame can be converted to an eager one with \code{as_duckdb_tibble(.lazy = FALSE)}.

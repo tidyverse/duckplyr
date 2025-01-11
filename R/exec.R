@@ -8,10 +8,10 @@
 #' See <https://duckdb.org/docs/configuration/overview.html>
 #' for more information on the configuration options.
 #'
-#' @seealso [duck_sql()]
+#' @seealso [read_sql_duckdb()]
 #'
 #' @param sql The statement to run.
-#' @inheritParams duck_sql
+#' @inheritParams read_sql_duckdb
 #' @return The return value of the [DBI::dbExecute()] call, invisibly.
 #' @export
 #' @examples

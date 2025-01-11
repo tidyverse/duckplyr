@@ -91,7 +91,7 @@ The default mode for `as_duckdb_tibble()` is eager.
 This allows applying all data frame operations on the results, including column subsetting or retrieving the number of rows.
 In addition, if an operation cannot be carried out by duckdb, the dplyr fallback is used transparently.
 Use `.lazy = TRUE` to ensure that all operations are carried out by DuckDB, or fail.
-This is also the default for the ingestion functions such as `duck_parquet()`.
+This is also the default for the ingestion functions such as `read_parquet_duckdb()`.
 
 ```{r}
 lazy <-

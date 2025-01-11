@@ -29,5 +29,5 @@ for more information on the configuration options.
 duck_exec("SET threads TO 2")
 }
 \seealso{
-\code{\link[=duck_sql]{duck_sql()}}
+\code{\link[=read_sql_duckdb]{read_sql_duckdb()}}
 }

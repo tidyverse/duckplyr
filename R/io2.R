@@ -5,24 +5,24 @@
 #' In many cases, these functions return immediately because they only read the metadata.
 #' The actual data is only read when it is actually processed.
 #'
-#' @name duck_file
+#' @name read_file_duckdb
 NULL
 
 #' @description
-#' `duck_parquet()` reads a CSV file using DuckDB's `read_parquet()` table function.
+#' `read_parquet_duckdb()` reads a CSV file using DuckDB's `read_parquet()` table function.
 #'
-#' @rdname duck_file
+#' @rdname read_file_duckdb
 #' @export
-duck_parquet <- function(path, ..., lazy = TRUE, options = list()) {
+read_parquet_duckdb <- function(path, ..., lazy = TRUE, options = list()) {
   check_dots_empty()
 
-  duck_file(path, "read_parquet", lazy = lazy, options = options)
+  read_file_duckdb(path, "read_parquet", lazy = lazy, options = options)
 }
 
 #' @description
-#' `duck_csv()` reads a CSV file using DuckDB's `read_csv_auto()` table function.
+#' `read_csv_duckdb()` reads a CSV file using DuckDB's `read_csv_auto()` table function.
 #'
-#' @rdname duck_file
+#' @rdname read_file_duckdb
 #' @export
 #' @examples
 #' # Create simple CSV file
@@ -30,7 +30,7 @@ duck_parquet <- function(path, ..., lazy = TRUE, options = list()) {
 #' write.csv(data.frame(a = 1:3, b = letters[4:6]), path, row.names = FALSE)
 #'
 #' # Reading is immediate
-#' df <- duck_csv(path)
+#' df <- read_csv_duckdb(path)
 #'
 #' # Names are always available
 #' names(df)
@@ -42,24 +42,24 @@ duck_parquet <- function(path, ..., lazy = TRUE, options = list()) {
 #' collect(df)$a
 #'
 #' # Automatic materialization with lazy = FALSE
-#' df <- duck_csv(path, lazy = FALSE)
+#' df <- read_csv_duckdb(path, lazy = FALSE)
 #' df$a
 #'
 #' # Specify column types
-#' duck_csv(
+#' read_csv_duckdb(
 #'   path,
 #'   options = list(delim = ",", types = list(c("DOUBLE", "VARCHAR")))
 #' )
-duck_csv <- function(path, ..., lazy = TRUE, options = list()) {
+read_csv_duckdb <- function(path, ..., lazy = TRUE, options = list()) {
   check_dots_empty()
 
-  duck_file(path, "read_csv_auto", lazy = lazy, options = options)
+  read_file_duckdb(path, "read_csv_auto", lazy = lazy, options = options)
 }
 
 #' @description
-#' `duck_json()` reads a JSON file using DuckDB's `read_json()` table function.
+#' `read_json_duckdb()` reads a JSON file using DuckDB's `read_json()` table function.
 #'
-#' @rdname duck_file
+#' @rdname read_file_duckdb
 #' @export
 #' @examples
 #'
@@ -70,15 +70,15 @@ duck_csv <- function(path, ..., lazy = TRUE, options = list()) {
 #' # Reading needs the json extension
 #' duck_exec("INSTALL json")
 #' duck_exec("LOAD json")
-#' duck_json(path)
-duck_json <- function(path, ..., lazy = TRUE, options = list()) {
+#' read_json_duckdb(path)
+read_json_duckdb <- function(path, ..., lazy = TRUE, options = list()) {
   check_dots_empty()
 
-  duck_file(path, "read_json", lazy = lazy, options = options)
+  read_file_duckdb(path, "read_json", lazy = lazy, options = options)
 }
 
 #' @description
-#' `duck_file()` uses arbitrary readers to read data.
+#' `read_file_duckdb()` uses arbitrary readers to read data.
 #' See <https://duckdb.org/docs/data/overview> for a documentation
 #' of the available functions and their options.
 #' To read multiple files with the same schema,
@@ -106,9 +106,9 @@ duck_json <- function(path, ..., lazy = TRUE, options = list()) {
 #'
 #' @return A duckplyr frame, see [as_duckdb_tibble()] for details.
 #'
-#' @rdname duck_file
+#' @rdname read_file_duckdb
 #' @export
-duck_file <- function(
+read_file_duckdb <- function(
   path,
   table_function,
   ...,

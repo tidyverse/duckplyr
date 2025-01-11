@@ -163,7 +163,7 @@ from R, without even downloading them first.
 duck_exec("INSTALL httpfs")
 duck_exec("LOAD httpfs")
 
-flights <- duck_parquet(urls)
+flights <- read_parquet_duckdb(urls)
 ```
 
 Unlike with local data frames, the default is to disallow automatic

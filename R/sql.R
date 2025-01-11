@@ -11,14 +11,14 @@
 #'
 #' @seealso [duck_exec()]
 #'
-#' @inheritParams duck_file
+#' @inheritParams read_file_duckdb
 #' @param sql The SQL to run.
 #' @param con The connection, defaults to the default connection.
 #'
 #' @export
 #' @examples
-#' duck_sql("FROM duckdb_settings()")
-duck_sql <- function(sql, ..., lazy = TRUE, con = NULL) {
+#' read_sql_duckdb("FROM duckdb_settings()")
+read_sql_duckdb <- function(sql, ..., lazy = TRUE, con = NULL) {
   if (!is_string(sql)) {
     cli::cli_abort("{.arg sql} must be a string.")
   }
