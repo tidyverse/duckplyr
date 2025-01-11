@@ -93,7 +93,7 @@ func_decl_chr <- function(
     "  # Our implementation\n",
     "  duckplyr_error <- rel_try(NULL,\n",
     if (always_fallback) "    # Always fall back to dplyr\n",
-    '    "No relational implementation for ', generic, '()" = TRUE,\n',
+    '    "No relational implementation for {.code ', generic, '()}" = TRUE,\n',
     "    {\n",
     "      return(out)\n",
     "    }\n",
