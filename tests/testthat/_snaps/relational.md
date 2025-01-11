@@ -6,5 +6,5 @@
       Cannot process duckplyr query with DuckDB, falling back to dplyr.
       i Affected
     Output
-      NULL
+      [1] "Affected"
 
