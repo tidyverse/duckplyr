@@ -9,7 +9,7 @@ right_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x
   # Our implementation
   rel_try(list(name = "right_join", x = x, y = y, args = try_list(by = if (!is.null(by) && !is_cross_by(by)) as_join_by(by), copy = copy, keep = keep, na_matches = na_matches, multiple = multiple, unmatched = unmatched, relationship = relationship)),
     #' @section Fallbacks:
-    #' You cannot use `right_join.duckplyr_df`
+    #' You cannot use `right_join.duckplyr_df()`
     #' - for an implicit cross join,
     #' - for a value of the `multiple` argument that isn't the default `"all"`.
     #' - for a value of the `unmatched` argument that isn't the default `"drop"`.

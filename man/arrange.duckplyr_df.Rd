@@ -49,9 +49,9 @@ once per data frame, not once per group.
 }
 \section{Fallbacks}{
 
-You cannot use \code{arrange.duckplyr_df} when:
+You cannot use \code{arrange.duckplyr_df()}
 \itemize{
-\item \code{.by_group = TRUE},
+\item with \code{.by_group = TRUE},
 \item providing a value for the \code{.locale} argument,
 \item providing a value for the \code{dplyr.legacy_locale} option.
 }

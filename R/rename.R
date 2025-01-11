@@ -14,7 +14,7 @@ rename.duckplyr_df <- function(.data, ...) {
 
   rel_try(list(name = "rename", x = .data, args = try_list(dots = enquos(...))),
     #' @section Fallbacks:
-    #' You cannot use `rename.duckplyr_df`
+    #' You cannot use `rename.duckplyr_df()`
     #' - with a selection that returns no columns.
     #'
     #' If you do the code will fall back to `dplyr::rename()` without any error.

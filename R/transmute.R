@@ -10,7 +10,7 @@ transmute.duckplyr_df <- function(.data, ...) {
 
   rel_try(list(name = "transmute", x = .data, args = try_list(dots = enquos(...))),
     #' @section Fallbacks:
-    #' You cannot use `transmute.duckplyr_df`
+    #' You cannot use `transmute.duckplyr_df()`
     #' - with a selection that returns no columns:
     #'
     #' If you do the code will fall back to `dplyr::transmute()` without any error.

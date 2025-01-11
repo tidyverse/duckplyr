@@ -16,7 +16,7 @@ symdiff.duckplyr_df <- function(x, y, ...) {
   rel_try(list(name = "symdiff", x = x, y = y),
     "No duplicate names" = !identical(x_names, y_names) && anyDuplicated(x_names) && anyDuplicated(y_names),
     #' @section Fallbacks:
-    #' You cannot use `symdiff.duckplyr_df`
+    #' You cannot use `symdiff.duckplyr_df()`
     #' - if column names are duplicated in one of the tables,
     #' - if column names are different in both tables.
     #'

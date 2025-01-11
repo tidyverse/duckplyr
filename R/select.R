@@ -18,7 +18,7 @@ select.duckplyr_df <- function(.data, ...) {
     # We could count and create a zero-col data frame, but we can't
     # create a duckplyr frame from it anyway.
     #' @section Fallbacks:
-    #' You cannot use `select.duckplyr_df`
+    #' You cannot use `select.duckplyr_df()`
     #' - with no expression,
     #' - nor with a selection that returns no columns.
     #'

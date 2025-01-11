@@ -15,7 +15,7 @@ setdiff.duckplyr_df <- function(x, y, ...) {
 
   rel_try(list(name = "setdiff", x = x, y = y),
     #' @section Fallbacks:
-    #' You cannot use `setdiff.duckplyr_df`
+    #' You cannot use `setdiff.duckplyr_df()`
     #' - if column names are duplicated in one of the tables,
     #' - if column names are different in both tables.
     #'

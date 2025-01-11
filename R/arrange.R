@@ -9,8 +9,8 @@ arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
 
   rel_try(list(name = "arrange", x = .data, args = try_list(dots = dots, .by_group = .by_group)),
     #' @section Fallbacks:
-    #' You cannot use `arrange.duckplyr_df` when:
-    #' - `.by_group = TRUE`,
+    #' You cannot use `arrange.duckplyr_df()`
+    #' - with `.by_group = TRUE`,
     #' - providing a value for the `.locale` argument,
     #' - providing a value for the `dplyr.legacy_locale` option.
     #'

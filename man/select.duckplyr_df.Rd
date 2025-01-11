@@ -27,7 +27,7 @@ to f on the right) or type
 }
 \section{Fallbacks}{
 
-You cannot use \code{select.duckplyr_df}
+You cannot use \code{select.duckplyr_df()}
 \itemize{
 \item with no expression,
 \item nor with a selection that returns no columns.

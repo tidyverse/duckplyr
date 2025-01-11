@@ -154,7 +154,7 @@ that have a matching key in \code{y}.
 }
 \section{Fallbacks}{
 
-You cannot use \code{inner_join.duckplyr_df}
+You cannot use \code{inner_join.duckplyr_df()}
 \itemize{
 \item for an implicit crossjoin,
 \item for a value of the \code{multiple} argument that isn't the default \code{"all"}.

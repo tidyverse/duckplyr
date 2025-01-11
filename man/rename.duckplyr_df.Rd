@@ -24,7 +24,7 @@ using \code{new_name = old_name} syntax.
 }
 \section{Fallbacks}{
 
-You cannot use \code{rename.duckplyr_df}
+You cannot use \code{rename.duckplyr_df()}
 \itemize{
 \item with a selection that returns no columns.
 }
