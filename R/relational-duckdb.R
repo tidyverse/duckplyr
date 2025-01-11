@@ -59,11 +59,13 @@ duckplyr_macros <- c(
 )
 
 create_default_duckdb_connection <- function() {
-  drv <- duckdb::duckdb()
+  dbroot <- Sys.getenv("DUCKPLYR_TEMP_DIR", tempdir())
+  dbdir <- tempfile("duckplyr", tmpdir = dbroot, fileext = ".duckdb")
+
+  drv <- duckdb::duckdb(dbdir = dbdir)
   con <- DBI::dbConnect(drv)
 
-  # DBI::dbExecute(con, "set memory_limit='1GB'")
-  DBI::dbExecute(con, paste0("pragma temp_directory='", tempdir(), "'"))
+  DBI::dbExecute(con, paste0("pragma temp_directory='", dbroot, "'"))
 
   duckdb$rapi_load_rfuns(drv@database_ref)
 

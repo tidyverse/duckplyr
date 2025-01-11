@@ -5,6 +5,9 @@
 #'
 #' @section Environment variables:
 #'
+#' `DUCKPLYR_TEMP_DIR`: Set to a path where temporary files can be created.
+#' By default, [tempdir()] is used.
+#'
 #' `DUCKPLYR_OUTPUT_ORDER`: If `TRUE`, row output order is preserved.
 #' The default may change the row order where dplyr would keep it stable.
 #' Preserving the order leads to more complicated execution plans
