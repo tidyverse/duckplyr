@@ -1,5 +1,4 @@
 diff --git b/R/symdiff.R a/R/symdiff.R
-index 7ebd2a8e..7a137b9d 100644
 --- b/R/symdiff.R
 +++ a/R/symdiff.R
 @@ -1,10 +1,46 @@

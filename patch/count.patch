@@ -1,5 +1,4 @@
 diff --git b/R/count.R a/R/count.R
-index c21200b0..4b0d1a43 100644
 --- b/R/count.R
 +++ a/R/count.R
 @@ -1,14 +1,63 @@

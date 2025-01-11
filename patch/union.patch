@@ -1,5 +1,4 @@
 diff --git b/R/union.R a/R/union.R
-index 2a0b730f..05657d3f 100644
 --- b/R/union.R
 +++ a/R/union.R
 @@ -2,12 +2,10 @@

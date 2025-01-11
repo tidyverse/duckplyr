@@ -1,5 +1,4 @@
 diff --git b/R/group_modify.R a/R/group_modify.R
-index 250f2c9e..4c0086e4 100644
 --- b/R/group_modify.R
 +++ a/R/group_modify.R
 @@ -1,6 +1,11 @@

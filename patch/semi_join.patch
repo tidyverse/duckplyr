@@ -1,5 +1,4 @@
 diff --git b/R/semi_join.R a/R/semi_join.R
-index 9d7b3654..cf50df50 100644
 --- b/R/semi_join.R
 +++ a/R/semi_join.R
 @@ -1,17 +1,26 @@

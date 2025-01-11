@@ -1,5 +1,4 @@
 diff --git b/R/setdiff.R a/R/setdiff.R
-index 1ff48325..360df9da 100644
 --- b/R/setdiff.R
 +++ a/R/setdiff.R
 @@ -1,10 +1,44 @@

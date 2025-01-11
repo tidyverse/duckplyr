@@ -1,5 +1,4 @@
 diff --git b/R/summarise.R a/R/summarise.R
-index 7f335ebd..16a3cfc0 100644
 --- b/R/summarise.R
 +++ a/R/summarise.R
 @@ -1,10 +1,60 @@

@@ -1,5 +1,4 @@
 diff --git b/R/mutate.R a/R/mutate.R
-index 0feaff42..2a0d76e0 100644
 --- b/R/mutate.R
 +++ a/R/mutate.R
 @@ -1,10 +1,105 @@
