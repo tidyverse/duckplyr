@@ -57,9 +57,13 @@
       duck_tbl(a = 1, b = 2, c = 3) %>% summarize(.by = a, e = sum(b), f = sum(e))
     Message
       i dplyr fallback recorded
-        {"version":"0.3.1","message":"Can't reuse summary variable `...4`.","name":"summarise","x":{"...1":"numeric","...2":"numeric","...3":"numeric"},"args":{"dots":{"...4":"sum(...2)","...5":"sum(...4)"},"by":["...1"]}}
+        {"version":"0.3.1","message":"rapi_startup: Failed to open database: {\"exception_type\":\"IO\",\"exception_message\":\"Could not read from file \\\"/tmp/RtmpJoS2Pk\\\": Is a directory\",\"errno\":\"21\"}","name":"summarise","x":{"...1":"numeric","...2":"numeric","...3":"numeric"},"args":{"dots":{"...4":"sum(...2)","...5":"sum(...4)"},"by":["...1"]}}
     Output
       # A duckplyr data frame: 3 variables
+    Message
+      i dplyr fallback recorded
+        {"version":"0.3.1","message":"rapi_startup: Failed to open database: {\"exception_type\":\"IO\",\"exception_message\":\"Could not read from file \\\"/tmp/RtmpJoS2Pk\\\": Is a directory\",\"errno\":\"21\"}","name":"head","x":{"...1":"numeric","...2":"numeric","...3":"numeric"},"args":{"n":11}}
+    Output
             a     e     f
         <dbl> <dbl> <dbl>
       1     1     2     2
@@ -70,7 +74,7 @@
       duck_tbl(a = as.Date("2024-03-08")) %>% mutate(b = lubridate::wday(a, label = TRUE))
     Message
       i dplyr fallback recorded
-        {"version":"0.3.1","message":"wday(label = ) not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"...3::...4(...1, label = TRUE)"},".by":"NULL",".keep":["all","used","unused","none"]}}
+        {"version":"0.3.1","message":"rapi_startup: Failed to open database: {\"exception_type\":\"IO\",\"exception_message\":\"Could not read from file \\\"/tmp/RtmpJoS2Pk\\\": Is a directory\",\"errno\":\"21\"}","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"...3::...4(...1, label = TRUE)"},".by":"NULL",".keep":["all","used","unused","none"]}}
     Output
       # A duckplyr data frame: 2 variables
     Message
@@ -87,9 +91,13 @@
       duck_tbl(a = as.Date("2024-03-08")) %>% mutate(b = lubridate::wday(a))
     Message
       i dplyr fallback recorded
-        {"version":"0.3.1","message":"`wday()` with `option(\"lubridate.week.start\")` not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"...3::...4(...1)"},".by":"NULL",".keep":["all","used","unused","none"]}}
+        {"version":"0.3.1","message":"rapi_startup: Failed to open database: {\"exception_type\":\"IO\",\"exception_message\":\"Could not read from file \\\"/tmp/RtmpJoS2Pk\\\": Is a directory\",\"errno\":\"21\"}","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"...3::...4(...1)"},".by":"NULL",".keep":["all","used","unused","none"]}}
     Output
       # A duckplyr data frame: 2 variables
+    Message
+      i dplyr fallback recorded
+        {"version":"0.3.1","message":"rapi_startup: Failed to open database: {\"exception_type\":\"IO\",\"exception_message\":\"Could not read from file \\\"/tmp/RtmpJoS2Pk\\\": Is a directory\",\"errno\":\"21\"}","name":"head","x":{"...1":"Date","...2":"numeric"},"args":{"n":11}}
+    Output
         a              b
         <date>     <dbl>
       1 2024-03-08     5
@@ -101,9 +109,13 @@
         tz = "CET"))
     Message
       i dplyr fallback recorded
-        {"version":"0.3.1","message":"strftime(tz = ) not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"strftime(...1, format = \"<character>\", tz = \"<character>\")"},".by":"NULL",".keep":["all","used","unused","none"]}}
+        {"version":"0.3.1","message":"rapi_startup: Failed to open database: {\"exception_type\":\"IO\",\"exception_message\":\"Could not read from file \\\"/tmp/RtmpJoS2Pk\\\": Is a directory\",\"errno\":\"21\"}","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"strftime(...1, format = \"<character>\", tz = \"<character>\")"},".by":"NULL",".keep":["all","used","unused","none"]}}
     Output
       # A duckplyr data frame: 2 variables
+    Message
+      i dplyr fallback recorded
+        {"version":"0.3.1","message":"rapi_startup: Failed to open database: {\"exception_type\":\"IO\",\"exception_message\":\"Could not read from file \\\"/tmp/RtmpJoS2Pk\\\": Is a directory\",\"errno\":\"21\"}","name":"head","x":{"...1":"Date","...2":"character"},"args":{"n":11}}
+    Output
         a          b         
         <date>     <chr>     
       1 2024-03-08 2024-03-08
@@ -114,7 +126,7 @@
       duck_tbl(a = 1, b = 2) %>% mutate(c = .env$x)
     Message
       i dplyr fallback recorded
-        {"version":"0.3.1","message":"internal: object not found, should also be triggered by the dplyr fallback","name":"mutate","x":{"...1":"numeric","...2":"numeric"},"args":{"dots":{"...3":"...4$...5"},".by":"NULL",".keep":["all","used","unused","none"]}}
+        {"version":"0.3.1","message":"rapi_startup: Failed to open database: {\"exception_type\":\"IO\",\"exception_message\":\"Could not read from file \\\"/tmp/RtmpJoS2Pk\\\": Is a directory\",\"errno\":\"21\"}","name":"mutate","x":{"...1":"numeric","...2":"numeric"},"args":{"dots":{"...3":"...4$...5"},".by":"NULL",".keep":["all","used","unused","none"]}}
     Condition
       Error in `mutate()`:
       i In argument: `c = .env$x`.
@@ -127,9 +139,13 @@
       duck_tbl(a = 1, b = 2) %>% mutate(c = foo(a, b))
     Message
       i dplyr fallback recorded
-        {"version":"0.3.1","message":"No translation for function `foo`.","name":"mutate","x":{"...1":"numeric","...2":"numeric"},"args":{"dots":{"...3":"foo(...1, ...2)"},".by":"NULL",".keep":["all","used","unused","none"]}}
+        {"version":"0.3.1","message":"rapi_startup: Failed to open database: {\"exception_type\":\"IO\",\"exception_message\":\"Could not read from file \\\"/tmp/RtmpJoS2Pk\\\": Is a directory\",\"errno\":\"21\"}","name":"mutate","x":{"...1":"numeric","...2":"numeric"},"args":{"dots":{"...3":"foo(...1, ...2)"},".by":"NULL",".keep":["all","used","unused","none"]}}
     Output
       # A duckplyr data frame: 3 variables
+    Message
+      i dplyr fallback recorded
+        {"version":"0.3.1","message":"rapi_startup: Failed to open database: {\"exception_type\":\"IO\",\"exception_message\":\"Could not read from file \\\"/tmp/RtmpJoS2Pk\\\": Is a directory\",\"errno\":\"21\"}","name":"head","x":{"...1":"numeric","...2":"numeric","...3":"numeric"},"args":{"n":11}}
+    Output
             a     b     c
         <dbl> <dbl> <dbl>
       1     1     2     3
@@ -138,8 +154,15 @@
 
     Code
       mtcars[1:2, ] %>% as_duck_tbl() %>% select(mpg, cyl)
+    Message
+      i dplyr fallback recorded
+        {"version":"0.3.1","message":"rapi_startup: Failed to open database: {\"exception_type\":\"IO\",\"exception_message\":\"Could not read from file \\\"/tmp/RtmpJoS2Pk\\\": Is a directory\",\"errno\":\"21\"}","name":"select","x":{"...1":"numeric","...2":"numeric","...3":"numeric","...4":"numeric","...5":"numeric","...6":"numeric","...7":"numeric","...8":"numeric","...9":"numeric","...10":"numeric","...11":"numeric"},"args":{"dots":{"1":"...1","2":"...2"}}}
     Output
       # A duckplyr data frame: 2 variables
+    Message
+      i dplyr fallback recorded
+        {"version":"0.3.1","message":"rapi_startup: Failed to open database: {\"exception_type\":\"IO\",\"exception_message\":\"Could not read from file \\\"/tmp/RtmpJoS2Pk\\\": Is a directory\",\"errno\":\"21\"}","name":"head","x":{"...1":"numeric","...2":"numeric"},"args":{"n":11}}
+    Output
           mpg   cyl
         <dbl> <dbl>
       1    21     6
@@ -189,6 +212,10 @@
         {"version":"0.3.1","message":"Can't convert columns of class <list> to relational. Affected column: `...3`.","name":"select","x":{"...1":"numeric","...2":"numeric","...3":"list"},"args":{"dots":{"1":"...1","2":"...2"}}}
     Output
       # A duckplyr data frame: 2 variables
+    Message
+      i dplyr fallback recorded
+        {"version":"0.3.1","message":"rapi_startup: Failed to open database: {\"exception_type\":\"IO\",\"exception_message\":\"Could not read from file \\\"/tmp/RtmpJoS2Pk\\\": Is a directory\",\"errno\":\"21\"}","name":"head","x":{"...1":"numeric","...2":"numeric"},"args":{"n":11}}
+    Output
             a     b
         <dbl> <dbl>
       1     1     2
@@ -199,9 +226,13 @@
       duck_tbl(`___row_number` = 1, b = 2:3) %>% arrange(b)
     Message
       i dplyr fallback recorded
-        {"version":"0.3.1","message":"Can't use column `...1` already present in rel for order preservation","name":"arrange","x":{"...1":"numeric","...2":"integer"},"args":{"dots":["...2"],".by_group":false}}
+        {"version":"0.3.1","message":"rapi_startup: Failed to open database: {\"exception_type\":\"IO\",\"exception_message\":\"Could not read from file \\\"/tmp/RtmpJoS2Pk\\\": Is a directory\",\"errno\":\"21\"}","name":"arrange","x":{"...1":"numeric","...2":"integer"},"args":{"dots":["...2"],".by_group":false}}
     Output
       # A duckplyr data frame: 2 variables
+    Message
+      i dplyr fallback recorded
+        {"version":"0.3.1","message":"rapi_startup: Failed to open database: {\"exception_type\":\"IO\",\"exception_message\":\"Could not read from file \\\"/tmp/RtmpJoS2Pk\\\": Is a directory\",\"errno\":\"21\"}","name":"head","x":{"...1":"numeric","...2":"integer"},"args":{"n":11}}
+    Output
         `___row_number`     b
                   <dbl> <int>
       1               1     2
@@ -218,6 +249,10 @@
         {"version":"0.3.1","message":"No relational implementation for group_by()"}
     Output
       # A duckplyr data frame: 2 variables
+    Message
+      i dplyr fallback recorded
+        {"version":"0.3.1","message":"rapi_startup: Failed to open database: {\"exception_type\":\"IO\",\"exception_message\":\"Could not read from file \\\"/tmp/RtmpJoS2Pk\\\": Is a directory\",\"errno\":\"21\"}","name":"head","x":{"...1":"numeric","...2":"integer"},"args":{"n":11}}
+    Output
             a     n
         <dbl> <int>
       1     1     1
