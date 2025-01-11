@@ -15,8 +15,8 @@ arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
     #' - providing a value for the `dplyr.legacy_locale` option.
     #'
     #' If you do the code will fall back to `dplyr::arrange()` without any error.
-    ".by_group = TRUE not supported" = !identical(.by_group, FALSE),
-    ".locale argument not supported" = !is.null(.locale),
+    "{.arg .by_group} = {.value TRUE} not supported" = !identical(.by_group, FALSE),
+    "{.arg .locale} argument not supported" = !is.null(.locale),
     "dplyr.legacy_locale not supported" = isTRUE(getOption("dplyr.legacy_locale")),
     {
       # Translate to df before early exit, so that we can bail out for subclasses

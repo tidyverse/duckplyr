@@ -23,7 +23,7 @@ i.e. all rows in \code{x} that aren't in \code{y} and all rows in \code{y} that 
 
 You cannot use \code{symdiff.duckplyr_df}
 \itemize{
-\item if column names are duplicated in one of the tables
+\item if column names are duplicated in one of the tables,
 \item if column names are different in both tables.
 }
 

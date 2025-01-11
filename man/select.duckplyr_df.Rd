@@ -30,7 +30,7 @@ to f on the right) or type
 You cannot use \code{select.duckplyr_df}
 \itemize{
 \item with no expression,
-\item nor with a selection that returns no columns:
+\item nor with a selection that returns no columns.
 }
 
 If you do the code will fall back to \code{dplyr::select()} without any error.

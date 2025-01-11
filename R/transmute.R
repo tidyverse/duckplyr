@@ -14,7 +14,7 @@ transmute.duckplyr_df <- function(.data, ...) {
     #' - with a selection that returns no columns:
     #'
     #' If you do the code will fall back to `dplyr::transmute()` without any error.
-    "Can't use relational with zero-column result set." = (length(dots) == 0),
+    "Zero-column result set not supported." = (length(dots) == 0),
     {
       exprs <- rel_translate_dots(dots, .data)
       rel <- duckdb_rel_from_df(.data)

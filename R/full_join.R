@@ -14,8 +14,8 @@ full_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
     #' - for a value of the `multiple` argument that isn't the default `"all"`.
     #'
     #' If you do the code will fall back to `dplyr::full_join()` without any error.
-    "No implicit cross joins for full_join()" = is_cross_by(by),
-    "`multiple` not supported" = !identical(multiple, "all"),
+    "No implicit cross joins for {.code full_join()}" = is_cross_by(by),
+    "{.arg multiple} not supported" = !identical(multiple, "all"),
     {
       out <- rel_join_impl(x, y, by, "full", na_matches, suffix, keep, error_call)
       return(out)

@@ -20,10 +20,10 @@ select.duckplyr_df <- function(.data, ...) {
     #' @section Fallbacks:
     #' You cannot use `select.duckplyr_df`
     #' - with no expression,
-    #' - nor with a selection that returns no columns:
+    #' - nor with a selection that returns no columns.
     #'
     #' If you do the code will fall back to `dplyr::select()` without any error.
-    "Can't use relational with zero-column result set." = (length(exprs) == 0),
+    "Zero-column result set not supported." = (length(exprs) == 0),
     {
       rel <- duckdb_rel_from_df(.data)
       out <- exprs_project(rel, exprs, .data)

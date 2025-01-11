@@ -16,9 +16,9 @@ left_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
     #'
     #' If you do the code will fall back to `dplyr::left_join()` without any error.
 
-    "No implicit cross joins for left_join()" = is_cross_by(by),
-    "`multiple` not supported" = !identical(multiple, "all"),
-    "`unmatched` not supported" = !identical(unmatched, "drop"),
+    "No implicit cross joins for {.code left_join()}" = is_cross_by(by),
+    "{.arg multiple} not supported" = !identical(multiple, "all"),
+    "{.arg unmatched} not supported" = !identical(unmatched, "drop"),
     {
       out <- rel_join_impl(x, y, by, "left", na_matches, suffix, keep, error_call)
       return(out)

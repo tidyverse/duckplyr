@@ -26,7 +26,7 @@ using \code{new_name = old_name} syntax.
 
 You cannot use \code{rename.duckplyr_df}
 \itemize{
-\item with a selection that returns no columns:
+\item with a selection that returns no columns.
 }
 
 If you do the code will fall back to \code{dplyr::rename()} without any error.

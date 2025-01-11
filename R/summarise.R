@@ -14,7 +14,7 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
     #' - with `.groups = "rowwise"`.
     #'
     #' If you do the code will fall back to `dplyr::summarise()` without any error.
-    'summarize(.groups = "rowwise") not supported' = identical(.groups, "rowwise"),
+    '{.code summarise()} with {.arg .groups} = {.value "rowwise")} not supported' = identical(.groups, "rowwise"),
     {
       rel <- duckdb_rel_from_df(.data)
 
