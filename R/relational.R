@@ -131,9 +131,8 @@ check_lazy <- function(x, duckplyr_error, call = caller_env()) {
     cli::cli_abort(parent = duckplyr_error_parent, call = call, c(
       "This operation cannot be carried out by DuckDB, and the input is a lazy duckplyr frame.",
       "*" = duckplyr_error_msg,
-      "*" = "Use {.code as_duck_tbl(.lazy = FALSE)} to materialize implicitly and continue with {.pkg duckplyr}.",
-      "*" = "Use {.code compute(lazy = FALSE)} to materialize explicitly and continue with {.pkg duckplyr}.",
-      "*" = "Use {.code collect()} to materialize explicitly and continue with {.pkg dplyr}."
+      "*" = "Use {.code compute(lazy = FALSE)} to materialize to temporary storage and continue with {.pkg duckplyr}.",
+      "*" = 'See the "Eager and lazy" section in {.help duck_tbl} for other options.'
     ))
   }
 }
