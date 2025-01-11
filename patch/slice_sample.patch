@@ -1,9 +1,9 @@
 diff --git b/R/slice_sample.R a/R/slice_sample.R
 --- b/R/slice_sample.R
 +++ a/R/slice_sample.R
-@@ -11,7 +11,7 @@ slice_sample.duckplyr_df <- function(.data, ..., n, prop, by = NULL, weight_by =
+@@ -13,7 +13,7 @@ slice_sample.duckplyr_df <- function(.data, ..., n, prop, by = NULL, weight_by =
+   check_lazy(.data, duckplyr_error)
  
-   # dplyr forward
    slice_sample <- dplyr$slice_sample.data.frame
 -  out <- slice_sample(.data, ..., n = n, prop = prop, by = by, weight_by = weight_by, replace = replace)
 +  out <- slice_sample(.data, ..., n = n, prop = prop, by = {{ by }}, weight_by = {{ weight_by }}, replace = replace)

@@ -8,7 +8,7 @@ diff --git b/R/select.R a/R/select.R
  select.duckplyr_df <- function(.data, ...) {
 -  # Our implementation
 -  duckplyr_error <- rel_try(NULL,
--    "No relational implementation for select()" = TRUE,
+-    "No relational implementation for {.code select()}" = TRUE,
 +  force(.data)
 +
 +  error_call <- dplyr_error_call()
@@ -40,5 +40,5 @@ diff --git b/R/select.R a/R/select.R
  
 +
    # dplyr forward
-   select <- dplyr$select.data.frame
-   out <- select(.data, ...)
+   check_lazy(.data, duckplyr_error)
+ 

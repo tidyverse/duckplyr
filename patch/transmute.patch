@@ -8,7 +8,7 @@ diff --git b/R/transmute.R a/R/transmute.R
  transmute.duckplyr_df <- function(.data, ...) {
 -  # Our implementation
 -  duckplyr_error <- rel_try(NULL,
--    "No relational implementation for transmute()" = TRUE,
+-    "No relational implementation for {.code transmute()}" = TRUE,
 +  force(.data)
 +
 +  dots <- check_transmute_args(...)

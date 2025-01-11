@@ -17,11 +17,11 @@ diff --git b/R/nest_join.R a/R/nest_join.R
 +
    # Our implementation
    duckplyr_error <- rel_try(NULL,
-     "No relational implementation for nest_join()" = TRUE,
-@@ -10,8 +20,13 @@ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, na
-   )
-
+     "No relational implementation for {.code nest_join()}" = TRUE,
+@@ -12,8 +22,13 @@ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, na
    # dplyr forward
+   check_lazy(x, duckplyr_error)
+ 
 +  x_df <- x
 +  class(x_df) <- setdiff(class(x_df), "duckplyr_df")
 +  y_df <- y
@@ -31,12 +31,12 @@ diff --git b/R/nest_join.R a/R/nest_join.R
 +  out <- nest_join(x_df, y_df, by, copy, keep, name, ..., na_matches = na_matches, unmatched = unmatched)
 +  out <- dplyr_reconstruct(out, x)
    return(out)
-
+ 
    # dplyr implementation
-@@ -98,7 +113,13 @@ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, na
+@@ -100,7 +115,13 @@ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, na
    dplyr_reconstruct(out, x)
  }
-
+ 
 -duckplyr_nest_join <- function(x, y, ...) {
 +duckplyr_nest_join <- function(x, y, by = NULL, copy = FALSE, keep = NULL, name = NULL, ...) {
 +  if (is.null(name)) {
@@ -48,7 +48,7 @@ diff --git b/R/nest_join.R a/R/nest_join.R
    try_fetch(
      {
        x <- as_duckplyr_df_impl(x)
-@@ -108,7 +129,7 @@ duckplyr_nest_join <- function(x, y, ...) {
+@@ -110,7 +131,7 @@ duckplyr_nest_join <- function(x, y, ...) {
        testthat::skip(conditionMessage(e))
      }
    )

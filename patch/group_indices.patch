@@ -1,7 +1,7 @@
 diff --git b/R/group_indices.R a/R/group_indices.R
 --- b/R/group_indices.R
 +++ a/R/group_indices.R
-@@ -25,7 +25,7 @@ group_indices.duckplyr_df <- function(.data, ...) {
+@@ -27,7 +27,7 @@ group_indices.duckplyr_df <- function(.data, ...) {
      .data <- group_by(.data, ...)
    }
  

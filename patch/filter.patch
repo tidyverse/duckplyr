@@ -8,7 +8,7 @@ diff --git b/R/filter.R a/R/filter.R
  filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
 -  # Our implementation
 -  duckplyr_error <- rel_try(NULL,
--    "No relational implementation for filter()" = TRUE,
+-    "No relational implementation for {.code filter()}" = TRUE,
 +  force(.data)
 +
 +  dots <- dplyr_quosures(...)

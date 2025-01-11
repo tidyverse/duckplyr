@@ -1,7 +1,7 @@
 diff --git b/R/nest_by.R a/R/nest_by.R
 --- b/R/nest_by.R
 +++ a/R/nest_by.R
-@@ -16,7 +16,7 @@ nest_by.duckplyr_df <- function(.data, ..., .key = "data", .keep = FALSE) {
+@@ -18,7 +18,7 @@ nest_by.duckplyr_df <- function(.data, ..., .key = "data", .keep = FALSE) {
  
    # dplyr implementation
    .data <- group_by(.data, ...)

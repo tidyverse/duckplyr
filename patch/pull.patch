@@ -8,7 +8,7 @@ diff --git b/R/pull.R a/R/pull.R
  pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
 -  # Our implementation
 -  duckplyr_error <- rel_try(NULL,
--    "No relational implementation for pull()" = TRUE,
+-    "No relational implementation for {.code pull()}" = TRUE,
 +  # dplyr implementation
 +  my_var <- tidyselect::vars_pull(names(.data), !!enquo(var))
 +  my_name <- enquo(name)
