@@ -10,6 +10,9 @@ and one option.
 \section{Environment variables}{
 
 
+\code{DUCKPLYR_TEMP_DIR}: Set to a path where temporary files can be created.
+By default, \code{\link[=tempdir]{tempdir()}} is used.
+
 \code{DUCKPLYR_OUTPUT_ORDER}: If \code{TRUE}, row output order is preserved.
 The default may change the row order where dplyr would keep it stable.
 Preserving the order leads to more complicated execution plans
