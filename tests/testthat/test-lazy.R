@@ -2,7 +2,7 @@ test_that("lazy duckplyr frames will collect", {
   tbl <- duck_tbl(a = 1, .lazy = TRUE)
   expect_identical(
     collect(tbl),
-    duck_tbl(a = 1)
+    tibble(a = 1)
   )
 })
 

@@ -52,6 +52,7 @@ df_methods <-
     "auto_copy", "pull", "setequal", "tbl_vars",
     "group_vars",
     "dplyr_reconstruct",
+    "collect",
 
     # For 03-tests.R
     "do", "reframe",

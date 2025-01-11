@@ -40,5 +40,5 @@ test_that("compute_csv() lazy", {
   out <- compute_csv(df, path = "test.csv", lazy = TRUE)
 
   expect_true(is_lazy_duckplyr_df(out))
-  expect_identical(collect(out), as_duck_tbl(df))
+  expect_identical(collect(out), as_tibble(df))
 })

@@ -3,6 +3,7 @@
 collect.duckplyr_df <- function(x, ...) {
   # Side effect: ALTREP materialization is triggered
   nrow(x)
+  class(x) <- setdiff(class(x), "duckplyr_df")
   x
 }
 
