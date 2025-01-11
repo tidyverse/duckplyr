@@ -337,7 +337,7 @@ locally is possible as well.
 
 ## Using duckplyr in other packages
 
-Refer to `vignette("developers", package = "duckplyr")`.
+Refer to `vignette("developers")`.
 
 ## Telemetry
 

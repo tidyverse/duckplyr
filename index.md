@@ -337,7 +337,7 @@ Of course, working with Parquet, CSV, or JSON files downloaded locally is possib
 
 ## Using duckplyr in other packages
 
-Refer to `vignette("developers", package = "duckplyr")`.
+Refer to `vignette("developers")`.
 
 ## Telemetry
 
