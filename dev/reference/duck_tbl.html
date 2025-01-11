@@ -3,24 +3,18 @@
 in addition to the default classes.
 This ensures that dplyr methods are dispatched correctly.
 For such objects,
-dplyr verbs such as dplyr::mutate(), dplyr::select() or dplyr::filter()  will attempt to use DuckDB.
-If this is not possible, the original dplyr implementation is used.
-duck_tbl() works like tibble::tibble().
-In contrast to dbplyr, duckplyr data frames are "eager" by default.
-To avoid unwanted expensive computation, they can be converted to "lazy" duckplyr frames
-on which dplyr::collect() needs to be called explicitly.
+dplyr verbs such as dplyr::mutate(), dplyr::select() or dplyr::filter()  will use DuckDB.
+duck_tbl() works like tibble::tibble(), returning an "eager" duckplyr data frame by default.
+See the "Eager and lazy" section below.
 as_duck_tbl() converts a data frame or a dplyr lazy table to a duckplyr data frame.
 This is a generic function that can be overridden for custom classes.
 is_duck_tbl() returns TRUE if x is a duckplyr data frame.'><meta property="og:description" content='Data frames backed by duckplyr have a special class, "duckplyr_df",
 in addition to the default classes.
 This ensures that dplyr methods are dispatched correctly.
 For such objects,
-dplyr verbs such as dplyr::mutate(), dplyr::select() or dplyr::filter()  will attempt to use DuckDB.
-If this is not possible, the original dplyr implementation is used.
-duck_tbl() works like tibble::tibble().
-In contrast to dbplyr, duckplyr data frames are "eager" by default.
-To avoid unwanted expensive computation, they can be converted to "lazy" duckplyr frames
-on which dplyr::collect() needs to be called explicitly.
+dplyr verbs such as dplyr::mutate(), dplyr::select() or dplyr::filter()  will use DuckDB.
+duck_tbl() works like tibble::tibble(), returning an "eager" duckplyr data frame by default.
+See the "Eager and lazy" section below.
 as_duck_tbl() converts a data frame or a dplyr lazy table to a duckplyr data frame.
 This is a generic function that can be overridden for custom classes.
 is_duck_tbl() returns TRUE if x is a duckplyr data frame.'><meta property="og:image" content="https://duckplyr.tidyverse.org/logo.png"><meta name="robots" content="noindex"><script defer data-domain="duckplyr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script></head><body>
@@ -66,12 +60,9 @@ is_duck_tbl() returns TRUE if x is a duckplyr data frame.'><meta property="og:im
 in addition to the default classes.
 This ensures that dplyr methods are dispatched correctly.
 For such objects,
-dplyr verbs such as <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">dplyr::mutate()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code> or <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">dplyr::filter()</a></code>  will attempt to use DuckDB.
-If this is not possible, the original dplyr implementation is used.</p>
-<p><code>duck_tbl()</code> works like <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble()</a></code>.
-In contrast to dbplyr, duckplyr data frames are "eager" by default.
-To avoid unwanted expensive computation, they can be converted to "lazy" duckplyr frames
-on which <code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">dplyr::collect()</a></code> needs to be called explicitly.</p>
+dplyr verbs such as <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">dplyr::mutate()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code> or <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">dplyr::filter()</a></code>  will use DuckDB.</p>
+<p><code>duck_tbl()</code> works like <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble()</a></code>, returning an "eager" duckplyr data frame by default.
+See the "Eager and lazy" section below.</p>
 <p><code>as_duck_tbl()</code> converts a data frame or a dplyr lazy table to a duckplyr data frame.
 This is a generic function that can be overridden for custom classes.</p>
 <p><code>is_duck_tbl()</code> returns <code>TRUE</code> if <code>x</code> is a duckplyr data frame.</p>
@@ -97,7 +88,7 @@ For <code>as_duck_tbl()</code>, passed on to methods.</p></dd>
 
 <dt id="arg--lazy">.lazy<a class="anchor" aria-label="anchor" href="#arg--lazy"></a></dt>
 <dd><p>Logical, whether to create a lazy duckplyr frame.
-If <code>TRUE</code>, <code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">dplyr::collect()</a></code> must be called before the data can be accessed.</p></dd>
+See the section "Eager and lazy" for details.</p></dd>
 
 
 <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
@@ -112,9 +103,46 @@ If <code>TRUE</code>, <code><a href="https://dplyr.tidyverse.org/reference/compu
 </ul><p>For <code>is_duck_tbl()</code>, a scalar logical.</p>
     </div>
     <div class="section level2">
-    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Set the <code>DUCKPLYR_FALLBACK_INFO</code> and <code>DUCKPLYR_FORCE</code> environment variables
-for more control over the behavior, see <a href="config.html">config</a> for more details.</p>
+    <h2 id="eager-and-lazy">Eager and lazy<a class="anchor" aria-label="anchor" href="#eager-and-lazy"></a></h2>
+
+
+<p>Data frames backed by duckplyr behave as regular data frames in almost all respects.
+In particular, direct column access like <code>df$x</code>,
+or retrieving the number of rows with <code><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow()</a></code>, works identically.
+For a duckplyr frame that is the result of a dplyr operation,
+accessing column data or retrieving the number of rows will trigger a computation
+that is carried out by DuckDB.</p>
+<p>Eager and lazy duckplyr frames differ in their behavior for column access and row count.
+For eager duckplyr frames, the underlying DuckDB computation is carried out
+upon the first request.
+Once the results are computed, they are cached and subsequent requests are fast.
+This is a good choice for small to medium-sized data,
+where DuckDB can provide a nice speedup but materializing the data is affordable.
+This is the default for <code>duck_tbl()</code> and <code>as_duck_tbl()</code>.
+Use <code>.lazy = TRUE</code> for these functions to check
+that all operations are supported by DuckDB.</p>
+<p>For lazy duckplyr frames, accessing a column or requesting the number of rows
+triggers an error.
+This is a good choice for large data sets where the cost of materializing the data
+may be prohibitive due to size or computation time,
+and the user wants to control when the computation is carried out.
+This is the default for the ingestion functions like <code><a href="duck_file.html">duck_parquet()</a></code>.
+It is safe to use <code>duck_parquet(lazy = FALSE)</code>
+if the data is small enough to be materialized at any stage.</p>
+<p>A lazy duckplyr frame can be converted to an eager one with <code>as_duck_tbl(.lazy = FALSE)</code>.
+The <code><a href="collect.duckplyr_df.html">collect.duckplyr_df()</a></code> method converts to a plain tibble.
+Other useful methods include <code><a href="compute_file.html">compute_file()</a></code> for storing results in a file,
+and <code><a href="compute.duckplyr_df.html">compute.duckplyr_df()</a></code> for storing results in temporary storage on disk.</p>
+<p>Computing via DuckDB is not always possible,
+see <code><a href="../articles/limits.html">vignette("limits")</a></code> for the supported operations.
+In such cases, the original dplyr implementation is used, see <a href="fallback.html">fallback</a> for details.
+As the original dplyr implementation accesses columns directly,
+the data must be materialized before a fallback can be executed.
+This means that automatic fallback is only possible for "eager" duckplyr frames,
+while for "lazy" duckplyr frames, one of the aforementioned methods must be used.</p>
+<p>The concept of lazy tables is also known from dbplyr,
+but "eager" tables are not available there at the time of writing,
+and the data must always be brought into R memory through <code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">dplyr::collect()</a></code>.</p>
     </div>
 
     <div class="section level2">
