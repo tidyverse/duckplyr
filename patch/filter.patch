@@ -18,13 +18,13 @@ diff --git b/R/filter.R a/R/filter.R
 +
 +  rel_try(list(name = "filter", x = .data, args = try_list(dots = dots, by = by, preserve = .preserve)),
 +    #' @section Fallbacks:
-+    #' You cannot use `filter.duckplyr_df`
++    #' You cannot use `filter.duckplyr_df()`
 +    #' - with no filter conditions,
 +    #' - nor for a grouped operation (if `.by` is set).
 +    #'
 +    #' If you do the code will fall back to `dplyr::filter()` without any error.
 +    "Can't use relational without filter conditions." = (length(dots) == 0),
-+    "Can't use relational with grouped operation." = (!quo_is_null(by)), # (length(by$names) > 0),
++    "{.code filter(by = ...)} not implemented, try {.code mutate(by = ...)} followed by a simple {.code filter()}." = (!quo_is_null(by)), # (length(by$names) > 0),
      {
 +      rel <- duckdb_rel_from_df(.data)
 +      exprs <- rel_translate_dots(dots, .data)
