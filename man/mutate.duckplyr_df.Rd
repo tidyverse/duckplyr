@@ -61,7 +61,7 @@ It can also modify (if the name is the same as an existing column)
 and delete columns (by setting their value to \code{NULL}).
 }
 \examples{
-library("duckplyr")
+library(duckplyr)
 df <- data.frame(x = c(1, 2))
 df <- mutate(df, y = 2)
 df

@@ -61,8 +61,8 @@ This is a method for the \code{\link[dplyr:filter-joins]{dplyr::anti_join()}} ge
 \code{anti_join()} returns all rows from \code{x} with\strong{out} a match in \code{y}.
 }
 \examples{
-library("dplyr") # for the data
-library("duckplyr")
+library(dplyr) # for the data
+library(duckplyr)
 band_members \%>\% anti_join(band_instruments)
 }
 \seealso{

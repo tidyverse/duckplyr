@@ -13,7 +13,7 @@
 #'
 #' @inheritParams dplyr::arrange
 #' @examples
-#' library("duckplyr")
+#' library(duckplyr)
 #' arrange(mtcars, cyl, disp)
 #' arrange(mtcars, desc(disp))
 #' @seealso [dplyr::arrange()]

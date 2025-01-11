@@ -17,7 +17,7 @@ This is a generic function which gives more details about an object
 than \code{print()}, and is more focused on human readable output than \code{str()}.
 }
 \examples{
-library("duckplyr")
+library(duckplyr)
 df <- tibble(x = c(1, 2))
 df <- mutate(df, y = 2)
 explain(df)

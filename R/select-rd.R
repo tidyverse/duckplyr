@@ -10,7 +10,7 @@
 #'
 #' @inheritParams dplyr::select
 #' @examples
-#' library("duckplyr")
+#' library(duckplyr)
 #' select(mtcars, mpg)
 #' @seealso [dplyr::select()]
 #' @rdname select.duckplyr_df

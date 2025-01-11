@@ -67,7 +67,7 @@ If you do the code will fall back to \code{dplyr::count()} without any error.
 }
 
 \examples{
-library("duckplyr")
+library(duckplyr)
 count(mtcars, am)
 }
 \seealso{

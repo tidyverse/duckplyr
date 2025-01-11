@@ -37,7 +37,7 @@ If you do the code will fall back to \code{dplyr::select()} without any error.
 }
 
 \examples{
-library("duckplyr")
+library(duckplyr)
 select(mtcars, mpg)
 }
 \seealso{

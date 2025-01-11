@@ -6,7 +6,7 @@
 #'
 #' @inheritParams dplyr::full_join
 #' @examples
-#' library("dplyr")
+#' library(dplyr)
 #' full_join(band_members, band_instruments)
 #' @seealso [dplyr::full_join()]
 #' @rdname full_join.duckplyr_df

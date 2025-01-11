@@ -5,7 +5,7 @@
 #'
 #' @inheritParams dplyr::collect
 #' @examples
-#' library("duckplyr")
+#' library(duckplyr)
 #' df <- duckdb_tibble(x = c(1, 2), .lazy = TRUE)
 #' df
 #' try(print(df$x))

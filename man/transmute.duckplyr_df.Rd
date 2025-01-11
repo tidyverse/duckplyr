@@ -40,7 +40,7 @@ If you do the code will fall back to \code{dplyr::transmute()} without any error
 }
 
 \examples{
-library("duckplyr")
+library(duckplyr)
 transmute(mtcars, mpg2 = mpg*2)
 }
 \seealso{

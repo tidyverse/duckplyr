@@ -11,7 +11,7 @@
 #'
 #' @inheritParams dplyr::count
 #' @examples
-#' library("duckplyr")
+#' library(duckplyr)
 #' count(mtcars, am)
 #' @seealso [dplyr::count()]
 #' @rdname count.duckplyr_df

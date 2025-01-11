@@ -5,8 +5,8 @@
 #'
 #' @inheritParams dplyr::anti_join
 #' @examples
-#' library("dplyr") # for the data
-#' library("duckplyr")
+#' library(dplyr) # for the data
+#' library(duckplyr)
 #' band_members %>% anti_join(band_instruments)
 #' @seealso [dplyr::anti_join()]
 #' @rdname anti_join.duckplyr_df
