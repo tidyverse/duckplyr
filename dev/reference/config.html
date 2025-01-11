@@ -50,6 +50,8 @@ and one option.</p>
 
 
 
+<p><code>DUCKPLYR_TEMP_DIR</code>: Set to a path where temporary files can be created.
+By default, <code><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir()</a></code> is used.</p>
 <p><code>DUCKPLYR_OUTPUT_ORDER</code>: If <code>TRUE</code>, row output order is preserved.
 The default may change the row order where dplyr would keep it stable.
 Preserving the order leads to more complicated execution plans
