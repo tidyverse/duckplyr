@@ -39,7 +39,7 @@ As of now, here are the translations provided:
 
 - Math functions: `log10()`, `log()`, `abs()`
 
-- Logical operators: `!`, `&`, `|`
+- Logical operators: `!`, `&`, `|` (`?Logic`)
 
 - Branching and conversion: `is.na()`, `dplyr::if_else()`, `as.integer()`, `strftime()`
 
