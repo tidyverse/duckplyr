@@ -69,7 +69,7 @@
 #' x
 #'
 #' library(dplyr)
-#' x %>%
+#' x |>
 #'   mutate(b = 2)
 #'
 #' x$a
