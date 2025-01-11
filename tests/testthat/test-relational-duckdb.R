@@ -71,7 +71,7 @@ test_that("rel_aggregate()", {
     mutate(species = as.character(species)) %>%
     mutate(island = as.character(island)) %>%
     mutate(sex = as.character(sex)) %>%
-    as_duck_tbl() %>%
+    as_duckdb_tibble() %>%
     duckdb_rel_from_df() %>%
     rel_aggregate(list(expr_species), list(expr_aggregate))
 
@@ -81,7 +81,7 @@ test_that("rel_aggregate()", {
     mutate(species = as.character(species)) %>%
     mutate(island = as.character(island)) %>%
     mutate(sex = as.character(sex)) %>%
-    as_duck_tbl() %>%
+    as_duckdb_tibble() %>%
     duckdb_rel_from_df() %>%
     rel_aggregate(list(), list(expr_aggregate))
 

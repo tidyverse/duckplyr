@@ -1,4 +1,4 @@
-taxi_data_2019 <- duck_tbl(
+taxi_data_2019 <- duckdb_tibble(
   vendor_name = character(0),
   pickup_datetime = as.POSIXct(character(0), tz = "UTC"),
   dropoff_datetime = as.POSIXct(character(0), tz = "UTC"),
@@ -25,7 +25,7 @@ taxi_data_2019 <- duck_tbl(
   month = character(0)
 )
 
-zone_map <- duck_tbl(
+zone_map <- duckdb_tibble(
   LocationID = numeric(0),
   Borough = character(0),
   Zone = character(0),

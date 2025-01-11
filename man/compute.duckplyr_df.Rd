@@ -14,7 +14,7 @@ details.}
 \item{...}{Arguments passed on to methods}
 
 \item{lazy}{Set to \code{TRUE} to return a lazy or \code{FALSE} to return an eager data frame,
-see the "Eager and lazy" section in \code{\link[=duck_tbl]{duck_tbl()}}.
+see the "Eager and lazy" section in \code{\link[=duckdb_tibble]{duckdb_tibble()}}.
 The default is to inherit the lazyness of the input.}
 
 \item{name}{The name of the table to store the result in.}
@@ -32,7 +32,7 @@ The result is a duckplyr frame that can be used with subsequent dplyr verbs.
 }
 \examples{
 library("duckplyr")
-df <- duck_tbl(x = c(1, 2))
+df <- duckdb_tibble(x = c(1, 2))
 df <- mutate(df, y = 2)
 df <- compute(df)
 explain(df)

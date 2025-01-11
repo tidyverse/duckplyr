@@ -248,7 +248,7 @@ Fallback is silent by default, but can be made verbose.
 Sys.setenv(DUCKPLYR_FALLBACK_INFO = TRUE)
 out <-
   nycflights13::flights %>%
-  duckplyr::as_duck_tbl() %>%
+  duckplyr::as_duckdb_tibble() %>%
   mutate(inflight_delay = arr_delay - dep_delay)
 ```
 

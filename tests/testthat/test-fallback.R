@@ -61,7 +61,7 @@ test_that("summarize()", {
   ))
 
   expect_snapshot({
-    duck_tbl(a = 1, b = 2, c = 3) %>%
+    duckdb_tibble(a = 1, b = 2, c = 3) %>%
       summarize(
         .by = a,
         e = sum(b),
@@ -80,7 +80,7 @@ test_that("wday()", {
   ))
 
   expect_snapshot({
-    duck_tbl(a = as.Date("2024-03-08")) %>%
+    duckdb_tibble(a = as.Date("2024-03-08")) %>%
       mutate(
         b = lubridate::wday(a, label = TRUE)
       )
@@ -89,7 +89,7 @@ test_that("wday()", {
   local_options(lubridate.week.start = 1)
 
   expect_snapshot({
-    duck_tbl(a = as.Date("2024-03-08")) %>%
+    duckdb_tibble(a = as.Date("2024-03-08")) %>%
       mutate(
         b = lubridate::wday(a)
       )
@@ -104,7 +104,7 @@ test_that("strftime()", {
   ))
 
   expect_snapshot({
-    duck_tbl(a = as.Date("2024-03-08")) %>%
+    duckdb_tibble(a = as.Date("2024-03-08")) %>%
       mutate(
         b = strftime(a, format = "%Y-%m-%d", tz = "CET")
       )
@@ -121,7 +121,7 @@ test_that("$", {
   ))
 
   expect_snapshot(error = TRUE, {
-    duck_tbl(a = 1, b = 2) %>%
+    duckdb_tibble(a = 1, b = 2) %>%
       mutate(c = .env$x)
   })
 })
@@ -136,7 +136,7 @@ test_that("unknown function", {
   foo <- function(...) 3
 
   expect_snapshot({
-    duck_tbl(a = 1, b = 2) %>%
+    duckdb_tibble(a = 1, b = 2) %>%
       mutate(c = foo(a, b))
   })
 })
@@ -150,7 +150,7 @@ test_that("row names", {
 
   expect_snapshot({
     mtcars[1:2, ] %>%
-      as_duck_tbl() %>%
+      as_duckdb_tibble() %>%
       select(mpg, cyl)
   })
 })
@@ -163,7 +163,7 @@ test_that("named column", {
   ))
 
   expect_snapshot({
-    duck_tbl(a = c(x = 1)) %>%
+    duckdb_tibble(a = c(x = 1)) %>%
       select(a)
   })
 })
@@ -176,7 +176,7 @@ test_that("named column", {
   ))
 
   expect_snapshot({
-    duck_tbl(a = matrix(1:4, ncol = 2)) %>%
+    duckdb_tibble(a = matrix(1:4, ncol = 2)) %>%
       select(a)
   })
 })
@@ -189,7 +189,7 @@ test_that("list column", {
   ))
 
   expect_snapshot({
-    duck_tbl(a = 1, b = 2, c = list(3)) %>%
+    duckdb_tibble(a = 1, b = 2, c = list(3)) %>%
       select(a, b)
   })
 })
@@ -203,7 +203,7 @@ test_that("__row_number", {
   ))
 
   expect_snapshot({
-    duck_tbl(`___row_number` = 1, b = 2:3) %>%
+    duckdb_tibble(`___row_number` = 1, b = 2:3) %>%
       arrange(b)
   })
 })
@@ -217,7 +217,7 @@ test_that("rel_try()", {
   ))
 
   expect_snapshot({
-    duck_tbl(a = 1) %>%
+    duckdb_tibble(a = 1) %>%
       count(a, .drop = FALSE, name = "n")
   })
 })

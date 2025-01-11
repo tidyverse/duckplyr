@@ -2,7 +2,7 @@
 #'
 #' Provides a copy of `nycflights13::flights` that is compatible with duckplyr,
 #' as a tibble.
-#' Call [as_duck_tbl()] to enable duckplyr operations.
+#' Call [as_duckdb_tibble()] to enable duckplyr operations.
 #'
 #' @export
 #' @examplesIf requireNamespace("nycflights13", quietly = TRUE)

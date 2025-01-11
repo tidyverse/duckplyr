@@ -22,7 +22,7 @@ duck_file(path, table_function, ..., lazy = TRUE, options = list())
 
 \item{lazy}{Logical, whether to create a lazy duckplyr frame.
 By default, a lazy duckplyr frame is created.
-See the "Eager and lazy" section in \code{\link[=duck_tbl]{duck_tbl()}} for details.}
+See the "Eager and lazy" section in \code{\link[=duckdb_tibble]{duckdb_tibble()}} for details.}
 
 \item{options}{Arguments to the DuckDB function
 indicated by \code{table_function}.}
@@ -32,7 +32,7 @@ DuckDB function such as \code{"read_parquet"},
 \code{"read_csv"}, \code{"read_csv_auto"} or \code{"read_json"}.}
 }
 \value{
-A duckplyr frame, see \code{\link[=as_duck_tbl]{as_duck_tbl()}} for details.
+A duckplyr frame, see \code{\link[=as_duckdb_tibble]{as_duckdb_tibble()}} for details.
 }
 \description{
 These functions ingest data from a file.

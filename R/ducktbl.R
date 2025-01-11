@@ -7,7 +7,7 @@
 #' For such objects,
 #' dplyr verbs such as [mutate()], [select()] or [filter()]  will use DuckDB.
 #'
-#' `duck_tbl()` works like [tibble()], returning an "eager" duckplyr data frame by default.
+#' `duckdb_tibble()` works like [tibble()], returning an "eager" duckplyr data frame by default.
 #' See the "Eager and lazy" section below.
 #'
 #' @section Eager and lazy:
@@ -24,7 +24,7 @@
 #' Once the results are computed, they are cached and subsequent requests are fast.
 #' This is a good choice for small to medium-sized data,
 #' where DuckDB can provide a nice speedup but materializing the data is affordable.
-#' This is the default for `duck_tbl()` and `as_duck_tbl()`.
+#' This is the default for `duckdb_tibble()` and `as_duckdb_tibble()`.
 #' Use `.lazy = TRUE` for these functions to check
 #' that all operations are supported by DuckDB.
 #'
@@ -37,7 +37,7 @@
 #' It is safe to use `duck_parquet(lazy = FALSE)`
 #' if the data is small enough to be materialized at any stage.
 #'
-#' A lazy duckplyr frame can be converted to an eager one with `as_duck_tbl(.lazy = FALSE)`.
+#' A lazy duckplyr frame can be converted to an eager one with `as_duckdb_tibble(.lazy = FALSE)`.
 #' The [collect.duckplyr_df()] method converts to a plain tibble.
 #' Other useful methods include [compute_file()] for storing results in a file,
 #' and [compute.duckplyr_df()] for storing results in temporary storage on disk.
@@ -54,18 +54,18 @@
 #' but "eager" tables are not available there at the time of writing,
 #' and the data must always be brought into R memory through [collect()].
 #'
-#' @param ... For `duck_tbl()`, passed on to [tibble()].
-#'   For `as_duck_tbl()`, passed on to methods.
+#' @param ... For `duckdb_tibble()`, passed on to [tibble()].
+#'   For `as_duckdb_tibble()`, passed on to methods.
 #' @param .lazy Logical, whether to create a lazy duckplyr frame.
 #'   See the section "Eager and lazy" for details.
 #'
-#' @return For `duck_tbl()` and `as_duck_tbl()`, an object with the following classes:
+#' @return For `duckdb_tibble()` and `as_duckdb_tibble()`, an object with the following classes:
 #'   - `"lazy_duckplyr_df"` if `.lazy` is `TRUE`
 #'   - `"duckplyr_df"`
 #'   - Classes of a [tibble]
 #'
 #' @examples
-#' x <- duck_tbl(a = 1)
+#' x <- duckdb_tibble(a = 1)
 #' x
 #'
 #' library(dplyr)
@@ -74,26 +74,26 @@
 #'
 #' x$a
 #'
-#' y <- duck_tbl(a = 1, .lazy = TRUE)
+#' y <- duckdb_tibble(a = 1, .lazy = TRUE)
 #' y
 #' try(length(y$a))
 #' length(collect(y)$a)
 #' @export
-duck_tbl <- function(..., .lazy = FALSE) {
+duckdb_tibble <- function(..., .lazy = FALSE) {
   out <- tibble::tibble(...)
-  as_duck_tbl(out, .lazy = .lazy)
+  as_duckdb_tibble(out, .lazy = .lazy)
 }
 
-#' as_duck_tbl
+#' as_duckdb_tibble
 #'
-#' `as_duck_tbl()` converts a data frame or a dplyr lazy table to a duckplyr data frame.
+#' `as_duckdb_tibble()` converts a data frame or a dplyr lazy table to a duckplyr data frame.
 #' This is a generic function that can be overridden for custom classes.
 #'
 #' @param x The object to convert or to test.
-#' @rdname duck_tbl
+#' @rdname duckdb_tibble
 #' @export
-as_duck_tbl <- function(x, ..., .lazy = FALSE) {
-  out <- as_duck_tbl_dispatch(x, ...)
+as_duckdb_tibble <- function(x, ..., .lazy = FALSE) {
+  out <- as_duckdb_tibble_dispatch(x, ...)
 
   if (isTRUE(.lazy)) {
     out <- as_lazy_duckplyr_df(out)
@@ -102,14 +102,14 @@ as_duck_tbl <- function(x, ..., .lazy = FALSE) {
   }
 
   return(out)
-  UseMethod("as_duck_tbl")
+  UseMethod("as_duckdb_tibble")
 }
-as_duck_tbl_dispatch <- function(x, ...) {
-  UseMethod("as_duck_tbl")
+as_duckdb_tibble_dispatch <- function(x, ...) {
+  UseMethod("as_duckdb_tibble")
 }
 
 #' @export
-as_duck_tbl.tbl_duckdb_connection <- function(x, ...) {
+as_duckdb_tibble.tbl_duckdb_connection <- function(x, ...) {
   check_dots_empty()
 
   con <- dbplyr::remote_con(x)
@@ -119,33 +119,33 @@ as_duck_tbl.tbl_duckdb_connection <- function(x, ...) {
 }
 
 #' @export
-as_duck_tbl.duckplyr_df <- function(x, ...) {
+as_duckdb_tibble.duckplyr_df <- function(x, ...) {
   check_dots_empty()
   x
 }
 
 #' @export
-as_duck_tbl.data.frame <- function(x, ...) {
+as_duckdb_tibble.data.frame <- function(x, ...) {
   check_dots_empty()
 
   tbl <- as_tibble(x)
 
   # - as_tibble() to remove row names
-  new_duck_tbl(tbl)
+  new_duckdb_tibble(tbl)
 }
 
 #' @export
-as_duck_tbl.default <- function(x, ...) {
+as_duckdb_tibble.default <- function(x, ...) {
   check_dots_empty()
 
   # - as.data.frame() call for good measure and perhaps https://github.com/tidyverse/tibble/issues/1556
   # - as_tibble() to remove row names
-  # Could call as_duck_tbl(as.data.frame(x)) here, but that would be slower
-  new_duck_tbl(as_tibble(as.data.frame(x)))
+  # Could call as_duckdb_tibble(as.data.frame(x)) here, but that would be slower
+  new_duckdb_tibble(as_tibble(as.data.frame(x)))
 }
 
 #' @export
-as_duck_tbl.grouped_df <- function(x, ...) {
+as_duckdb_tibble.grouped_df <- function(x, ...) {
   check_dots_empty()
 
   cli::cli_abort(c(
@@ -156,7 +156,7 @@ as_duck_tbl.grouped_df <- function(x, ...) {
 }
 
 #' @export
-as_duck_tbl.rowwise_df <- function(x, ...) {
+as_duckdb_tibble.rowwise_df <- function(x, ...) {
   check_dots_empty()
 
   cli::cli_abort(c(
@@ -165,21 +165,21 @@ as_duck_tbl.rowwise_df <- function(x, ...) {
   ))
 }
 
-#' is_duck_tbl
+#' is_duckdb_tibble
 #'
-#' `is_duck_tbl()` returns `TRUE` if `x` is a duckplyr data frame.
+#' `is_duckdb_tibble()` returns `TRUE` if `x` is a duckplyr data frame.
 #'
-#' @return For `is_duck_tbl()`, a scalar logical.
-#' @rdname duck_tbl
+#' @return For `is_duckdb_tibble()`, a scalar logical.
+#' @rdname duckdb_tibble
 #' @export
-is_duck_tbl <- function(x) {
+is_duckdb_tibble <- function(x) {
   inherits(x, "duckplyr_df")
 }
 
 
 #' @param lazy Only adds the class, does not recreate the relation object!
 #' @noRd
-new_duck_tbl <- function(x, class = NULL, lazy = FALSE, error_call = caller_env()) {
+new_duckdb_tibble <- function(x, class = NULL, lazy = FALSE, error_call = caller_env()) {
   if (is.null(class)) {
     class <- c("tbl_df", "tbl", "data.frame")
   }

@@ -8,8 +8,8 @@ Sys.setenv(DUCKPLYR_META_SKIP = FALSE)
 
 qloadm("tools/tpch/001.qs")
 
-# prep_fun <- function(x) as_duck_tbl(x)
-prep_fun <- function(x) as_duck_tbl(x[0, ])
+# prep_fun <- function(x) as_duckdb_tibble(x)
+prep_fun <- function(x) as_duckdb_tibble(x[0, ])
 
 customer <- prep_fun(customer)
 lineitem <- prep_fun(lineitem)

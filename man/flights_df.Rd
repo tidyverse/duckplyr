@@ -9,7 +9,7 @@ flights_df()
 \description{
 Provides a copy of \code{nycflights13::flights} that is compatible with duckplyr,
 as a tibble.
-Call \code{\link[=as_duck_tbl]{as_duck_tbl()}} to enable duckplyr operations.
+Call \code{\link[=as_duckdb_tibble]{as_duckdb_tibble()}} to enable duckplyr operations.
 }
 \examples{
 \dontshow{if (requireNamespace("nycflights13", quietly = TRUE)) withAutoprint(\{ # examplesIf}
