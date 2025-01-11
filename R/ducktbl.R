@@ -25,6 +25,8 @@
 #' This is a good choice for small to medium-sized data,
 #' where DuckDB can provide a nice speedup but materializing the data is affordable.
 #' This is the default for `duck_tbl()` and `as_duck_tbl()`.
+#' Use `.lazy = TRUE` for these functions to check
+#' that all operations are supported by DuckDB.
 #'
 #' For lazy duckplyr frames, accessing a column or requesting the number of rows
 #' triggers an error.
@@ -32,6 +34,8 @@
 #' may be prohibitive or where the cost of the computation is high,
 #' and the user wants to control when the computation is carried out.
 #' This is the default for the ingestion functions like [duck_parquet()].
+#' It is safe to use `duck_parquet(lazy = FALSE)`
+#' if the data is small enough to be materialized at any stage.
 #'
 #' A lazy duckplyr frame can be converted to an eager one with `as_duck_tbl(.lazy = FALSE)`.
 #' The [collect.duckplyr_df()] method converts to a plain tibble.
