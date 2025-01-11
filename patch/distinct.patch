@@ -13,7 +13,7 @@ diff --git b/R/distinct.R a/R/distinct.R
    # Our implementation
 -  duckplyr_error <- rel_try(NULL,
 -    "No relational implementation for distinct()" = TRUE,
-+  rel_try(list(name = "distinct", x = .data, args = try_list(dots = dots, .keep_all = .keep_all)),
++  duckplyr_error <- rel_try(list(name = "distinct", x = .data, args = try_list(dots = dots, .keep_all = .keep_all)),
 +    "Implemented for all cases?" = FALSE,
      {
 +      # FIXME: avoid column duplication in a cleaner way

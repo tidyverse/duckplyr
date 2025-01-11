@@ -14,7 +14,7 @@ diff --git b/R/mutate.R a/R/mutate.R
    # Our implementation
 -  duckplyr_error <- rel_try(NULL,
 -    "No relational implementation for mutate()" = TRUE,
-+  rel_try(list(name = "mutate", x = .data, args = try_list(dots = enquos(...), .by = by_arg, .keep = .keep)),
++  duckplyr_error <- rel_try(list(name = "mutate", x = .data, args = try_list(dots = enquos(...), .by = by_arg, .keep = .keep)),
 +    "Implemented for all cases?" = FALSE,
      {
 +      rel <- duckdb_rel_from_df(.data)
