@@ -8,7 +8,6 @@
 #' @section Unsupported verbs:
 #' For these verbs, duckplyr will fall back to dplyr.
 #' - [`add_count()`]
-#' - [`compute()`]
 #' - [`cross_join()`]
 #' - [`do()`]
 #' - [`group_by()`]

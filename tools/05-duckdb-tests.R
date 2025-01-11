@@ -26,6 +26,11 @@ get_test_code <- function(name, code, oo) {
       return("")
     }
 
+    # Skip compute tests for order-enforcing, meta not yet available for compute()
+    if (name == "compute" && !oo) {
+      return("")
+    }
+
     out <- get_test_code_one(extra_args, pre_step = "", oo, name, two_tables, force, skip)
   } else {
     out <- paste(pmap_chr(
@@ -94,7 +99,8 @@ get_test_code_one <- function(extra_arg, pre_step, oo, name, two_tables, force =
     )
   }
 
-  test_fun <- eval(parse(text = whisker::whisker.render(test_fun_code))[[1]])
+  test_fun_code <- whisker::whisker.render(test_fun_code)
+  test_fun <- eval(parse(text = test_fun_code)[[1]])
 
   withr::local_envvar(DUCKPLYR_OUTPUT_ORDER = oo)
 
