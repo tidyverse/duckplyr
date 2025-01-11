@@ -7,7 +7,7 @@ arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
   dots <- enquos(...)
   dots <- unname(dots)
 
-  rel_try(list(name = "arrange", x = .data, args = try_list(dots = dots, .by_group = .by_group)),
+  duckplyr_error <- rel_try(list(name = "arrange", x = .data, args = try_list(dots = dots, .by_group = .by_group)),
     #' @section Fallbacks:
     #' You cannot use `arrange.duckplyr_df()`
     #' - with `.by_group = TRUE`,

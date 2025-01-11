@@ -13,7 +13,7 @@ union_all.duckplyr_df <- function(x, y, ...) {
     y_names <- x_names
   }
 
-  rel_try(list(name = "union_all", x = x, y = y),
+  duckplyr_error <- rel_try(list(name = "union_all", x = x, y = y),
     "No duplicate names" = !identical(x_names, y_names) && anyDuplicated(x_names) && anyDuplicated(y_names),
     #' @section Fallbacks:
     #' You cannot use `union_all.duckplyr_df()`

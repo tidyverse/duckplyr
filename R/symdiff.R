@@ -13,7 +13,7 @@ symdiff.duckplyr_df <- function(x, y, ...) {
     y_names <- x_names
   }
 
-  rel_try(list(name = "symdiff", x = x, y = y),
+  duckplyr_error <- rel_try(list(name = "symdiff", x = x, y = y),
     "No duplicate names" = !identical(x_names, y_names) && anyDuplicated(x_names) && anyDuplicated(y_names),
     #' @section Fallbacks:
     #' You cannot use `symdiff.duckplyr_df()`

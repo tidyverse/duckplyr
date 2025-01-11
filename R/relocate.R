@@ -14,7 +14,7 @@ relocate.duckplyr_df <- function(.data, ..., .before = NULL, .after = NULL) {
   exprs <- exprs_from_loc(.data, loc)
 
   # Ensure `relocate()` appears in call stack
-  rel_try(list(name = "relocate", x = .data, args = try_list(dots = enquos(...), .before = enquo(.before), .after = enquo(.after))),
+  duckplyr_error <- rel_try(list(name = "relocate", x = .data, args = try_list(dots = enquos(...), .before = enquo(.before), .after = enquo(.after))),
     #' @section Fallbacks:
     #' You cannot use `relocate.duckplyr_df()`
     #' - with a selection that returns no columns.

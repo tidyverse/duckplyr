@@ -8,7 +8,7 @@ transmute.duckplyr_df <- function(.data, ...) {
   dots <- dplyr_quosures(!!!dots)
   dots <- fix_auto_name(dots)
 
-  rel_try(list(name = "transmute", x = .data, args = try_list(dots = enquos(...))),
+  duckplyr_error <- rel_try(list(name = "transmute", x = .data, args = try_list(dots = enquos(...))),
     #' @section Fallbacks:
     #' You cannot use `transmute.duckplyr_df()`
     #' - with a selection that returns no columns:

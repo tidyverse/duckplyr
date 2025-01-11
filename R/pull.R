@@ -14,7 +14,7 @@ pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
 
   exprs <- exprs_from_loc(.data, loc)
 
-  rel_try(list(name = "pull", .data = .data),
+  duckplyr_error <- rel_try(list(name = "pull", .data = .data),
     #' @section Fallbacks:
     #' You cannot use `pull.duckplyr_df()`
     #' - with a selection that returns no columns.
