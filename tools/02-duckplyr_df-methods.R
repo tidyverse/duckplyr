@@ -85,6 +85,7 @@ func_decl_chr <- function(
   formals <- formals(code)
 
   two_tables <- (length(formals) > 1) && (names(formals)[[2]] == "y")
+  arg_1 <- names(formals)[[1]]
 
   new_code_chr <- paste(utils::capture.output(print(new_code_chr)), collapse = "\n")
 
@@ -100,7 +101,14 @@ func_decl_chr <- function(
     "\n"
   )
 
-  new_code_chr <- sub("[{]", paste0("{\n", rel_try_chr, "  # dplyr forward"), new_code_chr)
+  new_code_chr_sub <- paste0(
+    "{\n",
+    rel_try_chr,
+    "  # dplyr forward\n",
+    "  check_lazy(", arg_1, ", duckplyr_error)\n"
+  )
+
+  new_code_chr <- sub("[{]", new_code_chr_sub, new_code_chr)
 
   dplyr_code <- brio::read_file(fs::path("dplyr-methods", paste0(generic, ".txt")))
   dplyr_impl <- c(
@@ -120,7 +128,6 @@ func_decl_chr <- function(
   )
 
   if (two_tables) {
-    arg_1 <- names(formals)[[1]]
     arg_2 <- names(formals)[[2]]
     args <- paste0(arg_1, ", ", arg_2)
     assign_impl <- c(
@@ -130,7 +137,6 @@ func_decl_chr <- function(
       '    },'
     )
   } else {
-    arg_1 <- names(formals)[[1]]
     args <- arg_1
     assign_impl <- c(
       '    {{{arg_1}}} <- as_duckplyr_df_impl({{{arg_1}}}),'
