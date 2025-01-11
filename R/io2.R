@@ -99,7 +99,8 @@ duck_json <- function(path, ..., lazy = TRUE, options = list()) {
 #'   DuckDB function such as `"read_parquet"`,
 #'   `"read_csv"`, `"read_csv_auto"` or `"read_json"`.
 #' @param lazy Logical, whether to create a lazy duckplyr frame.
-#'   If `TRUE` (the default), [collect()] must be called before the data can be accessed.
+#'   By default, a lazy duckplyr frame is created.
+#'   See the "Eager and lazy" section in [duck_tbl()] for details.
 #' @param options Arguments to the DuckDB function
 #'   indicated by `table_function`.
 #'

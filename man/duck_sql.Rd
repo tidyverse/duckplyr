@@ -12,7 +12,8 @@ duck_sql(sql, ..., lazy = TRUE, con = NULL)
 \item{...}{These dots are for future extensions and must be empty.}
 
 \item{lazy}{Logical, whether to create a lazy duckplyr frame.
-If \code{TRUE} (the default), \code{\link[dplyr:compute]{dplyr::collect()}} must be called before the data can be accessed.}
+By default, a lazy duckplyr frame is created.
+See the "Eager and lazy" section in \code{\link[=duck_tbl]{duck_tbl()}} for details.}
 
 \item{con}{The connection, defaults to the default connection.}
 }

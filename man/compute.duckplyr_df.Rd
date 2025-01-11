@@ -14,7 +14,8 @@ details.}
 \item{...}{Arguments passed on to methods}
 
 \item{lazy}{Set to \code{TRUE} to return a lazy or \code{FALSE} to return an eager data frame,
-see \code{\link[=duck_tbl]{duck_tbl()}}.  The default is to inherit the lazyness of the input.}
+see the "Eager and lazy" section in \code{\link[=duck_tbl]{duck_tbl()}}.
+The default is to inherit the lazyness of the input.}
 
 \item{name}{The name of the table to store the result in.}
 
