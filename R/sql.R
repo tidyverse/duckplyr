@@ -9,7 +9,7 @@
 #' Using data frames from the calling environment is not supported yet,
 #' see <https://github.com/duckdb/duckdb-r/issues/645> for details.
 #'
-#' @seealso [duck_exec()]
+#' @seealso [db_exec()]
 #'
 #' @inheritParams read_file_duckdb
 #' @param sql The SQL to run.

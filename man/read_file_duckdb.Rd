@@ -91,7 +91,7 @@ path <- tempfile("duckplyr_test_", fileext = ".json")
 writeLines('[{"a": 1, "b": "x"}, {"a": 2, "b": "y"}]', path)
 
 # Reading needs the json extension
-duck_exec("INSTALL json")
-duck_exec("LOAD json")
+db_exec("INSTALL json")
+db_exec("LOAD json")
 read_json_duckdb(path)
 }

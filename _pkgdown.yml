@@ -76,7 +76,7 @@ reference:
   - fallback
   - stats_show
   - last_rel
-  - duck_exec
+  - db_exec
 
 - title: Relational operations and expressions
   contents:

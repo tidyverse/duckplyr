@@ -160,8 +160,8 @@ Using the httpfs DuckDB extension, we can query these files directly from R, wit
 
 
 ``` r
-duck_exec("INSTALL httpfs")
-duck_exec("LOAD httpfs")
+db_exec("INSTALL httpfs")
+db_exec("LOAD httpfs")
 
 flights <- read_parquet_duckdb(urls)
 ```

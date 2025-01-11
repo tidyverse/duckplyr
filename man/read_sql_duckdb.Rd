@@ -30,5 +30,5 @@ see \url{https://github.com/duckdb/duckdb-r/issues/645} for details.
 read_sql_duckdb("FROM duckdb_settings()")
 }
 \seealso{
-\code{\link[=duck_exec]{duck_exec()}}
+\code{\link[=db_exec]{db_exec()}}
 }
