@@ -5,7 +5,7 @@ test_that("compute_parquet()", {
   withr::defer(unlink("test.parquet"))
   out <- compute_parquet(df, path = "test.parquet")
 
-  expect_identical(out, as_duck_tbl(df))
+  expect_identical(out, as_duckdb_tibble(df))
   expect_false(is_lazy_duckplyr_df(out))
 })
 
@@ -17,7 +17,7 @@ test_that("compute_parquet() with options", {
   dir.create("test")
   out <- compute_parquet(df, path = "test", options = list(partition_by = "a"))
 
-  expect_identical(out, as_duck_tbl(df))
+  expect_identical(out, as_duckdb_tibble(df))
   expect_false(is_lazy_duckplyr_df(out))
 })
 
@@ -28,7 +28,7 @@ test_that("compute_csv()", {
   withr::defer(unlink("test.csv"))
   out <- compute_csv(df, path = "test.csv")
 
-  expect_identical(out, as_duck_tbl(df))
+  expect_identical(out, as_duckdb_tibble(df))
   expect_false(is_lazy_duckplyr_df(out))
 })
 

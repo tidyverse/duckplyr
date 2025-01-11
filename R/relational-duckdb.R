@@ -95,7 +95,7 @@ duckdb_rel_from_df <- function(df) {
     return(rel)
   }
 
-  if (!is_duck_tbl(df)) {
+  if (!is_duckdb_tibble(df)) {
     df <- as_duckplyr_df_impl(df)
   }
 

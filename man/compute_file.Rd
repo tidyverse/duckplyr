@@ -20,7 +20,7 @@ details.}
 \item{...}{These dots are for future extensions and must be empty.}
 
 \item{lazy}{Set to \code{TRUE} to return a lazy or \code{FALSE} to return an eager data frame,
-see the "Eager and lazy" section in \code{\link[=duck_tbl]{duck_tbl()}}.
+see the "Eager and lazy" section in \code{\link[=duckdb_tibble]{duckdb_tibble()}}.
 The default is to inherit the lazyness of the input.}
 
 \item{options}{A list of additional options to pass to create the storage format,

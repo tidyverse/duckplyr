@@ -100,11 +100,11 @@ duck_json <- function(path, ..., lazy = TRUE, options = list()) {
 #'   `"read_csv"`, `"read_csv_auto"` or `"read_json"`.
 #' @param lazy Logical, whether to create a lazy duckplyr frame.
 #'   By default, a lazy duckplyr frame is created.
-#'   See the "Eager and lazy" section in [duck_tbl()] for details.
+#'   See the "Eager and lazy" section in [duckdb_tibble()] for details.
 #' @param options Arguments to the DuckDB function
 #'   indicated by `table_function`.
 #'
-#' @return A duckplyr frame, see [as_duck_tbl()] for details.
+#' @return A duckplyr frame, see [as_duckdb_tibble()] for details.
 #'
 #' @rdname duck_file
 #' @export
@@ -154,10 +154,10 @@ duckfun <- function(table_function, args, ..., lazy = TRUE) {
 
   # Start with lazy, to avoid unwanted materialization
   df <- duckdb$rel_to_altrep(rel, allow_materialization = FALSE)
-  out <- new_duck_tbl(df, lazy = TRUE)
+  out <- new_duckdb_tibble(df, lazy = TRUE)
 
   if (!lazy) {
-    out <- as_duck_tbl(out, .lazy = lazy)
+    out <- as_duckdb_tibble(out, .lazy = lazy)
   }
 
   out

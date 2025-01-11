@@ -2,7 +2,7 @@
 % Please edit documentation in R/sql.R
 \name{duck_sql}
 \alias{duck_sql}
-\title{Return SQL query as duck_tbl}
+\title{Return SQL query as duckdb_tibble}
 \usage{
 duck_sql(sql, ..., lazy = TRUE, con = NULL)
 }
@@ -13,7 +13,7 @@ duck_sql(sql, ..., lazy = TRUE, con = NULL)
 
 \item{lazy}{Logical, whether to create a lazy duckplyr frame.
 By default, a lazy duckplyr frame is created.
-See the "Eager and lazy" section in \code{\link[=duck_tbl]{duck_tbl()}} for details.}
+See the "Eager and lazy" section in \code{\link[=duckdb_tibble]{duckdb_tibble()}} for details.}
 
 \item{con}{The connection, defaults to the default connection.}
 }

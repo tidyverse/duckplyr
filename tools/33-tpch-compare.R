@@ -14,14 +14,14 @@ answer <- "tpch-sf0.01"
 # qloadm("tools/tpch/100.qs")
 # answer <- "tpch-sf1"
 
-customer <- as_duck_tbl(customer)
-lineitem <- as_duck_tbl(lineitem)
-nation <- as_duck_tbl(nation)
-orders <- as_duck_tbl(orders)
-part <- as_duck_tbl(part)
-partsupp <- as_duck_tbl(partsupp)
-region <- as_duck_tbl(region)
-supplier <- as_duck_tbl(supplier)
+customer <- as_duckdb_tibble(customer)
+lineitem <- as_duckdb_tibble(lineitem)
+nation <- as_duckdb_tibble(nation)
+orders <- as_duckdb_tibble(orders)
+part <- as_duckdb_tibble(part)
+partsupp <- as_duckdb_tibble(partsupp)
+region <- as_duckdb_tibble(region)
+supplier <- as_duckdb_tibble(supplier)
 
 run <- identity
 # run <- collect

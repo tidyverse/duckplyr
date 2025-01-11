@@ -31,13 +31,13 @@
 #'   as_duckplyr_df() %>%
 #'   mutate(b = a + 1)
 as_duckplyr_df <- function(.data) {
-  lifecycle::deprecate_soft("1.0.0", "as_duckplyr_df()", "as_duck_tbl()")
+  lifecycle::deprecate_soft("1.0.0", "as_duckplyr_df()", "as_duckdb_tibble()")
 
   as_duckplyr_df_impl(.data)
 }
 
 as_duckplyr_df_impl <- function(x, error_call = caller_env()) {
-  # FIXME: Move to as_duck_tbl()
+  # FIXME: Move to as_duckdb_tibble()
   if (!identical(class(x), "data.frame") && !identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
     cli::cli_abort(call = error_call, c(
       "Must pass a plain data frame or a tibble, not {.obj_type_friendly {x}}.",
@@ -45,5 +45,5 @@ as_duckplyr_df_impl <- function(x, error_call = caller_env()) {
     ))
   }
 
-  new_duck_tbl(x, class = class(x), error_call = error_call)
+  new_duckdb_tibble(x, class = class(x), error_call = error_call)
 }

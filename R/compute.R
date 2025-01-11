@@ -37,7 +37,7 @@ compute.duckplyr_df <- function(
       out <- duckplyr_reconstruct(out_rel, x)
 
       if (is_lazy_duckplyr_df(out) != lazy) {
-        out <- as_duck_tbl(out, .lazy = lazy)
+        out <- as_duckdb_tibble(out, .lazy = lazy)
       }
 
       return(out)

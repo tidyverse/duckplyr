@@ -1,4 +1,4 @@
-#' Return SQL query as duck_tbl
+#' Return SQL query as duckdb_tibble
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -33,5 +33,5 @@ duck_sql <- function(sql, ..., lazy = TRUE, con = NULL) {
   meta_rel_register(rel, expr(duckdb$rel_from_sql(con, !!sql)))
 
   out <- duckdb$rel_to_altrep(rel)
-  as_duck_tbl(out, .lazy = lazy)
+  as_duckdb_tibble(out, .lazy = lazy)
 }
