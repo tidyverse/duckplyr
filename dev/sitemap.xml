@@ -21,7 +21,7 @@
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/duck_exec.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/duck_file.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/duck_sql.html</loc></url>
-<url><loc>https://duckplyr.tidyverse.org/dev/reference/duck_tbl.html</loc></url>
+<url><loc>https://duckplyr.tidyverse.org/dev/reference/duckdb_tibble.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/duckplyr-package.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/duckplyr_execute.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/explain.duckplyr_df.html</loc></url>
