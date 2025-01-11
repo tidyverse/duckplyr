@@ -10,7 +10,7 @@ diff --git b/R/summarise.R a/R/summarise.R
  summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
 -  # Our implementation
 -  duckplyr_error <- rel_try(NULL,
--    "No relational implementation for summarise()" = TRUE,
+-    "No relational implementation for {.code summarise()}" = TRUE,
 +  force(.data)
 +
 +  by <- eval_select_by(enquo(.by), .data)
@@ -65,8 +65,8 @@ diff --git b/R/summarise.R a/R/summarise.R
        return(out)
      }
    )
-@@ -12,6 +62,11 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
-   # dplyr forward
+@@ -14,6 +64,11 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
+ 
    summarise <- dplyr$summarise.data.frame
    out <- summarise(.data, ..., .by = {{ .by }}, .groups = .groups)
 +  # dplyr_reconstruct() is not called here, restoring manually

@@ -3,13 +3,15 @@
 rows_append.duckplyr_df <- function(x, y, ..., copy = FALSE, in_place = FALSE) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
-    "No relational implementation for rows_append()" = TRUE,
+    "No relational implementation for {.code rows_append()}" = TRUE,
     {
       return(out)
     }
   )
 
   # dplyr forward
+  check_lazy(x, duckplyr_error)
+
   rows_append <- dplyr$rows_append.data.frame
   out <- rows_append(x, y, ..., copy = copy, in_place = in_place)
   return(out)

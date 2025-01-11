@@ -29,6 +29,8 @@ relocate.duckplyr_df <- function(.data, ..., .before = NULL, .after = NULL) {
   )
 
   # dplyr forward
+  check_lazy(.data, duckplyr_error)
+
   relocate <- dplyr$relocate.data.frame
   out <- relocate(.data, ..., .before = {{ .before }}, .after = {{ .after }})
   return(out)

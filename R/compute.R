@@ -45,6 +45,8 @@ compute.duckplyr_df <- function(
   )
 
   # dplyr forward
+  check_lazy(x, duckplyr_error)
+
   compute <- dplyr$compute.data.frame
   out <- compute(x, ...)
   return(out)

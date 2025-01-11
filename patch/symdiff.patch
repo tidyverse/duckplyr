@@ -8,7 +8,7 @@ diff --git b/R/symdiff.R a/R/symdiff.R
  symdiff.duckplyr_df <- function(x, y, ...) {
    # Our implementation
 -  duckplyr_error <- rel_try(NULL,
--    "No relational implementation for symdiff()" = TRUE,
+-    "No relational implementation for {.code symdiff()}" = TRUE,
 +  check_dots_empty()
 +  check_compatible(x, y)
 +

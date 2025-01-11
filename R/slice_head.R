@@ -3,13 +3,15 @@
 slice_head.duckplyr_df <- function(.data, ..., n, prop, by = NULL) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
-    "No relational implementation for slice_head()" = TRUE,
+    "No relational implementation for {.code slice_head()}" = TRUE,
     {
       return(out)
     }
   )
 
   # dplyr forward
+  check_lazy(.data, duckplyr_error)
+
   slice_head <- dplyr$slice_head.data.frame
   out <- slice_head(.data, ..., n = n, prop = prop, by = {{ by }})
   return(out)

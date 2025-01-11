@@ -60,6 +60,8 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
   )
 
   # dplyr forward
+  check_lazy(.data, duckplyr_error)
+
   summarise <- dplyr$summarise.data.frame
   out <- summarise(.data, ..., .by = {{ .by }}, .groups = .groups)
   # dplyr_reconstruct() is not called here, restoring manually

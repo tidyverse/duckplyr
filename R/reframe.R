@@ -3,13 +3,15 @@
 reframe.duckplyr_df <- function(.data, ..., .by = NULL) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
-    "No relational implementation for reframe()" = TRUE,
+    "No relational implementation for {.code reframe()}" = TRUE,
     {
       return(out)
     }
   )
 
   # dplyr forward
+  check_lazy(.data, duckplyr_error)
+
   reframe <- dplyr$reframe.data.frame
   out <- reframe(.data, ..., .by = {{ .by }})
   return(out)

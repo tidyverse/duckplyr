@@ -4,13 +4,15 @@ group_trim.duckplyr_df <- function(.tbl, .drop = group_by_drop_default(.tbl)) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
     # Always fall back to dplyr
-    "No relational implementation for group_trim()" = TRUE,
+    "No relational implementation for {.code group_trim()}" = TRUE,
     {
       return(out)
     }
   )
 
   # dplyr forward
+  check_lazy(.tbl, duckplyr_error)
+
   group_trim <- dplyr$group_trim.data.frame
   out <- group_trim(.tbl, .drop)
   return(out)

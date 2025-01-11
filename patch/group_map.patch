@@ -13,16 +13,16 @@ diff --git b/R/group_map.R a/R/group_map.R
    # Our implementation
    duckplyr_error <- rel_try(NULL,
      # Always fall back to dplyr
-@@ -12,7 +17,7 @@ group_map.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = deprecat
+@@ -14,7 +19,7 @@ group_map.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = deprecat
+   check_lazy(.data, duckplyr_error)
  
-   # dplyr forward
    group_map <- dplyr$group_map.data.frame
 -  out <- group_map(.data, .f, ..., .keep = .keep, keep = keep)
 +  out <- group_map(.data, .f, ..., .keep = .keep)
    return(out)
  
    # dplyr implementation
-@@ -28,7 +33,7 @@ group_map.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = deprecat
+@@ -30,7 +35,7 @@ group_map.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = deprecat
    } else {
      group_split(.data)
    }

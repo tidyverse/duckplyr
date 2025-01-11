@@ -1,0 +1,12 @@
+diff --git b/R/group_by.R a/R/group_by.R
+--- b/R/group_by.R
++++ a/R/group_by.R
+@@ -4,7 +4,7 @@ group_by.duckplyr_df <- function(.data, ..., .add = FALSE, .drop = group_by_drop
+   # Our implementation
+   duckplyr_error <- rel_try(NULL,
+     # Always fall back to dplyr
+-    "No relational implementation for {.code group_by()}" = TRUE,
++    "Try {.code summarise(.by = ...)} or {.code mutate(.by = ...)} instead of {.code group_by()} and {.code ungroup()}." = TRUE,
+     {
+       return(out)
+     }

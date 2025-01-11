@@ -9,13 +9,15 @@ group_map.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = deprecat
   # Our implementation
   duckplyr_error <- rel_try(NULL,
     # Always fall back to dplyr
-    "No relational implementation for group_map()" = TRUE,
+    "No relational implementation for {.code group_map()}" = TRUE,
     {
       return(out)
     }
   )
 
   # dplyr forward
+  check_lazy(.data, duckplyr_error)
+
   group_map <- dplyr$group_map.data.frame
   out <- group_map(.data, .f, ..., .keep = .keep)
   return(out)

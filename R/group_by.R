@@ -4,13 +4,15 @@ group_by.duckplyr_df <- function(.data, ..., .add = FALSE, .drop = group_by_drop
   # Our implementation
   duckplyr_error <- rel_try(NULL,
     # Always fall back to dplyr
-    "No relational implementation for group_by()" = TRUE,
+    "Try {.code summarise(.by = ...)} or {.code mutate(.by = ...)} instead of {.code group_by()} and {.code ungroup()}." = TRUE,
     {
       return(out)
     }
   )
 
   # dplyr forward
+  check_lazy(.data, duckplyr_error)
+
   group_by <- dplyr$group_by.data.frame
   out <- group_by(.data, ..., .add = .add, .drop = .drop)
   return(out)

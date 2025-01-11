@@ -3,13 +3,15 @@
 add_count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .drop = deprecated()) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
-    "No relational implementation for add_count()" = TRUE,
+    "No relational implementation for {.code add_count()}" = TRUE,
     {
       return(out)
     }
   )
 
   # dplyr forward
+  check_lazy(x, duckplyr_error)
+
   add_count <- dplyr$add_count.data.frame
   out <- add_count(x, ..., wt = {{ wt }}, sort = sort, name = name, .drop = .drop)
   return(out)

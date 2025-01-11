@@ -4,13 +4,15 @@ n_groups.duckplyr_df <- function(x) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
     # Always fall back to dplyr
-    "No relational implementation for n_groups()" = TRUE,
+    "No relational implementation for {.code n_groups()}" = TRUE,
     {
       return(out)
     }
   )
 
   # dplyr forward
+  check_lazy(x, duckplyr_error)
+
   n_groups <- dplyr$n_groups.data.frame
   out <- n_groups(x)
   return(out)

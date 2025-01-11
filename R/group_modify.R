@@ -9,13 +9,15 @@ group_modify.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = depre
   # Our implementation
   duckplyr_error <- rel_try(NULL,
     # Always fall back to dplyr
-    "No relational implementation for group_modify()" = TRUE,
+    "No relational implementation for {.code group_modify()}" = TRUE,
     {
       return(out)
     }
   )
 
   # dplyr forward
+  check_lazy(.data, duckplyr_error)
+
   group_modify <- dplyr$group_modify.data.frame
   out <- group_modify(.data, .f, ..., .keep = .keep)
   return(out)

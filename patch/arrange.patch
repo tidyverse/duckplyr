@@ -8,7 +8,7 @@ diff --git b/R/arrange.R a/R/arrange.R
  arrange.duckplyr_df <- function(.data, ..., .by_group = FALSE, .locale = NULL) {
 -  # Our implementation
 -  duckplyr_error <- rel_try(NULL,
--    "No relational implementation for arrange()" = TRUE,
+-    "No relational implementation for {.code arrange()}" = TRUE,
 +  force(.data)
 +
 +  dots <- enquos(...)

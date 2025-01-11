@@ -44,6 +44,8 @@ intersect.duckplyr_df <- function(x, y, ...) {
   )
 
   # dplyr forward
+  check_lazy(x, duckplyr_error)
+
   intersect <- dplyr$intersect.data.frame
   out <- intersect(x, y, ...)
   return(out)

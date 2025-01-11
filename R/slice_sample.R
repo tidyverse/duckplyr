@@ -3,13 +3,15 @@
 slice_sample.duckplyr_df <- function(.data, ..., n, prop, by = NULL, weight_by = NULL, replace = FALSE) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
-    "No relational implementation for slice_sample()" = TRUE,
+    "No relational implementation for {.code slice_sample()}" = TRUE,
     {
       return(out)
     }
   )
 
   # dplyr forward
+  check_lazy(.data, duckplyr_error)
+
   slice_sample <- dplyr$slice_sample.data.frame
   out <- slice_sample(.data, ..., n = n, prop = prop, by = {{ by }}, weight_by = {{ weight_by }}, replace = replace)
   return(out)

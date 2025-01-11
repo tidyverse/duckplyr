@@ -3,13 +3,15 @@
 rows_insert.duckplyr_df <- function(x, y, by = NULL, ..., conflict = c("error", "ignore"), copy = FALSE, in_place = FALSE) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
-    "No relational implementation for rows_insert()" = TRUE,
+    "No relational implementation for {.code rows_insert()}" = TRUE,
     {
       return(out)
     }
   )
 
   # dplyr forward
+  check_lazy(x, duckplyr_error)
+
   rows_insert <- dplyr$rows_insert.data.frame
   out <- rows_insert(x, y, by, ..., conflict = conflict, copy = copy, in_place = in_place)
   return(out)

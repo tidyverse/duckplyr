@@ -3,13 +3,15 @@
 rename_with.duckplyr_df <- function(.data, .fn, .cols = everything(), ...) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
-    "No relational implementation for rename_with()" = TRUE,
+    "No relational implementation for {.code rename_with()}" = TRUE,
     {
       return(out)
     }
   )
 
   # dplyr forward
+  check_lazy(.data, duckplyr_error)
+
   rename_with <- dplyr$rename_with.data.frame
   out <- rename_with(.data, .fn, {{ .cols }}, ...)
   return(out)

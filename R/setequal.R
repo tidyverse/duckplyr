@@ -3,13 +3,15 @@
 setequal.duckplyr_df <- function(x, y, ...) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
-    "No relational implementation for setequal()" = TRUE,
+    "No relational implementation for {.code setequal()}" = TRUE,
     {
       return(out)
     }
   )
 
   # dplyr forward
+  check_lazy(x, duckplyr_error)
+
   setequal <- dplyr$setequal.data.frame
   out <- setequal(x, y, ...)
   return(out)

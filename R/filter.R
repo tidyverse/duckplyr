@@ -36,6 +36,8 @@ filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
   )
 
   # dplyr forward
+  check_lazy(.data, duckplyr_error)
+
   filter <- dplyr$filter.data.frame
   out <- filter(.data, ..., .by = {{ .by }}, .preserve = .preserve)
   return(out)

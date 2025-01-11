@@ -3,13 +3,15 @@
 rows_patch.duckplyr_df <- function(x, y, by = NULL, ..., unmatched = c("error", "ignore"), copy = FALSE, in_place = FALSE) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
-    "No relational implementation for rows_patch()" = TRUE,
+    "No relational implementation for {.code rows_patch()}" = TRUE,
     {
       return(out)
     }
   )
 
   # dplyr forward
+  check_lazy(x, duckplyr_error)
+
   rows_patch <- dplyr$rows_patch.data.frame
   out <- rows_patch(x, y, by, ..., unmatched = unmatched, copy = copy, in_place = in_place)
   return(out)

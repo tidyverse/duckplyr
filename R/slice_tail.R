@@ -3,13 +3,15 @@
 slice_tail.duckplyr_df <- function(.data, ..., n, prop, by = NULL) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
-    "No relational implementation for slice_tail()" = TRUE,
+    "No relational implementation for {.code slice_tail()}" = TRUE,
     {
       return(out)
     }
   )
 
   # dplyr forward
+  check_lazy(.data, duckplyr_error)
+
   slice_tail <- dplyr$slice_tail.data.frame
   out <- slice_tail(.data, ..., n = n, prop = prop, by = {{ by }})
   return(out)

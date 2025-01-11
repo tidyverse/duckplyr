@@ -16,7 +16,7 @@ diff --git b/R/compute.R a/R/compute.R
 +) {
    # Our implementation
    duckplyr_error <- rel_try(NULL,
--    "No relational implementation for compute()" = TRUE,
+-    "No relational implementation for {.code compute()}" = TRUE,
 +    "Needs duckdb >= 1.1.3.9029" = !is_installed("duckdb", version = "1.1.3.9029"),
      {
 +      if (is.null(lazy)) {

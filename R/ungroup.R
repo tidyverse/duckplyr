@@ -3,13 +3,15 @@
 ungroup.duckplyr_df <- function(x, ...) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
-    "No relational implementation for ungroup()" = TRUE,
+    "No relational implementation for {.code ungroup()}" = TRUE,
     {
       return(out)
     }
   )
 
   # dplyr forward
+  check_lazy(x, duckplyr_error)
+
   ungroup <- dplyr$ungroup.data.frame
   out <- ungroup(x, ...)
   return(out)

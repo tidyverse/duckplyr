@@ -3,13 +3,15 @@
 nest_by.duckplyr_df <- function(.data, ..., .key = "data", .keep = FALSE) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
-    "No relational implementation for nest_by()" = TRUE,
+    "No relational implementation for {.code nest_by()}" = TRUE,
     {
       return(out)
     }
   )
 
   # dplyr forward
+  check_lazy(.data, duckplyr_error)
+
   nest_by <- dplyr$nest_by.data.frame
   out <- nest_by(.data, ..., .key = .key, .keep = .keep)
   return(out)

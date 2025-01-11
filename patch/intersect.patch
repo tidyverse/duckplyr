@@ -8,7 +8,7 @@ diff --git b/R/intersect.R a/R/intersect.R
  intersect.duckplyr_df <- function(x, y, ...) {
    # Our implementation
 -  duckplyr_error <- rel_try(NULL,
--    "No relational implementation for intersect()" = TRUE,
+-    "No relational implementation for {.code intersect()}" = TRUE,
 +  check_dots_empty()
 +  check_compatible(x, y)
 +

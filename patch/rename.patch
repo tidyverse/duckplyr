@@ -8,7 +8,7 @@ diff --git b/R/rename.R a/R/rename.R
  rename.duckplyr_df <- function(.data, ...) {
 -  # Our implementation
 -  duckplyr_error <- rel_try(NULL,
--    "No relational implementation for rename()" = TRUE,
+-    "No relational implementation for {.code rename()}" = TRUE,
 +  loc <- tidyselect::eval_rename(expr(c(...)), .data)
 +  dupes <- duplicated(loc, fromLast = TRUE)
 +  loc <- loc[!dupes]

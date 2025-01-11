@@ -120,3 +120,19 @@ new_failing_mask <- function(names_data) {
   walk(names_data, ~ env_bind_lazy(env, !!.x := stop("Can't access data in this context")))
   new_data_mask(env)
 }
+
+#' @param duckplyr_error Return value from rel_try()
+#' @noRd
+check_lazy <- function(x, duckplyr_error, call = caller_env()) {
+  msg <- tryCatch(nrow(x), error = conditionMessage)
+  if (is.character(msg)) {
+    duckplyr_error_msg <- if (is.character(duckplyr_error)) duckplyr_error
+    duckplyr_error_parent <- if (is_condition(duckplyr_error)) duckplyr_error
+    cli::cli_abort(parent = duckplyr_error_parent, call = call, c(
+      "This operation cannot be carried out by DuckDB, and the input is a lazy duckplyr frame.",
+      "*" = duckplyr_error_msg,
+      "*" = "Use {.code compute(lazy = FALSE)} to materialize to temporary storage and continue with {.pkg duckplyr}.",
+      "*" = 'See the "Eager and lazy" section in {.help duck_tbl} for other options.'
+    ))
+  }
+}

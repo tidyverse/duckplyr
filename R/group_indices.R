@@ -4,13 +4,15 @@ group_indices.duckplyr_df <- function(.data, ...) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
     # Always fall back to dplyr
-    "No relational implementation for group_indices()" = TRUE,
+    "No relational implementation for {.code group_indices()}" = TRUE,
     {
       return(out)
     }
   )
 
   # dplyr forward
+  check_lazy(.data, duckplyr_error)
+
   group_indices <- dplyr$group_indices.data.frame
   out <- group_indices(.data, ...)
   return(out)

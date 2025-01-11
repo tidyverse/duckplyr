@@ -4,13 +4,15 @@ group_nest.duckplyr_df <- function(.tbl, ..., .key = "data", keep = FALSE) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
     # Always fall back to dplyr
-    "No relational implementation for group_nest()" = TRUE,
+    "No relational implementation for {.code group_nest()}" = TRUE,
     {
       return(out)
     }
   )
 
   # dplyr forward
+  check_lazy(.tbl, duckplyr_error)
+
   group_nest <- dplyr$group_nest.data.frame
   out <- group_nest(.tbl, ..., .key = .key, keep = keep)
   return(out)

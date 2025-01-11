@@ -1,12 +1,12 @@
 diff --git b/R/union.R a/R/union.R
 --- b/R/union.R
 +++ a/R/union.R
-@@ -2,12 +2,10 @@
+@@ -2,12 +2,12 @@
  #' @export
  union.duckplyr_df <- function(x, y, ...) {
    # Our implementation
 -  duckplyr_error <- rel_try(NULL,
--    "No relational implementation for union()" = TRUE,
+-    "No relational implementation for {.code union()}" = TRUE,
 -    {
 -      return(out)
 -    }
@@ -15,6 +15,8 @@ diff --git b/R/union.R a/R/union.R
 +
 +  # This is difficult to do manually due to order preservation
 +  return(distinct(union_all(x, y)))
++
++  duckplyr_error <- NULL
  
    # dplyr forward
-   union <- dplyr$union.data.frame
+   check_lazy(x, duckplyr_error)

@@ -25,6 +25,8 @@ transmute.duckplyr_df <- function(.data, ...) {
   )
 
   # dplyr forward
+  check_lazy(.data, duckplyr_error)
+
   transmute <- dplyr$transmute.data.frame
   out <- transmute(.data, ...)
   return(out)
