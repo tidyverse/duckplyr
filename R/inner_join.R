@@ -9,15 +9,15 @@ inner_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x
   # Our implementation
   rel_try(list(name = "inner_join", x = x, y = y, args = try_list(by = if (!is.null(by) && !is_cross_by(by)) as_join_by(by), copy = copy, keep = keep, na_matches = na_matches, multiple = multiple, unmatched = unmatched, relationship = relationship)),
     #' @section Fallbacks:
-    #' You cannot use `inner_join.duckplyr_df`
+    #' You cannot use `inner_join.duckplyr_df()`
     #' - for an implicit crossjoin,
     #' - for a value of the `multiple` argument that isn't the default `"all"`.
     #' - for a value of the `unmatched` argument that isn't the default `"drop"`.
     #'
     #' If you do the code will fall back to `dplyr::inner_join()` without any error.
-    "No implicit cross joins for inner_join()" = is_cross_by(by),
-    "`multiple` not supported" = !identical(multiple, "all"),
-    "`unmatched` not supported" = !identical(unmatched, "drop"),
+    "No implicit cross joins for {.code inner_join()}" = is_cross_by(by),
+    "{.arg multiple} not supported" = !identical(multiple, "all"),
+    "{.arg unmatched} not supported" = !identical(unmatched, "drop"),
     {
       out <- rel_join_impl(x, y, by, "inner", na_matches, suffix, keep, error_call)
       return(out)

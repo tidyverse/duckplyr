@@ -25,9 +25,9 @@ using the same syntax as \code{select()} to make it easy to move blocks of colum
 }
 \section{Fallbacks}{
 
-You cannot use \code{relocate.duckplyr_df}
+You cannot use \code{relocate.duckplyr_df()}
 \itemize{
-\item with a selection that returns no columns:
+\item with a selection that returns no columns.
 }
 
 If you do the code will fall back to \code{dplyr::relocate()} without any error.

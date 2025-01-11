@@ -134,7 +134,7 @@ A \code{full_join()} keeps all observations in \code{x} and \code{y}.
 }
 \section{Fallbacks}{
 
-You cannot use \code{full_join.duckplyr_df}
+You cannot use \code{full_join.duckplyr_df()}
 \itemize{
 \item for an implicit cross join,
 \item for a value of the \code{multiple} argument that isn't the default \code{"all"}.

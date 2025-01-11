@@ -15,8 +15,8 @@ intersect.duckplyr_df <- function(x, y, ...) {
 
   rel_try(list(name = "intersect", x = x, y = y),
     #' @section Fallbacks:
-    #' You cannot use `intersect.duckplyr_df`
-    #' - if column names are duplicated in one of the tables
+    #' You cannot use `intersect.duckplyr_df()`
+    #' - if column names are duplicated in one of the tables,
     #' - if column names are different in both tables.
     #'
     #' If you do the code will fall back to `dplyr::intersect()` without any error.

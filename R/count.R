@@ -20,15 +20,15 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
   # Passing `name` reliably is surprisingly complicated.
   rel_try(list(name = "count", x = x, args = try_list(dots = enquos(...), wt = enquo(wt), sort = sort, .drop = .drop)),
     #' @section Fallbacks:
-    #' You cannot use `count.duckplyr_df`
+    #' You cannot use `count.duckplyr_df()`
     #' - with complex expressions in `...`,
     #' - with `.drop = FALSE`,
     #' - with `sort = TRUE`.
     #'
     #' If you do the code will fall back to `dplyr::count()` without any error.
-    "count() needs all(is_name)" = !all(is_name),
-    "count() only implemented for .drop = TRUE" = !.drop,
-    "count() only implemented for sort = FALSE" = sort,
+    "{.code count()} requires columns in {.arg ...}" = !all(is_name),
+    "{.code count()} only implemented for {.arg .drop} = {.value TRUE}" = !.drop,
+    "{.code count()} only implemented for {.arg sort} = {.value FALSE}" = sort,
     {
       rel <- duckdb_rel_from_df(x)
 

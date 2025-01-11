@@ -10,11 +10,11 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
 
   rel_try(list(name = "summarise", x = .data, args = try_list(dots = enquos(...), by = syms(by), .groups = .groups)),
     #' @section Fallbacks:
-    #' You cannot use `summarise.duckplyr_df`
+    #' You cannot use `summarise.duckplyr_df()`
     #' - with `.groups = "rowwise"`.
     #'
     #' If you do the code will fall back to `dplyr::summarise()` without any error.
-    'summarize(.groups = "rowwise") not supported' = identical(.groups, "rowwise"),
+    '{.code summarise()} with {.arg .groups} = {.value "rowwise")} not supported' = identical(.groups, "rowwise"),
     {
       rel <- duckdb_rel_from_df(.data)
 

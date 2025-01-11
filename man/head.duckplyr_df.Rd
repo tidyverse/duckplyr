@@ -20,7 +20,7 @@ Return the first rows of a data.frame
 }
 \section{Fallbacks}{
 
-You cannot use \code{head.duckplyr_df}
+You cannot use \code{head.duckplyr_df()}
 \itemize{
 \item with a negative \code{n}.
 }

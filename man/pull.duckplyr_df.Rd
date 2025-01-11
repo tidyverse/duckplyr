@@ -39,9 +39,9 @@ it also works with remote data frames, and it can optionally name the output.
 }
 \section{Fallbacks}{
 
-You cannot use \code{pull.duckplyr_df}
+You cannot use \code{pull.duckplyr_df()}
 \itemize{
-\item with a selection that returns no columns:
+\item with a selection that returns no columns.
 }
 
 If you do the code will fall back to \code{dplyr::pull()} without any error.
