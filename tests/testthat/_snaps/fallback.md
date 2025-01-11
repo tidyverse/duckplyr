@@ -215,7 +215,7 @@
       i dplyr fallback recorded
         {"version":"0.3.1","message":"{.code count()} only implemented for {.arg .drop} = {.value TRUE}","name":"count","x":{"...1":"numeric"},"args":{"dots":{"1":"...1"},"wt":"NULL","sort":false,".drop":false}}
       i dplyr fallback recorded
-        {"version":"0.3.1","message":"No relational implementation for group_by()"}
+        {"version":"0.3.1","message":"Try {.code summarise(.by = ...)} or {.code mutate(.by = ...)} instead of {.code group_by()} and {.code ungroup()}."}
     Output
       # A duckplyr data frame: 2 variables
             a     n
