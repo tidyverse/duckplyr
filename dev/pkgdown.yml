@@ -4,7 +4,7 @@ pkgdown_sha: 6615322cb2ce15b1effcecf894123c88fa10b9c9
 articles:
   developers: developers.html
   limits: limits.html
-last_built: 2025-01-11T01:20Z
+last_built: 2025-01-11T01:22Z
 urls:
   reference: https://duckplyr.tidyverse.org/reference
   article: https://duckplyr.tidyverse.org/articles
