@@ -1,6 +1,6 @@
 #' @title Extract a single column
 #'
-#' @description  This is a method for the [`dplyr::pull()`] generic.
+#' @description  This is a method for the [dplyr::pull()] generic.
 #' See "Fallbacks" section for differences in implementation.
 #' `pull()` is similar to `$`.
 #' It's mostly useful because it looks a little nicer in pipes,
@@ -10,7 +10,7 @@
 #' @examples
 #' pull(mtcars, cyl)
 #' pull(mtcars, 1)
-#' @seealso [`dplyr::pull()`]
+#' @seealso [dplyr::pull()]
 #' @rdname pull.duckplyr_df
 #' @name pull.duckplyr_df
 NULL

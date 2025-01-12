@@ -17,7 +17,7 @@
 #'
 #' @export
 #' @examples
-#' library("duckplyr")
+#' library(duckplyr)
 #' df <- data.frame(x = c(1, 2))
 #' df <- mutate(df, y = 2)
 #' path <- tempfile(fileext = ".parquet")

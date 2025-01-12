@@ -165,7 +165,7 @@ If you do the code will fall back to \code{dplyr::inner_join()} without any erro
 }
 
 \examples{
-library("dplyr")
+library(dplyr)
 inner_join(band_members, band_instruments)
 }
 \seealso{

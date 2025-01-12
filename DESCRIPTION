@@ -28,7 +28,7 @@ Imports:
     lifecycle,
     magrittr,
     memoise,
-    pillar (>= 1.9.0.1038),
+    pillar (>= 1.10.1),
     rlang (>= 1.0.6),
     tibble,
     tidyselect,
@@ -49,15 +49,14 @@ Suggests:
     palmerpenguins,
     prettycode,
     purrr,
-    qs,
-    reprex,
     rmarkdown,
-    rstudioapi,
     testthat (>= 3.1.5),
     usethis,
     withr
-Remotes: 
-    r-lib/pillar
+Enhances: 
+    qs,
+    reprex,
+    rstudioapi
 Config/Needs/check: anthonynorth/roxyglobals
 Config/Needs/website: tidyverse/tidytemplate, dbplyr, Lahman, rmarkdown
 Config/testthat/edition: 3

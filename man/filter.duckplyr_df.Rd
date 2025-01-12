@@ -48,7 +48,8 @@ If you do the code will fall back to \code{dplyr::filter()} without any error.
 }
 
 \examples{
-filter(mtcars, mpg > 30)
+df <- tibble(x = 1:3, y = 3:1)
+filter(df, x >= 2)
 }
 \seealso{
 \code{\link[dplyr:filter]{dplyr::filter()}}

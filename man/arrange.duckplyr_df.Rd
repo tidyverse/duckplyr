@@ -60,7 +60,7 @@ If you do the code will fall back to \code{dplyr::arrange()} without any error.
 }
 
 \examples{
-library("duckplyr")
+library(duckplyr)
 arrange(mtcars, cyl, disp)
 arrange(mtcars, desc(disp))
 }

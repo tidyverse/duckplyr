@@ -38,7 +38,7 @@ The result is a duckplyr frame that can be used with subsequent dplyr verbs.
 \code{compute_csv()} creates a CSV file.
 }
 \examples{
-library("duckplyr")
+library(duckplyr)
 df <- data.frame(x = c(1, 2))
 df <- mutate(df, y = 2)
 path <- tempfile(fileext = ".parquet")

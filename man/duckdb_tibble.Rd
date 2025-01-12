@@ -97,7 +97,7 @@ x <- duckdb_tibble(a = 1)
 x
 
 library(dplyr)
-x \%>\%
+x |>
   mutate(b = 2)
 
 x$a

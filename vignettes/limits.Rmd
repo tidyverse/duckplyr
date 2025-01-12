@@ -14,6 +14,35 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Data types
+
+duckplyr supports the following data types:
+
+- `is.logical()`
+- `is.integer()`
+- `is.numeric()`
+- `is.character()`
+- `is.Date()`
+- `is.POSIXct()` (with UTC time zone)
+- `is.difftime()`
+
+```{r}
+duckplyr::duckdb_tibble(
+  logical = TRUE,
+  integer = 1L,
+  numeric = 1.1,
+  character = "a",
+  Date = as.Date("2025-01-11"),
+  POSIXct = as.POSIXct("2025-01-11 19:23:00", tz = "UTC"),
+  difftime = as.difftime(1, units = "secs"),
+) |>
+  dplyr::compute()
+```
+
+Support for more data types, and passthrough of unknown data types, is planned.
+Let's [discuss](https://github.com/tidyverse/duckplyr/discussions/) any additional data types you would like to see supported.
+
+
 ## Verbs
 
 Not all dplyr verbs are implemented within duckplyr.
@@ -22,7 +51,7 @@ See `?unsupported` for a list of verbs for which duckplyr does not provide a met
 
 See the [reference index](https://duckplyr.tidyverse.org/reference/index.html) for a list of verbs with corresponding duckplyr methods.
 
-Refer to [our contributing guide](https://duckplyr.tidyverse.org/CONTRIBUTING.html#new-translations-for-functions) to learn how to suggest the addition of a new verb.
+Let's [discuss](https://github.com/tidyverse/duckplyr/discussions/) any additional verbs you would like to see supported.
 
 
 ## Functions within verbs
@@ -39,7 +68,7 @@ As of now, here are the translations provided:
 
 - Math functions: `log10()`, `log()`, `abs()`
 
-- Logical operators: `!`, `&`, `|`
+- Logical operators: `!`, `&`, `|` (`?Logic`)
 
 - Branching and conversion: `is.na()`, `dplyr::if_else()`, `as.integer()`, `strftime()`
 

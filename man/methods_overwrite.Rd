@@ -19,16 +19,16 @@ The \code{methods_overwrite()} function is called automatically when the package
 if the environment variable \code{DUCKPLYR_METHODS_OVERWRITE} is set to \code{TRUE}.
 }
 \examples{
-tibble(a = 1:3) \%>\%
+tibble(a = 1:3) |>
   mutate(b = a + 1)
 
 methods_overwrite()
 
-tibble(a = 1:3) \%>\%
+tibble(a = 1:3) |>
   mutate(b = a + 1)
 
 methods_restore()
 
-tibble(a = 1:3) \%>\%
+tibble(a = 1:3) |>
   mutate(b = a + 1)
 }
