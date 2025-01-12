@@ -1,5 +1,32 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9915 (2025-01-12)
+
+## Features
+
+- Rename `duck_exec()` to `db_exec()` and `duck_*()` to `read_*_duckdb()` (#210, #459).
+
+- Rename `duck_tbl()` to `duckdb_tibble()`, and `as_duck_tbl()` to `as_duckdb_tibble()` (#457).
+
+- Improve error message with lazy data frame by explicitly materializing before falling back to dplyr (#432, #456).
+
+- The default DuckDB connection is now based on a file, the location can be controlled with the `DUCKPLYR_TEMP_DIR` environment variable (#439, #448).
+
+## Chore
+
+- Capture and return `rel_try()` error (#454).
+
+- Sync patch (#453).
+
+- Remove noise from patch files (#451).
+
+## Documentation
+
+- Add "Eager and lazy" section to `?duck_tbl`, document `collect()` (#455).
+
+- Review `rel_try()` reasons and docs (#452).
+
+
 # duckplyr 0.99.99.9914 (2025-01-11)
 
 ## Features
