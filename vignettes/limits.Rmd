@@ -36,7 +36,7 @@ duckplyr::duckdb_tibble(
   POSIXct = as.POSIXct("2025-01-11 19:23:00", tz = "UTC"),
   difftime = as.difftime(1, units = "secs"),
 ) |>
-  compute()
+  dplyr::compute()
 ```
 
 Support for more data types, and passthrough of unknown data types, is planned.
