@@ -7,7 +7,7 @@
 #' @inheritParams dplyr::explain
 #' @examples
 #' library(duckplyr)
-#' df <- tibble(x = c(1, 2))
+#' df <- duckdb_tibble(x = c(1, 2))
 #' df <- mutate(df, y = 2)
 #' explain(df)
 #' @seealso [dplyr::explain()]
