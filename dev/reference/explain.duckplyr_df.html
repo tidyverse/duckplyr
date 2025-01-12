@@ -11,7 +11,7 @@ than print(), and is more focused on human readable output than str()."><meta pr
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9914</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9915</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,12 +72,27 @@ than <code><a href="https://rdrr.io/r/base/print.html" class="external-link">pri
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">lahman_s</span> <span class="op">&lt;-</span> <span class="fu">dbplyr</span><span class="fu">::</span><span class="fu"><a href="https://dbplyr.tidyverse.org/reference/lahman.html" class="external-link">lahman_sqlite</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in (function (cond) .Internal(C_tryCatchHelper(addr, 1L, cond)))(structure(list(message = "there is no package called ‘RSQLite’",     call = loadNamespace(x), package = "RSQLite", lib.loc = NULL), class = c("packageNotFoundError", "error", "condition"))):</span> error in evaluating the argument 'drv' in selecting a method for function 'dbConnect': there is no package called ‘RSQLite’</span>
-<span class="r-in"><span><span class="va">batting</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="va">lahman_s</span>, <span class="st">"Batting"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'lahman_s' not found</span>
-<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="va">batting</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'batting' not found</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://duckplyr.tidyverse.org">duckplyr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">df</span>, y <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ┌───────────────────────────┐</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │         PROJECTION        │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │    ────────────────────   │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │             x             │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │             y             │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │                           │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │          ~2 Rows          │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> └─────────────┬─────────────┘</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ┌─────────────┴─────────────┐</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │     R_DATAFRAME_SCAN      │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │    ────────────────────   │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │         data.frame        │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │                           │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │       Projections: x      │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │                           │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │          ~2 Rows          │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> └───────────────────────────┘</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

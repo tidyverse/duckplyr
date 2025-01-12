@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9914</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9915</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,6 +75,50 @@
     
     
 <div class="section level2">
+<h2 id="data-types">Data types<a class="anchor" aria-label="anchor" href="#data-types"></a>
+</h2>
+<p>duckplyr supports the following data types:</p>
+<ul>
+<li><code><a href="https://rdrr.io/r/base/logical.html" class="external-link">is.logical()</a></code></li>
+<li><code><a href="https://rdrr.io/r/base/integer.html" class="external-link">is.integer()</a></code></li>
+<li><code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">is.numeric()</a></code></li>
+<li><code><a href="https://rdrr.io/r/base/character.html" class="external-link">is.character()</a></code></li>
+<li><code>is.Date()</code></li>
+<li>
+<code>is.POSIXct()</code> (with UTC time zone)</li>
+<li><code>is.difftime()</code></li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span></span>
+<span>  logical <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  integer <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>  numeric <span class="op">=</span> <span class="fl">1.1</span>,</span>
+<span>  character <span class="op">=</span> <span class="st">"a"</span>,</span>
+<span>  Date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025-01-11"</span><span class="op">)</span>,</span>
+<span>  POSIXct <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="st">"2025-01-11 19:23:00"</span>, tz <span class="op">=</span> <span class="st">"UTC"</span><span class="op">)</span>,</span>
+<span>  difftime <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/difftime.html" class="external-link">as.difftime</a></span><span class="op">(</span><span class="fl">1</span>, units <span class="op">=</span> <span class="st">"secs"</span><span class="op">)</span>,</span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">compute</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; The <span style="color: #0000BB;">duckplyr</span> package is configured to fall back to <span style="color: #0000BB;">dplyr</span> when it</span></span>
+<span><span class="co">#&gt; encounters an incompatibility. Fallback events can be collected and</span></span>
+<span><span class="co">#&gt; uploaded for analysis to guide future development. By default, data will</span></span>
+<span><span class="co">#&gt; be collected but no data will be uploaded.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Automatic fallback uploading is not controlled and therefore disabled,</span></span>
+<span><span class="co">#&gt;   see `?duckplyr::fallback()`.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Number of reports ready for upload: <span style="font-weight: bold;">3</span>.</span></span>
+<span><span class="co">#&gt; → Review with `duckplyr::fallback_review()`, upload with</span></span>
+<span><span class="co">#&gt;   `duckplyr::fallback_upload()`.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Configure automatic uploading with `duckplyr::fallback_config()`.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 7 variables</span></span></span>
+<span><span class="co">#&gt;   logical integer numeric character Date       POSIXct            </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> TRUE          1     1.1 a         2025-01-11 2025-01-11 <span style="color: #949494;">19:23:00</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more variable: difftime &lt;drtn&gt;</span></span></span></code></pre></div>
+<p>Support for more data types, and passthrough of unknown data types,
+is planned. Let’s <a href="https://github.com/tidyverse/duckplyr/discussions/" class="external-link">discuss</a>
+any additional data types you would like to see supported.</p>
+</div>
+<div class="section level2">
 <h2 id="verbs">Verbs<a class="anchor" aria-label="anchor" href="#verbs"></a>
 </h2>
 <p>Not all dplyr verbs are implemented within duckplyr. For unsupported
@@ -83,9 +127,8 @@ verbs, duckplyr automatically falls back to dplyr. See
 not provide a method.</p>
 <p>See the <a href="https://duckplyr.tidyverse.org/reference/index.html">reference
 index</a> for a list of verbs with corresponding duckplyr methods.</p>
-<p>Refer to <a href="https://duckplyr.tidyverse.org/CONTRIBUTING.html#new-translations-for-functions">our
-contributing guide</a> to learn how to suggest the addition of a new
-verb.</p>
+<p>Let’s <a href="https://github.com/tidyverse/duckplyr/discussions/" class="external-link">discuss</a>
+any additional verbs you would like to see supported.</p>
 </div>
 <div class="section level2">
 <h2 id="functions-within-verbs">Functions within verbs<a class="anchor" aria-label="anchor" href="#functions-within-verbs"></a>
@@ -103,7 +146,7 @@ provided.</p>
 <li><p>Math functions: <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log()</a></code>,
 <code><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs()</a></code></p></li>
 <li><p>Logical operators: <code>!</code>, <code>&amp;</code>,
-<code>|</code></p></li>
+<code>|</code> (<code><a href="https://rdrr.io/r/base/Logic.html" class="external-link">?Logic</a></code>)</p></li>
 <li><p>Branching and conversion: <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na()</a></code>,
 <code><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">dplyr::if_else()</a></code>, <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code>,
 <code><a href="https://rdrr.io/r/base/strptime.html" class="external-link">strftime()</a></code></p></li>
