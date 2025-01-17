@@ -1,4 +1,4 @@
-#' @title Create, modify, and delete columns (duckplyr)
+#' @title Create, modify, and delete columns
 #'
 #' @description  This is a method for the [dplyr::mutate()] generic.
 #' `mutate()` creates new columns that are functions of existing variables.

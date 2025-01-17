@@ -1,4 +1,4 @@
-#' @title Create, modify, and delete columns (duckplyr)
+#' @title Force conversion to a data frame
 #'
 #' @description  This is a method for the [dplyr::collect()] generic.
 #' `collect()` converts the input to a tibble, materializing any lazy operations.
