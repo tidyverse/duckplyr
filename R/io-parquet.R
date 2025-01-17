@@ -42,9 +42,9 @@ duckplyr_df_from_parquet <- function(path, ..., options = list(), class = NULL) 
 #' df_to_parquet(df, path_parquet)
 #'
 #' # With a duckplyr_df, the materialization occurs outside of R:
-#' df |>
-#'   as_duckplyr_df() |>
-#'   mutate(b = a + 1) |>
+#' df %>%
+#'   as_duckplyr_df() %>%
+#'   mutate(b = a + 1) %>%
 #'   df_to_parquet(path_parquet)
 #'
 #' duckplyr_df_from_parquet(path_parquet)
