@@ -40,11 +40,3 @@
       Caused by error:
       ! object 'foo' not found
 
-# `duckplyr_mutate()` doesn't allow data frames with missing or empty names (#6758)
-
-    Code
-      duckplyr_mutate(df2)
-    Condition
-      Error in `mutate()`:
-      ! Can't transform a data frame with `NA` or `""` names.
-

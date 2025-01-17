@@ -29,22 +29,6 @@
       Caused by error:
       ! `..1` must be a logical vector, not a logical array.
 
-# `duckplyr_filter()` doesn't allow data frames with missing or empty names (#6758)
-
-    Code
-      duckplyr_filter(df1)
-    Condition
-      Error in `filter()`:
-      ! Can't transform a data frame with `NA` or `""` names.
-
----
-
-    Code
-      duckplyr_filter(df2)
-    Condition
-      Error in `filter()`:
-      ! Can't transform a data frame with `NA` or `""` names.
-
 # can't use `.by` with `.preserve`
 
     Code
