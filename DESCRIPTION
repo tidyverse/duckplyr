@@ -49,6 +49,7 @@ Suggests:
     palmerpenguins,
     prettycode,
     purrr,
+    readr,
     rmarkdown,
     testthat (>= 3.1.5),
     usethis,
