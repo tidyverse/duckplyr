@@ -38,6 +38,11 @@ test_that("as_duckdb_tibble() and readr data", {
   expect_snapshot(error = TRUE, {
     as_duckdb_tibble(readr::read_csv(path, show_col_types = FALSE))
   })
+
+  expect_equal(
+    as_duckdb_tibble(as_tibble(readr::read_csv(path, show_col_types = FALSE))),
+    duckdb_tibble(a = 1)
+  )
 })
 
 test_that("as_duckdb_tibble() and dbplyr tables", {
