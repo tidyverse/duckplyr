@@ -35,7 +35,7 @@ duckplyr::duckdb_tibble(
   Date = as.Date("2025-01-11"),
   POSIXct = as.POSIXct("2025-01-11 19:23:00", tz = "UTC"),
   difftime = as.difftime(1, units = "secs"),
-) |>
+) %>%
   dplyr::compute()
 ```
 

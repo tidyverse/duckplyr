@@ -45,15 +45,15 @@ To enable duckplyr **for individual data frames instead of session wide**,
 
 ```{r}
 eager <-
-  duckplyr::flights_df() |>
-  duckplyr::as_duckdb_tibble() |>
-  filter(!is.na(arr_delay), !is.na(dep_delay)) |>
-  mutate(inflight_delay = arr_delay - dep_delay) |>
+  duckplyr::flights_df() %>%
+  duckplyr::as_duckdb_tibble() %>%
+  filter(!is.na(arr_delay), !is.na(dep_delay)) %>%
+  mutate(inflight_delay = arr_delay - dep_delay) %>%
   summarize(
     .by = c(year, month), 
     mean_inflight_delay = mean(inflight_delay),
     median_inflight_delay = median(inflight_delay),
-  ) |>
+  ) %>%
   filter(month <= 6)
 ```
 
@@ -68,7 +68,7 @@ DuckDB is responsible for eventually carrying out the operations.
 Despite the late filter, the summary is not computed for the months in the second half of the year.
 
 ```{r}
-eager |>
+eager %>%
   explain()
 ```
 
@@ -95,7 +95,7 @@ This is also the default for the ingestion functions such as `read_parquet_duckd
 
 ```{r}
 lazy <-
-  duckplyr::flights_df() |>
+  duckplyr::flights_df() %>%
   duckplyr::as_duckdb_tibble(.lazy = TRUE)
 ```
 
@@ -108,8 +108,8 @@ nrow(lazy)
 Also, operations that are not (yet) supported will fail:
 
 ```{r error = TRUE}
-lazy |>
-  mutate(inflight_delay = arr_delay - dep_delay) |>
+lazy %>%
+  mutate(inflight_delay = arr_delay - dep_delay) %>%
   summarize(
     .by = c(year, month), 
     mean_inflight_delay = mean(inflight_delay, na.rm = TRUE),
