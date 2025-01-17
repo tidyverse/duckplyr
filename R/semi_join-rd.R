@@ -6,7 +6,6 @@
 #' @inheritParams dplyr::semi_join
 #' @examples
 #' library(duckplyr)
-#' library(dplyr)
 #' band_members %>% semi_join(band_instruments)
 #' @seealso [dplyr::semi_join()]
 #' @rdname semi_join.duckplyr_df

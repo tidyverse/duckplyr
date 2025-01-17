@@ -7,7 +7,7 @@
 #'
 #' @inheritParams dplyr::relocate
 #' @examples
-#' df <- tibble(a = 1, b = 1, c = 1, d = "a", e = "a", f = "a")
+#' df <- duckdb_tibble(a = 1, b = 1, c = 1, d = "a", e = "a", f = "a")
 #' relocate(df, f)
 #' @seealso [dplyr::relocate()]
 #' @rdname relocate.duckplyr_df

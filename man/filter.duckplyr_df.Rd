@@ -48,7 +48,7 @@ If you do the code will fall back to \code{dplyr::filter()} without any error.
 }
 
 \examples{
-df <- tibble(x = 1:3, y = 3:1)
+df <- duckdb_tibble(x = 1:3, y = 3:1)
 filter(df, x >= 2)
 }
 \seealso{

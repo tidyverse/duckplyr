@@ -10,7 +10,7 @@
 #'
 #' @inheritParams dplyr::filter
 #' @examples
-#' df <- tibble(x = 1:3, y = 3:1)
+#' df <- duckdb_tibble(x = 1:3, y = 3:1)
 #' filter(df, x >= 2)
 #' @seealso [dplyr::filter()]
 #' @rdname filter.duckplyr_df

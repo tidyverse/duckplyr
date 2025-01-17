@@ -7,6 +7,7 @@
 #'
 #' @inheritParams dplyr::rename
 #' @examples
+#' library(duckplyr)
 #' rename(mtcars, thing = mpg)
 #' @seealso [dplyr::rename()]
 #' @rdname rename.duckplyr_df

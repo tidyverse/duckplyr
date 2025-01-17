@@ -6,8 +6,8 @@
 #'
 #' @inheritParams dplyr::union_all
 #' @examples
-#' df1 <- tibble(x = 1:3)
-#' df2 <- tibble(x = 3:5)
+#' df1 <- duckdb_tibble(x = 1:3)
+#' df2 <- duckdb_tibble(x = 3:5)
 #' union_all(df1, df2)
 #' @seealso [dplyr::union_all()]
 #' @rdname union_all.duckplyr_df

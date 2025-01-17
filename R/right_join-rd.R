@@ -6,7 +6,7 @@
 #'
 #' @inheritParams dplyr::right_join
 #' @examples
-#' library(dplyr)
+#' library(duckplyr)
 #' right_join(band_members, band_instruments)
 #' @seealso [dplyr::right_join()]
 #' @rdname right_join.duckplyr_df
