@@ -93,19 +93,18 @@ duckdb_tibble <- function(..., .lazy = FALSE) {
 #' @rdname duckdb_tibble
 #' @export
 as_duckdb_tibble <- function(x, ..., .lazy = FALSE) {
-  out <- as_duckdb_tibble_dispatch(x, ...)
-
-  if (isTRUE(.lazy)) {
-    out <- as_lazy_duckplyr_df(out)
-  } else {
-    out <- as_eager_duckplyr_df(out)
+  # Handle the .lazy arg in the generic, only the other args will be dispatched
+  as_duckdb_tibble <- function(x, ...) {
+    UseMethod("as_duckdb_tibble")
   }
 
-  return(out)
-  UseMethod("as_duckdb_tibble")
-}
-as_duckdb_tibble_dispatch <- function(x, ...) {
-  UseMethod("as_duckdb_tibble")
+  out <- as_duckdb_tibble(x, ...)
+
+  if (isTRUE(.lazy)) {
+    as_lazy_duckplyr_df(out)
+  } else {
+    as_eager_duckplyr_df(out)
+  }
 }
 
 #' @export
