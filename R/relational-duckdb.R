@@ -4,14 +4,20 @@
 # we need a finalizer to disconnect on exit otherwise we get a warning
 default_duckdb_connection <- new.env(parent = emptyenv())
 get_default_duckdb_connection <- function() {
-  if (!exists("con", default_duckdb_connection)) {
+  if (is.null(default_duckdb_connection$con)) {
     default_duckdb_connection$con <- create_default_duckdb_connection()
-
-    reg.finalizer(default_duckdb_connection, onexit = TRUE, function(e) {
-      DBI::dbDisconnect(e$con, shutdown = TRUE)
-    })
+    reg.finalizer(default_duckdb_connection, onexit = TRUE, reset_default_duckdb_connection)
   }
   default_duckdb_connection$con
+}
+
+reset_default_duckdb_connection <- function(e = NULL) {
+  if (is.null(e)) {
+    e <- default_duckdb_connection
+  }
+  DBI::dbDisconnect(e$con)
+  # duckdb::duckdb_shutdown(e$con@driver)
+  e$con <- NULL
 }
 
 duckplyr_macros <- c(
