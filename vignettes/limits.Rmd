@@ -14,6 +14,13 @@ knitr::opts_chunk$set(
 )
 ```
 
+```{r}
+library(conflicted)
+library(dplyr)
+library(duckplyr)
+conflict_prefer("filter", "dplyr")
+```
+
 ## Data types
 
 duckplyr supports the following data types:
@@ -27,7 +34,7 @@ duckplyr supports the following data types:
 - `is.difftime()`
 
 ```{r}
-duckplyr::duckdb_tibble(
+duckdb_tibble(
   logical = TRUE,
   integer = 1L,
   numeric = 1.1,
@@ -36,7 +43,7 @@ duckplyr::duckdb_tibble(
   POSIXct = as.POSIXct("2025-01-11 19:23:00", tz = "UTC"),
   difftime = as.difftime(1, units = "secs"),
 ) %>%
-  dplyr::compute()
+  compute()
 ```
 
 Support for more data types, and passthrough of unknown data types, is planned.
