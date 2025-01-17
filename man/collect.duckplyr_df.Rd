@@ -2,7 +2,7 @@
 % Please edit documentation in R/collect-rd.R, R/collect.R
 \name{collect.duckplyr_df}
 \alias{collect.duckplyr_df}
-\title{Create, modify, and delete columns (duckplyr)}
+\title{Force conversion to a data frame}
 \usage{
 \method{collect}{duckplyr_df}(x, ...)
 }

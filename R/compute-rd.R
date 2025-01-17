@@ -1,4 +1,4 @@
-#' @title Compute results (duckplyr)
+#' @title Compute results
 #'
 #' @description  This is a method for the [dplyr::compute()] generic.
 #' For a (lazy) duckplyr frame,

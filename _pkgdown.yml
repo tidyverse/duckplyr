@@ -17,7 +17,7 @@ reference:
 
 - title: dplyr verbs
 
-- subtitle: Connecting, copying, and retrieving data
+- subtitle: Computing and materializing data
   contents:
   - compute.duckplyr_df
   - compute_file

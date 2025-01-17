@@ -2,7 +2,7 @@
 % Please edit documentation in R/compute-rd.R, R/compute.R
 \name{compute.duckplyr_df}
 \alias{compute.duckplyr_df}
-\title{Compute results (duckplyr)}
+\title{Compute results}
 \usage{
 \method{compute}{duckplyr_df}(x, ..., lazy = NULL, name = NULL, schema_name = NULL, temporary = TRUE)
 }

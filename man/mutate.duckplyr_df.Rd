@@ -2,7 +2,7 @@
 % Please edit documentation in R/mutate-rd.R, R/mutate.R
 \name{mutate.duckplyr_df}
 \alias{mutate.duckplyr_df}
-\title{Create, modify, and delete columns (duckplyr)}
+\title{Create, modify, and delete columns}
 \usage{
 \method{mutate}{duckplyr_df}(
   .data,
