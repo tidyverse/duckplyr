@@ -149,9 +149,9 @@ as_duckdb_tibble.grouped_df <- function(x, ...) {
   check_dots_empty()
 
   cli::cli_abort(c(
-    "duckplyr does not support {.code group_by()}.",
-    i = "Use `.by` instead.",
-    i = "To proceed with dplyr, use {.code as_tibble()} or {.code as.data.frame()}."
+    "{.pkg duckplyr} does not support {.code group_by()}.",
+    i = "Use {.arg .by} instead.",
+    i = "To proceed with {.pkg dplyr}, use {.code as_tibble()} or {.code as.data.frame()}."
   ))
 }
 
@@ -160,8 +160,8 @@ as_duckdb_tibble.rowwise_df <- function(x, ...) {
   check_dots_empty()
 
   cli::cli_abort(c(
-    "duckplyr does not support {.code rowwise()}.",
-    i = "To proceed with dplyr, use {.code as_tibble()} or {.code as.data.frame()}."
+    "{.pkg duckplyr} does not support {.code rowwise()}.",
+    i = "To proceed with {.pkg dplyr}, use {.code as_tibble()} or {.code as.data.frame()}."
   ))
 }
 
