@@ -12,6 +12,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
+Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
 ```
 
 ```{r}
