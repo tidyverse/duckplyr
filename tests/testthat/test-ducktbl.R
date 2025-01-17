@@ -29,6 +29,17 @@ test_that("as_duckdb_tibble() and rowwise df", {
   })
 })
 
+test_that("as_duckdb_tibble() and readr data", {
+  skip_if_not_installed("readr")
+
+  path <- withr::local_tempfile(fileext = ".csv")
+  readr::write_csv(data.frame(a = 1), path)
+
+  expect_snapshot(error = TRUE, {
+    as_duckdb_tibble(readr::read_csv(path, show_col_types = FALSE))
+  })
+})
+
 test_that("as_duckdb_tibble() and dbplyr tables", {
   skip_if_not_installed("dbplyr")
   con <- withr::local_db_connection(DBI::dbConnect(duckdb::duckdb()))

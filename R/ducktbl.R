@@ -164,6 +164,17 @@ as_duckdb_tibble.rowwise_df <- function(x, ...) {
   ))
 }
 
+#' @export
+as_duckdb_tibble.spec_tbl_df <- function(x, ...) {
+  check_dots_empty()
+
+  cli::cli_abort(c(
+    "The input is data read by {.pkg readr}, and {.pkg duckplyr} supports reading CSV files directly.",
+    i = "Use {.code read_csv_duckdb()} to use the built-in reader.",
+    i = "To proceed with the data as read by {.pkg readr}, use {.code as_tibble()} before {.code as_duckdb_tibble()}."
+  ))
+}
+
 #' is_duckdb_tibble
 #'
 #' `is_duckdb_tibble()` returns `TRUE` if `x` is a duckplyr data frame.
