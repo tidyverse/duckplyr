@@ -7,8 +7,8 @@
 #'
 #' @inheritParams dplyr::symdiff
 #' @examples
-#' df1 <- tibble(x = 1:3)
-#' df2 <- tibble(x = 3:5)
+#' df1 <- duckdb_tibble(x = 1:3)
+#' df2 <- duckdb_tibble(x = 3:5)
 #' symdiff(df1, df2)
 #' @seealso [dplyr::symdiff()]
 #' @rdname symdiff.duckplyr_df

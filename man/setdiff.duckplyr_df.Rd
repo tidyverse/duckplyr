@@ -2,7 +2,7 @@
 % Please edit documentation in R/setdiff-rd.R, R/setdiff.R
 \name{setdiff.duckplyr_df}
 \alias{setdiff.duckplyr_df}
-\title{Set diff}
+\title{Set difference}
 \usage{
 \method{setdiff}{duckplyr_df}(x, y, ...)
 }
@@ -30,8 +30,8 @@ If you do the code will fall back to \code{dplyr::setdiff()} without any error.
 }
 
 \examples{
-df1 <- tibble(x = 1:3)
-df2 <- tibble(x = 3:5)
+df1 <- duckdb_tibble(x = 1:3)
+df2 <- duckdb_tibble(x = 3:5)
 setdiff(df1, df2)
 setdiff(df2, df1)
 }

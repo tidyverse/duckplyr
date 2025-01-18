@@ -30,8 +30,8 @@ If you do the code will fall back to \code{dplyr::union_all()} without any error
 }
 
 \examples{
-df1 <- tibble(x = 1:3)
-df2 <- tibble(x = 3:5)
+df1 <- duckdb_tibble(x = 1:3)
+df2 <- duckdb_tibble(x = 3:5)
 union_all(df1, df2)
 }
 \seealso{

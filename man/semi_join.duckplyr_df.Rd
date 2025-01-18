@@ -62,7 +62,6 @@ This is a method for the \code{\link[dplyr:filter-joins]{dplyr::semi_join()}} ge
 }
 \examples{
 library(duckplyr)
-library(dplyr)
 band_members \%>\% semi_join(band_instruments)
 }
 \seealso{

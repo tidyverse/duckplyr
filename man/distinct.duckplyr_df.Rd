@@ -26,7 +26,7 @@ Keep only unique/distinct rows from a data frame.
 This is similar to \code{unique.data.frame()} but considerably faster.
 }
 \examples{
-df <- tibble(
+df <- duckdb_tibble(
   x = sample(10, 100, rep = TRUE),
   y = sample(10, 100, rep = TRUE)
 )

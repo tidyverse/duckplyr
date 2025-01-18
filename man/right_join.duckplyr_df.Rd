@@ -164,7 +164,7 @@ If you do the code will fall back to \code{dplyr::right_join()} without any erro
 }
 
 \examples{
-library(dplyr)
+library(duckplyr)
 right_join(band_members, band_instruments)
 }
 \seealso{

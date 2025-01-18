@@ -34,7 +34,7 @@ If you do the code will fall back to \code{dplyr::relocate()} without any error.
 }
 
 \examples{
-df <- tibble(a = 1, b = 1, c = 1, d = "a", e = "a", f = "a")
+df <- duckdb_tibble(a = 1, b = 1, c = 1, d = "a", e = "a", f = "a")
 relocate(df, f)
 }
 \seealso{

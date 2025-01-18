@@ -11,6 +11,7 @@
 #'
 #' @inheritParams dplyr::summarise
 #' @examples
+#' library(duckplyr)
 #' summarise(mtcars, mean = mean(disp), n = n())
 #' @seealso [dplyr::summarise()]
 #' @rdname summarise.duckplyr_df
