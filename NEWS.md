@@ -1,5 +1,32 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9917 (2025-01-18)
+
+## Bug fixes
+
+- Avoid base pipe for compatibility with R 4.0.0 (#463, #466).
+
+## Features
+
+- Point to the native CSV reader if encountering data frames read with readr (#127, #469).
+
+## Chore
+
+- Extract function to reset connection (#471).
+
+- Clean up source in error (#468).
+
+- Improve markup for error message (#467).
+
+## Documentation
+
+- Tweak reference index (#465, #474).
+
+## Testing
+
+- Move dplyr tests (#470).
+
+
 # duckplyr 0.99.99.9916 (2025-01-13)
 
 ## Documentation
