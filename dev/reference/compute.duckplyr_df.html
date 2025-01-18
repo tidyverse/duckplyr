@@ -101,6 +101,24 @@ The default is to inherit the lazyness of the input.</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://duckplyr.tidyverse.org">duckplyr</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">df</span>, y <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ┌───────────────────────────┐</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │         PROJECTION        │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │    ────────────────────   │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │             x             │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │             y             │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │                           │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │          ~2 Rows          │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> └─────────────┬─────────────┘</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ┌─────────────┴─────────────┐</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │     R_DATAFRAME_SCAN      │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │    ────────────────────   │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │         data.frame        │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │                           │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │       Projections: x      │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │                           │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> │          ~2 Rows          │</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> └───────────────────────────┘</span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">compute</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ┌───────────────────────────┐</span>
