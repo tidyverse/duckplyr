@@ -1,5 +1,14 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9918 (2025-01-19)
+
+## Documentation
+
+- Tweak examples and titles (#363, #475).
+
+- Fix logo (#476, #478).
+
+
 # duckplyr 0.99.99.9917 (2025-01-18)
 
 ## Bug fixes
