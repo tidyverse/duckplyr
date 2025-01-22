@@ -171,7 +171,7 @@ materialization of the results on access.
 
 ``` r
 nrow(flights)
-#> Error: Materialization is disabled, use collect() or as_tibble() to materialize
+#> Error: Materialization is disabled, use collect() or as_tibble() to materialize.
 ```
 
 Queries on the remote data are executed lazily, and the results are not
@@ -370,7 +370,7 @@ out <-
   duckplyr::as_duckdb_tibble() %>%
   mutate(inflight_delay = arr_delay - dep_delay)
 #> Error processing duckplyr query with DuckDB, falling back to dplyr.
-#> Caused by error in `check_df_for_rel()` at duckplyr/R/relational-duckdb.R:100:3:
+#> Caused by error in `check_df_for_rel()` at duckplyr/R/relational-duckdb.R:108:3:
 #> ! Attributes are lost during conversion. Affected column: `time_hour`.
 ```
 
