@@ -34,6 +34,7 @@ df_from_file <- function(path,
                          options = list(),
                          class = NULL) {
   check_dots_empty()
+  lifecycle::deprecate_soft("1.0.0", "df_from_file()", "read_file_duckdb()")
 
   if (!rlang::is_character(path)) {
     cli::cli_abort("{.arg path} must be a character vector.")
@@ -78,6 +79,7 @@ duckplyr_df_from_file <- function(
     options = list(),
     class = NULL) {
   check_dots_empty()
+  lifecycle::deprecate_soft("1.0.0", "duckplyr_df_from_file()", "read_file_duckdb()")
 
   out <- df_from_file(path, table_function, options = options, class = class)
   as_duckplyr_df_impl(out)
