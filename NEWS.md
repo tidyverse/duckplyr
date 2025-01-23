@@ -1,5 +1,18 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9919 (2025-01-23)
+
+## Chore
+
+- Deprecate old I/O functions (#481).
+
+## Documentation
+
+- Convert bullets to info items (#483).
+
+- Render README.
+
+
 # duckplyr 0.99.99.9918 (2025-01-19)
 
 ## Documentation
