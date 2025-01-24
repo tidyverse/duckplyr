@@ -4,16 +4,16 @@
 \alias{read_sql_duckdb}
 \title{Return SQL query as duckdb_tibble}
 \usage{
-read_sql_duckdb(sql, ..., tether = TRUE, con = NULL)
+read_sql_duckdb(sql, ..., funnel = TRUE, con = NULL)
 }
 \arguments{
 \item{sql}{The SQL to run.}
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{tether}{Logical, whether to create a tether duckplyr frame.
-By default, a tether duckplyr frame is created.
-See the "Tethering" section in \code{\link[=duckdb_tibble]{duckdb_tibble()}} for details.}
+\item{funnel}{Logical, whether to create a funneled duckplyr frame.
+By default, a funneled duckplyr frame is created.
+See the "Funneling" section in \code{\link[=duckdb_tibble]{duckdb_tibble()}} for details.}
 
 \item{con}{The connection, defaults to the default connection.}
 }
