@@ -1,7 +1,7 @@
 #' @title Compute results to a file
 #'
 #' @description
-#' These functions apply to (tether) duckplyr frames.
+#' These functions apply to (tethered) duckplyr frames.
 #' They executes a query and stores the results in a flat file.
 #' The result is a duckplyr frame that can be used with subsequent dplyr verbs.
 #'
