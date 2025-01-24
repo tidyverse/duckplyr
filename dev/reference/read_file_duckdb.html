@@ -73,13 +73,19 @@ pass a wildcard or a character vector to the <code>path</code> argument,</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_parquet_duckdb</span><span class="op">(</span><span class="va">path</span>, <span class="va">...</span>, lazy <span class="op">=</span> <span class="cn">TRUE</span>, options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_parquet_duckdb</span><span class="op">(</span><span class="va">path</span>, <span class="va">...</span>, lazy <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>cells <span class="op">=</span> <span class="fl">1e+06</span><span class="op">)</span>, options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">read_csv_duckdb</span><span class="op">(</span><span class="va">path</span>, <span class="va">...</span>, lazy <span class="op">=</span> <span class="cn">TRUE</span>, options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">read_csv_duckdb</span><span class="op">(</span><span class="va">path</span>, <span class="va">...</span>, lazy <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>cells <span class="op">=</span> <span class="fl">1e+06</span><span class="op">)</span>, options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">read_json_duckdb</span><span class="op">(</span><span class="va">path</span>, <span class="va">...</span>, lazy <span class="op">=</span> <span class="cn">TRUE</span>, options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">read_json_duckdb</span><span class="op">(</span><span class="va">path</span>, <span class="va">...</span>, lazy <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>cells <span class="op">=</span> <span class="fl">1e+06</span><span class="op">)</span>, options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">read_file_duckdb</span><span class="op">(</span><span class="va">path</span>, <span class="va">table_function</span>, <span class="va">...</span>, lazy <span class="op">=</span> <span class="cn">TRUE</span>, options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">read_file_duckdb</span><span class="op">(</span></span>
+<span>  <span class="va">path</span>,</span>
+<span>  <span class="va">table_function</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  lazy <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>cells <span class="op">=</span> <span class="fl">1e+06</span><span class="op">)</span>,</span>
+<span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -117,12 +123,8 @@ DuckDB function such as <code>"read_parquet"</code>,
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>By default, a lazy duckplyr frame is created.
-This means that all the data can be shown and all dplyr verbs can be used,
-but attempting to access the columns of the data frame or using an unsupported verb,
-data type, or function will result in an error.
-Pass <code>lazy = FALSE</code> to transparently switch to local processing as needed,
-or use <code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">dplyr::collect()</a></code> to explicitly materialize and continue local processing.</p>
+    <p>By default, a lazy duckplyr frame, with a limit of one million cells, is created.
+See the "Eager and lazy" section in <code><a href="duckdb_tibble.html">duckdb_tibble()</a></code> for details.</p>
     </div>
 
     <div class="section level2">
@@ -140,7 +142,7 @@ or use <code><a href="https://dplyr.tidyverse.org/reference/compute.html" class=
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Materialization upon access is turned off by default</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error : Materialization is disabled, use collect() or as_tibble() to materialize.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 2 3</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Materialize explicitly</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">$</span><span class="va">a</span></span></span>

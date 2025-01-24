@@ -75,7 +75,7 @@ details.</p></dd>
 
 <dt id="arg-lazy">lazy<a class="anchor" aria-label="anchor" href="#arg-lazy"></a></dt>
 <dd><p>Set to <code>TRUE</code> to return a lazy or <code>FALSE</code> to return an eager data frame,
-see the "Eager and lazy" section in <code><a href="duckdb_tibble.html">duckdb_tibble()</a></code>.
+see the "Eager and lazy" section.
 The default is to inherit the lazyness of the input.</p></dd>
 
 
@@ -91,6 +91,64 @@ The default is to inherit the lazyness of the input.</p></dd>
 <dd><p>Set to <code>FALSE</code> to store the result in a permanent table.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="eager-and-lazy">Eager and lazy<a class="anchor" aria-label="anchor" href="#eager-and-lazy"></a></h2>
+
+
+<p>Data frames backed by duckplyr, with class <code>"duckplyr_df"</code>,
+behave as regular data frames in almost all respects.
+In particular, direct column access like <code>df$x</code>,
+or retrieving the number of rows with <code><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow()</a></code>, works identically.
+Conceptually, duckplyr frames are "eager": from a user's perspective,
+they behave like regular data frames.
+Under the hood, two key differences provide improved performance and usability:
+lazy materialization and lazying.</p>
+<p>For a duckplyr frame that is the result of a dplyr operation,
+accessing column data or retrieving the number of rows will trigger a computation
+that is carried out by DuckDB, not dplyr.
+In this sense, duckplyr frames are also "lazy":
+the computation is deferred until the last possible moment,
+allowing DuckDB to optimize the whole pipeline.
+This is similar to lazy tables in <span class="pkg">dbplyr</span> and <span class="pkg">dtplyr</span>,
+but different from <span class="pkg">dplyr</span> where each intermediate step is computed.</p>
+<p>Being both "eager" and "lazy" at the same time introduces a challenge:
+it is too easy to accidentally trigger computation,
+which may be prohibitive if an intermediate result is too large.
+This is where lazying comes in.</p><ul><li><p>For eager duckplyr frames, the underlying DuckDB computation is carried out
+upon the first request.
+Once the results are computed, they are cached and subsequent requests are fast.
+This is a good choice for small to medium-sized data,
+where DuckDB can provide a nice speedup but materializing the data is affordable
+at any stage.
+This is the default for <code><a href="duckdb_tibble.html">duckdb_tibble()</a></code> and <code><a href="duckdb_tibble.html">as_duckdb_tibble()</a></code>.</p></li>
+<li><p>For lazy duckplyr frames, accessing a column or requesting the number of rows
+triggers an error, either unconditionally, or if the result exceeds a certain size.
+This is a good choice for large data sets where the cost of materializing the data
+may be prohibitive due to size or computation time,
+and the user wants to control when the computation is carried out.
+The default for the ingestion functions like <code><a href="read_file_duckdb.html">read_parquet_duckdb()</a></code>
+is to limit the result size to one million cells (values in the resulting data frame).</p></li>
+</ul><p>Lazy duckplyr frames behave like <a href="https://dtplyr.tidyverse.org/reference/lazy_dt.html" class="external-link"><code>dtplyr</code>'s lazy frames</a>,
+or dbplyr's lazy frames:
+the computation only starts when you <strong>explicitly</strong> request it with a "collect"
+function.
+In dtplyr and dbplyr, there are no eager frames: collection always needs to be
+explicit.</p>
+<p>A lazy duckplyr frame can be converted to an eager one with <code>as_duckdb_tibble(lazy = FALSE)</code>.
+The <code><a href="collect.duckplyr_df.html">collect.duckplyr_df()</a></code> method triggers computation and converts to a plain tibble.
+Other useful methods include <code><a href="compute_file.html">compute_file()</a></code> for storing results in a file,
+and <code>compute.duckplyr_df()</code> for storing results in temporary storage on disk.</p>
+<p>Beyond safety regarding memory usage, lazy frames also allow you
+to check that all operations are supported by DuckDB:
+for a lazy frame with <code>lazy = FALSE</code>, fallbacks to dplyr are not possible.
+As a reminder, computing via DuckDB is currently not always possible,
+see <code><a href="../articles/limits.html">vignette("limits")</a></code> for the supported operations.
+In such cases, the original dplyr implementation is used, see <a href="fallback.html">fallback</a> for details.
+As the original dplyr implementation accesses columns directly,
+the data must be materialized before a fallback can be executed.
+This means that automatic fallback is only possible for "eager" duckplyr frames,
+while for "lazy" duckplyr frames, one of the aforementioned collection methods must be used first.</p>
+    </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">dplyr::collect()</a></code></p></div>
