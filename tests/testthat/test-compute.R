@@ -9,5 +9,5 @@ test_that("compute()", {
   })
 
   expect_identical(out, as_duckdb_tibble(df))
-  expect_false(is_lazy_duckplyr_df(out))
+  expect_false(is_tethered_duckplyr_df(out))
 })

@@ -11,7 +11,7 @@ group_nest.duckplyr_df <- function(.tbl, ..., .key = "data", keep = FALSE) {
   )
 
   # dplyr forward
-  check_lazy(.tbl, duckplyr_error)
+  check_tethered(.tbl, duckplyr_error)
 
   group_nest <- dplyr$group_nest.data.frame
   out <- group_nest(.tbl, ..., .key = .key, keep = keep)

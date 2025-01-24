@@ -33,7 +33,7 @@ select.duckplyr_df <- function(.data, ...) {
 
 
   # dplyr forward
-  check_lazy(.data, duckplyr_error)
+  check_tethered(.data, duckplyr_error)
 
   select <- dplyr$select.data.frame
   out <- select(.data, ...)

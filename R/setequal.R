@@ -10,7 +10,7 @@ setequal.duckplyr_df <- function(x, y, ...) {
   )
 
   # dplyr forward
-  check_lazy(x, duckplyr_error)
+  check_tethered(x, duckplyr_error)
 
   setequal <- dplyr$setequal.data.frame
   out <- setequal(x, y, ...)

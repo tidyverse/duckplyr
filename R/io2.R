@@ -157,7 +157,7 @@ duckfun <- function(table_function, args, ..., tether = TRUE) {
   out <- new_duckdb_tibble(df, tether = TRUE)
 
   if (!tether) {
-    out <- as_duckdb_tibble(out, .tether = tether)
+    out <- as_duckdb_tibble(out, tether = tether)
   }
 
   out

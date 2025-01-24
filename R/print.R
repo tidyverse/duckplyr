@@ -4,7 +4,7 @@ tbl_sum.duckplyr_df <- function(x) {
   c("A duckplyr data frame" = cli::pluralize("{length(x)} variable{?s}"))
 }
 
-# dim.lazy_duckplyr_df is not called, special dispatch
+# dim.tethered_duckplyr_df is not called, special dispatch
 
 #' @importFrom pillar tbl_nrow
 #' @export

@@ -19,7 +19,7 @@ anti_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches
   )
 
   # dplyr forward
-  check_lazy(x, duckplyr_error)
+  check_tethered(x, duckplyr_error)
 
   anti_join <- dplyr$anti_join.data.frame
   out <- anti_join(x, y, by, copy = FALSE, ..., na_matches = na_matches)

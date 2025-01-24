@@ -60,7 +60,7 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
   )
 
   # dplyr forward
-  check_lazy(.data, duckplyr_error)
+  check_tethered(.data, duckplyr_error)
 
   summarise <- dplyr$summarise.data.frame
   out <- summarise(.data, ..., .by = {{ .by }}, .groups = .groups)

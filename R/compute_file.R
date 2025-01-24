@@ -1,7 +1,7 @@
 #' @title Compute results to a file
 #'
 #' @description
-#' These functions apply to (lazy) duckplyr frames.
+#' These functions apply to (tether) duckplyr frames.
 #' They executes a query and stores the results in a flat file.
 #' The result is a duckplyr frame that can be used with subsequent dplyr verbs.
 #'
@@ -25,7 +25,7 @@
 #' explain(df)
 #' @seealso [compute.duckplyr_df()], [dplyr::collect()]
 #' @name compute_file
-compute_parquet <- function(x, path, ..., lazy = NULL, options = NULL) {
+compute_parquet <- function(x, path, ..., tether = NULL, options = NULL) {
   check_dots_empty()
 
   if (!is.null(options)) {
@@ -34,8 +34,8 @@ compute_parquet <- function(x, path, ..., lazy = NULL, options = NULL) {
     options <- list()
   }
 
-  if (is.null(lazy)) {
-    lazy <- is_lazy_duckplyr_df(x)
+  if (is.null(tether)) {
+    tether <- is_tethered_duckplyr_df(x)
   }
 
   rel <- duckdb_rel_from_df(x)
@@ -51,7 +51,7 @@ compute_parquet <- function(x, path, ..., lazy = NULL, options = NULL) {
     path <- file.path(path, "**", "**.parquet")
   }
 
-  read_parquet_duckdb(path, lazy = lazy)
+  read_parquet_duckdb(path, tether = tether)
 }
 
 #' compute_csv()
@@ -59,7 +59,7 @@ compute_parquet <- function(x, path, ..., lazy = NULL, options = NULL) {
 #' `compute_csv()` creates a CSV file.
 #' @rdname compute_file
 #' @export
-compute_csv <- function(x, path, ..., lazy = NULL, options = NULL) {
+compute_csv <- function(x, path, ..., tether = NULL, options = NULL) {
   check_dots_empty()
 
   check_installed("duckdb", "1.1.3.9028")
@@ -68,8 +68,8 @@ compute_csv <- function(x, path, ..., lazy = NULL, options = NULL) {
     options <- list()
   }
 
-  if (is.null(lazy)) {
-    lazy <- is_lazy_duckplyr_df(x)
+  if (is.null(tether)) {
+    tether <- is_tethered_duckplyr_df(x)
   }
 
   rel <- duckdb_rel_from_df(x)
@@ -81,5 +81,5 @@ compute_csv <- function(x, path, ..., lazy = NULL, options = NULL) {
     path <- file.path(path, "**", "**.csv")
   }
 
-  read_csv_duckdb(path, lazy = lazy)
+  read_csv_duckdb(path, tether = tether)
 }

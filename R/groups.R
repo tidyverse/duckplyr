@@ -11,7 +11,7 @@ groups.duckplyr_df <- function(x) {
   )
 
   # dplyr forward
-  check_lazy(x, duckplyr_error)
+  check_tethered(x, duckplyr_error)
 
   groups <- dplyr$groups.data.frame
   out <- groups(x)

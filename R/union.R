@@ -11,7 +11,7 @@ union.duckplyr_df <- function(x, y, ...) {
   duckplyr_error <- NULL
 
   # dplyr forward
-  check_lazy(x, duckplyr_error)
+  check_tethered(x, duckplyr_error)
 
   union <- dplyr$union.data.frame
   out <- union(x, y, ...)

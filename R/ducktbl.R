@@ -37,7 +37,7 @@
 #' It is safe to use `read_parquet_duckdb(tether = FALSE)`
 #' if the data is small enough to be materialized at any stage.
 #'
-#' A tether duckplyr frame can be converted to an eager one with `as_duckdb_tibble(.tether = FALSE)`.
+#' A tether duckplyr frame can be converted to an eager one with `as_duckdb_tibble(tether = FALSE)`.
 #' The [collect.duckplyr_df()] method converts to a plain tibble.
 #' Other useful methods include [compute_file()] for storing results in a file,
 #' and [compute.duckplyr_df()] for storing results in temporary storage on disk.
@@ -60,7 +60,7 @@
 #'   See the section "Eager and tether" for details.
 #'
 #' @return For `duckdb_tibble()` and `as_duckdb_tibble()`, an object with the following classes:
-#'   - `"tether_duckplyr_df"` if `.tether` is `TRUE`
+#'   - `"tethered_duckplyr_df"` if `.tether` is `TRUE`
 #'   - `"duckplyr_df"`
 #'   - Classes of a [tibble]
 #'
@@ -101,7 +101,7 @@ as_duckdb_tibble <- function(x, ..., tether = FALSE) {
   out <- as_duckdb_tibble(x, ...)
 
   if (isTRUE(tether)) {
-    as_tether_duckplyr_df(out)
+    as_tethered_duckplyr_df(out)
   } else {
     as_eager_duckplyr_df(out)
   }
@@ -201,7 +201,7 @@ new_duckdb_tibble <- function(x, class = NULL, tether = FALSE, error_call = call
   }
 
   class(x) <- unique(c(
-    if (tether) "tether_duckplyr_df",
+    if (tether) "tethered_duckplyr_df",
     "duckplyr_df",
     class
   ))

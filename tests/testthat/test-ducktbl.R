@@ -7,13 +7,13 @@ test_that("Can construct", {
   expect_identical(duckdb_tibble(a = 1)$a, 1)
 })
 
-test_that(".lazy = TRUE forbids materialization", {
-  tbl <- duckdb_tibble(a = 1, .lazy = TRUE)
+test_that(".tether = TRUE forbids materialization", {
+  tbl <- duckdb_tibble(a = 1, .tether = TRUE)
   expect_error(length(tbl$a))
 })
 
-test_that(".lazy = TRUE forbids materialization for as_duckdb_tibble()", {
-  tbl <- as_duckdb_tibble(data.frame(a = 1), .lazy = TRUE)
+test_that(".tether = TRUE forbids materialization for as_duckdb_tibble()", {
+  tbl <- as_duckdb_tibble(data.frame(a = 1), tether = TRUE)
   expect_error(length(tbl$a))
 })
 
@@ -54,7 +54,7 @@ test_that("as_duckdb_tibble() and dbplyr tables", {
     dplyr::copy_to(dest = con)
 
   duck <- db_tbl %>%
-    as_duckdb_tibble(.lazy = TRUE) %>%
+    as_duckdb_tibble(tether = TRUE) %>%
     mutate(b = 2) %>%
     collect()
 
