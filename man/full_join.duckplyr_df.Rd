@@ -144,7 +144,7 @@ If you do the code will fall back to \code{dplyr::full_join()} without any error
 }
 
 \examples{
-library(dplyr)
+library(duckplyr)
 full_join(band_members, band_instruments)
 }
 \seealso{

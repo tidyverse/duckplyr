@@ -1,4 +1,4 @@
-#' @title Set diff
+#' @title Set difference
 #'
 #' @description  This is a method for the [dplyr::setdiff()] generic.
 #' See "Fallbacks" section for differences in implementation.
@@ -6,8 +6,8 @@
 #'
 #' @inheritParams dplyr::setdiff
 #' @examples
-#' df1 <- tibble(x = 1:3)
-#' df2 <- tibble(x = 3:5)
+#' df1 <- duckdb_tibble(x = 1:3)
+#' df2 <- duckdb_tibble(x = 3:5)
 #' setdiff(df1, df2)
 #' setdiff(df2, df1)
 #' @seealso [dplyr::setdiff()]

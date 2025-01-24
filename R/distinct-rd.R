@@ -6,7 +6,7 @@
 #'
 #' @inheritParams dplyr::distinct
 #' @examples
-#' df <- tibble(
+#' df <- duckdb_tibble(
 #'   x = sample(10, 100, rep = TRUE),
 #'   y = sample(10, 100, rep = TRUE)
 #' )

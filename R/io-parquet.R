@@ -7,6 +7,7 @@
 #' @export
 df_from_parquet <- function(path, ..., options = list(), class = NULL) {
   check_dots_empty()
+  lifecycle::deprecate_soft("1.0.0", "df_from_parquet()", "read_parquet_duckdb()")
 
   df_from_file(path, "read_parquet", options = options, class = class)
 }
@@ -20,6 +21,7 @@ df_from_parquet <- function(path, ..., options = list(), class = NULL) {
 #' @export
 duckplyr_df_from_parquet <- function(path, ..., options = list(), class = NULL) {
   check_dots_empty()
+  lifecycle::deprecate_soft("1.0.0", "duckplyr_df_from_parquet()", "read_parquet_duckdb()")
 
   duckplyr_df_from_file(path, "read_parquet", options = options, class = class)
 }
@@ -42,15 +44,16 @@ duckplyr_df_from_parquet <- function(path, ..., options = list(), class = NULL) 
 #' df_to_parquet(df, path_parquet)
 #'
 #' # With a duckplyr_df, the materialization occurs outside of R:
-#' df |>
-#'   as_duckplyr_df() |>
-#'   mutate(b = a + 1) |>
+#' df %>%
+#'   as_duckplyr_df() %>%
+#'   mutate(b = a + 1) %>%
 #'   df_to_parquet(path_parquet)
 #'
 #' duckplyr_df_from_parquet(path_parquet)
 #'
 #' unlink(path_parquet)
 df_to_parquet <- function(data, path) {
+  lifecycle::deprecate_soft("1.0.0", "df_to_parquet()", "compute_parquet()")
   rel <- duckdb_rel_from_df(data)
   duckdb$rel_to_parquet(rel, path)
 }

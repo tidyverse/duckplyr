@@ -38,11 +38,3 @@
       Error in `between()`:
       ! Can't recycle `right` (size 2) to size 3.
 
-# ptype argument affects type casting
-
-    Code
-      between(x, 1.5, 3.5, ptype = integer())
-    Condition
-      Error in `between()`:
-      ! unused argument (ptype = integer())
-

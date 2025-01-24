@@ -73,6 +73,7 @@ If you do the code will fall back to \code{dplyr::summarise()} without any error
 }
 
 \examples{
+library(duckplyr)
 summarise(mtcars, mean = mean(disp), n = n())
 }
 \seealso{

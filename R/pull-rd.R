@@ -8,6 +8,7 @@
 #'
 #' @inheritParams dplyr::pull
 #' @examples
+#' library(duckplyr)
 #' pull(mtcars, cyl)
 #' pull(mtcars, 1)
 #' @seealso [dplyr::pull()]

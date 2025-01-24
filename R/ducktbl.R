@@ -69,7 +69,7 @@
 #' x
 #'
 #' library(dplyr)
-#' x |>
+#' x %>%
 #'   mutate(b = 2)
 #'
 #' x$a
@@ -93,19 +93,18 @@ duckdb_tibble <- function(..., .lazy = FALSE) {
 #' @rdname duckdb_tibble
 #' @export
 as_duckdb_tibble <- function(x, ..., .lazy = FALSE) {
-  out <- as_duckdb_tibble_dispatch(x, ...)
-
-  if (isTRUE(.lazy)) {
-    out <- as_lazy_duckplyr_df(out)
-  } else {
-    out <- as_eager_duckplyr_df(out)
+  # Handle the .lazy arg in the generic, only the other args will be dispatched
+  as_duckdb_tibble <- function(x, ...) {
+    UseMethod("as_duckdb_tibble")
   }
 
-  return(out)
-  UseMethod("as_duckdb_tibble")
-}
-as_duckdb_tibble_dispatch <- function(x, ...) {
-  UseMethod("as_duckdb_tibble")
+  out <- as_duckdb_tibble(x, ...)
+
+  if (isTRUE(.lazy)) {
+    as_lazy_duckplyr_df(out)
+  } else {
+    as_eager_duckplyr_df(out)
+  }
 }
 
 #' @export
@@ -149,9 +148,9 @@ as_duckdb_tibble.grouped_df <- function(x, ...) {
   check_dots_empty()
 
   cli::cli_abort(c(
-    "duckplyr does not support {.code group_by()}.",
-    i = "Use `.by` instead.",
-    i = "To proceed with dplyr, use {.code as_tibble()} or {.code as.data.frame()}."
+    "{.pkg duckplyr} does not support {.code group_by()}.",
+    i = "Use {.arg .by} instead.",
+    i = "To proceed with {.pkg dplyr}, use {.code as_tibble()} or {.code as.data.frame()}."
   ))
 }
 
@@ -160,8 +159,19 @@ as_duckdb_tibble.rowwise_df <- function(x, ...) {
   check_dots_empty()
 
   cli::cli_abort(c(
-    "duckplyr does not support {.code rowwise()}.",
-    i = "To proceed with dplyr, use {.code as_tibble()} or {.code as.data.frame()}."
+    "{.pkg duckplyr} does not support {.code rowwise()}.",
+    i = "To proceed with {.pkg dplyr}, use {.code as_tibble()} or {.code as.data.frame()}."
+  ))
+}
+
+#' @export
+as_duckdb_tibble.spec_tbl_df <- function(x, ...) {
+  check_dots_empty()
+
+  cli::cli_abort(c(
+    "The input is data read by {.pkg readr}, and {.pkg duckplyr} supports reading CSV files directly.",
+    i = "Use {.code read_csv_duckdb()} to use the built-in reader.",
+    i = "To proceed with the data as read by {.pkg readr}, use {.code as_tibble()} before {.code as_duckdb_tibble()}."
   ))
 }
 

@@ -17,7 +17,7 @@ reference:
 
 - title: dplyr verbs
 
-- subtitle: Connecting, copying, and retrieving data
+- subtitle: Computing and materializing data
   contents:
   - compute.duckplyr_df
   - compute_file
@@ -54,6 +54,7 @@ reference:
   - semi_join.duckplyr_df
   - anti_join.duckplyr_df
   - intersect.duckplyr_df
+  - union.duckplyr_df
   - union_all.duckplyr_df
   - setdiff.duckplyr_df
   - symdiff.duckplyr_df

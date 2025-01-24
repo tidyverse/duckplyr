@@ -164,7 +164,7 @@ If you do the code will fall back to \code{dplyr::left_join()} without any error
 }
 
 \examples{
-library(dplyr)
+library(duckplyr)
 left_join(band_members, band_instruments)
 }
 \seealso{

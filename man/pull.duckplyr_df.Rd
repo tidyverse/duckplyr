@@ -48,6 +48,7 @@ If you do the code will fall back to \code{dplyr::pull()} without any error.
 }
 
 \examples{
+library(duckplyr)
 pull(mtcars, cyl)
 pull(mtcars, 1)
 }

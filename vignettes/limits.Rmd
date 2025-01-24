@@ -10,8 +10,11 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
+  eval = identical(Sys.getenv("IN_PKGDOWN"), "true") || (getRversion() >= "4.1"),
   comment = "#>"
 )
+
+Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
 ```
 
 ## Data types

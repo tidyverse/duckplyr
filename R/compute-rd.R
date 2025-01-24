@@ -1,4 +1,4 @@
-#' @title Compute results (duckplyr)
+#' @title Compute results
 #'
 #' @description  This is a method for the [dplyr::compute()] generic.
 #' For a (lazy) duckplyr frame,
@@ -17,6 +17,7 @@
 #' library(duckplyr)
 #' df <- duckdb_tibble(x = c(1, 2))
 #' df <- mutate(df, y = 2)
+#' explain(df)
 #' df <- compute(df)
 #' explain(df)
 #' @seealso [dplyr::collect()]

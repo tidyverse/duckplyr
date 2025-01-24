@@ -2,7 +2,7 @@
 % Please edit documentation in R/compute-rd.R, R/compute.R
 \name{compute.duckplyr_df}
 \alias{compute.duckplyr_df}
-\title{Compute results (duckplyr)}
+\title{Compute results}
 \usage{
 \method{compute}{duckplyr_df}(x, ..., lazy = NULL, name = NULL, schema_name = NULL, temporary = TRUE)
 }
@@ -34,6 +34,7 @@ The result is a duckplyr frame that can be used with subsequent dplyr verbs.
 library(duckplyr)
 df <- duckdb_tibble(x = c(1, 2))
 df <- mutate(df, y = 2)
+explain(df)
 df <- compute(df)
 explain(df)
 }

@@ -114,7 +114,7 @@ starts the computation:
 
 ``` r
 out$month
-#> [1] 2 1 5 3 6 4
+#> [1] 2 4 5 1 3 6
 ```
 
 Note that, unlike dplyr, the results are not ordered, see `?config` for
@@ -126,11 +126,11 @@ out
 #>    year month mean_inflight_delay median_inflight_delay
 #>   <int> <int>               <dbl>                 <dbl>
 #> 1  2013     2               -5.15                    -6
-#> 2  2013     1               -3.86                    -5
+#> 2  2013     4               -2.67                    -5
 #> 3  2013     5               -9.37                   -10
-#> 4  2013     3               -7.36                    -9
-#> 5  2013     6               -4.24                    -7
-#> 6  2013     4               -2.67                    -5
+#> 4  2013     1               -3.86                    -5
+#> 5  2013     3               -7.36                    -9
+#> 6  2013     6               -4.24                    -7
 ```
 
 Restart R, or call `duckplyr::methods_restore()` to revert to the
@@ -371,7 +371,7 @@ out <-
   duckplyr::as_duckdb_tibble() %>%
   mutate(inflight_delay = arr_delay - dep_delay)
 #> Error processing duckplyr query with DuckDB, falling back to dplyr.
-#> Caused by error in `check_df_for_rel()` at duckplyr/R/relational-duckdb.R:102:3:
+#> Caused by error in `check_df_for_rel()` at duckplyr/R/relational-duckdb.R:108:3:
 #> ! Attributes are lost during conversion. Affected column: `time_hour`.
 ```
 

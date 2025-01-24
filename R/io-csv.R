@@ -30,6 +30,7 @@
 #' )
 df_from_csv <- function(path, ..., options = list(), class = NULL) {
   check_dots_empty()
+  lifecycle::deprecate_soft("1.0.0", "df_from_csv()", "read_csv_duckdb()")
 
   df_from_file(path, "read_csv_auto", options = options, class = class)
 }
@@ -52,6 +53,7 @@ df_from_csv <- function(path, ..., options = list(), class = NULL) {
 #' unlink(c(path, path2))
 duckplyr_df_from_csv <- function(path, ..., options = list(), class = NULL) {
   check_dots_empty()
+  lifecycle::deprecate_soft("1.0.0", "duckplyr_df_from_csv()", "read_csv_duckdb()")
 
   duckplyr_df_from_file(path, "read_csv_auto", options = options, class = class)
 }

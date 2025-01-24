@@ -33,6 +33,7 @@ If you do the code will fall back to \code{dplyr::rename()} without any error.
 }
 
 \examples{
+library(duckplyr)
 rename(mtcars, thing = mpg)
 }
 \seealso{

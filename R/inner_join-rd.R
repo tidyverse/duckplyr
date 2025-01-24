@@ -7,7 +7,7 @@
 #'
 #' @inheritParams dplyr::inner_join
 #' @examples
-#' library(dplyr)
+#' library(duckplyr)
 #' inner_join(band_members, band_instruments)
 #' @seealso [dplyr::inner_join()]
 #' @rdname inner_join.duckplyr_df

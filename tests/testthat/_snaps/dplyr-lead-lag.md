@@ -68,35 +68,3 @@
       Error in `lag()`:
       ! `x` must be a vector, not an environment.
 
-# `default` must be size 1 (#5641)
-
-    Code
-      shift(1:5, default = 1:2)
-    Condition
-      Error in `shift()`:
-      ! could not find function "shift"
-
----
-
-    Code
-      shift(1:5, default = integer())
-    Condition
-      Error in `shift()`:
-      ! could not find function "shift"
-
-# `n` is validated
-
-    Code
-      shift(1, n = 1:2)
-    Condition
-      Error in `shift()`:
-      ! could not find function "shift"
-
-# `order_by` must be the same size as `x`
-
-    Code
-      shift(1:5, order_by = 1:4)
-    Condition
-      Error in `shift()`:
-      ! could not find function "shift"
-

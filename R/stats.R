@@ -12,8 +12,8 @@ stats <- new_environment(list(attempts = 0L, fallback = 0L, calls = character())
 #' @examples
 #' stats_show()
 #'
-#' tibble(a = 1:3) |>
-#'   as_duckplyr_tibble() |>
+#' tibble(a = 1:3) %>%
+#'   as_duckplyr_tibble() %>%
 #'   mutate(b = a + 1)
 #'
 #' stats_show()
