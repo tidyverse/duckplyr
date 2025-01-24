@@ -90,25 +90,25 @@ untethered
 The default mode for `as_duckdb_tibble()` is untethered.
 This allows applying all data frame operations on the results, including column subsetting or retrieving the number of rows.
 In addition, if an operation cannot be carried out by duckdb, the dplyr fallback is used transparently.
-Use `.lazy = TRUE` to ensure that all operations are carried out by DuckDB, or fail.
+Use `tether = TRUE` to ensure that all operations are carried out by DuckDB, or fail.
 This is also the default for the ingestion functions such as `read_parquet_duckdb()`.
 
 ```{r}
-lazy <-
+tethered <-
   duckplyr::flights_df() |>
-  duckplyr::as_duckdb_tibble(.lazy = TRUE)
+  duckplyr::as_duckdb_tibble(tether = TRUE)
 ```
 
 Columns or the row count cannot be accessed directly in this mode:
 
 ```{r error = TRUE}
-nrow(lazy)
+nrow(tethered)
 ```
 
 Also, operations that are not (yet) supported will fail:
 
 ```{r error = TRUE}
-lazy |>
+tethered |>
   mutate(inflight_delay = arr_delay - dep_delay) |>
   summarize(
     .by = c(year, month),
