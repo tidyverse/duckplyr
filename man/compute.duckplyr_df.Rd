@@ -4,7 +4,14 @@
 \alias{compute.duckplyr_df}
 \title{Compute results}
 \usage{
-\method{compute}{duckplyr_df}(x, ..., lazy = NULL, name = NULL, schema_name = NULL, temporary = TRUE)
+\method{compute}{duckplyr_df}(
+  x,
+  ...,
+  tether = NULL,
+  name = NULL,
+  schema_name = NULL,
+  temporary = TRUE
+)
 }
 \arguments{
 \item{x}{A data frame, data frame extension (e.g. a tibble), or a lazy
@@ -13,9 +20,9 @@ details.}
 
 \item{...}{Arguments passed on to methods}
 
-\item{lazy}{Set to \code{TRUE} to return a lazy or \code{FALSE} to return an eager data frame,
-see the "Eager and lazy" section in \code{\link[=duckdb_tibble]{duckdb_tibble()}}.
-The default is to inherit the lazyness of the input.}
+\item{tether}{Set to \code{TRUE} to return a tether or \code{FALSE} to return an untethered data frame,
+see the "Tethering" section in \code{\link[=duckdb_tibble]{duckdb_tibble()}}.
+The default is to inherit the tetherness of the input.}
 
 \item{name}{The name of the table to store the result in.}
 
@@ -25,7 +32,7 @@ The default is to inherit the lazyness of the input.}
 }
 \description{
 This is a method for the \code{\link[dplyr:compute]{dplyr::compute()}} generic.
-For a (lazy) duckplyr frame,
+For a (tethered) duckplyr frame,
 \code{compute()} executes a query but stores it in a (temporary) table,
 or in a Parquet or CSV file.
 The result is a duckplyr frame that can be used with subsequent dplyr verbs.

@@ -6,9 +6,9 @@
 \alias{compute_csv}
 \title{Compute results to a file}
 \usage{
-compute_parquet(x, path, ..., lazy = NULL, options = NULL)
+compute_parquet(x, path, ..., tether = NULL, options = NULL)
 
-compute_csv(x, path, ..., lazy = NULL, options = NULL)
+compute_csv(x, path, ..., tether = NULL, options = NULL)
 }
 \arguments{
 \item{x}{A data frame, data frame extension (e.g. a tibble), or a lazy
@@ -19,9 +19,9 @@ details.}
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{lazy}{Set to \code{TRUE} to return a lazy or \code{FALSE} to return an eager data frame,
-see the "Eager and lazy" section in \code{\link[=duckdb_tibble]{duckdb_tibble()}}.
-The default is to inherit the lazyness of the input.}
+\item{tether}{Set to \code{TRUE} to return a tether or \code{FALSE} to return an untethered data frame,
+see the "Tethering" section in \code{\link[=duckdb_tibble]{duckdb_tibble()}}.
+The default is to inherit the tetherness of the input.}
 
 \item{options}{A list of additional options to pass to create the storage format,
 see \url{https://duckdb.org/docs/data/parquet/overview#writing-to-parquet-files}
@@ -29,7 +29,7 @@ or \url{https://duckdb.org/docs/data/csv/overview#writing-using-the-copy-stateme
 for details.}
 }
 \description{
-These functions apply to (lazy) duckplyr frames.
+These functions apply to (tethered) duckplyr frames.
 They executes a query and stores the results in a flat file.
 The result is a duckplyr frame that can be used with subsequent dplyr verbs.
 
