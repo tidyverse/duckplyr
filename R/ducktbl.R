@@ -92,18 +92,49 @@ duckdb_tibble <- function(..., .tether = FALSE) {
 #' @param x The object to convert or to test.
 #' @rdname duckdb_tibble
 #' @export
-as_duckdb_tibble <- function(x, ..., tether = FALSE) {
+as_duckdb_tibble <- function(x, ..., tether = FALSE, call = caller_env()) {
   # Handle the tether arg in the generic, only the other args will be dispatched
   as_duckdb_tibble <- function(x, ...) {
     UseMethod("as_duckdb_tibble")
   }
 
   out <- as_duckdb_tibble(x, ...)
+  tether_duckdb_tibble(out, tether, call)
+}
+
+tether_duckdb_tibble <- function(x, tether, call) {
+  n_rows <- Inf
+  n_cells <- Inf
+
+  if (is.numeric(tether)) {
+    if (is.null(names(tether))) {
+      cli::cli_abort("{.arg tether} must have names if it is a named vector.", call = call)
+    }
+    extra_names <- setdiff(names(tether), c("rows", "cells"))
+    if (length(extra_names) > 0) {
+      cli::cli_abort("Unknown name in {.arg tether}: {extra_names[[1]]}", call = call)
+    }
+    if ("rows" %in% names(tether)) {
+      n_rows <- tether[["rows"]]
+      if (is.na(n_rows) || n_rows < 0) {
+        cli::cli_abort("The {.val rows} component of {.arg tether} must be a non-negative integer", call = call)
+      }
+    }
+    if ("cells" %in% names(tether)) {
+      n_cells <- tether[["cells"]]
+      if (is.na(n_cells) || n_cells < 0) {
+        cli::cli_abort("The {.val cells} component of {.arg tether} must be a non-negative integer", call = call)
+      }
+    }
+    tether <- TRUE
+  } else if (!is.logical(tether)) {
+    cli::cli_abort("{.arg tether} must be a logical scalar or a named vector", call = call)
+  }
 
   if (isTRUE(tether)) {
-    as_tethered_duckplyr_df(out)
+    as_tethered_duckplyr_df(x, n_rows, n_cells)
   } else {
-    as_untethered_duckplyr_df(out)
+    as_untethered_duckplyr_df(x)
   }
 }
 

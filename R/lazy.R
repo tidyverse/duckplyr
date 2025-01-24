@@ -1,11 +1,11 @@
-as_tethered_duckplyr_df <- function(x) {
+as_tethered_duckplyr_df <- function(x, n_rows, n_cells) {
   if (inherits(x, "tethered_duckplyr_df")) {
     return(x)
   }
 
   rel <- duckdb_rel_from_df(x)
 
-  out <- rel_to_df(rel, allow_materialization = FALSE)
+  out <- rel_to_df(rel, allow_materialization = FALSE, n_rows = n_rows, n_cells = n_cells)
 
   out <- dplyr_reconstruct(out, x)
   add_tethered_duckplyr_df_class(out)
@@ -14,10 +14,6 @@ as_tethered_duckplyr_df <- function(x) {
 add_tethered_duckplyr_df_class <- function(x) {
   class(x) <- unique(c("tethered_duckplyr_df", class(x)))
   x
-}
-
-is_tethered_duckplyr_df <- function(x) {
-  inherits(x, "tethered_duckplyr_df")
 }
 
 as_untethered_duckplyr_df <- function(x) {
@@ -31,6 +27,10 @@ as_untethered_duckplyr_df <- function(x) {
 
   out <- dplyr_reconstruct(out, x)
   remove_tethered_duckplyr_df_class(out)
+}
+
+is_tethered_duckplyr_df <- function(x) {
+  inherits(x, "tethered_duckplyr_df")
 }
 
 remove_tethered_duckplyr_df_class <- function(x) {
