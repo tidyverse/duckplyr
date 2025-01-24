@@ -62,7 +62,7 @@ conflict_prefer("filter", "dplyr", quiet = TRUE)
 ```
 
 The following code aggregates the inflight delay by year and month for the first half of the year.
-We use a variant of the `nycflights13::flights` dataset that works around an incompatibility with duckplyr.
+We use a variant of the `nycflights13::flights` dataset, where the timezone has been set to UTC to work around a current limitation of duckplyr, see `vignette("limits.html")`.
 
 
 ``` r
@@ -171,7 +171,7 @@ Unlike with local data frames, the default is to disallow automatic materializat
 
 ``` r
 nrow(flights)
-#> Error: Materialization is disabled, use collect() or as_tibble() to materialize
+#> Error: Materialization is disabled, use collect() or as_tibble() to materialize.
 ```
 
 Queries on the remote data are executed lazily, and the results are not materialized until explicitly requested.
@@ -369,7 +369,7 @@ out <-
   duckplyr::as_duckdb_tibble() %>%
   mutate(inflight_delay = arr_delay - dep_delay)
 #> Error processing duckplyr query with DuckDB, falling back to dplyr.
-#> [1mCaused by error in `check_df_for_rel()` at duckplyr/R/relational-duckdb.R:100:3:[22m
+#> [1mCaused by error in `check_df_for_rel()` at duckplyr/R/relational-duckdb.R:102:3:[22m
 #> [1m[22m[33m![39m Attributes are lost during conversion. Affected column: `time_hour`.
 ```
 
