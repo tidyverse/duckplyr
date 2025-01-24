@@ -8,7 +8,7 @@
 \usage{
 duckdb_tibble(..., .tether = FALSE)
 
-as_duckdb_tibble(x, ..., tether = FALSE, call = caller_env())
+as_duckdb_tibble(x, ..., tether = FALSE)
 
 is_duckdb_tibble(x)
 }

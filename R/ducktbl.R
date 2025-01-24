@@ -101,17 +101,17 @@ duckdb_tibble <- function(..., .tether = FALSE) {
 #' @param x The object to convert or to test.
 #' @rdname duckdb_tibble
 #' @export
-as_duckdb_tibble <- function(x, ..., tether = FALSE, call = caller_env()) {
+as_duckdb_tibble <- function(x, ..., tether = FALSE) {
   # Handle the tether arg in the generic, only the other args will be dispatched
   as_duckdb_tibble <- function(x, ...) {
     UseMethod("as_duckdb_tibble")
   }
 
   out <- as_duckdb_tibble(x, ...)
-  tether_duckdb_tibble(out, tether, call)
+  tether_duckdb_tibble(out, tether)
 }
 
-tether_duckdb_tibble <- function(x, tether, call) {
+tether_duckdb_tibble <- function(x, tether, call = caller_env()) {
   n_rows <- Inf
   n_cells <- Inf
 
