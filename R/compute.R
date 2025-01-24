@@ -11,7 +11,6 @@ compute.duckplyr_df <- function(
 ) {
   # Our implementation
   duckplyr_error <- rel_try(NULL,
-    "Needs duckdb >= 1.1.3.9029" = !is_installed("duckdb", version = "1.1.3.9029"),
     {
       if (is.null(funnel)) {
         funnel <- is_funneled_duckplyr_df(x)

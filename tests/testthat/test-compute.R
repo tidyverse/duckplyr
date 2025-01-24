@@ -1,5 +1,4 @@
 test_that("compute()", {
-  skip_if_not_installed("duckdb", "1.1.3.9029")
   set.seed(20241230)
 
   df <- duckdb_tibble(x = c(1, 2))

@@ -29,9 +29,7 @@
 compute_parquet <- function(x, path, ..., funnel = NULL, options = NULL) {
   check_dots_empty()
 
-  if (!is.null(options)) {
-    check_installed("duckdb", "1.1.3.9028")
-  } else {
+  if (is.null(options)) {
     options <- list()
   }
 
@@ -41,11 +39,7 @@ compute_parquet <- function(x, path, ..., funnel = NULL, options = NULL) {
 
   rel <- duckdb_rel_from_df(x)
 
-  if (is_installed("duckdb", version = "1.1.3.9028")) {
-    duckdb$rel_to_parquet(rel, path, options)
-  } else {
-    duckdb$rel_to_parquet(rel, path)
-  }
+  duckdb$rel_to_parquet(rel, path, options)
 
   # If the path is a directory, we assume that the user wants to write multiple files
   if (dir.exists(path)) {
@@ -62,8 +56,6 @@ compute_parquet <- function(x, path, ..., funnel = NULL, options = NULL) {
 #' @export
 compute_csv <- function(x, path, ..., funnel = NULL, options = NULL) {
   check_dots_empty()
-
-  check_installed("duckdb", "1.1.3.9028")
 
   if (is.null(options)) {
     options <- list()

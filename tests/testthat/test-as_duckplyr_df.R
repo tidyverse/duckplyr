@@ -247,8 +247,7 @@ test_that("as_duckplyr_df_impl() and compute()", {
 
 
 test_that("as_duckplyr_df_impl() and compute()", {
-  # Workaround until duckdb > 1.1.3 is on CRAN
-  withr::local_envvar(DUCKPLYR_FORCE = (is_installed("duckdb", version = "1.1.3.9029")))
+  withr::local_envvar(DUCKPLYR_FORCE = TRUE)
 
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
