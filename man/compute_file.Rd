@@ -20,7 +20,7 @@ details.}
 \item{...}{These dots are for future extensions and must be empty.}
 
 \item{tether}{Set to \code{TRUE} to return a tether or \code{FALSE} to return an untethered data frame,
-see the "Tethering" section in \code{\link[=duckdb_tibble]{duckdb_tibble()}}.
+see the "Tethering" section.
 The default is to inherit the tetherness of the input.}
 
 \item{options}{A list of additional options to pass to create the storage format,
@@ -37,6 +37,60 @@ The result is a duckplyr frame that can be used with subsequent dplyr verbs.
 
 \code{compute_csv()} creates a CSV file.
 }
+\section{Tethering}{
+
+Data frames backed by duckplyr, \code{"duckplyr_df"}, behave as regular data frames in almost all respects.
+In particular, direct column access like \code{df$x},
+or retrieving the number of rows with \code{\link[=nrow]{nrow()}}, works identically.
+
+A key difference is that for a duckplyr frame that is the result of a dplyr operation,
+accessing column data or retrieving the number of rows will trigger a computation
+that is carried out by DuckDB, not dplyr.
+
+Another difference is that duckplyr frames can be safer to use with bigger data
+thanks to \emph{tethering}.
+Tethering duckplyr frames differ in their behavior for column access and row count.
+\itemize{
+\item For untethered duckplyr frames, the underlying DuckDB computation is carried out
+upon the first request.
+Once the results are computed, they are cached and subsequent requests are fast.
+This is a good choice for small to medium-sized data,
+where DuckDB can provide a nice speedup but materializing the data is affordable.
+This is the default for \code{duckdb_tibble()} and \code{as_duckdb_tibble()}.
+\item For tethered duckplyr frames, accessing a column or requesting the number of rows
+triggers an error.
+This is a good choice for large data sets where the cost of materializing the data
+may be prohibitive due to size or computation time,
+and the user wants to control when the computation is carried out.
+This is the default for the ingestion functions like \code{\link[=read_parquet_duckdb]{read_parquet_duckdb()}}.
+It is safe to use \code{read_parquet_duckdb(tether = FALSE)}
+if the data is small enough to be materialized at any stage.
+}
+
+Tethered duckplyr frames behave like \href{https://dtplyr.tidyverse.org/reference/lazy_dt.html}{\code{dtplyr}'s lazy frames},
+or dbplyr's lazy frames:
+the computation only starts when you \strong{explicitly} request it with a "collect"
+function.
+In dtplyr and dbplyr, there are no untethered frames: collection always needs to be
+explicit.
+
+A tethered duckplyr frame can be converted to an untethered one with \code{as_duckdb_tibble(tether = FALSE)}.
+The \code{\link[=collect.duckplyr_df]{collect.duckplyr_df()}} method triggers computation and converts to a plain tibble.
+Other useful methods include \code{\link[=compute_file]{compute_file()}} for storing results in a file,
+and \code{\link[=compute.duckplyr_df]{compute.duckplyr_df()}} for storing results in temporary storage on disk.
+
+Beyond safety regarding memory usage, tethered frames also allow you
+to check that all operations are supported by DuckDB:
+for a tethered frame, fallbacks to dplyr are not possible.
+As a reminder, computing via DuckDB is currently not always possible,
+see \code{vignette("limits")} for the supported operations.
+In such cases, the original dplyr implementation is used, see \link{fallback} for details.
+As the original dplyr implementation accesses columns directly,
+the data must be materialized before a fallback can be executed.
+This means that automatic fallback is only possible for "untethered" duckplyr frames,
+while for "tethered" duckplyr frames, one of the aforementioned collection methods must be used first.
+}
+
 \examples{
 library(duckplyr)
 df <- data.frame(x = c(1, 2))
