@@ -34,7 +34,7 @@ compute_parquet <- function(x, path, ..., funnel = NULL, options = NULL) {
   }
 
   if (is.null(funnel)) {
-    funnel <- is_funneled_duckplyr_df(x)
+    funnel <- get_funnel_duckplyr_df(x)
   }
 
   rel <- duckdb_rel_from_df(x)
@@ -62,7 +62,7 @@ compute_csv <- function(x, path, ..., funnel = NULL, options = NULL) {
   }
 
   if (is.null(funnel)) {
-    funnel <- is_funneled_duckplyr_df(x)
+    funnel <- get_funnel_duckplyr_df(x)
   }
 
   rel <- duckdb_rel_from_df(x)

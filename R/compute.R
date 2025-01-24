@@ -9,23 +9,23 @@ compute.duckplyr_df <- function(
   schema_name = NULL,
   temporary = TRUE
 ) {
+  if (is.null(funnel)) {
+    funnel <- get_funnel_duckplyr_df(x)
+  }
+  if (is.null(schema_name)) {
+    schema_name <- ""
+  }
+  if (is.null(name)) {
+    if (isTRUE(temporary)) {
+      name <- unique_table_name()
+    } else {
+      cli::cli_abort("{.arg name} must be provided if {.arg temporary} is {.value FALSE}")
+    }
+  }
+
   # Our implementation
   duckplyr_error <- rel_try(NULL,
     {
-      if (is.null(funnel)) {
-        funnel <- is_funneled_duckplyr_df(x)
-      }
-      if (is.null(schema_name)) {
-        schema_name <- ""
-      }
-      if (is.null(name)) {
-        if (isTRUE(temporary)) {
-          name <- unique_table_name()
-        } else {
-          cli::cli_abort("{.arg name} must be provided if {.arg temporary} is {.value FALSE}")
-        }
-      }
-
       rel <- duckdb_rel_from_df(x)
 
       duckdb$rel_to_table(rel, schema_name, name, temporary)
@@ -35,7 +35,7 @@ compute.duckplyr_df <- function(
 
       out <- duckplyr_reconstruct(out_rel, x)
 
-      if (is_funneled_duckplyr_df(out) != funnel) {
+      if (get_funnel_duckplyr_df(out) != funnel) {
         out <- as_duckdb_tibble(out, funnel = funnel)
       }
 
