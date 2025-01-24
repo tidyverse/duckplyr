@@ -20,7 +20,7 @@ is_tethered_duckplyr_df <- function(x) {
   inherits(x, "tethered_duckplyr_df")
 }
 
-as_eager_duckplyr_df <- function(x) {
+as_untethered_duckplyr_df <- function(x) {
   if (!inherits(x, "tethered_duckplyr_df")) {
     return(x)
   }

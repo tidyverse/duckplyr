@@ -44,7 +44,7 @@ To enable duckplyr **for individual data frames instead of session wide**,
 - use `duckplyr::as_duckdb_tibble()` as the first step in your pipe, without attaching the package.
 
 ```{r}
-eager <-
+untethered <-
   duckplyr::flights_df() |>
   duckplyr::as_duckdb_tibble() |>
   filter(!is.na(arr_delay), !is.na(dep_delay)) |>
@@ -60,15 +60,15 @@ eager <-
 The result is a tibble, with its own class.
 
 ```{r}
-class(eager)
-names(eager)
+class(untethered)
+names(untethered)
 ```
 
 DuckDB is responsible for eventually carrying out the operations.
 Despite the late filter, the summary is not computed for the months in the second half of the year.
 
 ```{r}
-eager |>
+untethered |>
   explain()
 ```
 
@@ -76,18 +76,18 @@ All data frame operations are supported.
 Computation happens upon the first request.
 
 ```{r}
-eager$mean_inflight_delay
+untethered$mean_inflight_delay
 ```
 
 After the computation has been carried out, the results are preserved and available immediately:
 
 ```{r}
-eager
+untethered
 ```
 
 ## Eager and lazy modes
 
-The default mode for `as_duckdb_tibble()` is eager.
+The default mode for `as_duckdb_tibble()` is untethered.
 This allows applying all data frame operations on the results, including column subsetting or retrieving the number of rows.
 In addition, if an operation cannot be carried out by duckdb, the dplyr fallback is used transparently.
 Use `.lazy = TRUE` to ensure that all operations are carried out by DuckDB, or fail.

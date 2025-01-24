@@ -7,7 +7,7 @@
 #' For such objects,
 #' dplyr verbs such as [mutate()], [select()] or [filter()]  will use DuckDB.
 #'
-#' `duckdb_tibble()` works like [tibble()], returning an "eager" duckplyr data frame by default.
+#' `duckdb_tibble()` works like [tibble()], returning an "untethered" duckplyr data frame by default.
 #' See the "Eager and tether" section below.
 #'
 #' @section Eager and tether:
@@ -19,7 +19,7 @@
 #' that is carried out by DuckDB.
 #'
 #' Eager and tether duckplyr frames differ in their behavior for column access and row count.
-#' For eager duckplyr frames, the underlying DuckDB computation is carried out
+#' For untethered duckplyr frames, the underlying DuckDB computation is carried out
 #' upon the first request.
 #' Once the results are computed, they are cached and subsequent requests are fast.
 #' This is a good choice for small to medium-sized data,
@@ -37,7 +37,7 @@
 #' It is safe to use `read_parquet_duckdb(tether = FALSE)`
 #' if the data is small enough to be materialized at any stage.
 #'
-#' A tether duckplyr frame can be converted to an eager one with `as_duckdb_tibble(tether = FALSE)`.
+#' A tether duckplyr frame can be converted to an untethered one with `as_duckdb_tibble(tether = FALSE)`.
 #' The [collect.duckplyr_df()] method converts to a plain tibble.
 #' Other useful methods include [compute_file()] for storing results in a file,
 #' and [compute.duckplyr_df()] for storing results in temporary storage on disk.
@@ -47,11 +47,11 @@
 #' In such cases, the original dplyr implementation is used, see [fallback] for details.
 #' As the original dplyr implementation accesses columns directly,
 #' the data must be materialized before a fallback can be executed.
-#' This means that automatic fallback is only possible for "eager" duckplyr frames,
+#' This means that automatic fallback is only possible for "untethered" duckplyr frames,
 #' while for "tether" duckplyr frames, one of the aforementioned methods must be used.
 #'
 #' The concept of tether tables is also known from dbplyr,
-#' but "eager" tables are not available there at the time of writing,
+#' but "untethered" tables are not available there at the time of writing,
 #' and the data must always be brought into R memory through [collect()].
 #'
 #' @param ... For `duckdb_tibble()`, passed on to [tibble()].
@@ -103,7 +103,7 @@ as_duckdb_tibble <- function(x, ..., tether = FALSE) {
   if (isTRUE(tether)) {
     as_tethered_duckplyr_df(out)
   } else {
-    as_eager_duckplyr_df(out)
+    as_untethered_duckplyr_df(out)
   }
 }
 

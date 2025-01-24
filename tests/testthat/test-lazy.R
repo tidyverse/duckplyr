@@ -6,7 +6,7 @@ test_that("tether duckplyr frames will collect", {
   )
 })
 
-test_that("eager duckplyr frames are converted to data frames", {
+test_that("untethered duckplyr frames are converted to data frames", {
   tbl <- duckdb_tibble(a = 1)
   expect_identical(
     as.data.frame(tbl),
@@ -22,7 +22,7 @@ test_that("tether duckplyr frames are converted to data frames", {
   )
 })
 
-test_that("eager duckplyr frames are converted to tibbles", {
+test_that("untethered duckplyr frames are converted to tibbles", {
   tbl <- duckdb_tibble(a = 1)
   expect_identical(
     as_tibble(tbl),

@@ -20,7 +20,7 @@ duckplyr_expand_across <- function(data, quo) {
   # Abort expansion if there are any expression supplied because dots
   # must be evaluated once per group in the data mask. Expanding the
   # `across()` call would lead to either `n_group * n_col` evaluations
-  # if dots are delayed or only 1 evaluation if they are eagerly
+  # if dots are delayed or only 1 evaluation if they are untetheredly
   # evaluated.
   if (!is_null(expr$...)) {
     return(NULL)

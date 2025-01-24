@@ -7,7 +7,7 @@
 #' The result is a duckplyr frame that can be used with subsequent dplyr verbs.
 #'
 #' @inheritParams dplyr::compute
-#' @param tether Set to `TRUE` to return a tether or `FALSE` to return an eager data frame,
+#' @param tether Set to `TRUE` to return a tether or `FALSE` to return an untethered data frame,
 #'   see the "Eager and tether" section in [duckdb_tibble()].
 #'   The default is to inherit the tetherness of the input.
 #' @param name The name of the table to store the result in.
