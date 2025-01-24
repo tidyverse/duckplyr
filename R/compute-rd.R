@@ -8,7 +8,7 @@
 #'
 #' @inheritParams dplyr::compute
 #' @param tether Set to `TRUE` to return a tether or `FALSE` to return an untethered data frame,
-#'   see the "Eager and tether" section in [duckdb_tibble()].
+#'   see the "Tethering" section in [duckdb_tibble()].
 #'   The default is to inherit the tetherness of the input.
 #' @param name The name of the table to store the result in.
 #' @param schema_name The schema to store the result in, defaults to the current schema.

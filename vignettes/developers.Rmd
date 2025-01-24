@@ -85,7 +85,7 @@ After the computation has been carried out, the results are preserved and availa
 untethered
 ```
 
-## Eager and lazy modes
+## Tethering
 
 The default mode for `as_duckdb_tibble()` is untethered.
 This allows applying all data frame operations on the results, including column subsetting or retrieving the number of rows.

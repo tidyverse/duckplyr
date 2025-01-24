@@ -8,9 +8,9 @@
 #' dplyr verbs such as [mutate()], [select()] or [filter()]  will use DuckDB.
 #'
 #' `duckdb_tibble()` works like [tibble()], returning an "untethered" duckplyr data frame by default.
-#' See the "Eager and tether" section below.
+#' See the "Tethering" section below.
 #'
-#' @section Eager and tether:
+#' @section Tethering:
 #' Data frames backed by duckplyr behave as regular data frames in almost all respects.
 #' In particular, direct column access like `df$x`,
 #' or retrieving the number of rows with [nrow()], works identically.
@@ -18,7 +18,7 @@
 #' accessing column data or retrieving the number of rows will trigger a computation
 #' that is carried out by DuckDB.
 #'
-#' Eager and tether duckplyr frames differ in their behavior for column access and row count.
+#' Tethering duckplyr frames differ in their behavior for column access and row count.
 #' For untethered duckplyr frames, the underlying DuckDB computation is carried out
 #' upon the first request.
 #' Once the results are computed, they are cached and subsequent requests are fast.
@@ -57,7 +57,7 @@
 #' @param ... For `duckdb_tibble()`, passed on to [tibble()].
 #'   For `as_duckdb_tibble()`, passed on to methods.
 #' @param .tether,tether Logical, whether to create a tether duckplyr frame.
-#'   See the section "Eager and tether" for details.
+#'   See the section "Tethering" for details.
 #'
 #' @return For `duckdb_tibble()` and `as_duckdb_tibble()`, an object with the following classes:
 #'   - `"tethered_duckplyr_df"` if `.tether` is `TRUE`

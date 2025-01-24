@@ -100,7 +100,7 @@ read_json_duckdb <- function(path, ..., tether = TRUE, options = list()) {
 #'   `"read_csv"`, `"read_csv_auto"` or `"read_json"`.
 #' @param tether Logical, whether to create a tether duckplyr frame.
 #'   By default, a tether duckplyr frame is created.
-#'   See the "Eager and tether" section in [duckdb_tibble()] for details.
+#'   See the "Tethering" section in [duckdb_tibble()] for details.
 #' @param options Arguments to the DuckDB function
 #'   indicated by `table_function`.
 #'
