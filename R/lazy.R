@@ -68,11 +68,15 @@ duckplyr_reconstruct <- function(rel, template) {
 
 #' @export
 collect.funneled_duckplyr_df <- function(x, ...) {
-  rel <- duckdb_rel_from_df(x)
+  # Do nothing if already materialized
+  if (is.null(duckdb$rel_from_altrep_df(x, allow_materialized = FALSE))) {
+    out <- x
+  } else {
+    rel <- duckdb_rel_from_df(x)
+    out <- rel_to_df(rel, allow_materialization = TRUE)
+    out <- dplyr_reconstruct(out, x)
+  }
 
-  out <- rel_to_df(rel, allow_materialization = TRUE)
-
-  out <- dplyr_reconstruct(out, x)
   out <- remove_funneled_duckplyr_df_class(out)
   collect(out)
 }
