@@ -12,6 +12,16 @@ test_that(".funnel = TRUE forbids materialization", {
   expect_error(length(tbl$a))
 })
 
+test_that(".funnel = c(rows = ) forbids materialization", {
+  tbl <- duckdb_tibble(a = 1:10, .funnel = c(rows = 5))
+  expect_error(length(tbl$a))
+})
+
+test_that(".funnel = c(cells = ) forbids materialization", {
+  tbl <- duckdb_tibble(a = 1:10, b = 1, .funnel = c(cells = 10))
+  expect_error(length(tbl$a))
+})
+
 test_that(".funnel = TRUE forbids materialization for as_duckdb_tibble()", {
   tbl <- as_duckdb_tibble(data.frame(a = 1), funnel = TRUE)
   expect_error(length(tbl$a))
