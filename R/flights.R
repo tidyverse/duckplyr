@@ -2,7 +2,7 @@
 #'
 #' Provides a variant of `nycflights13::flights` that is compatible with duckplyr,
 #' as a tibble:
-#' the timezone has been set to UTC to work around a [current limitation of duckplyr](https://duckplyr.tidyverse.org/dev/articles/limits.html).
+#' the timezone has been set to UTC to work around a current limitation of duckplyr, see `vignette("limits.html")`.
 #' Call [as_duckdb_tibble()] to enable duckplyr operations.
 #'
 #' @export
