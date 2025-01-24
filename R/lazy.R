@@ -1,11 +1,12 @@
-as_tethered_duckplyr_df <- function(x, n_rows, n_cells) {
-  if (inherits(x, "tethered_duckplyr_df")) {
-    return(x)
-  }
-
+as_tethered_duckplyr_df <- function(x, allow_materialization, n_rows, n_cells) {
   rel <- duckdb_rel_from_df(x)
 
-  out <- rel_to_df(rel, allow_materialization = FALSE, n_rows = n_rows, n_cells = n_cells)
+  out <- rel_to_df(
+    rel,
+    allow_materialization = allow_materialization,
+    n_rows = n_rows,
+    n_cells = n_cells
+  )
 
   out <- dplyr_reconstruct(out, x)
   add_tethered_duckplyr_df_class(out)

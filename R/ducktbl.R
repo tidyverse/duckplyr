@@ -114,6 +114,7 @@ tether_duckdb_tibble <- function(x, tether, call) {
     if (length(extra_names) > 0) {
       cli::cli_abort("Unknown name in {.arg tether}: {extra_names[[1]]}", call = call)
     }
+
     if ("rows" %in% names(tether)) {
       n_rows <- tether[["rows"]]
       if (is.na(n_rows) || n_rows < 0) {
@@ -126,13 +127,16 @@ tether_duckdb_tibble <- function(x, tether, call) {
         cli::cli_abort("The {.val cells} component of {.arg tether} must be a non-negative integer", call = call)
       }
     }
+    allow_materialization <- is.finite(n_rows) || is.finite(n_cells)
     tether <- TRUE
   } else if (!is.logical(tether)) {
     cli::cli_abort("{.arg tether} must be a logical scalar or a named vector", call = call)
+  } else {
+    allow_materialization <- !isTRUE(tether)
   }
 
-  if (isTRUE(tether)) {
-    as_tethered_duckplyr_df(x, n_rows, n_cells)
+  if (tether) {
+    as_tethered_duckplyr_df(x, allow_materialization, n_rows, n_cells)
   } else {
     as_untethered_duckplyr_df(x)
   }
