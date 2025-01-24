@@ -64,7 +64,7 @@ conflict_prefer("filter", "dplyr", quiet = TRUE)
 ```
 
 The following code aggregates the inflight delay by year and month for
-the first half of the year. We use a variant of the `nycflights13::flights` dataset, where the timezone has been set to UTC to work around a [current limitation of duckplyr](https://duckplyr.tidyverse.org/dev/articles/limits.html).
+the first half of the year. We use a variant of the `nycflights13::flights` dataset, where the timezone has been set to UTC to work around a current limitation of duckplyr, see `vignette("limits.html")`.
 
 ``` r
 flights_df()
