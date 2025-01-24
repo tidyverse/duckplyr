@@ -1,4 +1,6 @@
 test_that("Roundtrip to CSV works", {
+  local_options(lifecycle_verbosity = "quiet")
+
   df <- tibble(a = 1:3, b = letters[4:6])
 
   path_csv <- withr::local_tempfile(fileext = ".csv")

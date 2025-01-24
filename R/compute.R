@@ -9,24 +9,23 @@ compute.duckplyr_df <- function(
   schema_name = NULL,
   temporary = TRUE
 ) {
+  if (is.null(lazy)) {
+    lazy <- get_lazy_duckplyr_df(x)
+  }
+  if (is.null(schema_name)) {
+    schema_name <- ""
+  }
+  if (is.null(name)) {
+    if (isTRUE(temporary)) {
+      name <- unique_table_name()
+    } else {
+      cli::cli_abort("{.arg name} must be provided if {.arg temporary} is {.value FALSE}")
+    }
+  }
+
   # Our implementation
   duckplyr_error <- rel_try(NULL,
-    "Needs duckdb >= 1.1.3.9029" = !is_installed("duckdb", version = "1.1.3.9029"),
     {
-      if (is.null(lazy)) {
-        lazy <- is_lazy_duckplyr_df(x)
-      }
-      if (is.null(schema_name)) {
-        schema_name <- ""
-      }
-      if (is.null(name)) {
-        if (isTRUE(temporary)) {
-          name <- unique_table_name()
-        } else {
-          cli::cli_abort("{.arg name} must be provided if {.arg temporary} is {.value FALSE}")
-        }
-      }
-
       rel <- duckdb_rel_from_df(x)
 
       duckdb$rel_to_table(rel, schema_name, name, temporary)
@@ -36,8 +35,8 @@ compute.duckplyr_df <- function(
 
       out <- duckplyr_reconstruct(out_rel, x)
 
-      if (is_lazy_duckplyr_df(out) != lazy) {
-        out <- as_duckdb_tibble(out, .lazy = lazy)
+      if (get_lazy_duckplyr_df(out) != lazy) {
+        out <- as_duckdb_tibble(out, lazy = lazy)
       }
 
       return(out)

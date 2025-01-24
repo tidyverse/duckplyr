@@ -12,8 +12,18 @@ test_that(".lazy = TRUE forbids materialization", {
   expect_error(length(tbl$a))
 })
 
+test_that(".lazy = c(rows = ) forbids materialization", {
+  tbl <- duckdb_tibble(a = 1:10, .lazy = c(rows = 5))
+  expect_error(length(tbl$a))
+})
+
+test_that(".lazy = c(cells = ) forbids materialization", {
+  tbl <- duckdb_tibble(a = 1:10, b = 1, .lazy = c(cells = 10))
+  expect_error(length(tbl$a))
+})
+
 test_that(".lazy = TRUE forbids materialization for as_duckdb_tibble()", {
-  tbl <- as_duckdb_tibble(data.frame(a = 1), .lazy = TRUE)
+  tbl <- as_duckdb_tibble(data.frame(a = 1), lazy = TRUE)
   expect_error(length(tbl$a))
 })
 
@@ -54,7 +64,7 @@ test_that("as_duckdb_tibble() and dbplyr tables", {
     dplyr::copy_to(dest = con)
 
   duck <- db_tbl %>%
-    as_duckdb_tibble(.lazy = TRUE) %>%
+    as_duckdb_tibble(lazy = TRUE) %>%
     mutate(b = 2) %>%
     collect()
 

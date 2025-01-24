@@ -8,7 +8,7 @@
 \usage{
 duckdb_tibble(..., .lazy = FALSE)
 
-as_duckdb_tibble(x, ..., .lazy = FALSE)
+as_duckdb_tibble(x, ..., lazy = FALSE)
 
 is_duckdb_tibble(x)
 }
@@ -16,7 +16,7 @@ is_duckdb_tibble(x)
 \item{...}{For \code{duckdb_tibble()}, passed on to \code{\link[tibble:tibble]{tibble::tibble()}}.
 For \code{as_duckdb_tibble()}, passed on to methods.}
 
-\item{.lazy}{Logical, whether to create a lazy duckplyr frame.
+\item{.lazy, lazy}{Logical, whether to create a lazy duckplyr frame.
 See the section "Eager and lazy" for details.}
 
 \item{x}{The object to convert or to test.}
@@ -48,48 +48,67 @@ This is a generic function that can be overridden for custom classes.
 }
 \section{Eager and lazy}{
 
-Data frames backed by duckplyr behave as regular data frames in almost all respects.
+Data frames backed by duckplyr, with class \code{"duckplyr_df"},
+behave as regular data frames in almost all respects.
 In particular, direct column access like \code{df$x},
 or retrieving the number of rows with \code{\link[=nrow]{nrow()}}, works identically.
+Conceptually, duckplyr frames are "eager": from a user's perspective,
+they behave like regular data frames.
+Under the hood, two key differences provide improved performance and usability:
+lazy materialization and lazying.
+
 For a duckplyr frame that is the result of a dplyr operation,
 accessing column data or retrieving the number of rows will trigger a computation
-that is carried out by DuckDB.
+that is carried out by DuckDB, not dplyr.
+In this sense, duckplyr frames are also "lazy":
+the computation is deferred until the last possible moment,
+allowing DuckDB to optimize the whole pipeline.
+This is similar to lazy tables in \pkg{dbplyr} and \pkg{dtplyr},
+but different from \pkg{dplyr} where each intermediate step is computed.
 
-Eager and lazy duckplyr frames differ in their behavior for column access and row count.
-For eager duckplyr frames, the underlying DuckDB computation is carried out
+Being both "eager" and "lazy" at the same time introduces a challenge:
+it is too easy to accidentally trigger computation,
+which may be prohibitive if an intermediate result is too large.
+This is where lazying comes in.
+\itemize{
+\item For eager duckplyr frames, the underlying DuckDB computation is carried out
 upon the first request.
 Once the results are computed, they are cached and subsequent requests are fast.
 This is a good choice for small to medium-sized data,
-where DuckDB can provide a nice speedup but materializing the data is affordable.
+where DuckDB can provide a nice speedup but materializing the data is affordable
+at any stage.
 This is the default for \code{duckdb_tibble()} and \code{as_duckdb_tibble()}.
-Use \code{.lazy = TRUE} for these functions to check
-that all operations are supported by DuckDB.
-
-For lazy duckplyr frames, accessing a column or requesting the number of rows
-triggers an error.
+\item For lazy duckplyr frames, accessing a column or requesting the number of rows
+triggers an error, either unconditionally, or if the result exceeds a certain size.
 This is a good choice for large data sets where the cost of materializing the data
 may be prohibitive due to size or computation time,
 and the user wants to control when the computation is carried out.
-This is the default for the ingestion functions like \code{\link[=read_parquet_duckdb]{read_parquet_duckdb()}}.
-It is safe to use \code{read_parquet_duckdb(lazy = FALSE)}
-if the data is small enough to be materialized at any stage.
+The default for the ingestion functions like \code{\link[=read_parquet_duckdb]{read_parquet_duckdb()}}
+is to limit the result size to one million cells (values in the resulting data frame).
+}
 
-A lazy duckplyr frame can be converted to an eager one with \code{as_duckdb_tibble(.lazy = FALSE)}.
-The \code{\link[=collect.duckplyr_df]{collect.duckplyr_df()}} method converts to a plain tibble.
+Lazy duckplyr frames behave like \href{https://dtplyr.tidyverse.org/reference/lazy_dt.html}{\code{dtplyr}'s lazy frames},
+or dbplyr's lazy frames:
+the computation only starts when you \strong{explicitly} request it with a "collect"
+function.
+In dtplyr and dbplyr, there are no eager frames: collection always needs to be
+explicit.
+
+A lazy duckplyr frame can be converted to an eager one with \code{as_duckdb_tibble(lazy = FALSE)}.
+The \code{\link[=collect.duckplyr_df]{collect.duckplyr_df()}} method triggers computation and converts to a plain tibble.
 Other useful methods include \code{\link[=compute_file]{compute_file()}} for storing results in a file,
 and \code{\link[=compute.duckplyr_df]{compute.duckplyr_df()}} for storing results in temporary storage on disk.
 
-Computing via DuckDB is not always possible,
+Beyond safety regarding memory usage, lazy frames also allow you
+to check that all operations are supported by DuckDB:
+for a lazy frame with \code{lazy = FALSE}, fallbacks to dplyr are not possible.
+As a reminder, computing via DuckDB is currently not always possible,
 see \code{vignette("limits")} for the supported operations.
 In such cases, the original dplyr implementation is used, see \link{fallback} for details.
 As the original dplyr implementation accesses columns directly,
 the data must be materialized before a fallback can be executed.
 This means that automatic fallback is only possible for "eager" duckplyr frames,
-while for "lazy" duckplyr frames, one of the aforementioned methods must be used.
-
-The concept of lazy tables is also known from dbplyr,
-but "eager" tables are not available there at the time of writing,
-and the data must always be brought into R memory through \code{\link[dplyr:compute]{dplyr::collect()}}.
+while for "lazy" duckplyr frames, one of the aforementioned collection methods must be used first.
 }
 
 \examples{

@@ -9,6 +9,7 @@
 #'
 #' @inheritParams rlang::args_dots_empty
 #' @inheritParams compute.duckplyr_df
+#' @inheritSection duckdb_tibble Eager and lazy
 #' @param path The path to store the result in.
 #' @param options A list of additional options to pass to create the storage format,
 #'   see <https://duckdb.org/docs/data/parquet/overview#writing-to-parquet-files>
@@ -28,23 +29,17 @@
 compute_parquet <- function(x, path, ..., lazy = NULL, options = NULL) {
   check_dots_empty()
 
-  if (!is.null(options)) {
-    check_installed("duckdb", "1.1.3.9028")
-  } else {
+  if (is.null(options)) {
     options <- list()
   }
 
   if (is.null(lazy)) {
-    lazy <- is_lazy_duckplyr_df(x)
+    lazy <- get_lazy_duckplyr_df(x)
   }
 
   rel <- duckdb_rel_from_df(x)
 
-  if (is_installed("duckdb", version = "1.1.3.9028")) {
-    duckdb$rel_to_parquet(rel, path, options)
-  } else {
-    duckdb$rel_to_parquet(rel, path)
-  }
+  duckdb$rel_to_parquet(rel, path, options)
 
   # If the path is a directory, we assume that the user wants to write multiple files
   if (dir.exists(path)) {
@@ -62,14 +57,12 @@ compute_parquet <- function(x, path, ..., lazy = NULL, options = NULL) {
 compute_csv <- function(x, path, ..., lazy = NULL, options = NULL) {
   check_dots_empty()
 
-  check_installed("duckdb", "1.1.3.9028")
-
   if (is.null(options)) {
     options <- list()
   }
 
   if (is.null(lazy)) {
-    lazy <- is_lazy_duckplyr_df(x)
+    lazy <- get_lazy_duckplyr_df(x)
   }
 
   rel <- duckdb_rel_from_df(x)

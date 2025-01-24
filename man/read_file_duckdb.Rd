@@ -7,13 +7,19 @@
 \alias{read_json_duckdb}
 \title{Read Parquet, CSV, and other files using DuckDB}
 \usage{
-read_parquet_duckdb(path, ..., lazy = TRUE, options = list())
+read_parquet_duckdb(path, ..., lazy = c(cells = 1e+06), options = list())
 
-read_csv_duckdb(path, ..., lazy = TRUE, options = list())
+read_csv_duckdb(path, ..., lazy = c(cells = 1e+06), options = list())
 
-read_json_duckdb(path, ..., lazy = TRUE, options = list())
+read_json_duckdb(path, ..., lazy = c(cells = 1e+06), options = list())
 
-read_file_duckdb(path, table_function, ..., lazy = TRUE, options = list())
+read_file_duckdb(
+  path,
+  table_function,
+  ...,
+  lazy = c(cells = 1e+06),
+  options = list()
+)
 }
 \arguments{
 \item{path}{Path to files, glob patterns \code{*} and \verb{?} are supported.}
@@ -52,12 +58,8 @@ To read multiple files with the same schema,
 pass a wildcard or a character vector to the \code{path} argument,
 }
 \details{
-By default, a lazy duckplyr frame is created.
-This means that all the data can be shown and all dplyr verbs can be used,
-but attempting to access the columns of the data frame or using an unsupported verb,
-data type, or function will result in an error.
-Pass \code{lazy = FALSE} to transparently switch to local processing as needed,
-or use \code{\link[dplyr:compute]{dplyr::collect()}} to explicitly materialize and continue local processing.
+By default, a lazy duckplyr frame, with a limit of one million cells, is created.
+See the "Eager and lazy" section in \code{\link[=duckdb_tibble]{duckdb_tibble()}} for details.
 }
 \examples{
 # Create simple CSV file

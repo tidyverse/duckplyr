@@ -4,7 +4,7 @@
 \alias{read_sql_duckdb}
 \title{Return SQL query as duckdb_tibble}
 \usage{
-read_sql_duckdb(sql, ..., lazy = TRUE, con = NULL)
+read_sql_duckdb(sql, ..., lazy = c(cells = 1e+06), con = NULL)
 }
 \arguments{
 \item{sql}{The SQL to run.}
