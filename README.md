@@ -65,8 +65,9 @@ conflict_prefer("filter", "dplyr", quiet = TRUE)
 
 The following code aggregates the inflight delay by year and month for
 the first half of the year. We use a variant of the
-`nycflights13::flights` dataset that works around an incompatibility
-with duckplyr.
+`nycflights13::flights` dataset, where the timezone has been set to UTC
+to work around a current limitation of duckplyr, see
+`vignette("limits.html")`.
 
 ``` r
 flights_df()
@@ -113,7 +114,7 @@ starts the computation:
 
 ``` r
 out$month
-#> [1] 2 1 5 3 6 4
+#> [1] 2 4 5 1 3 6
 ```
 
 Note that, unlike dplyr, the results are not ordered, see `?config` for
@@ -125,11 +126,11 @@ out
 #>    year month mean_inflight_delay median_inflight_delay
 #>   <int> <int>               <dbl>                 <dbl>
 #> 1  2013     2               -5.15                    -6
-#> 2  2013     1               -3.86                    -5
+#> 2  2013     4               -2.67                    -5
 #> 3  2013     5               -9.37                   -10
-#> 4  2013     3               -7.36                    -9
-#> 5  2013     6               -4.24                    -7
-#> 6  2013     4               -2.67                    -5
+#> 4  2013     1               -3.86                    -5
+#> 5  2013     3               -7.36                    -9
+#> 6  2013     6               -4.24                    -7
 ```
 
 Restart R, or call `duckplyr::methods_restore()` to revert to the
