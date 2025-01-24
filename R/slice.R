@@ -10,7 +10,7 @@ slice.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
   )
 
   # dplyr forward
-  check_tethered(.data, duckplyr_error)
+  check_funneled(.data, duckplyr_error)
 
   slice <- dplyr$slice.data.frame
   out <- slice(.data, ..., .by = {{ .by }}, .preserve = .preserve)

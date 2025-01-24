@@ -25,7 +25,7 @@ right_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x
   )
 
   # dplyr forward
-  check_tethered(x, duckplyr_error)
+  check_funneled(x, duckplyr_error)
 
   right_join <- dplyr$right_join.data.frame
   out <- right_join(x, y, by, copy = FALSE, suffix, ..., keep = keep, na_matches = na_matches, multiple = multiple, unmatched = unmatched, relationship = relationship)

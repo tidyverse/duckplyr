@@ -16,7 +16,7 @@ group_modify.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = depre
   )
 
   # dplyr forward
-  check_tethered(.data, duckplyr_error)
+  check_funneled(.data, duckplyr_error)
 
   group_modify <- dplyr$group_modify.data.frame
   out <- group_modify(.data, .f, ..., .keep = .keep)

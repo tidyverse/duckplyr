@@ -4,7 +4,7 @@
 compute.duckplyr_df <- function(
   x,
   ...,
-  tether = NULL,
+  funnel = NULL,
   name = NULL,
   schema_name = NULL,
   temporary = TRUE
@@ -13,8 +13,8 @@ compute.duckplyr_df <- function(
   duckplyr_error <- rel_try(NULL,
     "Needs duckdb >= 1.1.3.9029" = !is_installed("duckdb", version = "1.1.3.9029"),
     {
-      if (is.null(tether)) {
-        tether <- is_tethered_duckplyr_df(x)
+      if (is.null(funnel)) {
+        funnel <- is_funneled_duckplyr_df(x)
       }
       if (is.null(schema_name)) {
         schema_name <- ""
@@ -36,8 +36,8 @@ compute.duckplyr_df <- function(
 
       out <- duckplyr_reconstruct(out_rel, x)
 
-      if (is_tethered_duckplyr_df(out) != tether) {
-        out <- as_duckdb_tibble(out, tether = tether)
+      if (is_funneled_duckplyr_df(out) != funnel) {
+        out <- as_duckdb_tibble(out, funnel = funnel)
       }
 
       return(out)
@@ -45,7 +45,7 @@ compute.duckplyr_df <- function(
   )
 
   # dplyr forward
-  check_tethered(x, duckplyr_error)
+  check_funneled(x, duckplyr_error)
 
   compute <- dplyr$compute.data.frame
   out <- compute(x, ...)

@@ -44,7 +44,7 @@ To enable duckplyr **for individual data frames instead of session wide**,
 - use `duckplyr::as_duckdb_tibble()` as the first step in your pipe, without attaching the package.
 
 ```{r}
-untethered <-
+unfunneled <-
   duckplyr::flights_df() |>
   duckplyr::as_duckdb_tibble() |>
   filter(!is.na(arr_delay), !is.na(dep_delay)) |>
@@ -60,15 +60,15 @@ untethered <-
 The result is a tibble, with its own class.
 
 ```{r}
-class(untethered)
-names(untethered)
+class(unfunneled)
+names(unfunneled)
 ```
 
 DuckDB is responsible for eventually carrying out the operations.
 Despite the late filter, the summary is not computed for the months in the second half of the year.
 
 ```{r}
-untethered |>
+unfunneled |>
   explain()
 ```
 
@@ -76,39 +76,39 @@ All data frame operations are supported.
 Computation happens upon the first request.
 
 ```{r}
-untethered$mean_inflight_delay
+unfunneled$mean_inflight_delay
 ```
 
 After the computation has been carried out, the results are preserved and available immediately:
 
 ```{r}
-untethered
+unfunneled
 ```
 
-## Tethering
+## Funneling
 
-The default mode for `as_duckdb_tibble()` is untethered.
+The default mode for `as_duckdb_tibble()` is unfunneled.
 This allows applying all data frame operations on the results, including column subsetting or retrieving the number of rows.
 In addition, if an operation cannot be carried out by duckdb, the dplyr fallback is used transparently.
-Use `tether = TRUE` to ensure that all operations are carried out by DuckDB, or fail.
+Use `funnel = TRUE` to ensure that all operations are carried out by DuckDB, or fail.
 This is also the default for the ingestion functions such as `read_parquet_duckdb()`.
 
 ```{r}
-tethered <-
+funneled <-
   duckplyr::flights_df() |>
-  duckplyr::as_duckdb_tibble(tether = TRUE)
+  duckplyr::as_duckdb_tibble(funnel = TRUE)
 ```
 
 Columns or the row count cannot be accessed directly in this mode:
 
 ```{r error = TRUE}
-nrow(tethered)
+nrow(funneled)
 ```
 
 Also, operations that are not (yet) supported will fail:
 
 ```{r error = TRUE}
-tethered |>
+funneled |>
   mutate(inflight_delay = arr_delay - dep_delay) |>
   summarize(
     .by = c(year, month),

@@ -27,7 +27,7 @@ rename.duckplyr_df <- function(.data, ...) {
   )
 
   # dplyr forward
-  check_tethered(.data, duckplyr_error)
+  check_funneled(.data, duckplyr_error)
 
   rename <- dplyr$rename.data.frame
   out <- rename(.data, ...)

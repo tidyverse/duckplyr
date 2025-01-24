@@ -123,7 +123,7 @@ new_failing_mask <- function(names_data) {
 
 #' @param duckplyr_error Return value from rel_try()
 #' @noRd
-check_tethered <- function(x, duckplyr_error, call = caller_env()) {
+check_funneled <- function(x, duckplyr_error, call = caller_env()) {
   msg <- tryCatch(nrow(x), error = conditionMessage)
   if (is.character(msg)) {
     duckplyr_error_msg <- if (is.character(duckplyr_error)) duckplyr_error
@@ -132,7 +132,7 @@ check_tethered <- function(x, duckplyr_error, call = caller_env()) {
       "This operation cannot be carried out by DuckDB, and the input is a lazy duckplyr frame.",
       "*" = duckplyr_error_msg,
       "i" = "Use {.code compute(lazy = FALSE)} to materialize to temporary storage and continue with {.pkg duckplyr}.",
-      "i" = 'See the "Tethering" section in {.help duckdb_tibble} for other options.'
+      "i" = 'See the "Funneling" section in {.help duckdb_tibble} for other options.'
     ))
   }
 }

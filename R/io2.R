@@ -13,10 +13,10 @@ NULL
 #'
 #' @rdname read_file_duckdb
 #' @export
-read_parquet_duckdb <- function(path, ..., tether = TRUE, options = list()) {
+read_parquet_duckdb <- function(path, ..., funnel = TRUE, options = list()) {
   check_dots_empty()
 
-  read_file_duckdb(path, "read_parquet", tether = tether, options = options)
+  read_file_duckdb(path, "read_parquet", funnel = funnel, options = options)
 }
 
 #' @description
@@ -41,8 +41,8 @@ read_parquet_duckdb <- function(path, ..., tether = TRUE, options = list()) {
 #' # Materialize explicitly
 #' collect(df)$a
 #'
-#' # Automatic materialization with tether = FALSE
-#' df <- read_csv_duckdb(path, tether = FALSE)
+#' # Automatic materialization with funnel = FALSE
+#' df <- read_csv_duckdb(path, funnel = FALSE)
 #' df$a
 #'
 #' # Specify column types
@@ -50,10 +50,10 @@ read_parquet_duckdb <- function(path, ..., tether = TRUE, options = list()) {
 #'   path,
 #'   options = list(delim = ",", types = list(c("DOUBLE", "VARCHAR")))
 #' )
-read_csv_duckdb <- function(path, ..., tether = TRUE, options = list()) {
+read_csv_duckdb <- function(path, ..., funnel = TRUE, options = list()) {
   check_dots_empty()
 
-  read_file_duckdb(path, "read_csv_auto", tether = tether, options = options)
+  read_file_duckdb(path, "read_csv_auto", funnel = funnel, options = options)
 }
 
 #' @description
@@ -71,10 +71,10 @@ read_csv_duckdb <- function(path, ..., tether = TRUE, options = list()) {
 #' db_exec("INSTALL json")
 #' db_exec("LOAD json")
 #' read_json_duckdb(path)
-read_json_duckdb <- function(path, ..., tether = TRUE, options = list()) {
+read_json_duckdb <- function(path, ..., funnel = TRUE, options = list()) {
   check_dots_empty()
 
-  read_file_duckdb(path, "read_json", tether = tether, options = options)
+  read_file_duckdb(path, "read_json", funnel = funnel, options = options)
 }
 
 #' @description
@@ -85,11 +85,11 @@ read_json_duckdb <- function(path, ..., tether = TRUE, options = list()) {
 #' pass a wildcard or a character vector to the `path` argument,
 #'
 #' @details
-#' By default, a tether duckplyr frame is created.
+#' By default, a funneled duckplyr frame is created.
 #' This means that all the data can be shown and all dplyr verbs can be used,
 #' but attempting to access the columns of the data frame or using an unsupported verb,
 #' data type, or function will result in an error.
-#' Pass `tether = FALSE` to transparently switch to local processing as needed,
+#' Pass `funnel = FALSE` to transparently switch to local processing as needed,
 #' or use [collect()] to explicitly materialize and continue local processing.
 #'
 #' @inheritParams rlang::args_dots_empty
@@ -98,9 +98,9 @@ read_json_duckdb <- function(path, ..., tether = TRUE, options = list()) {
 #' @param table_function The name of a table-valued
 #'   DuckDB function such as `"read_parquet"`,
 #'   `"read_csv"`, `"read_csv_auto"` or `"read_json"`.
-#' @param tether Logical, whether to create a tether duckplyr frame.
-#'   By default, a tether duckplyr frame is created.
-#'   See the "Tethering" section in [duckdb_tibble()] for details.
+#' @param funnel Logical, whether to create a funneled duckplyr frame.
+#'   By default, a funneled duckplyr frame is created.
+#'   See the "Funneling" section in [duckdb_tibble()] for details.
 #' @param options Arguments to the DuckDB function
 #'   indicated by `table_function`.
 #'
@@ -112,7 +112,7 @@ read_file_duckdb <- function(
   path,
   table_function,
   ...,
-  tether = TRUE,
+  funnel = TRUE,
   options = list()
 ) {
   check_dots_empty()
@@ -125,10 +125,10 @@ read_file_duckdb <- function(
     path <- list(path)
   }
 
-  duckfun(table_function, c(list(path), options), tether = tether)
+  duckfun(table_function, c(list(path), options), funnel = funnel)
 }
 
-duckfun <- function(table_function, args, ..., tether = TRUE) {
+duckfun <- function(table_function, args, ..., funnel = TRUE) {
   if (!is.list(args)) {
     cli::cli_abort("{.arg args} must be a list.")
   }
@@ -152,12 +152,12 @@ duckfun <- function(table_function, args, ..., tether = TRUE) {
 
   meta_rel_register_file(rel, table_function, path, options)
 
-  # Start with tether, to avoid unwanted materialization
+  # Start with funnel, to avoid unwanted materialization
   df <- duckdb$rel_to_altrep(rel, allow_materialization = FALSE)
-  out <- new_duckdb_tibble(df, tether = TRUE)
+  out <- new_duckdb_tibble(df, funnel = TRUE)
 
-  if (!tether) {
-    out <- as_duckdb_tibble(out, tether = tether)
+  if (!funnel) {
+    out <- as_duckdb_tibble(out, funnel = funnel)
   }
 
   out
