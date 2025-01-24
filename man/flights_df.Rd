@@ -7,8 +7,9 @@
 flights_df()
 }
 \description{
-Provides a copy of \code{nycflights13::flights} that is compatible with duckplyr,
-as a tibble.
+Provides a variant of \code{nycflights13::flights} that is compatible with duckplyr,
+as a tibble:
+the timezone has been set to UTC to work around a \href{https://duckplyr.tidyverse.org/dev/articles/limits.html}{current limitation of duckplyr}.
 Call \code{\link[=as_duckdb_tibble]{as_duckdb_tibble()}} to enable duckplyr operations.
 }
 \examples{
