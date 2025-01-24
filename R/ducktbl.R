@@ -8,9 +8,9 @@
 #' dplyr verbs such as [mutate()], [select()] or [filter()]  will use DuckDB.
 #'
 #' `duckdb_tibble()` works like [tibble()], returning an "eager" duckplyr data frame by default.
-#' See the "Eager and lazy" section below.
+#' See the "Eager and tether" section below.
 #'
-#' @section Eager and lazy:
+#' @section Eager and tether:
 #' Data frames backed by duckplyr behave as regular data frames in almost all respects.
 #' In particular, direct column access like `df$x`,
 #' or retrieving the number of rows with [nrow()], works identically.
@@ -18,26 +18,26 @@
 #' accessing column data or retrieving the number of rows will trigger a computation
 #' that is carried out by DuckDB.
 #'
-#' Eager and lazy duckplyr frames differ in their behavior for column access and row count.
+#' Eager and tether duckplyr frames differ in their behavior for column access and row count.
 #' For eager duckplyr frames, the underlying DuckDB computation is carried out
 #' upon the first request.
 #' Once the results are computed, they are cached and subsequent requests are fast.
 #' This is a good choice for small to medium-sized data,
 #' where DuckDB can provide a nice speedup but materializing the data is affordable.
 #' This is the default for `duckdb_tibble()` and `as_duckdb_tibble()`.
-#' Use `.lazy = TRUE` for these functions to check
+#' Use `.tether = TRUE` for these functions to check
 #' that all operations are supported by DuckDB.
 #'
-#' For lazy duckplyr frames, accessing a column or requesting the number of rows
+#' For tether duckplyr frames, accessing a column or requesting the number of rows
 #' triggers an error.
 #' This is a good choice for large data sets where the cost of materializing the data
 #' may be prohibitive due to size or computation time,
 #' and the user wants to control when the computation is carried out.
 #' This is the default for the ingestion functions like [read_parquet_duckdb()].
-#' It is safe to use `read_parquet_duckdb(lazy = FALSE)`
+#' It is safe to use `read_parquet_duckdb(tether = FALSE)`
 #' if the data is small enough to be materialized at any stage.
 #'
-#' A lazy duckplyr frame can be converted to an eager one with `as_duckdb_tibble(.lazy = FALSE)`.
+#' A tether duckplyr frame can be converted to an eager one with `as_duckdb_tibble(.tether = FALSE)`.
 #' The [collect.duckplyr_df()] method converts to a plain tibble.
 #' Other useful methods include [compute_file()] for storing results in a file,
 #' and [compute.duckplyr_df()] for storing results in temporary storage on disk.
@@ -48,19 +48,19 @@
 #' As the original dplyr implementation accesses columns directly,
 #' the data must be materialized before a fallback can be executed.
 #' This means that automatic fallback is only possible for "eager" duckplyr frames,
-#' while for "lazy" duckplyr frames, one of the aforementioned methods must be used.
+#' while for "tether" duckplyr frames, one of the aforementioned methods must be used.
 #'
-#' The concept of lazy tables is also known from dbplyr,
+#' The concept of tether tables is also known from dbplyr,
 #' but "eager" tables are not available there at the time of writing,
 #' and the data must always be brought into R memory through [collect()].
 #'
 #' @param ... For `duckdb_tibble()`, passed on to [tibble()].
 #'   For `as_duckdb_tibble()`, passed on to methods.
-#' @param .lazy Logical, whether to create a lazy duckplyr frame.
-#'   See the section "Eager and lazy" for details.
+#' @param .tether,tether Logical, whether to create a tether duckplyr frame.
+#'   See the section "Eager and tether" for details.
 #'
 #' @return For `duckdb_tibble()` and `as_duckdb_tibble()`, an object with the following classes:
-#'   - `"lazy_duckplyr_df"` if `.lazy` is `TRUE`
+#'   - `"tether_duckplyr_df"` if `.tether` is `TRUE`
 #'   - `"duckplyr_df"`
 #'   - Classes of a [tibble]
 #'
@@ -74,34 +74,34 @@
 #'
 #' x$a
 #'
-#' y <- duckdb_tibble(a = 1, .lazy = TRUE)
+#' y <- duckdb_tibble(a = 1, .tether = TRUE)
 #' y
 #' try(length(y$a))
 #' length(collect(y)$a)
 #' @export
-duckdb_tibble <- function(..., .lazy = FALSE) {
+duckdb_tibble <- function(..., .tether = FALSE) {
   out <- tibble::tibble(...)
-  as_duckdb_tibble(out, .lazy = .lazy)
+  as_duckdb_tibble(out, tether = .tether)
 }
 
 #' as_duckdb_tibble
 #'
-#' `as_duckdb_tibble()` converts a data frame or a dplyr lazy table to a duckplyr data frame.
+#' `as_duckdb_tibble()` converts a data frame or a dplyr tether table to a duckplyr data frame.
 #' This is a generic function that can be overridden for custom classes.
 #'
 #' @param x The object to convert or to test.
 #' @rdname duckdb_tibble
 #' @export
-as_duckdb_tibble <- function(x, ..., .lazy = FALSE) {
-  # Handle the .lazy arg in the generic, only the other args will be dispatched
+as_duckdb_tibble <- function(x, ..., tether = FALSE) {
+  # Handle the tether arg in the generic, only the other args will be dispatched
   as_duckdb_tibble <- function(x, ...) {
     UseMethod("as_duckdb_tibble")
   }
 
   out <- as_duckdb_tibble(x, ...)
 
-  if (isTRUE(.lazy)) {
-    as_lazy_duckplyr_df(out)
+  if (isTRUE(tether)) {
+    as_tether_duckplyr_df(out)
   } else {
     as_eager_duckplyr_df(out)
   }
@@ -114,7 +114,7 @@ as_duckdb_tibble.tbl_duckdb_connection <- function(x, ...) {
   con <- dbplyr::remote_con(x)
   sql <- dbplyr::remote_query(x)
 
-  read_sql_duckdb(sql, lazy = FALSE, con = con)
+  read_sql_duckdb(sql, tether = FALSE, con = con)
 }
 
 #' @export
@@ -187,9 +187,9 @@ is_duckdb_tibble <- function(x) {
 }
 
 
-#' @param lazy Only adds the class, does not recreate the relation object!
+#' @param tether Only adds the class, does not recreate the relation object!
 #' @noRd
-new_duckdb_tibble <- function(x, class = NULL, lazy = FALSE, error_call = caller_env()) {
+new_duckdb_tibble <- function(x, class = NULL, tether = FALSE, error_call = caller_env()) {
   if (is.null(class)) {
     class <- c("tbl_df", "tbl", "data.frame")
   }
@@ -201,7 +201,7 @@ new_duckdb_tibble <- function(x, class = NULL, lazy = FALSE, error_call = caller
   }
 
   class(x) <- unique(c(
-    if (lazy) "lazy_duckplyr_df",
+    if (tether) "tether_duckplyr_df",
     "duckplyr_df",
     class
   ))
