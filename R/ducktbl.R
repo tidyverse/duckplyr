@@ -11,33 +11,44 @@
 #' See the "Funneling" section below.
 #'
 #' @section Funneling:
-#' Data frames backed by duckplyr, `"duckplyr_df"`, behave as regular data frames in almost all respects.
+#' Data frames backed by duckplyr, with class `"duckplyr_df"`,
+#' behave as regular data frames in almost all respects.
 #' In particular, direct column access like `df$x`,
 #' or retrieving the number of rows with [nrow()], works identically.
+#' Conceptually, duckplyr frames are "eager": from a user's perspective,
+#' they behave like regular data frames.
+#' Under the hood, two key differences provide improved performance and usability:
+#' lazy materialization and funneling.
 #'
-#' A key difference is that for a duckplyr frame that is the result of a dplyr operation,
+#' For a duckplyr frame that is the result of a dplyr operation,
 #' accessing column data or retrieving the number of rows will trigger a computation
 #' that is carried out by DuckDB, not dplyr.
+#' In this sense, duckplyr frames are also "lazy":
+#' the computation is deferred until the last possible moment,
+#' allowing DuckDB to optimize the whole pipeline.
+#' This is similar to lazy tables in \pkg{dbplyr} and \pkg{dtplyr},
+#' but different from \pkg{dplyr} where each intermediate step is computed.
 #'
-#' Another difference is that duckplyr frames can be safer to use with bigger data
-#' thanks to _funneling_.
-#' Funneling duckplyr frames differ in their behavior for column access and row count.
+#' Being both "eager" and "lazy" at the same time introduces a challenge:
+#' it is too easy to accidentally trigger computation,
+#' which may be prohibitive if an intermediate result is too large.
+#' This is where funneling comes in.
 #'
 #' - For unfunneled duckplyr frames, the underlying DuckDB computation is carried out
-#' upon the first request.
-#' Once the results are computed, they are cached and subsequent requests are fast.
-#' This is a good choice for small to medium-sized data,
-#' where DuckDB can provide a nice speedup but materializing the data is affordable.
-#' This is the default for `duckdb_tibble()` and `as_duckdb_tibble()`.
+#'   upon the first request.
+#'   Once the results are computed, they are cached and subsequent requests are fast.
+#'   This is a good choice for small to medium-sized data,
+#'   where DuckDB can provide a nice speedup but materializing the data is affordable
+#'   at any stage.
+#'   This is the default for `duckdb_tibble()` and `as_duckdb_tibble()`.
 #'
 #' - For funneled duckplyr frames, accessing a column or requesting the number of rows
-#' triggers an error.
-#' This is a good choice for large data sets where the cost of materializing the data
-#' may be prohibitive due to size or computation time,
-#' and the user wants to control when the computation is carried out.
-#' This is the default for the ingestion functions like [read_parquet_duckdb()].
-#' It is safe to use `read_parquet_duckdb(funnel = FALSE)`
-#' if the data is small enough to be materialized at any stage.
+#'   triggers an error, either unconditionally, or if the result exceeds a certain size.
+#'   This is a good choice for large data sets where the cost of materializing the data
+#'   may be prohibitive due to size or computation time,
+#'   and the user wants to control when the computation is carried out.
+#'   The default for the ingestion functions like [read_parquet_duckdb()]
+#'   is to limit the result size to one million cells (values in the resulting data frame).
 #'
 #' Funneled duckplyr frames behave like [`dtplyr`'s lazy frames](https://dtplyr.tidyverse.org/reference/lazy_dt.html),
 #' or dbplyr's lazy frames:
@@ -53,7 +64,7 @@
 #'
 #' Beyond safety regarding memory usage, funneled frames also allow you
 #' to check that all operations are supported by DuckDB:
-#' for a funneled frame, fallbacks to dplyr are not possible.
+#' for a funneled frame with `funnel = FALSE`, fallbacks to dplyr are not possible.
 #' As a reminder, computing via DuckDB is currently not always possible,
 #' see `vignette("limits")` for the supported operations.
 #' In such cases, the original dplyr implementation is used, see [fallback] for details.
