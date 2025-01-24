@@ -33,7 +33,7 @@ on:
     types:
       - checks_requested
   schedule:
-    - cron: "10 0 * * *"
+    - cron: "10 1 * * *"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs.ref || github.head_ref || github.sha }}-${{ github.base_ref || '' }}
