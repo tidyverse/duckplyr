@@ -227,15 +227,6 @@
 
     Code
       fallback_config_load()
-    Message
-      Some configuration values are set as environment variables and in the configuration file 'fallback.dcf':
-      * `info`
-      * `logging`
-      * `autoupload`
-      * `log_dir`
-      * `verbose`
-      i Use `duckplyr::fallback_config(reset_all = TRUE)` to reset the configuration.
-      i Use `usethis::edit_r_environ()` to edit '~/.Renviron'.
 
 ---
 
@@ -248,11 +239,6 @@
 
     Code
       fallback_config_load()
-    Message
-      Some configuration values are set as environment variables and in the configuration file 'fallback.dcf':
-      * `logging`
-      i Use `duckplyr::fallback_config(reset_all = TRUE)` to reset the configuration.
-      i Use `usethis::edit_r_environ()` to edit '~/.Renviron'.
 
 ---
 
