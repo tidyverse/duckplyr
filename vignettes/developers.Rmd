@@ -38,7 +38,7 @@ conflict_prefer("filter", "dplyr")
 
 ## Use of duckplyr for individual data frames
 
-To enable duckplyr **for individual data frames instead of session wide**, 
+To enable duckplyr **for individual data frames instead of session wide**,
 
 - do **not** load duckplyr with `library()`.
 - use `duckplyr::as_duckdb_tibble()` as the first step in your pipe, without attaching the package.
@@ -50,7 +50,7 @@ eager <-
   filter(!is.na(arr_delay), !is.na(dep_delay)) |>
   mutate(inflight_delay = arr_delay - dep_delay) |>
   summarize(
-    .by = c(year, month), 
+    .by = c(year, month),
     mean_inflight_delay = mean(inflight_delay),
     median_inflight_delay = median(inflight_delay),
   ) |>
@@ -111,7 +111,7 @@ Also, operations that are not (yet) supported will fail:
 lazy |>
   mutate(inflight_delay = arr_delay - dep_delay) |>
   summarize(
-    .by = c(year, month), 
+    .by = c(year, month),
     mean_inflight_delay = mean(inflight_delay, na.rm = TRUE),
     median_inflight_delay = median(inflight_delay, na.rm = TRUE),
   )
@@ -239,5 +239,3 @@ rel_names.dfrel <- function(rel, ...) {
 
 rel_names(mtcars_rel)
 ```
-
-
