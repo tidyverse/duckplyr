@@ -69,7 +69,7 @@ distinct.duckplyr_df <- function(.data, ..., .keep_all = FALSE) {
   )
 
   # dplyr forward
-  check_funneled(.data, duckplyr_error)
+  check_lazy(.data, duckplyr_error)
 
   distinct <- dplyr$distinct.data.frame
   out <- distinct(.data, ..., .keep_all = .keep_all)

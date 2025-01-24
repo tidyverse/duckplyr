@@ -23,7 +23,7 @@ full_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
   )
 
   # dplyr forward
-  check_funneled(x, duckplyr_error)
+  check_lazy(x, duckplyr_error)
 
   full_join <- dplyr$full_join.data.frame
   out <- full_join(x, y, by, copy = FALSE, suffix, ..., keep = keep, na_matches = na_matches, multiple = multiple, relationship = relationship)

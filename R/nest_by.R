@@ -10,7 +10,7 @@ nest_by.duckplyr_df <- function(.data, ..., .key = "data", .keep = FALSE) {
   )
 
   # dplyr forward
-  check_funneled(.data, duckplyr_error)
+  check_lazy(.data, duckplyr_error)
 
   nest_by <- dplyr$nest_by.data.frame
   out <- nest_by(.data, ..., .key = .key, .keep = .keep)

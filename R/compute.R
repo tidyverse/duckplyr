@@ -4,13 +4,13 @@
 compute.duckplyr_df <- function(
   x,
   ...,
-  funnel = NULL,
+  lazy = NULL,
   name = NULL,
   schema_name = NULL,
   temporary = TRUE
 ) {
-  if (is.null(funnel)) {
-    funnel <- get_funnel_duckplyr_df(x)
+  if (is.null(lazy)) {
+    lazy <- get_lazy_duckplyr_df(x)
   }
   if (is.null(schema_name)) {
     schema_name <- ""
@@ -35,8 +35,8 @@ compute.duckplyr_df <- function(
 
       out <- duckplyr_reconstruct(out_rel, x)
 
-      if (get_funnel_duckplyr_df(out) != funnel) {
-        out <- as_duckdb_tibble(out, funnel = funnel)
+      if (get_lazy_duckplyr_df(out) != lazy) {
+        out <- as_duckdb_tibble(out, lazy = lazy)
       }
 
       return(out)
@@ -44,7 +44,7 @@ compute.duckplyr_df <- function(
   )
 
   # dplyr forward
-  check_funneled(x, duckplyr_error)
+  check_lazy(x, duckplyr_error)
 
   compute <- dplyr$compute.data.frame
   out <- compute(x, ...)

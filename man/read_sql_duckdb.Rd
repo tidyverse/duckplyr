@@ -4,16 +4,16 @@
 \alias{read_sql_duckdb}
 \title{Return SQL query as duckdb_tibble}
 \usage{
-read_sql_duckdb(sql, ..., funnel = c(cells = 1e+06), con = NULL)
+read_sql_duckdb(sql, ..., lazy = c(cells = 1e+06), con = NULL)
 }
 \arguments{
 \item{sql}{The SQL to run.}
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{funnel}{Logical, whether to create a funneled duckplyr frame.
-By default, a funneled duckplyr frame is created.
-See the "Funneling" section in \code{\link[=duckdb_tibble]{duckdb_tibble()}} for details.}
+\item{lazy}{Logical, whether to create a lazy duckplyr frame.
+By default, a lazy duckplyr frame is created.
+See the "Eager and lazy" section in \code{\link[=duckdb_tibble]{duckdb_tibble()}} for details.}
 
 \item{con}{The connection, defaults to the default connection.}
 }

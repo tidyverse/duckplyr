@@ -105,7 +105,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
   )
 
   # dplyr forward
-  check_funneled(.data, duckplyr_error)
+  check_lazy(.data, duckplyr_error)
 
   mutate <- dplyr$mutate.data.frame
   out <- mutate(.data, ..., .by = {{ .by }}, .keep = .keep, .before = {{ .before }}, .after = {{ .after }})

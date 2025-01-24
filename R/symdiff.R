@@ -47,7 +47,7 @@ symdiff.duckplyr_df <- function(x, y, ...) {
   )
 
   # dplyr forward
-  check_funneled(x, duckplyr_error)
+  check_lazy(x, duckplyr_error)
 
   symdiff <- dplyr$symdiff.data.frame
   out <- symdiff(x, y, ...)

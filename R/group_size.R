@@ -11,7 +11,7 @@ group_size.duckplyr_df <- function(x) {
   )
 
   # dplyr forward
-  check_funneled(x, duckplyr_error)
+  check_lazy(x, duckplyr_error)
 
   group_size <- dplyr$group_size.data.frame
   out <- group_size(x)

@@ -6,9 +6,9 @@
 \alias{is_duckdb_tibble}
 \title{duckplyr data frames}
 \usage{
-duckdb_tibble(..., .funnel = FALSE)
+duckdb_tibble(..., .lazy = FALSE)
 
-as_duckdb_tibble(x, ..., funnel = FALSE)
+as_duckdb_tibble(x, ..., lazy = FALSE)
 
 is_duckdb_tibble(x)
 }
@@ -16,15 +16,15 @@ is_duckdb_tibble(x)
 \item{...}{For \code{duckdb_tibble()}, passed on to \code{\link[tibble:tibble]{tibble::tibble()}}.
 For \code{as_duckdb_tibble()}, passed on to methods.}
 
-\item{.funnel, funnel}{Logical, whether to create a funneled duckplyr frame.
-See the section "Funneling" for details.}
+\item{.lazy, lazy}{Logical, whether to create a lazy duckplyr frame.
+See the section "Eager and lazy" for details.}
 
 \item{x}{The object to convert or to test.}
 }
 \value{
 For \code{duckdb_tibble()} and \code{as_duckdb_tibble()}, an object with the following classes:
 \itemize{
-\item \code{"funneled_duckplyr_df"} if \code{.funnel} is \code{TRUE}
+\item \code{"lazy_duckplyr_df"} if \code{.lazy} is \code{TRUE}
 \item \code{"duckplyr_df"}
 \item Classes of a \link[tibble:tibble]{tibble::tibble}
 }
@@ -38,15 +38,15 @@ This ensures that dplyr methods are dispatched correctly.
 For such objects,
 dplyr verbs such as \code{\link[dplyr:mutate]{dplyr::mutate()}}, \code{\link[dplyr:select]{dplyr::select()}} or \code{\link[dplyr:filter]{dplyr::filter()}}  will use DuckDB.
 
-\code{duckdb_tibble()} works like \code{\link[tibble:tibble]{tibble::tibble()}}, returning an "unfunneled" duckplyr data frame by default.
-See the "Funneling" section below.
+\code{duckdb_tibble()} works like \code{\link[tibble:tibble]{tibble::tibble()}}, returning an "eager" duckplyr data frame by default.
+See the "Eager and lazy" section below.
 
-\code{as_duckdb_tibble()} converts a data frame or a dplyr funnel table to a duckplyr data frame.
+\code{as_duckdb_tibble()} converts a data frame or a dplyr lazy table to a duckplyr data frame.
 This is a generic function that can be overridden for custom classes.
 
 \code{is_duckdb_tibble()} returns \code{TRUE} if \code{x} is a duckplyr data frame.
 }
-\section{Funneling}{
+\section{Eager and lazy}{
 
 Data frames backed by duckplyr, with class \code{"duckplyr_df"},
 behave as regular data frames in almost all respects.
@@ -55,7 +55,7 @@ or retrieving the number of rows with \code{\link[=nrow]{nrow()}}, works identic
 Conceptually, duckplyr frames are "eager": from a user's perspective,
 they behave like regular data frames.
 Under the hood, two key differences provide improved performance and usability:
-lazy materialization and funneling.
+lazy materialization and lazying.
 
 For a duckplyr frame that is the result of a dplyr operation,
 accessing column data or retrieving the number of rows will trigger a computation
@@ -69,16 +69,16 @@ but different from \pkg{dplyr} where each intermediate step is computed.
 Being both "eager" and "lazy" at the same time introduces a challenge:
 it is too easy to accidentally trigger computation,
 which may be prohibitive if an intermediate result is too large.
-This is where funneling comes in.
+This is where lazying comes in.
 \itemize{
-\item For unfunneled duckplyr frames, the underlying DuckDB computation is carried out
+\item For eager duckplyr frames, the underlying DuckDB computation is carried out
 upon the first request.
 Once the results are computed, they are cached and subsequent requests are fast.
 This is a good choice for small to medium-sized data,
 where DuckDB can provide a nice speedup but materializing the data is affordable
 at any stage.
 This is the default for \code{duckdb_tibble()} and \code{as_duckdb_tibble()}.
-\item For funneled duckplyr frames, accessing a column or requesting the number of rows
+\item For lazy duckplyr frames, accessing a column or requesting the number of rows
 triggers an error, either unconditionally, or if the result exceeds a certain size.
 This is a good choice for large data sets where the cost of materializing the data
 may be prohibitive due to size or computation time,
@@ -87,28 +87,28 @@ The default for the ingestion functions like \code{\link[=read_parquet_duckdb]{r
 is to limit the result size to one million cells (values in the resulting data frame).
 }
 
-Funneled duckplyr frames behave like \href{https://dtplyr.tidyverse.org/reference/lazy_dt.html}{\code{dtplyr}'s lazy frames},
+Lazy duckplyr frames behave like \href{https://dtplyr.tidyverse.org/reference/lazy_dt.html}{\code{dtplyr}'s lazy frames},
 or dbplyr's lazy frames:
 the computation only starts when you \strong{explicitly} request it with a "collect"
 function.
-In dtplyr and dbplyr, there are no unfunneled frames: collection always needs to be
+In dtplyr and dbplyr, there are no eager frames: collection always needs to be
 explicit.
 
-A funneled duckplyr frame can be converted to an unfunneled one with \code{as_duckdb_tibble(funnel = FALSE)}.
+A lazy duckplyr frame can be converted to an eager one with \code{as_duckdb_tibble(lazy = FALSE)}.
 The \code{\link[=collect.duckplyr_df]{collect.duckplyr_df()}} method triggers computation and converts to a plain tibble.
 Other useful methods include \code{\link[=compute_file]{compute_file()}} for storing results in a file,
 and \code{\link[=compute.duckplyr_df]{compute.duckplyr_df()}} for storing results in temporary storage on disk.
 
-Beyond safety regarding memory usage, funneled frames also allow you
+Beyond safety regarding memory usage, lazy frames also allow you
 to check that all operations are supported by DuckDB:
-for a funneled frame with \code{funnel = FALSE}, fallbacks to dplyr are not possible.
+for a lazy frame with \code{lazy = FALSE}, fallbacks to dplyr are not possible.
 As a reminder, computing via DuckDB is currently not always possible,
 see \code{vignette("limits")} for the supported operations.
 In such cases, the original dplyr implementation is used, see \link{fallback} for details.
 As the original dplyr implementation accesses columns directly,
 the data must be materialized before a fallback can be executed.
-This means that automatic fallback is only possible for "unfunneled" duckplyr frames,
-while for "funneled" duckplyr frames, one of the aforementioned collection methods must be used first.
+This means that automatic fallback is only possible for "eager" duckplyr frames,
+while for "lazy" duckplyr frames, one of the aforementioned collection methods must be used first.
 }
 
 \examples{
@@ -121,7 +121,7 @@ x \%>\%
 
 x$a
 
-y <- duckdb_tibble(a = 1, .funnel = TRUE)
+y <- duckdb_tibble(a = 1, .lazy = TRUE)
 y
 try(length(y$a))
 length(collect(y)$a)

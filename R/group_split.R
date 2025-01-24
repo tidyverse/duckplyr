@@ -16,7 +16,7 @@ group_split.duckplyr_df <- function(.tbl, ..., .keep = TRUE, keep = deprecated()
   )
 
   # dplyr forward
-  check_funneled(.tbl, duckplyr_error)
+  check_lazy(.tbl, duckplyr_error)
 
   group_split <- dplyr$group_split.data.frame
   out <- group_split(.tbl, ..., .keep = .keep)

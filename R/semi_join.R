@@ -19,7 +19,7 @@ semi_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches
   )
 
   # dplyr forward
-  check_funneled(x, duckplyr_error)
+  check_lazy(x, duckplyr_error)
 
   semi_join <- dplyr$semi_join.data.frame
   out <- semi_join(x, y, by, copy = FALSE, ..., na_matches = na_matches)

@@ -11,7 +11,7 @@ n_groups.duckplyr_df <- function(x) {
   )
 
   # dplyr forward
-  check_funneled(x, duckplyr_error)
+  check_lazy(x, duckplyr_error)
 
   n_groups <- dplyr$n_groups.data.frame
   out <- n_groups(x)
