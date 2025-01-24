@@ -22,7 +22,7 @@ Imports:
     cli,
     collections,
     DBI,
-    duckdb (>= 1.1.3-1),
+    duckdb (>= 1.1.3-2),
     glue,
     jsonlite,
     lifecycle,
@@ -58,6 +58,8 @@ Enhances:
     qs,
     reprex,
     rstudioapi
+Remotes: 
+    duckdb/duckdb-r
 Config/Needs/check: anthonynorth/roxyglobals
 Config/Needs/website: tidyverse/tidytemplate, dbplyr, Lahman, rmarkdown
 Config/testthat/edition: 3
