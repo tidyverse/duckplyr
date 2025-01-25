@@ -41,7 +41,7 @@ dplyr verbs such as \code{\link[dplyr:mutate]{dplyr::mutate()}}, \code{\link[dpl
 \code{duckdb_tibble()} works like \code{\link[tibble:tibble]{tibble::tibble()}}, returning an "unfunneled" duckplyr data frame by default.
 See the "Funneling" section below.
 
-\code{as_duckdb_tibble()} converts a data frame or a dplyr funnel table to a duckplyr data frame.
+\code{as_duckdb_tibble()} converts a data frame or a dplyr lazy table to a duckplyr data frame.
 This is a generic function that can be overridden for custom classes.
 
 \code{is_duckdb_tibble()} returns \code{TRUE} if \code{x} is a duckplyr data frame.
