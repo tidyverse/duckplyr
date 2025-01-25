@@ -215,16 +215,12 @@ Over 10M rows analyzed in about 10 seconds over the internet, that's not bad.
 Of course, working with Parquet, CSV, or JSON files downloaded locally is possible as well.
 
 
-## Funneling
+## Further reading
 
-Refer to `vignette("funnel")`.
+- `vignette("funnel")`: How duckplyr is both eager and lazy at the same time
 
+- `vignette("limits")`: Translation employed by duckplyr, and current limitations
 
-## Using duckplyr in other packages
+- `vignette("developers")`: Using duckplyr for individual data frames and in other packages
 
-Refer to `vignette("developers")`.
-
-
-## Telemetry
-
-Refer to `vignette("telemetry")`.
+- `vignette("telemetry")`: Telemetry in duckplyr
