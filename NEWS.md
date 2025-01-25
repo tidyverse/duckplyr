@@ -1,5 +1,28 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9920 (2025-01-25)
+
+## Features
+
+- Support partial funneling (#487).
+
+## Chore
+
+- Bump.
+
+- Fix remote.
+
+- Bump duckdb dependency.
+
+## Continuous integration
+
+- Run fledge before RCC.
+
+## Documentation
+
+- Make flights data workaround explicit thus less scary (@maelle, #488, #490).
+
+
 # duckplyr 0.99.99.9919 (2025-01-23)
 
 ## Chore
