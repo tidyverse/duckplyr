@@ -224,3 +224,14 @@ Of course, working with Parquet, CSV, or JSON files downloaded locally is possib
 - `vignette("developers")`: Using duckplyr for individual data frames and in other packages
 
 - `vignette("telemetry")`: Telemetry in duckplyr
+
+
+## Getting help
+
+If you encounter a clear bug, please file an issue with a minimal reproducible example on [GitHub](https://github.com/tidyverse/duckplyr/issues). For questions and other discussion, please use [forum.posit.co](https://forum.posit.co/).
+
+
+## Code of conduct
+
+Please note that this project is released with a [Contributor Code of Conduct](https://duckplyr.tidyverse.org/CODE_OF_CONDUCT).
+By participating in this project you agree to abide by its terms.
