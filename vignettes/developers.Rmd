@@ -30,13 +30,13 @@ knitr::opts_chunk$set(
 Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
 ```
 
+This vignette demonstrates how to use duckplyr selectively, for individual data frames or for other packages.
+
 ```{r attach}
 library(conflicted)
 library(dplyr)
 conflict_prefer("filter", "dplyr")
 ```
-
-This vignette demonstrates how to use duckplyr selectively, for individual data frames or for other packages.
 
 ## External data frame
 
@@ -110,7 +110,7 @@ The recipe below shows how to achieve this with the usethis package.
 - Add dplyr as a dependency with `usethis::use_package("dplyr")`
 - Add duckplyr as a dependency with `usethis::use_package("duckplyr")`
 - In your code, use a pattern like `data |> duckplyr::as_duckdb_tibble() |> dplyr::filter(...)`
-- To avoid the package prefix:
+- To avoid the package prefix and simply write `as_duckdb_tibble()` or `filter()`:
     - Import the duckplyr function with `usethis::use_import_from("duckplyr", "as_duckdb_tibble")`
     - Import the dplyr function with `usethis::use_import_from("dplyr", "filter")`
 
@@ -120,9 +120,9 @@ Learn more about usethis at <https://usethis.r-lib.org/>.
 ## Funneling
 
 The default mode for `as_duckdb_tibble()` and `duckdb_tibble()` is unfunneled.
-This means that the data frame operations are carried out by DuckDB when possible, and also available as data frames upon first request.
+This means that the dplyr operations are carried out by DuckDB when possible, and also available as data frames upon first request.
 Use `as_duckdb_tibble(funnel = TRUE)` or `duckdb_tibble(.funnel = TRUE)` to avoid materializing intermediate data and to ensure that all operations are carried out by DuckDB or fail.
-Funneling can also limit the number of rows or cells that are materialized.
+Funneling can also limit the number of rows or cells that are materialized:
 
 ```{r}
 data <- duckplyr::duckdb_tibble(x = 1:5, .funnel = c(rows = 3))
