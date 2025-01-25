@@ -11,7 +11,7 @@ group_indices.duckplyr_df <- function(.data, ...) {
   )
 
   # dplyr forward
-  check_lazy(.data, duckplyr_error)
+  check_funneled(.data, duckplyr_error)
 
   group_indices <- dplyr$group_indices.data.frame
   out <- group_indices(.data, ...)

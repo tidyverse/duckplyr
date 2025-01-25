@@ -10,7 +10,7 @@ ungroup.duckplyr_df <- function(x, ...) {
   )
 
   # dplyr forward
-  check_lazy(x, duckplyr_error)
+  check_funneled(x, duckplyr_error)
 
   ungroup <- dplyr$ungroup.data.frame
   out <- ungroup(x, ...)

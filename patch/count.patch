@@ -66,5 +66,5 @@ diff --git b/R/count.R a/R/count.R
 +  # out <- count(x_df, !!!quos, wt = {{ wt }}, sort = sort, name = name, .drop = .drop)
 +
    # dplyr forward
-   check_lazy(x, duckplyr_error)
+   check_funneled(x, duckplyr_error)
  

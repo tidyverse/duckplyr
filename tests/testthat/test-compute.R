@@ -8,15 +8,15 @@ test_that("compute()", {
   })
 
   expect_identical(out, as_duckdb_tibble(df))
-  expect_false(is_lazy_duckplyr_df(out))
+  expect_false(is_funneled_duckplyr_df(out))
 })
 
-test_that("lazying", {
+test_that("funneling", {
   set.seed(20250124)
 
-  df <- duckdb_tibble(x = 1:10, .lazy = c(rows = 5))
+  df <- duckdb_tibble(x = 1:10, .funnel = c(rows = 5))
   out <- compute(df)
 
   expect_identical(collect(out), collect(df))
-  expect_identical(get_lazy_duckplyr_df(out), c(rows = 5))
+  expect_identical(get_funnel_duckplyr_df(out), c(rows = 5))
 })

@@ -40,5 +40,5 @@ diff --git b/R/select.R a/R/select.R
  
 +
    # dplyr forward
-   check_lazy(.data, duckplyr_error)
+   check_funneled(.data, duckplyr_error)
  

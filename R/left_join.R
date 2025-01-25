@@ -26,7 +26,7 @@ left_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
   )
 
   # dplyr forward
-  check_lazy(x, duckplyr_error)
+  check_funneled(x, duckplyr_error)
 
   left_join <- dplyr$left_join.data.frame
   out <- left_join(x, y, by, copy = FALSE, suffix, ..., keep = keep, na_matches = na_matches, multiple = multiple, unmatched = unmatched, relationship = relationship)

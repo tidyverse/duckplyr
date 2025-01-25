@@ -105,7 +105,7 @@ func_decl_chr <- function(
     "{\n",
     rel_try_chr,
     "  # dplyr forward\n",
-    "  check_lazy(", arg_1, ", duckplyr_error)\n"
+    "  check_funneled(", arg_1, ", duckplyr_error)\n"
   )
 
   new_code_chr <- sub("[{]", new_code_chr_sub, new_code_chr)

@@ -21,4 +21,4 @@ diff --git b/R/union.R a/R/union.R
 +  duckplyr_error <- NULL
  
    # dplyr forward
-   check_lazy(x, duckplyr_error)
+   check_funneled(x, duckplyr_error)

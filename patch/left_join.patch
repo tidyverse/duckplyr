@@ -31,7 +31,7 @@ diff --git b/R/left_join.R a/R/left_join.R
      }
    )
 @@ -13,7 +29,7 @@ left_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
-   check_lazy(x, duckplyr_error)
+   check_funneled(x, duckplyr_error)
  
    left_join <- dplyr$left_join.data.frame
 -  out <- left_join(x, y, by, copy, suffix, ..., keep = keep, na_matches = na_matches, multiple = multiple, unmatched = unmatched, relationship = relationship)
