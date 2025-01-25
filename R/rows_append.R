@@ -10,7 +10,7 @@ rows_append.duckplyr_df <- function(x, y, ..., copy = FALSE, in_place = FALSE) {
   )
 
   # dplyr forward
-  check_lazy(x, duckplyr_error)
+  check_funneled(x, duckplyr_error)
 
   rows_append <- dplyr$rows_append.data.frame
   out <- rows_append(x, y, ..., copy = copy, in_place = in_place)

@@ -20,7 +20,7 @@ diff --git b/R/nest_join.R a/R/nest_join.R
      "No relational implementation for {.code nest_join()}" = TRUE,
 @@ -12,8 +22,13 @@ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, na
    # dplyr forward
-   check_lazy(x, duckplyr_error)
+   check_funneled(x, duckplyr_error)
  
 +  x_df <- x
 +  class(x_df) <- setdiff(class(x_df), "duckplyr_df")

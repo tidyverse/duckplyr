@@ -14,7 +14,7 @@ diff --git b/R/group_map.R a/R/group_map.R
    duckplyr_error <- rel_try(NULL,
      # Always fall back to dplyr
 @@ -14,7 +19,7 @@ group_map.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = deprecat
-   check_lazy(.data, duckplyr_error)
+   check_funneled(.data, duckplyr_error)
  
    group_map <- dplyr$group_map.data.frame
 -  out <- group_map(.data, .f, ..., .keep = .keep, keep = keep)

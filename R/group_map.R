@@ -16,7 +16,7 @@ group_map.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = deprecat
   )
 
   # dplyr forward
-  check_lazy(.data, duckplyr_error)
+  check_funneled(.data, duckplyr_error)
 
   group_map <- dplyr$group_map.data.frame
   out <- group_map(.data, .f, ..., .keep = .keep)

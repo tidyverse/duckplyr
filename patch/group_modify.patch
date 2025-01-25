@@ -14,7 +14,7 @@ diff --git b/R/group_modify.R a/R/group_modify.R
    duckplyr_error <- rel_try(NULL,
      # Always fall back to dplyr
 @@ -14,7 +19,7 @@ group_modify.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = depre
-   check_lazy(.data, duckplyr_error)
+   check_funneled(.data, duckplyr_error)
  
    group_modify <- dplyr$group_modify.data.frame
 -  out <- group_modify(.data, .f, ..., .keep = .keep, keep = keep)
