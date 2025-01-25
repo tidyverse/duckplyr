@@ -17,6 +17,43 @@ knitr::opts_chunk$set(
 Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
 ```
 
+
+
+## Funneling
+
+The default mode for `as_duckdb_tibble()` is unfunneled.
+This allows applying all data frame operations on the results, including column subsetting or retrieving the number of rows.
+In addition, if an operation cannot be carried out by duckdb, the dplyr fallback is used transparently.
+Use `funnel = TRUE` to ensure that all operations are carried out by DuckDB, or fail.
+This is also the default for the ingestion functions such as `read_parquet_duckdb()`.
+
+```{r}
+funneled <-
+  duckplyr::flights_df() |>
+  duckplyr::as_duckdb_tibble(funnel = TRUE)
+```
+
+Columns or the row count cannot be accessed directly in this mode:
+
+```{r error = TRUE}
+nrow(funneled)
+```
+
+Also, operations that are not (yet) supported will fail:
+
+```{r error = TRUE}
+funneled |>
+  mutate(inflight_delay = arr_delay - dep_delay) |>
+  summarize(
+    .by = c(year, month),
+    mean_inflight_delay = mean(inflight_delay, na.rm = TRUE),
+    median_inflight_delay = median(inflight_delay, na.rm = TRUE),
+  )
+```
+
+See `vignette("limits")` for current limitations, and the contributing guide for how to add support for additional operations.
+
+
 ## How is this different from dbplyr?
 
 The duckplyr package is a dplyr backend that uses DuckDB, a high-performance, embeddable analytical database.
