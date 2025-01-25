@@ -2,7 +2,7 @@
 title: "Telemetry"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{telemetry}
+  %\VignetteIndexEntry{80 Telemetry}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

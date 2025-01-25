@@ -2,7 +2,7 @@
 title: "Use of duckplyr in other packages"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{developers}
+  %\VignetteIndexEntry{30 Developers}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

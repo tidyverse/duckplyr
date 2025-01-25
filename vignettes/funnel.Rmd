@@ -2,7 +2,7 @@
 title: "Funneling"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{funneling}
+  %\VignetteIndexEntry{10 Funneling}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

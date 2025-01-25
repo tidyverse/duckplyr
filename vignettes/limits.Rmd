@@ -2,7 +2,7 @@
 title: "Translations"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{translations}
+  %\VignetteIndexEntry{20 Translations}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
