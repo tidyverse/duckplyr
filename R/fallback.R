@@ -300,7 +300,12 @@ fallback_config_load <- function() {
 }
 
 fallback_config_reset <- function(config, name, envvar) {
-  if (!is.na(Sys.getenv(envvar, unset = NA))) {
+  if (is.null(config[[name]])) {
+    return(config)
+  }
+
+  val <- Sys.getenv(envvar, unset = NA)
+  if (!is.na(val) && !identical(val, config[[name]])) {
     config[[name]] <- NULL
   }
   config

@@ -226,6 +226,7 @@ test_that("fallback_config()", {
   withr::local_envvar(c(
     "DUCKPLYR_FALLBACK_COLLECT" = NA_character_,
     "DUCKPLYR_FALLBACK_INFO" = NA_character_,
+    "DUCKPLYR_FALLBACK_LOGGING" = NA_character_,
     "DUCKPLYR_FALLBACK_AUTOUPLOAD" = NA_character_,
     "DUCKPLYR_FALLBACK_LOG_DIR" = NA_character_,
     "DUCKPLYR_FALLBACK_VERBOSE" = NA_character_
@@ -240,19 +241,26 @@ test_that("fallback_config()", {
   expect_snapshot_file(config_path, "fallback.dcf")
 
   expect_snapshot({
+    "No conflicts"
     fallback_config_load()
   })
 
   expect_snapshot({
+    "Reset and set config"
     fallback_config(reset_all = TRUE, logging = FALSE)
   })
   expect_snapshot_file(config_path, "fallback-2.dcf")
 
+  withr::local_envvar(c(
+    DUCKPLYR_FALLBACK_LOGGING = 1
+  ))
   expect_snapshot({
+    "Conflicts with environment variable and setting"
     fallback_config_load()
   })
 
   expect_snapshot({
+    "Reset config"
     fallback_config(reset_all = TRUE)
   })
   expect_false(file.exists(config_path))

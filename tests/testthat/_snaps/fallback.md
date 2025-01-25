@@ -226,20 +226,13 @@
 # fallback_config()
 
     Code
+      # No conflicts
       fallback_config_load()
-    Message
-      Some configuration values are set as environment variables and in the configuration file 'fallback.dcf':
-      * `info`
-      * `logging`
-      * `autoupload`
-      * `log_dir`
-      * `verbose`
-      i Use `duckplyr::fallback_config(reset_all = TRUE)` to reset the configuration.
-      i Use `usethis::edit_r_environ()` to edit '~/.Renviron'.
 
 ---
 
     Code
+      # Reset and set config
       fallback_config(reset_all = TRUE, logging = FALSE)
     Message
       i Restart the R session to reset all values to their defaults.
@@ -247,6 +240,7 @@
 ---
 
     Code
+      # Conflicts with environment variable and setting
       fallback_config_load()
     Message
       Some configuration values are set as environment variables and in the configuration file 'fallback.dcf':
@@ -257,6 +251,7 @@
 ---
 
     Code
+      # Reset config
       fallback_config(reset_all = TRUE)
     Message
       i Restart the R session to reset all values to their defaults.
