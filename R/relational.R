@@ -132,7 +132,7 @@ check_funneled <- function(x, duckplyr_error, call = caller_env()) {
       "This operation cannot be carried out by DuckDB, and the input is a lazy duckplyr frame.",
       "*" = duckplyr_error_msg,
       "i" = "Use {.code compute(lazy = FALSE)} to materialize to temporary storage and continue with {.pkg duckplyr}.",
-      "i" = 'See the "Eager and lazy" section in {.help duckdb_tibble} for other options.'
+      "i" = 'See the "Funneling" section in {.help duckdb_tibble} for other options.'
     ))
   }
 }
