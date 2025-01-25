@@ -15,6 +15,14 @@ knitr::opts_chunk$set(
 )
 
 Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
+
+options(conflicts.policy = list(warn = FALSE))
+```
+
+```{r attach}
+library(conflicted)
+library(duckplyr)
+conflict_prefer("filter", "dplyr")
 ```
 
 As a drop-in replacement for dplyr, duckplyr will use DuckDB for the operations only if it can, and fall back to dplyr otherwise.
@@ -52,7 +60,7 @@ out <-
 After logs have been collected, the upload options are displayed the next time the duckplyr package is loaded in an R session.
 
 ```{r, echo = FALSE}
-fallback_autoupload()
+duckplyr:::fallback_autoupload()
 ```
 
 The `fallback_sitrep()` function describes the current configuration and the available options.
