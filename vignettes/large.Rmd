@@ -61,7 +61,8 @@ Full compatibility means fewer surprises and less cognitive load for the user.
 With DuckDB as the backend, duckplyr can also handle large data sets that do not fit into RAM, keeping full dplyr compatibility.
 The tools for bringing data into and out of R memory are modeled after the dplyr and dbplyr packages, and are described in the following sections.
 
-See `vignette("limits")` for limitations in the translation employed by duckplyr, and `?fallback` for more information on fallback.
+See `vignette("funnel")` on eager and lazy data, `vignette("limits")` for limitations in the translation employed by duckplyr, and `?fallback` for more information on fallback.
+
 
 ## To duckplyr
 
@@ -81,19 +82,207 @@ flights_df() |>
   as_duckdb_tibble()
 ```
 
-Existing code that uses DuckDB via dbplyr can also take advantage:
+Existing code that uses DuckDB via dbplyr can also take advantage.
+The following code creates a DuckDB connection and writes a data frame to a table:
 
 ```{r}
-con <- DBI::dbConnect(duckdb::duckdb())
+path_duckdb <- tempfile(fileext = ".duckdb")
+con <- DBI::dbConnect(duckdb::duckdb(path_duckdb))
 DBI::dbWriteTable(con, "data", data.frame(x = 1:5, y = letters[1:5]))
 
 dbplyr_data <- tbl(con, "data")
 dbplyr_data
 dbplyr_data |> 
   explain()
+```
+
+The `explain()` output shows that the data is actually coming from a DuckDB table.
+The `as_duckdb_tibble()` function can then be used to seamlessly convert the data to a duckplyr frame:
+
+```{r}
 dbplyr_data |>
   as_duckdb_tibble()
 dbplyr_data |>
   as_duckdb_tibble() |> 
   explain()
 ```
+
+This only works for DuckDB connections.
+For other databases, turn the data into an R data frame or export it to a file before using `as_duckdb_tibble()`.
+
+```{r}
+DBI::dbDisconnect(con)
+```
+
+For other common cases, the `duckdb_tibble()` function fails with a helpful error message:
+
+```{r error = TRUE}
+duckdb_tibble(a = 1) |> 
+  group_by(a) |> 
+  as_duckdb_tibble()
+duckdb_tibble(a = 1) |> 
+  rowwise() |> 
+  as_duckdb_tibble()
+readr::read_csv("a\n1", show_col_types = FALSE) |>
+  as_duckdb_tibble()
+```
+
+In all cases, `as_tibble()` can be used to proceed with the existing code.
+
+## From files
+
+DuckDB supports data ingestion from CSV, Parquet, and JSON files.
+The `read_csv_duckdb()` function accepts a file path and returns a duckplyr frame.
+
+```{r}
+path_csv_1 <- tempfile(fileext = ".csv")
+writeLines("x,y\n1,a\n2,b\n3,c", path_csv_1)
+read_csv_duckdb(path_csv_1)
+```
+
+Reading multiple files is also supported:
+
+```{r}
+path_csv_2 <- tempfile(fileext = ".csv")
+writeLines("x,y\n4,d\n5,e\n6,f", path_csv_2)
+read_csv_duckdb(c(path_csv_1, path_csv_2))
+```
+
+The `options` argument can be used to control the reading.
+
+Similarly, the `read_parquet_duckdb()` and `read_json_duckdb()` functions can be used to read Parquet and JSON files, respectively.
+
+For reading from HTTPS or S3 URLs, the [httpfs extension](https://duckdb.org/docs/extensions/httpfs/overview.html) must be installed and loaded in each session.
+
+```{r}
+db_exec("INSTALL httpfs")
+db_exec("LOAD httpfs")
+```
+
+Installation is fast if the extension is already installed.
+Once loaded, the `read_csv_duckdb()`, `read_parquet_duckdb()`, and `read_json_duckdb()` functions can be used with URLs:
+
+```{r}
+url <- "https://blobs.duckdb.org/flight-data-partitioned/Year=2024/data_0.parquet"
+flights_parquet <- read_parquet_duckdb(url)
+flights_parquet
+```
+
+In all cases, the data is read lazily: only the metadata is read initially, and the data is read as required.
+This means that data can be read from files that are larger than the available RAM.
+The Parquet format is particularly efficient for this purpose, as it stores data in a columnar format and allows reading only the columns that are required.
+See `vignette("funnel")` for more details on the concept of lazy data.
+
+## From DuckDB
+
+In addition to `as_duckdb_tibble()`, arbitrary DuckDB queries can be executed and the result can be converted to a duckplyr frame.
+For this, [attach](https://duckdb.org/docs/sql/statements/attach.html) an existing DuckDB database first:
+
+```{r}
+sql_attach <- paste0(
+  "ATTACH DATABASE '", 
+  path_duckdb, 
+  "' AS external (READ_ONLY)"
+)
+db_exec(sql_attach)
+```
+
+Then, use `read_sql_duckdb()` to execute a query and return a duckplyr frame:
+
+```{r}
+read_sql_duckdb("SELECT * FROM external.data")
+```
+
+## Materialization
+
+In dbplyr, `compute()` is used to materialize a lazy table in a temporary table on the database, and `collect()` is used to bring the data into R memory.
+This interface works exactly the same in duckplyr:
+
+```{r}
+simple_data <-
+  duckdb_tibble(a = 1) |>
+  mutate(b = 2)
+
+simple_data |> 
+  explain()
+
+simple_data_computed <-
+  simple_data |> 
+  compute()
+```
+
+The `compute.duckplyr_df()` function returns a duckplyr frame that is materialized in a temporary table.
+The return value of the function is a duckplyr frame that can be used in further computations.
+The materialization is done in a temporary table, so the data is not persisted after the session ends:
+
+```{r}
+simple_data_computed |> 
+  explain()
+```
+
+The `collect()` function brings the data into R memory and returns a plain tibble:
+
+```{r}
+duckdb_tibble(a = 1) |> 
+  mutate(b = 2) |> 
+  collect()
+```
+
+## To files
+
+To materialize data in a persistent file, the `compute_csv()` and `compute_parquet()` functions can be used.
+The `compute_csv()` function writes the data to a CSV file:
+
+```{r}
+path_csv_out <- tempfile(fileext = ".csv")
+duckdb_tibble(a = 1) |>
+  mutate(b = 2) |> 
+  compute_csv(path_csv_out)
+writeLines(readLines(path_csv_out))
+```
+
+The `compute_parquet()` function writes the data to a Parquet file:
+
+```{r}
+path_parquet_out <- tempfile(fileext = ".parquet")
+duckdb_tibble(a = 1) |>
+  mutate(b = 2) |> 
+  compute_parquet(path_parquet_out) |> 
+  explain()
+```
+
+Just like with `compute.duckplyr_df()`, the return value of `compute_csv()` and `compute_parquet()` is a duckplyr frame that uses the created CSV or Parquet file and can be used in further computations.
+At the time of writing, direct JSON export is not supported.
+
+## The big picture
+
+The functions shown in this vignette allow the construction of data transformation pipelines spanning multiple data sources and data that is too large to fit into memory.
+Full compatibility with dplyr is provided, so existing code can be used with duckplyr with minimal changes.
+The lazy evaluation of duckplyr frames allows for efficient data processing, as only the required data is read from disk.
+The materialization functions allow the data to be persisted in temporary tables or files, depending on the use case.
+A typical workflow might look like this:
+
+- Prepare all data sources as duckplyr frames: local data frames and files
+- Combine the data sources using dplyr verbs
+- Preview intermediate results as usual: the computation will be faster because only the first few rows are requested
+- To avoid rerunning the whole pipeline all over, use `compute.duckplyr_df()` or `compute_parquet()` to materialize any intermediate result that is too large to fit into memory
+- Collect the final result using `collect.duckplyr_df()` or write it to a file using `compute_csv()` or `compute_parquet()`
+
+There is a caveat: due to the design of duckplyr, if a dplyr verb is not supported or uses a function that is not supported, the data will be read into memory before being processed further.
+By default, if the data pipeline starts with an ingestion function, the data will only be read into memory if it is not "too large" (currently defined as 1 million cells or values in the table):
+
+```{r error = TRUE}
+flights_parquet |> 
+  group_by(Month)
+```
+
+Because `group_by()` is not supported, the data will be attempted to read into memory before the `group_by()` operation is executed.
+Once the data is small enough to fit into memory, this works transparently.
+
+```{r}
+flights_parquet |> 
+  count(Month, DayofMonth) |> 
+  group_by(Month)
+```
+
+See `vignette("funnel")` for the concepts and mechanisms at play.
