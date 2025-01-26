@@ -337,6 +337,9 @@ locally is possible as well.
 
 ## Further reading
 
+- [`vignette("large")`](https://duckplyr.tidyverse.org/dev/articles/large.html):
+  Tools for working with large data
+
 - [`vignette("funnel")`](https://duckplyr.tidyverse.org/dev/articles/funnel.html):
   How duckplyr is both eager and lazy at the same time
 

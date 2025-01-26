@@ -337,6 +337,8 @@ Of course, working with Parquet, CSV, or JSON files downloaded locally is possib
 
 ## Further reading
 
+- `vignette("large")`: Tools for working with large data
+
 - `vignette("funnel")`: How duckplyr is both eager and lazy at the same time
 
 - `vignette("limits")`: Translation employed by duckplyr, and current limitations

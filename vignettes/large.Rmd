@@ -1,0 +1,41 @@
+---
+title: "Large data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{01 Large data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+clean_output <- function(x, options) {
+  x <- gsub("0x[0-9a-f]+", "0xdeadbeef", x)
+  x <- gsub("dataframe_[0-9]*_[0-9]*", "      dataframe_42_42      ", x)
+  x <- gsub("[0-9]*\\.___row_number ASC", "42.___row_number ASC", x)
+  x <- gsub("─", "-", x)
+  x
+}
+
+local({
+  hook_source <- knitr::knit_hooks$get("document")
+  knitr::knit_hooks$set(document = clean_output)
+})
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  eval = identical(Sys.getenv("IN_PKGDOWN"), "true") || (getRversion() >= "4.1"),
+  comment = "#>"
+)
+
+Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
+```
+
+This vignette discusses how to work with large data sets using duckplyr.
+
+```{r attach}
+library(conflicted)
+library(dplyr)
+conflict_prefer("filter", "dplyr")
+```
+
+## Introduction
