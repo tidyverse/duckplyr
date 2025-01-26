@@ -59,59 +59,108 @@ lazy materialization and funneling.
 
 For a duckplyr frame that is the result of a dplyr operation, accessing column data or retrieving the number of rows will trigger a computation that is carried out by DuckDB, not dplyr.
 In this sense, duckplyr frames are also "lazy": the computation is deferred until the last possible moment, allowing DuckDB to optimize the whole pipeline.
-This is explained in the following example that computes the mean arrival delay for warm months:
+This is explained in the following example that computes the mean arrival delay for flights departing from Newark airport (EWR) by day and month:
 
 ```{r}
+flights_df <- duckplyr::flights_df()
+
 flights_duckdb <- 
-  duckplyr::flights_df() |> 
+  flights_df |> 
   duckplyr::as_duckdb_tibble()
 
 system.time(
-  mean_arr_delay_warm <- 
+  mean_arr_delay_ewr <- 
     flights_duckdb |> 
-    filter(month >= 3, month <= 10, !is.na(arr_delay)) |> 
-    summarize(mean_arr_delay = mean(arr_delay))
+    filter(origin == "EWR", !is.na(arr_delay)) |> 
+    summarize(
+      .by = month,
+      mean_arr_delay = mean(arr_delay),
+      min_arr_delay = min(arr_delay),
+      max_arr_delay = max(arr_delay),
+      median_arr_delay = median(arr_delay),
+    )
 )
 ```
 
-Setting up the pipeline takes almost no time, as the computation is deferred.
-This allos DuckDB to optimize the whole pipeline, which can be seen in the output below:
+Setting up the pipeline is fast, the size of the data does not affect the setup costs.
+Because the computation is deferred, DuckDB can optimize the whole pipeline, which can be seen in the output below:
 
 ```{r}
-mean_arr_delay_warm |> 
+mean_arr_delay_ewr |> 
   explain()
 ```
 
-The first step is to prune the unneeded columns, only `month` and `arr_delay` are kept.
-The result becomes available when accessed, this is where most of the time is spent:
+The first step is to prune the unneeded columns, only `origin`, `month`, and `arr_delay` are kept.
+The result becomes available when accessed:
 
 ```{r}
-system.time(mean_arr_delay_warm$mean_arr_delay[[1]])
+system.time(mean_arr_delay_ewr$mean_arr_delay[[1]])
 ```
 
-This is similar to lazy tables in dbplyr and dtplyr,
-but different from dplyr where each intermediate step is computed.
+This is similar to lazy tables in dbplyr and dtplyr.
+In contrast, with dplyr, each intermediate step is computed right away:
+
+```{r}
+system.time(
+  flights_df |> 
+    filter(origin == "EWR", !is.na(arr_delay)) |> 
+    summarize(
+      .by = c(month, day),
+      mean_arr_delay = mean(arr_delay),
+      min_arr_delay = min(arr_delay),
+      max_arr_delay = max(arr_delay),
+      median_arr_delay = median(arr_delay),
+    )
+)
+```
+
+## Funneling
 
 Being both "eager" and "lazy" at the same time introduces a challenge:
 it is too easy to accidentally trigger computation,
 which may be prohibitive if an intermediate result is too large.
 This is where funneling comes in.
 
-- For unfunneled duckplyr frames, the underlying DuckDB computation is carried out
-  upon the first request.
+- For unfunneled duckplyr frames, as in the two previous examples the underlying DuckDB computation is carried out upon the first request.
   Once the results are computed, they are cached and subsequent requests are fast.
-  This is a good choice for small to medium-sized data,
-  where DuckDB can provide a nice speedup but materializing the data is affordable
-  at any stage.
+  This is a good choice for small to medium-sized data, where DuckDB can provide a nice speedup but materializing the data is affordable at any stage.
   This is the default for `duckdb_tibble()` and `as_duckdb_tibble()`.
 
-- For funneled duckplyr frames, accessing a column or requesting the number of rows
-  triggers an error, either unconditionally, or if the result exceeds a certain size.
-  This is a good choice for large data sets where the cost of materializing the data
-  may be prohibitive due to size or computation time,
-  and the user wants to control when the computation is carried out.
-  The default for the ingestion functions like [read_parquet_duckdb()]
-  is to limit the result size to one million cells (values in the resulting data frame).
+- For funneled duckplyr frames, accessing a column or requesting the number of rows   triggers an error, either unconditionally, or if the result exceeds a certain size.
+  This is a good choice for large data sets where the cost of materializing the data may be prohibitive due to size or computation time, and the user wants to control when the computation is carried out.
+  The default for the ingestion functions like `read_parquet_duckdb()` is to limit the result size to one million cells (values in the resulting data frame).
+
+```{r}
+year <- 2024
+base_url <- "https://blobs.duckdb.org/flight-data-partitioned/"
+files <- paste0("Year=", year, "/data_0.parquet")
+url <- paste0(base_url, files)
+url
+
+duckplyr::db_exec("INSTALL httpfs")
+duckplyr::db_exec("LOAD httpfs")
+
+flights_funneled <- duckplyr::read_parquet_duckdb(url)
+flights_funneled
+class(flights_funneled)
+```
+
+In this example, `flights_funneled` is a funneled duckplyr frame.
+Accessing a column or requesting the number of rows triggers an error:
+
+```{r error = TRUE}
+nrow(flights_funneled)
+```
+
+On the other hand, if the results are small enough, e.g., after an aggregation, they can be transparently used as a data frame:
+
+```{r}
+flights_count <-
+  flights_funneled |> 
+  count(Month)
+
+nrow(flights_count)
+```
 
 Funneled duckplyr frames behave like [`dtplyr`'s lazy frames](https://dtplyr.tidyverse.org/reference/lazy_dt.html),
 or dbplyr's lazy frames:
