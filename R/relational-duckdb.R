@@ -181,6 +181,14 @@ check_df_for_rel <- function(df, call = caller_env()) {
       if (!identical(df_attrib, roundtrip_attrib)) {
         cli::cli_abort("Attributes are lost during conversion. Affected column: {.var {names(df)[[i]]}}.", call = call)
       }
+      # Always check roundtrip for timestamp columns
+      # duckdb uses microsecond precision only, this is in some cases
+      # less than R does
+      if (inherits(df[[i]], "POSIXct")) {
+        if (!identical(df[[i]], roundtrip[[i]])) {
+          cli::cli_abort("Imperfect roundtrip. Affected column: {.var {names(df)[[i]]}}.", call = call)
+        }
+      }
     }
   }
 
