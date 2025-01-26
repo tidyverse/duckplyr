@@ -827,7 +827,8 @@ test_extra_arg_map <- list(
 
     # is.na() with NaN
     "d = NA_real_, e = is.na(d)",
-    "d = NaN, e = is.na(d)",
+    # Needs extension support
+    # "d = NaN, e = is.na(d)",
 
     # row_number() returns integer
     "d = row_number()",

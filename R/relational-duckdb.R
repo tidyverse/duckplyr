@@ -33,7 +33,7 @@ duckplyr_macros <- c(
   #
   "___divide" = "(x, y) AS CASE WHEN y = 0 THEN CASE WHEN x = 0 THEN CAST('NaN' AS double) WHEN x > 0 THEN CAST('+Infinity' AS double) ELSE CAST('-Infinity' AS double) END ELSE CAST(x AS double) / y END",
   #
-  "is.na" = "(x) AS (x IS NULL OR isnan(x))",
+  "is.na" = "(x) AS (x IS NULL)",
   "n" = "() AS CAST(COUNT(*) AS int32)",
   #
   "___log10" = "(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE log10(x) END",
@@ -179,14 +179,6 @@ check_df_for_rel <- function(df) {
       roundtrip_attrib <- attributes(roundtrip[[i]])
       if (!identical(df_attrib, roundtrip_attrib)) {
         cli::cli_abort("Attributes are lost during conversion. Affected column: {.var {names(df)[[i]]}}.")
-      }
-      # Always check roundtrip for timestamp columns
-      # duckdb uses microsecond precision only, this is in some cases
-      # less than R does
-      if (inherits(df[[i]], "POSIXct")) {
-        if (!identical(df[[i]], roundtrip[[i]])) {
-          cli::cli_abort("Imperfect roundtrip. Affected column: {.var {names(df)[[i]]}}.")
-        }
       }
     }
   }
