@@ -24,6 +24,6 @@
     Condition
       Error in `as_duckdb_tibble()`:
       ! The input is data read by readr, and duckplyr supports reading CSV files directly.
-      i Use `read_csv_duckdb()` to use the built-in reader.
+      i Use `read_csv_duckdb()` to read with the built-in reader.
       i To proceed with the data as read by readr, use `as_tibble()` before `as_duckdb_tibble()`.
 
