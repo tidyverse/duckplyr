@@ -247,8 +247,6 @@ test_that("as_duckplyr_df_impl() and compute()", {
 
 
 test_that("as_duckplyr_df_impl() and compute()", {
-  withr::local_envvar(DUCKPLYR_FORCE = TRUE)
-
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -681,8 +679,6 @@ test_that("as_duckplyr_df_impl() and full_join(join_by(a))", {
 })
 
 test_that("as_duckplyr_df_impl() and group_by()", {
-  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
-
   skip("Grouped")
 
   # Data
