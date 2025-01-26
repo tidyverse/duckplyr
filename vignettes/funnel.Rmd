@@ -306,17 +306,3 @@ funneled |>
 ```
 
 See `vignette("limits")` for current limitations, and the contributing guide for how to add support for additional operations.
-
-
-## How is this different from dbplyr?
-
-The duckplyr package is a dplyr backend that uses DuckDB, a high-performance, embeddable analytical database.
-It is designed to be a fully compatible drop-in replacement for dplyr, with *exactly* the same syntax and semantics:
-
-- Input and output are data frames or tibbles.
-- All dplyr verbs are supported, with fallback.
-- All R data types and functions are supported, with fallback.
-- No SQL is generated.
-
-The dbplyr package is a dplyr backend that connects to SQL databases, and is designed to work with various databases that support SQL, including DuckDB.
-Data must be copied into and collected from the database, and the syntax and semantics are similar but not identical to plain dplyr.
