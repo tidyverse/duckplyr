@@ -237,7 +237,7 @@ as_duckdb_tibble.spec_tbl_df <- function(x, ...) {
 
   cli::cli_abort(c(
     "The input is data read by {.pkg readr}, and {.pkg duckplyr} supports reading CSV files directly.",
-    i = "Use {.code read_csv_duckdb()} to use the built-in reader.",
+    i = "Use {.code read_csv_duckdb()} to read with the built-in reader.",
     i = "To proceed with the data as read by {.pkg readr}, use {.code as_tibble()} before {.code as_duckdb_tibble()}."
   ))
 }
