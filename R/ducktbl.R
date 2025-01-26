@@ -118,11 +118,22 @@ as_duckdb_tibble <- function(x, ..., funnel = FALSE) {
     UseMethod("as_duckdb_tibble")
   }
 
+  funnel_parsed <- funnel_parse(funnel)
   out <- as_duckdb_tibble(x, ...)
-  funnel_duckdb_tibble(out, funnel)
+
+  if (funnel_parsed$funnel) {
+    as_funneled_duckplyr_df(
+      out,
+      funnel_parsed$allow_materialization,
+      funnel_parsed$n_rows,
+      funnel_parsed$n_cells
+    )
+  } else {
+    as_unfunneled_duckplyr_df(out)
+  }
 }
 
-funnel_duckdb_tibble <- function(x, funnel, call = caller_env()) {
+funnel_parse <- function(funnel, call = caller_env()) {
   n_rows <- Inf
   n_cells <- Inf
 
@@ -155,11 +166,12 @@ funnel_duckdb_tibble <- function(x, funnel, call = caller_env()) {
     allow_materialization <- !isTRUE(funnel)
   }
 
-  if (funnel) {
-    as_funneled_duckplyr_df(x, allow_materialization, n_rows, n_cells)
-  } else {
-    as_unfunneled_duckplyr_df(x)
-  }
+  list(
+    funnel = funnel,
+    allow_materialization = allow_materialization,
+    n_rows = n_rows,
+    n_cells = n_cells
+  )
 }
 
 #' @export

@@ -61,8 +61,14 @@ remove_funneled_duckplyr_df_class <- function(x) {
 }
 
 duckplyr_reconstruct <- function(rel, template) {
-  lazy <- inherits(template, "funneled_duckplyr_df")
-  out <- rel_to_df(rel, allow_materialization = !lazy)
+  funnel <- get_funnel_duckplyr_df(template)
+  funnel_parsed <- funnel_parse(funnel)
+  out <- rel_to_df(
+    rel,
+    allow_materialization = funnel_parsed$allow_materialization,
+    n_rows = funnel_parsed$n_rows,
+    n_cells = funnel_parsed$n_cells
+  )
   dplyr_reconstruct(out, template)
 }
 
