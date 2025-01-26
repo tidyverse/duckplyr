@@ -150,7 +150,7 @@ duckfun <- function(table_function, args, ..., funnel) {
 
   # Start with funnel, to avoid unwanted materialization
   df <- duckdb$rel_to_altrep(rel, allow_materialization = FALSE)
-  out <- new_duckdb_tibble(df, funnel = c(cells = 1e6))
+  out <- new_duckdb_tibble(df, funnel = TRUE)
 
   if (!isTRUE(funnel)) {
     out <- as_duckdb_tibble(out, funnel = funnel)
