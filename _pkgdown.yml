@@ -12,6 +12,7 @@ articles:
 - title: Articles
   desc: ~
   contents:
+  - large
   - funnel
   - limits
   - developers
