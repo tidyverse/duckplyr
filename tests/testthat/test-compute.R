@@ -11,7 +11,7 @@ test_that("compute()", {
   expect_false(is_funneled_duckplyr_df(out))
 })
 
-test_that("funneling", {
+test_that("funneling with failure", {
   set.seed(20250124)
 
   df <- duckdb_tibble(x = 1:10, .funnel = c(rows = 5))
@@ -19,4 +19,18 @@ test_that("funneling", {
 
   expect_identical(collect(out), collect(df))
   expect_identical(get_funnel_duckplyr_df(out), c(rows = 5))
+
+  expect_error(nrow(out))
+})
+
+test_that("funneling with success", {
+  set.seed(20250126)
+
+  df <- duckdb_tibble(x = 1:10, .funnel = c(rows = 20))
+  out <- compute(df)
+
+  expect_identical(collect(out), collect(df))
+  expect_identical(get_funnel_duckplyr_df(out), c(rows = 20))
+
+  expect_error(nrow(out), NA)
 })
