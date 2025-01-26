@@ -141,13 +141,13 @@ This is where funneling comes in.
 
 ### Concept
 
-- For unfunneled duckplyr frames, as in the two previous examples the underlying DuckDB computation is carried out upon the first request.
-  Once the results are computed, they are cached and subsequent requests are fast.
-  This is a good choice for small to medium-sized data, where DuckDB can provide a nice speedup but materializing the data is affordable at any stage.
-  This is the default for `duckdb_tibble()` and `as_duckdb_tibble()`.
+For unfunneled duckplyr frames, as in the two previous examples the underlying DuckDB computation is carried out upon the first request.
+Once the results are computed, they are cached and subsequent requests are fast.
+This is a good choice for small to medium-sized data, where DuckDB can provide a nice speedup but materializing the data is affordable at any stage.
+This is the default for `duckdb_tibble()` and `as_duckdb_tibble()`.
 
-- For funneled duckplyr frames, accessing a column or requesting the number of rows triggers an error.
-  This is a good choice for large data sets where the cost of materializing the data may be prohibitive due to size or computation time, and the user wants to control when the computation is carried out.
+For funneled duckplyr frames, accessing a column or requesting the number of rows triggers an error.
+This is a good choice for large data sets where the cost of materializing the data may be prohibitive due to size or computation time, and the user wants to control when the computation is carried out.
 
 
 ### Example
