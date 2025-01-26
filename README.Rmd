@@ -14,6 +14,7 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 
+Sys.setenv(DUCKPLYR_META_ENBALE = FALSE)
 pkgload::load_all()
 
 set.seed(20230702)
@@ -43,8 +44,6 @@ local({
   hook_source <- knitr::knit_hooks$get("document")
   knitr::knit_hooks$set(document = clean_output)
 })
-
-Sys.setenv(DUCKPLYR_META_SKIP = TRUE)
 ```
 
 # duckplyr <a href="https://duckplyr.tidyverse.org"><img src="man/figures/logo.png" align="right" height="138" /></a>

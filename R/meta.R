@@ -1,3 +1,6 @@
+# In addition, the whole file is excluded via .Rbuildignore
+if (Sys.getenv("DUCKPLYR_META_ENABLE") != "TRUE") {
+
 call_stack <- collections::stack()
 pre_code_cache <- collections::queue()
 code_cache <- collections::queue()
@@ -204,10 +207,6 @@ meta_df_register <- function(df) {
 }
 
 meta_rel_register_df <- function(rel, df) {
-  if (Sys.getenv("DUCKPLYR_META_SKIP") == "TRUE") {
-    return(invisible())
-  }
-
   df_name <- meta_df_register(df)
   # Expect experimental argument from outside
   rel_expr <- expr(duckdb$rel_from_df(con, !!df_name, experimental = experimental))
@@ -215,10 +214,6 @@ meta_rel_register_df <- function(rel, df) {
 }
 
 meta_rel_register_file <- function(rel, table_function, path, options) {
-  if (Sys.getenv("DUCKPLYR_META_SKIP") == "TRUE") {
-    return(invisible())
-  }
-
   rel_expr <- expr(
     duckdb$rel_from_table_function(con, !!table_function, list(!!path), list(!!!options))
   )
@@ -226,10 +221,6 @@ meta_rel_register_file <- function(rel, table_function, path, options) {
 }
 
 meta_rel_register <- function(rel, rel_expr) {
-  if (Sys.getenv("DUCKPLYR_META_SKIP") == "TRUE") {
-    return(invisible())
-  }
-
   force(rel_expr)
 
   count <- rel_cache$size()
@@ -279,4 +270,6 @@ new_prom_fun <- function(code) {
     }
     out
   }
+}
+
 }

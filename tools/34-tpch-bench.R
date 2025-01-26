@@ -1,8 +1,8 @@
+Sys.setenv(DUCKPLYR_META_ENABLE = FALSE)
 pkgload::load_all()
 
 Sys.setenv(DUCKPLYR_FORCE = TRUE)
 Sys.setenv(DUCKPLYR_EXPERIMENTAL = FALSE)
-Sys.setenv(DUCKPLYR_META_SKIP = TRUE)
 
 # Sys.setenv(DUCKPLYR_OUTPUT_ORDER = TRUE)
 
