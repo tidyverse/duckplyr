@@ -65,15 +65,17 @@ test_that("as_duckdb_tibble() and dbplyr tables", {
 
   duck <- db_tbl %>%
     as_duckdb_tibble(funnel = TRUE) %>%
-    mutate(b = 2) %>%
-    collect()
+    mutate(b = 2)
+
+  expect_error(length(duck$b))
 
   db <- db_tbl %>%
     mutate(b = 2) %>%
-    as_duckdb_tibble() %>%
-    collect()
+    as_duckdb_tibble(funnel = TRUE)
 
-  expect_identical(duck, db)
+  expect_error(length(db$b))
+
+  expect_identical(collect(duck), collect(db))
 })
 
 test_that("is_duckdb_tibble()", {

@@ -32,6 +32,12 @@ read_sql_duckdb <- function(sql, ..., funnel = c(cells = 1e6), con = NULL) {
 
   meta_rel_register(rel, expr(duckdb$rel_from_sql(con, !!sql)))
 
-  out <- duckdb$rel_to_altrep(rel)
-  as_duckdb_tibble(out, funnel = funnel)
+  df <- duckdb$rel_to_altrep(rel, allow_materialization = FALSE)
+  out <- new_duckdb_tibble(df, funnel = TRUE)
+
+  if (!isTRUE(funnel)) {
+    out <- as_duckdb_tibble(out, funnel = funnel)
+  }
+
+  out
 }

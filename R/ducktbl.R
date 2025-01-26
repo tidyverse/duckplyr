@@ -181,7 +181,7 @@ as_duckdb_tibble.tbl_duckdb_connection <- function(x, ...) {
   con <- dbplyr::remote_con(x)
   sql <- dbplyr::remote_query(x)
 
-  read_sql_duckdb(sql, funnel = FALSE, con = con)
+  read_sql_duckdb(sql, funnel = TRUE, con = con)
 }
 
 #' @export
@@ -194,10 +194,12 @@ as_duckdb_tibble.duckplyr_df <- function(x, ...) {
 as_duckdb_tibble.data.frame <- function(x, ...) {
   check_dots_empty()
 
-  tbl <- as_tibble(x)
+  # - Avoid as_tibble() here, we don't want to materialize
+  if (is.null(duckdb$rel_from_altrep_df(x, strict = FALSE, allow_materialized = FALSE))) {
+    x <- as_tibble(x)
+  }
 
-  # - as_tibble() to remove row names
-  new_duckdb_tibble(tbl)
+  new_duckdb_tibble(x)
 }
 
 #' @export
