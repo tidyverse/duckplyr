@@ -1,5 +1,20 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9921 (2025-01-26)
+
+## Bug fixes
+
+- Remove startup message after second `load_all()` (#480, #492).
+
+## Chore
+
+- Install duckdb from CRAN (#495).
+
+## Documentation
+
+- Introduce concept of funneling alongside eagerness and lazyness (#473, #496).
+
+
 # duckplyr 0.99.99.9920 (2025-01-25)
 
 ## Features
