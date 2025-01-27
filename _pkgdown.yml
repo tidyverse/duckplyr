@@ -10,13 +10,17 @@ template:
 
 articles:
 - title: Articles
-  desc: ~
+  navbar: ~
   contents:
   - large
   - funnel
   - limits
   - developers
   - telemetry
+
+- title: internal
+  contents:
+  - extend
 
 reference:
 - title: Using duckplyr
