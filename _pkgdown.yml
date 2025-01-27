@@ -8,6 +8,20 @@ template:
     in_header: |
       <script defer data-domain="duckplyr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
 
+articles:
+- title: Articles
+  navbar: ~
+  contents:
+  - large
+  - funnel
+  - limits
+  - developers
+  - telemetry
+
+- title: internal
+  contents:
+  - extend
+
 reference:
 - title: Using duckplyr
   contents:

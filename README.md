@@ -67,7 +67,7 @@ The following code aggregates the inflight delay by year and month for
 the first half of the year. We use a variant of the
 `nycflights13::flights` dataset, where the timezone has been set to UTC
 to work around a current limitation of duckplyr, see
-`vignette("limits.html")`.
+[`vignette("limits.html")`](https://duckplyr.tidyverse.org/dev/articles/limits.html.html).
 
 ``` r
 flights_df()
@@ -114,7 +114,7 @@ starts the computation:
 
 ``` r
 out$month
-#> [1] 2 4 5 1 3 6
+#> [1] 4 1 3 6 2 5
 ```
 
 Note that, unlike dplyr, the results are not ordered, see `?config` for
@@ -125,12 +125,12 @@ out
 #> # A tibble: 6 × 4
 #>    year month mean_inflight_delay median_inflight_delay
 #>   <int> <int>               <dbl>                 <dbl>
-#> 1  2013     2               -5.15                    -6
-#> 2  2013     4               -2.67                    -5
-#> 3  2013     5               -9.37                   -10
-#> 4  2013     1               -3.86                    -5
-#> 5  2013     3               -7.36                    -9
-#> 6  2013     6               -4.24                    -7
+#> 1  2013     4               -2.67                    -5
+#> 2  2013     1               -3.86                    -5
+#> 3  2013     3               -7.36                    -9
+#> 4  2013     6               -4.24                    -7
+#> 5  2013     2               -5.15                    -6
+#> 6  2013     5               -9.37                   -10
 ```
 
 Restart R, or call `duckplyr::methods_restore()` to revert to the
@@ -168,11 +168,11 @@ flights <- read_parquet_duckdb(urls)
 ```
 
 Unlike with local data frames, the default is to disallow automatic
-materialization of the results on access.
+materialization if the result is too large.
 
 ``` r
 nrow(flights)
-#> Error: Materialization is disabled, use collect() or as_tibble() to materialize.
+#> Error: Materialization would result in 9091 rows, which exceeds the limit of 9090. Use collect() or as_tibble() to materialize.
 ```
 
 Queries on the remote data are executed lazily, and the results are not
@@ -335,77 +335,33 @@ Over 10M rows analyzed in about 10 seconds over the internet, that’s not
 bad. Of course, working with Parquet, CSV, or JSON files downloaded
 locally is possible as well.
 
-## Using duckplyr in other packages
+## Further reading
 
-Refer to `vignette("developers", package = "duckplyr")`.
+- [`vignette("large")`](https://duckplyr.tidyverse.org/dev/articles/large.html):
+  Tools for working with large data
 
-## Telemetry
+- [`vignette("funnel")`](https://duckplyr.tidyverse.org/dev/articles/funnel.html):
+  How duckplyr is both eager and lazy at the same time
 
-As a drop-in replacement for dplyr, duckplyr will use DuckDB for the
-operations only if it can, and fall back to dplyr otherwise. A fallback
-will not change the correctness of the results, but it may be slower or
-consume more memory. We would like to guide our efforts towards
-improving duckplyr, focusing on the features with the most impact. To
-this end, duckplyr collects and uploads telemetry data about fallback
-situations, but only if permitted by the user:
+- [`vignette("limits")`](https://duckplyr.tidyverse.org/dev/articles/limits.html):
+  Translation employed by duckplyr, and current limitations
 
-- Collection is on by default, but can be turned off.
-- Uploads are done upon request only.
-- There is an option to automatically upload when the package is loaded,
-  this is also opt-in.
+- [`vignette("developers")`](https://duckplyr.tidyverse.org/dev/articles/developers.html):
+  Using duckplyr for individual data frames and in other packages
 
-The data collected contains:
+- [`vignette("telemetry")`](https://duckplyr.tidyverse.org/dev/articles/telemetry.html):
+  Telemetry in duckplyr
 
-- The package version
-- The error message
-- The operation being performed, and the arguments
-  - For the input data frames, only the structure is included (column
-    types only), no column names or data
+## Getting help
 
-Fallback is silent by default, but can be made verbose.
+If you encounter a clear bug, please file an issue with a minimal
+reproducible example on
+[GitHub](https://github.com/tidyverse/duckplyr/issues). For questions
+and other discussion, please use
+[forum.posit.co](https://forum.posit.co/).
 
-``` r
-Sys.setenv(DUCKPLYR_FALLBACK_INFO = TRUE)
-out <-
-  nycflights13::flights %>%
-  duckplyr::as_duckdb_tibble() %>%
-  mutate(inflight_delay = arr_delay - dep_delay)
-#> Error processing duckplyr query with DuckDB, falling back to dplyr.
-#> Caused by error in `check_df_for_rel()` at duckplyr/R/relational-duckdb.R:108:3:
-#> ! Attributes are lost during conversion. Affected column: `time_hour`.
-```
+## Code of conduct
 
-After logs have been collected, the upload options are displayed the
-next time the duckplyr package is loaded in an R session.
-
-    #> The duckplyr package is configured to fall back to dplyr when it encounters an
-    #> incompatibility. Fallback events can be collected and uploaded for analysis to
-    #> guide future development. By default, data will be collected but no data will
-    #> be uploaded.
-    #> ℹ Automatic fallback uploading is not controlled and therefore disabled, see
-    #>   `?duckplyr::fallback()`.
-    #> ✔ Number of reports ready for upload: 1.
-    #> → Review with `duckplyr::fallback_review()`, upload with
-    #>   `duckplyr::fallback_upload()`.
-    #> ℹ Configure automatic uploading with `duckplyr::fallback_config()`.
-
-The `fallback_sitrep()` function describes the current configuration and
-the available options.
-
-## How is this different from dbplyr?
-
-The duckplyr package is a dplyr backend that uses DuckDB, a
-high-performance, embeddable analytical database. It is designed to be a
-fully compatible drop-in replacement for dplyr, with *exactly* the same
-syntax and semantics:
-
-- Input and output are data frames or tibbles.
-- All dplyr verbs are supported, with fallback.
-- All R data types and functions are supported, with fallback.
-- No SQL is generated.
-
-The dbplyr package is a dplyr backend that connects to SQL databases,
-and is designed to work with various databases that support SQL,
-including DuckDB. Data must be copied into and collected from the
-database, and the syntax and semantics are similar but not identical to
-plain dplyr.
+Please note that this project is released with a [Contributor Code of
+Conduct](https://duckplyr.tidyverse.org/CODE_OF_CONDUCT). By
+participating in this project you agree to abide by its terms.

@@ -112,7 +112,7 @@ Querying the number of rows, or a column, starts the computation:
 
 ``` r
 out$month
-#> [1] 2 4 5 1 3 6
+#> [1] 4 1 3 6 2 5
 ```
 
 Note that, unlike dplyr, the results are not ordered, see `?config` for details.
@@ -124,12 +124,12 @@ out
 #> [38;5;246m# A tibble: 6 × 4[39m
 #>    [1myear[22m [1mmonth[22m [1mmean_inflight_delay[22m [1mmedian_inflight_delay[22m
 #>   [3m[38;5;246m<int>[39m[23m [3m[38;5;246m<int>[39m[23m               [3m[38;5;246m<dbl>[39m[23m                 [3m[38;5;246m<dbl>[39m[23m
-#> [38;5;250m1[39m  [4m2[24m013     2               -[31m5[39m[31m.[39m[31m15[39m                    -[31m6[39m
-#> [38;5;250m2[39m  [4m2[24m013     4               -[31m2[39m[31m.[39m[31m67[39m                    -[31m5[39m
-#> [38;5;250m3[39m  [4m2[24m013     5               -[31m9[39m[31m.[39m[31m37[39m                   -[31m10[39m
-#> [38;5;250m4[39m  [4m2[24m013     1               -[31m3[39m[31m.[39m[31m86[39m                    -[31m5[39m
-#> [38;5;250m5[39m  [4m2[24m013     3               -[31m7[39m[31m.[39m[31m36[39m                    -[31m9[39m
-#> [38;5;250m6[39m  [4m2[24m013     6               -[31m4[39m[31m.[39m[31m24[39m                    -[31m7[39m
+#> [38;5;250m1[39m  [4m2[24m013     4               -[31m2[39m[31m.[39m[31m67[39m                    -[31m5[39m
+#> [38;5;250m2[39m  [4m2[24m013     1               -[31m3[39m[31m.[39m[31m86[39m                    -[31m5[39m
+#> [38;5;250m3[39m  [4m2[24m013     3               -[31m7[39m[31m.[39m[31m36[39m                    -[31m9[39m
+#> [38;5;250m4[39m  [4m2[24m013     6               -[31m4[39m[31m.[39m[31m24[39m                    -[31m7[39m
+#> [38;5;250m5[39m  [4m2[24m013     2               -[31m5[39m[31m.[39m[31m15[39m                    -[31m6[39m
+#> [38;5;250m6[39m  [4m2[24m013     5               -[31m9[39m[31m.[39m[31m37[39m                   -[31m10[39m
 ```
 
 Restart R, or call `duckplyr::methods_restore()` to revert to the default dplyr implementation.
@@ -166,12 +166,12 @@ db_exec("LOAD httpfs")
 flights <- read_parquet_duckdb(urls)
 ```
 
-Unlike with local data frames, the default is to disallow automatic materialization of the results on access.
+Unlike with local data frames, the default is to disallow automatic materialization if the result is too large.
 
 
 ``` r
 nrow(flights)
-#> Error: Materialization is disabled, use collect() or as_tibble() to materialize.
+#> Error: Materialization would result in 9091 rows, which exceeds the limit of 9090. Use collect() or as_tibble() to materialize.
 ```
 
 Queries on the remote data are executed lazily, and the results are not materialized until explicitly requested.
@@ -335,72 +335,25 @@ Over 10M rows analyzed in about 10 seconds over the internet, that's not bad.
 Of course, working with Parquet, CSV, or JSON files downloaded locally is possible as well.
 
 
-## Using duckplyr in other packages
+## Further reading
 
-Refer to `vignette("developers", package = "duckplyr")`.
+- `vignette("large")`: Tools for working with large data
 
-## Telemetry
+- `vignette("funnel")`: How duckplyr is both eager and lazy at the same time
 
-As a drop-in replacement for dplyr, duckplyr will use DuckDB for the operations only if it can, and fall back to dplyr otherwise.
-A fallback will not change the correctness of the results, but it may be slower or consume more memory.
-We would like to guide our efforts towards improving duckplyr, focusing on the features with the most impact.
-To this end, duckplyr collects and uploads telemetry data about fallback situations, but only if permitted by the user:
+- `vignette("limits")`: Translation employed by duckplyr, and current limitations
 
-- Collection is on by default, but can be turned off.
-- Uploads are done upon request only.
-- There is an option to automatically upload when the package is loaded, this is also opt-in.
+- `vignette("developers")`: Using duckplyr for individual data frames and in other packages
 
-The data collected contains:
-
-- The package version
-- The error message
-- The operation being performed, and the arguments
-    - For the input data frames, only the structure is included (column types only), no column names or data
+- `vignette("telemetry")`: Telemetry in duckplyr
 
 
+## Getting help
 
-Fallback is silent by default, but can be made verbose.
-
-
-``` r
-Sys.setenv(DUCKPLYR_FALLBACK_INFO = TRUE)
-out <-
-  nycflights13::flights %>%
-  duckplyr::as_duckdb_tibble() %>%
-  mutate(inflight_delay = arr_delay - dep_delay)
-#> Error processing duckplyr query with DuckDB, falling back to dplyr.
-#> [1mCaused by error in `check_df_for_rel()` at duckplyr/R/relational-duckdb.R:108:3:[22m
-#> [1m[22m[33m![39m Attributes are lost during conversion. Affected column: `time_hour`.
-```
-
-After logs have been collected, the upload options are displayed the next time the duckplyr package is loaded in an R session.
+If you encounter a clear bug, please file an issue with a minimal reproducible example on [GitHub](https://github.com/tidyverse/duckplyr/issues). For questions and other discussion, please use [forum.posit.co](https://forum.posit.co/).
 
 
-```
-#> [1m[22mThe [34mduckplyr[39m package is configured to fall back to [34mdplyr[39m when it encounters an
-#> incompatibility. Fallback events can be collected and uploaded for analysis to
-#> guide future development. By default, data will be collected but no data will
-#> be uploaded.
-#> [36mℹ[39m Automatic fallback uploading is not controlled and therefore disabled, see
-#>   `?duckplyr::fallback()`.
-#> [32m✔[39m Number of reports ready for upload: [1m1[22m.
-#> → Review with `duckplyr::fallback_review()`, upload with
-#>   `duckplyr::fallback_upload()`.
-#> [36mℹ[39m [90mConfigure automatic uploading with `duckplyr::fallback_config()`.[39m
-```
+## Code of conduct
 
-The `fallback_sitrep()` function describes the current configuration and the available options.
-
-
-## How is this different from dbplyr?
-
-The duckplyr package is a dplyr backend that uses DuckDB, a high-performance, embeddable analytical database.
-It is designed to be a fully compatible drop-in replacement for dplyr, with *exactly* the same syntax and semantics:
-
-- Input and output are data frames or tibbles.
-- All dplyr verbs are supported, with fallback.
-- All R data types and functions are supported, with fallback.
-- No SQL is generated.
-
-The dbplyr package is a dplyr backend that connects to SQL databases, and is designed to work with various databases that support SQL, including DuckDB.
-Data must be copied into and collected from the database, and the syntax and semantics are similar but not identical to plain dplyr.
+Please note that this project is released with a [Contributor Code of Conduct](https://duckplyr.tidyverse.org/CODE_OF_CONDUCT).
+By participating in this project you agree to abide by its terms.

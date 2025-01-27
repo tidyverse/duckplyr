@@ -1,8 +1,8 @@
 ---
-title: "Use of duckplyr in other packages"
+title: "Selective use of duckplyr"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{developers}
+  %\VignetteIndexEntry{30 Selective use of duckplyr}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -30,21 +30,23 @@ knitr::opts_chunk$set(
 Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
 ```
 
+This vignette demonstrates how to use duckplyr selectively, for individual data frames or for other packages.
+
 ```{r attach}
 library(conflicted)
 library(dplyr)
 conflict_prefer("filter", "dplyr")
 ```
 
-## Use of duckplyr for individual data frames
+## External data frame
 
-To enable duckplyr **for individual data frames instead of session wide**,
+To enable duckplyr for individual data frames instead of session-wide,
 
-- do **not** load duckplyr with `library()`.
+- do *not* load duckplyr with `library()`.
 - use `duckplyr::as_duckdb_tibble()` as the first step in your pipe, without attaching the package.
 
 ```{r}
-unfunneled <-
+lazy <-
   duckplyr::flights_df() |>
   duckplyr::as_duckdb_tibble() |>
   filter(!is.na(arr_delay), !is.na(dep_delay)) |>
@@ -60,15 +62,15 @@ unfunneled <-
 The result is a tibble, with its own class.
 
 ```{r}
-class(unfunneled)
-names(unfunneled)
+class(lazy)
+names(lazy)
 ```
 
 DuckDB is responsible for eventually carrying out the operations.
-Despite the late filter, the summary is not computed for the months in the second half of the year.
+Despite the filter coming very late in the pipeline, it is applied to the raw data.
 
 ```{r}
-unfunneled |>
+lazy |>
   explain()
 ```
 
@@ -76,166 +78,59 @@ All data frame operations are supported.
 Computation happens upon the first request.
 
 ```{r}
-unfunneled$mean_inflight_delay
+lazy$mean_inflight_delay
 ```
 
 After the computation has been carried out, the results are preserved and available immediately:
 
 ```{r}
-unfunneled
+lazy
 ```
+
+## Own data
+
+Construct duckplyr frames directly with `duckplyr::duckdb_tibble()`:
+
+```{r}
+data <- duckplyr::duckdb_tibble(
+  x = 1:10,
+  y = 5,
+  z = letters[1:10]
+)
+data
+```
+
+
+## In other packages
+
+Like other dependencies, duckplyr must be declared in the `DESCRIPTION` file and optionally imported in the `NAMESPACE` file.
+Because duckplyr does not import dplyr, it is necessary to import both packages.
+The recipe below shows how to achieve this with the usethis package.
+
+- Add dplyr as a dependency with `usethis::use_package("dplyr")`
+- Add duckplyr as a dependency with `usethis::use_package("duckplyr")`
+- In your code, use a pattern like `data |> duckplyr::as_duckdb_tibble() |> dplyr::filter(...)`
+- To avoid the package prefix and simply write `as_duckdb_tibble()` or `filter()`:
+    - Import the duckplyr function with `usethis::use_import_from("duckplyr", "as_duckdb_tibble")`
+    - Import the dplyr function with `usethis::use_import_from("dplyr", "filter")`
+
+Learn more about usethis at <https://usethis.r-lib.org/>.
+
 
 ## Funneling
 
-The default mode for `as_duckdb_tibble()` is unfunneled.
-This allows applying all data frame operations on the results, including column subsetting or retrieving the number of rows.
-In addition, if an operation cannot be carried out by duckdb, the dplyr fallback is used transparently.
-Use `funnel = TRUE` to ensure that all operations are carried out by DuckDB, or fail.
-This is also the default for the ingestion functions such as `read_parquet_duckdb()`.
+The default mode for `as_duckdb_tibble()` and `duckdb_tibble()` is unfunneled.
+This means that the dplyr operations are carried out by DuckDB when possible, and also available as data frames upon first request.
+Use `as_duckdb_tibble(funnel = TRUE)` or `duckdb_tibble(.funnel = TRUE)` to avoid materializing intermediate data and to ensure that all operations are carried out by DuckDB or fail.
+Funneling can also limit the number of rows or cells that are materialized:
 
 ```{r}
-funneled <-
-  duckplyr::flights_df() |>
-  duckplyr::as_duckdb_tibble(funnel = TRUE)
+data <- duckplyr::duckdb_tibble(x = 1:5, .funnel = c(rows = 3))
+data
 ```
-
-Columns or the row count cannot be accessed directly in this mode:
 
 ```{r error = TRUE}
-nrow(funneled)
+nrow(data)
 ```
 
-Also, operations that are not (yet) supported will fail:
-
-```{r error = TRUE}
-funneled |>
-  mutate(inflight_delay = arr_delay - dep_delay) |>
-  summarize(
-    .by = c(year, month),
-    mean_inflight_delay = mean(inflight_delay, na.rm = TRUE),
-    median_inflight_delay = median(inflight_delay, na.rm = TRUE),
-  )
-```
-
-See `vignette("limits")` for current limitations, and the contributing guide for how to add support for additional operations.
-
-## Extensibility
-
-duckplyr also defines a set of generics that provide a low-level implementer's interface for dplyr's high-level user interface.
-Other packages may then implement methods for those generics.
-
-```{r extensibility}
-library(conflicted)
-library(dplyr)
-conflict_prefer("filter", "dplyr")
-library(duckplyr)
-```
-
-
-```{r overwrite, echo = FALSE}
-methods_overwrite()
-```
-
-```{r extensibility2}
-# Create a relational to be used by examples below
-new_dfrel <- function(x) {
-  stopifnot(is.data.frame(x))
-  new_relational(list(x), class = "dfrel")
-}
-mtcars_rel <- new_dfrel(mtcars[1:5, 1:4])
-
-# Example 1: return a data.frame
-rel_to_df.dfrel <- function(rel, ...) {
-  unclass(rel)[[1]]
-}
-rel_to_df(mtcars_rel)
-
-# Example 2: A (random) filter
-rel_filter.dfrel <- function(rel, exprs, ...) {
-  df <- unclass(rel)[[1]]
-
-  # A real implementation would evaluate the predicates defined
-  # by the exprs argument
-  new_dfrel(df[sample.int(nrow(df), 3, replace = TRUE), ])
-}
-
-rel_filter(
-  mtcars_rel,
-  list(
-    relexpr_function(
-      "gt",
-      list(relexpr_reference("cyl"), relexpr_constant("6"))
-    )
-  )
-)
-
-# Example 3: A custom projection
-rel_project.dfrel <- function(rel, exprs, ...) {
-  df <- unclass(rel)[[1]]
-
-  # A real implementation would evaluate the expressions defined
-  # by the exprs argument
-  new_dfrel(df[seq_len(min(3, base::ncol(df)))])
-}
-
-rel_project(
-  mtcars_rel,
-  list(relexpr_reference("cyl"), relexpr_reference("disp"))
-)
-
-# Example 4: A custom ordering (eg, ascending by mpg)
-rel_order.dfrel <- function(rel, exprs, ...) {
-  df <- unclass(rel)[[1]]
-
-  # A real implementation would evaluate the expressions defined
-  # by the exprs argument
-  new_dfrel(df[order(df[[1]]), ])
-}
-
-rel_order(
-  mtcars_rel,
-  list(relexpr_reference("mpg"))
-)
-
-# Example 5: A custom join
-rel_join.dfrel <- function(left, right, conds, join, ...) {
-  left_df <- unclass(left)[[1]]
-  right_df <- unclass(right)[[1]]
-
-  # A real implementation would evaluate the expressions
-  # defined by the conds argument,
-  # use different join types based on the join argument,
-  # and implement the join itself instead of relaying to left_join().
-  new_dfrel(dplyr::left_join(left_df, right_df))
-}
-
-rel_join(new_dfrel(data.frame(mpg = 21)), mtcars_rel)
-
-# Example 6: Limit the maximum rows returned
-rel_limit.dfrel <- function(rel, n, ...) {
-  df <- unclass(rel)[[1]]
-
-  new_dfrel(df[seq_len(n), ])
-}
-
-rel_limit(mtcars_rel, 3)
-
-# Example 7: Suppress duplicate rows
-#  (ignoring row names)
-rel_distinct.dfrel <- function(rel, ...) {
-  df <- unclass(rel)[[1]]
-
-  new_dfrel(df[!duplicated(df), ])
-}
-
-rel_distinct(new_dfrel(mtcars[1:3, 1:4]))
-
-# Example 8: Return column names
-rel_names.dfrel <- function(rel, ...) {
-  df <- unclass(rel)[[1]]
-
-  names(df)
-}
-
-rel_names(mtcars_rel)
-```
+Learn more about funneling in `vignette("funnel")`, and about the translation employed by duckplyr in `vignette("limits")`.
