@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Use of duckplyr in other packages • duckplyr</title>
+<title>Selective use of duckplyr • duckplyr</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="48x48" href="../favicon-48x48.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <link href="../deps/Source_Code_Pro-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Use of duckplyr in other packages">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Selective use of duckplyr">
 <meta name="robots" content="noindex">
 <script defer data-domain="duckplyr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
 </head>
@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9921</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9922</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,8 +42,13 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/developers.html">Use of duckplyr in other packages</a></li>
+<li><a class="dropdown-item" href="../articles/large.html">Large data</a></li>
+    <li><a class="dropdown-item" href="../articles/funnel.html">Funneling</a></li>
     <li><a class="dropdown-item" href="../articles/limits.html">Translations</a></li>
+    <li><a class="dropdown-item" href="../articles/developers.html">Selective use of duckplyr</a></li>
+    <li><a class="dropdown-item" href="../articles/telemetry.html">Telemetry</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -65,7 +70,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Use of duckplyr in other packages</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Selective use of duckplyr</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/tidyverse/duckplyr/blob/main/vignettes/developers.Rmd" class="external-link"><code>vignettes/developers.Rmd</code></a></small>
@@ -74,6 +79,8 @@
 
     
     
+<p>This vignette demonstrates how to use duckplyr selectively, for
+individual data frames or for other packages.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://conflicted.r-lib.org/" class="external-link">conflicted</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
@@ -81,18 +88,17 @@
 <span><span class="co">#&gt; <span style="color: #555555;">[conflicted]</span> Will prefer <span style="color: #0000BB; font-weight: bold;">dplyr</span>::filter over</span></span>
 <span><span class="co">#&gt; any other package.</span></span></code></pre></div>
 <div class="section level2">
-<h2 id="use-of-duckplyr-for-individual-data-frames">Use of duckplyr for individual data frames<a class="anchor" aria-label="anchor" href="#use-of-duckplyr-for-individual-data-frames"></a>
+<h2 id="external-data-frame">External data frame<a class="anchor" aria-label="anchor" href="#external-data-frame"></a>
 </h2>
-<p>To enable duckplyr <strong>for individual data frames instead of
-session wide</strong>,</p>
+<p>To enable duckplyr for individual data frames instead of
+session-wide,</p>
 <ul>
-<li>do <strong>not</strong> load duckplyr with
-<code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code>.</li>
+<li>do <em>not</em> load duckplyr with <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code>.</li>
 <li>use <code><a href="../reference/duckdb_tibble.html">duckplyr::as_duckdb_tibble()</a></code> as the first step in
 your pipe, without attaching the package.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">unfunneled</span> <span class="op">&lt;-</span></span>
+<code class="sourceCode R"><span><span class="va">lazy</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/flights_df.html">flights_df</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">arr_delay</span><span class="op">)</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">dep_delay</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -115,16 +121,16 @@ your pipe, without attaching the package.</li>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Configure automatic uploading with `duckplyr::fallback_config()`.</span></span></span></code></pre></div>
 <p>The result is a tibble, with its own class.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">unfunneled</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">lazy</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "duckplyr_df" "tbl_df"      "tbl"         "data.frame"</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">unfunneled</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">lazy</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "year"                  "month"                </span></span>
 <span><span class="co">#&gt; [3] "mean_inflight_delay"   "median_inflight_delay"</span></span></code></pre></div>
 <p>DuckDB is responsible for eventually carrying out the operations.
-Despite the late filter, the summary is not computed for the months in
-the second half of the year.</p>
+Despite the filter coming very late in the pipeline, it is applied to
+the raw data.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">unfunneled</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="va">lazy</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ┌---------------------------┐</span></span>
 <span><span class="co">#&gt; │       HASH_GROUP_BY       │</span></span>
@@ -184,240 +190,109 @@ the second half of the year.</p>
 <p>All data frame operations are supported. Computation happens upon the
 first request.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">unfunneled</span><span class="op">$</span><span class="va">mean_inflight_delay</span></span>
-<span><span class="co">#&gt; [1] -5.147220 -7.356713 -2.673124 -4.244284 -3.855519 -9.370201</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lazy</span><span class="op">$</span><span class="va">mean_inflight_delay</span></span>
+<span><span class="co">#&gt; [1] -3.855519 -7.356713 -2.673124 -4.244284 -5.147220 -9.370201</span></span></code></pre></div>
 <p>After the computation has been carried out, the results are preserved
 and available immediately:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">unfunneled</span></span>
+<code class="sourceCode R"><span><span class="va">lazy</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 4 variables</span></span></span>
 <span><span class="co">#&gt;    year month mean_inflight_delay median_inflight_delay</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>  <span style="text-decoration: underline;">2</span>013     2               -<span style="color: #BB0000;">5.15</span>                    -<span style="color: #BB0000;">6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>  <span style="text-decoration: underline;">2</span>013     1               -<span style="color: #BB0000;">3.86</span>                    -<span style="color: #BB0000;">5</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>  <span style="text-decoration: underline;">2</span>013     3               -<span style="color: #BB0000;">7.36</span>                    -<span style="color: #BB0000;">9</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>  <span style="text-decoration: underline;">2</span>013     4               -<span style="color: #BB0000;">2.67</span>                    -<span style="color: #BB0000;">5</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>  <span style="text-decoration: underline;">2</span>013     6               -<span style="color: #BB0000;">4.24</span>                    -<span style="color: #BB0000;">7</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>  <span style="text-decoration: underline;">2</span>013     1               -<span style="color: #BB0000;">3.86</span>                    -<span style="color: #BB0000;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>  <span style="text-decoration: underline;">2</span>013     2               -<span style="color: #BB0000;">5.15</span>                    -<span style="color: #BB0000;">6</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>  <span style="text-decoration: underline;">2</span>013     5               -<span style="color: #BB0000;">9.37</span>                   -<span style="color: #BB0000;">10</span></span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="own-data">Own data<a class="anchor" aria-label="anchor" href="#own-data"></a>
+</h2>
+<p>Construct duckplyr frames directly with
+<code><a href="../reference/duckdb_tibble.html">duckplyr::duckdb_tibble()</a></code>:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,</span>
+<span>  y <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  z <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">data</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 3 variables</span></span></span>
+<span><span class="co">#&gt;        x     y z    </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     1     5 a    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>     2     5 b    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>     3     5 c    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>     4     5 d    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>     5     5 e    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>     6     5 f    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>     7     5 g    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     8     5 h    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     9     5 i    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>    10     5 j</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="in-other-packages">In other packages<a class="anchor" aria-label="anchor" href="#in-other-packages"></a>
+</h2>
+<p>Like other dependencies, duckplyr must be declared in the
+<code>DESCRIPTION</code> file and optionally imported in the
+<code>NAMESPACE</code> file. Because duckplyr does not import dplyr, it
+is necessary to import both packages. The recipe below shows how to
+achieve this with the usethis package.</p>
+<ul>
+<li>Add dplyr as a dependency with
+<code>usethis::use_package("dplyr")</code>
+</li>
+<li>Add duckplyr as a dependency with
+<code>usethis::use_package("duckplyr")</code>
+</li>
+<li>In your code, use a pattern like
+<code>data |&gt; duckplyr::as_duckdb_tibble() |&gt; dplyr::filter(...)</code>
+</li>
+<li>To avoid the package prefix and simply write
+<code><a href="../reference/duckdb_tibble.html">as_duckdb_tibble()</a></code> or <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code>:
+<ul>
+<li>Import the duckplyr function with
+<code>usethis::use_import_from("duckplyr", "as_duckdb_tibble")</code>
+</li>
+<li>Import the dplyr function with
+<code>usethis::use_import_from("dplyr", "filter")</code>
+</li>
+</ul>
+</li>
+</ul>
+<p>Learn more about usethis at <a href="https://usethis.r-lib.org/" class="external-link uri">https://usethis.r-lib.org/</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="funneling">Funneling<a class="anchor" aria-label="anchor" href="#funneling"></a>
 </h2>
-<p>The default mode for <code><a href="../reference/duckdb_tibble.html">as_duckdb_tibble()</a></code> is unfunneled.
-This allows applying all data frame operations on the results, including
-column subsetting or retrieving the number of rows. In addition, if an
-operation cannot be carried out by duckdb, the dplyr fallback is used
-transparently. Use <code>funnel = TRUE</code> to ensure that all
-operations are carried out by DuckDB, or fail. This is also the default
-for the ingestion functions such as
-<code><a href="../reference/read_file_duckdb.html">read_parquet_duckdb()</a></code>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">funneled</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/flights_df.html">flights_df</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span>funnel <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>Columns or the row count cannot be accessed directly in this
-mode:</p>
+<p>The default mode for <code><a href="../reference/duckdb_tibble.html">as_duckdb_tibble()</a></code> and
+<code><a href="../reference/duckdb_tibble.html">duckdb_tibble()</a></code> is unfunneled. This means that the dplyr
+operations are carried out by DuckDB when possible, and also available
+as data frames upon first request. Use
+<code>as_duckdb_tibble(funnel = TRUE)</code> or
+<code>duckdb_tibble(.funnel = TRUE)</code> to avoid materializing
+intermediate data and to ensure that all operations are carried out by
+DuckDB or fail. Funneling can also limit the number of rows or cells
+that are materialized:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">funneled</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: Materialization is disabled, use collect() or as_tibble() to materialize.</span></span></code></pre></div>
-<p>Also, operations that are not (yet) supported will fail:</p>
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, .funnel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>rows <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">data</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 1 variable</span></span></span>
+<span><span class="co">#&gt;       x</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>     5</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">funneled</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>inflight_delay <span class="op">=</span> <span class="va">arr_delay</span> <span class="op">-</span> <span class="va">dep_delay</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span></span>
-<span>    .by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span><span class="op">)</span>,</span>
-<span>    mean_inflight_delay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">inflight_delay</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>    median_inflight_delay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">inflight_delay</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `summarize()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> This operation cannot be carried out by DuckDB, and the input is</span></span>
-<span><span class="co">#&gt;   a lazy duckplyr frame.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `compute(lazy = FALSE)` to materialize to temporary storage and</span></span>
-<span><span class="co">#&gt;   continue with <span style="color: #0000BB;">duckplyr</span>.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> See the "Funneling" section in `?duckdb_tibble()` for other options.</span></span>
-<span><span class="co">#&gt; <span style="font-weight: bold;">Caused by error in `rel_translate_lang()` at duckplyr/R/translate.R:371:5:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't translate named argument `mean(na.rm = )`.</span></span></code></pre></div>
-<p>See <code><a href="../articles/limits.html">vignette("limits")</a></code> for current limitations, and the
-contributing guide for how to add support for additional operations.</p>
-</div>
-<div class="section level2">
-<h2 id="extensibility">Extensibility<a class="anchor" aria-label="anchor" href="#extensibility"></a>
-</h2>
-<p>duckplyr also defines a set of generics that provide a low-level
-implementer’s interface for dplyr’s high-level user interface. Other
-packages may then implement methods for those generics.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://conflicted.r-lib.org/" class="external-link">conflicted</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://conflicted.r-lib.org/reference/conflict_prefer.html" class="external-link">conflict_prefer</a></span><span class="op">(</span><span class="st">"filter"</span>, <span class="st">"dplyr"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[conflicted]</span> Removing existing preference.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[conflicted]</span> Will prefer <span style="color: #0000BB; font-weight: bold;">dplyr</span>::filter over any other package.</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://duckplyr.tidyverse.org">duckplyr</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Overwriting <span style="color: #0000BB;">dplyr</span> methods with <span style="color: #0000BB;">duckplyr</span> methods.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Turn off with `duckplyr::methods_restore()`.</span></span></code></pre></div>
-<pre><code><span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Overwriting <span style="color: #0000BB;">dplyr</span> methods with <span style="color: #0000BB;">duckplyr</span> methods.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Turn off with `duckplyr::methods_restore()`.</span></span></code></pre>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Create a relational to be used by examples below</span></span>
-<span><span class="va">new_dfrel</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">is.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="../reference/new_relational.html">new_relational</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, class <span class="op">=</span> <span class="st">"dfrel"</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="va">mtcars_rel</span> <span class="op">&lt;-</span> <span class="fu">new_dfrel</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Example 1: return a data.frame</span></span>
-<span><span class="va">rel_to_df.dfrel</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rel</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="va">rel</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="op">}</span></span>
-<span><span class="fu"><a href="../reference/new_relational.html">rel_to_df</a></span><span class="op">(</span><span class="va">mtcars_rel</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                    mpg cyl disp  hp</span></span>
-<span><span class="co">#&gt; Mazda RX4         21.0   6  160 110</span></span>
-<span><span class="co">#&gt; Mazda RX4 Wag     21.0   6  160 110</span></span>
-<span><span class="co">#&gt; Datsun 710        22.8   4  108  93</span></span>
-<span><span class="co">#&gt; Hornet 4 Drive    21.4   6  258 110</span></span>
-<span><span class="co">#&gt; Hornet Sportabout 18.7   8  360 175</span></span>
-<span></span>
-<span><span class="co"># Example 2: A (random) filter</span></span>
-<span><span class="va">rel_filter.dfrel</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rel</span>, <span class="va">exprs</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="va">rel</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span></span>
-<span>  <span class="co"># A real implementation would evaluate the predicates defined</span></span>
-<span>  <span class="co"># by the exprs argument</span></span>
-<span>  <span class="fu">new_dfrel</span><span class="op">(</span><span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample.int</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, <span class="fl">3</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="op">]</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu"><a href="../reference/new_relational.html">rel_filter</a></span><span class="op">(</span></span>
-<span>  <span class="va">mtcars_rel</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="../reference/new_relexpr.html">relexpr_function</a></span><span class="op">(</span></span>
-<span>      <span class="st">"gt"</span>,</span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/new_relexpr.html">relexpr_reference</a></span><span class="op">(</span><span class="st">"cyl"</span><span class="op">)</span>, <span class="fu"><a href="../reference/new_relexpr.html">relexpr_constant</a></span><span class="op">(</span><span class="st">"6"</span><span class="op">)</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt;                      mpg cyl disp  hp</span></span>
-<span><span class="co">#&gt; Hornet Sportabout   18.7   8  360 175</span></span>
-<span><span class="co">#&gt; Hornet 4 Drive      21.4   6  258 110</span></span>
-<span><span class="co">#&gt; Hornet Sportabout.1 18.7   8  360 175</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; attr(,"class")</span></span>
-<span><span class="co">#&gt; [1] "dfrel"      "relational"</span></span>
-<span></span>
-<span><span class="co"># Example 3: A custom projection</span></span>
-<span><span class="va">rel_project.dfrel</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rel</span>, <span class="va">exprs</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="va">rel</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span></span>
-<span>  <span class="co"># A real implementation would evaluate the expressions defined</span></span>
-<span>  <span class="co"># by the exprs argument</span></span>
-<span>  <span class="fu">new_dfrel</span><span class="op">(</span><span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu"><a href="../reference/new_relational.html">rel_project</a></span><span class="op">(</span></span>
-<span>  <span class="va">mtcars_rel</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/new_relexpr.html">relexpr_reference</a></span><span class="op">(</span><span class="st">"cyl"</span><span class="op">)</span>, <span class="fu"><a href="../reference/new_relexpr.html">relexpr_reference</a></span><span class="op">(</span><span class="st">"disp"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt;                    mpg cyl disp</span></span>
-<span><span class="co">#&gt; Mazda RX4         21.0   6  160</span></span>
-<span><span class="co">#&gt; Mazda RX4 Wag     21.0   6  160</span></span>
-<span><span class="co">#&gt; Datsun 710        22.8   4  108</span></span>
-<span><span class="co">#&gt; Hornet 4 Drive    21.4   6  258</span></span>
-<span><span class="co">#&gt; Hornet Sportabout 18.7   8  360</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; attr(,"class")</span></span>
-<span><span class="co">#&gt; [1] "dfrel"      "relational"</span></span>
-<span></span>
-<span><span class="co"># Example 4: A custom ordering (eg, ascending by mpg)</span></span>
-<span><span class="va">rel_order.dfrel</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rel</span>, <span class="va">exprs</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="va">rel</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span></span>
-<span>  <span class="co"># A real implementation would evaluate the expressions defined</span></span>
-<span>  <span class="co"># by the exprs argument</span></span>
-<span>  <span class="fu">new_dfrel</span><span class="op">(</span><span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">df</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, <span class="op">]</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu"><a href="../reference/new_relational.html">rel_order</a></span><span class="op">(</span></span>
-<span>  <span class="va">mtcars_rel</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/new_relexpr.html">relexpr_reference</a></span><span class="op">(</span><span class="st">"mpg"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt;                    mpg cyl disp  hp</span></span>
-<span><span class="co">#&gt; Hornet Sportabout 18.7   8  360 175</span></span>
-<span><span class="co">#&gt; Mazda RX4         21.0   6  160 110</span></span>
-<span><span class="co">#&gt; Mazda RX4 Wag     21.0   6  160 110</span></span>
-<span><span class="co">#&gt; Hornet 4 Drive    21.4   6  258 110</span></span>
-<span><span class="co">#&gt; Datsun 710        22.8   4  108  93</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; attr(,"class")</span></span>
-<span><span class="co">#&gt; [1] "dfrel"      "relational"</span></span>
-<span></span>
-<span><span class="co"># Example 5: A custom join</span></span>
-<span><span class="va">rel_join.dfrel</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">left</span>, <span class="va">right</span>, <span class="va">conds</span>, <span class="va">join</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">left_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="va">left</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span>  <span class="va">right_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="va">right</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span></span>
-<span>  <span class="co"># A real implementation would evaluate the expressions</span></span>
-<span>  <span class="co"># defined by the conds argument,</span></span>
-<span>  <span class="co"># use different join types based on the join argument,</span></span>
-<span>  <span class="co"># and implement the join itself instead of relaying to left_join().</span></span>
-<span>  <span class="fu">new_dfrel</span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">left_df</span>, <span class="va">right_df</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu"><a href="../reference/new_relational.html">rel_join</a></span><span class="op">(</span><span class="fu">new_dfrel</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>mpg <span class="op">=</span> <span class="fl">21</span><span class="op">)</span><span class="op">)</span>, <span class="va">mtcars_rel</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Joining with `by = join_by(mpg)`</span></span>
-<span><span class="co">#&gt; Joining with `by = join_by(mpg)`</span></span>
-<span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt;   mpg cyl disp  hp</span></span>
-<span><span class="co">#&gt; 1  21   6  160 110</span></span>
-<span><span class="co">#&gt; 2  21   6  160 110</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; attr(,"class")</span></span>
-<span><span class="co">#&gt; [1] "dfrel"      "relational"</span></span>
-<span></span>
-<span><span class="co"># Example 6: Limit the maximum rows returned</span></span>
-<span><span class="va">rel_limit.dfrel</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rel</span>, <span class="va">n</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="va">rel</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span></span>
-<span>  <span class="fu">new_dfrel</span><span class="op">(</span><span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>, <span class="op">]</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu"><a href="../reference/new_relational.html">rel_limit</a></span><span class="op">(</span><span class="va">mtcars_rel</span>, <span class="fl">3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt;                mpg cyl disp  hp</span></span>
-<span><span class="co">#&gt; Mazda RX4     21.0   6  160 110</span></span>
-<span><span class="co">#&gt; Mazda RX4 Wag 21.0   6  160 110</span></span>
-<span><span class="co">#&gt; Datsun 710    22.8   4  108  93</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; attr(,"class")</span></span>
-<span><span class="co">#&gt; [1] "dfrel"      "relational"</span></span>
-<span></span>
-<span><span class="co"># Example 7: Suppress duplicate rows</span></span>
-<span><span class="co">#  (ignoring row names)</span></span>
-<span><span class="va">rel_distinct.dfrel</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rel</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="va">rel</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span></span>
-<span>  <span class="fu">new_dfrel</span><span class="op">(</span><span class="va">df</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html" class="external-link">duplicated</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, <span class="op">]</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu"><a href="../reference/new_relational.html">rel_distinct</a></span><span class="op">(</span><span class="fu">new_dfrel</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt;             mpg cyl disp  hp</span></span>
-<span><span class="co">#&gt; Mazda RX4  21.0   6  160 110</span></span>
-<span><span class="co">#&gt; Datsun 710 22.8   4  108  93</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; attr(,"class")</span></span>
-<span><span class="co">#&gt; [1] "dfrel"      "relational"</span></span>
-<span></span>
-<span><span class="co"># Example 8: Return column names</span></span>
-<span><span class="va">rel_names.dfrel</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rel</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="va">rel</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu"><a href="../reference/new_relational.html">rel_names</a></span><span class="op">(</span><span class="va">mtcars_rel</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "mpg"  "cyl"  "disp" "hp"</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error: Materialization would result in 4 rows, which exceeds the limit of 3. Use collect() or as_tibble() to materialize.</span></span></code></pre></div>
+<p>Learn more about funneling in <code><a href="../articles/funnel.html">vignette("funnel")</a></code>, and
+about the translation employed by duckplyr in
+<code><a href="../articles/limits.html">vignette("limits")</a></code>.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

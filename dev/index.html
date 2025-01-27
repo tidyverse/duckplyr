@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9921</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9922</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,8 +45,13 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/developers.html">Use of duckplyr in other packages</a></li>
+<li><a class="dropdown-item" href="articles/large.html">Large data</a></li>
+    <li><a class="dropdown-item" href="articles/funnel.html">Funneling</a></li>
     <li><a class="dropdown-item" href="articles/limits.html">Translations</a></li>
+    <li><a class="dropdown-item" href="articles/developers.html">Selective use of duckplyr</a></li>
+    <li><a class="dropdown-item" href="articles/telemetry.html">Telemetry</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="articles/index.html">More articles...</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
@@ -139,19 +144,19 @@
 <p>Nothing has been computed yet. Querying the number of rows, or a column, starts the computation:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out</span><span class="op">$</span><span class="va">month</span></span>
-<span><span class="co">#&gt; [1] 2 4 5 1 3 6</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 4 1 3 6 2 5</span></span></code></pre></div>
 <p>Note that, unlike dplyr, the results are not ordered, see <code><a href="reference/config.html">?config</a></code> for details. However, once materialized, the results are stable:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
 <span><span class="co">#&gt;    <span style="font-weight: bold;">year</span> <span style="font-weight: bold;">month</span> <span style="font-weight: bold;">mean_inflight_delay</span> <span style="font-weight: bold;">median_inflight_delay</span></span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>  <span style="text-decoration: underline;">2</span>013     2               -<span style="color: #BB0000;">5.15</span>                    -<span style="color: #BB0000;">6</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>  <span style="text-decoration: underline;">2</span>013     4               -<span style="color: #BB0000;">2.67</span>                    -<span style="color: #BB0000;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>  <span style="text-decoration: underline;">2</span>013     5               -<span style="color: #BB0000;">9.37</span>                   -<span style="color: #BB0000;">10</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>  <span style="text-decoration: underline;">2</span>013     1               -<span style="color: #BB0000;">3.86</span>                    -<span style="color: #BB0000;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>  <span style="text-decoration: underline;">2</span>013     3               -<span style="color: #BB0000;">7.36</span>                    -<span style="color: #BB0000;">9</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>  <span style="text-decoration: underline;">2</span>013     6               -<span style="color: #BB0000;">4.24</span>                    -<span style="color: #BB0000;">7</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>  <span style="text-decoration: underline;">2</span>013     4               -<span style="color: #BB0000;">2.67</span>                    -<span style="color: #BB0000;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>  <span style="text-decoration: underline;">2</span>013     1               -<span style="color: #BB0000;">3.86</span>                    -<span style="color: #BB0000;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>  <span style="text-decoration: underline;">2</span>013     3               -<span style="color: #BB0000;">7.36</span>                    -<span style="color: #BB0000;">9</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>  <span style="text-decoration: underline;">2</span>013     6               -<span style="color: #BB0000;">4.24</span>                    -<span style="color: #BB0000;">7</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>  <span style="text-decoration: underline;">2</span>013     2               -<span style="color: #BB0000;">5.15</span>                    -<span style="color: #BB0000;">6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>  <span style="text-decoration: underline;">2</span>013     5               -<span style="color: #BB0000;">9.37</span>                   -<span style="color: #BB0000;">10</span></span></span></code></pre></div>
 <p>Restart R, or call <code><a href="reference/methods_overwrite.html">duckplyr::methods_restore()</a></code> to revert to the default dplyr implementation.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="reference/methods_overwrite.html">methods_restore</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -176,10 +181,10 @@
 <span><span class="fu"><a href="reference/db_exec.html">db_exec</a></span><span class="op">(</span><span class="st">"LOAD httpfs"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">flights</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_file_duckdb.html">read_parquet_duckdb</a></span><span class="op">(</span><span class="va">urls</span><span class="op">)</span></span></code></pre></div>
-<p>Unlike with local data frames, the default is to disallow automatic materialization of the results on access.</p>
+<p>Unlike with local data frames, the default is to disallow automatic materialization if the result is too large.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">flights</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: Materialization is disabled, use collect() or as_tibble() to materialize.</span></span></code></pre></div>
+<span><span class="co">#&gt; Error: Materialization would result in 9091 rows, which exceeds the limit of 9090. Use collect() or as_tibble() to materialize.</span></span></code></pre></div>
 <p>Queries on the remote data are executed lazily, and the results are not materialized until explicitly requested. For printing, only the first few rows of the result are fetched.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">flights</span></span>
@@ -327,63 +332,25 @@
 <p>Over 10M rows analyzed in about 10 seconds over the internet, that’s not bad. Of course, working with Parquet, CSV, or JSON files downloaded locally is possible as well.</p>
 </div>
 <div class="section level2">
-<h2 id="using-duckplyr-in-other-packages">Using duckplyr in other packages<a class="anchor" aria-label="anchor" href="#using-duckplyr-in-other-packages"></a>
+<h2 id="further-reading">Further reading<a class="anchor" aria-label="anchor" href="#further-reading"></a>
 </h2>
-<p>Refer to <code><a href="articles/developers.html">vignette("developers", package = "duckplyr")</a></code>.</p>
+<ul>
+<li><p><code><a href="articles/large.html">vignette("large")</a></code>: Tools for working with large data</p></li>
+<li><p><code><a href="articles/funnel.html">vignette("funnel")</a></code>: How duckplyr is both eager and lazy at the same time</p></li>
+<li><p><code><a href="articles/limits.html">vignette("limits")</a></code>: Translation employed by duckplyr, and current limitations</p></li>
+<li><p><code><a href="articles/developers.html">vignette("developers")</a></code>: Using duckplyr for individual data frames and in other packages</p></li>
+<li><p><code><a href="articles/telemetry.html">vignette("telemetry")</a></code>: Telemetry in duckplyr</p></li>
+</ul>
 </div>
 <div class="section level2">
-<h2 id="telemetry">Telemetry<a class="anchor" aria-label="anchor" href="#telemetry"></a>
+<h2 id="getting-help">Getting help<a class="anchor" aria-label="anchor" href="#getting-help"></a>
 </h2>
-<p>As a drop-in replacement for dplyr, duckplyr will use DuckDB for the operations only if it can, and fall back to dplyr otherwise. A fallback will not change the correctness of the results, but it may be slower or consume more memory. We would like to guide our efforts towards improving duckplyr, focusing on the features with the most impact. To this end, duckplyr collects and uploads telemetry data about fallback situations, but only if permitted by the user:</p>
-<ul>
-<li>Collection is on by default, but can be turned off.</li>
-<li>Uploads are done upon request only.</li>
-<li>There is an option to automatically upload when the package is loaded, this is also opt-in.</li>
-</ul>
-<p>The data collected contains:</p>
-<ul>
-<li>The package version</li>
-<li>The error message</li>
-<li>The operation being performed, and the arguments
-<ul>
-<li>For the input data frames, only the structure is included (column types only), no column names or data</li>
-</ul>
-</li>
-</ul>
-<p>Fallback is silent by default, but can be made verbose.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>DUCKPLYR_FALLBACK_INFO <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="va">out</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">nycflights13</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/nycflights13/man/flights.html" class="external-link">flights</a></span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>inflight_delay <span class="op">=</span> <span class="va">arr_delay</span> <span class="op">-</span> <span class="va">dep_delay</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error processing duckplyr query with DuckDB, falling back to dplyr.</span></span>
-<span><span class="co">#&gt; <span style="font-weight: bold;">Caused by error in `check_df_for_rel()` at duckplyr/R/relational-duckdb.R:108:3:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Attributes are lost during conversion. Affected column: `time_hour`.</span></span></code></pre></div>
-<p>After logs have been collected, the upload options are displayed the next time the duckplyr package is loaded in an R session.</p>
-<pre><code><span><span class="co">#&gt; The <span style="color: #0000BB;">duckplyr</span> package is configured to fall back to <span style="color: #0000BB;">dplyr</span> when it encounters an</span></span>
-<span><span class="co">#&gt; incompatibility. Fallback events can be collected and uploaded for analysis to</span></span>
-<span><span class="co">#&gt; guide future development. By default, data will be collected but no data will</span></span>
-<span><span class="co">#&gt; be uploaded.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Automatic fallback uploading is not controlled and therefore disabled, see</span></span>
-<span><span class="co">#&gt;   `?duckplyr::fallback()`.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Number of reports ready for upload: <span style="font-weight: bold;">1</span>.</span></span>
-<span><span class="co">#&gt; → Review with `duckplyr::fallback_review()`, upload with</span></span>
-<span><span class="co">#&gt;   `duckplyr::fallback_upload()`.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Configure automatic uploading with `duckplyr::fallback_config()`.</span></span></span></code></pre>
-<p>The <code><a href="reference/fallback.html">fallback_sitrep()</a></code> function describes the current configuration and the available options.</p>
+<p>If you encounter a clear bug, please file an issue with a minimal reproducible example on <a href="https://github.com/tidyverse/duckplyr/issues" class="external-link">GitHub</a>. For questions and other discussion, please use <a href="https://forum.posit.co/" class="external-link">forum.posit.co</a>.</p>
 </div>
 <div class="section level2">
-<h2 id="how-is-this-different-from-dbplyr">How is this different from dbplyr?<a class="anchor" aria-label="anchor" href="#how-is-this-different-from-dbplyr"></a>
+<h2 id="code-of-conduct">Code of conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
 </h2>
-<p>The duckplyr package is a dplyr backend that uses DuckDB, a high-performance, embeddable analytical database. It is designed to be a fully compatible drop-in replacement for dplyr, with <em>exactly</em> the same syntax and semantics:</p>
-<ul>
-<li>Input and output are data frames or tibbles.</li>
-<li>All dplyr verbs are supported, with fallback.</li>
-<li>All R data types and functions are supported, with fallback.</li>
-<li>No SQL is generated.</li>
-</ul>
-<p>The dbplyr package is a dplyr backend that connects to SQL databases, and is designed to work with various databases that support SQL, including DuckDB. Data must be copied into and collected from the database, and the syntax and semantics are similar but not identical to plain dplyr.</p>
+<p>Please note that this project is released with a <a href="https://duckplyr.tidyverse.org/CODE_OF_CONDUCT">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -407,6 +374,7 @@
 <h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CONTRIBUTING.html">Contributing guide</a></li>
+<li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
 
