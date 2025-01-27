@@ -1,5 +1,34 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9922 (2025-01-27)
+
+## Bug fixes
+
+- `as_duckdb_tibble()` for dbplyr `tbl` objects avoids materialization (#502).
+
+- Avoid forwarding `is.na()` to `is.nan()` to support non-numeric data, avoid checking roundtrip for timestamp data (#482).
+
+- Funneled data frames inherit limitation of rows and cells after an operation (#501).
+
+## Chore
+
+- Clean up `DESCRIPTION`.
+
+- The meta functionality is now enabled only if the `DUCKPLYR_META_ENABLE` environment variable is set to `TRUE` (#499).
+
+- Sync.
+
+- Adapt script.
+
+## Documentation
+
+- Tweak wording for readr error message (#503).
+
+## Performance
+
+- Prefer `vctrs::new_data_frame()` over `tibble()` for performance (#500).
+
+
 # duckplyr 0.99.99.9921 (2025-01-26)
 
 ## Bug fixes
