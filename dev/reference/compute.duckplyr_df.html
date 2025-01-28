@@ -86,9 +86,16 @@ details.</p></dd>
 
 
 <dt id="arg-funnel">funnel<a class="anchor" aria-label="anchor" href="#arg-funnel"></a></dt>
-<dd><p>Set to <code>TRUE</code> to return a funneled or <code>FALSE</code> to return an unfunneled data frame,
-see the "Funneling" section.
-The default is to inherit the funnelness of the input.</p></dd>
+<dd><p>Either a logical:</p><ul><li><p>Set to <code>TRUE</code> to return a funneled data frame.</p></li>
+<li><p>Set to <code>FALSE</code> to return an unfunneled data frame.</p></li>
+</ul><p>Or a named vector with at least one of</p><ul><li><p><code>cells</code> (numeric)</p></li>
+<li><p><code>rows</code> (numeric)</p></li>
+</ul><p>to allow materialization for data up to a certain size,
+measured in cells (values) and rows in the resulting data frame.</p>
+<p>If <code>cells</code> is specified but not <code>rows</code>, <code>rows</code> is <code>Inf</code>.
+If <code>rows</code> is specified but not <code>cells</code>, <code>cells</code> is <code>Inf</code>.</p>
+<p>The default is to inherit the funneling of the input.
+see the "Funneling" section.</p></dd>
 
 
 <dt id="arg-name">name<a class="anchor" aria-label="anchor" href="#arg-name"></a></dt>
