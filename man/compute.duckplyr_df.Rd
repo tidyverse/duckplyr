@@ -20,9 +20,26 @@ details.}
 
 \item{...}{Arguments passed on to methods}
 
-\item{funnel}{Set to \code{TRUE} to return a funneled or \code{FALSE} to return an unfunneled data frame,
-see the "Funneling" section.
-The default is to inherit the funnelness of the input.}
+\item{funnel}{Either a logical:
+\itemize{
+\item Set to \code{TRUE} to return a funneled data frame.
+\item Set to \code{FALSE} to return an unfunneled data frame.
+}
+
+Or a named vector with at least one of
+\itemize{
+\item \code{cells} (numeric)
+\item \code{rows} (numeric)
+}
+
+to allow materialization for data up to a certain size,
+measured in cells (values) and rows in the resulting data frame.
+
+If \code{cells} is specified but not \code{rows}, \code{rows} is \code{Inf}.
+If \code{rows} is specified but not \code{cells}, \code{cells} is \code{Inf}.
+
+The default is to inherit the funneling of the input.
+see the "Funneling" section.}
 
 \item{name}{The name of the table to store the result in.}
 
