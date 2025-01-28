@@ -84,7 +84,7 @@ The `duckdb_tibble()` function is a drop-in replacement for `tibble()`, and can 
 Similarly, `as_duckdb_tibble()` can be used to convert a data frame or another object to a duckplyr data frame:
 
 ```{r}
-flights_df() |> 
+flights_df() |>
   as_duckdb_tibble()
 ```
 
@@ -98,7 +98,7 @@ DBI::dbWriteTable(con, "data", data.frame(x = 1:5, y = letters[1:5]))
 
 dbplyr_data <- tbl(con, "data")
 dbplyr_data
-dbplyr_data |> 
+dbplyr_data |>
   explain()
 ```
 
@@ -109,7 +109,7 @@ The `as_duckdb_tibble()` function can then be used to seamlessly convert the dat
 dbplyr_data |>
   as_duckdb_tibble()
 dbplyr_data |>
-  as_duckdb_tibble() |> 
+  as_duckdb_tibble() |>
   explain()
 ```
 
@@ -123,11 +123,11 @@ DBI::dbDisconnect(con)
 For other common cases, the `duckdb_tibble()` function fails with a helpful error message:
 
 ```{r error = TRUE}
-duckdb_tibble(a = 1) |> 
-  group_by(a) |> 
+duckdb_tibble(a = 1) |>
+  group_by(a) |>
   as_duckdb_tibble()
-duckdb_tibble(a = 1) |> 
-  rowwise() |> 
+duckdb_tibble(a = 1) |>
+  rowwise() |>
   as_duckdb_tibble()
 readr::read_csv("a\n1", show_col_types = FALSE) |>
   as_duckdb_tibble()
@@ -186,8 +186,8 @@ For this, [attach](https://duckdb.org/docs/sql/statements/attach.html) an existi
 
 ```{r}
 sql_attach <- paste0(
-  "ATTACH DATABASE '", 
-  path_duckdb, 
+  "ATTACH DATABASE '",
+  path_duckdb,
   "' AS external (READ_ONLY)"
 )
 db_exec(sql_attach)
@@ -209,11 +209,11 @@ simple_data <-
   duckdb_tibble(a = 1) |>
   mutate(b = 2)
 
-simple_data |> 
+simple_data |>
   explain()
 
 simple_data_computed <-
-  simple_data |> 
+  simple_data |>
   compute()
 ```
 
@@ -222,15 +222,15 @@ The return value of the function is a duckplyr frame that can be used in further
 The materialization is done in a temporary table, so the data is not persisted after the session ends:
 
 ```{r}
-simple_data_computed |> 
+simple_data_computed |>
   explain()
 ```
 
 The `collect()` function brings the data into R memory and returns a plain tibble:
 
 ```{r}
-duckdb_tibble(a = 1) |> 
-  mutate(b = 2) |> 
+duckdb_tibble(a = 1) |>
+  mutate(b = 2) |>
   collect()
 ```
 
@@ -242,7 +242,7 @@ The `compute_csv()` function writes the data to a CSV file:
 ```{r}
 path_csv_out <- tempfile(fileext = ".csv")
 duckdb_tibble(a = 1) |>
-  mutate(b = 2) |> 
+  mutate(b = 2) |>
   compute_csv(path_csv_out)
 writeLines(readLines(path_csv_out))
 ```
@@ -252,8 +252,8 @@ The `compute_parquet()` function writes the data to a Parquet file:
 ```{r}
 path_parquet_out <- tempfile(fileext = ".parquet")
 duckdb_tibble(a = 1) |>
-  mutate(b = 2) |> 
-  compute_parquet(path_parquet_out) |> 
+  mutate(b = 2) |>
+  compute_parquet(path_parquet_out) |>
   explain()
 ```
 
@@ -278,7 +278,7 @@ There is a caveat: due to the design of duckplyr, if a dplyr verb is not support
 By default, if the data pipeline starts with an ingestion function, the data will only be read into memory if it is not "too large" (currently defined as 1 million cells or values in the table):
 
 ```{r error = TRUE}
-flights_parquet |> 
+flights_parquet |>
   group_by(Month)
 ```
 
@@ -286,8 +286,8 @@ Because `group_by()` is not supported, the data will be attempted to read into m
 Once the data is small enough to fit into memory, this works transparently.
 
 ```{r}
-flights_parquet |> 
-  count(Month, DayofMonth) |> 
+flights_parquet |>
+  count(Month, DayofMonth) |>
   group_by(Month)
 ```
 
