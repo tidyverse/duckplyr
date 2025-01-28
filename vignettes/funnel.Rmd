@@ -1,5 +1,5 @@
 ---
-title: "Funneling"
+title: "Memory protection: Funneling"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{10 Funneling}
