@@ -245,7 +245,7 @@ In dtplyr and dbplyr, there are no unfunneled frames: collection always needs to
 ## Partial funneling
 
 Partial funneling is a compromise between funneling and unfunneling.
-Materialization is allowed for data up to a certain size, measured in cells (values) or rows in the resulting data frame.
+Materialization is allowed for data up to a certain size, measured in cells (values) and rows in the resulting data frame.
 
 ```{r}
 nrow(flights)
