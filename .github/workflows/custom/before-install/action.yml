@@ -6,4 +6,5 @@ runs:
     - name: Define R CMD check error condition
       run: |
         echo '_R_CHECK_PKG_SIZES_=FALSE' | tee -a $GITHUB_ENV
+        echo 'DUCKPLYR_FALLBACK_AUTOUPLOAD=0' | tee -a $GITHUB_ENV
       shell: bash
