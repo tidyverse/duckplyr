@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9922</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9923</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,16 +100,6 @@ perspective, they behave like regular data frames.</p>
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">x</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; The <span style="color: #0000BB;">duckplyr</span> package is configured to fall back to <span style="color: #0000BB;">dplyr</span> when it</span></span>
-<span><span class="co">#&gt; encounters an incompatibility. Fallback events can be collected and</span></span>
-<span><span class="co">#&gt; uploaded for analysis to guide future development. By default, data will</span></span>
-<span><span class="co">#&gt; be collected but no data will be uploaded.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Automatic fallback uploading is not controlled and therefore disabled,</span></span>
-<span><span class="co">#&gt;   see `?duckplyr::fallback()`.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Number of reports ready for upload: <span style="font-weight: bold;">2</span>.</span></span>
-<span><span class="co">#&gt; → Review with `duckplyr::fallback_review()`, upload with</span></span>
-<span><span class="co">#&gt;   `duckplyr::fallback_upload()`.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Configure automatic uploading with `duckplyr::fallback_config()`.</span></span></span>
 <span><span class="va">df</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 2 variables</span></span></span>
 <span><span class="co">#&gt;       x     y</span></span>
@@ -163,7 +153,7 @@ month:</p>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.105   0.000   0.105</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.105   0.000   0.104</span></span></code></pre></div>
 <p>Setting up the pipeline is fast, the size of the data does not affect
 the setup costs. Because the computation is deferred, DuckDB can
 optimize the whole pipeline, which can be seen in the output below:</p>
@@ -284,7 +274,7 @@ opportunity for optimization:</p>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.035   0.009   0.043</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.033   0.011   0.044</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
