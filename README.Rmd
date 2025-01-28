@@ -39,7 +39,10 @@ options(
   cli.num_colors = 256,
   cli.width = 80,
   width = 80,
-  pillar.bold = TRUE
+  pillar.bold = TRUE,
+  pillar.max_title_chars = 5,
+  pillar.min_title_chars = 5,
+  pillar.max_footer_lines = 12
 )
 
 local({
