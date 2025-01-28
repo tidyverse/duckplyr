@@ -12,9 +12,9 @@ get_default_duckdb_connection <- function() {
 }
 
 reset_default_duckdb_connection <- function(e = NULL) {
-  if (is.null(e)) {
-    e <- default_duckdb_connection
-  }
+
+  e <- e %||% default_duckdb_connection
+
   DBI::dbDisconnect(e$con)
   # duckdb::duckdb_shutdown(e$con@driver)
   e$con <- NULL

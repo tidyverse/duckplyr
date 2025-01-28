@@ -259,9 +259,9 @@ is_duckdb_tibble <- function(x) {
 #' @param funnel Only adds the class, does not recreate the relation object!
 #' @noRd
 new_duckdb_tibble <- function(x, class = NULL, funnel = FALSE, error_call = caller_env()) {
-  if (is.null(class)) {
-    class <- c("tbl_df", "tbl", "data.frame")
-  }
+
+  class <- class %||% c("tbl_df", "tbl", "data.frame")
+
 
   if (!inherits(x, "duckplyr_df")) {
     if (anyNA(names(x)) || any(names(x) == "")) {

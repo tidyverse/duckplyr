@@ -29,13 +29,9 @@
 compute_parquet <- function(x, path, ..., funnel = NULL, options = NULL) {
   check_dots_empty()
 
-  if (is.null(options)) {
-    options <- list()
-  }
+  options <- options %||% list()
 
-  if (is.null(funnel)) {
-    funnel <- get_funnel_duckplyr_df(x)
-  }
+  funnel <- funnel %||% get_funnel_duckplyr_df(x)
 
   rel <- duckdb_rel_from_df(x)
 
@@ -57,13 +53,9 @@ compute_parquet <- function(x, path, ..., funnel = NULL, options = NULL) {
 compute_csv <- function(x, path, ..., funnel = NULL, options = NULL) {
   check_dots_empty()
 
-  if (is.null(options)) {
-    options <- list()
-  }
+  options <- options %||% list()
 
-  if (is.null(funnel)) {
-    funnel <- get_funnel_duckplyr_df(x)
-  }
+  funnel <- funnel %||% get_funnel_duckplyr_df(x)
 
   rel <- duckdb_rel_from_df(x)
 

@@ -55,6 +55,7 @@
 #' @importFrom dplyr vars
 #' @importFrom glue glue
 #' @importFrom lifecycle deprecated
+#' @importFrom rlang %||%
 #' @importFrom tibble as_tibble
 #' @importFrom tibble deframe
 #' @importFrom tibble is_tibble

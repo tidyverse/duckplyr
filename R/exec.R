@@ -23,9 +23,7 @@ db_exec <- function(sql, ..., con = NULL) {
     cli::cli_abort("{.arg sql} must be a string.")
   }
 
-  if (is.null(con)) {
-    con <- get_default_duckdb_connection()
-  }
+  con <- con %||% get_default_duckdb_connection()
 
   invisible(DBI::dbExecute(con, sql))
 }

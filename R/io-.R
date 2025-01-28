@@ -44,9 +44,7 @@ df_from_file <- function(path,
     path <- list(path)
   }
 
-  if (is.null(class)) {
-    class <- default_df_class()
-  }
+  class <- class %||% default_df_class()
 
   # FIXME: For some reason, it's important to create an alias here
   con <- get_default_duckdb_connection()

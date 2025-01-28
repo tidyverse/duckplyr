@@ -24,9 +24,7 @@ read_sql_duckdb <- function(sql, ..., funnel = c(cells = 1e6), con = NULL) {
   }
 
   # FIXME: For some reason, it's important to create an alias here
-  if (is.null(con)) {
-    con <- get_default_duckdb_connection()
-  }
+  con <- con %||% get_default_duckdb_connection()
 
   rel <- duckdb$rel_from_sql(con, sql)
 

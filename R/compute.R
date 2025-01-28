@@ -9,12 +9,10 @@ compute.duckplyr_df <- function(
   schema_name = NULL,
   temporary = TRUE
 ) {
-  if (is.null(funnel)) {
-    funnel <- get_funnel_duckplyr_df(x)
-  }
-  if (is.null(schema_name)) {
-    schema_name <- ""
-  }
+  funnel <- funnel %||% get_funnel_duckplyr_df(x)
+
+  schema_name <- schema_name %||% ""
+
   if (is.null(name)) {
     if (isTRUE(temporary)) {
       name <- unique_table_name()
