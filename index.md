@@ -16,6 +16,7 @@
 [dplyr](https://dplyr.tidyverse.org/) is the grammar of data manipulation in the tidyverse.
 The duckplyr package will run all of your existing dplyr code with identical results, using [DuckDB](https://duckdb.org/) where possible to compute the results faster.
 In addition, you can analyze larger-than-memory datasets straight from files on your disk or from the web.
+
 If you are new to dplyr, the best place to start is the [data transformation chapter](https://r4ds.hadley.nz/data-transform) in R for Data Science.
 
 
@@ -68,23 +69,22 @@ We use a variant of the `nycflights13::flights` dataset, where the timezone has 
 ``` r
 flights_df()
 #> [38;5;246m# A tibble: 336,776 × 19[39m
-#>     [1myear[22m [1mmonth[22m   [1mday[22m [1mdep_time[22m [1msched_de…¹[22m [1mdep_d…²[22m [1marr_t…³[22m [1msched…⁴[22m [1marr_d…⁵[22m [1mcarrier[22m
-#>    [3m[38;5;246m<int>[39m[23m [3m[38;5;246m<int>[39m[23m [3m[38;5;246m<int>[39m[23m    [3m[38;5;246m<int>[39m[23m      [3m[38;5;246m<int>[39m[23m   [3m[38;5;246m<dbl>[39m[23m   [3m[38;5;246m<int>[39m[23m   [3m[38;5;246m<int>[39m[23m   [3m[38;5;246m<dbl>[39m[23m [3m[38;5;246m<chr>[39m[23m  
-#> [38;5;250m 1[39m  [4m2[24m013     1     1      517        515       2     830     819      11 UA     
-#> [38;5;250m 2[39m  [4m2[24m013     1     1      533        529       4     850     830      20 UA     
-#> [38;5;250m 3[39m  [4m2[24m013     1     1      542        540       2     923     850      33 AA     
-#> [38;5;250m 4[39m  [4m2[24m013     1     1      544        545      -[31m1[39m    [4m1[24m004    [4m1[24m022     -[31m18[39m B6     
-#> [38;5;250m 5[39m  [4m2[24m013     1     1      554        600      -[31m6[39m     812     837     -[31m25[39m DL     
-#> [38;5;250m 6[39m  [4m2[24m013     1     1      554        558      -[31m4[39m     740     728      12 UA     
-#> [38;5;250m 7[39m  [4m2[24m013     1     1      555        600      -[31m5[39m     913     854      19 B6     
-#> [38;5;250m 8[39m  [4m2[24m013     1     1      557        600      -[31m3[39m     709     723     -[31m14[39m EV     
-#> [38;5;250m 9[39m  [4m2[24m013     1     1      557        600      -[31m3[39m     838     846      -[31m8[39m B6     
-#> [38;5;250m10[39m  [4m2[24m013     1     1      558        600      -[31m2[39m     753     745       8 AA     
+#>     [1myear[22m [1mmonth[22m   [1mday[22m [1mdep_time[22m [1msched_dep_time[22m [1mdep_delay[22m [1marr_time[22m [1msched_arr_time[22m
+#>    [3m[38;5;246m<int>[39m[23m [3m[38;5;246m<int>[39m[23m [3m[38;5;246m<int>[39m[23m    [3m[38;5;246m<int>[39m[23m          [3m[38;5;246m<int>[39m[23m     [3m[38;5;246m<dbl>[39m[23m    [3m[38;5;246m<int>[39m[23m          [3m[38;5;246m<int>[39m[23m
+#> [38;5;250m 1[39m  [4m2[24m013     1     1      517            515         2      830            819
+#> [38;5;250m 2[39m  [4m2[24m013     1     1      533            529         4      850            830
+#> [38;5;250m 3[39m  [4m2[24m013     1     1      542            540         2      923            850
+#> [38;5;250m 4[39m  [4m2[24m013     1     1      544            545        -[31m1[39m     [4m1[24m004           [4m1[24m022
+#> [38;5;250m 5[39m  [4m2[24m013     1     1      554            600        -[31m6[39m      812            837
+#> [38;5;250m 6[39m  [4m2[24m013     1     1      554            558        -[31m4[39m      740            728
+#> [38;5;250m 7[39m  [4m2[24m013     1     1      555            600        -[31m5[39m      913            854
+#> [38;5;250m 8[39m  [4m2[24m013     1     1      557            600        -[31m3[39m      709            723
+#> [38;5;250m 9[39m  [4m2[24m013     1     1      557            600        -[31m3[39m      838            846
+#> [38;5;250m10[39m  [4m2[24m013     1     1      558            600        -[31m2[39m      753            745
 #> [38;5;246m# ℹ 336,766 more rows[39m
-#> [38;5;246m# ℹ abbreviated names: ¹​sched_dep_time, ²​dep_delay, ³​arr_time, ⁴​sched_arr_time,[39m
-#> [38;5;246m#   ⁵​arr_delay[39m
-#> [38;5;246m# ℹ 9 more variables: [1mflight[22m <int>, [1mtailnum[22m <chr>, [1morigin[22m <chr>, [1mdest[22m <chr>,[39m
-#> [38;5;246m#   [1mair_time[22m <dbl>, [1mdistance[22m <dbl>, [1mhour[22m <dbl>, [1mminute[22m <dbl>, [1mtime_hour[22m <dttm>[39m
+#> [38;5;246m# ℹ 11 more variables: [1marr_delay[22m <dbl>, [1mcarrier[22m <chr>, [1mflight[22m <int>,[39m
+#> [38;5;246m#   [1mtailnum[22m <chr>, [1morigin[22m <chr>, [1mdest[22m <chr>, [1mair_time[22m <dbl>, [1mdistance[22m <dbl>,[39m
+#> [38;5;246m#   [1mhour[22m <dbl>, [1mminute[22m <dbl>, [1mtime_hour[22m <dttm>[39m
 
 out <-
   flights_df() %>%
@@ -112,7 +112,7 @@ Querying the number of rows, or a column, starts the computation:
 
 ``` r
 out$month
-#> [1] 4 1 3 6 2 5
+#> [1] 5 4 2 1 3 6
 ```
 
 Note that, unlike dplyr, the results are not ordered, see `?config` for details.
@@ -124,12 +124,12 @@ out
 #> [38;5;246m# A tibble: 6 × 4[39m
 #>    [1myear[22m [1mmonth[22m [1mmean_inflight_delay[22m [1mmedian_inflight_delay[22m
 #>   [3m[38;5;246m<int>[39m[23m [3m[38;5;246m<int>[39m[23m               [3m[38;5;246m<dbl>[39m[23m                 [3m[38;5;246m<dbl>[39m[23m
-#> [38;5;250m1[39m  [4m2[24m013     4               -[31m2[39m[31m.[39m[31m67[39m                    -[31m5[39m
-#> [38;5;250m2[39m  [4m2[24m013     1               -[31m3[39m[31m.[39m[31m86[39m                    -[31m5[39m
-#> [38;5;250m3[39m  [4m2[24m013     3               -[31m7[39m[31m.[39m[31m36[39m                    -[31m9[39m
-#> [38;5;250m4[39m  [4m2[24m013     6               -[31m4[39m[31m.[39m[31m24[39m                    -[31m7[39m
-#> [38;5;250m5[39m  [4m2[24m013     2               -[31m5[39m[31m.[39m[31m15[39m                    -[31m6[39m
-#> [38;5;250m6[39m  [4m2[24m013     5               -[31m9[39m[31m.[39m[31m37[39m                   -[31m10[39m
+#> [38;5;250m1[39m  [4m2[24m013     5               -[31m9[39m[31m.[39m[31m37[39m                   -[31m10[39m
+#> [38;5;250m2[39m  [4m2[24m013     4               -[31m2[39m[31m.[39m[31m67[39m                    -[31m5[39m
+#> [38;5;250m3[39m  [4m2[24m013     2               -[31m5[39m[31m.[39m[31m15[39m                    -[31m6[39m
+#> [38;5;250m4[39m  [4m2[24m013     1               -[31m3[39m[31m.[39m[31m86[39m                    -[31m5[39m
+#> [38;5;250m5[39m  [4m2[24m013     3               -[31m7[39m[31m.[39m[31m36[39m                    -[31m9[39m
+#> [38;5;250m6[39m  [4m2[24m013     6               -[31m4[39m[31m.[39m[31m24[39m                    -[31m7[39m
 ```
 
 Restart R, or call `duckplyr::methods_restore()` to revert to the default dplyr implementation.
@@ -171,7 +171,7 @@ Unlike with local data frames, the default is to disallow automatic materializat
 
 ``` r
 nrow(flights)
-#> Error: Materialization would result in 9091 rows, which exceeds the limit of 9090. Use collect() or as_tibble() to materialize.
+#> Error: Materialization would result in 140080528085608 rows, which exceeds the limit of 9091
 ```
 
 Queries on the remote data are executed lazily, and the results are not materialized until explicitly requested.
@@ -181,30 +181,25 @@ For printing, only the first few rows of the result are fetched.
 ``` r
 flights
 #> [38;5;246m# A duckplyr data frame: 110 variables[39m
-#>     [1mYear[22m [1mQuarter[22m [1mMonth[22m [1mDayofMonth[22m [1mDayOfWeek[22m [1mFlightDate[22m [1mReporti…¹[22m [1mDOT_I…²[22m [1mIATA_…³[22m
-#>    [3m[38;5;246m<dbl>[39m[23m   [3m[38;5;246m<dbl>[39m[23m [3m[38;5;246m<dbl>[39m[23m      [3m[38;5;246m<dbl>[39m[23m     [3m[38;5;246m<dbl>[39m[23m [3m[38;5;246m<date>[39m[23m     [3m[38;5;246m<chr>[39m[23m       [3m[38;5;246m<dbl>[39m[23m [3m[38;5;246m<chr>[39m[23m  
-#> [38;5;250m 1[39m  [4m2[24m022       1     1         14         5 2022-01-14 YX          [4m2[24m[4m0[24m452 YX     
-#> [38;5;250m 2[39m  [4m2[24m022       1     1         15         6 2022-01-15 YX          [4m2[24m[4m0[24m452 YX     
-#> [38;5;250m 3[39m  [4m2[24m022       1     1         16         7 2022-01-16 YX          [4m2[24m[4m0[24m452 YX     
-#> [38;5;250m 4[39m  [4m2[24m022       1     1         17         1 2022-01-17 YX          [4m2[24m[4m0[24m452 YX     
-#> [38;5;250m 5[39m  [4m2[24m022       1     1         18         2 2022-01-18 YX          [4m2[24m[4m0[24m452 YX     
-#> [38;5;250m 6[39m  [4m2[24m022       1     1         19         3 2022-01-19 YX          [4m2[24m[4m0[24m452 YX     
-#> [38;5;250m 7[39m  [4m2[24m022       1     1         20         4 2022-01-20 YX          [4m2[24m[4m0[24m452 YX     
-#> [38;5;250m 8[39m  [4m2[24m022       1     1         21         5 2022-01-21 YX          [4m2[24m[4m0[24m452 YX     
-#> [38;5;250m 9[39m  [4m2[24m022       1     1         22         6 2022-01-22 YX          [4m2[24m[4m0[24m452 YX     
-#> [38;5;250m10[39m  [4m2[24m022       1     1         23         7 2022-01-23 YX          [4m2[24m[4m0[24m452 YX     
+#>     [1mYear[22m [1mQuarter[22m [1mMonth[22m [1mDayofMonth[22m [1mDayOfWeek[22m [1mFlightDate[22m [1mReporting_Airline[22m
+#>    [3m[38;5;246m<dbl>[39m[23m   [3m[38;5;246m<dbl>[39m[23m [3m[38;5;246m<dbl>[39m[23m      [3m[38;5;246m<dbl>[39m[23m     [3m[38;5;246m<dbl>[39m[23m [3m[38;5;246m<date>[39m[23m     [3m[38;5;246m<chr>[39m[23m            
+#> [38;5;250m 1[39m  [4m2[24m022       1     1         14         5 2022-01-14 YX               
+#> [38;5;250m 2[39m  [4m2[24m022       1     1         15         6 2022-01-15 YX               
+#> [38;5;250m 3[39m  [4m2[24m022       1     1         16         7 2022-01-16 YX               
+#> [38;5;250m 4[39m  [4m2[24m022       1     1         17         1 2022-01-17 YX               
+#> [38;5;250m 5[39m  [4m2[24m022       1     1         18         2 2022-01-18 YX               
+#> [38;5;250m 6[39m  [4m2[24m022       1     1         19         3 2022-01-19 YX               
+#> [38;5;250m 7[39m  [4m2[24m022       1     1         20         4 2022-01-20 YX               
+#> [38;5;250m 8[39m  [4m2[24m022       1     1         21         5 2022-01-21 YX               
+#> [38;5;250m 9[39m  [4m2[24m022       1     1         22         6 2022-01-22 YX               
+#> [38;5;250m10[39m  [4m2[24m022       1     1         23         7 2022-01-23 YX               
 #> [38;5;246m# ℹ more rows[39m
-#> [38;5;246m# ℹ abbreviated names: ¹​Reporting_Airline, ²​DOT_ID_Reporting_Airline,[39m
-#> [38;5;246m#   ³​IATA_CODE_Reporting_Airline[39m
-#> [38;5;246m# ℹ 101 more variables: [1mTail_Number[22m <chr>,[39m
+#> [38;5;246m# ℹ 103 more variables: [1mDOT_ID_Reporting_Airline[22m <dbl>,[39m
+#> [38;5;246m#   [1mIATA_CODE_Reporting_Airline[22m <chr>, [1mTail_Number[22m <chr>,[39m
 #> [38;5;246m#   [1mFlight_Number_Reporting_Airline[22m <dbl>, [1mOriginAirportID[22m <dbl>,[39m
 #> [38;5;246m#   [1mOriginAirportSeqID[22m <dbl>, [1mOriginCityMarketID[22m <dbl>, [1mOrigin[22m <chr>,[39m
 #> [38;5;246m#   [1mOriginCityName[22m <chr>, [1mOriginState[22m <chr>, [1mOriginStateFips[22m <chr>,[39m
-#> [38;5;246m#   [1mOriginStateName[22m <chr>, [1mOriginWac[22m <dbl>, [1mDestAirportID[22m <dbl>,[39m
-#> [38;5;246m#   [1mDestAirportSeqID[22m <dbl>, [1mDestCityMarketID[22m <dbl>, [1mDest[22m <chr>,[39m
-#> [38;5;246m#   [1mDestCityName[22m <chr>, [1mDestState[22m <chr>, [1mDestStateFips[22m <chr>,[39m
-#> [38;5;246m#   [1mDestStateName[22m <chr>, [1mDestWac[22m <dbl>, [1mCRSDepTime[22m <chr>, [1mDepTime[22m <chr>,[39m
-#> [38;5;246m#   [1mDepDelay[22m <dbl>, [1mDepDelayMinutes[22m <dbl>, [1mDepDel15[22m <dbl>, …[39m
+#> [38;5;246m#   [1mOriginStateName[22m <chr>, [1mOriginWac[22m <dbl>, [1mDestAirportID[22m <dbl>, …[39m
 ```
 
 
@@ -282,10 +277,9 @@ out |>
 #> ┌-------------┴-------------┐
 #> │           FILTER          │
 #> │    --------------------   │
-#> │ ((NOT ((DepDelay IS NULL) │
-#> │  OR isnan(DepDelay))) AND │
-#> │  (NOT ((ArrDelay IS NULL) │
-#> │    OR isnan(ArrDelay))))  │
+#> │ ((NOT (DepDelay IS NULL)) │
+#> │    AND (NOT (ArrDelay IS  │
+#> │           NULL)))         │
 #> │                           │
 #> │       ~2691650 Rows       │
 #> └-------------┬-------------┘
@@ -316,19 +310,19 @@ out |>
 #> [38;5;246m# A duckplyr data frame: 4 variables[39m
 #>     [1mYear[22m [1mMonth[22m [1mMeanInFlightDelay[22m [1mMedianInFlightDelay[22m
 #>    [3m[38;5;246m<dbl>[39m[23m [3m[38;5;246m<dbl>[39m[23m             [3m[38;5;246m<dbl>[39m[23m               [3m[38;5;246m<dbl>[39m[23m
-#> [38;5;250m 1[39m  [4m2[24m022    11             -[31m5[39m[31m.[39m[31m21[39m                  -[31m7[39m
-#> [38;5;250m 2[39m  [4m2[24m023    11             -[31m7[39m[31m.[39m[31m10[39m                  -[31m8[39m
-#> [38;5;250m 3[39m  [4m2[24m022     7             -[31m5[39m[31m.[39m[31m13[39m                  -[31m7[39m
-#> [38;5;250m 4[39m  [4m2[24m022     8             -[31m5[39m[31m.[39m[31m27[39m                  -[31m7[39m
-#> [38;5;250m 5[39m  [4m2[24m023     4             -[31m4[39m[31m.[39m[31m54[39m                  -[31m6[39m
-#> [38;5;250m 6[39m  [4m2[24m022     4             -[31m4[39m[31m.[39m[31m88[39m                  -[31m6[39m
-#> [38;5;250m 7[39m  [4m2[24m023     8             -[31m5[39m[31m.[39m[31m73[39m                  -[31m7[39m
-#> [38;5;250m 8[39m  [4m2[24m023     7             -[31m4[39m[31m.[39m[31m47[39m                  -[31m7[39m
-#> [38;5;250m 9[39m  [4m2[24m022     1             -[31m6[39m[31m.[39m[31m88[39m                  -[31m8[39m
-#> [38;5;250m10[39m  [4m2[24m023    12             -[31m7[39m[31m.[39m[31m71[39m                  -[31m8[39m
+#> [38;5;250m 1[39m  [4m2[24m023     5             -[31m6[39m[31m.[39m[31m17[39m                  -[31m7[39m
+#> [38;5;250m 2[39m  [4m2[24m023     9             -[31m5[39m[31m.[39m[31m37[39m                  -[31m7[39m
+#> [38;5;250m 3[39m  [4m2[24m022     9             -[31m6[39m[31m.[39m[31m00[39m                  -[31m7[39m
+#> [38;5;250m 4[39m  [4m2[24m022     5             -[31m5[39m[31m.[39m[31m11[39m                  -[31m6[39m
+#> [38;5;250m 5[39m  [4m2[24m023    11             -[31m7[39m[31m.[39m[31m10[39m                  -[31m8[39m
+#> [38;5;250m 6[39m  [4m2[24m022     2             -[31m6[39m[31m.[39m[31m52[39m                  -[31m8[39m
+#> [38;5;250m 7[39m  [4m2[24m022    10             -[31m5[39m[31m.[39m[31m99[39m                  -[31m7[39m
+#> [38;5;250m 8[39m  [4m2[24m022    11             -[31m5[39m[31m.[39m[31m21[39m                  -[31m7[39m
+#> [38;5;250m 9[39m  [4m2[24m023    10             -[31m6[39m[31m.[39m[31m35[39m                  -[31m7[39m
+#> [38;5;250m10[39m  [4m2[24m022     1             -[31m6[39m[31m.[39m[31m88[39m                  -[31m8[39m
 #> [38;5;246m# ℹ more rows[39m
 #>    user  system elapsed 
-#>   1.822   0.510  10.065
+#>   3.216   0.425  13.882
 ```
 
 Over 10M rows analyzed in about 10 seconds over the internet, that's not bad.
