@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9923 (2025-01-28)
+
+## Features
+
+- Move content from README to vignettes (#207, #504).
+
+
 # duckplyr 0.99.99.9922 (2025-01-27)
 
 ## Bug fixes
