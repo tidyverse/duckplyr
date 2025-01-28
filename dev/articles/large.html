@@ -93,14 +93,21 @@ duckplyr.</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>Data frames and other objects in R are stored in RAM, which can be a
-bottleneck when working with large data sets. A variety of tools have
-been developed to work with large data sets, also in R. One examples is
-the dbplyr package, a dplyr backend that connects to SQL databases and
-is designed to work with various databases that support SQL. This is a
-viable approach if the data is already stored in a database, or if the
-data is stored in Parquet or CSV files and loaded as a lazy table via
-<code><a href="https://r.duckdb.org/reference/backend-duckdb.html" class="external-link">duckdb::tbl_file()</a></code>.</p>
+<p>Data frames and other objects in R are stored in RAM. This can become
+problematic:</p>
+<ul>
+<li>Data must be loaded into RAM first, even if only part of it is
+needed.</li>
+<li>Data must be stored in RAM, even if it is not used.</li>
+<li>RAM is limited, and data sets can be larger than the available
+RAM.</li>
+</ul>
+<p>A variety of tools have been developed to work with large data sets,
+also in R. One examples is the dbplyr package, a dplyr backend that
+connects to SQL databases and is designed to work with various databases
+that support SQL. This is a viable approach if the data is already
+stored in a database, or if the data is stored in Parquet or CSV files
+and loaded as a lazy table via <code><a href="https://r.duckdb.org/reference/backend-duckdb.html" class="external-link">duckdb::tbl_file()</a></code>.</p>
 <p>The dbplyr package translates dplyr code to SQL. The syntax and
 semantics are very similar, but not identical to plain dplyr. In
 contrast, the duckplyr package aims to be a fully compatible drop-in
@@ -176,7 +183,7 @@ to a table:</p>
 <span><span class="va">dbplyr_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"data"</span><span class="op">)</span></span>
 <span><span class="va">dbplyr_data</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># Source:   table&lt;"data"&gt; [?? x 2]</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB v1.1.3 [unknown@Linux 6.8.0-1020-azure:R 4.4.2//tmp/RtmpYqwGfH/file41393ab6d455.duckdb]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB v1.1.3 [unknown@Linux 6.8.0-1020-azure:R 4.4.2//tmp/RtmpUEgBcs/file410168a27549.duckdb]</span></span></span>
 <span><span class="co">#&gt;       x y    </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1 a    </span></span>
