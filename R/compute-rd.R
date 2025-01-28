@@ -9,7 +9,7 @@
 #' @inheritParams dplyr::compute
 #' @param funnel Set to `TRUE` to return a funneled or `FALSE` to return an unfunneled data frame,
 #'   see the "Funneling" section.
-#'   The default is to inherit the funnelness of the input.
+#'   The default is to inherit the funneling of the input.
 #' @param name The name of the table to store the result in.
 #' @param schema_name The schema to store the result in, defaults to the current schema.
 #' @param temporary Set to `FALSE` to store the result in a permanent table.
