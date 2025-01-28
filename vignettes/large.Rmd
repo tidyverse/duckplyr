@@ -43,7 +43,13 @@ conflict_prefer("filter", "dplyr")
 
 ## Introduction
 
-Data frames and other objects in R are stored in RAM, which can be a bottleneck when working with large data sets.
+Data frames and other objects in R are stored in RAM.
+This can become problematic:
+
+- Data must be loaded into RAM first, even if only part of it is needed.
+- Data must be stored in RAM, even if it is not used.
+- RAM is limited, and data sets can be larger than the available RAM.
+
 A variety of tools have been developed to work with large data sets, also in R.
 One examples is the dbplyr package, a dplyr backend that connects to SQL databases and is designed to work with various databases that support SQL.
 This is a viable approach if the data is already stored in a database, or if the data is stored in Parquet or CSV files and loaded as a lazy table via `duckdb::tbl_file()`.
