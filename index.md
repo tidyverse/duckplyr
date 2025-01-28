@@ -171,7 +171,7 @@ Unlike with local data frames, the default is to disallow automatic materializat
 
 ``` r
 nrow(flights)
-#> Error: Materialization would result in 140080528085608 rows, which exceeds the limit of 9091
+#> Error: Materialization would result in 139898655851112 rows, which exceeds the limit of 9091
 ```
 
 Queries on the remote data are executed lazily, and the results are not materialized until explicitly requested.
@@ -333,9 +333,9 @@ Of course, working with Parquet, CSV, or JSON files downloaded locally is possib
 
 - `vignette("large")`: Tools for working with large data
 
-- `vignette("funnel")`: How duckplyr is both eager and lazy at the same time
+- `vignette("funnel")`: How duckplyr can help protect memory when working with large data
 
-- `vignette("limits")`: Translation employed by duckplyr, and current limitations
+- `vignette("limits")`: Translation of dplyr employed by duckplyr, and current limitations
 
 - `vignette("developers")`: Using duckplyr for individual data frames and in other packages
 

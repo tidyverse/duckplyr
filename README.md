@@ -173,7 +173,7 @@ materialization if the result is too large.
 
 ``` r
 nrow(flights)
-#> Error: Materialization would result in 140080528085608 rows, which exceeds the limit of 9091
+#> Error: Materialization would result in 139898655851112 rows, which exceeds the limit of 9091
 ```
 
 Queries on the remote data are executed lazily, and the results are not
@@ -336,10 +336,10 @@ locally is possible as well.
   Tools for working with large data
 
 - [`vignette("funnel")`](https://duckplyr.tidyverse.org/dev/articles/funnel.html):
-  How duckplyr is both eager and lazy at the same time
+  How duckplyr can help protect memory when working with large data
 
 - [`vignette("limits")`](https://duckplyr.tidyverse.org/dev/articles/limits.html):
-  Translation employed by duckplyr, and current limitations
+  Translation of dplyr employed by duckplyr, and current limitations
 
 - [`vignette("developers")`](https://duckplyr.tidyverse.org/dev/articles/developers.html):
   Using duckplyr for individual data frames and in other packages
