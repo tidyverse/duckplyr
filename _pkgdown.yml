@@ -9,21 +9,14 @@ template:
       <script defer data-domain="duckplyr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
 
 articles:
-- title: Working with large data
-  desc: ~
+- title: Articles
+  navbar: ~
   contents:
   - large
   - funnel
-- title: Advanced usage
-  desc: ~
-  contents:
   - limits
-  - telemetry
-- title: Developing (with) duckplyr
-  desc: ~
-  contents:
   - developers
-  - extend
+  - telemetry
 
 - title: internal
   contents:
