@@ -59,7 +59,7 @@ Let's [discuss](https://github.com/tidyverse/duckplyr/discussions/) any addition
 
 ## Functions within verbs
 
-For all functions used in dplyr verbs, translations must be provided. 
+For all functions used in dplyr verbs, translations must be provided.
 
 As of now, here are the translations provided:
 

@@ -40,7 +40,7 @@ test_that("funneled duckplyr frames are converted to tibbles", {
 
 test_that("funneling after operation with failure", {
   df <- duckdb_tibble(x = 1:10, .funnel = c(rows = 5))
-  out <- df |>
+  out <- df %>%
     count(x)
 
   expect_identical(get_funnel_duckplyr_df(out), c(rows = 5))
@@ -49,7 +49,7 @@ test_that("funneling after operation with failure", {
 
 test_that("funneling after operation with success", {
   df <- duckdb_tibble(x = 1:10, .funnel = c(rows = 5))
-  out <- df |>
+  out <- df %>%
     count()
 
   expect_identical(get_funnel_duckplyr_df(out), c(rows = 5))
