@@ -153,7 +153,7 @@ month:</p>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.105   0.001   0.106</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.107   0.000   0.106</span></span></code></pre></div>
 <p>Setting up the pipeline is fast, the size of the data does not affect
 the setup costs. Because the computation is deferred, DuckDB can
 optimize the whole pipeline, which can be seen in the output below:</p>
@@ -218,7 +218,7 @@ kept. The result becomes available when accessed:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">mean_arr_delay_ewr</span><span class="op">$</span><span class="va">mean_arr_delay</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.018   0.001   0.016</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.019   0.001   0.016</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="comparison">Comparison<a class="anchor" aria-label="anchor" href="#comparison"></a>
@@ -274,7 +274,7 @@ opportunity for optimization:</p>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.038   0.006   0.044</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.040   0.006   0.046</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -357,8 +357,7 @@ implementation is used as a fallback. As the original dplyr
 implementation accesses columns directly, the data must be materialized
 before a fallback can be executed. Therefore, funneled frames allow you
 to check that all operations are supported by DuckDB: for a funneled
-frame with <code>funnel = FALSE</code>, fallbacks to dplyr are not
-possible.</p>
+frame, fallbacks to dplyr are not possible.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">flights_funneled</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">origin</span><span class="op">)</span> <span class="op">|&gt;</span></span>
