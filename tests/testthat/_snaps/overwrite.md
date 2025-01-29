@@ -13,10 +13,3 @@
     Message
       i Restoring dplyr methods.
 
----
-
-    Code
-      methods_restore()
-    Message
-      i Restoring dplyr methods.
-

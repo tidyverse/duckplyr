@@ -7,7 +7,7 @@
       ---------------------
       --- Relation Tree ---
       ---------------------
-      r_dataframe_scan(0x5617c3fc3ee8)
+      Scan Table [duckplyr_4hYuvhNS26]
       
       ---------------------
       -- Result Columns  --
