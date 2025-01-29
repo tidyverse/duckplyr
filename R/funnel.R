@@ -43,12 +43,12 @@ is_funneled_duckplyr_df <- function(x) {
 
 get_funnel_duckplyr_df <- function(x) {
   if (!is_funneled_duckplyr_df(x)) {
-    return(FALSE)
+    return("open")
   }
 
   funnel <- attr(x, "funnel")
   if (is.null(funnel)) {
-    return(TRUE)
+    return("closed")
   }
 
   funnel

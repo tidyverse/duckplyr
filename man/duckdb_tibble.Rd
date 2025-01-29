@@ -6,9 +6,9 @@
 \alias{is_duckdb_tibble}
 \title{duckplyr data frames}
 \usage{
-duckdb_tibble(..., .funnel = FALSE)
+duckdb_tibble(..., .funnel = "open")
 
-as_duckdb_tibble(x, ..., funnel = FALSE)
+as_duckdb_tibble(x, ..., funnel = "open")
 
 is_duckdb_tibble(x)
 }
@@ -112,14 +112,14 @@ function.
 In dtplyr and dbplyr, there are no unfunneled frames: collection always needs to be
 explicit.
 
-A funneled duckplyr frame can be converted to an unfunneled one with \code{as_duckdb_tibble(funnel = FALSE)}.
+A funneled duckplyr frame can be converted to an unfunneled one with \code{as_duckdb_tibble(funnel = "open")}.
 The \code{\link[=collect.duckplyr_df]{collect.duckplyr_df()}} method triggers computation and converts to a plain tibble.
 Other useful methods include \code{\link[=compute_file]{compute_file()}} for storing results in a file,
 and \code{\link[=compute.duckplyr_df]{compute.duckplyr_df()}} for storing results in temporary storage on disk.
 
 Beyond safety regarding memory usage, funneled frames also allow you
 to check that all operations are supported by DuckDB:
-for a funneled frame with \code{funnel = FALSE}, fallbacks to dplyr are not possible.
+for a funneled frame with \code{funnel = "closed"}, fallbacks to dplyr are not possible.
 As a reminder, computing via DuckDB is currently not always possible,
 see \code{vignette("limits")} for the supported operations.
 In such cases, the original dplyr implementation is used, see \link{fallback} for details.
@@ -139,7 +139,7 @@ x \%>\%
 
 x$a
 
-y <- duckdb_tibble(a = 1, .funnel = TRUE)
+y <- duckdb_tibble(a = 1, .funnel = "closed")
 y
 try(length(y$a))
 length(collect(y)$a)

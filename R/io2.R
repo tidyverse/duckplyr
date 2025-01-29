@@ -41,8 +41,8 @@ read_parquet_duckdb <- function(path, ..., funnel = c(cells = 1e6), options = li
 #' # Materialize explicitly
 #' collect(df)$a
 #'
-#' # Automatic materialization with funnel = FALSE
-#' df <- read_csv_duckdb(path, funnel = FALSE)
+#' # Automatic materialization with funnel = "open"
+#' df <- read_csv_duckdb(path, funnel = "open")
 #' df$a
 #'
 #' # Specify column types
@@ -150,9 +150,9 @@ duckfun <- function(table_function, args, ..., funnel) {
 
   # Start with funnel, to avoid unwanted materialization
   df <- duckdb$rel_to_altrep(rel, allow_materialization = FALSE)
-  out <- new_duckdb_tibble(df, funnel = TRUE)
+  out <- new_duckdb_tibble(df, funnel = "closed")
 
-  if (!isTRUE(funnel)) {
+  if (!identical(funnel, "closed")) {
     out <- as_duckdb_tibble(out, funnel = funnel)
   }
 
