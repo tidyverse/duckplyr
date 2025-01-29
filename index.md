@@ -16,6 +16,7 @@
 [dplyr](https://dplyr.tidyverse.org/) is the grammar of data manipulation in the tidyverse.
 The duckplyr package will run all of your existing dplyr code with identical results, using [DuckDB](https://duckdb.org/) where possible to compute the results faster.
 In addition, you can analyze larger-than-memory datasets straight from files on your disk or from the web.
+
 If you are new to dplyr, the best place to start is the [data transformation chapter](https://r4ds.hadley.nz/data-transform) in R for Data Science.
 
 
@@ -112,7 +113,7 @@ Querying the number of rows, or a column, starts the computation:
 
 ``` r
 out$month
-#> [1] 4 1 3 6 2 5
+#> [1] 4 2 1 5 3 6
 ```
 
 Note that, unlike dplyr, the results are not ordered, see `?config` for details.
@@ -125,11 +126,11 @@ out
 #>    [1myear[22m [1mmonth[22m [1mmean_inflight_delay[22m [1mmedian_inflight_delay[22m
 #>   [3m[38;5;246m<int>[39m[23m [3m[38;5;246m<int>[39m[23m               [3m[38;5;246m<dbl>[39m[23m                 [3m[38;5;246m<dbl>[39m[23m
 #> [38;5;250m1[39m  [4m2[24m013     4               -[31m2[39m[31m.[39m[31m67[39m                    -[31m5[39m
-#> [38;5;250m2[39m  [4m2[24m013     1               -[31m3[39m[31m.[39m[31m86[39m                    -[31m5[39m
-#> [38;5;250m3[39m  [4m2[24m013     3               -[31m7[39m[31m.[39m[31m36[39m                    -[31m9[39m
-#> [38;5;250m4[39m  [4m2[24m013     6               -[31m4[39m[31m.[39m[31m24[39m                    -[31m7[39m
-#> [38;5;250m5[39m  [4m2[24m013     2               -[31m5[39m[31m.[39m[31m15[39m                    -[31m6[39m
-#> [38;5;250m6[39m  [4m2[24m013     5               -[31m9[39m[31m.[39m[31m37[39m                   -[31m10[39m
+#> [38;5;250m2[39m  [4m2[24m013     2               -[31m5[39m[31m.[39m[31m15[39m                    -[31m6[39m
+#> [38;5;250m3[39m  [4m2[24m013     1               -[31m3[39m[31m.[39m[31m86[39m                    -[31m5[39m
+#> [38;5;250m4[39m  [4m2[24m013     5               -[31m9[39m[31m.[39m[31m37[39m                   -[31m10[39m
+#> [38;5;250m5[39m  [4m2[24m013     3               -[31m7[39m[31m.[39m[31m36[39m                    -[31m9[39m
+#> [38;5;250m6[39m  [4m2[24m013     6               -[31m4[39m[31m.[39m[31m24[39m                    -[31m7[39m
 ```
 
 Restart R, or call `duckplyr::methods_restore()` to revert to the default dplyr implementation.
@@ -282,10 +283,9 @@ out |>
 #> ┌-------------┴-------------┐
 #> │           FILTER          │
 #> │    --------------------   │
-#> │ ((NOT ((DepDelay IS NULL) │
-#> │  OR isnan(DepDelay))) AND │
-#> │  (NOT ((ArrDelay IS NULL) │
-#> │    OR isnan(ArrDelay))))  │
+#> │ ((NOT (DepDelay IS NULL)) │
+#> │    AND (NOT (ArrDelay IS  │
+#> │           NULL)))         │
 #> │                           │
 #> │       ~2691650 Rows       │
 #> └-------------┬-------------┘
@@ -321,14 +321,14 @@ out |>
 #> [38;5;250m 3[39m  [4m2[24m022     7             -[31m5[39m[31m.[39m[31m13[39m                  -[31m7[39m
 #> [38;5;250m 4[39m  [4m2[24m022     8             -[31m5[39m[31m.[39m[31m27[39m                  -[31m7[39m
 #> [38;5;250m 5[39m  [4m2[24m023     4             -[31m4[39m[31m.[39m[31m54[39m                  -[31m6[39m
-#> [38;5;250m 6[39m  [4m2[24m022     4             -[31m4[39m[31m.[39m[31m88[39m                  -[31m6[39m
-#> [38;5;250m 7[39m  [4m2[24m023     8             -[31m5[39m[31m.[39m[31m73[39m                  -[31m7[39m
-#> [38;5;250m 8[39m  [4m2[24m023     7             -[31m4[39m[31m.[39m[31m47[39m                  -[31m7[39m
-#> [38;5;250m 9[39m  [4m2[24m022     1             -[31m6[39m[31m.[39m[31m88[39m                  -[31m8[39m
-#> [38;5;250m10[39m  [4m2[24m023    12             -[31m7[39m[31m.[39m[31m71[39m                  -[31m8[39m
+#> [38;5;250m 6[39m  [4m2[24m022     1             -[31m6[39m[31m.[39m[31m88[39m                  -[31m8[39m
+#> [38;5;250m 7[39m  [4m2[24m023    12             -[31m7[39m[31m.[39m[31m71[39m                  -[31m8[39m
+#> [38;5;250m 8[39m  [4m2[24m023     3             -[31m4[39m[31m.[39m[31m0[39m[31m6[39m                  -[31m6[39m
+#> [38;5;250m 9[39m  [4m2[24m023     6             -[31m4[39m[31m.[39m[31m35[39m                  -[31m6[39m
+#> [38;5;250m10[39m  [4m2[24m022     2             -[31m6[39m[31m.[39m[31m52[39m                  -[31m8[39m
 #> [38;5;246m# ℹ more rows[39m
 #>    user  system elapsed 
-#>   1.822   0.510  10.065
+#>   1.502   0.463   9.568
 ```
 
 Over 10M rows analyzed in about 10 seconds over the internet, that's not bad.
@@ -339,9 +339,9 @@ Of course, working with Parquet, CSV, or JSON files downloaded locally is possib
 
 - `vignette("large")`: Tools for working with large data
 
-- `vignette("funnel")`: How duckplyr is both eager and lazy at the same time
+- `vignette("funnel")`: How duckplyr can help protect memory when working with large data
 
-- `vignette("limits")`: Translation employed by duckplyr, and current limitations
+- `vignette("limits")`: Translation of dplyr employed by duckplyr, and current limitations
 
 - `vignette("developers")`: Using duckplyr for individual data frames and in other packages
 

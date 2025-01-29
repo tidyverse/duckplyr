@@ -20,9 +20,11 @@ manipulation in the tidyverse. The duckplyr package will run all of your
 existing dplyr code with identical results, using
 [DuckDB](https://duckdb.org/) where possible to compute the results
 faster. In addition, you can analyze larger-than-memory datasets
-straight from files on your disk or from the web. If you are new to
-dplyr, the best place to start is the [data transformation
-chapter](https://r4ds.hadley.nz/data-transform) in R for Data Science.
+straight from files on your disk or from the web.
+
+If you are new to dplyr, the best place to start is the [data
+transformation chapter](https://r4ds.hadley.nz/data-transform) in R for
+Data Science.
 
 ## Installation
 
@@ -114,7 +116,7 @@ starts the computation:
 
 ``` r
 out$month
-#> [1] 4 1 3 6 2 5
+#> [1] 4 2 1 5 3 6
 ```
 
 Note that, unlike dplyr, the results are not ordered, see `?config` for
@@ -126,11 +128,11 @@ out
 #>    year month mean_inflight_delay median_inflight_delay
 #>   <int> <int>               <dbl>                 <dbl>
 #> 1  2013     4               -2.67                    -5
-#> 2  2013     1               -3.86                    -5
-#> 3  2013     3               -7.36                    -9
-#> 4  2013     6               -4.24                    -7
-#> 5  2013     2               -5.15                    -6
-#> 6  2013     5               -9.37                   -10
+#> 2  2013     2               -5.15                    -6
+#> 3  2013     1               -3.86                    -5
+#> 4  2013     5               -9.37                   -10
+#> 5  2013     3               -7.36                    -9
+#> 6  2013     6               -4.24                    -7
 ```
 
 Restart R, or call `duckplyr::methods_restore()` to revert to the
@@ -282,10 +284,9 @@ out |>
 #> ┌─────────────┴─────────────┐
 #> │           FILTER          │
 #> │    ────────────────────   │
-#> │ ((NOT ((DepDelay IS NULL) │
-#> │  OR isnan(DepDelay))) AND │
-#> │  (NOT ((ArrDelay IS NULL) │
-#> │    OR isnan(ArrDelay))))  │
+#> │ ((NOT (DepDelay IS NULL)) │
+#> │    AND (NOT (ArrDelay IS  │
+#> │           NULL)))         │
 #> │                           │
 #> │       ~2691650 Rows       │
 #> └─────────────┬─────────────┘
@@ -321,14 +322,14 @@ out |>
 #>  3  2022     7             -5.13                  -7
 #>  4  2022     8             -5.27                  -7
 #>  5  2023     4             -4.54                  -6
-#>  6  2022     4             -4.88                  -6
-#>  7  2023     8             -5.73                  -7
-#>  8  2023     7             -4.47                  -7
-#>  9  2022     1             -6.88                  -8
-#> 10  2023    12             -7.71                  -8
+#>  6  2022     1             -6.88                  -8
+#>  7  2023    12             -7.71                  -8
+#>  8  2023     3             -4.06                  -6
+#>  9  2023     6             -4.35                  -6
+#> 10  2022     2             -6.52                  -8
 #> # ℹ more rows
 #>    user  system elapsed 
-#>   1.822   0.510  10.065
+#>   1.502   0.463   9.568
 ```
 
 Over 10M rows analyzed in about 10 seconds over the internet, that’s not
@@ -341,10 +342,10 @@ locally is possible as well.
   Tools for working with large data
 
 - [`vignette("funnel")`](https://duckplyr.tidyverse.org/dev/articles/funnel.html):
-  How duckplyr is both eager and lazy at the same time
+  How duckplyr can help protect memory when working with large data
 
 - [`vignette("limits")`](https://duckplyr.tidyverse.org/dev/articles/limits.html):
-  Translation employed by duckplyr, and current limitations
+  Translation of dplyr employed by duckplyr, and current limitations
 
 - [`vignette("developers")`](https://duckplyr.tidyverse.org/dev/articles/developers.html):
   Using duckplyr for individual data frames and in other packages

@@ -1,8 +1,8 @@
 ---
-title: "Funneling"
+title: "Memory protection: Funneling"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{10 Funneling}
+  %\VignetteIndexEntry{10 Memory protection: Funneling}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
