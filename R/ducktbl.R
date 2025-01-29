@@ -57,14 +57,14 @@
 #' In dtplyr and dbplyr, there are no unfunneled frames: collection always needs to be
 #' explicit.
 #'
-#' A funneled duckplyr frame can be converted to an unfunneled one with `as_duckdb_tibble(funnel = FALSE)`.
+#' A funneled duckplyr frame can be converted to an unfunneled one with `as_duckdb_tibble(funnel = "open")`.
 #' The [collect.duckplyr_df()] method triggers computation and converts to a plain tibble.
 #' Other useful methods include [compute_file()] for storing results in a file,
 #' and [compute.duckplyr_df()] for storing results in temporary storage on disk.
 #'
 #' Beyond safety regarding memory usage, funneled frames also allow you
 #' to check that all operations are supported by DuckDB:
-#' for a funneled frame with `funnel = FALSE`, fallbacks to dplyr are not possible.
+#' for a funneled frame with `funnel = "closed"`, fallbacks to dplyr are not possible.
 #' As a reminder, computing via DuckDB is currently not always possible,
 #' see `vignette("limits")` for the supported operations.
 #' In such cases, the original dplyr implementation is used, see [fallback] for details.
@@ -126,7 +126,7 @@ duckdb_tibble <- function(..., .funnel = "open") {
 #' @param x The object to convert or to test.
 #' @rdname duckdb_tibble
 #' @export
-as_duckdb_tibble <- function(x, ..., funnel = FALSE) {
+as_duckdb_tibble <- function(x, ..., funnel = "open") {
   # Handle the funnel arg in the generic, only the other args will be dispatched
   as_duckdb_tibble <- function(x, ...) {
     UseMethod("as_duckdb_tibble")
@@ -272,7 +272,7 @@ is_duckdb_tibble <- function(x) {
 
 #' @param funnel Only adds the class, does not recreate the relation object!
 #' @noRd
-new_duckdb_tibble <- function(x, class = NULL, funnel = FALSE, error_call = caller_env()) {
+new_duckdb_tibble <- function(x, class = NULL, funnel = "open", error_call = caller_env()) {
   if (is.null(class)) {
     class <- c("tbl_df", "tbl", "data.frame")
   }
@@ -284,7 +284,7 @@ new_duckdb_tibble <- function(x, class = NULL, funnel = FALSE, error_call = call
   }
 
   class(x) <- unique(c(
-    if (funnel) "funneled_duckplyr_df",
+    if (!identical(funnel, "open")) "funneled_duckplyr_df",
     "duckplyr_df",
     class
   ))
