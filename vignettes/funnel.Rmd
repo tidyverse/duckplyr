@@ -182,7 +182,7 @@ flights_funneled[[1]]
 
 For operations not supported by duckplyr, the original dplyr implementation is used as a fallback.
 As the original dplyr implementation accesses columns directly, the data must be materialized before a fallback can be executed.
-Therefore, funneled frames allow you to check that all operations are supported by DuckDB: for a funneled frame with `funnel = FALSE`, fallbacks to dplyr are not possible.
+Therefore, funneled frames allow you to check that all operations are supported by DuckDB: for a funneled frame, fallbacks to dplyr are not possible.
 
 ```{r error = TRUE}
 flights_funneled |>
