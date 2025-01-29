@@ -57,14 +57,14 @@
 #' In dtplyr and dbplyr, there are no unfunneled frames: collection always needs to be
 #' explicit.
 #'
-#' A funneled duckplyr frame can be converted to an unfunneled one with `as_duckdb_tibble(funnel = FALSE)`.
+#' A funneled duckplyr frame can be converted to an unfunneled one with `as_duckdb_tibble(funnel = "open")`.
 #' The [collect.duckplyr_df()] method triggers computation and converts to a plain tibble.
 #' Other useful methods include [compute_file()] for storing results in a file,
 #' and [compute.duckplyr_df()] for storing results in temporary storage on disk.
 #'
 #' Beyond safety regarding memory usage, funneled frames also allow you
 #' to check that all operations are supported by DuckDB:
-#' for a funneled frame with `funnel = FALSE`, fallbacks to dplyr are not possible.
+#' for a funneled frame with `funnel = "closed"`, fallbacks to dplyr are not possible.
 #' As a reminder, computing via DuckDB is currently not always possible,
 #' see `vignette("limits")` for the supported operations.
 #' In such cases, the original dplyr implementation is used, see [fallback] for details.
@@ -108,12 +108,12 @@
 #'
 #' x$a
 #'
-#' y <- duckdb_tibble(a = 1, .funnel = TRUE)
+#' y <- duckdb_tibble(a = 1, .funnel = "closed")
 #' y
 #' try(length(y$a))
 #' length(collect(y)$a)
 #' @export
-duckdb_tibble <- function(..., .funnel = FALSE) {
+duckdb_tibble <- function(..., .funnel = "open") {
   out <- tibble::tibble(...)
   as_duckdb_tibble(out, funnel = .funnel)
 }
@@ -126,7 +126,7 @@ duckdb_tibble <- function(..., .funnel = FALSE) {
 #' @param x The object to convert or to test.
 #' @rdname duckdb_tibble
 #' @export
-as_duckdb_tibble <- function(x, ..., funnel = FALSE) {
+as_duckdb_tibble <- function(x, ..., funnel = "open") {
   # Handle the funnel arg in the generic, only the other args will be dispatched
   as_duckdb_tibble <- function(x, ...) {
     UseMethod("as_duckdb_tibble")
@@ -135,7 +135,7 @@ as_duckdb_tibble <- function(x, ..., funnel = FALSE) {
   funnel_parsed <- funnel_parse(funnel)
   out <- as_duckdb_tibble(x, ...)
 
-  if (funnel_parsed$funnel) {
+  if (funnel_parsed$funnel == "closed") {
     as_funneled_duckplyr_df(
       out,
       funnel_parsed$allow_materialization,
@@ -173,11 +173,11 @@ funnel_parse <- function(funnel, call = caller_env()) {
       }
     }
     allow_materialization <- is.finite(n_rows) || is.finite(n_cells)
-    funnel <- TRUE
-  } else if (!is.logical(funnel)) {
-    cli::cli_abort("{.arg funnel} must be a logical scalar or a named vector", call = call)
+    funnel <- "closed"
+  } else if (!is.character(funnel)) {
+    cli::cli_abort("{.arg funnel} must be an unnamed character vector or a named numeric vector", call = call)
   } else {
-    allow_materialization <- !isTRUE(funnel)
+    allow_materialization <- !identical(funnel, "closed")
   }
 
   list(
@@ -195,7 +195,7 @@ as_duckdb_tibble.tbl_duckdb_connection <- function(x, ...) {
   con <- dbplyr::remote_con(x)
   sql <- dbplyr::remote_query(x)
 
-  read_sql_duckdb(sql, funnel = TRUE, con = con)
+  read_sql_duckdb(sql, funnel = "closed", con = con)
 }
 
 #' @export
@@ -272,7 +272,7 @@ is_duckdb_tibble <- function(x) {
 
 #' @param funnel Only adds the class, does not recreate the relation object!
 #' @noRd
-new_duckdb_tibble <- function(x, class = NULL, funnel = FALSE, error_call = caller_env()) {
+new_duckdb_tibble <- function(x, class = NULL, funnel = "open", error_call = caller_env()) {
   if (is.null(class)) {
     class <- c("tbl_df", "tbl", "data.frame")
   }
@@ -284,7 +284,7 @@ new_duckdb_tibble <- function(x, class = NULL, funnel = FALSE, error_call = call
   }
 
   class(x) <- unique(c(
-    if (funnel) "funneled_duckplyr_df",
+    if (!identical(funnel, "open")) "funneled_duckplyr_df",
     "duckplyr_df",
     class
   ))
