@@ -78,8 +78,8 @@ try(print(df$a))
 # Materialize explicitly
 collect(df)$a
 
-# Automatic materialization with funnel = FALSE
-df <- read_csv_duckdb(path, funnel = FALSE)
+# Automatic materialization with funnel = "open"
+df <- read_csv_duckdb(path, funnel = "open")
 df$a
 
 # Specify column types

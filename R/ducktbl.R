@@ -108,12 +108,12 @@
 #'
 #' x$a
 #'
-#' y <- duckdb_tibble(a = 1, .funnel = TRUE)
+#' y <- duckdb_tibble(a = 1, .funnel = "closed")
 #' y
 #' try(length(y$a))
 #' length(collect(y)$a)
 #' @export
-duckdb_tibble <- function(..., .funnel = FALSE) {
+duckdb_tibble <- function(..., .funnel = "open") {
   out <- tibble::tibble(...)
   as_duckdb_tibble(out, funnel = .funnel)
 }
@@ -135,7 +135,7 @@ as_duckdb_tibble <- function(x, ..., funnel = FALSE) {
   funnel_parsed <- funnel_parse(funnel)
   out <- as_duckdb_tibble(x, ...)
 
-  if (funnel_parsed$funnel) {
+  if (funnel_parsed$funnel == "closed") {
     as_funneled_duckplyr_df(
       out,
       funnel_parsed$allow_materialization,
@@ -173,11 +173,11 @@ funnel_parse <- function(funnel, call = caller_env()) {
       }
     }
     allow_materialization <- is.finite(n_rows) || is.finite(n_cells)
-    funnel <- TRUE
-  } else if (!is.logical(funnel)) {
-    cli::cli_abort("{.arg funnel} must be a logical scalar or a named vector", call = call)
+    funnel <- "closed"
+  } else if (!is.character(funnel)) {
+    cli::cli_abort("{.arg funnel} must be an unnamed character vector or a named numeric vector", call = call)
   } else {
-    allow_materialization <- !isTRUE(funnel)
+    allow_materialization <- !identical(funnel, "closed")
   }
 
   list(
@@ -195,7 +195,7 @@ as_duckdb_tibble.tbl_duckdb_connection <- function(x, ...) {
   con <- dbplyr::remote_con(x)
   sql <- dbplyr::remote_query(x)
 
-  read_sql_duckdb(sql, funnel = TRUE, con = con)
+  read_sql_duckdb(sql, funnel = "closed", con = con)
 }
 
 #' @export

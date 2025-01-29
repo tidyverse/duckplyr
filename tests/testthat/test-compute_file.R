@@ -29,7 +29,7 @@ test_that("compute_csv()", {
 test_that("compute_csv() funnel", {
   df <- data.frame(x = c(1, 2))
   withr::defer(unlink("test.csv"))
-  out <- compute_csv(df, path = "test.csv", funnel = TRUE)
+  out <- compute_csv(df, path = "test.csv", funnel = "closed")
 
   expect_true(is_funneled_duckplyr_df(out))
   expect_identical(collect(out), as_tibble(df))
