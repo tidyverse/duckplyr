@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9923</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9924</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/large.html">Large data</a></li>
-    <li><a class="dropdown-item" href="../articles/funnel.html">Funneling</a></li>
+    <li><a class="dropdown-item" href="../articles/funnel.html">Memory protection: Funneling</a></li>
     <li><a class="dropdown-item" href="../articles/limits.html">Translations</a></li>
     <li><a class="dropdown-item" href="../articles/developers.html">Selective use of duckplyr</a></li>
     <li><a class="dropdown-item" href="../articles/telemetry.html">Telemetry</a></li>
@@ -181,7 +181,7 @@ the raw data.</p>
 first request.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lazy</span><span class="op">$</span><span class="va">mean_inflight_delay</span></span>
-<span><span class="co">#&gt; [1] -3.855519 -5.147220 -9.370201 -7.356713 -2.673124 -4.244284</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] -3.855519 -5.147220 -7.356713 -2.673124 -4.244284 -9.370201</span></span></code></pre></div>
 <p>After the computation has been carried out, the results are preserved
 and available immediately:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -191,10 +191,10 @@ and available immediately:</p>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>  <span style="text-decoration: underline;">2</span>013     1               -<span style="color: #BB0000;">3.86</span>                    -<span style="color: #BB0000;">5</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>  <span style="text-decoration: underline;">2</span>013     2               -<span style="color: #BB0000;">5.15</span>                    -<span style="color: #BB0000;">6</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>  <span style="text-decoration: underline;">2</span>013     5               -<span style="color: #BB0000;">9.37</span>                   -<span style="color: #BB0000;">10</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>  <span style="text-decoration: underline;">2</span>013     3               -<span style="color: #BB0000;">7.36</span>                    -<span style="color: #BB0000;">9</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>  <span style="text-decoration: underline;">2</span>013     4               -<span style="color: #BB0000;">2.67</span>                    -<span style="color: #BB0000;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>  <span style="text-decoration: underline;">2</span>013     6               -<span style="color: #BB0000;">4.24</span>                    -<span style="color: #BB0000;">7</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>  <span style="text-decoration: underline;">2</span>013     3               -<span style="color: #BB0000;">7.36</span>                    -<span style="color: #BB0000;">9</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>  <span style="text-decoration: underline;">2</span>013     4               -<span style="color: #BB0000;">2.67</span>                    -<span style="color: #BB0000;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>  <span style="text-decoration: underline;">2</span>013     6               -<span style="color: #BB0000;">4.24</span>                    -<span style="color: #BB0000;">7</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>  <span style="text-decoration: underline;">2</span>013     5               -<span style="color: #BB0000;">9.37</span>                   -<span style="color: #BB0000;">10</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="own-data">Own data<a class="anchor" aria-label="anchor" href="#own-data"></a>
