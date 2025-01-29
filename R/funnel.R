@@ -43,12 +43,12 @@ is_frugal_duckplyr_df <- function(x) {
 
 get_collect_duckplyr_df <- function(x) {
   if (!is_frugal_duckplyr_df(x)) {
-    return("open")
+    return("any_size")
   }
 
   collect <- attr(x, "collect")
   if (is.null(collect)) {
-    return("closed")
+    return("always_manual")
   }
 
   collect

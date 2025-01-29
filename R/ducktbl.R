@@ -57,14 +57,14 @@
 #' In dtplyr and dbplyr, there are no lavish frames: collection always needs to be
 #' explicit.
 #'
-#' A frugal duckplyr frame can be converted to an lavish one with `as_duckdb_tibble(collect = "open")`.
+#' A frugal duckplyr frame can be converted to an lavish one with `as_duckdb_tibble(collect = "any_size")`.
 #' The [collect.duckplyr_df()] method triggers computation and converts to a plain tibble.
 #' Other useful methods include [compute_file()] for storing results in a file,
 #' and [compute.duckplyr_df()] for storing results in temporary storage on disk.
 #'
 #' Beyond safety regarding memory usage, frugal frames also allow you
 #' to check that all operations are supported by DuckDB:
-#' for a frugal frame with `collect = "closed"`, fallbacks to dplyr are not possible.
+#' for a frugal frame with `collect = "always_manual"`, fallbacks to dplyr are not possible.
 #' As a reminder, computing via DuckDB is currently not always possible,
 #' see `vignette("limits")` for the supported operations.
 #' In such cases, the original dplyr implementation is used, see [fallback] for details.
@@ -108,12 +108,12 @@
 #'
 #' x$a
 #'
-#' y <- duckdb_tibble(a = 1, .collect = "closed")
+#' y <- duckdb_tibble(a = 1, .collect = "always_manual")
 #' y
 #' try(length(y$a))
 #' length(collect(y)$a)
 #' @export
-duckdb_tibble <- function(..., .collect = "open") {
+duckdb_tibble <- function(..., .collect = "any_size") {
   out <- tibble::tibble(...)
   as_duckdb_tibble(out, collect = .collect)
 }
@@ -126,7 +126,7 @@ duckdb_tibble <- function(..., .collect = "open") {
 #' @param x The object to convert or to test.
 #' @rdname duckdb_tibble
 #' @export
-as_duckdb_tibble <- function(x, ..., collect = "open") {
+as_duckdb_tibble <- function(x, ..., collect = "any_size") {
   # Handle the collect arg in the generic, only the other args will be dispatched
   as_duckdb_tibble <- function(x, ...) {
     UseMethod("as_duckdb_tibble")
@@ -135,7 +135,7 @@ as_duckdb_tibble <- function(x, ..., collect = "open") {
   collect_parsed <- collect_parse(collect)
   out <- as_duckdb_tibble(x, ...)
 
-  if (collect_parsed$collect == "closed") {
+  if (collect_parsed$collect == "always_manual") {
     as_frugal_duckplyr_df(
       out,
       collect_parsed$allow_materialization,
@@ -173,11 +173,11 @@ collect_parse <- function(collect, call = caller_env()) {
       }
     }
     allow_materialization <- is.finite(n_rows) || is.finite(n_cells)
-    collect <- "closed"
+    collect <- "always_manual"
   } else if (!is.character(collect)) {
     cli::cli_abort("{.arg collect} must be an unnamed character vector or a named numeric vector", call = call)
   } else {
-    allow_materialization <- !identical(collect, "closed")
+    allow_materialization <- !identical(collect, "always_manual")
   }
 
   list(
@@ -195,7 +195,7 @@ as_duckdb_tibble.tbl_duckdb_connection <- function(x, ...) {
   con <- dbplyr::remote_con(x)
   sql <- dbplyr::remote_query(x)
 
-  read_sql_duckdb(sql, collect = "closed", con = con)
+  read_sql_duckdb(sql, collect = "always_manual", con = con)
 }
 
 #' @export
@@ -272,7 +272,7 @@ is_duckdb_tibble <- function(x) {
 
 #' @param collect Only adds the class, does not recreate the relation object!
 #' @noRd
-new_duckdb_tibble <- function(x, class = NULL, collect = "open", error_call = caller_env()) {
+new_duckdb_tibble <- function(x, class = NULL, collect = "any_size", error_call = caller_env()) {
   if (is.null(class)) {
     class <- c("tbl_df", "tbl", "data.frame")
   }
@@ -284,7 +284,7 @@ new_duckdb_tibble <- function(x, class = NULL, collect = "open", error_call = ca
   }
 
   class(x) <- unique(c(
-    if (!identical(collect, "open")) "frugal_duckplyr_df",
+    if (!identical(collect, "any_size")) "frugal_duckplyr_df",
     "duckplyr_df",
     class
   ))

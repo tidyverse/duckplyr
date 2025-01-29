@@ -1,5 +1,5 @@
 test_that("frugal duckplyr frames will collect", {
-  tbl <- duckdb_tibble(a = 1, .collect = "closed")
+  tbl <- duckdb_tibble(a = 1, .collect = "always_manual")
   expect_identical(
     collect(tbl),
     tibble(a = 1)
@@ -15,7 +15,7 @@ test_that("lavish duckplyr frames are converted to data frames", {
 })
 
 test_that("frugal duckplyr frames are converted to data frames", {
-  tbl <- duckdb_tibble(a = 1, .collect = "closed")
+  tbl <- duckdb_tibble(a = 1, .collect = "always_manual")
   expect_identical(
     as.data.frame(tbl),
     data.frame(a = 1)
@@ -31,7 +31,7 @@ test_that("lavish duckplyr frames are converted to tibbles", {
 })
 
 test_that("frugal duckplyr frames are converted to tibbles", {
-  tbl <- duckdb_tibble(a = 1, .collect = "closed")
+  tbl <- duckdb_tibble(a = 1, .collect = "always_manual")
   expect_identical(
     as_tibble(tbl),
     tibble(a = 1)

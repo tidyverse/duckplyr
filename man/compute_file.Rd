@@ -102,14 +102,14 @@ function.
 In dtplyr and dbplyr, there are no lavish frames: collection always needs to be
 explicit.
 
-A frugal duckplyr frame can be converted to an lavish one with \code{as_duckdb_tibble(collect = "open")}.
+A frugal duckplyr frame can be converted to an lavish one with \code{as_duckdb_tibble(collect = "any_size")}.
 The \code{\link[=collect.duckplyr_df]{collect.duckplyr_df()}} method triggers computation and converts to a plain tibble.
 Other useful methods include \code{\link[=compute_file]{compute_file()}} for storing results in a file,
 and \code{\link[=compute.duckplyr_df]{compute.duckplyr_df()}} for storing results in temporary storage on disk.
 
 Beyond safety regarding memory usage, frugal frames also allow you
 to check that all operations are supported by DuckDB:
-for a frugal frame with \code{collect = "closed"}, fallbacks to dplyr are not possible.
+for a frugal frame with \code{collect = "always_manual"}, fallbacks to dplyr are not possible.
 As a reminder, computing via DuckDB is currently not always possible,
 see \code{vignette("limits")} for the supported operations.
 In such cases, the original dplyr implementation is used, see \link{fallback} for details.

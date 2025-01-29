@@ -7,8 +7,8 @@ test_that("Can construct", {
   expect_identical(duckdb_tibble(a = 1)$a, 1)
 })
 
-test_that('.collect = "closed" forbids materialization', {
-  tbl <- duckdb_tibble(a = 1, .collect = "closed")
+test_that('.collect = "always_manual" forbids materialization', {
+  tbl <- duckdb_tibble(a = 1, .collect = "always_manual")
   expect_error(length(tbl$a))
 })
 
@@ -22,8 +22,8 @@ test_that('.collect = c(cells = ) forbids materialization', {
   expect_error(length(tbl$a))
 })
 
-test_that('.collect = "closed" forbids materialization for as_duckdb_tibble', {
-  tbl <- as_duckdb_tibble(data.frame(a = 1), collect = "closed")
+test_that('.collect = "always_manual" forbids materialization for as_duckdb_tibble', {
+  tbl <- as_duckdb_tibble(data.frame(a = 1), collect = "always_manual")
   expect_error(length(tbl$a))
 })
 
@@ -64,14 +64,14 @@ test_that("as_duckdb_tibble() and dbplyr tables", {
     dplyr::copy_to(dest = con)
 
   duck <- db_tbl %>%
-    as_duckdb_tibble(collect = "closed") %>%
+    as_duckdb_tibble(collect = "always_manual") %>%
     mutate(b = 2)
 
   expect_error(length(duck$b))
 
   db <- db_tbl %>%
     mutate(b = 2) %>%
-    as_duckdb_tibble(collect = "closed")
+    as_duckdb_tibble(collect = "always_manual")
 
   expect_error(length(db$b))
 
