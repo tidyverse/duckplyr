@@ -33,7 +33,7 @@ select.duckplyr_df <- function(.data, ...) {
 
 
   # dplyr forward
-  check_funneled(.data, duckplyr_error)
+  check_prudence(.data, duckplyr_error)
 
   select <- dplyr$select.data.frame
   out <- select(.data, ...)
