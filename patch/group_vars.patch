@@ -14,7 +14,7 @@ diff --git b/R/group_vars.R a/R/group_vars.R
 -  )
 -
 -  # dplyr forward
--  check_funneled(x, duckplyr_error)
+-  check_inertia(x, duckplyr_error)
 -
 -  group_vars <- dplyr$group_vars.data.frame
 -  out <- group_vars(x)

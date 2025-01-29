@@ -28,7 +28,7 @@ diff --git b/R/full_join.R a/R/full_join.R
      }
    )
 @@ -13,7 +26,7 @@ full_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
-   check_funneled(x, duckplyr_error)
+   check_inertia(x, duckplyr_error)
  
    full_join <- dplyr$full_join.data.frame
 -  out <- full_join(x, y, by, copy, suffix, ..., keep = keep, na_matches = na_matches, multiple = multiple, relationship = relationship)

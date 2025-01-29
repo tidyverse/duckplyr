@@ -44,7 +44,7 @@ compute.duckplyr_df <- function(
   )
 
   # dplyr forward
-  check_funneled(x, duckplyr_error)
+  check_inertia(x, duckplyr_error)
 
   compute <- dplyr$compute.data.frame
   out <- compute(x, ...)

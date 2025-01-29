@@ -29,7 +29,7 @@ relocate.duckplyr_df <- function(.data, ..., .before = NULL, .after = NULL) {
   )
 
   # dplyr forward
-  check_funneled(.data, duckplyr_error)
+  check_inertia(.data, duckplyr_error)
 
   relocate <- dplyr$relocate.data.frame
   out <- relocate(.data, ..., .before = {{ .before }}, .after = {{ .after }})

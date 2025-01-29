@@ -44,7 +44,7 @@ intersect.duckplyr_df <- function(x, y, ...) {
   )
 
   # dplyr forward
-  check_funneled(x, duckplyr_error)
+  check_inertia(x, duckplyr_error)
 
   intersect <- dplyr$intersect.data.frame
   out <- intersect(x, y, ...)

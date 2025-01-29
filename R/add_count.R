@@ -10,7 +10,7 @@ add_count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, 
   )
 
   # dplyr forward
-  check_funneled(x, duckplyr_error)
+  check_inertia(x, duckplyr_error)
 
   add_count <- dplyr$add_count.data.frame
   out <- add_count(x, ..., wt = {{ wt }}, sort = sort, name = name, .drop = .drop)

@@ -30,7 +30,7 @@ diff --git b/R/right_join.R a/R/right_join.R
      }
    )
 @@ -13,7 +28,7 @@ right_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x
-   check_funneled(x, duckplyr_error)
+   check_inertia(x, duckplyr_error)
  
    right_join <- dplyr$right_join.data.frame
 -  out <- right_join(x, y, by, copy, suffix, ..., keep = keep, na_matches = na_matches, multiple = multiple, unmatched = unmatched, relationship = relationship)

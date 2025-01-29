@@ -20,7 +20,7 @@ nest_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, keep = NULL, na
   )
 
   # dplyr forward
-  check_funneled(x, duckplyr_error)
+  check_inertia(x, duckplyr_error)
 
   x_df <- x
   class(x_df) <- setdiff(class(x_df), "duckplyr_df")

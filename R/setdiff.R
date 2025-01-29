@@ -44,7 +44,7 @@ setdiff.duckplyr_df <- function(x, y, ...) {
   )
 
   # dplyr forward
-  check_funneled(x, duckplyr_error)
+  check_inertia(x, duckplyr_error)
 
   setdiff <- dplyr$setdiff.data.frame
   out <- setdiff(x, y, ...)

@@ -14,7 +14,7 @@ diff --git b/R/group_split.R a/R/group_split.R
    duckplyr_error <- rel_try(NULL,
      # Always fall back to dplyr
 @@ -14,7 +19,7 @@ group_split.duckplyr_df <- function(.tbl, ..., .keep = TRUE, keep = deprecated()
-   check_funneled(.tbl, duckplyr_error)
+   check_inertia(.tbl, duckplyr_error)
  
    group_split <- dplyr$group_split.data.frame
 -  out <- group_split(.tbl, ..., .keep = .keep, keep = keep)

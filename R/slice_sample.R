@@ -10,7 +10,7 @@ slice_sample.duckplyr_df <- function(.data, ..., n, prop, by = NULL, weight_by =
   )
 
   # dplyr forward
-  check_funneled(.data, duckplyr_error)
+  check_inertia(.data, duckplyr_error)
 
   slice_sample <- dplyr$slice_sample.data.frame
   out <- slice_sample(.data, ..., n = n, prop = prop, by = {{ by }}, weight_by = {{ weight_by }}, replace = replace)

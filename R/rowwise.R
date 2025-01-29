@@ -11,7 +11,7 @@ rowwise.duckplyr_df <- function(data, ...) {
   )
 
   # dplyr forward
-  check_funneled(data, duckplyr_error)
+  check_inertia(data, duckplyr_error)
 
   rowwise <- dplyr$rowwise.data.frame
   out <- rowwise(data, ...)

@@ -15,7 +15,7 @@ diff --git b/R/collect.R a/R/collect.R
 -  )
 -
 -  # dplyr forward
--  check_funneled(x, duckplyr_error)
+-  check_inertia(x, duckplyr_error)
 -
 -  collect <- dplyr$collect.data.frame
 -  out <- collect(x, ...)

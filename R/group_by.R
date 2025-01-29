@@ -11,7 +11,7 @@ group_by.duckplyr_df <- function(.data, ..., .add = FALSE, .drop = group_by_drop
   )
 
   # dplyr forward
-  check_funneled(.data, duckplyr_error)
+  check_inertia(.data, duckplyr_error)
 
   group_by <- dplyr$group_by.data.frame
   out <- group_by(.data, ..., .add = .add, .drop = .drop)
