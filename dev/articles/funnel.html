@@ -153,7 +153,7 @@ month:</p>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.107   0.000   0.106</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.105   0.001   0.105</span></span></code></pre></div>
 <p>Setting up the pipeline is fast, the size of the data does not affect
 the setup costs. Because the computation is deferred, DuckDB can
 optimize the whole pipeline, which can be seen in the output below:</p>
@@ -218,7 +218,7 @@ kept. The result becomes available when accessed:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">mean_arr_delay_ewr</span><span class="op">$</span><span class="va">mean_arr_delay</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.019   0.001   0.016</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.043   0.002   0.022</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="comparison">Comparison<a class="anchor" aria-label="anchor" href="#comparison"></a>
@@ -274,7 +274,7 @@ opportunity for optimization:</p>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.040   0.006   0.046</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.036   0.008   0.044</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -308,7 +308,7 @@ frames.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">flights_funneled</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">flights</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span>funnel <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span>funnel <span class="op">=</span> <span class="st">"closed"</span><span class="op">)</span></span></code></pre></div>
 <p>In this example, <code>flights_funneled</code> is a funneled duckplyr
 frame. The data can be displayed, and column names and types can be
 accessed.</p>
@@ -368,14 +368,14 @@ frame, fallbacks to dplyr are not possible.</p>
 <span><span class="co">#&gt;   a funneled duckplyr frame.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Try `summarise(.by = ...)` or `mutate(.by = ...)` instead of</span></span>
 <span><span class="co">#&gt;   `group_by()` and `ungroup()`.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `compute(funnel = FALSE)` to materialize to temporary storage and</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `compute(funnel = "open")` to materialize to temporary storage and</span></span>
 <span><span class="co">#&gt;   continue with <span style="color: #0000BB;">duckplyr</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> See `vignette("funnel")` for other options.</span></span></code></pre></div>
 <p>The same pipeline with an unfunneled frame works, but the computation
 is carried out by dplyr:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">flights_funneled</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span>funnel <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span>funnel <span class="op">=</span> <span class="st">"open"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">origin</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -395,13 +395,13 @@ duckplyr.</p>
 <h3 id="unfunneling">Unfunneling<a class="anchor" aria-label="anchor" href="#unfunneling"></a>
 </h3>
 <p>A funneled duckplyr frame can be converted to an unfunneled one with
-<code>as_duckdb_tibble(funnel = FALSE)</code>. The
+<code>as_duckdb_tibble(funnel = "open")</code>. The
 <code><a href="../reference/collect.duckplyr_df.html">collect.duckplyr_df()</a></code> method triggers computation and
 converts to a plain tibble. The difference between the two is the class
 of the returned object:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">flights_funneled</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span>funnel <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span>funnel <span class="op">=</span> <span class="st">"open"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "duckplyr_df" "tbl_df"      "tbl"         "data.frame"</span></span>
 <span></span>

@@ -153,8 +153,8 @@ See the "Funneling" section in <code><a href="duckdb_tibble.html">duckdb_tibble(
 <span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">$</span><span class="va">a</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 2 3</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Automatic materialization with funnel = FALSE</span></span></span>
-<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">read_csv_duckdb</span><span class="op">(</span><span class="va">path</span>, funnel <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Automatic materialization with funnel = "open"</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">read_csv_duckdb</span><span class="op">(</span><span class="va">path</span>, funnel <span class="op">=</span> <span class="st">"open"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">df</span><span class="op">$</span><span class="va">a</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 2 3</span>
 <span class="r-in"><span></span></span>

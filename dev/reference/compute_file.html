@@ -146,13 +146,13 @@ the computation only starts when you <strong>explicitly</strong> request it with
 function.
 In dtplyr and dbplyr, there are no unfunneled frames: collection always needs to be
 explicit.</p>
-<p>A funneled duckplyr frame can be converted to an unfunneled one with <code>as_duckdb_tibble(funnel = FALSE)</code>.
+<p>A funneled duckplyr frame can be converted to an unfunneled one with <code>as_duckdb_tibble(funnel = "open")</code>.
 The <code><a href="collect.duckplyr_df.html">collect.duckplyr_df()</a></code> method triggers computation and converts to a plain tibble.
 Other useful methods include <code>compute_file()</code> for storing results in a file,
 and <code><a href="compute.duckplyr_df.html">compute.duckplyr_df()</a></code> for storing results in temporary storage on disk.</p>
 <p>Beyond safety regarding memory usage, funneled frames also allow you
 to check that all operations are supported by DuckDB:
-for a funneled frame with <code>funnel = FALSE</code>, fallbacks to dplyr are not possible.
+for a funneled frame with <code>funnel = "closed"</code>, fallbacks to dplyr are not possible.
 As a reminder, computing via DuckDB is currently not always possible,
 see <code><a href="../articles/limits.html">vignette("limits")</a></code> for the supported operations.
 In such cases, the original dplyr implementation is used, see <a href="fallback.html">fallback</a> for details.
