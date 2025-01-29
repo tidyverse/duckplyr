@@ -6,9 +6,9 @@
 \alias{is_duckdb_tibble}
 \title{duckplyr data frames}
 \usage{
-duckdb_tibble(..., .inert = "open")
+duckdb_tibble(..., .inert = "never")
 
-as_duckdb_tibble(x, ..., inert = "open")
+as_duckdb_tibble(x, ..., inert = "never")
 
 is_duckdb_tibble(x)
 }
@@ -112,14 +112,14 @@ function.
 In dtplyr and dbplyr, there are no non_inert frames: collection always needs to be
 explicit.
 
-An inert duckplyr frame can be converted to an non_inert one with \code{as_duckdb_tibble(inert = "open")}.
+An inert duckplyr frame can be converted to an non_inert one with \code{as_duckdb_tibble(inert = "never")}.
 The \code{\link[=collect.duckplyr_df]{collect.duckplyr_df()}} method triggers computation and converts to a plain tibble.
 Other useful methods include \code{\link[=compute_file]{compute_file()}} for storing results in a file,
 and \code{\link[=compute.duckplyr_df]{compute.duckplyr_df()}} for storing results in temporary storage on disk.
 
 Beyond safety regarding memory usage, inert frames also allow you
 to check that all operations are supported by DuckDB:
-for an inert frame with \code{inert = "closed"}, fallbacks to dplyr are not possible.
+for an inert frame with \code{inert = "always"}, fallbacks to dplyr are not possible.
 As a reminder, computing via DuckDB is currently not always possible,
 see \code{vignette("limits")} for the supported operations.
 In such cases, the original dplyr implementation is used, see \link{fallback} for details.
@@ -139,7 +139,7 @@ x \%>\%
 
 x$a
 
-y <- duckdb_tibble(a = 1, .inert = "closed")
+y <- duckdb_tibble(a = 1, .inert = "always")
 y
 try(length(y$a))
 length(collect(y)$a)

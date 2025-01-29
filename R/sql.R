@@ -33,9 +33,9 @@ read_sql_duckdb <- function(sql, ..., inert = c(cells = 1e6), con = NULL) {
   meta_rel_register(rel, expr(duckdb$rel_from_sql(con, !!sql)))
 
   df <- duckdb$rel_to_altrep(rel, allow_materialization = FALSE)
-  out <- new_duckdb_tibble(df, inert = "closed")
+  out <- new_duckdb_tibble(df, inert = "always")
 
-  if (!identical(inert, "closed")) {
+  if (!identical(inert, "always")) {
     out <- as_duckdb_tibble(out, inert = inert)
   }
 

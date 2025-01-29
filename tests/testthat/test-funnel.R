@@ -1,5 +1,5 @@
 test_that("inert duckplyr frames will collect", {
-  tbl <- duckdb_tibble(a = 1, .inert = "closed")
+  tbl <- duckdb_tibble(a = 1, .inert = "always")
   expect_identical(
     collect(tbl),
     tibble(a = 1)
@@ -15,7 +15,7 @@ test_that("non_inert duckplyr frames are converted to data frames", {
 })
 
 test_that("inert duckplyr frames are converted to data frames", {
-  tbl <- duckdb_tibble(a = 1, .inert = "closed")
+  tbl <- duckdb_tibble(a = 1, .inert = "always")
   expect_identical(
     as.data.frame(tbl),
     data.frame(a = 1)
@@ -31,7 +31,7 @@ test_that("non_inert duckplyr frames are converted to tibbles", {
 })
 
 test_that("inert duckplyr frames are converted to tibbles", {
-  tbl <- duckdb_tibble(a = 1, .inert = "closed")
+  tbl <- duckdb_tibble(a = 1, .inert = "always")
   expect_identical(
     as_tibble(tbl),
     tibble(a = 1)

@@ -57,14 +57,14 @@
 #' In dtplyr and dbplyr, there are no non_inert frames: collection always needs to be
 #' explicit.
 #'
-#' An inert duckplyr frame can be converted to an non_inert one with `as_duckdb_tibble(inert = "open")`.
+#' An inert duckplyr frame can be converted to an non_inert one with `as_duckdb_tibble(inert = "never")`.
 #' The [collect.duckplyr_df()] method triggers computation and converts to a plain tibble.
 #' Other useful methods include [compute_file()] for storing results in a file,
 #' and [compute.duckplyr_df()] for storing results in temporary storage on disk.
 #'
 #' Beyond safety regarding memory usage, inert frames also allow you
 #' to check that all operations are supported by DuckDB:
-#' for an inert frame with `inert = "closed"`, fallbacks to dplyr are not possible.
+#' for an inert frame with `inert = "always"`, fallbacks to dplyr are not possible.
 #' As a reminder, computing via DuckDB is currently not always possible,
 #' see `vignette("limits")` for the supported operations.
 #' In such cases, the original dplyr implementation is used, see [fallback] for details.
@@ -108,12 +108,12 @@
 #'
 #' x$a
 #'
-#' y <- duckdb_tibble(a = 1, .inert = "closed")
+#' y <- duckdb_tibble(a = 1, .inert = "always")
 #' y
 #' try(length(y$a))
 #' length(collect(y)$a)
 #' @export
-duckdb_tibble <- function(..., .inert = "open") {
+duckdb_tibble <- function(..., .inert = "never") {
   out <- tibble::tibble(...)
   as_duckdb_tibble(out, inert = .inert)
 }
@@ -126,7 +126,7 @@ duckdb_tibble <- function(..., .inert = "open") {
 #' @param x The object to convert or to test.
 #' @rdname duckdb_tibble
 #' @export
-as_duckdb_tibble <- function(x, ..., inert = "open") {
+as_duckdb_tibble <- function(x, ..., inert = "never") {
   # Handle the inert arg in the generic, only the other args will be dispatched
   as_duckdb_tibble <- function(x, ...) {
     UseMethod("as_duckdb_tibble")
@@ -135,7 +135,7 @@ as_duckdb_tibble <- function(x, ..., inert = "open") {
   inert_parsed <- inert_parse(inert)
   out <- as_duckdb_tibble(x, ...)
 
-  if (inert_parsed$inert == "closed") {
+  if (inert_parsed$inert == "always") {
     as_inert_duckplyr_df(
       out,
       inert_parsed$allow_materialization,
@@ -173,11 +173,11 @@ inert_parse <- function(inert, call = caller_env()) {
       }
     }
     allow_materialization <- is.finite(n_rows) || is.finite(n_cells)
-    inert <- "closed"
+    inert <- "always"
   } else if (!is.character(inert)) {
     cli::cli_abort("{.arg inert} must be an unnamed character vector or a named numeric vector", call = call)
   } else {
-    allow_materialization <- !identical(inert, "closed")
+    allow_materialization <- !identical(inert, "always")
   }
 
   list(
@@ -195,7 +195,7 @@ as_duckdb_tibble.tbl_duckdb_connection <- function(x, ...) {
   con <- dbplyr::remote_con(x)
   sql <- dbplyr::remote_query(x)
 
-  read_sql_duckdb(sql, inert = "closed", con = con)
+  read_sql_duckdb(sql, inert = "always", con = con)
 }
 
 #' @export
@@ -272,7 +272,7 @@ is_duckdb_tibble <- function(x) {
 
 #' @param inert Only adds the class, does not recreate the relation object!
 #' @noRd
-new_duckdb_tibble <- function(x, class = NULL, inert = "open", error_call = caller_env()) {
+new_duckdb_tibble <- function(x, class = NULL, inert = "never", error_call = caller_env()) {
   if (is.null(class)) {
     class <- c("tbl_df", "tbl", "data.frame")
   }
@@ -284,7 +284,7 @@ new_duckdb_tibble <- function(x, class = NULL, inert = "open", error_call = call
   }
 
   class(x) <- unique(c(
-    if (!identical(inert, "open")) "inert_duckplyr_df",
+    if (!identical(inert, "never")) "inert_duckplyr_df",
     "duckplyr_df",
     class
   ))

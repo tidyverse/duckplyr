@@ -41,8 +41,8 @@ read_parquet_duckdb <- function(path, ..., inert = c(cells = 1e6), options = lis
 #' # Materialize explicitly
 #' collect(df)$a
 #'
-#' # Automatic materialization with inert = "open"
-#' df <- read_csv_duckdb(path, inert = "open")
+#' # Automatic materialization with inert = "never"
+#' df <- read_csv_duckdb(path, inert = "never")
 #' df$a
 #'
 #' # Specify column types
@@ -150,9 +150,9 @@ duckfun <- function(table_function, args, ..., inert) {
 
   # Start with inert, to avoid unwanted materialization
   df <- duckdb$rel_to_altrep(rel, allow_materialization = FALSE)
-  out <- new_duckdb_tibble(df, inert = "closed")
+  out <- new_duckdb_tibble(df, inert = "always")
 
-  if (!identical(inert, "closed")) {
+  if (!identical(inert, "always")) {
     out <- as_duckdb_tibble(out, inert = inert)
   }
 

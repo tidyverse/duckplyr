@@ -78,8 +78,8 @@ try(print(df$a))
 # Materialize explicitly
 collect(df)$a
 
-# Automatic materialization with inert = "open"
-df <- read_csv_duckdb(path, inert = "open")
+# Automatic materialization with inert = "never"
+df <- read_csv_duckdb(path, inert = "never")
 df$a
 
 # Specify column types

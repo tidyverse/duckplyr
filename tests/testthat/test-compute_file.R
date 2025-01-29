@@ -29,7 +29,7 @@ test_that("compute_csv()", {
 test_that("compute_csv() inert", {
   df <- data.frame(x = c(1, 2))
   withr::defer(unlink("test.csv"))
-  out <- compute_csv(df, path = "test.csv", inert = "closed")
+  out <- compute_csv(df, path = "test.csv", inert = "always")
 
   expect_true(is_inert_duckplyr_df(out))
   expect_identical(collect(out), as_tibble(df))

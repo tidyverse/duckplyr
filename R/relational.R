@@ -131,7 +131,7 @@ check_inertia <- function(x, duckplyr_error, call = caller_env()) {
     cli::cli_abort(parent = duckplyr_error_parent, call = call, c(
       "This operation cannot be carried out by DuckDB, and the input is an inert duckplyr frame.",
       "*" = duckplyr_error_msg,
-      "i" = 'Use {.code compute(inert = "open")} to materialize to temporary storage and continue with {.pkg duckplyr}.',
+      "i" = 'Use {.code compute(inert = "never")} to materialize to temporary storage and continue with {.pkg duckplyr}.',
       "i" = 'See {.run vignette("inert")} for other options.'
     ))
   }

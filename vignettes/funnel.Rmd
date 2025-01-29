@@ -157,7 +157,7 @@ The example below demonstrates the use of inert duckplyr frames.
 ```{r}
 flights_inert <-
   flights |>
-  duckplyr::as_duckdb_tibble(inert = "closed")
+  duckplyr::as_duckdb_tibble(inert = "always")
 ```
 
 In this example, `flights_inert` is an inert duckplyr frame.
@@ -195,7 +195,7 @@ The same pipeline with an non_inert frame works, but the computation is carried 
 
 ```{r}
 flights_inert |>
-  duckplyr::as_duckdb_tibble(inert = "open") |>
+  duckplyr::as_duckdb_tibble(inert = "never") |>
   group_by(origin) |>
   summarize(n = n()) |>
   ungroup()
@@ -207,13 +207,13 @@ See `?fallback` for details on fallbacks, and `vignette("limits")` for the opera
 
 ### Uninerting
 
-An inert duckplyr frame can be converted to an non_inert one with `as_duckdb_tibble(inert = "open")`.
+An inert duckplyr frame can be converted to an non_inert one with `as_duckdb_tibble(inert = "never")`.
 The `collect.duckplyr_df()` method triggers computation and converts to a plain tibble.
 The difference between the two is the class of the returned object:
 
 ```{r}
 flights_inert |>
-  duckplyr::as_duckdb_tibble(inert = "open") |>
+  duckplyr::as_duckdb_tibble(inert = "never") |>
   class()
 
 flights_inert |>

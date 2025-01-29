@@ -43,12 +43,12 @@ is_inert_duckplyr_df <- function(x) {
 
 get_inert_duckplyr_df <- function(x) {
   if (!is_inert_duckplyr_df(x)) {
-    return("open")
+    return("never")
   }
 
   inert <- attr(x, "inert")
   if (is.null(inert)) {
-    return("closed")
+    return("always")
   }
 
   inert
