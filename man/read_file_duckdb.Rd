@@ -7,17 +7,17 @@
 \alias{read_json_duckdb}
 \title{Read Parquet, CSV, and other files using DuckDB}
 \usage{
-read_parquet_duckdb(path, ..., funnel = c(cells = 1e+06), options = list())
+read_parquet_duckdb(path, ..., inert = c(cells = 1e+06), options = list())
 
-read_csv_duckdb(path, ..., funnel = c(cells = 1e+06), options = list())
+read_csv_duckdb(path, ..., inert = c(cells = 1e+06), options = list())
 
-read_json_duckdb(path, ..., funnel = c(cells = 1e+06), options = list())
+read_json_duckdb(path, ..., inert = c(cells = 1e+06), options = list())
 
 read_file_duckdb(
   path,
   table_function,
   ...,
-  funnel = c(cells = 1e+06),
+  inert = c(cells = 1e+06),
   options = list()
 )
 }
@@ -26,9 +26,9 @@ read_file_duckdb(
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{funnel}{Logical, whether to create a funneled duckplyr frame.
-By default, a funneled duckplyr frame is created.
-See the "Funneling" section in \code{\link[=duckdb_tibble]{duckdb_tibble()}} for details.}
+\item{inert}{Logical, whether to create an inert duckplyr frame.
+By default, an inert duckplyr frame is created.
+See the "Inertia" section in \code{\link[=duckdb_tibble]{duckdb_tibble()}} for details.}
 
 \item{options}{Arguments to the DuckDB function
 indicated by \code{table_function}.}
@@ -58,8 +58,8 @@ To read multiple files with the same schema,
 pass a wildcard or a character vector to the \code{path} argument,
 }
 \details{
-By default, a funneled duckplyr frame, with a limit of one million cells, is created.
-See the "Funneling" section in \code{\link[=duckdb_tibble]{duckdb_tibble()}} for details.
+By default, an inert duckplyr frame, with a limit of one million cells, is created.
+See the "Inertia" section in \code{\link[=duckdb_tibble]{duckdb_tibble()}} for details.
 }
 \examples{
 # Create simple CSV file
@@ -78,8 +78,8 @@ try(print(df$a))
 # Materialize explicitly
 collect(df)$a
 
-# Automatic materialization with funnel = "open"
-df <- read_csv_duckdb(path, funnel = "open")
+# Automatic materialization with inert = "open"
+df <- read_csv_duckdb(path, inert = "open")
 df$a
 
 # Specify column types

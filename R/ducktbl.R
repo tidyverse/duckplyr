@@ -7,10 +7,10 @@
 #' For such objects,
 #' dplyr verbs such as [mutate()], [select()] or [filter()]  will use DuckDB.
 #'
-#' `duckdb_tibble()` works like [tibble()], returning an "unfunneled" duckplyr data frame by default.
-#' See the "Funneling" section below.
+#' `duckdb_tibble()` works like [tibble()], returning an "non_inert" duckplyr data frame by default.
+#' See the "Inertia" section below.
 #'
-#' @section Funneling:
+#' @section Inertia:
 #' Data frames backed by duckplyr, with class `"duckplyr_df"`,
 #' behave as regular data frames in almost all respects.
 #' In particular, direct column access like `df$x`,
@@ -18,7 +18,7 @@
 #' Conceptually, duckplyr frames are "eager": from a user's perspective,
 #' they behave like regular data frames.
 #' Under the hood, two key differences provide improved performance and usability:
-#' lazy materialization and funneling.
+#' lazy materialization and inerting.
 #'
 #' For a duckplyr frame that is the result of a dplyr operation,
 #' accessing column data or retrieving the number of rows will trigger a computation
@@ -32,9 +32,9 @@
 #' Being both "eager" and "lazy" at the same time introduces a challenge:
 #' it is too easy to accidentally trigger computation,
 #' which may be prohibitive if an intermediate result is too large.
-#' This is where funneling comes in.
+#' This is where inerting comes in.
 #'
-#' - For unfunneled duckplyr frames, the underlying DuckDB computation is carried out
+#' - For non_inert duckplyr frames, the underlying DuckDB computation is carried out
 #'   upon the first request.
 #'   Once the results are computed, they are cached and subsequent requests are fast.
 #'   This is a good choice for small to medium-sized data,
@@ -42,7 +42,7 @@
 #'   at any stage.
 #'   This is the default for `duckdb_tibble()` and `as_duckdb_tibble()`.
 #'
-#' - For funneled duckplyr frames, accessing a column or requesting the number of rows
+#' - For inert duckplyr frames, accessing a column or requesting the number of rows
 #'   triggers an error, either unconditionally, or if the result exceeds a certain size.
 #'   This is a good choice for large data sets where the cost of materializing the data
 #'   may be prohibitive due to size or computation time,
@@ -50,35 +50,35 @@
 #'   The default for the ingestion functions like [read_parquet_duckdb()]
 #'   is to limit the result size to one million cells (values in the resulting data frame).
 #'
-#' Funneled duckplyr frames behave like [`dtplyr`'s lazy frames](https://dtplyr.tidyverse.org/reference/lazy_dt.html),
+#' Inert duckplyr frames behave like [`dtplyr`'s lazy frames](https://dtplyr.tidyverse.org/reference/lazy_dt.html),
 #' or dbplyr's lazy frames:
 #' the computation only starts when you **explicitly** request it with a "collect"
 #' function.
-#' In dtplyr and dbplyr, there are no unfunneled frames: collection always needs to be
+#' In dtplyr and dbplyr, there are no non_inert frames: collection always needs to be
 #' explicit.
 #'
-#' A funneled duckplyr frame can be converted to an unfunneled one with `as_duckdb_tibble(funnel = "open")`.
+#' An inert duckplyr frame can be converted to an non_inert one with `as_duckdb_tibble(inert = "open")`.
 #' The [collect.duckplyr_df()] method triggers computation and converts to a plain tibble.
 #' Other useful methods include [compute_file()] for storing results in a file,
 #' and [compute.duckplyr_df()] for storing results in temporary storage on disk.
 #'
-#' Beyond safety regarding memory usage, funneled frames also allow you
+#' Beyond safety regarding memory usage, inert frames also allow you
 #' to check that all operations are supported by DuckDB:
-#' for a funneled frame with `funnel = "closed"`, fallbacks to dplyr are not possible.
+#' for an inert frame with `inert = "closed"`, fallbacks to dplyr are not possible.
 #' As a reminder, computing via DuckDB is currently not always possible,
 #' see `vignette("limits")` for the supported operations.
 #' In such cases, the original dplyr implementation is used, see [fallback] for details.
 #' As the original dplyr implementation accesses columns directly,
 #' the data must be materialized before a fallback can be executed.
-#' This means that automatic fallback is only possible for "unfunneled" duckplyr frames,
-#' while for "funneled" duckplyr frames, one of the aforementioned collection methods must be used first.
+#' This means that automatic fallback is only possible for "non_inert" duckplyr frames,
+#' while for "inert" duckplyr frames, one of the aforementioned collection methods must be used first.
 #'
 #'
 #' @param ... For `duckdb_tibble()`, passed on to [tibble()].
 #'   For `as_duckdb_tibble()`, passed on to methods.
-#' @param .funnel,funnel Either a logical:
-#'   - Set to `TRUE` to return a funneled data frame.
-#'   - Set to `FALSE` to return an unfunneled data frame.
+#' @param .inert,inert Either a logical:
+#'   - Set to `TRUE` to return an inert data frame.
+#'   - Set to `FALSE` to return an non_inert data frame.
 #'
 #' Or a named vector with at least one of
 #'   - `cells` (numeric)
@@ -90,11 +90,11 @@
 #' If `cells` is specified but not `rows`, `rows` is `Inf`.
 #' If `rows` is specified but not `cells`, `cells` is `Inf`.
 #'
-#' The default is to inherit the funneling of the input.
-#'   see the "Funneling" section.
+#' The default is to inherit the inerting of the input.
+#'   see the "Inertia" section.
 #'
 #' @return For `duckdb_tibble()` and `as_duckdb_tibble()`, an object with the following classes:
-#'   - `"funneled_duckplyr_df"` if `.funnel` is `TRUE`
+#'   - `"inert_duckplyr_df"` if `.inert` is `TRUE`
 #'   - `"duckplyr_df"`
 #'   - Classes of a [tibble]
 #'
@@ -108,14 +108,14 @@
 #'
 #' x$a
 #'
-#' y <- duckdb_tibble(a = 1, .funnel = "closed")
+#' y <- duckdb_tibble(a = 1, .inert = "closed")
 #' y
 #' try(length(y$a))
 #' length(collect(y)$a)
 #' @export
-duckdb_tibble <- function(..., .funnel = "open") {
+duckdb_tibble <- function(..., .inert = "open") {
   out <- tibble::tibble(...)
-  as_duckdb_tibble(out, funnel = .funnel)
+  as_duckdb_tibble(out, inert = .inert)
 }
 
 #' as_duckdb_tibble
@@ -126,62 +126,62 @@ duckdb_tibble <- function(..., .funnel = "open") {
 #' @param x The object to convert or to test.
 #' @rdname duckdb_tibble
 #' @export
-as_duckdb_tibble <- function(x, ..., funnel = "open") {
-  # Handle the funnel arg in the generic, only the other args will be dispatched
+as_duckdb_tibble <- function(x, ..., inert = "open") {
+  # Handle the inert arg in the generic, only the other args will be dispatched
   as_duckdb_tibble <- function(x, ...) {
     UseMethod("as_duckdb_tibble")
   }
 
-  funnel_parsed <- funnel_parse(funnel)
+  inert_parsed <- inert_parse(inert)
   out <- as_duckdb_tibble(x, ...)
 
-  if (funnel_parsed$funnel == "closed") {
-    as_funneled_duckplyr_df(
+  if (inert_parsed$inert == "closed") {
+    as_inert_duckplyr_df(
       out,
-      funnel_parsed$allow_materialization,
-      funnel_parsed$n_rows,
-      funnel_parsed$n_cells
+      inert_parsed$allow_materialization,
+      inert_parsed$n_rows,
+      inert_parsed$n_cells
     )
   } else {
-    as_unfunneled_duckplyr_df(out)
+    as_non_inert_duckplyr_df(out)
   }
 }
 
-funnel_parse <- function(funnel, call = caller_env()) {
+inert_parse <- function(inert, call = caller_env()) {
   n_rows <- Inf
   n_cells <- Inf
 
-  if (is.numeric(funnel)) {
-    if (is.null(names(funnel))) {
-      cli::cli_abort("{.arg funnel} must have names if it is a named vector.", call = call)
+  if (is.numeric(inert)) {
+    if (is.null(names(inert))) {
+      cli::cli_abort("{.arg inert} must have names if it is a named vector.", call = call)
     }
-    extra_names <- setdiff(names(funnel), c("rows", "cells"))
+    extra_names <- setdiff(names(inert), c("rows", "cells"))
     if (length(extra_names) > 0) {
-      cli::cli_abort("Unknown name in {.arg funnel}: {extra_names[[1]]}", call = call)
+      cli::cli_abort("Unknown name in {.arg inert}: {extra_names[[1]]}", call = call)
     }
 
-    if ("rows" %in% names(funnel)) {
-      n_rows <- funnel[["rows"]]
+    if ("rows" %in% names(inert)) {
+      n_rows <- inert[["rows"]]
       if (is.na(n_rows) || n_rows < 0) {
-        cli::cli_abort("The {.val rows} component of {.arg funnel} must be a non-negative integer", call = call)
+        cli::cli_abort("The {.val rows} component of {.arg inert} must be a non-negative integer", call = call)
       }
     }
-    if ("cells" %in% names(funnel)) {
-      n_cells <- funnel[["cells"]]
+    if ("cells" %in% names(inert)) {
+      n_cells <- inert[["cells"]]
       if (is.na(n_cells) || n_cells < 0) {
-        cli::cli_abort("The {.val cells} component of {.arg funnel} must be a non-negative integer", call = call)
+        cli::cli_abort("The {.val cells} component of {.arg inert} must be a non-negative integer", call = call)
       }
     }
     allow_materialization <- is.finite(n_rows) || is.finite(n_cells)
-    funnel <- "closed"
-  } else if (!is.character(funnel)) {
-    cli::cli_abort("{.arg funnel} must be an unnamed character vector or a named numeric vector", call = call)
+    inert <- "closed"
+  } else if (!is.character(inert)) {
+    cli::cli_abort("{.arg inert} must be an unnamed character vector or a named numeric vector", call = call)
   } else {
-    allow_materialization <- !identical(funnel, "closed")
+    allow_materialization <- !identical(inert, "closed")
   }
 
   list(
-    funnel = funnel,
+    inert = inert,
     allow_materialization = allow_materialization,
     n_rows = n_rows,
     n_cells = n_cells
@@ -195,7 +195,7 @@ as_duckdb_tibble.tbl_duckdb_connection <- function(x, ...) {
   con <- dbplyr::remote_con(x)
   sql <- dbplyr::remote_query(x)
 
-  read_sql_duckdb(sql, funnel = "closed", con = con)
+  read_sql_duckdb(sql, inert = "closed", con = con)
 }
 
 #' @export
@@ -270,9 +270,9 @@ is_duckdb_tibble <- function(x) {
 }
 
 
-#' @param funnel Only adds the class, does not recreate the relation object!
+#' @param inert Only adds the class, does not recreate the relation object!
 #' @noRd
-new_duckdb_tibble <- function(x, class = NULL, funnel = "open", error_call = caller_env()) {
+new_duckdb_tibble <- function(x, class = NULL, inert = "open", error_call = caller_env()) {
   if (is.null(class)) {
     class <- c("tbl_df", "tbl", "data.frame")
   }
@@ -284,7 +284,7 @@ new_duckdb_tibble <- function(x, class = NULL, funnel = "open", error_call = cal
   }
 
   class(x) <- unique(c(
-    if (!identical(funnel, "open")) "funneled_duckplyr_df",
+    if (!identical(inert, "open")) "inert_duckplyr_df",
     "duckplyr_df",
     class
   ))

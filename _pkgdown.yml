@@ -13,7 +13,7 @@ articles:
   navbar: ~
   contents:
   - large
-  - funnel
+  - inert
   - limits
   - developers
   - telemetry

@@ -4,13 +4,13 @@
 compute.duckplyr_df <- function(
   x,
   ...,
-  funnel = NULL,
+  inert = NULL,
   name = NULL,
   schema_name = NULL,
   temporary = TRUE
 ) {
-  if (is.null(funnel)) {
-    funnel <- get_funnel_duckplyr_df(x)
+  if (is.null(inert)) {
+    inert <- get_inert_duckplyr_df(x)
   }
   if (is.null(schema_name)) {
     schema_name <- ""
@@ -35,8 +35,8 @@ compute.duckplyr_df <- function(
 
       out <- duckplyr_reconstruct(out_rel, x)
 
-      if (get_funnel_duckplyr_df(out) != funnel) {
-        out <- as_duckdb_tibble(out, funnel = funnel)
+      if (get_inert_duckplyr_df(out) != inert) {
+        out <- as_duckdb_tibble(out, inert = inert)
       }
 
       return(out)

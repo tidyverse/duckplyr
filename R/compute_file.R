@@ -1,7 +1,7 @@
 #' @title Compute results to a file
 #'
 #' @description
-#' These functions apply to (funneled) duckplyr frames.
+#' These functions apply to (inert) duckplyr frames.
 #' They executes a query and stores the results in a flat file.
 #' The result is a duckplyr frame that can be used with subsequent dplyr verbs.
 #'
@@ -9,7 +9,7 @@
 #'
 #' @inheritParams rlang::args_dots_empty
 #' @inheritParams compute.duckplyr_df
-#' @inheritSection duckdb_tibble Funneling
+#' @inheritSection duckdb_tibble Inertia
 #' @param path The path to store the result in.
 #' @param options A list of additional options to pass to create the storage format,
 #'   see <https://duckdb.org/docs/data/parquet/overview#writing-to-parquet-files>
@@ -26,15 +26,15 @@
 #' explain(df)
 #' @seealso [compute.duckplyr_df()], [dplyr::collect()]
 #' @name compute_file
-compute_parquet <- function(x, path, ..., funnel = NULL, options = NULL) {
+compute_parquet <- function(x, path, ..., inert = NULL, options = NULL) {
   check_dots_empty()
 
   if (is.null(options)) {
     options <- list()
   }
 
-  if (is.null(funnel)) {
-    funnel <- get_funnel_duckplyr_df(x)
+  if (is.null(inert)) {
+    inert <- get_inert_duckplyr_df(x)
   }
 
   rel <- duckdb_rel_from_df(x)
@@ -46,7 +46,7 @@ compute_parquet <- function(x, path, ..., funnel = NULL, options = NULL) {
     path <- file.path(path, "**", "**.parquet")
   }
 
-  read_parquet_duckdb(path, funnel = funnel)
+  read_parquet_duckdb(path, inert = inert)
 }
 
 #' compute_csv()
@@ -54,15 +54,15 @@ compute_parquet <- function(x, path, ..., funnel = NULL, options = NULL) {
 #' `compute_csv()` creates a CSV file.
 #' @rdname compute_file
 #' @export
-compute_csv <- function(x, path, ..., funnel = NULL, options = NULL) {
+compute_csv <- function(x, path, ..., inert = NULL, options = NULL) {
   check_dots_empty()
 
   if (is.null(options)) {
     options <- list()
   }
 
-  if (is.null(funnel)) {
-    funnel <- get_funnel_duckplyr_df(x)
+  if (is.null(inert)) {
+    inert <- get_inert_duckplyr_df(x)
   }
 
   rel <- duckdb_rel_from_df(x)
@@ -74,5 +74,5 @@ compute_csv <- function(x, path, ..., funnel = NULL, options = NULL) {
     path <- file.path(path, "**", "**.csv")
   }
 
-  read_csv_duckdb(path, funnel = funnel)
+  read_csv_duckdb(path, inert = inert)
 }

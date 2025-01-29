@@ -18,7 +18,7 @@
 #' @export
 #' @examples
 #' read_sql_duckdb("FROM duckdb_settings()")
-read_sql_duckdb <- function(sql, ..., funnel = c(cells = 1e6), con = NULL) {
+read_sql_duckdb <- function(sql, ..., inert = c(cells = 1e6), con = NULL) {
   if (!is_string(sql)) {
     cli::cli_abort("{.arg sql} must be a string.")
   }
@@ -33,10 +33,10 @@ read_sql_duckdb <- function(sql, ..., funnel = c(cells = 1e6), con = NULL) {
   meta_rel_register(rel, expr(duckdb$rel_from_sql(con, !!sql)))
 
   df <- duckdb$rel_to_altrep(rel, allow_materialization = FALSE)
-  out <- new_duckdb_tibble(df, funnel = "closed")
+  out <- new_duckdb_tibble(df, inert = "closed")
 
-  if (!identical(funnel, "closed")) {
-    out <- as_duckdb_tibble(out, funnel = funnel)
+  if (!identical(inert, "closed")) {
+    out <- as_duckdb_tibble(out, inert = inert)
   }
 
   out
