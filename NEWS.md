@@ -1,5 +1,28 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9924 (2025-01-29)
+
+## Chore
+
+- Remove space at EOL in limits (#521).
+
+- Remove space at EOL in large (#520).
+
+## Continuous integration
+
+- Avoid autoupload.
+
+## Documentation
+
+- Remove use of word bottleneck (#517, #519).
+
+- Document `.funnel`/`funnel` argument (#513).
+
+## Refactoring
+
+- Rename lazy.R to funnel.R (#509).
+
+
 # duckplyr 0.99.99.9923 (2025-01-28)
 
 ## Features
