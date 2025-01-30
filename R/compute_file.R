@@ -9,7 +9,6 @@
 #'
 #' @inheritParams rlang::args_dots_empty
 #' @inheritParams compute.duckplyr_df
-#' @inheritSection duckdb_tibble Funneling
 #' @param path The path to store the result in.
 #' @param options A list of additional options to pass to create the storage format,
 #'   see <https://duckdb.org/docs/data/parquet/overview#writing-to-parquet-files>

@@ -27,8 +27,8 @@ read_file_duckdb(
 \item{...}{These dots are for future extensions and must be empty.}
 
 \item{funnel}{Logical, whether to create a funneled duckplyr frame.
-By default, a funneled duckplyr frame is created.
-See the "Funneling" section in \code{\link[=duckdb_tibble]{duckdb_tibble()}} for details.}
+By default, a funneled duckplyr frame, with a limit of one million cells, is created.
+See \code{vignette("funnel")} for details.}
 
 \item{options}{Arguments to the DuckDB function
 indicated by \code{table_function}.}
@@ -56,10 +56,6 @@ See \url{https://duckdb.org/docs/data/overview} for a documentation
 of the available functions and their options.
 To read multiple files with the same schema,
 pass a wildcard or a character vector to the \code{path} argument,
-}
-\details{
-By default, a funneled duckplyr frame, with a limit of one million cells, is created.
-See the "Funneling" section in \code{\link[=duckdb_tibble]{duckdb_tibble()}} for details.
 }
 \examples{
 # Create simple CSV file

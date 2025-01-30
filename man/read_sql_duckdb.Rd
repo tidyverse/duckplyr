@@ -12,8 +12,8 @@ read_sql_duckdb(sql, ..., funnel = c(cells = 1e+06), con = NULL)
 \item{...}{These dots are for future extensions and must be empty.}
 
 \item{funnel}{Logical, whether to create a funneled duckplyr frame.
-By default, a funneled duckplyr frame is created.
-See the "Funneling" section in \code{\link[=duckdb_tibble]{duckdb_tibble()}} for details.}
+By default, a funneled duckplyr frame, with a limit of one million cells, is created.
+See \code{vignette("funnel")} for details.}
 
 \item{con}{The connection, defaults to the default connection.}
 }
