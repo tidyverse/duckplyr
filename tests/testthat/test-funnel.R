@@ -55,3 +55,12 @@ test_that("funneling after operation with success", {
   expect_identical(get_funnel_duckplyr_df(out), c(rows = 5))
   expect_error(nrow(out), NA)
 })
+
+test_that("funneling after summarise() with success", {
+  df <- duckdb_tibble(x = 1:10, .funnel = c(rows = 5))
+  out <- df %>%
+    summarise(n())
+
+  expect_identical(get_funnel_duckplyr_df(out), c(rows = 5))
+  expect_error(nrow(out), NA)
+})
