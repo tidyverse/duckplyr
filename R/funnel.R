@@ -59,6 +59,12 @@ as_unfunneled_duckplyr_df <- function(x) {
   remove_funneled_duckplyr_df_class(out)
 }
 
+remove_funneled_duckplyr_df_class <- function(x) {
+  class(x) <- setdiff(class(x), "funneled_duckplyr_df")
+  attr(x, "funnel") <- NULL
+  x
+}
+
 is_funneled_duckplyr_df <- function(x) {
   inherits(x, "funneled_duckplyr_df")
 }
@@ -74,12 +80,6 @@ get_funnel_duckplyr_df <- function(x) {
   }
 
   funnel
-}
-
-remove_funneled_duckplyr_df_class <- function(x) {
-  class(x) <- setdiff(class(x), "funneled_duckplyr_df")
-  attr(x, "funnel") <- NULL
-  x
 }
 
 duckplyr_reconstruct <- function(rel, template) {
