@@ -110,7 +110,7 @@ collect.funneled_duckplyr_df <- function(x, ...) {
     out <- x
   } else {
     rel <- duckdb_rel_from_df(x)
-    out <- rel_to_df(rel, allow_materialization = TRUE)
+    out <- rel_to_df(rel, funnel = "open")
     out <- dplyr_reconstruct(out, x)
   }
 
