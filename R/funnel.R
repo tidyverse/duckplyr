@@ -1,3 +1,25 @@
+#' @param funnel Only adds the class, does not recreate the relation object!
+#' @noRd
+new_duckdb_tibble <- function(x, class = NULL, funnel = "open", error_call = caller_env()) {
+  if (is.null(class)) {
+    class <- c("tbl_df", "tbl", "data.frame")
+  }
+
+  if (!inherits(x, "duckplyr_df")) {
+    if (anyNA(names(x)) || any(names(x) == "")) {
+      cli::cli_abort("Missing or empty names not allowed.", call = error_call)
+    }
+  }
+
+  class(x) <- unique(c(
+    if (!identical(funnel, "open")) "funneled_duckplyr_df",
+    "duckplyr_df",
+    class
+  ))
+
+  x
+}
+
 as_funneled_duckplyr_df <- function(x, allow_materialization, n_rows, n_cells) {
   rel <- duckdb_rel_from_df(x)
 
