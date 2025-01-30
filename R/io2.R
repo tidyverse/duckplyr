@@ -84,10 +84,6 @@ read_json_duckdb <- function(path, ..., funnel = c(cells = 1e6), options = list(
 #' To read multiple files with the same schema,
 #' pass a wildcard or a character vector to the `path` argument,
 #'
-#' @details
-#' By default, a funneled duckplyr frame, with a limit of one million cells, is created.
-#' See the "Funneling" section in [duckdb_tibble()] for details.
-#'
 #' @inheritParams rlang::args_dots_empty
 #'
 #' @param path Path to files, glob patterns `*` and `?` are supported.
@@ -95,8 +91,8 @@ read_json_duckdb <- function(path, ..., funnel = c(cells = 1e6), options = list(
 #'   DuckDB function such as `"read_parquet"`,
 #'   `"read_csv"`, `"read_csv_auto"` or `"read_json"`.
 #' @param funnel Logical, whether to create a funneled duckplyr frame.
-#'   By default, a funneled duckplyr frame is created.
-#'   See the "Funneling" section in [duckdb_tibble()] for details.
+#'   By default, a funneled duckplyr frame, with a limit of one million cells, is created.
+#'   See `vignette("funnel")` for details.
 #' @param options Arguments to the DuckDB function
 #'   indicated by `table_function`.
 #'
