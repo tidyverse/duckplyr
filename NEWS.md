@@ -1,5 +1,20 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9925 (2025-01-30)
+
+## Chore
+
+- Use magrittr pipe in tests.
+
+## Documentation
+
+- Change `funnel` values to `"open"` and `"closed"` instead of a logical value (#526).
+
+- Fix erroneous argument (@TimTaylor, #524).
+
+- Review (#516).
+
+
 # duckplyr 0.99.99.9924 (2025-01-29)
 
 ## Chore
