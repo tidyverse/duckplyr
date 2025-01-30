@@ -3,6 +3,8 @@
 new_duckdb_tibble <- function(x, class = NULL, funnel = "open", error_call = caller_env()) {
   if (is.null(class)) {
     class <- c("tbl_df", "tbl", "data.frame")
+  } else {
+    class <- setdiff(class, c("funneled_duckplyr_df", "duckplyr_df"))
   }
 
   if (!inherits(x, "duckplyr_df")) {
@@ -11,11 +13,11 @@ new_duckdb_tibble <- function(x, class = NULL, funnel = "open", error_call = cal
     }
   }
 
-  class(x) <- unique(c(
+  class(x) <- c(
     if (!identical(funnel, "open")) "funneled_duckplyr_df",
     "duckplyr_df",
     class
-  ))
+  )
 
   x
 }
