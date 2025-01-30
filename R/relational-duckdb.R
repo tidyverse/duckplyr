@@ -196,8 +196,28 @@ vec_ptype_safe <- function(x) {
 }
 
 #' @export
-rel_to_df.duckdb_relation <- function(rel, ..., allow_materialization = TRUE, n_rows = Inf, n_cells = Inf) {
-  duckdb$rel_to_altrep(rel, allow_materialization, n_rows, n_cells)
+rel_to_df.duckdb_relation <- function(
+  rel,
+  ...,
+  funnel = NULL,
+  allow_materialization = TRUE,
+  n_rows = Inf,
+  n_cells = Inf
+) {
+  if (is.null(funnel)) {
+    # Legacy
+    return(duckdb$rel_to_altrep(rel, allow_materialization, n_rows, n_cells))
+  }
+
+  funnel_parsed <- funnel_parse(funnel)
+  out <- duckdb$rel_to_altrep(
+    rel,
+    allow_materialization = funnel_parsed$allow_materialization,
+    n_rows = funnel_parsed$n_rows,
+    n_cells = funnel_parsed$n_cells
+  )
+
+  new_duckdb_tibble(out, funnel = funnel)
 }
 
 #' @export

@@ -19,6 +19,13 @@ new_duckdb_tibble <- function(x, class = NULL, funnel = "open", error_call = cal
     class
   )
 
+  funnel_parsed <- funnel_parse(funnel, error_call)
+  funnel_attr <- c(
+    rows = if (is.finite(funnel_parsed$n_rows)) funnel_parsed$n_rows,
+    cells = if (is.finite(funnel_parsed$n_cells)) funnel_parsed$n_cells
+  )
+  attr(x, "funnel") <- funnel_attr
+
   x
 }
 
