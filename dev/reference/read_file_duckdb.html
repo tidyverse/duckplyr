@@ -27,7 +27,7 @@ pass a wildcard or a character vector to the path argument,"><meta property="og:
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9924</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9925</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,8 +107,8 @@ pass a wildcard or a character vector to the <code>path</code> argument,</p>
 
 <dt id="arg-funnel">funnel<a class="anchor" aria-label="anchor" href="#arg-funnel"></a></dt>
 <dd><p>Logical, whether to create a funneled duckplyr frame.
-By default, a funneled duckplyr frame is created.
-See the "Funneling" section in <code><a href="duckdb_tibble.html">duckdb_tibble()</a></code> for details.</p></dd>
+By default, a funneled duckplyr frame, with a limit of one million cells, is created.
+See <code><a href="../articles/funnel.html">vignette("funnel")</a></code> for details.</p></dd>
 
 
 <dt id="arg-options">options<a class="anchor" aria-label="anchor" href="#arg-options"></a></dt>
@@ -125,11 +125,6 @@ DuckDB function such as <code>"read_parquet"</code>,
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A duckplyr frame, see <code><a href="duckdb_tibble.html">as_duckdb_tibble()</a></code> for details.</p>
-    </div>
-    <div class="section level2">
-    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>By default, a funneled duckplyr frame, with a limit of one million cells, is created.
-See the "Funneling" section in <code><a href="duckdb_tibble.html">duckdb_tibble()</a></code> for details.</p>
     </div>
 
     <div class="section level2">

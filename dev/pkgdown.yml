@@ -1,6 +1,6 @@
 pandoc: 3.1.11
 pkgdown: 2.1.1.9000
-pkgdown_sha: 74fda8cdb8bbbcd215faf2a2079f4eb98db586c6
+pkgdown_sha: 18cca452d736fea33d47b19b4ef4973db9104a75
 articles:
   developers: developers.html
   extend: extend.html
@@ -8,7 +8,7 @@ articles:
   large: large.html
   limits: limits.html
   telemetry: telemetry.html
-last_built: 2025-01-29T08:40Z
+last_built: 2025-01-30T07:04Z
 urls:
   reference: https://duckplyr.tidyverse.org/reference
   article: https://duckplyr.tidyverse.org/articles
