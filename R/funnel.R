@@ -1,3 +1,27 @@
+#' @param funnel Only adds the class, does not recreate the relation object!
+#' @noRd
+new_duckdb_tibble <- function(x, class = NULL, funnel = "open", error_call = caller_env()) {
+  if (is.null(class)) {
+    class <- c("tbl_df", "tbl", "data.frame")
+  } else {
+    class <- setdiff(class, c("funneled_duckplyr_df", "duckplyr_df"))
+  }
+
+  if (!inherits(x, "duckplyr_df")) {
+    if (anyNA(names(x)) || any(names(x) == "")) {
+      cli::cli_abort("Missing or empty names not allowed.", call = error_call)
+    }
+  }
+
+  class(x) <- c(
+    if (!identical(funnel, "open")) "funneled_duckplyr_df",
+    "duckplyr_df",
+    class
+  )
+
+  x
+}
+
 as_funneled_duckplyr_df <- function(x, allow_materialization, n_rows, n_cells) {
   rel <- duckdb_rel_from_df(x)
 
@@ -37,6 +61,12 @@ as_unfunneled_duckplyr_df <- function(x) {
   remove_funneled_duckplyr_df_class(out)
 }
 
+remove_funneled_duckplyr_df_class <- function(x) {
+  class(x) <- setdiff(class(x), "funneled_duckplyr_df")
+  attr(x, "funnel") <- NULL
+  x
+}
+
 is_funneled_duckplyr_df <- function(x) {
   inherits(x, "funneled_duckplyr_df")
 }
@@ -52,12 +82,6 @@ get_funnel_duckplyr_df <- function(x) {
   }
 
   funnel
-}
-
-remove_funneled_duckplyr_df_class <- function(x) {
-  class(x) <- setdiff(class(x), "funneled_duckplyr_df")
-  attr(x, "funnel") <- NULL
-  x
 }
 
 duckplyr_reconstruct <- function(rel, template) {

@@ -145,7 +145,7 @@ duckfun <- function(table_function, args, ..., funnel) {
   meta_rel_register_file(rel, table_function, path, options)
 
   # Start with funnel, to avoid unwanted materialization
-  df <- duckdb$rel_to_altrep(rel, allow_materialization = FALSE)
+  df <- rel_to_df(rel, allow_materialization = FALSE)
   out <- new_duckdb_tibble(df, funnel = "closed")
 
   if (!identical(funnel, "closed")) {
