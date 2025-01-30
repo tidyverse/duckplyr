@@ -3,7 +3,7 @@
     Code
       data.frame(a = vctrs::new_vctr(1:3)) %>% duckdb_rel_from_df()
     Condition
-      Error in `check_df_for_rel()`:
+      Error in `duckdb_rel_from_df()`:
       ! Can't convert columns of class <vctrs_vctr> to relational. Affected column: `a`.
 
 # rel_aggregate()

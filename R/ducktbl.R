@@ -51,6 +51,13 @@
 #' @export
 duckdb_tibble <- function(..., .funnel = "open") {
   out <- tibble::tibble(...)
+
+  # Side effect: check compatibility
+  # No telemetry, this doesn't seem to be useful data
+  # (and conflicts with test-telemetry.R)
+  # FIXME: May be handled by other methods
+  check_df_for_rel(out)
+
   as_duckdb_tibble(out, funnel = .funnel)
 }
 

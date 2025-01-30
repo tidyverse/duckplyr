@@ -116,27 +116,27 @@ duckdb_rel_from_df <- function(df) {
 }
 
 # FIXME: This should be duckdb's responsibility
-check_df_for_rel <- function(df) {
+check_df_for_rel <- function(df, call = caller_env()) {
   rni <- .row_names_info(df, 0L)
   if (is.character(rni)) {
-    cli::cli_abort("Need data frame without row names to convert to relational, got character row names.")
+    cli::cli_abort("Need data frame without row names to convert to relational, got character row names.", call = call)
   }
   if (length(rni) != 0) {
     if (length(rni) != 2L || !is.na(rni[[1]])) {
-      cli::cli_abort("Need data frame without row names to convert to relational, got numeric row names.")
+      cli::cli_abort("Need data frame without row names to convert to relational, got numeric row names.", call = call)
     }
   }
 
   for (i in seq_along(df)) {
     col <- .subset2(df, i)
     if (!is.null(names(col))) {
-      cli::cli_abort("Can't convert named vectors to relational. Affected column: {.var {names(df)[[i]]}}.")
+      cli::cli_abort("Can't convert named vectors to relational. Affected column: {.var {names(df)[[i]]}}.", call = call)
     }
     if (!is.null(dim(col))) {
-      cli::cli_abort("Can't convert arrays or matrices to relational. Affected column: {.var {names(df)[[i]]}}.")
+      cli::cli_abort("Can't convert arrays or matrices to relational. Affected column: {.var {names(df)[[i]]}}.", call = call)
     }
     if (isS4(col)) {
-      cli::cli_abort("Can't convert S4 columns to relational. Affected column: {.var {names(df)[[i]]}}.")
+      cli::cli_abort("Can't convert S4 columns to relational. Affected column: {.var {names(df)[[i]]}}.", call = call)
     }
 
     # Factors: https://github.com/duckdb/duckdb/issues/8561
@@ -152,7 +152,7 @@ check_df_for_rel <- function(df) {
       valid <- FALSE
     }
     if (!valid) {
-      cli::cli_abort("Can't convert columns of class {.cls {col_class}} to relational. Affected column: {.var {names(df)[[i]]}}.")
+      cli::cli_abort("Can't convert columns of class {.cls {col_class}} to relational. Affected column: {.var {names(df)[[i]]}}.", call = call)
     }
   }
 
@@ -169,7 +169,7 @@ check_df_for_rel <- function(df) {
     rlang::with_options(duckdb.materialize_callback = NULL, {
       for (i in seq_along(df)) {
         if (!identical(df[[i]], roundtrip[[i]])) {
-          cli::cli_abort("Imperfect roundtrip. Affected column: {.var {names(df)[[i]]}}.")
+          cli::cli_abort("Imperfect roundtrip. Affected column: {.var {names(df)[[i]]}}.", call = call)
         }
       }
     })
@@ -178,7 +178,7 @@ check_df_for_rel <- function(df) {
       df_attrib <- attributes(df[[i]])
       roundtrip_attrib <- attributes(roundtrip[[i]])
       if (!identical(df_attrib, roundtrip_attrib)) {
-        cli::cli_abort("Attributes are lost during conversion. Affected column: {.var {names(df)[[i]]}}.")
+        cli::cli_abort("Attributes are lost during conversion. Affected column: {.var {names(df)[[i]]}}.", call = call)
       }
     }
   }

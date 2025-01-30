@@ -162,9 +162,8 @@ test_that("named column", {
     "DUCKPLYR_FALLBACK_LOG_DIR" = tempdir()
   ))
 
-  expect_snapshot({
-    duckdb_tibble(a = c(x = 1)) %>%
-      select(a)
+  expect_snapshot(error = TRUE, {
+    duckdb_tibble(a = c(x = 1))
   })
 })
 
@@ -175,9 +174,8 @@ test_that("named column", {
     "DUCKPLYR_FALLBACK_LOG_DIR" = tempdir()
   ))
 
-  expect_snapshot({
-    duckdb_tibble(a = matrix(1:4, ncol = 2)) %>%
-      select(a)
+  expect_snapshot(error = TRUE, {
+    duckdb_tibble(a = matrix(1:4, ncol = 2))
   })
 })
 
@@ -188,9 +186,8 @@ test_that("list column", {
     "DUCKPLYR_FALLBACK_LOG_DIR" = tempdir()
   ))
 
-  expect_snapshot({
-    duckdb_tibble(a = 1, b = 2, c = list(3)) %>%
-      select(a, b)
+  expect_snapshot(error = TRUE, {
+    duckdb_tibble(a = 1, b = 2, c = list(3))
   })
 })
 

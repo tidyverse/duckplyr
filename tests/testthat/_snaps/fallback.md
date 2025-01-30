@@ -149,50 +149,26 @@
 # named column
 
     Code
-      duckdb_tibble(a = c(x = 1)) %>% select(a)
-    Message
-      i dplyr fallback recorded
-        {"version":"0.3.1","message":"Can't convert named vectors to relational. Affected column: `...1`.","name":"select","x":{"...1":"numeric"},"args":{"dots":{"1":"...1"}}}
-    Output
-      # A duckplyr data frame: 1 variable
-    Message
-      i dplyr fallback recorded
-        {"version":"0.3.1","message":"Can't convert named vectors to relational. Affected column: `...1`.","name":"head","x":{"...1":"numeric"},"args":{"n":11}}
-    Output
-            a
-        <dbl>
-      1     1
+      duckdb_tibble(a = c(x = 1))
+    Condition
+      Error in `duckdb_tibble()`:
+      ! Can't convert named vectors to relational. Affected column: `a`.
 
 ---
 
     Code
-      duckdb_tibble(a = matrix(1:4, ncol = 2)) %>% select(a)
-    Message
-      i dplyr fallback recorded
-        {"version":"0.3.1","message":"Can't convert arrays or matrices to relational. Affected column: `...1`.","name":"select","x":{"...1":"matrix/array"},"args":{"dots":{"1":"...1"}}}
-    Output
-      # A duckplyr data frame: 1 variable
-    Message
-      i dplyr fallback recorded
-        {"version":"0.3.1","message":"Can't convert arrays or matrices to relational. Affected column: `...1`.","name":"head","x":{"...1":"matrix/array"},"args":{"n":11}}
-    Output
-        a[,1]  [,2]
-        <int> <int>
-      1     1     3
-      2     2     4
+      duckdb_tibble(a = matrix(1:4, ncol = 2))
+    Condition
+      Error in `duckdb_tibble()`:
+      ! Can't convert arrays or matrices to relational. Affected column: `a`.
 
 # list column
 
     Code
-      duckdb_tibble(a = 1, b = 2, c = list(3)) %>% select(a, b)
-    Message
-      i dplyr fallback recorded
-        {"version":"0.3.1","message":"Can't convert columns of class <list> to relational. Affected column: `...3`.","name":"select","x":{"...1":"numeric","...2":"numeric","...3":"list"},"args":{"dots":{"1":"...1","2":"...2"}}}
-    Output
-      # A duckplyr data frame: 2 variables
-            a     b
-        <dbl> <dbl>
-      1     1     2
+      duckdb_tibble(a = 1, b = 2, c = list(3))
+    Condition
+      Error in `duckdb_tibble()`:
+      ! Can't convert columns of class <list> to relational. Affected column: `c`.
 
 # __row_number
 
