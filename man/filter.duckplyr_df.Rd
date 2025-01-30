@@ -38,7 +38,7 @@ unlike base subsetting with \code{[}.
 }
 \section{Fallbacks}{
 
-You cannot use \code{filter.duckplyr_df()}
+There is no DuckDB translation in \code{filter.duckplyr_df()}
 \itemize{
 \item with no filter conditions,
 \item nor for a grouped operation (if \code{.by} is set).

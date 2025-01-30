@@ -49,7 +49,7 @@ once per data frame, not once per group.
 }
 \section{Fallbacks}{
 
-You cannot use \code{arrange.duckplyr_df()}
+There is no DuckDB translation in \code{arrange.duckplyr_df()}
 \itemize{
 \item with \code{.by_group = TRUE},
 \item providing a value for the \code{.locale} argument,

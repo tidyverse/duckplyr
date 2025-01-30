@@ -39,7 +39,7 @@ it also works with remote data frames, and it can optionally name the output.
 }
 \section{Fallbacks}{
 
-You cannot use \code{pull.duckplyr_df()}
+There is no DuckDB translation in \code{pull.duckplyr_df()}
 \itemize{
 \item with a selection that returns no columns.
 }

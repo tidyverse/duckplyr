@@ -10,7 +10,7 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
 
   duckplyr_error <- rel_try(list(name = "summarise", x = .data, args = try_list(dots = enquos(...), by = syms(by), .groups = .groups)),
     #' @section Fallbacks:
-    #' You cannot use `summarise.duckplyr_df()`
+    #' There is no DuckDB translation in `summarise.duckplyr_df()`
     #' - with `.groups = "rowwise"`.
     #'
     #' If you do the code will fall back to `dplyr::summarise()` without any error.

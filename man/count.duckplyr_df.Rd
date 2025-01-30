@@ -56,7 +56,7 @@ switching the summary from \code{n = n()} to \code{n = sum(wt)}.
 }
 \section{Fallbacks}{
 
-You cannot use \code{count.duckplyr_df()}
+There is no DuckDB translation in \code{count.duckplyr_df()}
 \itemize{
 \item with complex expressions in \code{...},
 \item with \code{.drop = FALSE},

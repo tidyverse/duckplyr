@@ -20,7 +20,7 @@ See "Fallbacks" section for differences in implementation.
 }
 \section{Fallbacks}{
 
-You cannot use \code{union_all.duckplyr_df()}
+There is no DuckDB translation in \code{union_all.duckplyr_df()}
 \itemize{
 \item if column names are duplicated in one of the tables,
 \item if column names are different in both tables.

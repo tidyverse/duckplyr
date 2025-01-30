@@ -31,7 +31,7 @@ It's superseded because you can perform the same job with \code{mutate(.keep = "
 }
 \section{Fallbacks}{
 
-You cannot use \code{transmute.duckplyr_df()}
+There is no DuckDB translation in \code{transmute.duckplyr_df()}
 \itemize{
 \item with a selection that returns no columns:
 }

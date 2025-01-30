@@ -11,7 +11,7 @@ filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
 
   duckplyr_error <- rel_try(list(name = "filter", x = .data, args = try_list(dots = dots, by = by, preserve = .preserve)),
     #' @section Fallbacks:
-    #' You cannot use `filter.duckplyr_df()`
+    #' There is no DuckDB translation in `filter.duckplyr_df()`
     #' - with no filter conditions,
     #' - nor for a grouped operation (if `.by` is set).
     #'

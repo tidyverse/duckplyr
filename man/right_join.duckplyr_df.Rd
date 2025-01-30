@@ -153,7 +153,7 @@ A \code{right_join()} keeps all observations in \code{y}.
 }
 \section{Fallbacks}{
 
-You cannot use \code{right_join.duckplyr_df()}
+There is no DuckDB translation in \code{right_join.duckplyr_df()}
 \itemize{
 \item for an implicit cross join,
 \item for a value of the \code{multiple} argument that isn't the default \code{"all"}.

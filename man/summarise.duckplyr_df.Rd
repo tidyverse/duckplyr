@@ -64,7 +64,7 @@ and one column for each of the summary statistics that you have specified.
 }
 \section{Fallbacks}{
 
-You cannot use \code{summarise.duckplyr_df()}
+There is no DuckDB translation in \code{summarise.duckplyr_df()}
 \itemize{
 \item with \code{.groups = "rowwise"}.
 }
