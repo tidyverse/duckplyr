@@ -4,7 +4,7 @@
 \alias{read_sql_duckdb}
 \title{Return SQL query as duckdb_tibble}
 \usage{
-read_sql_duckdb(sql, ..., funnel = "drip", con = NULL)
+read_sql_duckdb(sql, ..., funnel = "only_small", con = NULL)
 }
 \arguments{
 \item{sql}{The SQL to run.}

@@ -7,13 +7,13 @@
 \alias{read_json_duckdb}
 \title{Read Parquet, CSV, and other files using DuckDB}
 \usage{
-read_parquet_duckdb(path, ..., funnel = "drip", options = list())
+read_parquet_duckdb(path, ..., funnel = "only_small", options = list())
 
-read_csv_duckdb(path, ..., funnel = "drip", options = list())
+read_csv_duckdb(path, ..., funnel = "only_small", options = list())
 
-read_json_duckdb(path, ..., funnel = "drip", options = list())
+read_json_duckdb(path, ..., funnel = "only_small", options = list())
 
-read_file_duckdb(path, table_function, ..., funnel = "drip", options = list())
+read_file_duckdb(path, table_function, ..., funnel = "only_small", options = list())
 }
 \arguments{
 \item{path}{Path to files, glob patterns \code{*} and \verb{?} are supported.}
@@ -68,8 +68,8 @@ try(print(df$a))
 # Materialize explicitly
 collect(df)$a
 
-# Automatic materialization with funnel = "open"
-df <- read_csv_duckdb(path, funnel = "open")
+# Automatic materialization with funnel = "automatic"
+df <- read_csv_duckdb(path, funnel = "automatic")
 df$a
 
 # Specify column types

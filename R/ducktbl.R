@@ -44,12 +44,12 @@
 #'
 #' x$a
 #'
-#' y <- duckdb_tibble(a = 1, .funnel = "closed")
+#' y <- duckdb_tibble(a = 1, .funnel = "always_manual")
 #' y
 #' try(length(y$a))
 #' length(collect(y)$a)
 #' @export
-duckdb_tibble <- function(..., .funnel = "open") {
+duckdb_tibble <- function(..., .funnel = "automatic") {
   out <- tibble::tibble(...)
 
   # Side effect: check compatibility
@@ -69,7 +69,7 @@ duckdb_tibble <- function(..., .funnel = "open") {
 #' @param x The object to convert or to test.
 #' @rdname duckdb_tibble
 #' @export
-as_duckdb_tibble <- function(x, ..., funnel = "open") {
+as_duckdb_tibble <- function(x, ..., funnel = "automatic") {
   # Handle the funnel arg in the generic, only the other args will be dispatched
   as_duckdb_tibble <- function(x, ...) {
     UseMethod("as_duckdb_tibble")
@@ -86,7 +86,7 @@ as_duckdb_tibble.tbl_duckdb_connection <- function(x, ...) {
   con <- dbplyr::remote_con(x)
   sql <- dbplyr::remote_query(x)
 
-  read_sql_duckdb(sql, funnel = "closed", con = con)
+  read_sql_duckdb(sql, funnel = "always_manual", con = con)
 }
 
 #' @export

@@ -1,6 +1,6 @@
 #' @param funnel Only adds the class, does not recreate the relation object!
 #' @noRd
-new_duckdb_tibble <- function(x, class = NULL, funnel = "open", refunnel = FALSE, error_call = caller_env()) {
+new_duckdb_tibble <- function(x, class = NULL, funnel = "automatic", refunnel = FALSE, error_call = caller_env()) {
   if (is.null(class)) {
     class <- c("tbl_df", "tbl", "data.frame")
   } else {
@@ -30,7 +30,7 @@ new_duckdb_tibble <- function(x, class = NULL, funnel = "open", refunnel = FALSE
   }
 
   class(x) <- c(
-    if (!identical(funnel, "open")) "funneled_duckplyr_df",
+    if (!identical(funnel, "automatic")) "funneled_duckplyr_df",
     "duckplyr_df",
     class
   )
@@ -74,14 +74,14 @@ funnel_parse <- function(funnel, call = caller_env()) {
       }
     }
     allow_materialization <- is.finite(n_rows) || is.finite(n_cells)
-    funnel <- "closed"
+    funnel <- "always_manual"
   } else if (!is.character(funnel)) {
     cli::cli_abort("{.arg funnel} must be an unnamed character vector or a named numeric vector", call = call)
   } else {
-    allow_materialization <- !identical(funnel, "closed")
+    allow_materialization <- !identical(funnel, "always_manual")
     if (!allow_materialization) {
       n_cells <- 0
-    } else if (identical(funnel, "drip")) {
+    } else if (identical(funnel, "only_small")) {
       n_cells <- 1e6
     }
   }
@@ -97,16 +97,16 @@ funnel_parse <- function(funnel, call = caller_env()) {
 
 get_funnel_duckplyr_df <- function(x) {
   if (!is_funneled_duckplyr_df(x)) {
-    return("open")
+    return("automatic")
   }
 
   funnel <- attr(x, "funnel")
   if (is.null(funnel)) {
-    return("closed")
+    return("always_manual")
   }
 
   if (identical(funnel, c(cells = 1e6))) {
-    return("drip")
+    return("only_small")
   }
 
   funnel
@@ -125,7 +125,7 @@ collect.funneled_duckplyr_df <- function(x, ...) {
   # Do nothing if already materialized
   refunnel <- !is.null(duckdb$rel_from_altrep_df(x, strict = FALSE, allow_materialized = FALSE))
 
-  out <- new_duckdb_tibble(x, class(x), refunnel = refunnel, funnel = "open")
+  out <- new_duckdb_tibble(x, class(x), refunnel = refunnel, funnel = "automatic")
   collect(out)
 }
 

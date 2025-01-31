@@ -6,9 +6,9 @@
 \alias{is_duckdb_tibble}
 \title{duckplyr data frames}
 \usage{
-duckdb_tibble(..., .funnel = "open")
+duckdb_tibble(..., .funnel = "automatic")
 
-as_duckdb_tibble(x, ..., funnel = "open")
+as_duckdb_tibble(x, ..., funnel = "automatic")
 
 is_duckdb_tibble(x)
 }
@@ -74,7 +74,7 @@ x \%>\%
 
 x$a
 
-y <- duckdb_tibble(a = 1, .funnel = "closed")
+y <- duckdb_tibble(a = 1, .funnel = "always_manual")
 y
 try(length(y$a))
 length(collect(y)$a)

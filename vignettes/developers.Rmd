@@ -121,7 +121,7 @@ Learn more about usethis at <https://usethis.r-lib.org/>.
 
 The default mode for `as_duckdb_tibble()` and `duckdb_tibble()` is unfunneled.
 This means that the dplyr operations are carried out by DuckDB when possible, and also available as data frames upon first request.
-Use `as_duckdb_tibble(funnel = "closed")` or `duckdb_tibble(.funnel = "closed")` to avoid materializing intermediate data and to ensure that all operations are carried out by DuckDB or fail.
+Use `as_duckdb_tibble(funnel = "always_manual")` or `duckdb_tibble(.funnel = "always_manual")` to avoid materializing intermediate data and to ensure that all operations are carried out by DuckDB or fail.
 Funneling can also limit the number of rows or cells that are materialized:
 
 ```{r}
