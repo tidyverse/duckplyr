@@ -175,8 +175,7 @@ flights <- read_parquet_duckdb(urls)
 ```
 
 Like with local data frames, queries on the remote data are executed lazily.
-Unlike with local data frames, the default is to disallow automatic materialization if the result is too large in order to protect memory:
-the results are not materialized until explicitly requested, with a `compute()` call for instance.
+Unlike with local data frames, the default is to disallow automatic materialization if the result is too large in order to protect memory: the results are not materialized until explicitly requested, with a `collect()` call for instance.
 
 ```{r error = TRUE}
 nrow(flights)
