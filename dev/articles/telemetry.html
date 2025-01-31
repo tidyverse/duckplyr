@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9925</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9926</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -120,7 +120,7 @@ types only), no column names or data</li>
 <span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>inflight_delay <span class="op">=</span> <span class="va">arr_delay</span> <span class="op">-</span> <span class="va">dep_delay</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error processing duckplyr query with DuckDB, falling back to dplyr.</span></span>
-<span><span class="co">#&gt; <span style="font-weight: bold;">Caused by error in `check_df_for_rel()` at duckplyr/R/relational-duckdb.R:108:3:</span></span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Caused by error in `duckdb_rel_from_df()` at duckplyr/R/mutate.R:14:7:</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Attributes are lost during conversion. Affected column:</span></span>
 <span><span class="co">#&gt;   `time_hour`.</span></span></code></pre></div>
 <p>After logs have been collected, the upload options are displayed the
