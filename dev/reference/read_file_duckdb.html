@@ -39,7 +39,7 @@ pass a wildcard or a character vector to the path argument,"><meta property="og:
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/large.html">Large data</a></li>
-    <li><a class="dropdown-item" href="../articles/funnel.html">Memory protection: Funneling</a></li>
+    <li><a class="dropdown-item" href="../articles/funnel.html">Memory protection: Prudence</a></li>
     <li><a class="dropdown-item" href="../articles/limits.html">Translations</a></li>
     <li><a class="dropdown-item" href="../articles/developers.html">Selective use of duckplyr</a></li>
     <li><a class="dropdown-item" href="../articles/telemetry.html">Telemetry</a></li>
@@ -81,21 +81,21 @@ pass a wildcard or a character vector to the <code>path</code> argument,</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_parquet_duckdb</span><span class="op">(</span></span>
 <span>  <span class="va">path</span>,</span>
 <span>  <span class="va">...</span>,</span>
-<span>  funnel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"drip"</span>, <span class="st">"open"</span>, <span class="st">"closed"</span><span class="op">)</span>,</span>
+<span>  prudence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"thrifty"</span>, <span class="st">"lavish"</span>, <span class="st">"frugal"</span><span class="op">)</span>,</span>
 <span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">read_csv_duckdb</span><span class="op">(</span></span>
 <span>  <span class="va">path</span>,</span>
 <span>  <span class="va">...</span>,</span>
-<span>  funnel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"drip"</span>, <span class="st">"open"</span>, <span class="st">"closed"</span><span class="op">)</span>,</span>
+<span>  prudence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"thrifty"</span>, <span class="st">"lavish"</span>, <span class="st">"frugal"</span><span class="op">)</span>,</span>
 <span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">read_json_duckdb</span><span class="op">(</span></span>
 <span>  <span class="va">path</span>,</span>
 <span>  <span class="va">...</span>,</span>
-<span>  funnel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"drip"</span>, <span class="st">"open"</span>, <span class="st">"closed"</span><span class="op">)</span>,</span>
+<span>  prudence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"thrifty"</span>, <span class="st">"lavish"</span>, <span class="st">"frugal"</span><span class="op">)</span>,</span>
 <span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -103,7 +103,7 @@ pass a wildcard or a character vector to the <code>path</code> argument,</p>
 <span>  <span class="va">path</span>,</span>
 <span>  <span class="va">table_function</span>,</span>
 <span>  <span class="va">...</span>,</span>
-<span>  funnel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"drip"</span>, <span class="st">"open"</span>, <span class="st">"closed"</span><span class="op">)</span>,</span>
+<span>  prudence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"thrifty"</span>, <span class="st">"lavish"</span>, <span class="st">"frugal"</span><span class="op">)</span>,</span>
 <span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -120,9 +120,9 @@ pass a wildcard or a character vector to the <code>path</code> argument,</p>
 <dd><p>These dots are for future extensions and must be empty.</p></dd>
 
 
-<dt id="arg-funnel">funnel<a class="anchor" aria-label="anchor" href="#arg-funnel"></a></dt>
-<dd><p>Logical, whether to create a funneled duckplyr frame.
-By default, a funneled duckplyr frame, with a limit of one million cells, is created.
+<dt id="arg-prudence">prudence<a class="anchor" aria-label="anchor" href="#arg-prudence"></a></dt>
+<dd><p>Logical, whether to create a frugal duckplyr frame.
+By default, a frugal duckplyr frame, with a limit of one million cells, is created.
 See <code><a href="../articles/funnel.html">vignette("funnel")</a></code> for details.</p></dd>
 
 
@@ -163,8 +163,8 @@ DuckDB function such as <code>"read_parquet"</code>,
 <span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">$</span><span class="va">a</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 2 3</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Automatic materialization with funnel = "open"</span></span></span>
-<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">read_csv_duckdb</span><span class="op">(</span><span class="va">path</span>, funnel <span class="op">=</span> <span class="st">"open"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Automatic materialization with prudence = "lavish"</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">read_csv_duckdb</span><span class="op">(</span><span class="va">path</span>, prudence <span class="op">=</span> <span class="st">"lavish"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">df</span><span class="op">$</span><span class="va">a</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 2 3</span>
 <span class="r-in"><span></span></span>

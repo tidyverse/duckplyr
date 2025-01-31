@@ -27,7 +27,7 @@ The result is a duckplyr frame that can be used with subsequent dplyr verbs."><m
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/large.html">Large data</a></li>
-    <li><a class="dropdown-item" href="../articles/funnel.html">Memory protection: Funneling</a></li>
+    <li><a class="dropdown-item" href="../articles/funnel.html">Memory protection: Prudence</a></li>
     <li><a class="dropdown-item" href="../articles/limits.html">Translations</a></li>
     <li><a class="dropdown-item" href="../articles/developers.html">Selective use of duckplyr</a></li>
     <li><a class="dropdown-item" href="../articles/telemetry.html">Telemetry</a></li>
@@ -64,7 +64,7 @@ The result is a duckplyr frame that can be used with subsequent dplyr verbs.</p>
 <span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">compute</a></span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  <span class="va">...</span>,</span>
-<span>  funnel <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  prudence <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  schema_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  temporary <span class="op">=</span> <span class="cn">TRUE</span></span>
@@ -85,18 +85,18 @@ details.</p></dd>
 <dd><p>Arguments passed on to methods</p></dd>
 
 
-<dt id="arg-funnel">funnel<a class="anchor" aria-label="anchor" href="#arg-funnel"></a></dt>
-<dd><p>Either a string:</p><ul><li><p><code>"closed"</code>:  a funneled data frame,</p></li>
-<li><p><code>"open"</code>: an unfunneled data frame,</p></li>
-<li><p><code>"drip"</code>: allow the materialization up to a maximum size of 1 million cells.</p></li>
+<dt id="arg-prudence">prudence<a class="anchor" aria-label="anchor" href="#arg-prudence"></a></dt>
+<dd><p>Either a string:</p><ul><li><p><code>"frugal"</code>:  a frugal data frame,</p></li>
+<li><p><code>"lavish"</code>: a lavish data frame,</p></li>
+<li><p><code>"thrifty"</code>: allow the materialization up to a maximum size of 1 million cells.</p></li>
 </ul><p>Or a named vector with at least one of</p><ul><li><p><code>cells</code> (numeric)</p></li>
 <li><p><code>rows</code> (numeric)</p></li>
 </ul><p>to allow materialization for data up to a certain size,
 measured in cells (values) and rows in the resulting data frame.
-The equivalent of <code>"drip"</code> is <code>c(cells = 1e6)</code>.</p>
+The equivalent of <code>"thrifty"</code> is <code>c(cells = 1e6)</code>.</p>
 <p>If <code>cells</code> is specified but not <code>rows</code>, <code>rows</code> is <code>Inf</code>.
 If <code>rows</code> is specified but not <code>cells</code>, <code>cells</code> is <code>Inf</code>.</p>
-<p>The default is to inherit the funneling of the input.</p></dd>
+<p>The default is to inherit the prudence of the input.</p></dd>
 
 
 <dt id="arg-name">name<a class="anchor" aria-label="anchor" href="#arg-name"></a></dt>

@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Memory protection: Funneling • duckplyr</title>
+<title>Memory protection: Prudence • duckplyr</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="48x48" href="../favicon-48x48.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <link href="../deps/Source_Code_Pro-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Memory protection: Funneling">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Memory protection: Prudence">
 <meta name="robots" content="noindex">
 <script defer data-domain="duckplyr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
 </head>
@@ -43,7 +43,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/large.html">Large data</a></li>
-    <li><a class="dropdown-item" href="../articles/funnel.html">Memory protection: Funneling</a></li>
+    <li><a class="dropdown-item" href="../articles/funnel.html">Memory protection: Prudence</a></li>
     <li><a class="dropdown-item" href="../articles/limits.html">Translations</a></li>
     <li><a class="dropdown-item" href="../articles/developers.html">Selective use of duckplyr</a></li>
     <li><a class="dropdown-item" href="../articles/telemetry.html">Telemetry</a></li>
@@ -70,7 +70,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Memory protection: Funneling</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Memory protection: Prudence</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/tidyverse/duckplyr/blob/main/vignettes/funnel.Rmd" class="external-link"><code>vignettes/funnel.Rmd</code></a></small>
@@ -79,8 +79,7 @@
 
     
     
-<p>This vignette discusses eager and lazy computation, and
-funneling.</p>
+<p>This vignette discusses eager and lazy computation, and prudence.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://conflicted.r-lib.org/" class="external-link">conflicted</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
@@ -116,7 +115,7 @@ perspective, they behave like regular data frames.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 5</span></span></code></pre></div>
 <p>Under the hood, two key differences provide improved performance and
-usability: lazy materialization and funneling.</p>
+usability: lazy materialization and prudence.</p>
 </div>
 <div class="section level2">
 <h2 id="eager-and-lazy-computation">Eager and lazy computation<a class="anchor" aria-label="anchor" href="#eager-and-lazy-computation"></a>
@@ -153,7 +152,7 @@ month:</p>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.008   0.000   0.008</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.009   0.000   0.008</span></span></code></pre></div>
 <p>Setting up the pipeline is fast, the size of the data does not affect
 the setup costs. Because the computation is deferred, DuckDB can
 optimize the whole pipeline, which can be seen in the output below:</p>
@@ -218,7 +217,7 @@ kept. The result becomes available when accessed:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">mean_arr_delay_ewr</span><span class="op">$</span><span class="va">mean_arr_delay</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.048   0.000   0.024</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.019   0.001   0.016</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="comparison">Comparison<a class="anchor" aria-label="anchor" href="#comparison"></a>
@@ -274,27 +273,27 @@ opportunity for optimization:</p>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.035   0.012   0.047</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.040   0.005   0.045</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
-<h2 id="funneling">Funneling<a class="anchor" aria-label="anchor" href="#funneling"></a>
+<h2 id="prudence">Prudence<a class="anchor" aria-label="anchor" href="#prudence"></a>
 </h2>
 <p>Being both “eager” and “lazy” at the same time introduces a
 challenge: it is too easy to accidentally trigger computation, which may
 be prohibitive if an intermediate result is too large. This is where
-funneling comes in.</p>
+prudence comes in.</p>
 <div class="section level3">
 <h3 id="concept">Concept<a class="anchor" aria-label="anchor" href="#concept"></a>
 </h3>
-<p>For unfunneled duckplyr frames, as in the two previous examples the
+<p>For lavish duckplyr frames, as in the two previous examples the
 underlying DuckDB computation is carried out upon the first request.
 Once the results are computed, they are cached and subsequent requests
 are fast. This is a good choice for small to medium-sized data, where
 DuckDB can provide a nice speedup but materializing the data is
 affordable at any stage. This is the default for
 <code><a href="../reference/duckdb_tibble.html">duckdb_tibble()</a></code> and <code><a href="../reference/duckdb_tibble.html">as_duckdb_tibble()</a></code>.</p>
-<p>For funneled duckplyr frames, accessing a column or requesting the
+<p>For frugal duckplyr frames, accessing a column or requesting the
 number of rows triggers an error. This is a good choice for large data
 sets where the cost of materializing the data may be prohibitive due to
 size or computation time, and the user wants to control when the
@@ -303,17 +302,16 @@ computation is carried out.</p>
 <div class="section level3">
 <h3 id="example-1">Example<a class="anchor" aria-label="anchor" href="#example-1"></a>
 </h3>
-<p>The example below demonstrates the use of funneled duckplyr
-frames.</p>
+<p>The example below demonstrates the use of frugal duckplyr frames.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">flights_funneled</span> <span class="op">&lt;-</span></span>
+<code class="sourceCode R"><span><span class="va">flights_frugal</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">flights</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span>funnel <span class="op">=</span> <span class="st">"closed"</span><span class="op">)</span></span></code></pre></div>
-<p>In this example, <code>flights_funneled</code> is a funneled duckplyr
+<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span>prudence <span class="op">=</span> <span class="st">"frugal"</span><span class="op">)</span></span></code></pre></div>
+<p>In this example, <code>flights_frugal</code> is a frugal duckplyr
 frame. The data can be displayed, and column names and types can be
 accessed.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">flights_funneled</span></span>
+<code class="sourceCode R"><span><span class="va">flights_frugal</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 19 variables</span></span></span>
 <span><span class="co">#&gt;     year month   day dep_time sched_dep_time dep_delay arr_time</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
@@ -332,21 +330,21 @@ accessed.</p>
 <span><span class="co">#&gt; <span style="color: #949494;">#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   time_hour &lt;dttm&gt;</span></span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">flights_funneled</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">flights_frugal</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
 <span><span class="co">#&gt;  [1] "year"           "month"          "day"            "dep_time"      </span></span>
 <span><span class="co">#&gt;  [5] "sched_dep_time" "dep_delay"      "arr_time"       "sched_arr_time"</span></span>
 <span><span class="co">#&gt;  [9] "arr_delay"      "carrier"</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">flights_funneled</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "funneled_duckplyr_df" "duckplyr_df"          "tbl_df"              </span></span>
-<span><span class="co">#&gt; [4] "tbl"                  "data.frame"</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">flights_funneled</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">flights_frugal</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "prudent_duckplyr_df" "duckplyr_df"         "tbl_df"             </span></span>
+<span><span class="co">#&gt; [4] "tbl"                 "data.frame"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">flights_frugal</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "integer"</span></span></code></pre></div>
 <p>On the other hand, accessing a column or requesting the number of
 rows triggers an error:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">flights_funneled</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">flights_frugal</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error: Materialization is disabled, use collect() or as_tibble() to materialize.</span></span>
-<span><span class="va">flights_funneled</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">flights_frugal</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="co">#&gt; Error: Materialization is disabled, use collect() or as_tibble() to materialize.</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -355,27 +353,27 @@ rows triggers an error:</p>
 <p>For operations not supported by duckplyr, the original dplyr
 implementation is used as a fallback. As the original dplyr
 implementation accesses columns directly, the data must be materialized
-before a fallback can be executed. Therefore, funneled frames allow you
-to check that all operations are supported by DuckDB: for a funneled
-frame, fallbacks to dplyr are not possible.</p>
+before a fallback can be executed. Therefore, frugal frames allow you to
+check that all operations are supported by DuckDB: for a frugal frame,
+fallbacks to dplyr are not possible.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">flights_funneled</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="va">flights_frugal</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">origin</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `group_by()`:</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> This operation cannot be carried out by DuckDB, and the input is</span></span>
-<span><span class="co">#&gt;   a funneled duckplyr frame.</span></span>
+<span><span class="co">#&gt;   a frugal duckplyr frame.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Try `summarise(.by = ...)` or `mutate(.by = ...)` instead of</span></span>
 <span><span class="co">#&gt;   `group_by()` and `ungroup()`.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `compute(funnel = "open")` to materialize to temporary storage and</span></span>
-<span><span class="co">#&gt;   continue with <span style="color: #0000BB;">duckplyr</span>.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `compute(prudence = "lavish")` to materialize to temporary storage</span></span>
+<span><span class="co">#&gt;   and continue with <span style="color: #0000BB;">duckplyr</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> See `vignette("funnel")` for other options.</span></span></code></pre></div>
-<p>The same pipeline with an unfunneled frame works, but the computation
-is carried out by dplyr:</p>
+<p>The same pipeline with a lavish frame works, but the computation is
+carried out by dplyr:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">flights_funneled</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span>funnel <span class="op">=</span> <span class="st">"open"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="va">flights_frugal</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span>prudence <span class="op">=</span> <span class="st">"lavish"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">origin</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -392,32 +390,32 @@ optimized way. See <code><a href="../reference/fallback.html">?fallback</a></cod
 duckplyr.</p>
 </div>
 <div class="section level3">
-<h3 id="from-funneled-to-unfunneled">From funneled to unfunneled<a class="anchor" aria-label="anchor" href="#from-funneled-to-unfunneled"></a>
+<h3 id="from-frugal-to-lavish">From frugal to lavish<a class="anchor" aria-label="anchor" href="#from-frugal-to-lavish"></a>
 </h3>
-<p>A funneled duckplyr frame can be converted to an unfunneled one with
-<code>as_duckdb_tibble(funnel = "open")</code>. The
+<p>A frugal duckplyr frame can be converted to a lavish one with
+<code>as_duckdb_tibble(prudence = "lavish")</code>. The
 <code><a href="../reference/collect.duckplyr_df.html">collect.duckplyr_df()</a></code> method triggers computation and
 converts to a plain tibble. The difference between the two is the class
 of the returned object:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">flights_funneled</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span>funnel <span class="op">=</span> <span class="st">"open"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="va">flights_frugal</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span>prudence <span class="op">=</span> <span class="st">"lavish"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "duckplyr_df" "tbl_df"      "tbl"         "data.frame"</span></span>
 <span></span>
-<span><span class="va">flights_funneled</span> <span class="op">|&gt;</span></span>
+<span><span class="va">flights_frugal</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "tbl_df"     "tbl"        "data.frame"</span></span></code></pre></div>
 <p>The same behavior is achieved with <code><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble()</a></code> and
 <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code>:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">flights_funneled</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="va">flights_frugal</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "tbl_df"     "tbl"        "data.frame"</span></span>
 <span></span>
-<span><span class="va">flights_funneled</span> <span class="op">|&gt;</span></span>
+<span><span class="va">flights_frugal</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "data.frame"</span></span></code></pre></div>
@@ -427,27 +425,26 @@ large data sets.</p>
 <div class="section level3">
 <h3 id="comparison-1">Comparison<a class="anchor" aria-label="anchor" href="#comparison-1"></a>
 </h3>
-<p>Funneled duckplyr frames behave like lazy tables in dbplyr and lazy
+<p>Frugal duckplyr frames behave like lazy tables in dbplyr and lazy
 frames in dtplyr: the computation only starts when you
 <em>explicitly</em> request it with <code><a href="../reference/collect.duckplyr_df.html">collect.duckplyr_df()</a></code>
-or through other means. However, funneled duckplyr frames can be
-converted to unfunneled ones at any time, and vice versa. In dtplyr and
-dbplyr, there are no unfunneled frames: collection always needs to be
-explicit.</p>
+or through other means. However, frugal duckplyr frames can be converted
+to lavish ones at any time, and vice versa. In dtplyr and dbplyr, there
+are no lavish frames: collection always needs to be explicit.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="partial-funneling">Partial funneling<a class="anchor" aria-label="anchor" href="#partial-funneling"></a>
+<h2 id="thrift">Thrift<a class="anchor" aria-label="anchor" href="#thrift"></a>
 </h2>
-<p>Partial funneling is a compromise between funneled and unfunneled.
-Materialization is allowed for data up to a certain size, measured in
-cells (values) and rows in the resulting data frame.</p>
+<p>Thrifty is a compromise between frugal and lavish. Materialization is
+allowed for data up to a certain size, measured in cells (values) and
+rows in the resulting data frame.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">flights</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 336776</span></span>
 <span><span class="va">flights_partial</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">flights</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span>funnel <span class="op">=</span> <span class="st">"drip"</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span>prudence <span class="op">=</span> <span class="st">"thrifty"</span><span class="op">)</span></span></code></pre></div>
 <p>With this setting, the data is materialized only if the result has
 fewer than 1,000,000 cells (rows multiplied by columns).</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
@@ -463,7 +460,7 @@ to be materialized:</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">origin</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 3</span></span></code></pre></div>
-<p>Partial funneling is a good choice for data sets where the cost of
+<p>Thrifty is a good choice for data sets where the cost of
 materializing the data is prohibitive only for large results. This is
 the default for the ingestion functions like
 <code><a href="../reference/read_file_duckdb.html">read_parquet_duckdb()</a></code>. See <code><a href="../articles/large.html">vignette("large")</a></code>

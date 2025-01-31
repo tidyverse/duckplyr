@@ -27,7 +27,7 @@ compute_csv() creates a CSV file."><meta property="og:image" content="https://du
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/large.html">Large data</a></li>
-    <li><a class="dropdown-item" href="../articles/funnel.html">Memory protection: Funneling</a></li>
+    <li><a class="dropdown-item" href="../articles/funnel.html">Memory protection: Prudence</a></li>
     <li><a class="dropdown-item" href="../articles/limits.html">Translations</a></li>
     <li><a class="dropdown-item" href="../articles/developers.html">Selective use of duckplyr</a></li>
     <li><a class="dropdown-item" href="../articles/telemetry.html">Telemetry</a></li>
@@ -60,9 +60,9 @@ The result is a duckplyr frame that can be used with subsequent dplyr verbs.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">compute_parquet</span><span class="op">(</span><span class="va">x</span>, <span class="va">path</span>, <span class="va">...</span>, funnel <span class="op">=</span> <span class="cn">NULL</span>, options <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">compute_parquet</span><span class="op">(</span><span class="va">x</span>, <span class="va">path</span>, <span class="va">...</span>, prudence <span class="op">=</span> <span class="cn">NULL</span>, options <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">compute_csv</span><span class="op">(</span><span class="va">x</span>, <span class="va">path</span>, <span class="va">...</span>, funnel <span class="op">=</span> <span class="cn">NULL</span>, options <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">compute_csv</span><span class="op">(</span><span class="va">x</span>, <span class="va">path</span>, <span class="va">...</span>, prudence <span class="op">=</span> <span class="cn">NULL</span>, options <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -83,18 +83,18 @@ details.</p></dd>
 <dd><p>These dots are for future extensions and must be empty.</p></dd>
 
 
-<dt id="arg-funnel">funnel<a class="anchor" aria-label="anchor" href="#arg-funnel"></a></dt>
-<dd><p>Either a string:</p><ul><li><p><code>"closed"</code>:  a funneled data frame,</p></li>
-<li><p><code>"open"</code>: an unfunneled data frame,</p></li>
-<li><p><code>"drip"</code>: allow the materialization up to a maximum size of 1 million cells.</p></li>
+<dt id="arg-prudence">prudence<a class="anchor" aria-label="anchor" href="#arg-prudence"></a></dt>
+<dd><p>Either a string:</p><ul><li><p><code>"frugal"</code>:  a frugal data frame,</p></li>
+<li><p><code>"lavish"</code>: a lavish data frame,</p></li>
+<li><p><code>"thrifty"</code>: allow the materialization up to a maximum size of 1 million cells.</p></li>
 </ul><p>Or a named vector with at least one of</p><ul><li><p><code>cells</code> (numeric)</p></li>
 <li><p><code>rows</code> (numeric)</p></li>
 </ul><p>to allow materialization for data up to a certain size,
 measured in cells (values) and rows in the resulting data frame.
-The equivalent of <code>"drip"</code> is <code>c(cells = 1e6)</code>.</p>
+The equivalent of <code>"thrifty"</code> is <code>c(cells = 1e6)</code>.</p>
 <p>If <code>cells</code> is specified but not <code>rows</code>, <code>rows</code> is <code>Inf</code>.
 If <code>rows</code> is specified but not <code>cells</code>, <code>cells</code> is <code>Inf</code>.</p>
-<p>The default is to inherit the funneling of the input.</p></dd>
+<p>The default is to inherit the prudence of the input.</p></dd>
 
 
 <dt id="arg-options">options<a class="anchor" aria-label="anchor" href="#arg-options"></a></dt>

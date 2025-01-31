@@ -4,7 +4,7 @@ in addition to the default classes.
 This ensures that dplyr methods are dispatched correctly.
 For such objects,
 dplyr verbs such as dplyr::mutate(), dplyr::select() or dplyr::filter()  will use DuckDB.
-duckdb_tibble() works like tibble::tibble(), returning an "unfunneled" duckplyr data frame by default.
+duckdb_tibble() works like tibble::tibble(), returning a lavish duckplyr data frame by default.
 See vignette("funnel") for details.
 as_duckdb_tibble() converts a data frame or a dplyr lazy table to a duckplyr data frame.
 This is a generic function that can be overridden for custom classes.
@@ -13,7 +13,7 @@ in addition to the default classes.
 This ensures that dplyr methods are dispatched correctly.
 For such objects,
 dplyr verbs such as dplyr::mutate(), dplyr::select() or dplyr::filter()  will use DuckDB.
-duckdb_tibble() works like tibble::tibble(), returning an "unfunneled" duckplyr data frame by default.
+duckdb_tibble() works like tibble::tibble(), returning a lavish duckplyr data frame by default.
 See vignette("funnel") for details.
 as_duckdb_tibble() converts a data frame or a dplyr lazy table to a duckplyr data frame.
 This is a generic function that can be overridden for custom classes.
@@ -37,7 +37,7 @@ is_duckdb_tibble() returns TRUE if x is a duckplyr data frame.'><meta property="
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/large.html">Large data</a></li>
-    <li><a class="dropdown-item" href="../articles/funnel.html">Memory protection: Funneling</a></li>
+    <li><a class="dropdown-item" href="../articles/funnel.html">Memory protection: Prudence</a></li>
     <li><a class="dropdown-item" href="../articles/limits.html">Translations</a></li>
     <li><a class="dropdown-item" href="../articles/developers.html">Selective use of duckplyr</a></li>
     <li><a class="dropdown-item" href="../articles/telemetry.html">Telemetry</a></li>
@@ -66,7 +66,7 @@ in addition to the default classes.
 This ensures that dplyr methods are dispatched correctly.
 For such objects,
 dplyr verbs such as <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">dplyr::mutate()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code> or <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">dplyr::filter()</a></code>  will use DuckDB.</p>
-<p><code>duckdb_tibble()</code> works like <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble()</a></code>, returning an "unfunneled" duckplyr data frame by default.
+<p><code>duckdb_tibble()</code> works like <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble()</a></code>, returning a lavish duckplyr data frame by default.
 See <code><a href="../articles/funnel.html">vignette("funnel")</a></code> for details.</p>
 <p><code>as_duckdb_tibble()</code> converts a data frame or a dplyr lazy table to a duckplyr data frame.
 This is a generic function that can be overridden for custom classes.</p>
@@ -75,9 +75,9 @@ This is a generic function that can be overridden for custom classes.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">duckdb_tibble</span><span class="op">(</span><span class="va">...</span>, .funnel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"open"</span>, <span class="st">"drip"</span>, <span class="st">"closed"</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">duckdb_tibble</span><span class="op">(</span><span class="va">...</span>, .prudence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lavish"</span>, <span class="st">"thrifty"</span>, <span class="st">"frugal"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">as_duckdb_tibble</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, funnel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"open"</span>, <span class="st">"drip"</span>, <span class="st">"closed"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">as_duckdb_tibble</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, prudence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lavish"</span>, <span class="st">"thrifty"</span>, <span class="st">"frugal"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">is_duckdb_tibble</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -91,18 +91,18 @@ This is a generic function that can be overridden for custom classes.</p>
 For <code>as_duckdb_tibble()</code>, passed on to methods.</p></dd>
 
 
-<dt id="arg--funnel-funnel">.funnel, funnel<a class="anchor" aria-label="anchor" href="#arg--funnel-funnel"></a></dt>
-<dd><p>Either a string:</p><ul><li><p><code>"closed"</code>:  a funneled data frame,</p></li>
-<li><p><code>"open"</code>: an unfunneled data frame,</p></li>
-<li><p><code>"drip"</code>: allow the materialization up to a maximum size of 1 million cells.</p></li>
+<dt id="arg--prudence-prudence">.prudence, prudence<a class="anchor" aria-label="anchor" href="#arg--prudence-prudence"></a></dt>
+<dd><p>Either a string:</p><ul><li><p><code>"frugal"</code>:  a frugal data frame,</p></li>
+<li><p><code>"lavish"</code>: a lavish data frame,</p></li>
+<li><p><code>"thrifty"</code>: allow the materialization up to a maximum size of 1 million cells.</p></li>
 </ul><p>Or a named vector with at least one of</p><ul><li><p><code>cells</code> (numeric)</p></li>
 <li><p><code>rows</code> (numeric)</p></li>
 </ul><p>to allow materialization for data up to a certain size,
 measured in cells (values) and rows in the resulting data frame.
-The equivalent of <code>"drip"</code> is <code>c(cells = 1e6)</code>.</p>
+The equivalent of <code>"thrifty"</code> is <code>c(cells = 1e6)</code>.</p>
 <p>If <code>cells</code> is specified but not <code>rows</code>, <code>rows</code> is <code>Inf</code>.
 If <code>rows</code> is specified but not <code>cells</code>, <code>cells</code> is <code>Inf</code>.</p>
-<p>The default is to inherit the funneling of the input.</p></dd>
+<p>The default is to inherit the prudence of the input.</p></dd>
 
 
 <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
@@ -111,7 +111,7 @@ If <code>rows</code> is specified but not <code>cells</code>, <code>cells</code>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>For <code>duckdb_tibble()</code> and <code>as_duckdb_tibble()</code>, an object with the following classes:</p><ul><li><p><code>"funneled_duckplyr_df"</code> if <code>.funnel</code> is not <code>"open"</code></p></li>
+    <p>For <code>duckdb_tibble()</code> and <code>as_duckdb_tibble()</code>, an object with the following classes:</p><ul><li><p><code>"prudent_duckplyr_df"</code> if <code>.prudence</code> is not <code>"lavish"</code></p></li>
 <li><p><code>"duckplyr_df"</code></p></li>
 <li><p>Classes of a <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble</a></p></li>
 </ul><p>For <code>is_duckdb_tibble()</code>, a scalar logical.</p>
@@ -137,7 +137,7 @@ If <code>rows</code> is specified but not <code>cells</code>, <code>cells</code>
 <span class="r-in"><span><span class="va">x</span><span class="op">$</span><span class="va">a</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">duckdb_tibble</span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, .funnel <span class="op">=</span> <span class="st">"closed"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">duckdb_tibble</span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, .prudence <span class="op">=</span> <span class="st">"frugal"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">y</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A duckplyr data frame: 1 variable</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       a</span>
