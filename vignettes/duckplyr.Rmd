@@ -42,9 +42,9 @@ If the duckplyr data.frame is accessed by...
 Therefore, duckplyr can be **both lazy** (within itself) **and not lazy** (for the outside world).
 
 Now, the default materialization can be problematic if dealing with large data: what if the materialization eats up all RAM?
-Therefore, the duckplyr package has a **safeguard called funneling**.
-A funneled data.frame cannot be materialized by default, it needs a call to a `compute()` function.
-By default, duckplyr frames are _unfunneled_, but duckplyr frames created from Parquet data (presumedly large) are _funneled_.
+Therefore, the duckplyr package has a **safeguard called prudence**.
+A prudent data.frame cannot be materialized by default, it needs a call to a `compute()` function.
+By default, duckplyr frames are _lavish_, but duckplyr frames created from Parquet data (presumedly large) are _frugal_.
 
 ## How to use duckplyr
 
@@ -74,7 +74,7 @@ With large datasets, you want:
 - input data in an efficient format, like Parquet files. Therefore you might input data using `read_parquet_duckdb()`.
 - efficient computation, which duckplyr provides via DuckDB's holistic optimization, without your having to use another syntax than dplyr.
 - the output to not clutter all the memory. Therefore you can make use of these features:
-    - funneling (see `vignette("funnel")`) to disable automatic materialization completely or to disable automatic materialization up to a certain output size.
+    - prudence (see `vignette("funnel")`) to disable automatic materialization completely or to disable automatic materialization up to a certain output size.
     - computation to files using  `compute_parquet()` or `compute_csv()`.
 
 
