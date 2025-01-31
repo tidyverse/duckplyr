@@ -260,6 +260,20 @@ duckdb_tibble(a = 1) |>
 Just like with `compute.duckplyr_df()`, the return value of `compute_csv()` and `compute_parquet()` is a duckplyr frame that uses the created CSV or Parquet file and can be used in further computations.
 At the time of writing, direct JSON export is not supported.
 
+## Memory usage
+
+Computations carried out by DuckDB allocate RAM in the context of the R process.
+This memory separate from the memory used by R objects, and is managed by DuckDB.
+Limit the memory used by DuckDB by setting a pragma:
+
+```{r}
+read_sql_duckdb("SELECT current_setting('memory_limit') AS memlimit")
+db_exec("PRAGMA memory_limit = '1GB'")
+read_sql_duckdb("SELECT current_setting('memory_limit') AS memlimit")
+```
+
+See [the DuckDB documentation](https://duckdb.org/docs/configuration/overview.html) for other configuration options.
+
 ## The big picture
 
 The functions shown in this vignette allow the construction of data transformation pipelines spanning multiple data sources and data that is too large to fit into memory.
