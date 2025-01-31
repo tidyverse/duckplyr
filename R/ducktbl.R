@@ -87,6 +87,7 @@ as_duckdb_tibble.tbl_duckdb_connection <- function(x, ...) {
   con <- dbplyr::remote_con(x)
   sql <- dbplyr::remote_query(x)
 
+  # Start restrictive to avoid accidental materialization
   read_sql_duckdb(sql, funnel = "closed", con = con)
 }
 
