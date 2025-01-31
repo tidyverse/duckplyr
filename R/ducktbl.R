@@ -7,30 +7,31 @@
 #' For such objects,
 #' dplyr verbs such as [mutate()], [select()] or [filter()]  will use DuckDB.
 #'
-#' `duckdb_tibble()` works like [tibble()], returning an "unfunneled" duckplyr data frame by default.
+#' `duckdb_tibble()` works like [tibble()], returning a lavish duckplyr data frame by default.
 #' See `vignette("funnel")` for details.
 #'
 #' @param ... For `duckdb_tibble()`, passed on to [tibble()].
 #'   For `as_duckdb_tibble()`, passed on to methods.
-#' @param .funnel,funnel Either a logical:
-#'   - Set to `TRUE` to return a funneled data frame.
-#'   - Set to `FALSE` to return an unfunneled data frame.
+#' @param .prudence,prudence Either a string:
+#'   - `"frugal"`:  a frugal data frame,
+#'   - `"lavish"`: a lavish data frame,
+#'   - `"thrifty"`: allow the materialization up to a maximum size of 1 million cells.
 #'
 #' Or a named vector with at least one of
 #'   - `cells` (numeric)
 #'   - `rows` (numeric)
 #'
 #' to allow materialization for data up to a certain size,
-#'   measured in cells (values) and rows in the resulting data frame.
+#' measured in cells (values) and rows in the resulting data frame.
+#' The equivalent of `"thrifty"` is `c(cells = 1e6)`.
 #'
 #' If `cells` is specified but not `rows`, `rows` is `Inf`.
 #' If `rows` is specified but not `cells`, `cells` is `Inf`.
 #'
-#' The default is to inherit the funneling of the input.
-#'   see the "Funneling" section.
+#' The default is to inherit the prudence of the input.
 #'
 #' @return For `duckdb_tibble()` and `as_duckdb_tibble()`, an object with the following classes:
-#'   - `"funneled_duckplyr_df"` if `.funnel` is `TRUE`
+#'   - `"prudent_duckplyr_df"` if `.prudence` is not `"lavish"`
 #'   - `"duckplyr_df"`
 #'   - Classes of a [tibble]
 #'
@@ -44,12 +45,12 @@
 #'
 #' x$a
 #'
-#' y <- duckdb_tibble(a = 1, .funnel = "closed")
+#' y <- duckdb_tibble(a = 1, .prudence = "frugal")
 #' y
 #' try(length(y$a))
 #' length(collect(y)$a)
 #' @export
-duckdb_tibble <- function(..., .funnel = "open") {
+duckdb_tibble <- function(..., .prudence = c("lavish", "thrifty", "frugal")) {
   out <- tibble::tibble(...)
 
   # Side effect: check compatibility
@@ -58,7 +59,7 @@ duckdb_tibble <- function(..., .funnel = "open") {
   # FIXME: May be handled by other methods
   check_df_for_rel(out)
 
-  new_duckdb_tibble(out, class(out), funnel = .funnel, refunnel = TRUE)
+  new_duckdb_tibble(out, class(out), prudence = .prudence, adjust_prudence = TRUE)
 }
 
 #' as_duckdb_tibble
@@ -69,14 +70,14 @@ duckdb_tibble <- function(..., .funnel = "open") {
 #' @param x The object to convert or to test.
 #' @rdname duckdb_tibble
 #' @export
-as_duckdb_tibble <- function(x, ..., funnel = "open") {
-  # Handle the funnel arg in the generic, only the other args will be dispatched
+as_duckdb_tibble <- function(x, ..., prudence = c("lavish", "thrifty", "frugal")) {
+  # Handle the prudence arg in the generic, only the other args will be dispatched
   as_duckdb_tibble <- function(x, ...) {
     UseMethod("as_duckdb_tibble")
   }
 
   out <- as_duckdb_tibble(x, ...)
-  new_duckdb_tibble(out, class(out), funnel = funnel, refunnel = TRUE)
+  new_duckdb_tibble(out, class(out), prudence = prudence, adjust_prudence = TRUE)
 }
 
 #' @export
@@ -86,7 +87,8 @@ as_duckdb_tibble.tbl_duckdb_connection <- function(x, ...) {
   con <- dbplyr::remote_con(x)
   sql <- dbplyr::remote_query(x)
 
-  read_sql_duckdb(sql, funnel = "closed", con = con)
+  # Start restrictive to avoid accidental materialization
+  read_sql_duckdb(sql, prudence = "frugal", con = con)
 }
 
 #' @export

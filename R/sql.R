@@ -18,7 +18,7 @@
 #' @export
 #' @examples
 #' read_sql_duckdb("FROM duckdb_settings()")
-read_sql_duckdb <- function(sql, ..., funnel = "drip", con = NULL) {
+read_sql_duckdb <- function(sql, ..., prudence = c("thrifty", "lavish", "frugal"), con = NULL) {
   if (!is_string(sql)) {
     cli::cli_abort("{.arg sql} must be a string.")
   }
@@ -32,5 +32,5 @@ read_sql_duckdb <- function(sql, ..., funnel = "drip", con = NULL) {
 
   meta_rel_register(rel, expr(duckdb$rel_from_sql(con, !!sql)))
 
-  rel_to_df(rel, funnel = funnel)
+  rel_to_df(rel, prudence = prudence)
 }

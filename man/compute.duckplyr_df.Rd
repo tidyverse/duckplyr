@@ -7,7 +7,7 @@
 \method{compute}{duckplyr_df}(
   x,
   ...,
-  funnel = NULL,
+  prudence = NULL,
   name = NULL,
   schema_name = NULL,
   temporary = TRUE
@@ -20,10 +20,11 @@ details.}
 
 \item{...}{Arguments passed on to methods}
 
-\item{funnel}{Either a logical:
+\item{prudence}{Either a string:
 \itemize{
-\item Set to \code{TRUE} to return a funneled data frame.
-\item Set to \code{FALSE} to return an unfunneled data frame.
+\item \code{"frugal"}:  a frugal data frame,
+\item \code{"lavish"}: a lavish data frame,
+\item \code{"thrifty"}: allow the materialization up to a maximum size of 1 million cells.
 }
 
 Or a named vector with at least one of
@@ -34,12 +35,12 @@ Or a named vector with at least one of
 
 to allow materialization for data up to a certain size,
 measured in cells (values) and rows in the resulting data frame.
+The equivalent of \code{"thrifty"} is \code{c(cells = 1e6)}.
 
 If \code{cells} is specified but not \code{rows}, \code{rows} is \code{Inf}.
 If \code{rows} is specified but not \code{cells}, \code{cells} is \code{Inf}.
 
-The default is to inherit the funneling of the input.
-see the "Funneling" section.}
+The default is to inherit the prudence of the input.}
 
 \item{name}{The name of the table to store the result in.}
 
@@ -49,7 +50,7 @@ see the "Funneling" section.}
 }
 \description{
 This is a method for the \code{\link[dplyr:compute]{dplyr::compute()}} generic.
-For a (funneled) duckplyr frame,
+For a duckplyr frame,
 \code{compute()} executes a query but stores it in a (temporary) table,
 or in a Parquet or CSV file.
 The result is a duckplyr frame that can be used with subsequent dplyr verbs.

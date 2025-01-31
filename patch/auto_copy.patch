@@ -14,7 +14,7 @@ diff --git b/R/auto_copy.R a/R/auto_copy.R
 -  )
 -
 -  # dplyr forward
--  check_funneled(x, duckplyr_error)
+-  check_prudence(x, duckplyr_error)
 -
 -  auto_copy <- dplyr$auto_copy.data.frame
 -  out <- auto_copy(x, y, copy, ...)

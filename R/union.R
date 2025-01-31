@@ -11,7 +11,7 @@ union.duckplyr_df <- function(x, y, ...) {
   duckplyr_error <- NULL
 
   # dplyr forward
-  check_funneled(x, duckplyr_error)
+  check_prudence(x, duckplyr_error)
 
   union <- dplyr$union.data.frame
   out <- union(x, y, ...)

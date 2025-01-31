@@ -7,21 +7,42 @@
 \alias{read_json_duckdb}
 \title{Read Parquet, CSV, and other files using DuckDB}
 \usage{
-read_parquet_duckdb(path, ..., funnel = "drip", options = list())
+read_parquet_duckdb(
+  path,
+  ...,
+  prudence = c("thrifty", "lavish", "frugal"),
+  options = list()
+)
 
-read_csv_duckdb(path, ..., funnel = "drip", options = list())
+read_csv_duckdb(
+  path,
+  ...,
+  prudence = c("thrifty", "lavish", "frugal"),
+  options = list()
+)
 
-read_json_duckdb(path, ..., funnel = "drip", options = list())
+read_json_duckdb(
+  path,
+  ...,
+  prudence = c("thrifty", "lavish", "frugal"),
+  options = list()
+)
 
-read_file_duckdb(path, table_function, ..., funnel = "drip", options = list())
+read_file_duckdb(
+  path,
+  table_function,
+  ...,
+  prudence = c("thrifty", "lavish", "frugal"),
+  options = list()
+)
 }
 \arguments{
 \item{path}{Path to files, glob patterns \code{*} and \verb{?} are supported.}
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{funnel}{Logical, whether to create a funneled duckplyr frame.
-By default, a funneled duckplyr frame, with a limit of one million cells, is created.
+\item{prudence}{Logical, whether to create a frugal duckplyr frame.
+By default, a frugal duckplyr frame, with a limit of one million cells, is created.
 See \code{vignette("funnel")} for details.}
 
 \item{options}{Arguments to the DuckDB function
@@ -68,8 +89,8 @@ try(print(df$a))
 # Materialize explicitly
 collect(df)$a
 
-# Automatic materialization with funnel = "open"
-df <- read_csv_duckdb(path, funnel = "open")
+# Automatic materialization with prudence = "lavish"
+df <- read_csv_duckdb(path, prudence = "lavish")
 df$a
 
 # Specify column types
