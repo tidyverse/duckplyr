@@ -30,7 +30,8 @@ knitr::opts_chunk$set(
 Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
 ```
 
-This vignette discusses eager and lazy computation, and prudence.
+Unlike traditional data frames, duckplyr defers computation until absolutely necessary, allowing DuckDB to optimize execution.
+This article explains how the concept of _prudence_ allows controlling the materialization of data while maintaining a seamless dplyr-like experience.
 
 ```{r attach}
 library(conflicted)
