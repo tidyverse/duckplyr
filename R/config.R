@@ -33,6 +33,7 @@
 # Not available in the CRAN package:
 # `DUCKPLYR_META_ENABLE`: Skip recording the operations, replay not available.
 # `DUCKPLYR_META_GLOBAL`: Assume data frames in the global environment as "known".
+# `DUCKPLYR_SKIP_DPLYR_TESTS`: Skip dplyr tests for performance
 #' @name config
 #' @examples
 #' # Sys.setenv(DUCKPLYR_OUTPUT_ORDER = TRUE)
