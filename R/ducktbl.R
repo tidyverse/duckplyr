@@ -70,7 +70,7 @@ duckdb_tibble <- function(..., .funnel = c("open", "drip", "closed")) {
 #' @param x The object to convert or to test.
 #' @rdname duckdb_tibble
 #' @export
-as_duckdb_tibble <- function(x, ..., funnel = "open") {
+as_duckdb_tibble <- function(x, ..., funnel = c("open", "drip", "closed")) {
   # Handle the funnel arg in the generic, only the other args will be dispatched
   as_duckdb_tibble <- function(x, ...) {
     UseMethod("as_duckdb_tibble")
