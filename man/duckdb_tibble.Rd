@@ -16,10 +16,11 @@ is_duckdb_tibble(x)
 \item{...}{For \code{duckdb_tibble()}, passed on to \code{\link[tibble:tibble]{tibble::tibble()}}.
 For \code{as_duckdb_tibble()}, passed on to methods.}
 
-\item{.funnel, funnel}{Either a logical:
+\item{.funnel, funnel}{Either a string:
 \itemize{
-\item Set to \code{TRUE} to return a funneled data frame.
-\item Set to \code{FALSE} to return an unfunneled data frame.
+\item \code{"closed"}:  a funneled data frame,
+\item \code{"open"}: an unfunneled data frame,
+\item \code{"drip"}: allow the materialization up to a maximum size of 1 million cells.
 }
 
 Or a named vector with at least one of
@@ -30,12 +31,12 @@ Or a named vector with at least one of
 
 to allow materialization for data up to a certain size,
 measured in cells (values) and rows in the resulting data frame.
+The equivalent of \code{"drip"} is \code{c(cells = 1e6)}.
 
 If \code{cells} is specified but not \code{rows}, \code{rows} is \code{Inf}.
 If \code{rows} is specified but not \code{cells}, \code{cells} is \code{Inf}.
 
-The default is to inherit the funneling of the input.
-see the "Funneling" section.}
+The default is to inherit the funneling of the input.}
 
 \item{x}{The object to convert or to test.}
 }

@@ -12,22 +12,23 @@
 #'
 #' @param ... For `duckdb_tibble()`, passed on to [tibble()].
 #'   For `as_duckdb_tibble()`, passed on to methods.
-#' @param .funnel,funnel Either a logical:
-#'   - Set to `TRUE` to return a funneled data frame.
-#'   - Set to `FALSE` to return an unfunneled data frame.
+#' @param .funnel,funnel Either a string:
+#'   - `"closed"`:  a funneled data frame,
+#'   - `"open"`: an unfunneled data frame,
+#'   - `"drip"`: allow the materialization up to a maximum size of 1 million cells.
 #'
 #' Or a named vector with at least one of
 #'   - `cells` (numeric)
 #'   - `rows` (numeric)
 #'
 #' to allow materialization for data up to a certain size,
-#'   measured in cells (values) and rows in the resulting data frame.
+#' measured in cells (values) and rows in the resulting data frame.
+#' The equivalent of `"drip"` is `c(cells = 1e6)`.
 #'
 #' If `cells` is specified but not `rows`, `rows` is `Inf`.
 #' If `rows` is specified but not `cells`, `cells` is `Inf`.
 #'
 #' The default is to inherit the funneling of the input.
-#'   see the "Funneling" section.
 #'
 #' @return For `duckdb_tibble()` and `as_duckdb_tibble()`, an object with the following classes:
 #'   - `"funneled_duckplyr_df"` if `.funnel` is not `"open"`
