@@ -244,17 +244,17 @@ In dtplyr and dbplyr, there are no unfunneled frames: collection always needs to
 
 ## Partial funneling
 
-Partial funneling is a compromise between funneling and unfunneling.
+Partial funneling is a compromise between funneled and unfunneled.
 Materialization is allowed for data up to a certain size, measured in cells (values) and rows in the resulting data frame.
 
 ```{r}
 nrow(flights)
 flights_partial <-
   flights |>
-  duckplyr::as_duckdb_tibble(funnel = c(rows = 100000))
+  duckplyr::as_duckdb_tibble(funnel = "drip")
 ```
 
-In this example, the data is materialized only if the result has fewer than 100,000 rows.
+With this setting, the data is materialized only if the result has fewer than 1,000,000 cells (rows multiplied by columns).
 
 ```{r error = TRUE}
 flights_partial |>
@@ -272,5 +272,5 @@ flights_partial |>
 ```
 
 Partial funneling is a good choice for data sets where the cost of materializing the data is prohibitive only for large results.
-The default for the ingestion functions like `read_parquet_duckdb()` is to limit the result size to one million cells (values in the resulting data frame).
+This is the default for the ingestion functions like `read_parquet_duckdb()`.
 See `vignette("large")` for more details on working with large data sets.
