@@ -1,5 +1,5 @@
 # In addition, the whole file is excluded via .Rbuildignore
-if (Sys.getenv("DUCKPLYR_META_ENABLE") != "TRUE") {
+if (Sys.getenv("DUCKPLYR_META_ENABLE") == "TRUE") {
 
 call_stack <- collections::stack()
 pre_code_cache <- collections::queue()
