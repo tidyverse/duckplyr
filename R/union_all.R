@@ -47,7 +47,7 @@ union_all.duckplyr_df <- function(x, y, ...) {
   )
 
   # dplyr forward
-  check_funneled(x, duckplyr_error)
+  check_prudence(x, duckplyr_error)
 
   union_all <- dplyr$union_all.data.frame
   out <- union_all(x, y, ...)
