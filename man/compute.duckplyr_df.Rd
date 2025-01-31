@@ -7,7 +7,7 @@
 \method{compute}{duckplyr_df}(
   x,
   ...,
-  funnel = NULL,
+  prudence = NULL,
   name = NULL,
   schema_name = NULL,
   temporary = TRUE
@@ -20,11 +20,11 @@ details.}
 
 \item{...}{Arguments passed on to methods}
 
-\item{funnel}{Either a string:
+\item{prudence}{Either a string:
 \itemize{
-\item \code{"closed"}:  a funneled data frame,
-\item \code{"open"}: an unfunneled data frame,
-\item \code{"drip"}: allow the materialization up to a maximum size of 1 million cells.
+\item \code{"frugal"}:  a frugal data frame,
+\item \code{"lavish"}: a lavish data frame,
+\item \code{"thrifty"}: allow the materialization up to a maximum size of 1 million cells.
 }
 
 Or a named vector with at least one of
@@ -35,12 +35,12 @@ Or a named vector with at least one of
 
 to allow materialization for data up to a certain size,
 measured in cells (values) and rows in the resulting data frame.
-The equivalent of \code{"drip"} is \code{c(cells = 1e6)}.
+The equivalent of \code{"thrifty"} is \code{c(cells = 1e6)}.
 
 If \code{cells} is specified but not \code{rows}, \code{rows} is \code{Inf}.
 If \code{rows} is specified but not \code{cells}, \code{cells} is \code{Inf}.
 
-The default is to inherit the funneling of the input.}
+The default is to inherit the prudence of the input.}
 
 \item{name}{The name of the table to store the result in.}
 

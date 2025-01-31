@@ -11,7 +11,7 @@ group_keys.duckplyr_df <- function(.tbl, ...) {
   )
 
   # dplyr forward
-  check_funneled(.tbl, duckplyr_error)
+  check_prudence(.tbl, duckplyr_error)
 
   group_keys <- dplyr$group_keys.data.frame
   out <- group_keys(.tbl, ...)

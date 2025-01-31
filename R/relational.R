@@ -123,15 +123,15 @@ new_failing_mask <- function(names_data) {
 
 #' @param duckplyr_error Return value from rel_try()
 #' @noRd
-check_funneled <- function(x, duckplyr_error, call = caller_env()) {
+check_prudence <- function(x, duckplyr_error, call = caller_env()) {
   msg <- tryCatch(nrow(x), error = conditionMessage)
   if (is.character(msg)) {
     duckplyr_error_msg <- if (is.character(duckplyr_error)) duckplyr_error
     duckplyr_error_parent <- if (is_condition(duckplyr_error)) duckplyr_error
     cli::cli_abort(parent = duckplyr_error_parent, call = call, c(
-      "This operation cannot be carried out by DuckDB, and the input is a funneled duckplyr frame.",
+      "This operation cannot be carried out by DuckDB, and the input is a frugal duckplyr frame.",
       "*" = duckplyr_error_msg,
-      "i" = 'Use {.code compute(funnel = "open")} to materialize to temporary storage and continue with {.pkg duckplyr}.',
+      "i" = 'Use {.code compute(prudence = "lavish")} to materialize to temporary storage and continue with {.pkg duckplyr}.',
       "i" = 'See {.run vignette("funnel")} for other options.'
     ))
   }

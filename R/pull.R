@@ -31,7 +31,7 @@ pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
   )
 
   # dplyr forward
-  check_funneled(.data, duckplyr_error)
+  check_prudence(.data, duckplyr_error)
 
   pull <- dplyr$pull.data.frame
   out <- pull(.data, {{ var }}, {{ name }}, ...)
