@@ -1,5 +1,20 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9926 (2025-01-31)
+
+## Features
+
+- Add `funnel` arg to `rel_to_df.duckdb_relation()` (#534).
+
+## Chore
+
+- Reorganize code (#533).
+
+## Documentation
+
+- Remove funneling section in docs (#532).
+
+
 # duckplyr 0.99.99.9925 (2025-01-30)
 
 ## Chore
