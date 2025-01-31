@@ -8,6 +8,7 @@ test_that("TPCH queries can be parsed and run", {
     c_acctbal = numeric(0),
     c_mktsegment = character(0),
     c_comment = character(0),
+    .prudence = "frugal"
   )
 
   lineitem <- duckdb_tibble(
@@ -27,6 +28,7 @@ test_that("TPCH queries can be parsed and run", {
     l_shipinstruct = character(0),
     l_shipmode = character(0),
     l_comment = character(0),
+    .prudence = "frugal"
   )
 
   nation <- duckdb_tibble(
@@ -34,6 +36,7 @@ test_that("TPCH queries can be parsed and run", {
     n_name = character(0),
     n_regionkey = integer(0),
     n_comment = character(0),
+    .prudence = "frugal"
   )
 
   orders <- duckdb_tibble(
@@ -46,6 +49,7 @@ test_that("TPCH queries can be parsed and run", {
     o_clerk = character(0),
     o_shippriority = integer(0),
     o_comment = character(0),
+    .prudence = "frugal"
   )
 
   part <- duckdb_tibble(
@@ -58,6 +62,7 @@ test_that("TPCH queries can be parsed and run", {
     p_container = character(0),
     p_retailprice = numeric(0),
     p_comment = character(0),
+    .prudence = "frugal"
   )
 
   partsupp <- duckdb_tibble(
@@ -66,12 +71,14 @@ test_that("TPCH queries can be parsed and run", {
     ps_availqty = integer(0),
     ps_supplycost = numeric(0),
     ps_comment = character(0),
+    .prudence = "frugal"
   )
 
   region <- duckdb_tibble(
     r_regionkey = integer(0),
     r_name = character(0),
     r_comment = character(0),
+    .prudence = "frugal"
   )
 
   supplier <- duckdb_tibble(
@@ -82,6 +89,7 @@ test_that("TPCH queries can be parsed and run", {
     s_phone = character(0),
     s_acctbal = numeric(0),
     s_comment = character(0),
+    .prudence = "frugal"
   )
 
   withr::local_envvar(DUCKPLYR_FORCE = TRUE)
