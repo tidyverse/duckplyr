@@ -8,5 +8,5 @@
       i Use `compute(prudence = "lavish")` to materialize to temporary storage and continue with duckplyr.
       i See `vignette("funnel")` for other options.
       Caused by error in `rel_find_call()`:
-      ! Function `desc` does not map to `dplyr::desc`.
+      ! No translation for function `desc`.
 
