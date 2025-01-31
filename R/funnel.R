@@ -19,7 +19,8 @@ new_duckdb_tibble <- function(x, class = NULL, funnel = "open", refunnel = FALSE
   if (refunnel) {
     rel <- duckdb_rel_from_df(x)
 
-    x <- rel_to_df(
+    # Copied from rel_to_df.duckdb_relation(), to avoid recursion
+    x <- duckdb$rel_to_altrep(
       rel,
       allow_materialization = funnel_parsed$allow_materialization,
       n_rows = funnel_parsed$n_rows,
