@@ -157,7 +157,7 @@ The example below demonstrates the use of funneled duckplyr frames.
 ```{r}
 flights_funneled <-
   flights |>
-  duckplyr::as_duckdb_tibble(funnel = "closed")
+  duckplyr::as_duckdb_tibble(funnel = "frugal")
 ```
 
 In this example, `flights_funneled` is a funneled duckplyr frame.
@@ -195,7 +195,7 @@ The same pipeline with an unfunneled frame works, but the computation is carried
 
 ```{r}
 flights_funneled |>
-  duckplyr::as_duckdb_tibble(funnel = "open") |>
+  duckplyr::as_duckdb_tibble(funnel = "lavish") |>
   group_by(origin) |>
   summarize(n = n()) |>
   ungroup()
@@ -207,13 +207,13 @@ See `?fallback` for details on fallbacks, and `vignette("limits")` for the opera
 
 ### From funneled to unfunneled
 
-A funneled duckplyr frame can be converted to an unfunneled one with `as_duckdb_tibble(funnel = "open")`.
+A funneled duckplyr frame can be converted to an unfunneled one with `as_duckdb_tibble(funnel = "lavish")`.
 The `collect.duckplyr_df()` method triggers computation and converts to a plain tibble.
 The difference between the two is the class of the returned object:
 
 ```{r}
 flights_funneled |>
-  duckplyr::as_duckdb_tibble(funnel = "open") |>
+  duckplyr::as_duckdb_tibble(funnel = "lavish") |>
   class()
 
 flights_funneled |>
@@ -251,7 +251,7 @@ Materialization is allowed for data up to a certain size, measured in cells (val
 nrow(flights)
 flights_partial <-
   flights |>
-  duckplyr::as_duckdb_tibble(funnel = "drip")
+  duckplyr::as_duckdb_tibble(funnel = "thrifty")
 ```
 
 With this setting, the data is materialized only if the result has fewer than 1,000,000 cells (rows multiplied by columns).

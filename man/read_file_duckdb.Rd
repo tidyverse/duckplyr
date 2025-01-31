@@ -10,21 +10,21 @@
 read_parquet_duckdb(
   path,
   ...,
-  funnel = c("drip", "open", "closed"),
+  funnel = c("thrifty", "lavish", "frugal"),
   options = list()
 )
 
 read_csv_duckdb(
   path,
   ...,
-  funnel = c("drip", "open", "closed"),
+  funnel = c("thrifty", "lavish", "frugal"),
   options = list()
 )
 
 read_json_duckdb(
   path,
   ...,
-  funnel = c("drip", "open", "closed"),
+  funnel = c("thrifty", "lavish", "frugal"),
   options = list()
 )
 
@@ -32,7 +32,7 @@ read_file_duckdb(
   path,
   table_function,
   ...,
-  funnel = c("drip", "open", "closed"),
+  funnel = c("thrifty", "lavish", "frugal"),
   options = list()
 )
 }
@@ -89,8 +89,8 @@ try(print(df$a))
 # Materialize explicitly
 collect(df)$a
 
-# Automatic materialization with funnel = "open"
-df <- read_csv_duckdb(path, funnel = "open")
+# Automatic materialization with funnel = "lavish"
+df <- read_csv_duckdb(path, funnel = "lavish")
 df$a
 
 # Specify column types

@@ -6,9 +6,9 @@
 \alias{is_duckdb_tibble}
 \title{duckplyr data frames}
 \usage{
-duckdb_tibble(..., .funnel = c("open", "drip", "closed"))
+duckdb_tibble(..., .funnel = c("lavish", "thrifty", "frugal"))
 
-as_duckdb_tibble(x, ..., funnel = c("open", "drip", "closed"))
+as_duckdb_tibble(x, ..., funnel = c("lavish", "thrifty", "frugal"))
 
 is_duckdb_tibble(x)
 }
@@ -18,9 +18,9 @@ For \code{as_duckdb_tibble()}, passed on to methods.}
 
 \item{.funnel, funnel}{Either a string:
 \itemize{
-\item \code{"closed"}:  a funneled data frame,
-\item \code{"open"}: an unfunneled data frame,
-\item \code{"drip"}: allow the materialization up to a maximum size of 1 million cells.
+\item \code{"frugal"}:  a funneled data frame,
+\item \code{"lavish"}: an unfunneled data frame,
+\item \code{"thrifty"}: allow the materialization up to a maximum size of 1 million cells.
 }
 
 Or a named vector with at least one of
@@ -31,7 +31,7 @@ Or a named vector with at least one of
 
 to allow materialization for data up to a certain size,
 measured in cells (values) and rows in the resulting data frame.
-The equivalent of \code{"drip"} is \code{c(cells = 1e6)}.
+The equivalent of \code{"thrifty"} is \code{c(cells = 1e6)}.
 
 If \code{cells} is specified but not \code{rows}, \code{rows} is \code{Inf}.
 If \code{rows} is specified but not \code{cells}, \code{cells} is \code{Inf}.
@@ -43,7 +43,7 @@ The default is to inherit the funneling of the input.}
 \value{
 For \code{duckdb_tibble()} and \code{as_duckdb_tibble()}, an object with the following classes:
 \itemize{
-\item \code{"funneled_duckplyr_df"} if \code{.funnel} is not \code{"open"}
+\item \code{"funneled_duckplyr_df"} if \code{.funnel} is not \code{"lavish"}
 \item \code{"duckplyr_df"}
 \item Classes of a \link[tibble:tibble]{tibble::tibble}
 }
@@ -75,7 +75,7 @@ x \%>\%
 
 x$a
 
-y <- duckdb_tibble(a = 1, .funnel = "closed")
+y <- duckdb_tibble(a = 1, .funnel = "frugal")
 y
 try(length(y$a))
 length(collect(y)$a)

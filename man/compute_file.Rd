@@ -21,9 +21,9 @@ details.}
 
 \item{funnel}{Either a string:
 \itemize{
-\item \code{"closed"}:  a funneled data frame,
-\item \code{"open"}: an unfunneled data frame,
-\item \code{"drip"}: allow the materialization up to a maximum size of 1 million cells.
+\item \code{"frugal"}:  a funneled data frame,
+\item \code{"lavish"}: an unfunneled data frame,
+\item \code{"thrifty"}: allow the materialization up to a maximum size of 1 million cells.
 }
 
 Or a named vector with at least one of
@@ -34,7 +34,7 @@ Or a named vector with at least one of
 
 to allow materialization for data up to a certain size,
 measured in cells (values) and rows in the resulting data frame.
-The equivalent of \code{"drip"} is \code{c(cells = 1e6)}.
+The equivalent of \code{"thrifty"} is \code{c(cells = 1e6)}.
 
 If \code{cells} is specified but not \code{rows}, \code{rows} is \code{Inf}.
 If \code{rows} is specified but not \code{cells}, \code{cells} is \code{Inf}.

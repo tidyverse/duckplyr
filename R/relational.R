@@ -131,7 +131,7 @@ check_prudence <- function(x, duckplyr_error, call = caller_env()) {
     cli::cli_abort(parent = duckplyr_error_parent, call = call, c(
       "This operation cannot be carried out by DuckDB, and the input is a funneled duckplyr frame.",
       "*" = duckplyr_error_msg,
-      "i" = 'Use {.code compute(funnel = "open")} to materialize to temporary storage and continue with {.pkg duckplyr}.',
+      "i" = 'Use {.code compute(funnel = "lavish")} to materialize to temporary storage and continue with {.pkg duckplyr}.',
       "i" = 'See {.run vignette("funnel")} for other options.'
     ))
   }

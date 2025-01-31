@@ -1,6 +1,6 @@
 #' @param funnel Only adds the class, does not recreate the relation object!
 #' @noRd
-new_duckdb_tibble <- function(x, class = NULL, funnel = "open", refunnel = FALSE, error_call = caller_env()) {
+new_duckdb_tibble <- function(x, class = NULL, funnel = "lavish", refunnel = FALSE, error_call = caller_env()) {
   if (is.null(class)) {
     class <- c("tbl_df", "tbl", "data.frame")
   } else {
@@ -30,7 +30,7 @@ new_duckdb_tibble <- function(x, class = NULL, funnel = "open", refunnel = FALSE
   }
 
   class(x) <- c(
-    if (!identical(funnel_parsed$funnel, "open")) "funneled_duckplyr_df",
+    if (!identical(funnel_parsed$funnel, "lavish")) "funneled_duckplyr_df",
     "duckplyr_df",
     class
   )
@@ -74,16 +74,16 @@ funnel_parse <- function(funnel, call = caller_env()) {
       }
     }
     allow_materialization <- is.finite(n_rows) || is.finite(n_cells)
-    funnel <- "closed"
+    funnel <- "frugal"
   } else if (!is.character(funnel)) {
     cli::cli_abort("{.arg funnel} must be an unnamed character vector or a named numeric vector", call = call)
   } else {
-    funnel <- arg_match(funnel, c("open", "closed", "drip"), error_call = call)
+    funnel <- arg_match(funnel, c("lavish", "frugal", "thrifty"), error_call = call)
 
-    allow_materialization <- !identical(funnel, "closed")
+    allow_materialization <- !identical(funnel, "frugal")
     if (!allow_materialization) {
       n_cells <- 0
-    } else if (identical(funnel, "drip")) {
+    } else if (identical(funnel, "thrifty")) {
       n_cells <- 1e6
     }
   }
@@ -99,16 +99,16 @@ funnel_parse <- function(funnel, call = caller_env()) {
 
 get_funnel_duckplyr_df <- function(x) {
   if (!is_funneled_duckplyr_df(x)) {
-    return("open")
+    return("lavish")
   }
 
   funnel <- attr(x, "funnel")
   if (is.null(funnel)) {
-    return("closed")
+    return("frugal")
   }
 
   if (identical(funnel, c(cells = 1e6))) {
-    return("drip")
+    return("thrifty")
   }
 
   funnel
@@ -127,7 +127,7 @@ collect.funneled_duckplyr_df <- function(x, ...) {
   # Do nothing if already materialized
   refunnel <- !is.null(duckdb$rel_from_altrep_df(x, strict = FALSE, allow_materialized = FALSE))
 
-  out <- new_duckdb_tibble(x, class(x), refunnel = refunnel, funnel = "open")
+  out <- new_duckdb_tibble(x, class(x), refunnel = refunnel, funnel = "lavish")
   collect(out)
 }
 

@@ -7,8 +7,8 @@ test_that("Can construct", {
   expect_identical(duckdb_tibble(a = 1)$a, 1)
 })
 
-test_that('.funnel = "closed" forbids materialization', {
-  tbl <- duckdb_tibble(a = 1, .funnel = "closed")
+test_that('.funnel = "frugal" forbids materialization', {
+  tbl <- duckdb_tibble(a = 1, .funnel = "frugal")
   expect_error(length(tbl$a))
 })
 
@@ -22,8 +22,8 @@ test_that('.funnel = c(cells = ) forbids materialization', {
   expect_error(length(tbl$a))
 })
 
-test_that('.funnel = "closed" forbids materialization for as_duckdb_tibble', {
-  tbl <- as_duckdb_tibble(data.frame(a = 1), funnel = "closed")
+test_that('.funnel = "frugal" forbids materialization for as_duckdb_tibble', {
+  tbl <- as_duckdb_tibble(data.frame(a = 1), funnel = "frugal")
   expect_error(length(tbl$a))
 })
 
@@ -64,14 +64,14 @@ test_that("as_duckdb_tibble() and dbplyr tables", {
     dplyr::copy_to(dest = con)
 
   duck <- db_tbl %>%
-    as_duckdb_tibble(funnel = "closed") %>%
+    as_duckdb_tibble(funnel = "frugal") %>%
     mutate(b = 2)
 
   expect_error(length(duck$b))
 
   db <- db_tbl %>%
     mutate(b = 2) %>%
-    as_duckdb_tibble(funnel = "closed")
+    as_duckdb_tibble(funnel = "frugal")
 
   expect_error(length(db$b))
 

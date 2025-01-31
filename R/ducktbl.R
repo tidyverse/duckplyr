@@ -13,9 +13,9 @@
 #' @param ... For `duckdb_tibble()`, passed on to [tibble()].
 #'   For `as_duckdb_tibble()`, passed on to methods.
 #' @param .funnel,funnel Either a string:
-#'   - `"closed"`:  a funneled data frame,
-#'   - `"open"`: an unfunneled data frame,
-#'   - `"drip"`: allow the materialization up to a maximum size of 1 million cells.
+#'   - `"frugal"`:  a funneled data frame,
+#'   - `"lavish"`: an unfunneled data frame,
+#'   - `"thrifty"`: allow the materialization up to a maximum size of 1 million cells.
 #'
 #' Or a named vector with at least one of
 #'   - `cells` (numeric)
@@ -23,7 +23,7 @@
 #'
 #' to allow materialization for data up to a certain size,
 #' measured in cells (values) and rows in the resulting data frame.
-#' The equivalent of `"drip"` is `c(cells = 1e6)`.
+#' The equivalent of `"thrifty"` is `c(cells = 1e6)`.
 #'
 #' If `cells` is specified but not `rows`, `rows` is `Inf`.
 #' If `rows` is specified but not `cells`, `cells` is `Inf`.
@@ -31,7 +31,7 @@
 #' The default is to inherit the funneling of the input.
 #'
 #' @return For `duckdb_tibble()` and `as_duckdb_tibble()`, an object with the following classes:
-#'   - `"funneled_duckplyr_df"` if `.funnel` is not `"open"`
+#'   - `"funneled_duckplyr_df"` if `.funnel` is not `"lavish"`
 #'   - `"duckplyr_df"`
 #'   - Classes of a [tibble]
 #'
@@ -45,12 +45,12 @@
 #'
 #' x$a
 #'
-#' y <- duckdb_tibble(a = 1, .funnel = "closed")
+#' y <- duckdb_tibble(a = 1, .funnel = "frugal")
 #' y
 #' try(length(y$a))
 #' length(collect(y)$a)
 #' @export
-duckdb_tibble <- function(..., .funnel = c("open", "drip", "closed")) {
+duckdb_tibble <- function(..., .funnel = c("lavish", "thrifty", "frugal")) {
   out <- tibble::tibble(...)
 
   # Side effect: check compatibility
@@ -70,7 +70,7 @@ duckdb_tibble <- function(..., .funnel = c("open", "drip", "closed")) {
 #' @param x The object to convert or to test.
 #' @rdname duckdb_tibble
 #' @export
-as_duckdb_tibble <- function(x, ..., funnel = c("open", "drip", "closed")) {
+as_duckdb_tibble <- function(x, ..., funnel = c("lavish", "thrifty", "frugal")) {
   # Handle the funnel arg in the generic, only the other args will be dispatched
   as_duckdb_tibble <- function(x, ...) {
     UseMethod("as_duckdb_tibble")
@@ -88,7 +88,7 @@ as_duckdb_tibble.tbl_duckdb_connection <- function(x, ...) {
   sql <- dbplyr::remote_query(x)
 
   # Start restrictive to avoid accidental materialization
-  read_sql_duckdb(sql, funnel = "closed", con = con)
+  read_sql_duckdb(sql, funnel = "frugal", con = con)
 }
 
 #' @export

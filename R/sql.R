@@ -18,7 +18,7 @@
 #' @export
 #' @examples
 #' read_sql_duckdb("FROM duckdb_settings()")
-read_sql_duckdb <- function(sql, ..., funnel = c("drip", "open", "closed"), con = NULL) {
+read_sql_duckdb <- function(sql, ..., funnel = c("thrifty", "lavish", "frugal"), con = NULL) {
   if (!is_string(sql)) {
     cli::cli_abort("{.arg sql} must be a string.")
   }
