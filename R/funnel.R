@@ -1,6 +1,6 @@
-#' @param prudence Only adds the class, does not recreate the relation object!
+#' @param collect Only adds the class, does not recreate the relation object!
 #' @noRd
-new_duckdb_tibble <- function(x, class = NULL, prudence = "lavish", adjust_prudence = FALSE, error_call = caller_env()) {
+new_duckdb_tibble <- function(x, class = NULL, collect = "automatic", adjust_prudence = FALSE, error_call = caller_env()) {
   if (is.null(class)) {
     class <- c("tbl_df", "tbl", "data.frame")
   } else {
@@ -13,9 +13,9 @@ new_duckdb_tibble <- function(x, class = NULL, prudence = "lavish", adjust_prude
     }
   }
 
-  prudence_parsed <- prudence_parse(prudence, error_call)
+  collect_parsed <- collect_parse(collect, error_call)
 
-  # Before setting class, needs prudence_parsed
+  # Before setting class, needs collect_parsed
   if (adjust_prudence) {
     rel <- duckdb_rel_from_df(x)
 
@@ -23,23 +23,23 @@ new_duckdb_tibble <- function(x, class = NULL, prudence = "lavish", adjust_prude
     x <- duckdb$rel_to_altrep(
       rel,
       # FIXME: Remove allow_materialization with duckdb >= 1.2.0
-      allow_materialization = prudence_parsed$allow_materialization,
-      n_rows = prudence_parsed$n_rows,
-      n_cells = prudence_parsed$n_cells
+      allow_materialization = collect_parsed$allow_materialization,
+      n_rows = collect_parsed$n_rows,
+      n_cells = collect_parsed$n_cells
     )
   }
 
   class(x) <- c(
-    if (!identical(prudence_parsed$prudence, "lavish")) "prudent_duckplyr_df",
+    if (!identical(collect_parsed$collect, "automatic")) "prudent_duckplyr_df",
     "duckplyr_df",
     class
   )
 
-  prudence_attr <- c(
-    rows = if (is.finite(prudence_parsed$n_rows)) prudence_parsed$n_rows,
-    cells = if (is.finite(prudence_parsed$n_cells)) prudence_parsed$n_cells
+  collect_attr <- c(
+    rows = if (is.finite(collect_parsed$n_rows)) collect_parsed$n_rows,
+    cells = if (is.finite(collect_parsed$n_cells)) collect_parsed$n_cells
   )
-  attr(x, "prudence") <- prudence_attr
+  attr(x, "collect") <- collect_attr
 
   x
 }
@@ -48,48 +48,48 @@ is_prudent_duckplyr_df <- function(x) {
   inherits(x, "prudent_duckplyr_df")
 }
 
-prudence_parse <- function(prudence, call = caller_env()) {
+collect_parse <- function(collect, call = caller_env()) {
   n_rows <- Inf
   n_cells <- Inf
 
-  if (is.numeric(prudence)) {
-    if (is.null(names(prudence))) {
-      cli::cli_abort("{.arg prudence} must have names if it is a named vector.", call = call)
+  if (is.numeric(collect)) {
+    if (is.null(names(collect))) {
+      cli::cli_abort("{.arg collect} must have names if it is a named vector.", call = call)
     }
-    extra_names <- setdiff(names(prudence), c("rows", "cells"))
+    extra_names <- setdiff(names(collect), c("rows", "cells"))
     if (length(extra_names) > 0) {
-      cli::cli_abort("Unknown name in {.arg prudence}: {extra_names[[1]]}", call = call)
+      cli::cli_abort("Unknown name in {.arg collect}: {extra_names[[1]]}", call = call)
     }
 
-    if ("rows" %in% names(prudence)) {
-      n_rows <- prudence[["rows"]]
+    if ("rows" %in% names(collect)) {
+      n_rows <- collect[["rows"]]
       if (is.na(n_rows) || n_rows < 0) {
-        cli::cli_abort("The {.val rows} component of {.arg prudence} must be a non-negative integer", call = call)
+        cli::cli_abort("The {.val rows} component of {.arg collect} must be a non-negative integer", call = call)
       }
     }
-    if ("cells" %in% names(prudence)) {
-      n_cells <- prudence[["cells"]]
+    if ("cells" %in% names(collect)) {
+      n_cells <- collect[["cells"]]
       if (is.na(n_cells) || n_cells < 0) {
-        cli::cli_abort("The {.val cells} component of {.arg prudence} must be a non-negative integer", call = call)
+        cli::cli_abort("The {.val cells} component of {.arg collect} must be a non-negative integer", call = call)
       }
     }
     allow_materialization <- is.finite(n_rows) || is.finite(n_cells)
-    prudence <- "frugal"
-  } else if (!is.character(prudence)) {
-    cli::cli_abort("{.arg prudence} must be an unnamed character vector or a named numeric vector", call = call)
+    collect <- "always_manual"
+  } else if (!is.character(collect)) {
+    cli::cli_abort("{.arg collect} must be an unnamed character vector or a named numeric vector", call = call)
   } else {
-    prudence <- arg_match(prudence, c("lavish", "frugal", "thrifty"), error_call = call)
+    collect <- arg_match(collect, c("automatic", "always_manual", "only_small"), error_call = call)
 
-    allow_materialization <- !identical(prudence, "frugal")
+    allow_materialization <- !identical(collect, "always_manual")
     if (!allow_materialization) {
       n_cells <- 0
-    } else if (identical(prudence, "thrifty")) {
+    } else if (identical(collect, "only_small")) {
       n_cells <- 1e6
     }
   }
 
   list(
-    prudence = prudence,
+    collect = collect,
     # FIXME: Remove allow_materialization with duckdb >= 1.2.0
     allow_materialization = allow_materialization,
     n_rows = n_rows,
@@ -97,27 +97,27 @@ prudence_parse <- function(prudence, call = caller_env()) {
   )
 }
 
-get_prudence_duckplyr_df <- function(x) {
+get_collect_duckplyr_df <- function(x) {
   if (!is_prudent_duckplyr_df(x)) {
-    return("lavish")
+    return("automatic")
   }
 
-  prudence <- attr(x, "prudence")
-  if (is.null(prudence)) {
-    return("frugal")
+  collect <- attr(x, "collect")
+  if (is.null(collect)) {
+    return("always_manual")
   }
 
-  if (identical(prudence, c(cells = 1e6))) {
-    return("thrifty")
+  if (identical(collect, c(cells = 1e6))) {
+    return("only_small")
   }
 
-  prudence
+  collect
 }
 
 duckplyr_reconstruct <- function(rel, template) {
   out <- rel_to_df(
     rel,
-    prudence = get_prudence_duckplyr_df(template)
+    collect = get_collect_duckplyr_df(template)
   )
   dplyr_reconstruct(out, template)
 }
@@ -127,7 +127,7 @@ collect.prudent_duckplyr_df <- function(x, ...) {
   # Do nothing if already materialized
   adjust_prudence <- !is.null(duckdb$rel_from_altrep_df(x, strict = FALSE, allow_materialized = FALSE))
 
-  out <- new_duckdb_tibble(x, class(x), adjust_prudence = adjust_prudence, prudence = "lavish")
+  out <- new_duckdb_tibble(x, class(x), adjust_prudence = adjust_prudence, collect = "automatic")
   collect(out)
 }
 

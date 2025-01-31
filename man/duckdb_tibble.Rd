@@ -6,9 +6,13 @@
 \alias{is_duckdb_tibble}
 \title{duckplyr data frames}
 \usage{
-duckdb_tibble(..., .prudence = c("lavish", "thrifty", "frugal"))
+duckdb_tibble(..., .collect = c("automatic", "only_small", "always_manual"))
 
-as_duckdb_tibble(x, ..., prudence = c("lavish", "thrifty", "frugal"))
+as_duckdb_tibble(
+  x,
+  ...,
+  collect = c("automatic", "only_small", "always_manual")
+)
 
 is_duckdb_tibble(x)
 }
@@ -16,11 +20,11 @@ is_duckdb_tibble(x)
 \item{...}{For \code{duckdb_tibble()}, passed on to \code{\link[tibble:tibble]{tibble::tibble()}}.
 For \code{as_duckdb_tibble()}, passed on to methods.}
 
-\item{.prudence, prudence}{Either a string:
+\item{.collect, collect}{Either a string:
 \itemize{
-\item \code{"frugal"}:  a frugal data frame,
-\item \code{"lavish"}: a lavish data frame,
-\item \code{"thrifty"}: allow the materialization up to a maximum size of 1 million cells.
+\item \code{"always_manual"}:  a frugal data frame,
+\item \code{"automatic"}: a lavish data frame,
+\item \code{"only_small"}: allow the materialization up to a maximum size of 1 million cells.
 }
 
 Or a named vector with at least one of
@@ -31,7 +35,7 @@ Or a named vector with at least one of
 
 to allow materialization for data up to a certain size,
 measured in cells (values) and rows in the resulting data frame.
-The equivalent of \code{"thrifty"} is \code{c(cells = 1e6)}.
+The equivalent of \code{"only_small"} is \code{c(cells = 1e6)}.
 
 If \code{cells} is specified but not \code{rows}, \code{rows} is \code{Inf}.
 If \code{rows} is specified but not \code{cells}, \code{cells} is \code{Inf}.
@@ -43,7 +47,7 @@ The default is to inherit the prudence of the input.}
 \value{
 For \code{duckdb_tibble()} and \code{as_duckdb_tibble()}, an object with the following classes:
 \itemize{
-\item \code{"prudent_duckplyr_df"} if \code{.prudence} is not \code{"lavish"}
+\item \code{"prudent_duckplyr_df"} if \code{.collect} is not \code{"automatic"}
 \item \code{"duckplyr_df"}
 \item Classes of a \link[tibble:tibble]{tibble::tibble}
 }
@@ -75,7 +79,7 @@ x \%>\%
 
 x$a
 
-y <- duckdb_tibble(a = 1, .prudence = "frugal")
+y <- duckdb_tibble(a = 1, .collect = "always_manual")
 y
 try(length(y$a))
 length(collect(y)$a)

@@ -6,9 +6,9 @@
 \alias{compute_csv}
 \title{Compute results to a file}
 \usage{
-compute_parquet(x, path, ..., prudence = NULL, options = NULL)
+compute_parquet(x, path, ..., collect = NULL, options = NULL)
 
-compute_csv(x, path, ..., prudence = NULL, options = NULL)
+compute_csv(x, path, ..., collect = NULL, options = NULL)
 }
 \arguments{
 \item{x}{A data frame, data frame extension (e.g. a tibble), or a lazy
@@ -19,11 +19,11 @@ details.}
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{prudence}{Either a string:
+\item{collect}{Either a string:
 \itemize{
-\item \code{"frugal"}:  a frugal data frame,
-\item \code{"lavish"}: a lavish data frame,
-\item \code{"thrifty"}: allow the materialization up to a maximum size of 1 million cells.
+\item \code{"always_manual"}:  a frugal data frame,
+\item \code{"automatic"}: a lavish data frame,
+\item \code{"only_small"}: allow the materialization up to a maximum size of 1 million cells.
 }
 
 Or a named vector with at least one of
@@ -34,7 +34,7 @@ Or a named vector with at least one of
 
 to allow materialization for data up to a certain size,
 measured in cells (values) and rows in the resulting data frame.
-The equivalent of \code{"thrifty"} is \code{c(cells = 1e6)}.
+The equivalent of \code{"only_small"} is \code{c(cells = 1e6)}.
 
 If \code{cells} is specified but not \code{rows}, \code{rows} is \code{Inf}.
 If \code{rows} is specified but not \code{cells}, \code{cells} is \code{Inf}.

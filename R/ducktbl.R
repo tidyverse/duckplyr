@@ -12,10 +12,10 @@
 #'
 #' @param ... For `duckdb_tibble()`, passed on to [tibble()].
 #'   For `as_duckdb_tibble()`, passed on to methods.
-#' @param .prudence,prudence Either a string:
-#'   - `"frugal"`:  a frugal data frame,
-#'   - `"lavish"`: a lavish data frame,
-#'   - `"thrifty"`: allow the materialization up to a maximum size of 1 million cells.
+#' @param .collect,collect Either a string:
+#'   - `"always_manual"`:  a frugal data frame,
+#'   - `"automatic"`: a lavish data frame,
+#'   - `"only_small"`: allow the materialization up to a maximum size of 1 million cells.
 #'
 #' Or a named vector with at least one of
 #'   - `cells` (numeric)
@@ -23,7 +23,7 @@
 #'
 #' to allow materialization for data up to a certain size,
 #' measured in cells (values) and rows in the resulting data frame.
-#' The equivalent of `"thrifty"` is `c(cells = 1e6)`.
+#' The equivalent of `"only_small"` is `c(cells = 1e6)`.
 #'
 #' If `cells` is specified but not `rows`, `rows` is `Inf`.
 #' If `rows` is specified but not `cells`, `cells` is `Inf`.
@@ -31,7 +31,7 @@
 #' The default is to inherit the prudence of the input.
 #'
 #' @return For `duckdb_tibble()` and `as_duckdb_tibble()`, an object with the following classes:
-#'   - `"prudent_duckplyr_df"` if `.prudence` is not `"lavish"`
+#'   - `"prudent_duckplyr_df"` if `.collect` is not `"automatic"`
 #'   - `"duckplyr_df"`
 #'   - Classes of a [tibble]
 #'
@@ -45,12 +45,12 @@
 #'
 #' x$a
 #'
-#' y <- duckdb_tibble(a = 1, .prudence = "frugal")
+#' y <- duckdb_tibble(a = 1, .collect = "always_manual")
 #' y
 #' try(length(y$a))
 #' length(collect(y)$a)
 #' @export
-duckdb_tibble <- function(..., .prudence = c("lavish", "thrifty", "frugal")) {
+duckdb_tibble <- function(..., .collect = c("automatic", "only_small", "always_manual")) {
   out <- tibble::tibble(...)
 
   # Side effect: check compatibility
@@ -59,7 +59,7 @@ duckdb_tibble <- function(..., .prudence = c("lavish", "thrifty", "frugal")) {
   # FIXME: May be handled by other methods
   check_df_for_rel(out)
 
-  new_duckdb_tibble(out, class(out), prudence = .prudence, adjust_prudence = TRUE)
+  new_duckdb_tibble(out, class(out), collect = .collect, adjust_prudence = TRUE)
 }
 
 #' as_duckdb_tibble
@@ -70,14 +70,14 @@ duckdb_tibble <- function(..., .prudence = c("lavish", "thrifty", "frugal")) {
 #' @param x The object to convert or to test.
 #' @rdname duckdb_tibble
 #' @export
-as_duckdb_tibble <- function(x, ..., prudence = c("lavish", "thrifty", "frugal")) {
-  # Handle the prudence arg in the generic, only the other args will be dispatched
+as_duckdb_tibble <- function(x, ..., collect = c("automatic", "only_small", "always_manual")) {
+  # Handle the collect arg in the generic, only the other args will be dispatched
   as_duckdb_tibble <- function(x, ...) {
     UseMethod("as_duckdb_tibble")
   }
 
   out <- as_duckdb_tibble(x, ...)
-  new_duckdb_tibble(out, class(out), prudence = prudence, adjust_prudence = TRUE)
+  new_duckdb_tibble(out, class(out), collect = collect, adjust_prudence = TRUE)
 }
 
 #' @export
@@ -88,7 +88,7 @@ as_duckdb_tibble.tbl_duckdb_connection <- function(x, ...) {
   sql <- dbplyr::remote_query(x)
 
   # Start restrictive to avoid accidental materialization
-  read_sql_duckdb(sql, prudence = "frugal", con = con)
+  read_sql_duckdb(sql, collect = "always_manual", con = con)
 }
 
 #' @export

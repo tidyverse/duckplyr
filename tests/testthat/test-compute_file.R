@@ -26,10 +26,10 @@ test_that("compute_csv()", {
   expect_false(is_prudent_duckplyr_df(out))
 })
 
-test_that("compute_csv() prudence", {
+test_that("compute_csv() collect", {
   df <- data.frame(x = c(1, 2))
   withr::defer(unlink("test.csv"))
-  out <- compute_csv(df, path = "test.csv", prudence = "frugal")
+  out <- compute_csv(df, path = "test.csv", collect = "always_manual")
 
   expect_true(is_prudent_duckplyr_df(out))
   expect_identical(collect(out), as_tibble(df))

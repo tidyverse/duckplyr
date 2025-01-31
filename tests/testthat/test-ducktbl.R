@@ -7,23 +7,23 @@ test_that("Can construct", {
   expect_identical(duckdb_tibble(a = 1)$a, 1)
 })
 
-test_that('.prudence = "frugal" forbids materialization', {
-  tbl <- duckdb_tibble(a = 1, .prudence = "frugal")
+test_that('.collect = "always_manual" forbids materialization', {
+  tbl <- duckdb_tibble(a = 1, .collect = "always_manual")
   expect_error(length(tbl$a))
 })
 
-test_that('.prudence = c(rows = ) forbids materialization', {
-  tbl <- duckdb_tibble(a = 1:10, .prudence = c(rows = 5))
+test_that('.collect = c(rows = ) forbids materialization', {
+  tbl <- duckdb_tibble(a = 1:10, .collect = c(rows = 5))
   expect_error(length(tbl$a))
 })
 
-test_that('.prudence = c(cells = ) forbids materialization', {
-  tbl <- duckdb_tibble(a = 1:10, b = 1, .prudence = c(cells = 10))
+test_that('.collect = c(cells = ) forbids materialization', {
+  tbl <- duckdb_tibble(a = 1:10, b = 1, .collect = c(cells = 10))
   expect_error(length(tbl$a))
 })
 
-test_that('.prudence = "frugal" forbids materialization for as_duckdb_tibble', {
-  tbl <- as_duckdb_tibble(data.frame(a = 1), prudence = "frugal")
+test_that('.collect = "always_manual" forbids materialization for as_duckdb_tibble', {
+  tbl <- as_duckdb_tibble(data.frame(a = 1), collect = "always_manual")
   expect_error(length(tbl$a))
 })
 
@@ -64,14 +64,14 @@ test_that("as_duckdb_tibble() and dbplyr tables", {
     dplyr::copy_to(dest = con)
 
   duck <- db_tbl %>%
-    as_duckdb_tibble(prudence = "frugal") %>%
+    as_duckdb_tibble(collect = "always_manual") %>%
     mutate(b = 2)
 
   expect_error(length(duck$b))
 
   db <- db_tbl %>%
     mutate(b = 2) %>%
-    as_duckdb_tibble(prudence = "frugal")
+    as_duckdb_tibble(collect = "always_manual")
 
   expect_error(length(db$b))
 
