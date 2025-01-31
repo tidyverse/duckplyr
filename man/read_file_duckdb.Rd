@@ -21,7 +21,12 @@ read_csv_duckdb(
   options = list()
 )
 
-read_json_duckdb(path, ..., funnel = "drip", options = list())
+read_json_duckdb(
+  path,
+  ...,
+  funnel = c("drip", "open", "closed"),
+  options = list()
+)
 
 read_file_duckdb(path, table_function, ..., funnel = "drip", options = list())
 }

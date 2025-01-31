@@ -71,7 +71,7 @@ read_csv_duckdb <- function(path, ..., funnel = c("drip", "open", "closed"), opt
 #' db_exec("INSTALL json")
 #' db_exec("LOAD json")
 #' read_json_duckdb(path)
-read_json_duckdb <- function(path, ..., funnel = "drip", options = list()) {
+read_json_duckdb <- function(path, ..., funnel = c("drip", "open", "closed"), options = list()) {
   check_dots_empty()
 
   read_file_duckdb(path, "read_json", funnel = funnel, options = options)
