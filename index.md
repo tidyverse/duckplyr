@@ -143,7 +143,7 @@ duckplyr::methods_restore()
 
 ## Analyzing larger-than-memory data
 
-An extended variant of this dataset is also available for download as Parquet files.
+An extended variant of the `nycflights13::flights` dataset is also available for download as Parquet files.
 
 
 ``` r
@@ -157,7 +157,7 @@ urls
 #> [3] "https://blobs.duckdb.org/flight-data-partitioned/Year=2024/data_0.parquet"
 ```
 
-Using the httpfs DuckDB extension, we can query these files directly from R, without even downloading them first.
+Using the [httpfs DuckDB extension](https://duckdb.org/docs/extensions/httpfs/overview.html), we can query these files directly from R, without even downloading them first.
 
 
 ``` r
@@ -167,15 +167,15 @@ db_exec("LOAD httpfs")
 flights <- read_parquet_duckdb(urls)
 ```
 
-Unlike with local data frames, the default is to disallow automatic materialization if the result is too large.
+Like with local data frames, queries on the remote data are executed lazily.
+Unlike with local data frames, the default is to disallow automatic materialization if the result is too large in order to protect memory: the results are not materialized until explicitly requested, with a `collect()` call for instance.
 
 
 ``` r
 nrow(flights)
-#> Error: Materialization would result in 9091 rows, which exceeds the limit of 9090. Use collect() or as_tibble() to materialize.
+#> Error: Materialization would result in more than 9090 rows. Use collect() or as_tibble() to materialize.
 ```
 
-Queries on the remote data are executed lazily, and the results are not materialized until explicitly requested.
 For printing, only the first few rows of the result are fetched.
 
 
