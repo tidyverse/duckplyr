@@ -104,7 +104,7 @@ read_file_duckdb <- function(
   path,
   table_function,
   ...,
-  funnel = "drip",
+  funnel = c("drip", "open", "closed"),
   options = list()
 ) {
   check_dots_empty()
