@@ -1,0 +1,89 @@
+---
+title: "duckplyr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{duckplyr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(duckplyr)
+```
+
+## Design principles
+
+The duckplyr package uses **DuckDB under the hood** but is also a **drop-in replacement for dplyr**.
+These two facts create a tension:
+
+-   When using dplyr, we are not used to explicitly collect results: the data.frames are eager by default.
+    Adding a `collect()` step by default would confuse users and make "drop-in replacement" an exaggeration.
+    Therefore, _duckplyr needs eagerness_!
+
+-   The whole advantage of using DuckDB under the hood is letting DuckDB optimize computations, like dtplyr does with data.table.
+    _Therefore, duckplyr needs laziness_!
+
+As a consequence, duckplyr is lazy on the inside for all DuckDB operations but eager on the outside, thanks to [ALTREP](https://duckdb.org/2024/04/02/duckplyr.html#eager-vs-lazy-materialization), a powerful R feature that among other things supports **deferred evaluation**.
+
+> "ALTREP allows R objects to have different in-memory representations, and for custom code to be executed whenever those objects are accessed."
+
+If the duckplyr data.frame is accessed by...
+
+-   not duckplyr (say, ggplot2), then a special callback is executed, allowing materialization of the data frame.
+-   duckplyr, then the operations continue to be lazy (until a call to `collect.duckplyr_df()` for instance).
+
+Therefore, duckplyr can be **both lazy** (within itself) **and not lazy** (for the outside world).
+
+Now, the default materialization can be problematic if dealing with large data: what if the materialization eats up all RAM?
+Therefore, the duckplyr package has a **safeguard called funneling** (in the current development version of the package).
+A funneled data.frame cannot be materialized by default, it needs a call to a `compute()` function.
+By default, duckplyr frames are _unfunneled_, but duckplyr frames created from Parquet data (presumedly large) are _funneled_.
+
+## How to use duckplyr
+
+### For normal sized data (instead of dplyr)
+
+To replace dplyr with duckplyr, you can either
+
+- load duckplyr and then keep your pipeline as is.
+
+```r
+library(conflicted)
+library(duckplyr)
+conflict_prefer("filter", "dplyr", quiet = TRUE)
+```
+
+- convert individual data.frames to duck frames which allows you to control their automatic materialization parameters. To do that, you use `duckdb_tibble()`, `as_duckdb_tibble()` or read data using `read_*()` functions like `read_csv_duckdb()`.
+
+In both cases, if an operation cannot be performed 
+by duckplyr (see `vignettes("limits")`), it will be outsourced to dplyr. 
+You can choose to be informed about fallbacks to dplyr, see `?fallback_config`.
+You can disable fallbacks by turning off automatic materialization.
+In that case, if an operation cannot be performed by duckplyr, your code will error.
+
+### For large data (instead of dbplyr)
+
+With large datasets, you want:
+
+- input data in an efficient format, like Parquet files. Therefore you might input data using `read_parquet_duckdb()`.
+- efficient computation, which duckplyr provides via DuckDB's holistic optimization, without your having to use another syntax than dplyr.
+- the output to not clutter all the memory. Therefore you can make use of these features:
+    - funneling see vignette TODO ADD CURRENT NAME to disable automatic materialization completely or to disable automatic materialization up to a certain output size.
+    - computation to files using  `compute_parquet()` or `compute_csv()`.
+    
+
+
+A drawback of analyzing large data with duckplyr is that the limitations of duckplyr 
+(unsupported verbs or data types, see `vignette("limits")`) won't be compensated by fallbacks since fallbacks to dplyr necessitate putting data into memory.
+
+## How to improve duckplyr
+
+- telemetry
+- report issues, contribute
