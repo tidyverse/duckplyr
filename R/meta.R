@@ -170,6 +170,8 @@ meta_macro_register <- function(name) {
 }
 
 meta_df_register <- function(df) {
+  class(df) <- "data.frame"
+
   if (df_cache$has(df)) {
     return(invisible(df_cache$get(df)))
   }
@@ -184,6 +186,12 @@ meta_df_register <- function(df) {
 
     for (df_name in names(global_dfs)) {
       global_df <- global_dfs[[df_name]]
+      if (!is.data.frame(global_df)) {
+        next
+      }
+
+      class(global_df) <- "data.frame"
+
       # FIXME: Does this also work with pointer comparison?
       if (identical(df, global_df)) {
         df_expr <- sym(df_name)
