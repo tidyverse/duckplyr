@@ -166,7 +166,7 @@
 <div class="section level2">
 <h2 id="analyzing-larger-than-memory-data">Analyzing larger-than-memory data<a class="anchor" aria-label="anchor" href="#analyzing-larger-than-memory-data"></a>
 </h2>
-<p>An extended variant of this dataset is also available for download as Parquet files.</p>
+<p>An extended variant of the <code><a href="https://rdrr.io/pkg/nycflights13/man/flights.html" class="external-link">nycflights13::flights</a></code> dataset is also available for download as Parquet files.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">year</span> <span class="op">&lt;-</span> <span class="fl">2022</span><span class="op">:</span><span class="fl">2024</span></span>
 <span><span class="va">base_url</span> <span class="op">&lt;-</span> <span class="st">"https://blobs.duckdb.org/flight-data-partitioned/"</span></span>
@@ -176,17 +176,17 @@
 <span><span class="co">#&gt; [1] "https://blobs.duckdb.org/flight-data-partitioned/Year=2022/data_0.parquet"</span></span>
 <span><span class="co">#&gt; [2] "https://blobs.duckdb.org/flight-data-partitioned/Year=2023/data_0.parquet"</span></span>
 <span><span class="co">#&gt; [3] "https://blobs.duckdb.org/flight-data-partitioned/Year=2024/data_0.parquet"</span></span></code></pre></div>
-<p>Using the httpfs DuckDB extension, we can query these files directly from R, without even downloading them first.</p>
+<p>Using the <a href="https://duckdb.org/docs/extensions/httpfs/overview.html" class="external-link">httpfs DuckDB extension</a>, we can query these files directly from R, without even downloading them first.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/db_exec.html">db_exec</a></span><span class="op">(</span><span class="st">"INSTALL httpfs"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/db_exec.html">db_exec</a></span><span class="op">(</span><span class="st">"LOAD httpfs"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">flights</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_file_duckdb.html">read_parquet_duckdb</a></span><span class="op">(</span><span class="va">urls</span><span class="op">)</span></span></code></pre></div>
-<p>Unlike with local data frames, the default is to disallow automatic materialization if the result is too large.</p>
+<p>Like with local data frames, queries on the remote data are executed lazily. Unlike with local data frames, the default is to disallow automatic materialization if the result is too large in order to protect memory: the results are not materialized until explicitly requested, with a <code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect()</a></code> call for instance.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">flights</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: Materialization would result in 9091 rows, which exceeds the limit of 9090. Use collect() or as_tibble() to materialize.</span></span></code></pre></div>
-<p>Queries on the remote data are executed lazily, and the results are not materialized until explicitly requested. For printing, only the first few rows of the result are fetched.</p>
+<span><span class="co">#&gt; Error: Materialization would result in more than 9090 rows. Use collect() or as_tibble() to materialize.</span></span></code></pre></div>
+<p>For printing, only the first few rows of the result are fetched.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">flights</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 110 variables</span></span></span>
