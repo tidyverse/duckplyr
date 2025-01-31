@@ -75,19 +75,8 @@ as_duckdb_tibble <- function(x, ..., funnel = "open") {
     UseMethod("as_duckdb_tibble")
   }
 
-  funnel_parsed <- funnel_parse(funnel)
   out <- as_duckdb_tibble(x, ...)
-
-  if (funnel_parsed$funnel == "closed") {
-    as_funneled_duckplyr_df(
-      out,
-      funnel_parsed$allow_materialization,
-      funnel_parsed$n_rows,
-      funnel_parsed$n_cells
-    )
-  } else {
-    as_unfunneled_duckplyr_df(out)
-  }
+  new_duckdb_tibble(out, class(out), funnel = funnel, refunnel = TRUE)
 }
 
 #' @export
