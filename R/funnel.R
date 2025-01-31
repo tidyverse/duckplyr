@@ -22,6 +22,7 @@ new_duckdb_tibble <- function(x, class = NULL, funnel = "open", refunnel = FALSE
     # Copied from rel_to_df.duckdb_relation(), to avoid recursion
     x <- duckdb$rel_to_altrep(
       rel,
+      # FIXME: Remove allow_materialization with duckdb >= 1.2.0
       allow_materialization = funnel_parsed$allow_materialization,
       n_rows = funnel_parsed$n_rows,
       n_cells = funnel_parsed$n_cells
@@ -78,10 +79,16 @@ funnel_parse <- function(funnel, call = caller_env()) {
     cli::cli_abort("{.arg funnel} must be an unnamed character vector or a named numeric vector", call = call)
   } else {
     allow_materialization <- !identical(funnel, "closed")
+    if (!allow_materialization) {
+      n_cells <- 0
+    } else if (identical(funnel, "drip")) {
+      n_cells <- 1e6
+    }
   }
 
   list(
     funnel = funnel,
+    # FIXME: Remove allow_materialization with duckdb >= 1.2.0
     allow_materialization = allow_materialization,
     n_rows = n_rows,
     n_cells = n_cells
@@ -96,6 +103,10 @@ get_funnel_duckplyr_df <- function(x) {
   funnel <- attr(x, "funnel")
   if (is.null(funnel)) {
     return("closed")
+  }
+
+  if (identical(funnel, c(cells = 1e6))) {
+    return("drip")
   }
 
   funnel
