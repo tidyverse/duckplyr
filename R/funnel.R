@@ -78,6 +78,47 @@ is_funneled_duckplyr_df <- function(x) {
   inherits(x, "funneled_duckplyr_df")
 }
 
+funnel_parse <- function(funnel, call = caller_env()) {
+  n_rows <- Inf
+  n_cells <- Inf
+
+  if (is.numeric(funnel)) {
+    if (is.null(names(funnel))) {
+      cli::cli_abort("{.arg funnel} must have names if it is a named vector.", call = call)
+    }
+    extra_names <- setdiff(names(funnel), c("rows", "cells"))
+    if (length(extra_names) > 0) {
+      cli::cli_abort("Unknown name in {.arg funnel}: {extra_names[[1]]}", call = call)
+    }
+
+    if ("rows" %in% names(funnel)) {
+      n_rows <- funnel[["rows"]]
+      if (is.na(n_rows) || n_rows < 0) {
+        cli::cli_abort("The {.val rows} component of {.arg funnel} must be a non-negative integer", call = call)
+      }
+    }
+    if ("cells" %in% names(funnel)) {
+      n_cells <- funnel[["cells"]]
+      if (is.na(n_cells) || n_cells < 0) {
+        cli::cli_abort("The {.val cells} component of {.arg funnel} must be a non-negative integer", call = call)
+      }
+    }
+    allow_materialization <- is.finite(n_rows) || is.finite(n_cells)
+    funnel <- "closed"
+  } else if (!is.character(funnel)) {
+    cli::cli_abort("{.arg funnel} must be an unnamed character vector or a named numeric vector", call = call)
+  } else {
+    allow_materialization <- !identical(funnel, "closed")
+  }
+
+  list(
+    funnel = funnel,
+    allow_materialization = allow_materialization,
+    n_rows = n_rows,
+    n_cells = n_cells
+  )
+}
+
 get_funnel_duckplyr_df <- function(x) {
   if (!is_funneled_duckplyr_df(x)) {
     return("open")
