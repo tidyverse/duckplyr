@@ -29,7 +29,7 @@ diff --git b/R/mutate.R a/R/mutate.R
 +
 +      names_used <- character()
 +      names_new <- character()
-+      current_data <- rel_to_df(rel)
++      current_data <- rel_to_df(rel, prudence = "frugal")
 +
 +      # FIXME: use fewer projections
 +      for (i in seq_along(dots)) {
@@ -77,7 +77,7 @@ diff --git b/R/mutate.R a/R/mutate.R
 +        }
 +
 +        rel <- rel_project(rel, unname(exprs))
-+        current_data <- rel_to_df(rel)
++        current_data <- rel_to_df(rel, prudence = "frugal")
 +      }
 +
 +      if (length(by_names) > 0) {
