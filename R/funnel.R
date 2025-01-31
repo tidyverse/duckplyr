@@ -1,6 +1,6 @@
 #' @param funnel Only adds the class, does not recreate the relation object!
 #' @noRd
-new_duckdb_tibble <- function(x, class = NULL, funnel = "open", error_call = caller_env()) {
+new_duckdb_tibble <- function(x, class = NULL, funnel = "open", refunnel = FALSE, error_call = caller_env()) {
   if (is.null(class)) {
     class <- c("tbl_df", "tbl", "data.frame")
   } else {
@@ -13,13 +13,26 @@ new_duckdb_tibble <- function(x, class = NULL, funnel = "open", error_call = cal
     }
   }
 
+  funnel_parsed <- funnel_parse(funnel, error_call)
+
+  # Before setting class, needs funnel_parsed
+  if (refunnel) {
+    rel <- duckdb_rel_from_df(x)
+
+    x <- rel_to_df(
+      rel,
+      allow_materialization = funnel_parsed$allow_materialization,
+      n_rows = funnel_parsed$n_rows,
+      n_cells = funnel_parsed$n_cells
+    )
+  }
+
   class(x) <- c(
     if (!identical(funnel, "open")) "funneled_duckplyr_df",
     "duckplyr_df",
     class
   )
 
-  funnel_parsed <- funnel_parse(funnel, error_call)
   funnel_attr <- c(
     rows = if (is.finite(funnel_parsed$n_rows)) funnel_parsed$n_rows,
     cells = if (is.finite(funnel_parsed$n_cells)) funnel_parsed$n_cells
@@ -143,7 +156,7 @@ duckplyr_reconstruct <- function(rel, template) {
 #' @export
 collect.funneled_duckplyr_df <- function(x, ...) {
   # Do nothing if already materialized
-  if (is.null(duckdb$rel_from_altrep_df(x, allow_materialized = FALSE))) {
+  if (is.null(duckdb$rel_from_altrep_df(x, strict = FALSE, allow_materialized = FALSE))) {
     out <- x
   } else {
     rel <- duckdb_rel_from_df(x)
