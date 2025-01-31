@@ -16,12 +16,13 @@ rel_find_call <- function(fun, env) {
   # Remember to update limits.Rmd when adding new functions!
   pkgs <- switch(name,
     # Handled in a special way, not mentioned here
-    # "desc" = c("dplyr", "duckplyr"),
+    "desc" = "dplyr",
+
     "==" = "base",
     "/" = "base",
     "$" = "base", # very special, also with constant folding
     "mean" = "base",
-    "n" = c("dplyr", "duckplyr"),
+    "n" = "dplyr",
     ">" = "base",
     "%in%" = "base",
     "sum" = "base",
@@ -38,7 +39,7 @@ rel_find_call <- function(fun, env) {
     "<" = "base",
     # "[" = "base", # won't implement?
     ">=" = "base",
-    "n_distinct" = c("dplyr", "duckplyr"),
+    "n_distinct" = "dplyr",
     "max" = "base",
     "<=" = "base",
     # "as.numeric" = "base",
@@ -56,7 +57,7 @@ rel_find_call <- function(fun, env) {
     # "round" = "base",
     # "paste0" = "base",
     # "length" = "base",
-    # ".data$" = c("dplyr", "duckplyr"), # implemented
+    # ".data$" = "dplyr",
     "sd" = "stats",
     # "[[" = "base", # won't implement?
     # "gsub" = "base",
@@ -64,35 +65,35 @@ rel_find_call <- function(fun, env) {
     "median" = "stats",
     # "~" = "base", # won't implement?
     # "unique" = "base", # what's the use case?
-    # ".$" = c("dplyr", "duckplyr"), # won't implement?
+    # ".$" = "dplyr",
     # "%>%" = "magrittr", # with the help of magrittr?
     # "as.Date" = "base",
     "as.integer" = "base",
     # "nrow" = "base",
     # "as.factor" = "base",
     # "%<=>%" = "???", # what is this?
-    "row_number" = c("dplyr", "duckplyr"),
+    "row_number" = "dplyr",
     # "rev" = "base", # what's the use case?
     # "seq" = "base", # what's the use case?
     # "sqrt" = "base",
     # "abs" = "base",
-    "if_else" = c("dplyr", "duckplyr"),
+    "if_else" = "dplyr",
     #
     "any" = "base",
     "suppressWarnings" = "base",
-    "lag" = c("dplyr", "duckplyr"),
-    "lead" = c("dplyr", "duckplyr"),
-    "first" = c("dplyr", "duckplyr"),
-    "last" = c("dplyr", "duckplyr"),
-    "nth" = c("dplyr", "duckplyr"),
+    "lag" = "dplyr",
+    "lead" = "dplyr",
+    "first" = "dplyr",
+    "last" = "dplyr",
+    "nth" = "dplyr",
     "log10" = "base",
     "log" = "base",
     "rank" = "base",
-    "min_rank" = c("dplyr", "duckplyr"),
-    "dense_rank" = c("dplyr", "duckplyr"),
-    "percent_rank" = c("dplyr", "duckplyr"),
-    "cume_dist" = c("dplyr", "duckplyr"),
-    "ntile" = c("dplyr", "duckplyr"),
+    "min_rank" = "dplyr",
+    "dense_rank" = "dplyr",
+    "percent_rank" = "dplyr",
+    "cume_dist" = "dplyr",
+    "ntile" = "dplyr",
     "hour" = "lubridate",
     "minute" = "lubridate",
     "second" = "lubridate",
