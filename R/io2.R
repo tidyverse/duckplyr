@@ -13,7 +13,7 @@ NULL
 #'
 #' @rdname read_file_duckdb
 #' @export
-read_parquet_duckdb <- function(path, ..., funnel = "drip", options = list()) {
+read_parquet_duckdb <- function(path, ..., funnel = c("drip", "open", "closed"), options = list()) {
   check_dots_empty()
 
   read_file_duckdb(path, "read_parquet", funnel = funnel, options = options)
