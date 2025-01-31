@@ -156,15 +156,9 @@ duckplyr_reconstruct <- function(rel, template) {
 #' @export
 collect.funneled_duckplyr_df <- function(x, ...) {
   # Do nothing if already materialized
-  if (is.null(duckdb$rel_from_altrep_df(x, strict = FALSE, allow_materialized = FALSE))) {
-    out <- x
-  } else {
-    rel <- duckdb_rel_from_df(x)
-    out <- rel_to_df(rel, funnel = "open")
-    out <- dplyr_reconstruct(out, x)
-  }
+  refunnel <- !is.null(duckdb$rel_from_altrep_df(x, strict = FALSE, allow_materialized = FALSE))
 
-  out <- remove_funneled_duckplyr_df_class(out)
+  out <- new_duckdb_tibble(x, class(x), refunnel = refunnel, funnel = "open")
   collect(out)
 }
 
