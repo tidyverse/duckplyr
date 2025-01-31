@@ -42,7 +42,7 @@ see the "Funneling" section.}
 \value{
 For \code{duckdb_tibble()} and \code{as_duckdb_tibble()}, an object with the following classes:
 \itemize{
-\item \code{"funneled_duckplyr_df"} if \code{.funnel} is \code{TRUE}
+\item \code{"funneled_duckplyr_df"} if \code{.funnel} is not \code{"open"}
 \item \code{"duckplyr_df"}
 \item Classes of a \link[tibble:tibble]{tibble::tibble}
 }

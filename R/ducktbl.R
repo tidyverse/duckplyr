@@ -30,7 +30,7 @@
 #'   see the "Funneling" section.
 #'
 #' @return For `duckdb_tibble()` and `as_duckdb_tibble()`, an object with the following classes:
-#'   - `"funneled_duckplyr_df"` if `.funnel` is `TRUE`
+#'   - `"funneled_duckplyr_df"` if `.funnel` is not `"open"`
 #'   - `"duckplyr_df"`
 #'   - Classes of a [tibble]
 #'
