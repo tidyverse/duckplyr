@@ -30,7 +30,7 @@ new_duckdb_tibble <- function(x, class = NULL, funnel = "open", refunnel = FALSE
   }
 
   class(x) <- c(
-    if (!identical(funnel, "open")) "funneled_duckplyr_df",
+    if (!identical(funnel_parsed$funnel, "open")) "funneled_duckplyr_df",
     "duckplyr_df",
     class
   )
@@ -78,6 +78,8 @@ funnel_parse <- function(funnel, call = caller_env()) {
   } else if (!is.character(funnel)) {
     cli::cli_abort("{.arg funnel} must be an unnamed character vector or a named numeric vector", call = call)
   } else {
+    funnel <- arg_match(funnel, c("open", "closed", "drip"), error_call = call)
+
     allow_materialization <- !identical(funnel, "closed")
     if (!allow_materialization) {
       n_cells <- 0

@@ -7,13 +7,34 @@
 \alias{read_json_duckdb}
 \title{Read Parquet, CSV, and other files using DuckDB}
 \usage{
-read_parquet_duckdb(path, ..., funnel = "drip", options = list())
+read_parquet_duckdb(
+  path,
+  ...,
+  funnel = c("drip", "open", "closed"),
+  options = list()
+)
 
-read_csv_duckdb(path, ..., funnel = "drip", options = list())
+read_csv_duckdb(
+  path,
+  ...,
+  funnel = c("drip", "open", "closed"),
+  options = list()
+)
 
-read_json_duckdb(path, ..., funnel = "drip", options = list())
+read_json_duckdb(
+  path,
+  ...,
+  funnel = c("drip", "open", "closed"),
+  options = list()
+)
 
-read_file_duckdb(path, table_function, ..., funnel = "drip", options = list())
+read_file_duckdb(
+  path,
+  table_function,
+  ...,
+  funnel = c("drip", "open", "closed"),
+  options = list()
+)
 }
 \arguments{
 \item{path}{Path to files, glob patterns \code{*} and \verb{?} are supported.}
