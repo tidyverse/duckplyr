@@ -58,7 +58,7 @@ duckdb_tibble <- function(..., .funnel = "open") {
   # FIXME: May be handled by other methods
   check_df_for_rel(out)
 
-  as_duckdb_tibble(out, funnel = .funnel)
+  new_duckdb_tibble(out, class(out), funnel = .funnel, refunnel = TRUE)
 }
 
 #' as_duckdb_tibble
@@ -75,19 +75,8 @@ as_duckdb_tibble <- function(x, ..., funnel = "open") {
     UseMethod("as_duckdb_tibble")
   }
 
-  funnel_parsed <- funnel_parse(funnel)
   out <- as_duckdb_tibble(x, ...)
-
-  if (funnel_parsed$funnel == "closed") {
-    as_funneled_duckplyr_df(
-      out,
-      funnel_parsed$allow_materialization,
-      funnel_parsed$n_rows,
-      funnel_parsed$n_cells
-    )
-  } else {
-    as_unfunneled_duckplyr_df(out)
-  }
+  new_duckdb_tibble(out, class(out), funnel = funnel, refunnel = TRUE)
 }
 
 #' @export
@@ -110,7 +99,7 @@ as_duckdb_tibble.duckplyr_df <- function(x, ...) {
 as_duckdb_tibble.data.frame <- function(x, ...) {
   check_dots_empty()
 
-  # - Avoid as_tibble() here, we don't want to materialize
+  # Only if not materialized yet
   if (is.null(duckdb$rel_from_altrep_df(x, strict = FALSE, allow_materialized = FALSE))) {
     x <- as_tibble(x)
   }

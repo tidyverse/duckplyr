@@ -209,6 +209,7 @@ rel_to_df.duckdb_relation <- function(
     return(duckdb$rel_to_altrep(rel, allow_materialization, n_rows, n_cells))
   }
 
+  # Same code in new_duckdb_tibble(), to avoid recursion there
   funnel_parsed <- funnel_parse(funnel)
   out <- duckdb$rel_to_altrep(
     rel,

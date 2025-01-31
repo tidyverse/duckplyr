@@ -52,9 +52,8 @@ Fallback is silent by default, but can be made verbose.
 ```{r}
 Sys.setenv(DUCKPLYR_FALLBACK_INFO = TRUE)
 out <-
-  nycflights13::flights %>%
-  duckplyr::as_duckdb_tibble() %>%
-  mutate(inflight_delay = arr_delay - dep_delay)
+  flights_df() %>%
+  summarize(.by = origin, paste(dest, collapse = " "))
 ```
 
 After logs have been collected, the upload options are displayed the next time the duckplyr package is loaded in an R session.
