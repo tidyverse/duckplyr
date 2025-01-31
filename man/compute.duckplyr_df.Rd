@@ -7,7 +7,7 @@
 \method{compute}{duckplyr_df}(
   x,
   ...,
-  funnel = NULL,
+  prudence = NULL,
   name = NULL,
   schema_name = NULL,
   temporary = TRUE
@@ -20,10 +20,10 @@ details.}
 
 \item{...}{Arguments passed on to methods}
 
-\item{funnel}{Either a string:
+\item{prudence}{Either a string:
 \itemize{
-\item \code{"frugal"}:  a funneled data frame,
-\item \code{"lavish"}: an unfunneled data frame,
+\item \code{"frugal"}:  a frugal data frame,
+\item \code{"lavish"}: a lavish data frame,
 \item \code{"thrifty"}: allow the materialization up to a maximum size of 1 million cells.
 }
 
@@ -40,7 +40,7 @@ The equivalent of \code{"thrifty"} is \code{c(cells = 1e6)}.
 If \code{cells} is specified but not \code{rows}, \code{rows} is \code{Inf}.
 If \code{rows} is specified but not \code{cells}, \code{cells} is \code{Inf}.
 
-The default is to inherit the funneling of the input.}
+The default is to inherit the prudence of the input.}
 
 \item{name}{The name of the table to store the result in.}
 

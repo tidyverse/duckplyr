@@ -6,9 +6,9 @@
 \alias{compute_csv}
 \title{Compute results to a file}
 \usage{
-compute_parquet(x, path, ..., funnel = NULL, options = NULL)
+compute_parquet(x, path, ..., prudence = NULL, options = NULL)
 
-compute_csv(x, path, ..., funnel = NULL, options = NULL)
+compute_csv(x, path, ..., prudence = NULL, options = NULL)
 }
 \arguments{
 \item{x}{A data frame, data frame extension (e.g. a tibble), or a lazy
@@ -19,10 +19,10 @@ details.}
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{funnel}{Either a string:
+\item{prudence}{Either a string:
 \itemize{
-\item \code{"frugal"}:  a funneled data frame,
-\item \code{"lavish"}: an unfunneled data frame,
+\item \code{"frugal"}:  a frugal data frame,
+\item \code{"lavish"}: a lavish data frame,
 \item \code{"thrifty"}: allow the materialization up to a maximum size of 1 million cells.
 }
 
@@ -39,7 +39,7 @@ The equivalent of \code{"thrifty"} is \code{c(cells = 1e6)}.
 If \code{cells} is specified but not \code{rows}, \code{rows} is \code{Inf}.
 If \code{rows} is specified but not \code{cells}, \code{cells} is \code{Inf}.
 
-The default is to inherit the funneling of the input.}
+The default is to inherit the prudence of the input.}
 
 \item{options}{A list of additional options to pass to create the storage format,
 see \url{https://duckdb.org/docs/data/parquet/overview#writing-to-parquet-files}

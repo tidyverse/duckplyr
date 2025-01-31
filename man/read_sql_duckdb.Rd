@@ -4,15 +4,20 @@
 \alias{read_sql_duckdb}
 \title{Return SQL query as duckdb_tibble}
 \usage{
-read_sql_duckdb(sql, ..., funnel = c("thrifty", "lavish", "frugal"), con = NULL)
+read_sql_duckdb(
+  sql,
+  ...,
+  prudence = c("thrifty", "lavish", "frugal"),
+  con = NULL
+)
 }
 \arguments{
 \item{sql}{The SQL to run.}
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{funnel}{Logical, whether to create a funneled duckplyr frame.
-By default, a funneled duckplyr frame, with a limit of one million cells, is created.
+\item{prudence}{Logical, whether to create a frugal duckplyr frame.
+By default, a frugal duckplyr frame, with a limit of one million cells, is created.
 See \code{vignette("funnel")} for details.}
 
 \item{con}{The connection, defaults to the default connection.}

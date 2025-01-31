@@ -51,9 +51,9 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
         out_rel <- oo_restore(out_rel, "___row_number")
       }
 
-      out <- rel_to_df(out_rel, funnel = get_funnel_duckplyr_df(.data))
+      out <- rel_to_df(out_rel, prudence = get_prudence_duckplyr_df(.data))
       # https://github.com/tidyverse/dplyr/pull/6988
-      class(out) <- intersect(c("funneled_duckplyr_df", "duckplyr_df", "tbl_df", "tbl", "data.frame"), class(.data))
+      class(out) <- intersect(c("prudent_duckplyr_df", "duckplyr_df", "tbl_df", "tbl", "data.frame"), class(.data))
 
       return(out)
     }

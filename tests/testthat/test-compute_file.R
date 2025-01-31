@@ -4,7 +4,7 @@ test_that("compute_parquet()", {
   out <- compute_parquet(df, path = "test.parquet")
 
   expect_identical(out, as_duckdb_tibble(df))
-  expect_false(is_funneled_duckplyr_df(out))
+  expect_false(is_prudent_duckplyr_df(out))
 })
 
 test_that("compute_parquet() with options", {
@@ -14,7 +14,7 @@ test_that("compute_parquet() with options", {
   out <- compute_parquet(df, path = "test", options = list(partition_by = "a"))
 
   expect_identical(out, as_duckdb_tibble(df))
-  expect_false(is_funneled_duckplyr_df(out))
+  expect_false(is_prudent_duckplyr_df(out))
 })
 
 test_that("compute_csv()", {
@@ -23,14 +23,14 @@ test_that("compute_csv()", {
   out <- compute_csv(df, path = "test.csv")
 
   expect_identical(out, as_duckdb_tibble(df))
-  expect_false(is_funneled_duckplyr_df(out))
+  expect_false(is_prudent_duckplyr_df(out))
 })
 
-test_that("compute_csv() funnel", {
+test_that("compute_csv() prudence", {
   df <- data.frame(x = c(1, 2))
   withr::defer(unlink("test.csv"))
-  out <- compute_csv(df, path = "test.csv", funnel = "frugal")
+  out <- compute_csv(df, path = "test.csv", prudence = "frugal")
 
-  expect_true(is_funneled_duckplyr_df(out))
+  expect_true(is_prudent_duckplyr_df(out))
   expect_identical(collect(out), as_tibble(df))
 })
