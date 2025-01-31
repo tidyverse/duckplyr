@@ -36,6 +36,9 @@ copy_dplyr_test <- function(test_name) {
     "",
     if (grepl("^test-", test_name)) {
       c(
+        "# Workaround for lazytest",
+        'test_that("Dummy", { expect_true(TRUE) })',
+        "",
         'skip_if(Sys.getenv("DUCKPLYR_SKIP_DPLYR_TESTS") == "TRUE")',
         ""
       )
