@@ -7,7 +7,7 @@
 \method{compute}{duckplyr_df}(
   x,
   ...,
-  funnel = NULL,
+  collect = NULL,
   name = NULL,
   schema_name = NULL,
   temporary = TRUE
@@ -20,10 +20,10 @@ details.}
 
 \item{...}{Arguments passed on to methods}
 
-\item{funnel}{Either a logical:
+\item{collect}{Either a logical:
 \itemize{
-\item Set to \code{TRUE} to return a funneled data frame.
-\item Set to \code{FALSE} to return an unfunneled data frame.
+\item Set to \code{TRUE} to return a frugal data frame.
+\item Set to \code{FALSE} to return an lavish data frame.
 }
 
 Or a named vector with at least one of
@@ -38,8 +38,8 @@ measured in cells (values) and rows in the resulting data frame.
 If \code{cells} is specified but not \code{rows}, \code{rows} is \code{Inf}.
 If \code{rows} is specified but not \code{cells}, \code{cells} is \code{Inf}.
 
-The default is to inherit the funneling of the input.
-see the "Funneling" section.}
+The default is to inherit the prudence of the input.
+see the "Prudence" section.}
 
 \item{name}{The name of the table to store the result in.}
 
@@ -49,7 +49,7 @@ see the "Funneling" section.}
 }
 \description{
 This is a method for the \code{\link[dplyr:compute]{dplyr::compute()}} generic.
-For a (funneled) duckplyr frame,
+For a (frugal) duckplyr frame,
 \code{compute()} executes a query but stores it in a (temporary) table,
 or in a Parquet or CSV file.
 The result is a duckplyr frame that can be used with subsequent dplyr verbs.

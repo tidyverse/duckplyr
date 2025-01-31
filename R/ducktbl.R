@@ -7,14 +7,14 @@
 #' For such objects,
 #' dplyr verbs such as [mutate()], [select()] or [filter()]  will use DuckDB.
 #'
-#' `duckdb_tibble()` works like [tibble()], returning an "unfunneled" duckplyr data frame by default.
-#' See `vignette("funnel")` for details.
+#' `duckdb_tibble()` works like [tibble()], returning an "lavish" duckplyr data frame by default.
+#' See `vignette("collect")` for details.
 #'
 #' @param ... For `duckdb_tibble()`, passed on to [tibble()].
 #'   For `as_duckdb_tibble()`, passed on to methods.
-#' @param .funnel,funnel Either a logical:
-#'   - Set to `TRUE` to return a funneled data frame.
-#'   - Set to `FALSE` to return an unfunneled data frame.
+#' @param .collect,collect Either a logical:
+#'   - Set to `TRUE` to return a frugal data frame.
+#'   - Set to `FALSE` to return an lavish data frame.
 #'
 #' Or a named vector with at least one of
 #'   - `cells` (numeric)
@@ -26,11 +26,11 @@
 #' If `cells` is specified but not `rows`, `rows` is `Inf`.
 #' If `rows` is specified but not `cells`, `cells` is `Inf`.
 #'
-#' The default is to inherit the funneling of the input.
-#'   see the "Funneling" section.
+#' The default is to inherit the prudence of the input.
+#'   see the "Prudence" section.
 #'
 #' @return For `duckdb_tibble()` and `as_duckdb_tibble()`, an object with the following classes:
-#'   - `"funneled_duckplyr_df"` if `.funnel` is `TRUE`
+#'   - `"frugal_duckplyr_df"` if `.collect` is `TRUE`
 #'   - `"duckplyr_df"`
 #'   - Classes of a [tibble]
 #'
@@ -44,12 +44,12 @@
 #'
 #' x$a
 #'
-#' y <- duckdb_tibble(a = 1, .funnel = "always_manual")
+#' y <- duckdb_tibble(a = 1, .collect = "always_manual")
 #' y
 #' try(length(y$a))
 #' length(collect(y)$a)
 #' @export
-duckdb_tibble <- function(..., .funnel = "automatic") {
+duckdb_tibble <- function(..., .collect = "automatic") {
   out <- tibble::tibble(...)
 
   # Side effect: check compatibility
@@ -58,7 +58,7 @@ duckdb_tibble <- function(..., .funnel = "automatic") {
   # FIXME: May be handled by other methods
   check_df_for_rel(out)
 
-  new_duckdb_tibble(out, class(out), funnel = .funnel, refunnel = TRUE)
+  new_duckdb_tibble(out, class(out), collect = .collect, adjust_prudence = TRUE)
 }
 
 #' as_duckdb_tibble
@@ -69,14 +69,14 @@ duckdb_tibble <- function(..., .funnel = "automatic") {
 #' @param x The object to convert or to test.
 #' @rdname duckdb_tibble
 #' @export
-as_duckdb_tibble <- function(x, ..., funnel = "automatic") {
-  # Handle the funnel arg in the generic, only the other args will be dispatched
+as_duckdb_tibble <- function(x, ..., collect = "automatic") {
+  # Handle the collect arg in the generic, only the other args will be dispatched
   as_duckdb_tibble <- function(x, ...) {
     UseMethod("as_duckdb_tibble")
   }
 
   out <- as_duckdb_tibble(x, ...)
-  new_duckdb_tibble(out, class(out), funnel = funnel, refunnel = TRUE)
+  new_duckdb_tibble(out, class(out), collect = collect, adjust_prudence = TRUE)
 }
 
 #' @export
@@ -86,7 +86,7 @@ as_duckdb_tibble.tbl_duckdb_connection <- function(x, ...) {
   con <- dbplyr::remote_con(x)
   sql <- dbplyr::remote_query(x)
 
-  read_sql_duckdb(sql, funnel = "always_manual", con = con)
+  read_sql_duckdb(sql, collect = "always_manual", con = con)
 }
 
 #' @export

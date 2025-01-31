@@ -23,7 +23,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
 
       names_used <- character()
       names_new <- character()
-      current_data <- rel_to_df(rel, funnel = "always_manual")
+      current_data <- rel_to_df(rel, collect = "always_manual")
 
       # FIXME: use fewer projections
       for (i in seq_along(dots)) {
@@ -71,7 +71,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
         }
 
         rel <- rel_project(rel, unname(exprs))
-        current_data <- rel_to_df(rel, funnel = "always_manual")
+        current_data <- rel_to_df(rel, collect = "always_manual")
       }
 
       if (length(by_names) > 0) {

@@ -13,10 +13,10 @@ NULL
 #'
 #' @rdname read_file_duckdb
 #' @export
-read_parquet_duckdb <- function(path, ..., funnel = "only_small", options = list()) {
+read_parquet_duckdb <- function(path, ..., collect = "only_small", options = list()) {
   check_dots_empty()
 
-  read_file_duckdb(path, "read_parquet", funnel = funnel, options = options)
+  read_file_duckdb(path, "read_parquet", collect = collect, options = options)
 }
 
 #' @description
@@ -41,8 +41,8 @@ read_parquet_duckdb <- function(path, ..., funnel = "only_small", options = list
 #' # Materialize explicitly
 #' collect(df)$a
 #'
-#' # Automatic materialization with funnel = "automatic"
-#' df <- read_csv_duckdb(path, funnel = "automatic")
+#' # Automatic materialization with collect = "automatic"
+#' df <- read_csv_duckdb(path, collect = "automatic")
 #' df$a
 #'
 #' # Specify column types
@@ -50,10 +50,10 @@ read_parquet_duckdb <- function(path, ..., funnel = "only_small", options = list
 #'   path,
 #'   options = list(delim = ",", types = list(c("DOUBLE", "VARCHAR")))
 #' )
-read_csv_duckdb <- function(path, ..., funnel = "only_small", options = list()) {
+read_csv_duckdb <- function(path, ..., collect = "only_small", options = list()) {
   check_dots_empty()
 
-  read_file_duckdb(path, "read_csv_auto", funnel = funnel, options = options)
+  read_file_duckdb(path, "read_csv_auto", collect = collect, options = options)
 }
 
 #' @description
@@ -71,10 +71,10 @@ read_csv_duckdb <- function(path, ..., funnel = "only_small", options = list()) 
 #' db_exec("INSTALL json")
 #' db_exec("LOAD json")
 #' read_json_duckdb(path)
-read_json_duckdb <- function(path, ..., funnel = "only_small", options = list()) {
+read_json_duckdb <- function(path, ..., collect = "only_small", options = list()) {
   check_dots_empty()
 
-  read_file_duckdb(path, "read_json", funnel = funnel, options = options)
+  read_file_duckdb(path, "read_json", collect = collect, options = options)
 }
 
 #' @description
@@ -90,9 +90,9 @@ read_json_duckdb <- function(path, ..., funnel = "only_small", options = list())
 #' @param table_function The name of a table-valued
 #'   DuckDB function such as `"read_parquet"`,
 #'   `"read_csv"`, `"read_csv_auto"` or `"read_json"`.
-#' @param funnel Logical, whether to create a funneled duckplyr frame.
-#'   By default, a funneled duckplyr frame, with a limit of one million cells, is created.
-#'   See `vignette("funnel")` for details.
+#' @param collect Logical, whether to create a frugal duckplyr frame.
+#'   By default, a frugal duckplyr frame, with a limit of one million cells, is created.
+#'   See `vignette("collect")` for details.
 #' @param options Arguments to the DuckDB function
 #'   indicated by `table_function`.
 #'
@@ -104,7 +104,7 @@ read_file_duckdb <- function(
   path,
   table_function,
   ...,
-  funnel = "only_small",
+  collect = "only_small",
   options = list()
 ) {
   check_dots_empty()
@@ -117,10 +117,10 @@ read_file_duckdb <- function(
     path <- list(path)
   }
 
-  duckfun(table_function, c(list(path), options), funnel = funnel)
+  duckfun(table_function, c(list(path), options), collect = collect)
 }
 
-duckfun <- function(table_function, args, ..., funnel) {
+duckfun <- function(table_function, args, ..., collect) {
   if (!is.list(args)) {
     cli::cli_abort("{.arg args} must be a list.")
   }
@@ -144,5 +144,5 @@ duckfun <- function(table_function, args, ..., funnel) {
 
   meta_rel_register_file(rel, table_function, path, options)
 
-  rel_to_df(rel, funnel = funnel)
+  rel_to_df(rel, collect = collect)
 }

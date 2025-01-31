@@ -1,7 +1,7 @@
 #' @title Compute results
 #'
 #' @description  This is a method for the [dplyr::compute()] generic.
-#' For a (funneled) duckplyr frame,
+#' For a (frugal) duckplyr frame,
 #' `compute()` executes a query but stores it in a (temporary) table,
 #' or in a Parquet or CSV file.
 #' The result is a duckplyr frame that can be used with subsequent dplyr verbs.

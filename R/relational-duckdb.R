@@ -199,27 +199,27 @@ vec_ptype_safe <- function(x) {
 rel_to_df.duckdb_relation <- function(
   rel,
   ...,
-  funnel = NULL,
+  collect = NULL,
   allow_materialization = TRUE,
   n_rows = Inf,
   n_cells = Inf
 ) {
-  if (is.null(funnel)) {
+  if (is.null(collect)) {
     # Legacy
     return(duckdb$rel_to_altrep(rel, allow_materialization, n_rows, n_cells))
   }
 
   # Same code in new_duckdb_tibble(), to avoid recursion there
-  funnel_parsed <- funnel_parse(funnel)
+  collect_parsed <- collect_parse(collect)
   out <- duckdb$rel_to_altrep(
     rel,
     # FIXME: Remove allow_materialization with duckdb >= 1.2.0
-    allow_materialization = funnel_parsed$allow_materialization,
-    n_rows = funnel_parsed$n_rows,
-    n_cells = funnel_parsed$n_cells
+    allow_materialization = collect_parsed$allow_materialization,
+    n_rows = collect_parsed$n_rows,
+    n_cells = collect_parsed$n_cells
   )
 
-  new_duckdb_tibble(out, funnel = funnel)
+  new_duckdb_tibble(out, collect = collect)
 }
 
 #' @export

@@ -6,9 +6,9 @@
 \alias{is_duckdb_tibble}
 \title{duckplyr data frames}
 \usage{
-duckdb_tibble(..., .funnel = "automatic")
+duckdb_tibble(..., .collect = "automatic")
 
-as_duckdb_tibble(x, ..., funnel = "automatic")
+as_duckdb_tibble(x, ..., collect = "automatic")
 
 is_duckdb_tibble(x)
 }
@@ -16,10 +16,10 @@ is_duckdb_tibble(x)
 \item{...}{For \code{duckdb_tibble()}, passed on to \code{\link[tibble:tibble]{tibble::tibble()}}.
 For \code{as_duckdb_tibble()}, passed on to methods.}
 
-\item{.funnel, funnel}{Either a logical:
+\item{.collect, collect}{Either a logical:
 \itemize{
-\item Set to \code{TRUE} to return a funneled data frame.
-\item Set to \code{FALSE} to return an unfunneled data frame.
+\item Set to \code{TRUE} to return a frugal data frame.
+\item Set to \code{FALSE} to return an lavish data frame.
 }
 
 Or a named vector with at least one of
@@ -34,15 +34,15 @@ measured in cells (values) and rows in the resulting data frame.
 If \code{cells} is specified but not \code{rows}, \code{rows} is \code{Inf}.
 If \code{rows} is specified but not \code{cells}, \code{cells} is \code{Inf}.
 
-The default is to inherit the funneling of the input.
-see the "Funneling" section.}
+The default is to inherit the prudence of the input.
+see the "Prudence" section.}
 
 \item{x}{The object to convert or to test.}
 }
 \value{
 For \code{duckdb_tibble()} and \code{as_duckdb_tibble()}, an object with the following classes:
 \itemize{
-\item \code{"funneled_duckplyr_df"} if \code{.funnel} is \code{TRUE}
+\item \code{"frugal_duckplyr_df"} if \code{.collect} is \code{TRUE}
 \item \code{"duckplyr_df"}
 \item Classes of a \link[tibble:tibble]{tibble::tibble}
 }
@@ -56,8 +56,8 @@ This ensures that dplyr methods are dispatched correctly.
 For such objects,
 dplyr verbs such as \code{\link[dplyr:mutate]{dplyr::mutate()}}, \code{\link[dplyr:select]{dplyr::select()}} or \code{\link[dplyr:filter]{dplyr::filter()}}  will use DuckDB.
 
-\code{duckdb_tibble()} works like \code{\link[tibble:tibble]{tibble::tibble()}}, returning an "unfunneled" duckplyr data frame by default.
-See \code{vignette("funnel")} for details.
+\code{duckdb_tibble()} works like \code{\link[tibble:tibble]{tibble::tibble()}}, returning an "lavish" duckplyr data frame by default.
+See \code{vignette("collect")} for details.
 
 \code{as_duckdb_tibble()} converts a data frame or a dplyr lazy table to a duckplyr data frame.
 This is a generic function that can be overridden for custom classes.
@@ -74,7 +74,7 @@ x \%>\%
 
 x$a
 
-y <- duckdb_tibble(a = 1, .funnel = "always_manual")
+y <- duckdb_tibble(a = 1, .collect = "always_manual")
 y
 try(length(y$a))
 length(collect(y)$a)

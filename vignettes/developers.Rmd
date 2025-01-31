@@ -117,15 +117,15 @@ The recipe below shows how to achieve this with the usethis package.
 Learn more about usethis at <https://usethis.r-lib.org/>.
 
 
-## Funneling
+## Prudence
 
-The default mode for `as_duckdb_tibble()` and `duckdb_tibble()` is unfunneled.
+The default mode for `as_duckdb_tibble()` and `duckdb_tibble()` is lavish.
 This means that the dplyr operations are carried out by DuckDB when possible, and also available as data frames upon first request.
-Use `as_duckdb_tibble(funnel = "always_manual")` or `duckdb_tibble(.funnel = "always_manual")` to avoid materializing intermediate data and to ensure that all operations are carried out by DuckDB or fail.
-Funneling can also limit the number of rows or cells that are materialized:
+Use `as_duckdb_tibble(collect = "always_manual")` or `duckdb_tibble(.collect = "always_manual")` to avoid materializing intermediate data and to ensure that all operations are carried out by DuckDB or fail.
+Prudence can also limit the number of rows or cells that are materialized:
 
 ```{r}
-data <- duckplyr::duckdb_tibble(x = 1:5, .funnel = c(rows = 3))
+data <- duckplyr::duckdb_tibble(x = 1:5, .collect = c(rows = 3))
 data
 ```
 
@@ -133,4 +133,4 @@ data
 nrow(data)
 ```
 
-Learn more about funneling in `vignette("funnel")`, and about the translation employed by duckplyr in `vignette("limits")`.
+Learn more about prudence in `vignette("collect")`, and about the translation employed by duckplyr in `vignette("limits")`.

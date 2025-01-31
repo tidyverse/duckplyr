@@ -1,8 +1,8 @@
 ---
-title: "Memory protection: Funneling"
+title: "Memory protection: Prudence"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{10 Memory protection: Funneling}
+  %\VignetteIndexEntry{10 Memory protection: Prudence}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -30,7 +30,7 @@ knitr::opts_chunk$set(
 Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
 ```
 
-This vignette discusses eager and lazy computation, and funneling.
+This vignette discusses eager and lazy computation, and prudence.
 
 ```{r attach}
 library(conflicted)
@@ -55,7 +55,7 @@ nrow(df)
 ```
 
 Under the hood, two key differences provide improved performance and usability:
-lazy materialization and funneling.
+lazy materialization and prudence.
 
 
 ## Eager and lazy computation
@@ -131,50 +131,50 @@ system.time(
 ```
 
 
-## Funneling
+## Prudence
 
 Being both "eager" and "lazy" at the same time introduces a challenge:
 it is too easy to accidentally trigger computation,
 which may be prohibitive if an intermediate result is too large.
-This is where funneling comes in.
+This is where prudence comes in.
 
 
 ### Concept
 
-For unfunneled duckplyr frames, as in the two previous examples the underlying DuckDB computation is carried out upon the first request.
+For lavish duckplyr frames, as in the two previous examples the underlying DuckDB computation is carried out upon the first request.
 Once the results are computed, they are cached and subsequent requests are fast.
 This is a good choice for small to medium-sized data, where DuckDB can provide a nice speedup but materializing the data is affordable at any stage.
 This is the default for `duckdb_tibble()` and `as_duckdb_tibble()`.
 
-For funneled duckplyr frames, accessing a column or requesting the number of rows triggers an error.
+For frugal duckplyr frames, accessing a column or requesting the number of rows triggers an error.
 This is a good choice for large data sets where the cost of materializing the data may be prohibitive due to size or computation time, and the user wants to control when the computation is carried out.
 
 
 ### Example
 
-The example below demonstrates the use of funneled duckplyr frames.
+The example below demonstrates the use of frugal duckplyr frames.
 
 ```{r}
-flights_funneled <-
+flights_frugal <-
   flights |>
-  duckplyr::as_duckdb_tibble(funnel = "always_manual")
+  duckplyr::as_duckdb_tibble(collect = "always_manual")
 ```
 
-In this example, `flights_funneled` is a funneled duckplyr frame.
+In this example, `flights_frugal` is a frugal duckplyr frame.
 The data can be displayed, and column names and types can be accessed.
 
 ```{r}
-flights_funneled
-names(flights_funneled)[1:10]
-class(flights_funneled)
-class(flights_funneled[[1]])
+flights_frugal
+names(flights_frugal)[1:10]
+class(flights_frugal)
+class(flights_frugal[[1]])
 ```
 
 On the other hand, accessing a column or requesting the number of rows triggers an error:
 
 ```{r error = TRUE}
-nrow(flights_funneled)
-flights_funneled[[1]]
+nrow(flights_frugal)
+flights_frugal[[1]]
 ```
 
 
@@ -182,20 +182,20 @@ flights_funneled[[1]]
 
 For operations not supported by duckplyr, the original dplyr implementation is used as a fallback.
 As the original dplyr implementation accesses columns directly, the data must be materialized before a fallback can be executed.
-Therefore, funneled frames allow you to check that all operations are supported by DuckDB: for a funneled frame, fallbacks to dplyr are not possible.
+Therefore, frugal frames allow you to check that all operations are supported by DuckDB: for a frugal frame, fallbacks to dplyr are not possible.
 
 ```{r error = TRUE}
-flights_funneled |>
+flights_frugal |>
   group_by(origin) |>
   summarize(n = n()) |>
   ungroup()
 ```
 
-The same pipeline with an unfunneled frame works, but the computation is carried out by dplyr:
+The same pipeline with an lavish frame works, but the computation is carried out by dplyr:
 
 ```{r}
-flights_funneled |>
-  duckplyr::as_duckdb_tibble(funnel = "automatic") |>
+flights_frugal |>
+  duckplyr::as_duckdb_tibble(collect = "automatic") |>
   group_by(origin) |>
   summarize(n = n()) |>
   ungroup()
@@ -205,18 +205,18 @@ By using operations supported by duckplyr and avoiding fallbacks as much as poss
 See `?fallback` for details on fallbacks, and `vignette("limits")` for the operations supported by duckplyr.
 
 
-### Unfunneling
+### Unprudence
 
-A funneled duckplyr frame can be converted to an unfunneled one with `as_duckdb_tibble(funnel = "automatic")`.
+A frugal duckplyr frame can be converted to an lavish one with `as_duckdb_tibble(collect = "automatic")`.
 The `collect.duckplyr_df()` method triggers computation and converts to a plain tibble.
 The difference between the two is the class of the returned object:
 
 ```{r}
-flights_funneled |>
-  duckplyr::as_duckdb_tibble(funnel = "automatic") |>
+flights_frugal |>
+  duckplyr::as_duckdb_tibble(collect = "automatic") |>
   class()
 
-flights_funneled |>
+flights_frugal |>
   collect() |>
   class()
 ```
@@ -224,11 +224,11 @@ flights_funneled |>
 The same behavior is achieved with `as_tibble()` and `as.data.frame()`:
 
 ```{r}
-flights_funneled |>
+flights_frugal |>
   as_tibble() |>
   class()
 
-flights_funneled |>
+flights_frugal |>
   as.data.frame() |>
   class()
 ```
@@ -237,21 +237,21 @@ See `vignette("large")` for techniques for working with large data sets.
 
 ### Comparison
 
-Funneled duckplyr frames behave like lazy tables in dbplyr and lazy frames in dtplyr: the computation only starts when you *explicitly* request it with `collect.duckplyr_df()` or through other means.
-However, funneled duckplyr frames can be unfunneled at any time, and vice versa.
-In dtplyr and dbplyr, there are no unfunneled frames: collection always needs to be explicit.
+Frugal duckplyr frames behave like lazy tables in dbplyr and lazy frames in dtplyr: the computation only starts when you *explicitly* request it with `collect.duckplyr_df()` or through other means.
+However, frugal duckplyr frames can be lavish at any time, and vice versa.
+In dtplyr and dbplyr, there are no lavish frames: collection always needs to be explicit.
 
 
-## Partial funneling
+## Partial prudence
 
-Partial funneling is a compromise between funneling and unfunneling.
+Partial prudence is a compromise between prudence and unprudence.
 Materialization is allowed for data up to a certain size, measured in cells (values) and rows in the resulting data frame.
 
 ```{r}
 nrow(flights)
 flights_partial <-
   flights |>
-  duckplyr::as_duckdb_tibble(funnel = c(rows = 100000))
+  duckplyr::as_duckdb_tibble(collect = c(rows = 100000))
 ```
 
 In this example, the data is materialized only if the result has fewer than 100,000 rows.
@@ -271,6 +271,6 @@ flights_partial |>
   nrow()
 ```
 
-Partial funneling is a good choice for data sets where the cost of materializing the data is prohibitive only for large results.
+Partial prudence is a good choice for data sets where the cost of materializing the data is prohibitive only for large results.
 The default for the ingestion functions like `read_parquet_duckdb()` is to limit the result size to one million cells (values in the resulting data frame).
 See `vignette("large")` for more details on working with large data sets.

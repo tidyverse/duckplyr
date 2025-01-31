@@ -67,7 +67,7 @@ Full compatibility means fewer surprises and less cognitive load for the user.
 With DuckDB as the backend, duckplyr can also handle large data sets that do not fit into RAM, keeping full dplyr compatibility.
 The tools for bringing data into and out of R memory are modeled after the dplyr and dbplyr packages, and are described in the following sections.
 
-See `vignette("funnel")` on eager and lazy data, `vignette("limits")` for limitations in the translation employed by duckplyr, and `?fallback` for more information on fallback.
+See `vignette("collect")` on eager and lazy data, `vignette("limits")` for limitations in the translation employed by duckplyr, and `?fallback` for more information on fallback.
 
 
 ## To duckplyr
@@ -177,7 +177,7 @@ flights_parquet
 In all cases, the data is read lazily: only the metadata is read initially, and the data is read as required.
 This means that data can be read from files that are larger than the available RAM.
 The Parquet format is particularly efficient for this purpose, as it stores data in a columnar format and allows reading only the columns that are required.
-See `vignette("funnel")` for more details on the concept of lazy data.
+See `vignette("collect")` for more details on the concept of lazy data.
 
 ## From DuckDB
 
@@ -291,4 +291,4 @@ flights_parquet |>
   group_by(Month)
 ```
 
-See `vignette("funnel")` for the concepts and mechanisms at play.
+See `vignette("collect")` for the concepts and mechanisms at play.
