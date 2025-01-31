@@ -60,7 +60,7 @@ rel_try <- function(call, rel, ...) {
 
   if (Sys.getenv("DUCKPLYR_FORCE") == "TRUE") {
     force(rel)
-    cli::cli_abort("Internal: Must use a {.code return()} in {.code rel_try()}.")
+    cli::cli_abort("Must use a {.code return()} in {.code rel_try()}.", .internal = TRUE)
   }
 
   out <- rlang::try_fetch(rel, error = identity)
@@ -75,7 +75,7 @@ rel_try <- function(call, rel, ...) {
   }
 
   # Never reached due to return() in code
-  cli::cli_abort("Must use a return() in rel_try().")
+  cli::cli_abort("Must use a {.code return()} in {.code rel_try()}.", .internal = TRUE)
 }
 
 rel_translate_dots <- function(dots, data) {
