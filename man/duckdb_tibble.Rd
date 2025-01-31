@@ -57,7 +57,7 @@ This ensures that dplyr methods are dispatched correctly.
 For such objects,
 dplyr verbs such as \code{\link[dplyr:mutate]{dplyr::mutate()}}, \code{\link[dplyr:select]{dplyr::select()}} or \code{\link[dplyr:filter]{dplyr::filter()}}  will use DuckDB.
 
-\code{duckdb_tibble()} works like \code{\link[tibble:tibble]{tibble::tibble()}}, returning an "lavish" duckplyr data frame by default.
+\code{duckdb_tibble()} works like \code{\link[tibble:tibble]{tibble::tibble()}}, returning a lavish duckplyr data frame by default.
 See \code{vignette("funnel")} for details.
 
 \code{as_duckdb_tibble()} converts a data frame or a dplyr lazy table to a duckplyr data frame.
