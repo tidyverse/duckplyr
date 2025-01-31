@@ -13,7 +13,7 @@ NULL
 #'
 #' @rdname read_file_duckdb
 #' @export
-read_parquet_duckdb <- function(path, ..., funnel = c(cells = 1e6), options = list()) {
+read_parquet_duckdb <- function(path, ..., funnel = "drip", options = list()) {
   check_dots_empty()
 
   read_file_duckdb(path, "read_parquet", funnel = funnel, options = options)
@@ -50,7 +50,7 @@ read_parquet_duckdb <- function(path, ..., funnel = c(cells = 1e6), options = li
 #'   path,
 #'   options = list(delim = ",", types = list(c("DOUBLE", "VARCHAR")))
 #' )
-read_csv_duckdb <- function(path, ..., funnel = c(cells = 1e6), options = list()) {
+read_csv_duckdb <- function(path, ..., funnel = "drip", options = list()) {
   check_dots_empty()
 
   read_file_duckdb(path, "read_csv_auto", funnel = funnel, options = options)
@@ -71,7 +71,7 @@ read_csv_duckdb <- function(path, ..., funnel = c(cells = 1e6), options = list()
 #' db_exec("INSTALL json")
 #' db_exec("LOAD json")
 #' read_json_duckdb(path)
-read_json_duckdb <- function(path, ..., funnel = c(cells = 1e6), options = list()) {
+read_json_duckdb <- function(path, ..., funnel = "drip", options = list()) {
   check_dots_empty()
 
   read_file_duckdb(path, "read_json", funnel = funnel, options = options)
@@ -104,7 +104,7 @@ read_file_duckdb <- function(
   path,
   table_function,
   ...,
-  funnel = c(cells = 1e6),
+  funnel = "drip",
   options = list()
 ) {
   check_dots_empty()

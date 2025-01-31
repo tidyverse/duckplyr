@@ -213,6 +213,7 @@ rel_to_df.duckdb_relation <- function(
   funnel_parsed <- funnel_parse(funnel)
   out <- duckdb$rel_to_altrep(
     rel,
+    # FIXME: Remove allow_materialization with duckdb >= 1.2.0
     allow_materialization = funnel_parsed$allow_materialization,
     n_rows = funnel_parsed$n_rows,
     n_cells = funnel_parsed$n_cells
