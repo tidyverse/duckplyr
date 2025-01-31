@@ -4,7 +4,7 @@ gert::git_pull(repo = ".sync/dplyr-main")
 
 copy_dplyr_test <- function(test_name) {
   source <- fs::path(".sync/dplyr-main/tests/testthat", test_name)
-  target <- fs::path("tests/testthat", gsub("^test-", "test-dplyr-", test_name))
+  target <- fs::path("tests/testthat", gsub("^(test|helper)-", "\\1-dplyr-", test_name))
 
   rx <- paste0(
     "((?<![a-z_])(?:",
