@@ -10,21 +10,21 @@
 read_parquet_duckdb(
   path,
   ...,
-  prudence = c("thrifty", "lavish", "frugal"),
+  collect = c("only_small", "automatic", "always_manual"),
   options = list()
 )
 
 read_csv_duckdb(
   path,
   ...,
-  prudence = c("thrifty", "lavish", "frugal"),
+  collect = c("only_small", "automatic", "always_manual"),
   options = list()
 )
 
 read_json_duckdb(
   path,
   ...,
-  prudence = c("thrifty", "lavish", "frugal"),
+  collect = c("only_small", "automatic", "always_manual"),
   options = list()
 )
 
@@ -32,7 +32,7 @@ read_file_duckdb(
   path,
   table_function,
   ...,
-  prudence = c("thrifty", "lavish", "frugal"),
+  collect = c("only_small", "automatic", "always_manual"),
   options = list()
 )
 }
@@ -41,7 +41,7 @@ read_file_duckdb(
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{prudence}{Logical, whether to create a frugal duckplyr frame.
+\item{collect}{Logical, whether to create a frugal duckplyr frame.
 By default, a frugal duckplyr frame, with a limit of one million cells, is created.
 See \code{vignette("funnel")} for details.}
 
@@ -89,8 +89,8 @@ try(print(df$a))
 # Materialize explicitly
 collect(df)$a
 
-# Automatic materialization with prudence = "lavish"
-df <- read_csv_duckdb(path, prudence = "lavish")
+# Automatic materialization with collect = "automatic"
+df <- read_csv_duckdb(path, collect = "automatic")
 df$a
 
 # Specify column types

@@ -7,7 +7,7 @@
 read_sql_duckdb(
   sql,
   ...,
-  prudence = c("thrifty", "lavish", "frugal"),
+  collect = c("only_small", "automatic", "always_manual"),
   con = NULL
 )
 }
@@ -16,7 +16,7 @@ read_sql_duckdb(
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{prudence}{Logical, whether to create a frugal duckplyr frame.
+\item{collect}{Logical, whether to create a frugal duckplyr frame.
 By default, a frugal duckplyr frame, with a limit of one million cells, is created.
 See \code{vignette("funnel")} for details.}
 
