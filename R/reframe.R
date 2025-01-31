@@ -10,7 +10,7 @@ reframe.duckplyr_df <- function(.data, ..., .by = NULL) {
   )
 
   # dplyr forward
-  check_funneled(.data, duckplyr_error)
+  check_prudence(.data, duckplyr_error)
 
   reframe <- dplyr$reframe.data.frame
   out <- reframe(.data, ..., .by = {{ .by }})
