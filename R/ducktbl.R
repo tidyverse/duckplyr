@@ -50,7 +50,7 @@
 #' try(length(y$a))
 #' length(collect(y)$a)
 #' @export
-duckdb_tibble <- function(..., .funnel = "open") {
+duckdb_tibble <- function(..., .funnel = c("open", "drip", "closed")) {
   out <- tibble::tibble(...)
 
   # Side effect: check compatibility

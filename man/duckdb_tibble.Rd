@@ -6,7 +6,7 @@
 \alias{is_duckdb_tibble}
 \title{duckplyr data frames}
 \usage{
-duckdb_tibble(..., .funnel = "open")
+duckdb_tibble(..., .funnel = c("open", "drip", "closed"))
 
 as_duckdb_tibble(x, ..., funnel = "open")
 
