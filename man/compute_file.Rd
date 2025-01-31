@@ -46,7 +46,7 @@ or \url{https://duckdb.org/docs/data/csv/overview#writing-using-the-copy-stateme
 for details.}
 }
 \description{
-These functions apply to (funneled) duckplyr frames.
+These functions apply to duckplyr frames.
 They executes a query and stores the results in a flat file.
 The result is a duckplyr frame that can be used with subsequent dplyr verbs.
 

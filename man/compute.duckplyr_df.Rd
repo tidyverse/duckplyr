@@ -49,7 +49,7 @@ see the "Funneling" section.}
 }
 \description{
 This is a method for the \code{\link[dplyr:compute]{dplyr::compute()}} generic.
-For a (funneled) duckplyr frame,
+For a duckplyr frame,
 \code{compute()} executes a query but stores it in a (temporary) table,
 or in a Parquet or CSV file.
 The result is a duckplyr frame that can be used with subsequent dplyr verbs.
