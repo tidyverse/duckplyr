@@ -42,7 +42,7 @@ If the duckplyr data.frame is accessed by...
 Therefore, duckplyr can be **both lazy** (within itself) **and not lazy** (for the outside world).
 
 Now, the default materialization can be problematic if dealing with large data: what if the materialization eats up all RAM?
-Therefore, the duckplyr package has a **safeguard called funneling** (in the current development version of the package).
+Therefore, the duckplyr package has a **safeguard called funneling**.
 A funneled data.frame cannot be materialized by default, it needs a call to a `compute()` function.
 By default, duckplyr frames are _unfunneled_, but duckplyr frames created from Parquet data (presumedly large) are _funneled_.
 
@@ -62,8 +62,7 @@ conflict_prefer("filter", "dplyr", quiet = TRUE)
 
 - convert individual data.frames to duck frames which allows you to control their automatic materialization parameters. To do that, you use `duckdb_tibble()`, `as_duckdb_tibble()` or read data using `read_*()` functions like `read_csv_duckdb()`.
 
-In both cases, if an operation cannot be performed 
-by duckplyr (see `vignettes("limits")`), it will be outsourced to dplyr. 
+In both cases, if an operation cannot be performed by duckplyr (see `vignettes("limits")`), it will be outsourced to dplyr.
 You can choose to be informed about fallbacks to dplyr, see `?fallback_config`.
 You can disable fallbacks by turning off automatic materialization.
 In that case, if an operation cannot be performed by duckplyr, your code will error.
@@ -75,13 +74,12 @@ With large datasets, you want:
 - input data in an efficient format, like Parquet files. Therefore you might input data using `read_parquet_duckdb()`.
 - efficient computation, which duckplyr provides via DuckDB's holistic optimization, without your having to use another syntax than dplyr.
 - the output to not clutter all the memory. Therefore you can make use of these features:
-    - funneling see vignette TODO ADD CURRENT NAME to disable automatic materialization completely or to disable automatic materialization up to a certain output size.
+    - funneling (see `vignette("funnel")`) to disable automatic materialization completely or to disable automatic materialization up to a certain output size.
     - computation to files using  `compute_parquet()` or `compute_csv()`.
-    
 
 
-A drawback of analyzing large data with duckplyr is that the limitations of duckplyr 
-(unsupported verbs or data types, see `vignette("limits")`) won't be compensated by fallbacks since fallbacks to dplyr necessitate putting data into memory.
+
+A drawback of analyzing large data with duckplyr is that the limitations of duckplyr (unsupported verbs or data types, see `vignette("limits")`) won't be compensated by fallbacks since fallbacks to dplyr necessitate putting data into memory.
 
 ## How to improve duckplyr
 
