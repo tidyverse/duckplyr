@@ -14,7 +14,12 @@ read_parquet_duckdb(
   options = list()
 )
 
-read_csv_duckdb(path, ..., funnel = "drip", options = list())
+read_csv_duckdb(
+  path,
+  ...,
+  funnel = c("drip", "open", "closed"),
+  options = list()
+)
 
 read_json_duckdb(path, ..., funnel = "drip", options = list())
 

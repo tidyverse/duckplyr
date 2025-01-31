@@ -50,7 +50,7 @@ read_parquet_duckdb <- function(path, ..., funnel = c("drip", "open", "closed"),
 #'   path,
 #'   options = list(delim = ",", types = list(c("DOUBLE", "VARCHAR")))
 #' )
-read_csv_duckdb <- function(path, ..., funnel = "drip", options = list()) {
+read_csv_duckdb <- function(path, ..., funnel = c("drip", "open", "closed"), options = list()) {
   check_dots_empty()
 
   read_file_duckdb(path, "read_csv_auto", funnel = funnel, options = options)
