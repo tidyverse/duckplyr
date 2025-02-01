@@ -9,13 +9,13 @@ tpch_11 <- function() {
 
   global_agr <- joined_filtered %>%
     summarise(
-      global_value = sum(ps_supplycost * ps_availqty) * 0.0001000000
+      global_value = sum(na.rm = TRUE, ps_supplycost * ps_availqty) * 0.0001000000
     ) %>%
     mutate(global_agr_key = 1L)
 
   partkey_agr <- joined_filtered %>%
     summarise(
-      value = sum(ps_supplycost * ps_availqty),
+      value = sum(na.rm = TRUE, ps_supplycost * ps_availqty),
       .by = ps_partkey
     )
 
@@ -43,14 +43,14 @@ tpch_12 <- function() {
       by = c("l_orderkey" = "o_orderkey")
     ) %>%
     summarise(
-      high_line_count = sum(
+      high_line_count = sum(na.rm = TRUE,
         if_else(
           (o_orderpriority == "1-URGENT") | (o_orderpriority == "2-HIGH"),
           1L,
           0L
         )
       ),
-      low_line_count = sum(
+      low_line_count = sum(na.rm = TRUE,
         if_else(
           (o_orderpriority != "1-URGENT") & (o_orderpriority != "2-HIGH"),
           1L,
@@ -72,8 +72,8 @@ tpch_13 <- function() {
       by = c("c_custkey" = "o_custkey")
     ) %>%
     summarise(
-      # FIXME: sum(!is.na(o_orderkey))
-      c_count = sum(if_else(is.na(o_orderkey), 0L, 1L)),
+      # FIXME: sum(na.rm = TRUE, !is.na(o_orderkey))
+      c_count = sum(na.rm = TRUE, if_else(is.na(o_orderkey), 0L, 1L)),
       .by = c_custkey
     )
 
@@ -91,9 +91,9 @@ tpch_14 <- function() {
     ) %>%
     inner_join(na_matches = TPCH_NA_MATCHES, part, by = c("l_partkey" = "p_partkey")) %>%
     summarise(
-      promo_revenue = 100 * sum(
+      promo_revenue = 100 * sum(na.rm = TRUE,
         if_else(grepl("^PROMO", p_type), l_extendedprice * (1 - l_discount), 0)
-      ) / sum(l_extendedprice * (1 - l_discount))
+      ) / sum(na.rm = TRUE, l_extendedprice * (1 - l_discount))
     )
 }
 
@@ -105,7 +105,7 @@ tpch_15 <- function() {
       l_shipdate < !!as.Date("1996-04-01")
     ) %>%
     summarise(
-      total_revenue = sum(l_extendedprice * (1 - l_discount)),
+      total_revenue = sum(na.rm = TRUE, l_extendedprice * (1 - l_discount)),
       .by = l_suppkey
     )
 
@@ -168,13 +168,13 @@ tpch_17 <- function() {
   joined %>%
     inner_join(na_matches = TPCH_NA_MATCHES, quantity_by_part, by = "l_partkey") %>%
     filter(l_quantity < quantity_threshold) %>%
-    summarise(avg_yearly = sum(l_extendedprice) / 7.0)
+    summarise(avg_yearly = sum(na.rm = TRUE, l_extendedprice) / 7.0)
 }
 
 #' @autoglobal
 tpch_18 <- function() {
   big_orders <- lineitem %>%
-    summarise(sum = sum(l_quantity), .by = l_orderkey) %>%
+    summarise(sum = sum(na.rm = TRUE, l_quantity), .by = l_orderkey) %>%
     filter(sum > 300)
 
   orders %>%
@@ -230,7 +230,7 @@ tpch_19 <- function() {
 
   result %>%
     summarise(
-      revenue = sum(l_extendedprice * (1 - l_discount))
+      revenue = sum(na.rm = TRUE, l_extendedprice * (1 - l_discount))
     )
 }
 
@@ -257,7 +257,7 @@ tpch_20 <- function() {
       l_shipdate < !!as.Date("1995-01-01")
     ) %>%
     semi_join(na_matches = TPCH_NA_MATCHES, partsupp_forest_ca, by = c("l_partkey" = "ps_partkey", "l_suppkey" = "ps_suppkey")) %>%
-    summarise(qty_threshold = 0.5 * sum(l_quantity), .by = l_suppkey)
+    summarise(qty_threshold = 0.5 * sum(na.rm = TRUE, l_quantity), .by = l_suppkey)
 
   partsupp_forest_ca_filtered <- partsupp_forest_ca %>%
     inner_join(
@@ -290,7 +290,7 @@ tpch_21 <- function() {
     ) %>%
     summarise(
       n_supplier = n(),
-      num_failed = sum(if_else(failed_delivery_commit, 1, 0)),
+      num_failed = sum(na.rm = TRUE, if_else(failed_delivery_commit, 1, 0)),
       .by = l_orderkey
     ) %>%
     filter(n_supplier > 1 & num_failed == 1)
@@ -331,7 +331,7 @@ tpch_22 <- function() {
     select(cntrycode, c_acctbal) %>%
     summarise(
       numcust = n(),
-      totacctbal = sum(c_acctbal),
+      totacctbal = sum(na.rm = TRUE, c_acctbal),
       .by = cntrycode
     ) %>%
     arrange(cntrycode)
