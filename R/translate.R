@@ -202,8 +202,7 @@ rel_translate_lang <- function(
       if (!is.null(pkg) && pkg != "lubridate") {
         cli::cli_abort("Don't know how to translate {.code {pkg}::{name}}.", call = call)
       }
-      def <- lubridate::wday
-      call <- call_match(expr, def, dots_env = env)
+      call <- call_match(expr, lubridate::wday, dots_env = env)
       args <- as.list(call[-1])
       bad <- !(names(args) %in% c("x"))
       if (any(bad)) {
@@ -214,8 +213,7 @@ rel_translate_lang <- function(
       }
     },
     "strftime" = {
-      def <- strftime
-      call <- call_match(expr, def, dots_env = env)
+      call <- call_match(expr, strftime, dots_env = env)
       args <- as.list(call[-1])
       bad <- !(names(args) %in% c("x", "format"))
       if (any(bad)) {
@@ -337,11 +335,13 @@ rel_translate_lang <- function(
     is_primitive <- (name %in% c("sum", "min", "max", "any", "all"))
 
     if (is_primitive) {
-      def <- function(..., na.rm = FALSE) {}
+      def_primitive <- function(..., na.rm = FALSE) {}
+      def <- def_primitive
       good_names <- c("", "na.rm")
       unnamed_args <- 1
     } else {
-      def <- function(x, ..., na.rm = FALSE) {}
+      def_regular <- function(x, ..., na.rm = FALSE) {}
+      def <- def_regular
       good_names <- c("x", "na.rm")
       unnamed_args <- 0
     }
