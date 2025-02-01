@@ -133,4 +133,4 @@ data
 nrow(data)
 ```
 
-Learn more about prudence in `vignette("funnel")`, and about the translation employed by duckplyr in `vignette("limits")`.
+Learn more about prudence in `vignette("prudence")`, and about the translation employed by duckplyr in `vignette("limits")`.

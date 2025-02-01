@@ -18,7 +18,7 @@ read_sql_duckdb(
 
 \item{prudence}{Logical, whether to create a frugal duckplyr frame.
 By default, a frugal duckplyr frame, with a limit of one million cells, is created.
-See \code{vignette("funnel")} for details.}
+See \code{vignette("prudence")} for details.}
 
 \item{con}{The connection, defaults to the default connection.}
 }

@@ -8,7 +8,7 @@
 #' dplyr verbs such as [mutate()], [select()] or [filter()]  will use DuckDB.
 #'
 #' `duckdb_tibble()` works like [tibble()], returning a lavish duckplyr data frame by default.
-#' See `vignette("funnel")` for details.
+#' See `vignette("prudence")` for details.
 #'
 #' @param ... For `duckdb_tibble()`, passed on to [tibble()].
 #'   For `as_duckdb_tibble()`, passed on to methods.

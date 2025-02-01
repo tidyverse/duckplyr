@@ -132,7 +132,7 @@ check_prudence <- function(x, duckplyr_error, call = caller_env()) {
       "This operation cannot be carried out by DuckDB, and the input is a frugal duckplyr frame.",
       "*" = duckplyr_error_msg,
       "i" = 'Use {.code compute(prudence = "lavish")} to materialize to temporary storage and continue with {.pkg duckplyr}.',
-      "i" = 'See {.run vignette("funnel")} for other options.'
+      "i" = 'See {.run vignette("prudence")} for other options.'
     ))
   }
 }

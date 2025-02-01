@@ -92,7 +92,7 @@ read_json_duckdb <- function(path, ..., prudence = c("thrifty", "lavish", "fruga
 #'   `"read_csv"`, `"read_csv_auto"` or `"read_json"`.
 #' @param prudence Logical, whether to create a frugal duckplyr frame.
 #'   By default, a frugal duckplyr frame, with a limit of one million cells, is created.
-#'   See `vignette("funnel")` for details.
+#'   See `vignette("prudence")` for details.
 #' @param options Arguments to the DuckDB function
 #'   indicated by `table_function`.
 #'
