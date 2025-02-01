@@ -185,9 +185,9 @@ rel_translate_lang <- function(
   }
 
 
-  if (!(name %in% c("wday", "strftime", "lag", "lead"))) {
+  if (!(name %in% c("wday", "strftime", "lag", "lead", "sum", "min", "max"))) {
     if (!is.null(names(expr)) && any(names(expr) != "")) {
-      # Fix grepl() logic below when allowing matching by argument name
+      # Fix grepl() and sum()/min()/max() logic below when allowing matching by argument name
       cli::cli_abort("Can't translate named argument {.code {name}({names(expr)[names(expr) != ''][[1]]} = )}.", call = call)
     }
   }
@@ -220,6 +220,21 @@ rel_translate_lang <- function(
       if (any(bad)) {
         cli::cli_abort("{name}({names(args)[which(bad)[[1]]]} = ) not supported", call = call)
       }
+    },
+    "min" =,
+    "max" =,
+    "sum" = {
+      def <- function (..., na.rm = FALSE) {}
+      call <- match.call(def, expr, envir = env)
+      args <- as.list(call[-1])
+      bad <- !(names(args) %in% c("na.rm", ""))
+      if (any(bad)) {
+        cli::cli_abort("{name}({names(args)[which(bad)[[1]]]} = ) not supported", call = call)
+      }
+      if (sum(names2(args) == "") != 1) {
+        cli::cli_abort("{.fun {name}} needs exactly one argument besides the optional {.arg na.rm}", call = call)
+      }
+      names(args) <- NULL
     },
     "%in%" = {
       values <- eval_tidy(expr[[3]], data = new_failing_mask(names(data)), env = env)
@@ -282,6 +297,10 @@ rel_translate_lang <- function(
     ">=" = "r_base::>=",
     "==" = "r_base::==",
     "!=" = "r_base::!=",
+
+    "sum" = "r_base::sum",
+    "min" = "r_base::min",
+    "max" = "r_base::max",
     NULL
   )
 
@@ -300,12 +319,13 @@ rel_translate_lang <- function(
   window <- need_window && (name %in% known_window)
 
   if (name %in% names(aliases)) {
-    name <- aliases[[name]]
-    if (grepl("^r_base::", name)) {
+    aliased_name <- aliases[[name]]
+    if (grepl("^r_base::", aliased_name)) {
       meta_ext_register()
     }
+  } else {
+    aliased_name <- name
   }
-  # name <- aliases[name] %|% name
 
   order_bys <- list()
   offset_expr <- NULL
@@ -332,11 +352,17 @@ rel_translate_lang <- function(
 
   if (name == "grepl") {
     if (!inherits(args[[1]], "relational_relexpr_constant")) {
-      cli::cli_abort("Only constant patterns are supported in {.code grepl()}", call = call)
+      cli::cli_abort("Only constant patterns are supported in {.fun grepl}", call = call)
     }
   }
 
-  fun <- relexpr_function(name, args)
+  if (name %in% c("sum", "min", "max") && length(args) > 1) {
+    if (!inherits(args[[2]], "relational_relexpr_constant")) {
+      cli::cli_abort("Only constants are supported in {.code {name}(na.rm = )}", call = call)
+    }
+  }
+
+  fun <- relexpr_function(aliased_name, args)
   if (window) {
     partitions <- map(partition, relexpr_reference)
     fun <- relexpr_window(
