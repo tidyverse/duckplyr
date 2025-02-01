@@ -20,27 +20,17 @@ details.}
 
 \item{...}{Arguments passed on to methods}
 
-\item{prudence}{Either a string:
+\item{prudence}{Convenience argument to control automatic materialization of data.
 \itemize{
-\item \code{"frugal"}:  a frugal data frame,
-\item \code{"lavish"}: a lavish data frame,
-\item \code{"thrifty"}: allow the materialization up to a maximum size of 1 million cells.
+\item \code{"lavish"}: regardless of size,
+\item \code{"frugal"}: never,
+\item \code{"thrifty"}: up to a maximum size of 1 million cells.
 }
 
-Or a named vector with at least one of
-\itemize{
-\item \code{cells} (numeric)
-\item \code{rows} (numeric)
-}
-
-to allow materialization for data up to a certain size,
-measured in cells (values) and rows in the resulting data frame.
-The equivalent of \code{"thrifty"} is \code{c(cells = 1e6)}.
-
-If \code{cells} is specified but not \code{rows}, \code{rows} is \code{Inf}.
-If \code{rows} is specified but not \code{cells}, \code{cells} is \code{Inf}.
-
-The default is to inherit the prudence of the input.}
+The default is to inherit from the input.
+The same effect can be achieved by forwarding the output to \code{\link[=as_duckdb_tibble]{as_duckdb_tibble()}}
+with the desired prudence.
+See \code{vignette("prudence")} for more information.}
 
 \item{name}{The name of the table to store the result in.}
 
