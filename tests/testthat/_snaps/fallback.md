@@ -115,7 +115,7 @@
       duckdb_tibble(a = 1, b = 2) %>% mutate(c = .env$x)
     Message
       i dplyr fallback recorded
-        {"version":"0.3.1","message":"internal: object not found, should also be triggered by the dplyr fallback","name":"mutate","x":{"...1":"numeric","...2":"numeric"},"args":{"dots":{"...3":"...4$...5"},".by":"NULL",".keep":["all","used","unused","none"]}}
+        {"version":"0.3.1","message":"object not found, should also be triggered by the dplyr fallback","name":"mutate","x":{"...1":"numeric","...2":"numeric"},"args":{"dots":{"...3":"...4$...5"},".by":"NULL",".keep":["all","used","unused","none"]}}
     Condition
       Error in `mutate()`:
       i In argument: `c = .env$x`.
@@ -128,7 +128,7 @@
       duckdb_tibble(a = 1, b = 2) %>% mutate(c = foo(a, b))
     Message
       i dplyr fallback recorded
-        {"version":"0.3.1","message":"No translation for function `foo`.","name":"mutate","x":{"...1":"numeric","...2":"numeric"},"args":{"dots":{"...3":"foo(...1, ...2)"},".by":"NULL",".keep":["all","used","unused","none"]}}
+        {"version":"0.3.1","message":"No translation for function `foo()`.","name":"mutate","x":{"...1":"numeric","...2":"numeric"},"args":{"dots":{"...3":"foo(...1, ...2)"},".by":"NULL",".keep":["all","used","unused","none"]}}
     Output
       # A duckplyr data frame: 3 variables
             a     b     c
