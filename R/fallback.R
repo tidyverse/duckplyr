@@ -7,6 +7,7 @@
 #' R functions, and R data types are implemented.
 #' Whenever a request cannot be handled by DuckDB,
 #' \pkg{duckplyr} falls back to \pkg{dplyr}.
+#' See `vignette("fallback"`)` for details.
 #'
 #' To assist future development, the fallback situations can be logged
 #' to the console or to a local file and uploaded for analysis.

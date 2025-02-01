@@ -62,6 +62,7 @@ To achieve this, only a carefully selected subset of \pkg{dplyr}'s operations,
 R functions, and R data types are implemented.
 Whenever a request cannot be handled by DuckDB,
 \pkg{duckplyr} falls back to \pkg{dplyr}.
+See \verb{vignette("fallback"})` for details.
 
 To assist future development, the fallback situations can be logged
 to the console or to a local file and uploaded for analysis.

@@ -61,6 +61,7 @@ lazy materialization and prudence.
 ## Eager and lazy computation
 
 For a duckplyr frame that is the result of a dplyr operation, accessing column data or retrieving the number of rows will trigger a computation that is carried out by DuckDB, not dplyr.
+See `vignette("fallback")` for details.
 In this sense, duckplyr frames are also "lazy": the computation is deferred until the last possible moment, allowing DuckDB to optimize the whole pipeline.
 
 ### Example
@@ -275,4 +276,5 @@ flights_partial |>
 
 Thrifty is a good choice for data sets where the cost of materializing the data is prohibitive only for large results.
 This is the default for the ingestion functions like `read_parquet_duckdb()`.
-See `vignette("large")` for more details on working with large data sets.
+
+See `vignette("large")` for more details on working with large data sets, and `vignette("fallback")` for fallbacks to dplyr.
