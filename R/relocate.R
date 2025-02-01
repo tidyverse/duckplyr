@@ -19,7 +19,7 @@ relocate.duckplyr_df <- function(.data, ..., .before = NULL, .after = NULL) {
     #' There is no DuckDB translation in `relocate.duckplyr_df()`
     #' - with a selection that returns no columns.
     #'
-    #' If you do the code will fall back to `dplyr::relocate()` without any error.
+    #' These features fall back to [dplyr::relocate()], see `vignette("fallback")` for details.
     "Zero-column result set not supported." = (length(exprs) == 0),
     {
       rel <- duckdb_rel_from_df(.data)

@@ -26,7 +26,7 @@ There is no DuckDB translation in \code{intersect.duckplyr_df()}
 \item if column names are different in both tables.
 }
 
-If you do the code will fall back to \code{dplyr::intersect()} without any error.
+These features fall back to \code{\link[dplyr:setops]{dplyr::intersect()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{

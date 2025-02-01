@@ -30,7 +30,7 @@ There is no DuckDB translation in \code{relocate.duckplyr_df()}
 \item with a selection that returns no columns.
 }
 
-If you do the code will fall back to \code{dplyr::relocate()} without any error.
+These features fall back to \code{\link[dplyr:relocate]{dplyr::relocate()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{

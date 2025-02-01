@@ -13,7 +13,7 @@ transmute.duckplyr_df <- function(.data, ...) {
     #' There is no DuckDB translation in `transmute.duckplyr_df()`
     #' - with a selection that returns no columns:
     #'
-    #' If you do the code will fall back to `dplyr::transmute()` without any error.
+    #' These features fall back to [dplyr::transmute()], see `vignette("fallback")` for details.
     "Zero-column result set not supported." = (length(dots) == 0),
     {
       exprs <- rel_translate_dots(dots, .data)

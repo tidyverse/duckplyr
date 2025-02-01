@@ -27,7 +27,7 @@ There is no DuckDB translation in \code{symdiff.duckplyr_df()}
 \item if column names are different in both tables.
 }
 
-If you do the code will fall back to \code{dplyr::symdiff()} without any error.
+These features fall back to \code{\link[dplyr:setops]{dplyr::symdiff()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{

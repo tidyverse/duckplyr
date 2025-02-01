@@ -160,7 +160,7 @@ There is no DuckDB translation in \code{left_join.duckplyr_df()}
 \item for a value of the \code{unmatched} argument that isn't the default \code{"drop"}.
 }
 
-If you do the code will fall back to \code{dplyr::left_join()} without any error.
+These features fall back to \code{\link[dplyr:mutate-joins]{dplyr::left_join()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{

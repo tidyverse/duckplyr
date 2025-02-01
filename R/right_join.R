@@ -14,7 +14,7 @@ right_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x
     #' - for a value of the `multiple` argument that isn't the default `"all"`.
     #' - for a value of the `unmatched` argument that isn't the default `"drop"`.
     #'
-    #' If you do the code will fall back to `dplyr::right_join()` without any error.
+    #' These features fall back to [dplyr::right_join()], see `vignette("fallback")` for details.
     "No implicit cross joins for {.code right_join()}" = is_cross_by(by),
     "{.arg multiple} not supported" = !identical(multiple, "all"),
     "{.arg unmatched} not supported" = !identical(unmatched, "drop"),

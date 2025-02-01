@@ -33,7 +33,7 @@ There is no DuckDB translation in \code{select.duckplyr_df()}
 \item nor with a selection that returns no columns.
 }
 
-If you do the code will fall back to \code{dplyr::select()} without any error.
+These features fall back to \code{\link[dplyr:select]{dplyr::select()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{

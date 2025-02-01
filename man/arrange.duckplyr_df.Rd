@@ -56,7 +56,7 @@ There is no DuckDB translation in \code{arrange.duckplyr_df()}
 \item providing a value for the \code{dplyr.legacy_locale} option.
 }
 
-If you do the code will fall back to \code{dplyr::arrange()} without any error.
+These features fall back to \code{\link[dplyr:arrange]{dplyr::arrange()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{

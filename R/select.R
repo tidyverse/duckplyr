@@ -22,7 +22,7 @@ select.duckplyr_df <- function(.data, ...) {
     #' - with no expression,
     #' - nor with a selection that returns no columns.
     #'
-    #' If you do the code will fall back to `dplyr::select()` without any error.
+    #' These features fall back to [dplyr::select()], see `vignette("fallback")` for details.
     "Zero-column result set not supported." = (length(exprs) == 0),
     {
       rel <- duckdb_rel_from_df(.data)

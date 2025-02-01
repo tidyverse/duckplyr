@@ -13,7 +13,7 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
     #' There is no DuckDB translation in `summarise.duckplyr_df()`
     #' - with `.groups = "rowwise"`.
     #'
-    #' If you do the code will fall back to `dplyr::summarise()` without any error.
+    #' These features fall back to [dplyr::summarise()], see `vignette("fallback")` for details.
     '{.code summarise()} with {.arg .groups} = {.value "rowwise")} not supported' = identical(.groups, "rowwise"),
     {
       rel <- duckdb_rel_from_df(.data)

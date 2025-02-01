@@ -15,7 +15,7 @@ filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
     #' - with no filter conditions,
     #' - nor for a grouped operation (if `.by` is set).
     #'
-    #' If you do the code will fall back to `dplyr::filter()` without any error.
+    #' These features fall back to [dplyr::filter()], see `vignette("fallback")` for details.
     "Can't use relational without filter conditions." = (length(dots) == 0),
     "{.code filter(by = ...)} not implemented, try {.code mutate(by = ...)} followed by a simple {.code filter()}." = (!quo_is_null(by)), # (length(by$names) > 0),
     {

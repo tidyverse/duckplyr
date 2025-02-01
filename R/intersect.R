@@ -19,7 +19,7 @@ intersect.duckplyr_df <- function(x, y, ...) {
     #' - if column names are duplicated in one of the tables,
     #' - if column names are different in both tables.
     #'
-    #' If you do the code will fall back to `dplyr::intersect()` without any error.
+    #' These features fall back to [dplyr::intersect()], see `vignette("fallback")` for details.
     "No duplicate names" = !identical(x_names, y_names) && anyDuplicated(x_names) && anyDuplicated(y_names),
     "Tables of different width" = length(x_names) != length(y_names),
     "Name mismatch" = !identical(x_names, y_names) && !all(y_names %in% x_names),

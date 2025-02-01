@@ -25,7 +25,7 @@ There is no DuckDB translation in \code{head.duckplyr_df()}
 \item with a negative \code{n}.
 }
 
-If you do the code will fall back to \code{head()} without any error.
+These features fall back to \code{\link[=head]{head()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{

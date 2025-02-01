@@ -63,7 +63,7 @@ There is no DuckDB translation in \code{count.duckplyr_df()}
 \item with \code{sort = TRUE}.
 }
 
-If you do the code will fall back to \code{dplyr::count()} without any error.
+These features fall back to \code{\link[dplyr:count]{dplyr::count()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{
