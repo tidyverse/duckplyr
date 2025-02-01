@@ -128,6 +128,10 @@ check_df_for_rel <- function(df, call = caller_env()) {
     }
   }
 
+  if (length(df) == 0L) {
+    cli::cli_abort("Can't convert empty data frame to relational.", call = call)
+  }
+
   for (i in seq_along(df)) {
     col <- .subset2(df, i)
     if (!is.null(names(col))) {
