@@ -153,7 +153,7 @@ month:</p>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.008   0.000   0.008</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.009   0.000   0.009</span></span></code></pre></div>
 <p>Setting up the pipeline is fast, the size of the data does not affect
 the setup costs. Because the computation is deferred, DuckDB can
 optimize the whole pipeline, which can be seen in the output below:</p>
@@ -161,15 +161,27 @@ optimize the whole pipeline, which can be seen in the output below:</p>
 <code class="sourceCode R"><span><span class="va">mean_arr_delay_ewr</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ┌---------------------------┐</span></span>
+<span><span class="co">#&gt; │         PROJECTION        │</span></span>
+<span><span class="co">#&gt; │    --------------------   │</span></span>
+<span><span class="co">#&gt; │           month           │</span></span>
+<span><span class="co">#&gt; │       mean_arr_delay      │</span></span>
+<span><span class="co">#&gt; │       min_arr_delay       │</span></span>
+<span><span class="co">#&gt; │       max_arr_delay       │</span></span>
+<span><span class="co">#&gt; │      median_arr_delay     │</span></span>
+<span><span class="co">#&gt; │                           │</span></span>
+<span><span class="co">#&gt; │        ~33677 Rows        │</span></span>
+<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
+<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │       HASH_GROUP_BY       │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │         Groups: #0        │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │        Aggregates:        │</span></span>
-<span><span class="co">#&gt; │          mean(#1)         │</span></span>
-<span><span class="co">#&gt; │          min(#2)          │</span></span>
-<span><span class="co">#&gt; │          max(#3)          │</span></span>
-<span><span class="co">#&gt; │         median(#4)        │</span></span>
+<span><span class="co">#&gt; │    sum_no_overflow(#1)    │</span></span>
+<span><span class="co">#&gt; │          avg(#2)          │</span></span>
+<span><span class="co">#&gt; │          min(#3)          │</span></span>
+<span><span class="co">#&gt; │          max(#4)          │</span></span>
+<span><span class="co">#&gt; │     quantile_cont(#5)     │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │        ~33677 Rows        │</span></span>
 <span><span class="co">#&gt; └-------------┬-------------┘</span></span>
@@ -177,6 +189,8 @@ optimize the whole pipeline, which can be seen in the output below:</p>
 <span><span class="co">#&gt; │         PROJECTION        │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │           month           │</span></span>
+<span><span class="co">#&gt; │ CASE  WHEN ((arr_delay IS │</span></span>
+<span><span class="co">#&gt; │ NULL)) THEN (1) ELSE 0 END│</span></span>
 <span><span class="co">#&gt; │         arr_delay         │</span></span>
 <span><span class="co">#&gt; │         arr_delay         │</span></span>
 <span><span class="co">#&gt; │         arr_delay         │</span></span>
@@ -218,7 +232,7 @@ kept. The result becomes available when accessed:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">mean_arr_delay_ewr</span><span class="op">$</span><span class="va">mean_arr_delay</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.017   0.002   0.016</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.042   0.003   0.023</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="comparison">Comparison<a class="anchor" aria-label="anchor" href="#comparison"></a>
@@ -274,7 +288,7 @@ opportunity for optimization:</p>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.036   0.010   0.045</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.036   0.009   0.045</span></span></code></pre></div>
 <p>See also the <a href="https://duckdb.org/2024/04/02/duckplyr.html" class="external-link">duckplyr: dplyr
 Powered by DuckDB</a> blog post for more information.</p>
 </div>
