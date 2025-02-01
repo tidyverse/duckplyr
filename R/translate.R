@@ -76,7 +76,7 @@ rel_find_call <- function(fun, env, call = caller_env()) {
     # "rev" = "base", # what's the use case?
     # "seq" = "base", # what's the use case?
     # "sqrt" = "base",
-    # "abs" = "base",
+    "abs" = "base",
     "if_else" = "dplyr",
     #
     "any" = "base",
@@ -99,7 +99,6 @@ rel_find_call <- function(fun, env, call = caller_env()) {
     "second" = "lubridate",
     "wday" = "lubridate",
     "strftime" = "base",
-    "abs" = "base",
     "substr" = "base",
     NULL
   )
