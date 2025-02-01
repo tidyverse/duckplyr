@@ -258,10 +258,10 @@ rel_translate_lang <- function(
   )
 
   aliases <- c(
-    sd = "stddev",
-    first = "first_value",
-    last = "last_value",
-    nth = "nth_value",
+    "sd" = "stddev",
+    "first" = "first_value",
+    "last" = "last_value",
+    "nth" = "nth_value",
     "/" = "___divide",
     "log10" = "___log10",
     "log" = "___log",
