@@ -151,7 +151,7 @@ If a computation is not supported by DuckDB, duckplyr will automatically fall ba
 
 ```{r dropin-fallback, cache = TRUE}
 flights_df() |>
-  summarise(
+  summarize(
     .by = origin,
     dest = paste(sort(dest), collapse = " ")
   )
@@ -208,12 +208,11 @@ Note how only the relevant columns are fetched and the 2024 data isn't even touc
 ```{r remote-exec, cache = TRUE}
 out <-
   flights |>
-  filter(!is.na(DepDelay), !is.na(ArrDelay)) |>
   mutate(InFlightDelay = ArrDelay - DepDelay) |>
   summarize(
     .by = c(Year, Month),
-    MeanInFlightDelay = mean(InFlightDelay),
-    MedianInFlightDelay = median(InFlightDelay),
+    MeanInFlightDelay = mean(InFlightDelay, na.rm = TRUE),
+    MedianInFlightDelay = median(InFlightDelay, na.rm = TRUE),
   ) |>
   filter(Year < 2024)
 
@@ -227,6 +226,12 @@ out |>
 
 Over 10M rows analyzed in about 10 seconds over the internet, that's not bad.
 Of course, working with Parquet, CSV, or JSON files downloaded locally is possible as well.
+For full compatibility, `na.rm = FALSE` by default in the aggregation functions:
+
+```{r remote-na-rm, cache = TRUE}
+flights |>
+  summarize(mean(ArrDelay - DepDelay))
+```
 
 
 ## Further reading

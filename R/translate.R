@@ -372,7 +372,7 @@ rel_translate_lang <- function(
       }
     } else {
       if (identical(na_rm, FALSE)) {
-        aliased_name <- paste0("___", aliased_name, "_na") # ___sum_na, ___min_na, ___max_na
+        aliased_name <- paste0("___", name, "_na") # ___sum_na, ___min_na, ___max_na
       } else if (!identical(na_rm, TRUE)) {
         cli::cli_abort("Invalid value for {.arg na.rm} in call to {.fun {name}}", call = call)
       } else if (name %in% c("sum", "any", "all")) {

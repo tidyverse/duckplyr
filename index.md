@@ -138,7 +138,7 @@ If a computation is not supported by DuckDB, duckplyr will automatically fall ba
 
 ``` r
 flights_df() |>
-  summarise(
+  summarize(
     .by = origin,
     dest = paste(sort(dest), collapse = " ")
   )
@@ -244,12 +244,11 @@ Note how only the relevant columns are fetched and the 2024 data isn't even touc
 ``` r
 out <-
   flights |>
-  filter(!is.na(DepDelay), !is.na(ArrDelay)) |>
   mutate(InFlightDelay = ArrDelay - DepDelay) |>
   summarize(
     .by = c(Year, Month),
-    MeanInFlightDelay = mean(InFlightDelay),
-    MedianInFlightDelay = median(InFlightDelay),
+    MeanInFlightDelay = mean(InFlightDelay, na.rm = TRUE),
+    MedianInFlightDelay = median(InFlightDelay, na.rm = TRUE),
   ) |>
   filter(Year < 2024)
 
@@ -266,7 +265,7 @@ out |>
 #> │          mean(#2)         │
 #> │         median(#3)        │
 #> │                           │
-#> │       ~1345825 Rows       │
+#> │       ~6729125 Rows       │
 #> └-------------┬-------------┘
 #> ┌-------------┴-------------┐
 #> │         PROJECTION        │
@@ -276,7 +275,7 @@ out |>
 #> │       InFlightDelay       │
 #> │       InFlightDelay       │
 #> │                           │
-#> │       ~2691650 Rows       │
+#> │       ~13458250 Rows      │
 #> └-------------┬-------------┘
 #> ┌-------------┴-------------┐
 #> │         PROJECTION        │
@@ -285,26 +284,7 @@ out |>
 #> │           Month           │
 #> │       InFlightDelay       │
 #> │                           │
-#> │       ~2691650 Rows       │
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │         PROJECTION        │
-#> │    --------------------   │
-#> │            Year           │
-#> │           Month           │
-#> │          DepDelay         │
-#> │          ArrDelay         │
-#> │                           │
-#> │       ~2691650 Rows       │
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │           FILTER          │
-#> │    --------------------   │
-#> │ ((NOT (DepDelay IS NULL)) │
-#> │    AND (NOT (ArrDelay IS  │
-#> │           NULL)))         │
-#> │                           │
-#> │       ~2691650 Rows       │
+#> │       ~13458250 Rows      │
 #> └-------------┬-------------┘
 #> ┌-------------┴-------------┐
 #> │       READ_PARQUET        │
@@ -313,16 +293,16 @@ out |>
 #> │        READ_PARQUET       │
 #> │                           │
 #> │        Projections:       │
-#> │          DepDelay         │
-#> │          ArrDelay         │
 #> │            Year           │
 #> │           Month           │
+#> │          DepDelay         │
+#> │          ArrDelay         │
 #> │                           │
 #> │       File Filters:       │
 #> │  (CAST(Year AS DOUBLE) <  │
 #> │           2024.0)         │
 #> │                           │
-#> │    Scanning Files: 2/2    │
+#> │    Scanning Files: 2/3    │
 #> │                           │
 #> │       ~13458250 Rows      │
 #> └---------------------------┘
@@ -333,23 +313,34 @@ out |>
 #> [38;5;246m# A duckplyr data frame: 4 variables[39m
 #>     [1mYear[22m [1mMonth[22m [1mMeanInFlightDelay[22m [1mMedianInFlightDelay[22m
 #>    [3m[38;5;246m<dbl>[39m[23m [3m[38;5;246m<dbl>[39m[23m             [3m[38;5;246m<dbl>[39m[23m               [3m[38;5;246m<dbl>[39m[23m
-#> [38;5;250m 1[39m  [4m2[24m022     9             -[31m6[39m[31m.[39m[31m00[39m                  -[31m7[39m
-#> [38;5;250m 2[39m  [4m2[24m022     5             -[31m5[39m[31m.[39m[31m11[39m                  -[31m6[39m
-#> [38;5;250m 3[39m  [4m2[24m023     5             -[31m6[39m[31m.[39m[31m17[39m                  -[31m7[39m
-#> [38;5;250m 4[39m  [4m2[24m023     9             -[31m5[39m[31m.[39m[31m37[39m                  -[31m7[39m
-#> [38;5;250m 5[39m  [4m2[24m022     1             -[31m6[39m[31m.[39m[31m88[39m                  -[31m8[39m
-#> [38;5;250m 6[39m  [4m2[24m023     4             -[31m4[39m[31m.[39m[31m54[39m                  -[31m6[39m
-#> [38;5;250m 7[39m  [4m2[24m022     4             -[31m4[39m[31m.[39m[31m88[39m                  -[31m6[39m
-#> [38;5;250m 8[39m  [4m2[24m023     1             -[31m5[39m[31m.[39m[31m0[39m[31m6[39m                  -[31m7[39m
+#> [38;5;250m 1[39m  [4m2[24m023     4             -[31m4[39m[31m.[39m[31m54[39m                  -[31m6[39m
+#> [38;5;250m 2[39m  [4m2[24m022     1             -[31m6[39m[31m.[39m[31m88[39m                  -[31m8[39m
+#> [38;5;250m 3[39m  [4m2[24m022     9             -[31m6[39m[31m.[39m[31m00[39m                  -[31m7[39m
+#> [38;5;250m 4[39m  [4m2[24m022     5             -[31m5[39m[31m.[39m[31m11[39m                  -[31m6[39m
+#> [38;5;250m 5[39m  [4m2[24m022    11             -[31m5[39m[31m.[39m[31m21[39m                  -[31m7[39m
+#> [38;5;250m 6[39m  [4m2[24m023     2             -[31m5[39m[31m.[39m[31m93[39m                  -[31m7[39m
+#> [38;5;250m 7[39m  [4m2[24m023    10             -[31m6[39m[31m.[39m[31m35[39m                  -[31m7[39m
+#> [38;5;250m 8[39m  [4m2[24m022     2             -[31m6[39m[31m.[39m[31m52[39m                  -[31m8[39m
 #> [38;5;250m 9[39m  [4m2[24m022    10             -[31m5[39m[31m.[39m[31m99[39m                  -[31m7[39m
-#> [38;5;250m10[39m  [4m2[24m022     2             -[31m6[39m[31m.[39m[31m52[39m                  -[31m8[39m
+#> [38;5;250m10[39m  [4m2[24m023     5             -[31m6[39m[31m.[39m[31m17[39m                  -[31m7[39m
 #> [38;5;246m# ℹ more rows[39m
 #>    user  system elapsed 
-#>   0.955   0.377   8.586
+#>   1.093   0.411   8.839
 ```
 
 Over 10M rows analyzed in about 10 seconds over the internet, that's not bad.
 Of course, working with Parquet, CSV, or JSON files downloaded locally is possible as well.
+For full compatibility, `na.rm = FALSE` by default in the aggregation functions:
+
+
+``` r
+flights |>
+  summarize(mean(ArrDelay - DepDelay))
+#> [38;5;246m# A duckplyr data frame: 1 variable[39m
+#>   [1m`mean(ArrDelay - DepDelay)`[22m
+#>                         [3m[38;5;246m<dbl>[39m[23m
+#> [38;5;250m1[39m                          [31mNA[39m
+```
 
 
 ## Further reading
