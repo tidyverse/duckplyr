@@ -39,8 +39,8 @@ As a consequence, duckplyr is lazy on the inside for all DuckDB operations but e
 
 If the duckplyr data.frame is accessed by...
 
--   not duckplyr (say, ggplot2), then a special callback is executed, allowing materialization of the data frame.
 -   duckplyr, then the operations continue to be lazy (until a call to `collect.duckplyr_df()` for instance).
+-   not duckplyr (say, ggplot2), then a special callback is executed, allowing materialization of the data frame.
 
 Therefore, duckplyr can be **both lazy** (within itself) **and not lazy** (for the outside world).
 
