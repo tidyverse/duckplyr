@@ -96,3 +96,130 @@
        - attr(*, "class")= chr [1:2] "relational_relexpr_comparison" "relational_relexpr"
        - attr(*, "used")= chr [1:2] "a" "c"
 
+# aggregation primitives
+
+    Code
+      rel_translate(expr(sum(a)), df)
+    Output
+      List of 3
+       $ name : chr "___sum_na"
+       $ args :List of 1
+        ..$ :List of 3
+        .. ..$ name : chr "a"
+        .. ..$ rel  : NULL
+        .. ..$ alias: NULL
+        .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
+       $ alias: NULL
+       - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
+       - attr(*, "used")= chr "a"
+
+---
+
+    Code
+      rel_translate(expr(sum(a, na.rm = TRUE)), df)
+    Output
+      List of 3
+       $ name : chr "___sum"
+       $ args :List of 1
+        ..$ :List of 3
+        .. ..$ name : chr "a"
+        .. ..$ rel  : NULL
+        .. ..$ alias: NULL
+        .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
+       $ alias: NULL
+       - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
+       - attr(*, "used")= chr "a"
+
+---
+
+    Code
+      rel_translate(expr(sum(a, na.rm = FALSE)), df)
+    Output
+      List of 3
+       $ name : chr "___sum_na"
+       $ args :List of 1
+        ..$ :List of 3
+        .. ..$ name : chr "a"
+        .. ..$ rel  : NULL
+        .. ..$ alias: NULL
+        .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
+       $ alias: NULL
+       - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
+       - attr(*, "used")= chr "a"
+
+---
+
+    Code
+      rel_translate(expr(sum(a, na.rm = b)), df)
+    Condition
+      Error:
+      ! object 'b' not found
+
+---
+
+    Code
+      rel_translate(expr(sum(a, na.rm = 1)), df)
+    Condition
+      Error:
+      ! Invalid value for `na.rm` in call to `sum()`
+
+---
+
+    Code
+      rel_translate(expr(sum(a)), df, need_window = TRUE)
+    Condition
+      Error:
+      ! `sum(na.rm = FALSE)` not supported in window functions
+      i Use `sum(na.rm = TRUE)` after checking for missing values
+
+---
+
+    Code
+      rel_translate(expr(min(a)), df)
+    Output
+      List of 3
+       $ name : chr "___min_na"
+       $ args :List of 1
+        ..$ :List of 3
+        .. ..$ name : chr "a"
+        .. ..$ rel  : NULL
+        .. ..$ alias: NULL
+        .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
+       $ alias: NULL
+       - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
+       - attr(*, "used")= chr "a"
+
+---
+
+    Code
+      rel_translate(expr(min(a, na.rm = TRUE)), df)
+    Output
+      List of 3
+       $ name : chr "min"
+       $ args :List of 1
+        ..$ :List of 3
+        .. ..$ name : chr "a"
+        .. ..$ rel  : NULL
+        .. ..$ alias: NULL
+        .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
+       $ alias: NULL
+       - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
+       - attr(*, "used")= chr "a"
+
+---
+
+    Code
+      rel_translate(expr(max(a)), df)
+    Output
+      List of 3
+       $ name : chr "___max_na"
+       $ args :List of 1
+        ..$ :List of 3
+        .. ..$ name : chr "a"
+        .. ..$ rel  : NULL
+        .. ..$ alias: NULL
+        .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
+       $ alias: NULL
+       - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
+       - attr(*, "used")= chr "a"
+

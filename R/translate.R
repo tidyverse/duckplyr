@@ -185,9 +185,9 @@ rel_translate_lang <- function(
   }
 
 
-  if (!(name %in% c("wday", "strftime", "lag", "lead"))) {
+  if (!(name %in% c("wday", "strftime", "lag", "lead", "sum", "min", "max"))) {
     if (!is.null(names(expr)) && any(names(expr) != "")) {
-      # Fix grepl() logic below when allowing matching by argument name
+      # Fix grepl() and sum()/min()/max() logic below when allowing matching by argument name
       cli::cli_abort("Can't translate named argument {.code {name}({names(expr)[names(expr) != ''][[1]]} = )}.", call = call)
     }
   }
@@ -282,6 +282,7 @@ rel_translate_lang <- function(
     ">=" = "r_base::>=",
     "==" = "r_base::==",
     "!=" = "r_base::!=",
+
     NULL
   )
 
@@ -300,12 +301,13 @@ rel_translate_lang <- function(
   window <- need_window && (name %in% known_window)
 
   if (name %in% names(aliases)) {
-    name <- aliases[[name]]
-    if (grepl("^r_base::", name)) {
+    aliased_name <- aliases[[name]]
+    if (grepl("^r_base::", aliased_name)) {
       meta_ext_register()
     }
+  } else {
+    aliased_name <- name
   }
-  # name <- aliases[name] %|% name
 
   order_bys <- list()
   offset_expr <- NULL
@@ -328,15 +330,56 @@ rel_translate_lang <- function(
     }
   }
 
+  # Other primitives: prod, range, any, all
+  if (name %in% c("sum", "min", "max")) {
+    def <- function (..., na.rm = FALSE) {}
+    expr <- match.call(def, expr, envir = env)
+    args <- as.list(expr[-1])
+    bad <- !(names(args) %in% c("na.rm", ""))
+    if (any(bad)) {
+      cli::cli_abort("{.code {name}({names(args)[which(bad)[[1]]]} = )} not supported", call = call)
+    }
+    if (sum(names2(args) == "") != 1) {
+      cli::cli_abort("{.fun {name}} needs exactly one argument besides the optional {.arg na.rm}", call = call)
+    }
+
+    na_rm <- FALSE
+    if (length(args) > 1) {
+      na_rm <- eval(args[[2]], env)
+    }
+
+    if (window) {
+      if (identical(na_rm, FALSE)) {
+        cli::cli_abort(call = call, c(
+          "{.code {name}(na.rm = FALSE)} not supported in window functions",
+          i = "Use {.code {name}(na.rm = TRUE)} after checking for missing values"
+        ))
+      } else if (!identical(na_rm, TRUE)) {
+        cli::cli_abort("Invalid value for {.arg na.rm} in call to {.fun {name}}", call = call)
+      }
+    } else {
+      if (identical(na_rm, FALSE)) {
+        aliased_name <- paste0("___", aliased_name, "_na") # ___sum_na, ___min_na, ___max_na
+      } else if (!identical(na_rm, TRUE)) {
+        cli::cli_abort("Invalid value for {.arg na.rm} in call to {.fun {name}}", call = call)
+      } else if (name == "sum") {
+        # Edge case: sum(integer()) is 0, not NA
+        aliased_name <- "___sum"
+      }
+    }
+
+    expr <- expr[1:2]
+  }
+
   args <- map(as.list(expr[-1]), do_translate, in_window = in_window || window)
 
   if (name == "grepl") {
     if (!inherits(args[[1]], "relational_relexpr_constant")) {
-      cli::cli_abort("Only constant patterns are supported in {.code grepl()}", call = call)
+      cli::cli_abort("Only constant patterns are supported in {.fun grepl}", call = call)
     }
   }
 
-  fun <- relexpr_function(name, args)
+  fun <- relexpr_function(aliased_name, args)
   if (window) {
     partitions <- map(partition, relexpr_reference)
     fun <- relexpr_window(

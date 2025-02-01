@@ -61,6 +61,11 @@ duckplyr_macros <- c(
   # FIXME: Need a better way?
   "suppressWarnings" = "(x) AS (x)",
   #
+  "___sum" = "(x) AS (CASE WHEN COUNT(x) = 0 THEN 0 ELSE SUM(x) END)",
+  "___sum_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE CASE WHEN COUNT(x) = 0 THEN 0 ELSE SUM(x) END END)",
+  "___min_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE MIN(x) END)",
+  "___max_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE MAX(x) END)",
+  #
   NULL
 )
 
