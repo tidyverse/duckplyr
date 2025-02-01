@@ -16,27 +16,16 @@ is_duckdb_tibble(x)
 \item{...}{For \code{duckdb_tibble()}, passed on to \code{\link[tibble:tibble]{tibble::tibble()}}.
 For \code{as_duckdb_tibble()}, passed on to methods.}
 
-\item{.prudence, prudence}{Either a string:
+\item{.prudence, prudence}{Controls automatic materialization of data.
 \itemize{
-\item \code{"frugal"}:  a frugal data frame,
-\item \code{"lavish"}: a lavish data frame,
-\item \code{"thrifty"}: allow the materialization up to a maximum size of 1 million cells.
+\item \code{"lavish"}: regardless of size,
+\item \code{"frugal"}: never,
+\item \code{"thrifty"}: up to a maximum size of 1 million cells.
 }
 
-Or a named vector with at least one of
-\itemize{
-\item \code{cells} (numeric)
-\item \code{rows} (numeric)
-}
-
-to allow materialization for data up to a certain size,
-measured in cells (values) and rows in the resulting data frame.
-The equivalent of \code{"thrifty"} is \code{c(cells = 1e6)}.
-
-If \code{cells} is specified but not \code{rows}, \code{rows} is \code{Inf}.
-If \code{rows} is specified but not \code{cells}, \code{cells} is \code{Inf}.
-
-The default is to inherit the prudence of the input.}
+The default is \code{"lavish"} for \code{duckdb_tibble()} and \code{as_duckdb_tibble()},
+and may be different for other functions.
+See \code{vignette("prudence")} for more information.}
 
 \item{x}{The object to convert or to test.}
 }
@@ -65,6 +54,18 @@ This is a generic function that can be overridden for custom classes.
 
 \code{is_duckdb_tibble()} returns \code{TRUE} if \code{x} is a duckplyr data frame.
 }
+\section{Fine-tuning prudence}{
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
+The \code{prudence} or \code{.prudence} argument can also be a named numeric vector
+with at least one of \code{cells} or \code{rows}
+to limit the cells (values) and rows in the resulting data frame
+after automatic materialization.
+If both limits are specified, both are enforced.
+The equivalent of \code{"thrifty"} is \code{c(cells = 1e6)}.
+}
+
 \examples{
 x <- duckdb_tibble(a = 1)
 x

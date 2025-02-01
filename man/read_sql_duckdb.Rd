@@ -16,9 +16,16 @@ read_sql_duckdb(
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{prudence}{Logical, whether to create a frugal duckplyr frame.
-By default, a frugal duckplyr frame, with a limit of one million cells, is created.
-See \code{vignette("prudence")} for details.}
+\item{prudence}{Controls automatic materialization of data.
+\itemize{
+\item \code{"thrifty"}: up to a maximum size of 1 million cells,
+\item \code{"lavish"}: regardless of size,
+\item \code{"frugal"}: never.
+}
+
+The default is \code{"thrifty"} for the ingestion functions,
+and may be different for other functions.
+See \code{vignette("prudence")} for more information.}
 
 \item{con}{The connection, defaults to the default connection.}
 }
