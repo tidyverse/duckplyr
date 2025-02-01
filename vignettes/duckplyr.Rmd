@@ -1,8 +1,9 @@
 ---
 title: "duckplyr"
 output: rmarkdown::html_vignette
+author: Maëlle Salmon
 vignette: >
-  %\VignetteIndexEntry{duckplyr}
+  %\VignetteIndexEntry{00 Get started}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
