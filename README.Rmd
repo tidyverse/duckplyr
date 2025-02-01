@@ -147,6 +147,16 @@ However, once materialized, the results are stable:
 out
 ```
 
+If a computation is not supported by DuckDB, duckplyr will automatically fall back to dplyr.
+
+```{r dropin-fallback, cache = TRUE}
+flights_df() |>
+  summarise(
+    .by = origin,
+    dest = paste(sort(dest), collapse = " ")
+  )
+```
+
 Restart R, or call `duckplyr::methods_restore()` to revert to the default dplyr implementation.
 
 ```{r}

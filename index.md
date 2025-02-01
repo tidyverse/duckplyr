@@ -133,6 +133,23 @@ out
 #> [38;5;250m6[39m  [4m2[24m013     6               -[31m4[39m[31m.[39m[31m24[39m                    -[31m7[39m
 ```
 
+If a computation is not supported by DuckDB, duckplyr will automatically fall back to dplyr.
+
+
+``` r
+flights_df() |>
+  summarise(
+    .by = origin,
+    dest = paste(sort(dest), collapse = " ")
+  )
+#> [38;5;246m# A tibble: 3 × 2[39m
+#>   [1morigin[22m [1mdest[22m                                                                   
+#>   [3m[38;5;246m<chr>[39m[23m  [3m[38;5;246m<chr>[39m[23m                                                                  
+#> [38;5;250m1[39m EWR    ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB AL…
+#> [38;5;250m2[39m LGA    ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL AT…
+#> [38;5;250m3[39m JFK    ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ AB…
+```
+
 Restart R, or call `duckplyr::methods_restore()` to revert to the default dplyr implementation.
 
 

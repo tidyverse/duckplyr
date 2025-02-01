@@ -135,6 +135,23 @@ out
 #> 6  2013     6               -4.24                    -7
 ```
 
+If a computation is not supported by DuckDB, duckplyr will automatically
+fall back to dplyr.
+
+``` r
+flights_df() |>
+  summarise(
+    .by = origin,
+    dest = paste(sort(dest), collapse = " ")
+  )
+#> # A tibble: 3 × 2
+#>   origin dest                                                                   
+#>   <chr>  <chr>                                                                  
+#> 1 EWR    ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB AL…
+#> 2 LGA    ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL AT…
+#> 3 JFK    ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ AB…
+```
+
 Restart R, or call `duckplyr::methods_restore()` to revert to the
 default dplyr implementation.
 
