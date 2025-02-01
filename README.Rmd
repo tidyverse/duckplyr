@@ -6,11 +6,11 @@ output:
 
 <!-- README.md and index.md are generated from README.Rmd. Please edit that file. -->
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-",
+  fig.path = "man/figures/dropin-",
   out.width = "100%"
 )
 
@@ -93,57 +93,57 @@ pak::pak("tidyverse/duckplyr")
 
 Calling `library(duckplyr)` overwrites dplyr methods, enabling duckplyr for the entire session.
 
-```{r attach}
+```{r dropin-attach}
 library(conflicted)
 library(duckplyr)
 ```
 
-```{r echo = FALSE}
+```{r dropin-simulate-library, echo = FALSE}
 # Needed exactly because we use pkgload::load_all() above
 # and because we want to show the "Overwriting" message
 methods_overwrite()
 Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
 ```
 
-```{r dplyr}
+```{r dropin-dplyr}
 conflict_prefer("filter", "dplyr", quiet = TRUE)
 ```
 
 The following code aggregates the inflight delay by year and month for the first half of the year.
 We use a variant of the `nycflights13::flights` dataset, where the timezone has been set to UTC to work around a current limitation of duckplyr, see `vignette("limits.html")`.
 
-```{r}
+```{r dropin-pipeline}
 flights_df()
 
 out <-
-  flights_df() %>%
-  filter(!is.na(arr_delay), !is.na(dep_delay)) %>%
-  mutate(inflight_delay = arr_delay - dep_delay) %>%
+  flights_df() |>
+  filter(!is.na(arr_delay), !is.na(dep_delay)) |>
+  mutate(inflight_delay = arr_delay - dep_delay) |>
   summarize(
     .by = c(year, month),
     mean_inflight_delay = mean(inflight_delay),
     median_inflight_delay = median(inflight_delay),
-  ) %>%
+  ) |>
   filter(month <= 6)
 ```
 
 The result is a plain tibble:
 
-```{r}
+```{r dropin-class}
 class(out)
 ```
 
 Nothing has been computed yet.
 Querying the number of rows, or a column, starts the computation:
 
-```{r cache = TRUE}
+```{r dropin-touch, cache = TRUE}
 out$month
 ```
 
 Note that, unlike dplyr, the results are not ordered, see `?config` for details.
 However, once materialized, the results are stable:
 
-```{r cache = TRUE}
+```{r dropin-stable, cache = TRUE}
 out
 ```
 
@@ -159,7 +159,7 @@ flights_df() |>
 
 Restart R, or call `duckplyr::methods_restore()` to revert to the default dplyr implementation.
 
-```{r}
+```{r dropin-restore}
 duckplyr::methods_restore()
 ```
 
@@ -167,7 +167,7 @@ duckplyr::methods_restore()
 
 An extended variant of the `nycflights13::flights` dataset is also available for download as Parquet files.
 
-```{r}
+```{r remote-url}
 year <- 2022:2024
 base_url <- "https://blobs.duckdb.org/flight-data-partitioned/"
 files <- paste0("Year=", year, "/data_0.parquet")
@@ -177,7 +177,7 @@ urls
 
 Using the [httpfs DuckDB extension](https://duckdb.org/docs/extensions/httpfs/overview.html), we can query these files directly from R, without even downloading them first.
 
-```{r}
+```{r remote-https}
 db_exec("INSTALL httpfs")
 db_exec("LOAD httpfs")
 
@@ -187,17 +187,17 @@ flights <- read_parquet_duckdb(urls)
 Like with local data frames, queries on the remote data are executed lazily.
 Unlike with local data frames, the default is to disallow automatic materialization if the result is too large in order to protect memory: the results are not materialized until explicitly requested, with a `collect()` call for instance.
 
-```{r error = TRUE}
+```{r remote-thrifty, error = TRUE}
 nrow(flights)
 ```
 
 For printing, only the first few rows of the result are fetched.
 
-```{r cache = TRUE}
+```{r remote-print, cache = TRUE}
 flights
 ```
 
-```{r cache = TRUE}
+```{r remote-count, cache = TRUE}
 flights |>
   count(Year)
 ```
@@ -205,7 +205,7 @@ flights |>
 Complex queries can be executed on the remote data.
 Note how only the relevant columns are fetched and the 2024 data isn't even touched, as it's not needed for the result.
 
-```{r cache = TRUE}
+```{r remote-exec, cache = TRUE}
 out <-
   flights |>
   filter(!is.na(DepDelay), !is.na(ArrDelay)) |>
