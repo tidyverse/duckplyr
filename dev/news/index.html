@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9926</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9927</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,6 +41,39 @@
       <small>Source: <a href="https://github.com/tidyverse/duckplyr/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.99.99.9927" id="duckplyr-099999927-2025-02-01">duckplyr 0.99.99.9927 (2025-02-01)<a class="anchor" aria-label="anchor" href="#duckplyr-099999927-2025-02-01"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-0-99-99-9927">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-99-99-9927"></a></h3>
+<ul><li><p>No longer support translation of <code><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">duckplyr::nth()</a></code> and other functions that were previously reexported (<a href="https://github.com/tidyverse/duckplyr/issues/551" class="external-link">#551</a>).</p></li>
+<li><p>Correct criterion for inclusion of <code>meta.R</code> (<a href="https://github.com/tidyverse/duckplyr/issues/539" class="external-link">#539</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="features-0-99-99-9927">Features<a class="anchor" aria-label="anchor" href="#features-0-99-99-9927"></a></h3>
+<ul><li><p>Handle <code><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">dplyr::desc()</a></code> (<a href="https://github.com/tidyverse/duckplyr/issues/550" class="external-link">#550</a>).</p></li>
+<li><p>Prudence as concept and as argument (<a href="https://github.com/tidyverse/duckplyr/issues/511" class="external-link">#511</a>, <a href="https://github.com/tidyverse/duckplyr/issues/547" class="external-link">#547</a>).</p></li>
+<li><p>Implement argument matching for <code>funnel</code> (<a href="https://github.com/tidyverse/duckplyr/issues/546" class="external-link">#546</a>).</p></li>
+<li><p>New <code>funnel = "drip"</code> (<a href="https://github.com/tidyverse/duckplyr/issues/541" class="external-link">#541</a>).</p></li>
+<li><p><code><a href="../reference/duckdb_tibble.html">duckdb_tibble()</a></code>, <code><a href="../reference/duckdb_tibble.html">as_duckdb_tibble()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect()</a></code> use <code>new_duckdb_tibble()</code> (<a href="https://github.com/tidyverse/duckplyr/issues/540" class="external-link">#540</a>).</p></li>
+<li><p><code><a href="../reference/duckdb_tibble.html">duckdb_tibble()</a></code> checks if columns can be represented in DuckDB (<a href="https://github.com/tidyverse/duckplyr/issues/537" class="external-link">#537</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="chore-0-99-99-9927">Chore<a class="anchor" aria-label="anchor" href="#chore-0-99-99-9927"></a></h3>
+<ul><li><p>Sync (<a href="https://github.com/tidyverse/duckplyr/issues/556" class="external-link">#556</a>).</p></li>
+<li><p>Move code.</p></li>
+<li><p>Add prefix to dplyr generated helper files, and skip if env var is set (<a href="https://github.com/tidyverse/duckplyr/issues/538" class="external-link">#538</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="documentation-0-99-99-9927">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-99-99-9927"></a></h3>
+<ul><li><p>Small README tweaks (<a href="https://github.com/tidyverse/duckplyr/issues/543" class="external-link">#543</a>).</p></li>
+<li><p>Document limiting memory usage (<a href="https://github.com/tidyverse/duckplyr/issues/472" class="external-link">#472</a>, <a href="https://github.com/tidyverse/duckplyr/issues/548" class="external-link">#548</a>).</p></li>
+<li><p>Tweak funneling (<a href="https://github.com/tidyverse/duckplyr/issues/545" class="external-link">#545</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="testing-0-99-99-9927">Testing<a class="anchor" aria-label="anchor" href="#testing-0-99-99-9927"></a></h3>
+<ul><li>Snapshot updates (<a href="https://github.com/1741643" class="external-link">@1741643</a>+krlmlr).</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.99.99.9926" id="duckplyr-099999926-2025-01-31">duckplyr 0.99.99.9926 (2025-01-31)<a class="anchor" aria-label="anchor" href="#duckplyr-099999926-2025-01-31"></a></h2>
 <div class="section level3">
