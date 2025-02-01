@@ -116,6 +116,14 @@
 ---
 
     Code
+      rel_translate(expr(sum(a, b)), df)
+    Condition
+      Error:
+      ! `sum()` needs exactly one argument besides the optional `na.rm`
+
+---
+
+    Code
       rel_translate(expr(sum(a, na.rm = TRUE)), df)
     Output
       List of 3
@@ -307,4 +315,88 @@
        $ alias: NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
+
+---
+
+    Code
+      rel_translate(expr(mean(a)), df)
+    Output
+      List of 3
+       $ name : chr "___mean_na"
+       $ args :List of 1
+        ..$ x:List of 3
+        .. ..$ name : chr "a"
+        .. ..$ rel  : NULL
+        .. ..$ alias: NULL
+        .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
+       $ alias: NULL
+       - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
+       - attr(*, "used")= chr "a"
+
+---
+
+    Code
+      rel_translate(expr(mean(a, b)), df)
+    Condition
+      Error:
+      ! `mean()` needs exactly one argument besides the optional `na.rm`
+
+---
+
+    Code
+      rel_translate(expr(mean(a, na.rm = TRUE)), df)
+    Output
+      List of 3
+       $ name : chr "mean"
+       $ args :List of 1
+        ..$ x:List of 3
+        .. ..$ name : chr "a"
+        .. ..$ rel  : NULL
+        .. ..$ alias: NULL
+        .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
+       $ alias: NULL
+       - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
+       - attr(*, "used")= chr "a"
+
+---
+
+    Code
+      rel_translate(expr(mean(a, na.rm = FALSE)), df)
+    Output
+      List of 3
+       $ name : chr "___mean_na"
+       $ args :List of 1
+        ..$ x:List of 3
+        .. ..$ name : chr "a"
+        .. ..$ rel  : NULL
+        .. ..$ alias: NULL
+        .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
+       $ alias: NULL
+       - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
+       - attr(*, "used")= chr "a"
+
+---
+
+    Code
+      rel_translate(expr(mean(a, na.rm = b)), df)
+    Condition
+      Error:
+      ! object 'b' not found
+
+---
+
+    Code
+      rel_translate(expr(mean(a, na.rm = 1)), df)
+    Condition
+      Error:
+      ! Invalid value for `na.rm` in call to `mean()`
+
+---
+
+    Code
+      rel_translate(expr(mean(a)), df, need_window = TRUE)
+    Condition
+      Error:
+      ! `mean(na.rm = FALSE)` not supported in window functions
+      i Use `mean(na.rm = TRUE)` after checking for missing values
 

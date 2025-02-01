@@ -1055,6 +1055,8 @@ test_that("as_duckplyr_df_impl() and mutate(sum(a), .by = g)", {
 
 
 test_that("as_duckplyr_df_impl() and mutate(mean(a))", {
+  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -1068,6 +1070,8 @@ test_that("as_duckplyr_df_impl() and mutate(mean(a))", {
 
 
 test_that("as_duckplyr_df_impl() and mutate(mean(a), .by = g)", {
+  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -1081,6 +1085,8 @@ test_that("as_duckplyr_df_impl() and mutate(mean(a), .by = g)", {
 
 
 test_that("as_duckplyr_df_impl() and mutate(sd(a))", {
+  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
@@ -1094,6 +1100,8 @@ test_that("as_duckplyr_df_impl() and mutate(sd(a))", {
 
 
 test_that("as_duckplyr_df_impl() and mutate(sd(a), .by = g)", {
+  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
+
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 

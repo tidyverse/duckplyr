@@ -186,7 +186,7 @@ rel_translate_lang <- function(
   }
 
 
-  if (!(name %in% c("wday", "strftime", "lag", "lead", "sum", "min", "max", "any", "all"))) {
+  if (!(name %in% c("wday", "strftime", "lag", "lead", "sum", "min", "max", "any", "all", "mean", "median", "sd"))) {
     if (!is.null(names(expr)) && any(names(expr) != "")) {
       # Fix grepl() and sum()/min()/max() logic below when allowing matching by argument name
       cli::cli_abort("Can't translate named argument {.code {name}({names(expr)[names(expr) != ''][[1]]} = )}.", call = call)
@@ -294,7 +294,7 @@ rel_translate_lang <- function(
     "cume_dist", "lead", "lag", "ntile",
 
     # Aggregates
-    "sum", "mean", "sd", "min", "max", "median", "any", "all",
+    "sum", "min", "max", "any", "all", "mean", "sd", "median",
     #
     NULL
   )
@@ -332,16 +332,28 @@ rel_translate_lang <- function(
   }
 
   # Other primitives: prod, range
-  if (name %in% c("sum", "min", "max", "any", "all")) {
-    def <- function (..., na.rm = FALSE) {}
-    expr <- match.call(def, expr, envir = env)
+  # Other aggregates: var(), cum*(), quantile()
+  if (name %in% c("sum", "min", "max", "any", "all", "mean", "sd", "median")) {
+    is_primitive <- (name %in% c("sum", "min", "max", "any", "all"))
+
+    if (is_primitive) {
+      def <- function(..., na.rm = FALSE) {}
+      good_names <- c("", "na.rm")
+      unnamed_args <- 1
+    } else {
+      def <- function(x, ..., na.rm = FALSE) {}
+      good_names <- c("x", "na.rm")
+      unnamed_args <- 0
+    }
+
+    expr <- call_match(expr, def, dots_env = env)
     args <- as.list(expr[-1])
-    bad <- !(names(args) %in% c("na.rm", ""))
+    bad <- !(names(args) %in% good_names)
+    if (sum(names2(args) == "") != unnamed_args) {
+      cli::cli_abort("{.fun {name}} needs exactly one argument besides the optional {.arg na.rm}", call = call)
+    }
     if (any(bad)) {
       cli::cli_abort("{.code {name}({names(args)[which(bad)[[1]]]} = )} not supported", call = call)
-    }
-    if (sum(names2(args) == "") != 1) {
-      cli::cli_abort("{.fun {name}} needs exactly one argument besides the optional {.arg na.rm}", call = call)
     }
 
     na_rm <- FALSE

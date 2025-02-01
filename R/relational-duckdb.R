@@ -70,6 +70,9 @@ duckplyr_macros <- c(
   "___any_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE CASE WHEN COUNT(x) = 0 THEN FALSE ELSE bool_or(x) END END)",
   "___all" = "(x) AS (CASE WHEN COUNT(x) = 0 THEN TRUE ELSE bool_and(x) END)",
   "___all_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE CASE WHEN COUNT(x) = 0 THEN TRUE ELSE bool_and(x) END END)",
+  "___mean_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE AVG(x) END)",
+  "___sd_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE STDDEV(x) END)",
+  "___median_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE percentile_cont(0.5) WITHIN GROUP (ORDER BY x) END)",
   #
   NULL
 )
