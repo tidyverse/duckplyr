@@ -5,6 +5,7 @@ To achieve this, only a carefully selected subset of dplyr's operations,
 R functions, and R data types are implemented.
 Whenever a request cannot be handled by DuckDB,
 duckplyr falls back to dplyr.
+See vignette(&quot;fallback&quot;)` for details.
 To assist future development, the fallback situations can be logged
 to the console or to a local file and uploaded for analysis.
 By default, duckplyr will not log or upload anything.
@@ -28,6 +29,7 @@ To achieve this, only a carefully selected subset of dplyr's operations,
 R functions, and R data types are implemented.
 Whenever a request cannot be handled by DuckDB,
 duckplyr falls back to dplyr.
+See vignette(&quot;fallback&quot;)` for details.
 To assist future development, the fallback situations can be logged
 to the console or to a local file and uploaded for analysis.
 By default, duckplyr will not log or upload anything.
@@ -66,6 +68,7 @@ fallback_purge() deletes some or all available reports."><meta property="og:imag
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/large.html">Large data</a></li>
     <li><a class="dropdown-item" href="../articles/prudence.html">Memory protection: Prudence</a></li>
+    <li><a class="dropdown-item" href="../articles/fallback.html">Fallback to dplyr</a></li>
     <li><a class="dropdown-item" href="../articles/limits.html">Translations</a></li>
     <li><a class="dropdown-item" href="../articles/developers.html">Selective use of duckplyr</a></li>
     <li><a class="dropdown-item" href="../articles/telemetry.html">Telemetry</a></li>
@@ -94,7 +97,8 @@ a fully compatible drop-in replacement for <span class="pkg">dplyr</span>.
 To achieve this, only a carefully selected subset of <span class="pkg">dplyr</span>'s operations,
 R functions, and R data types are implemented.
 Whenever a request cannot be handled by DuckDB,
-<span class="pkg">duckplyr</span> falls back to <span class="pkg">dplyr</span>.</p>
+<span class="pkg">duckplyr</span> falls back to <span class="pkg">dplyr</span>.
+See <code>vignette("fallback"</code>)` for details.</p>
 <p>To assist future development, the fallback situations can be logged
 to the console or to a local file and uploaded for analysis.
 By default, <span class="pkg">duckplyr</span> will not log or upload anything.

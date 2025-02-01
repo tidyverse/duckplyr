@@ -4,11 +4,12 @@ pkgdown_sha: 18cca452d736fea33d47b19b4ef4973db9104a75
 articles:
   developers: developers.html
   extend: extend.html
+  fallback: fallback.html
   large: large.html
   limits: limits.html
   prudence: prudence.html
   telemetry: telemetry.html
-last_built: 2025-02-01T06:45Z
+last_built: 2025-02-01T07:57Z
 urls:
   reference: https://duckplyr.tidyverse.org/reference
   article: https://duckplyr.tidyverse.org/articles
