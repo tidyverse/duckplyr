@@ -203,7 +203,7 @@ rel_translate_lang <- function(
         cli::cli_abort("Don't know how to translate {.code {pkg}::{name}}.", call = call)
       }
       def <- lubridate::wday
-      call <- match.call(def, expr, envir = env)
+      call <- call_match(expr, def, dots_env = env)
       args <- as.list(call[-1])
       bad <- !(names(args) %in% c("x"))
       if (any(bad)) {
@@ -215,7 +215,7 @@ rel_translate_lang <- function(
     },
     "strftime" = {
       def <- strftime
-      call <- match.call(def, expr, envir = env)
+      call <- call_match(expr, def, dots_env = env)
       args <- as.list(call[-1])
       bad <- !(names(args) %in% c("x", "format"))
       if (any(bad)) {
@@ -315,7 +315,7 @@ rel_translate_lang <- function(
   default_expr <- NULL
   if (name %in% c("lag", "lead")) {
     # x, n = 1L, default = NULL, order_by = NULL
-    expr <- match.call(lag, expr)
+    expr <- call_match(expr, lag, dots_env = env)
 
     offset_expr <- relexpr_constant(expr$n %||% 1L)
     expr$n <- NULL
