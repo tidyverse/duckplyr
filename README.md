@@ -140,7 +140,7 @@ fall back to dplyr.
 
 ``` r
 flights_df() |>
-  summarise(
+  summarize(
     .by = origin,
     dest = paste(sort(dest), collapse = " ")
   )

@@ -138,7 +138,7 @@ If a computation is not supported by DuckDB, duckplyr will automatically fall ba
 
 ``` r
 flights_df() |>
-  summarise(
+  summarize(
     .by = origin,
     dest = paste(sort(dest), collapse = " ")
   )
