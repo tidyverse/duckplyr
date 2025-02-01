@@ -122,9 +122,12 @@ pass a wildcard or a character vector to the <code>path</code> argument,</p>
 
 
 <dt id="arg-prudence">prudence<a class="anchor" aria-label="anchor" href="#arg-prudence"></a></dt>
-<dd><p>Logical, whether to create a frugal duckplyr frame.
-By default, a frugal duckplyr frame, with a limit of one million cells, is created.
-See <code><a href="../articles/prudence.html">vignette("prudence")</a></code> for details.</p></dd>
+<dd><p>Controls automatic materialization of data.</p><ul><li><p><code>"thrifty"</code>: up to a maximum size of 1 million cells,</p></li>
+<li><p><code>"lavish"</code>: regardless of size,</p></li>
+<li><p><code>"frugal"</code>: never.</p></li>
+</ul><p>The default is <code>"thrifty"</code> for the ingestion functions,
+and may be different for other functions.
+See <code><a href="../articles/prudence.html">vignette("prudence")</a></code> for more information.</p></dd>
 
 
 <dt id="arg-options">options<a class="anchor" aria-label="anchor" href="#arg-options"></a></dt>
@@ -141,6 +144,18 @@ DuckDB function such as <code>"read_parquet"</code>,
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A duckplyr frame, see <code><a href="duckdb_tibble.html">as_duckdb_tibble()</a></code> for details.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="fine-tuning-prudence">Fine-tuning prudence<a class="anchor" aria-label="anchor" href="#fine-tuning-prudence"></a></h2>
+
+
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="figures/lifecycle-experimental.svg" alt="[Experimental]"></a></p>
+<p>The <code>prudence</code> or <code>.prudence</code> argument can also be a named numeric vector
+with at least one of <code>cells</code> or <code>rows</code>
+to limit the cells (values) and rows in the resulting data frame
+after automatic materialization.
+If both limits are specified, both are enforced.
+The equivalent of <code>"thrifty"</code> is <code>c(cells = 1e6)</code>.</p>
     </div>
 
     <div class="section level2">

@@ -93,17 +93,12 @@ For <code>as_duckdb_tibble()</code>, passed on to methods.</p></dd>
 
 
 <dt id="arg--prudence-prudence">.prudence, prudence<a class="anchor" aria-label="anchor" href="#arg--prudence-prudence"></a></dt>
-<dd><p>Either a string:</p><ul><li><p><code>"frugal"</code>:  a frugal data frame,</p></li>
-<li><p><code>"lavish"</code>: a lavish data frame,</p></li>
-<li><p><code>"thrifty"</code>: allow the materialization up to a maximum size of 1 million cells.</p></li>
-</ul><p>Or a named vector with at least one of</p><ul><li><p><code>cells</code> (numeric)</p></li>
-<li><p><code>rows</code> (numeric)</p></li>
-</ul><p>to allow materialization for data up to a certain size,
-measured in cells (values) and rows in the resulting data frame.
-The equivalent of <code>"thrifty"</code> is <code>c(cells = 1e6)</code>.</p>
-<p>If <code>cells</code> is specified but not <code>rows</code>, <code>rows</code> is <code>Inf</code>.
-If <code>rows</code> is specified but not <code>cells</code>, <code>cells</code> is <code>Inf</code>.</p>
-<p>The default is to inherit the prudence of the input.</p></dd>
+<dd><p>Controls automatic materialization of data.</p><ul><li><p><code>"lavish"</code>: regardless of size,</p></li>
+<li><p><code>"frugal"</code>: never,</p></li>
+<li><p><code>"thrifty"</code>: up to a maximum size of 1 million cells.</p></li>
+</ul><p>The default is <code>"lavish"</code> for <code>duckdb_tibble()</code> and <code>as_duckdb_tibble()</code>,
+and may be different for other functions.
+See <code><a href="../articles/prudence.html">vignette("prudence")</a></code> for more information.</p></dd>
 
 
 <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
@@ -116,6 +111,18 @@ If <code>rows</code> is specified but not <code>cells</code>, <code>cells</code>
 <li><p><code>"duckplyr_df"</code></p></li>
 <li><p>Classes of a <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble</a></p></li>
 </ul><p>For <code>is_duckdb_tibble()</code>, a scalar logical.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="fine-tuning-prudence">Fine-tuning prudence<a class="anchor" aria-label="anchor" href="#fine-tuning-prudence"></a></h2>
+
+
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="figures/lifecycle-experimental.svg" alt="[Experimental]"></a></p>
+<p>The <code>prudence</code> or <code>.prudence</code> argument can also be a named numeric vector
+with at least one of <code>cells</code> or <code>rows</code>
+to limit the cells (values) and rows in the resulting data frame
+after automatic materialization.
+If both limits are specified, both are enforced.
+The equivalent of <code>"thrifty"</code> is <code>c(cells = 1e6)</code>.</p>
     </div>
 
     <div class="section level2">
