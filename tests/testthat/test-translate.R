@@ -75,4 +75,24 @@ test_that("aggregation primitives", {
   expect_snapshot({
     rel_translate(expr(max(a)), df)
   })
+
+  expect_snapshot({
+    rel_translate(expr(max(a, na.rm = TRUE)), df)
+  })
+
+  expect_snapshot({
+    rel_translate(expr(any(a)), df)
+  })
+
+  expect_snapshot({
+    rel_translate(expr(any(a, na.rm = TRUE)), df)
+  })
+
+  expect_snapshot({
+    rel_translate(expr(all(a)), df)
+  })
+
+  expect_snapshot({
+    rel_translate(expr(all(a, na.rm = TRUE)), df)
+  })
 })

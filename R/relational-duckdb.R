@@ -50,7 +50,6 @@ duckplyr_macros <- c(
   "|" = "(x, y) AS (x OR y)",
   "&" = "(x, y) AS (x AND y)",
   "!" = "(x) AS (NOT x)",
-  "any" = "(x) AS (bool_or(x))",
   "n_distinct" = "(x) AS (COUNT(DISTINCT x))",
   #
   "wday" = "(x) AS CAST(weekday(CAST (x AS DATE)) + 1 AS int32)",
@@ -63,8 +62,14 @@ duckplyr_macros <- c(
   #
   "___sum" = "(x) AS (CASE WHEN COUNT(x) = 0 THEN 0 ELSE SUM(x) END)",
   "___sum_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE CASE WHEN COUNT(x) = 0 THEN 0 ELSE SUM(x) END END)",
+  "___min" = "(x) AS MIN(x)",
   "___min_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE MIN(x) END)",
+  "___max" = "(x) AS MAX(x)",
   "___max_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE MAX(x) END)",
+  "___any" = "(x) AS (CASE WHEN COUNT(x) = 0 THEN FALSE ELSE bool_or(x) END)",
+  "___any_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE CASE WHEN COUNT(x) = 0 THEN FALSE ELSE bool_or(x) END END)",
+  "___all" = "(x) AS (CASE WHEN COUNT(x) = 0 THEN TRUE ELSE bool_and(x) END)",
+  "___all_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE CASE WHEN COUNT(x) = 0 THEN TRUE ELSE bool_and(x) END END)",
   #
   NULL
 )

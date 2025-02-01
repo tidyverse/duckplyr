@@ -223,3 +223,88 @@
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
 
+---
+
+    Code
+      rel_translate(expr(max(a, na.rm = TRUE)), df)
+    Output
+      List of 3
+       $ name : chr "max"
+       $ args :List of 1
+        ..$ :List of 3
+        .. ..$ name : chr "a"
+        .. ..$ rel  : NULL
+        .. ..$ alias: NULL
+        .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
+       $ alias: NULL
+       - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
+       - attr(*, "used")= chr "a"
+
+---
+
+    Code
+      rel_translate(expr(any(a)), df)
+    Output
+      List of 3
+       $ name : chr "___any_na"
+       $ args :List of 1
+        ..$ :List of 3
+        .. ..$ name : chr "a"
+        .. ..$ rel  : NULL
+        .. ..$ alias: NULL
+        .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
+       $ alias: NULL
+       - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
+       - attr(*, "used")= chr "a"
+
+---
+
+    Code
+      rel_translate(expr(any(a, na.rm = TRUE)), df)
+    Output
+      List of 3
+       $ name : chr "___any"
+       $ args :List of 1
+        ..$ :List of 3
+        .. ..$ name : chr "a"
+        .. ..$ rel  : NULL
+        .. ..$ alias: NULL
+        .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
+       $ alias: NULL
+       - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
+       - attr(*, "used")= chr "a"
+
+---
+
+    Code
+      rel_translate(expr(all(a)), df)
+    Output
+      List of 3
+       $ name : chr "___all_na"
+       $ args :List of 1
+        ..$ :List of 3
+        .. ..$ name : chr "a"
+        .. ..$ rel  : NULL
+        .. ..$ alias: NULL
+        .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
+       $ alias: NULL
+       - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
+       - attr(*, "used")= chr "a"
+
+---
+
+    Code
+      rel_translate(expr(all(a, na.rm = TRUE)), df)
+    Output
+      List of 3
+       $ name : chr "___all"
+       $ args :List of 1
+        ..$ :List of 3
+        .. ..$ name : chr "a"
+        .. ..$ rel  : NULL
+        .. ..$ alias: NULL
+        .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
+       $ alias: NULL
+       - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
+       - attr(*, "used")= chr "a"
+

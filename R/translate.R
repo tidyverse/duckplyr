@@ -80,6 +80,7 @@ rel_find_call <- function(fun, env, call = caller_env()) {
     "if_else" = "dplyr",
     #
     "any" = "base",
+    "all" = "base",
     "suppressWarnings" = "base",
     "lag" = "dplyr",
     "lead" = "dplyr",
@@ -185,7 +186,7 @@ rel_translate_lang <- function(
   }
 
 
-  if (!(name %in% c("wday", "strftime", "lag", "lead", "sum", "min", "max"))) {
+  if (!(name %in% c("wday", "strftime", "lag", "lead", "sum", "min", "max", "any", "all"))) {
     if (!is.null(names(expr)) && any(names(expr) != "")) {
       # Fix grepl() and sum()/min()/max() logic below when allowing matching by argument name
       cli::cli_abort("Can't translate named argument {.code {name}({names(expr)[names(expr) != ''][[1]]} = )}.", call = call)
@@ -293,7 +294,7 @@ rel_translate_lang <- function(
     "cume_dist", "lead", "lag", "ntile",
 
     # Aggregates
-    "sum", "mean", "sd", "min", "max", "median",
+    "sum", "mean", "sd", "min", "max", "median", "any", "all",
     #
     NULL
   )
@@ -330,8 +331,8 @@ rel_translate_lang <- function(
     }
   }
 
-  # Other primitives: prod, range, any, all
-  if (name %in% c("sum", "min", "max")) {
+  # Other primitives: prod, range
+  if (name %in% c("sum", "min", "max", "any", "all")) {
     def <- function (..., na.rm = FALSE) {}
     expr <- match.call(def, expr, envir = env)
     args <- as.list(expr[-1])
@@ -362,9 +363,9 @@ rel_translate_lang <- function(
         aliased_name <- paste0("___", aliased_name, "_na") # ___sum_na, ___min_na, ___max_na
       } else if (!identical(na_rm, TRUE)) {
         cli::cli_abort("Invalid value for {.arg na.rm} in call to {.fun {name}}", call = call)
-      } else if (name == "sum") {
+      } else if (name %in% c("sum", "any", "all")) {
         # Edge case: sum(integer()) is 0, not NA
-        aliased_name <- "___sum"
+        aliased_name <- paste0("___", name)
       }
     }
 
