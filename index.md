@@ -358,6 +358,8 @@ Of course, working with Parquet, CSV, or JSON files downloaded locally is possib
 
 - `vignette("prudence")`: How duckplyr can help protect memory when working with large data
 
+- `vignette("fallback")`: How the fallback to dplyr works internally
+
 - `vignette("limits")`: Translation of dplyr employed by duckplyr, and current limitations
 
 - `vignette("developers")`: Using duckplyr for individual data frames and in other packages

@@ -63,3 +63,5 @@ duckplyr:::fallback_autoupload()
 ```
 
 The `fallback_sitrep()` function describes the current configuration and the available options.
+
+See `vignette("fallback")` for details on the fallback mechanism.

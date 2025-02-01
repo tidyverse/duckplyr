@@ -364,6 +364,9 @@ locally is possible as well.
 - [`vignette("prudence")`](https://duckplyr.tidyverse.org/dev/articles/prudence.html):
   How duckplyr can help protect memory when working with large data
 
+- [`vignette("fallback")`](https://duckplyr.tidyverse.org/dev/articles/fallback.html):
+  How the fallback to dplyr works internally
+
 - [`vignette("limits")`](https://duckplyr.tidyverse.org/dev/articles/limits.html):
   Translation of dplyr employed by duckplyr, and current limitations
 

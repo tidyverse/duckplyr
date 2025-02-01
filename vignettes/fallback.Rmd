@@ -1,0 +1,148 @@
+---
+title: "Fallback to dplyr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{15 Fallback}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+clean_output <- function(x, options) {
+  x <- gsub("0x[0-9a-f]+", "0xdeadbeef", x)
+  x <- gsub("dataframe_[0-9]*_[0-9]*", "      dataframe_42_42      ", x)
+  x <- gsub("[0-9]*\\.___row_number ASC", "42.___row_number ASC", x)
+  x <- gsub("─", "-", x)
+  x
+}
+
+local({
+  hook_source <- knitr::knit_hooks$get("document")
+  knitr::knit_hooks$set(document = clean_output)
+})
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  eval = identical(Sys.getenv("IN_PKGDOWN"), "true") || (getRversion() >= "4.1" && rlang::is_installed(c("conflicted", "dbplyr", "nycflights13"))),
+  comment = "#>"
+)
+
+options(conflicts.policy = list(warn = FALSE))
+
+Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
+```
+
+This article details the fallback mechanism in duckplyr, which allows support for all dplyr verbs and R functions.
+
+
+```{r attach}
+library(conflicted)
+library(dplyr)
+conflict_prefer("filter", "dplyr")
+```
+
+
+## Introduction
+
+The duckplyr package aims at providing a fully compatible drop-in replacement for dplyr.
+To achieve this, only a carefully selected subset of dplyr's operations, R functions, and R data types are implemented.
+Whenever a request cannot be handled by DuckDB, duckplyr falls back to dplyr.
+
+## DuckDB operation
+
+The following operation is supported by duckplyr:
+
+```{r}
+duckdb <-
+  duckplyr::duckdb_tibble(a = 1:3) %>%
+  arrange(desc(a)) %>%
+  mutate(b = a + 1) %>%
+  select(-a)
+```
+
+The `explain()` function shows what happens under the hood:
+
+```{r}
+duckdb %>%
+  explain()
+```
+
+The plan shows three operations: a data frame scan (the input), a sort operation, and a projection (adding the `b` column and removing the `a` column).
+Because each operation is supported by DuckDB, the resulting object contains a plan for the entire pipeline.
+The plan is only executed when the data is needed.
+
+## Relation objects
+
+DuckDB accepts a tree of interconnected _relation objects_ as input.
+Each relation object represents a logical step of the execution plan.
+The duckplyr package translates dplyr verbs into relation objects.
+
+The `last_rel()` function shows the last relation that has been materialized:
+
+```{r}
+duckplyr::last_rel()
+```
+
+It is NULL because nothing has been computed yet.
+Converting the object to a data frame triggers the computation:
+
+```{r}
+duckdb %>% collect()
+duckplyr::last_rel()
+```
+
+The `last_rel()` function now shows a relation that describes logical plan for executing the whole pipeline.
+
+## Functionality not supported by DuckDB
+
+Using a custom function with a side effect is not supported by DuckDB and triggers a dplyr fallback:
+
+```{r}
+verbose_plus_one <- function(x) {
+  message("Adding one to ", paste(x, collapse = ", "))
+  x + 1
+}
+
+fallback <-
+  duckplyr::duckdb_tibble(a = 1:3) %>%
+  arrange(desc(a)) %>%
+  mutate(b = verbose_plus_one(a)) %>%
+  select(-a)
+```
+
+The `verbose_plus_one()` function is not supported by DuckDB, so the `mutate()` step is handled by dplyr and already executed when the pipeline is defined.
+This is confirmed by the `last_rel()` function:
+
+```{r}
+duckplyr::last_rel()
+```
+
+Only the `arrange()` step is executed by DuckDB.
+Because the dplyr implementation of `mutate()` needs the data before it can proceed, the data is first converted to a data frame, and this triggers the materialization of the first step.
+
+The `explain()` function also confirms indirectly that at least a part of the operation is handled by dplyr:
+
+```{r}
+fallback %>%
+  explain()
+```
+
+The final plan now consists of two operations: a data frame scan, and a projection (removing the `a` column).
+The data frame scan is the result of the `mutate()` step, which at this stage already has been executed by dplyr.
+
+Converting the final object to a data frame triggers the rest of the computation:
+
+```{r}
+fallback %>% collect()
+duckplyr::last_rel()
+```
+
+The `last_rel()` function confirms that only the final `select()` is handled by DuckDB again.
+
+## Conclusion
+
+The fallback mechanism in duckplyr allows for a seamless integration of dplyr verbs and R functions that are not supported by DuckDB.
+It is transparent to the user and only triggers when necessary.
+With small or medium-sized data sets, it will not even be noticeable in most settings.
+
+See `vignette("large")` for techniques for working with large data, `vignette("limits")` for the currently implementated translations, `vignette("prudence")` for details on controlling fallback behavior, and `vignette("telemetry")` for the automatic reporting of fallback situations.
