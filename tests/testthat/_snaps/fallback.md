@@ -57,7 +57,7 @@
       duckdb_tibble(a = 1, b = 2, c = 3) %>% summarize(.by = a, e = sum(b), f = sum(e))
     Message
       i dplyr fallback recorded
-        {"version":"0.3.1","message":"Can't reuse summary variable `...4`.","name":"summarise","x":{"...1":"numeric","...2":"numeric","...3":"numeric"},"args":{"dots":{"...4":"sum(...2)","...5":"sum(...4)"},"by":["...1"]}}
+        {"version":"0.3.1","message":"object 'b' not found","name":"summarise","x":{"...1":"numeric","...2":"numeric","...3":"numeric"},"args":{"dots":{"...4":"sum(...2)","...5":"sum(...4)"},"by":["...1"]}}
     Output
       # A duckplyr data frame: 3 variables
             a     e     f
