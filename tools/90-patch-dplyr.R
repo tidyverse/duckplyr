@@ -28,7 +28,7 @@ forbidden <- fs::path("R", c(
   "zzz-methods.R",
   "duckplyr-package.R",
   "fallback.R",
-  "funnel.R",
+  "prudence.R",
   "head.R",
   "meta.R",
   "n-col.R",

@@ -344,7 +344,7 @@ locally is possible as well.
 - [`vignette("large")`](https://duckplyr.tidyverse.org/dev/articles/large.html):
   Tools for working with large data
 
-- [`vignette("funnel")`](https://duckplyr.tidyverse.org/dev/articles/funnel.html):
+- [`vignette("prudence")`](https://duckplyr.tidyverse.org/dev/articles/prudence.html):
   How duckplyr can help protect memory when working with large data
 
 - [`vignette("limits")`](https://duckplyr.tidyverse.org/dev/articles/limits.html):
