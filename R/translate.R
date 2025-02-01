@@ -277,9 +277,13 @@ rel_translate_lang <- function(
 
   known_window <- c(
     # Window functions
-    "rank", "dense_rank", "percent_rank",
-    "row_number", "first", "last", "nth",
-    "cume_dist", "lead", "lag", "ntile",
+    "row_number",
+    # Not yet implemented
+    "ntile",
+    "first", "last", "nth",
+    # Difficult to implement
+    "rank", "dense_rank", "percent_rank", "cume_dist",
+    "lead", "lag",
 
     # Aggregates
     "sum", "mean", "sd", "min", "max", "median",
