@@ -93,14 +93,14 @@ flights_df()
 #> #   air_time <dbl>, distance <dbl>, hour <dbl>, minute <dbl>, time_hour <dttm>
 
 out <-
-  flights_df() %>%
-  filter(!is.na(arr_delay), !is.na(dep_delay)) %>%
-  mutate(inflight_delay = arr_delay - dep_delay) %>%
+  flights_df() |>
+  filter(!is.na(arr_delay), !is.na(dep_delay)) |>
+  mutate(inflight_delay = arr_delay - dep_delay) |>
   summarize(
     .by = c(year, month),
     mean_inflight_delay = mean(inflight_delay),
     median_inflight_delay = median(inflight_delay),
-  ) %>%
+  ) |>
   filter(month <= 6)
 ```
 
@@ -133,6 +133,23 @@ out
 #> 4  2013     5               -9.37                   -10
 #> 5  2013     3               -7.36                    -9
 #> 6  2013     6               -4.24                    -7
+```
+
+If a computation is not supported by DuckDB, duckplyr will automatically
+fall back to dplyr.
+
+``` r
+flights_df() |>
+  summarise(
+    .by = origin,
+    dest = paste(sort(dest), collapse = " ")
+  )
+#> # A tibble: 3 × 2
+#>   origin dest                                                                   
+#>   <chr>  <chr>                                                                  
+#> 1 EWR    ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB AL…
+#> 2 LGA    ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL AT…
+#> 3 JFK    ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ AB…
 ```
 
 Restart R, or call `duckplyr::methods_restore()` to revert to the
@@ -320,19 +337,19 @@ out |>
 #> # A duckplyr data frame: 4 variables
 #>     Year Month MeanInFlightDelay MedianInFlightDelay
 #>    <dbl> <dbl>             <dbl>               <dbl>
-#>  1  2022    11             -5.21                  -7
-#>  2  2023    11             -7.10                  -8
-#>  3  2022     7             -5.13                  -7
-#>  4  2022     8             -5.27                  -7
-#>  5  2023     4             -4.54                  -6
-#>  6  2022     1             -6.88                  -8
-#>  7  2023    12             -7.71                  -8
-#>  8  2023     3             -4.06                  -6
-#>  9  2023     6             -4.35                  -6
+#>  1  2022     9             -6.00                  -7
+#>  2  2022     5             -5.11                  -6
+#>  3  2023     5             -6.17                  -7
+#>  4  2023     9             -5.37                  -7
+#>  5  2022     1             -6.88                  -8
+#>  6  2023     4             -4.54                  -6
+#>  7  2022     4             -4.88                  -6
+#>  8  2023     1             -5.06                  -7
+#>  9  2022    10             -5.99                  -7
 #> 10  2022     2             -6.52                  -8
 #> # ℹ more rows
 #>    user  system elapsed 
-#>   1.502   0.463   9.568
+#>   0.955   0.377   8.586
 ```
 
 Over 10M rows analyzed in about 10 seconds over the internet, that’s not
