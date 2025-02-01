@@ -13,6 +13,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
+options(conflicts.policy = list(warn = FALSE))
 ```
 
 ```{r setup}
