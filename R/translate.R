@@ -80,6 +80,7 @@ rel_find_call <- function(fun, env, call = caller_env()) {
     "if_else" = "dplyr",
     #
     "any" = "base",
+    "all" = "base",
     "suppressWarnings" = "base",
     "lag" = "dplyr",
     "lead" = "dplyr",
@@ -185,9 +186,9 @@ rel_translate_lang <- function(
   }
 
 
-  if (!(name %in% c("wday", "strftime", "lag", "lead"))) {
+  if (!(name %in% c("wday", "strftime", "lag", "lead", "sum", "min", "max", "any", "all", "mean", "median", "sd"))) {
     if (!is.null(names(expr)) && any(names(expr) != "")) {
-      # Fix grepl() logic below when allowing matching by argument name
+      # Fix grepl() and sum()/min()/max() logic below when allowing matching by argument name
       cli::cli_abort("Can't translate named argument {.code {name}({names(expr)[names(expr) != ''][[1]]} = )}.", call = call)
     }
   }
@@ -202,7 +203,7 @@ rel_translate_lang <- function(
         cli::cli_abort("Don't know how to translate {.code {pkg}::{name}}.", call = call)
       }
       def <- lubridate::wday
-      call <- match.call(def, expr, envir = env)
+      call <- call_match(expr, def, dots_env = env)
       args <- as.list(call[-1])
       bad <- !(names(args) %in% c("x"))
       if (any(bad)) {
@@ -214,7 +215,7 @@ rel_translate_lang <- function(
     },
     "strftime" = {
       def <- strftime
-      call <- match.call(def, expr, envir = env)
+      call <- call_match(expr, def, dots_env = env)
       args <- as.list(call[-1])
       bad <- !(names(args) %in% c("x", "format"))
       if (any(bad)) {
@@ -282,6 +283,7 @@ rel_translate_lang <- function(
     ">=" = "r_base::>=",
     "==" = "r_base::==",
     "!=" = "r_base::!=",
+
     NULL
   )
 
@@ -292,7 +294,7 @@ rel_translate_lang <- function(
     "cume_dist", "lead", "lag", "ntile",
 
     # Aggregates
-    "sum", "mean", "sd", "min", "max", "median",
+    "sum", "min", "max", "any", "all", "mean", "sd", "median",
     #
     NULL
   )
@@ -300,19 +302,20 @@ rel_translate_lang <- function(
   window <- need_window && (name %in% known_window)
 
   if (name %in% names(aliases)) {
-    name <- aliases[[name]]
-    if (grepl("^r_base::", name)) {
+    aliased_name <- aliases[[name]]
+    if (grepl("^r_base::", aliased_name)) {
       meta_ext_register()
     }
+  } else {
+    aliased_name <- name
   }
-  # name <- aliases[name] %|% name
 
   order_bys <- list()
   offset_expr <- NULL
   default_expr <- NULL
   if (name %in% c("lag", "lead")) {
     # x, n = 1L, default = NULL, order_by = NULL
-    expr <- match.call(lag, expr)
+    expr <- call_match(expr, lag, dots_env = env)
 
     offset_expr <- relexpr_constant(expr$n %||% 1L)
     expr$n <- NULL
@@ -328,15 +331,68 @@ rel_translate_lang <- function(
     }
   }
 
+  # Other primitives: prod, range
+  # Other aggregates: var(), cum*(), quantile()
+  if (name %in% c("sum", "min", "max", "any", "all", "mean", "sd", "median")) {
+    is_primitive <- (name %in% c("sum", "min", "max", "any", "all"))
+
+    if (is_primitive) {
+      def <- function(..., na.rm = FALSE) {}
+      good_names <- c("", "na.rm")
+      unnamed_args <- 1
+    } else {
+      def <- function(x, ..., na.rm = FALSE) {}
+      good_names <- c("x", "na.rm")
+      unnamed_args <- 0
+    }
+
+    expr <- call_match(expr, def, dots_env = env)
+    args <- as.list(expr[-1])
+    bad <- !(names(args) %in% good_names)
+    if (sum(names2(args) == "") != unnamed_args) {
+      cli::cli_abort("{.fun {name}} needs exactly one argument besides the optional {.arg na.rm}", call = call)
+    }
+    if (any(bad)) {
+      cli::cli_abort("{.code {name}({names(args)[which(bad)[[1]]]} = )} not supported", call = call)
+    }
+
+    na_rm <- FALSE
+    if (length(args) > 1) {
+      na_rm <- eval(args[[2]], env)
+    }
+
+    if (window) {
+      if (identical(na_rm, FALSE)) {
+        cli::cli_abort(call = call, c(
+          "{.code {name}(na.rm = FALSE)} not supported in window functions",
+          i = "Use {.code {name}(na.rm = TRUE)} after checking for missing values"
+        ))
+      } else if (!identical(na_rm, TRUE)) {
+        cli::cli_abort("Invalid value for {.arg na.rm} in call to {.fun {name}}", call = call)
+      }
+    } else {
+      if (identical(na_rm, FALSE)) {
+        aliased_name <- paste0("___", aliased_name, "_na") # ___sum_na, ___min_na, ___max_na
+      } else if (!identical(na_rm, TRUE)) {
+        cli::cli_abort("Invalid value for {.arg na.rm} in call to {.fun {name}}", call = call)
+      } else if (name %in% c("sum", "any", "all")) {
+        # Edge case: sum(integer()) is 0, not NA
+        aliased_name <- paste0("___", name)
+      }
+    }
+
+    expr <- expr[1:2]
+  }
+
   args <- map(as.list(expr[-1]), do_translate, in_window = in_window || window)
 
   if (name == "grepl") {
     if (!inherits(args[[1]], "relational_relexpr_constant")) {
-      cli::cli_abort("Only constant patterns are supported in {.code grepl()}", call = call)
+      cli::cli_abort("Only constant patterns are supported in {.fun grepl}", call = call)
     }
   }
 
-  fun <- relexpr_function(name, args)
+  fun <- relexpr_function(aliased_name, args)
   if (window) {
     partitions <- map(partition, relexpr_reference)
     fun <- relexpr_window(
