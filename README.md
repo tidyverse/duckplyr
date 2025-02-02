@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![R-CMD-check](https://github.com/tidyverse/duckplyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidyverse/duckplyr/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/tidyverse/duckplyr/graph/badge.svg)](https://app.codecov.io/gh/tidyverse/duckplyr)
@@ -68,7 +68,7 @@ The following code aggregates the inflight delay by year and month for
 the first half of the year. We use a variant of the
 `nycflights13::flights` dataset, where the timezone has been set to UTC
 to work around a current limitation of duckplyr, see
-[`vignette("limits.html")`](https://duckplyr.tidyverse.org/dev/articles/limits.html.html).
+[`vignette("limits")`](https://duckplyr.tidyverse.org/dev/articles/limits.html).
 
 ``` r
 flights_df()
