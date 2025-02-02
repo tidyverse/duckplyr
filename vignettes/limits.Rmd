@@ -37,6 +37,7 @@ If a translation is not provided, duckplyr falls back to dplyr, see `vignette("f
 library(conflicted)
 library(dplyr)
 conflict_prefer("filter", "dplyr")
+conflict_prefer("lag", "dplyr")
 ```
 
 ## Data types
