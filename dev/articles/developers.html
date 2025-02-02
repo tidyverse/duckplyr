@@ -89,31 +89,40 @@ individual data frames or for other packages.</p>
 <span><span class="co">#&gt; <span style="color: #555555;">[conflicted]</span> Will prefer <span style="color: #0000BB; font-weight: bold;">dplyr</span>::filter over</span></span>
 <span><span class="co">#&gt; any other package.</span></span></code></pre></div>
 <div class="section level2">
-<h2 id="external-data-frame">External data frame<a class="anchor" aria-label="anchor" href="#external-data-frame"></a>
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>To enable duckplyr for individual data frames instead of
-session-wide,</p>
-<ul>
-<li>do <em>not</em> load duckplyr with <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code>.</li>
-<li>use <code><a href="../reference/duckdb_tibble.html">duckplyr::as_duckdb_tibble()</a></code> as the first step in
-your pipe, without attaching the package.</li>
-</ul>
+<p>The default behavior of duckplyr is to enable itself for all data
+frames in the session. This happens when the package is attached with
+<code><a href="https://duckplyr.tidyverse.org">library(duckplyr)</a></code>, or by calling
+<code><a href="../reference/methods_overwrite.html">methods_overwrite()</a></code>. To enable duckplyr for individual data
+frames instead of session-wide, it is sufficient to prefix all calls to
+duckplyr functions with <code>duckplyr::</code> and not attach the
+package. Alternatively, <code><a href="../reference/methods_overwrite.html">methods_restore()</a></code> can be called to
+undo the session-wide overwrite after
+<code><a href="https://duckplyr.tidyverse.org">library(duckplyr)</a></code>.</p>
+</div>
+<div class="section level2">
+<h2 id="external-data-with-explicit-qualification">External data with explicit qualification<a class="anchor" aria-label="anchor" href="#external-data-with-explicit-qualification"></a>
+</h2>
+<p>The following example uses <code><a href="../reference/duckdb_tibble.html">duckplyr::as_duckdb_tibble()</a></code>
+to convert a data frame to a duckplyr frame and to enable duckplyr
+operation.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lazy</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/flights_df.html">flights_df</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">arr_delay</span><span class="op">)</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">dep_delay</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>inflight_delay <span class="op">=</span> <span class="va">arr_delay</span> <span class="op">-</span> <span class="va">dep_delay</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span></span>
 <span>    .by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span><span class="op">)</span>,</span>
-<span>    mean_inflight_delay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">inflight_delay</span><span class="op">)</span>,</span>
-<span>    median_inflight_delay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">inflight_delay</span><span class="op">)</span>,</span>
+<span>    mean_inflight_delay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">inflight_delay</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    median_inflight_delay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">inflight_delay</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">month</span> <span class="op">&lt;=</span> <span class="fl">6</span><span class="op">)</span></span></code></pre></div>
 <p>The result is a tibble, with its own class.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">lazy</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "duckplyr_df" "tbl_df"      "tbl"         "data.frame"</span></span>
+<span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">lazy</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "year"                  "month"                </span></span>
 <span><span class="co">#&gt; [3] "mean_inflight_delay"   "median_inflight_delay"</span></span></code></pre></div>
@@ -124,16 +133,6 @@ the raw data.</p>
 <code class="sourceCode R"><span><span class="va">lazy</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ┌---------------------------┐</span></span>
-<span><span class="co">#&gt; │         PROJECTION        │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │            year           │</span></span>
-<span><span class="co">#&gt; │           month           │</span></span>
-<span><span class="co">#&gt; │    mean_inflight_delay    │</span></span>
-<span><span class="co">#&gt; │   median_inflight_delay   │</span></span>
-<span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │        ~33677 Rows        │</span></span>
-<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
-<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │       HASH_GROUP_BY       │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │          Groups:          │</span></span>
@@ -141,9 +140,8 @@ the raw data.</p>
 <span><span class="co">#&gt; │             #1            │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │        Aggregates:        │</span></span>
-<span><span class="co">#&gt; │    sum_no_overflow(#2)    │</span></span>
-<span><span class="co">#&gt; │          avg(#3)          │</span></span>
-<span><span class="co">#&gt; │     quantile_cont(#4)     │</span></span>
+<span><span class="co">#&gt; │          mean(#2)         │</span></span>
+<span><span class="co">#&gt; │         median(#3)        │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │        ~33677 Rows        │</span></span>
 <span><span class="co">#&gt; └-------------┬-------------┘</span></span>
@@ -152,9 +150,6 @@ the raw data.</p>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │            year           │</span></span>
 <span><span class="co">#&gt; │           month           │</span></span>
-<span><span class="co">#&gt; │        CASE  WHEN (       │</span></span>
-<span><span class="co">#&gt; │ (inflight_delay IS NULL)) │</span></span>
-<span><span class="co">#&gt; │     THEN (1) ELSE 0 END   │</span></span>
 <span><span class="co">#&gt; │       inflight_delay      │</span></span>
 <span><span class="co">#&gt; │       inflight_delay      │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
@@ -172,10 +167,8 @@ the raw data.</p>
 <span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │           FILTER          │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │ ((CAST(month AS DOUBLE) &lt;=│</span></span>
-<span><span class="co">#&gt; │  6.0) AND (NOT (arr_delay │</span></span>
-<span><span class="co">#&gt; │     IS NULL)) AND (NOT    │</span></span>
-<span><span class="co">#&gt; │   (dep_delay IS NULL)))   │</span></span>
+<span><span class="co">#&gt; │ (CAST(month AS DOUBLE) &lt;= │</span></span>
+<span><span class="co">#&gt; │            6.0)           │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │        ~67355 Rows        │</span></span>
 <span><span class="co">#&gt; └-------------┬-------------┘</span></span>
@@ -196,7 +189,7 @@ the raw data.</p>
 first request.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lazy</span><span class="op">$</span><span class="va">mean_inflight_delay</span></span>
-<span><span class="co">#&gt; [1] -7.356713 -2.673124 -4.244284 -3.855519 -5.147220 -9.370201</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] -3.855519 -5.147220 -9.370201 -7.356713 -2.673124 -4.244284</span></span></code></pre></div>
 <p>After the computation has been carried out, the results are preserved
 and available immediately:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -204,38 +197,51 @@ and available immediately:</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 4 variables</span></span></span>
 <span><span class="co">#&gt;    year month mean_inflight_delay median_inflight_delay</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>  <span style="text-decoration: underline;">2</span>013     3               -<span style="color: #BB0000;">7.36</span>                    -<span style="color: #BB0000;">9</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>  <span style="text-decoration: underline;">2</span>013     4               -<span style="color: #BB0000;">2.67</span>                    -<span style="color: #BB0000;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>  <span style="text-decoration: underline;">2</span>013     6               -<span style="color: #BB0000;">4.24</span>                    -<span style="color: #BB0000;">7</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>  <span style="text-decoration: underline;">2</span>013     1               -<span style="color: #BB0000;">3.86</span>                    -<span style="color: #BB0000;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>  <span style="text-decoration: underline;">2</span>013     2               -<span style="color: #BB0000;">5.15</span>                    -<span style="color: #BB0000;">6</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>  <span style="text-decoration: underline;">2</span>013     5               -<span style="color: #BB0000;">9.37</span>                   -<span style="color: #BB0000;">10</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>  <span style="text-decoration: underline;">2</span>013     1               -<span style="color: #BB0000;">3.86</span>                    -<span style="color: #BB0000;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>  <span style="text-decoration: underline;">2</span>013     2               -<span style="color: #BB0000;">5.15</span>                    -<span style="color: #BB0000;">6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>  <span style="text-decoration: underline;">2</span>013     5               -<span style="color: #BB0000;">9.37</span>                   -<span style="color: #BB0000;">10</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>  <span style="text-decoration: underline;">2</span>013     3               -<span style="color: #BB0000;">7.36</span>                    -<span style="color: #BB0000;">9</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>  <span style="text-decoration: underline;">2</span>013     4               -<span style="color: #BB0000;">2.67</span>                    -<span style="color: #BB0000;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>  <span style="text-decoration: underline;">2</span>013     6               -<span style="color: #BB0000;">4.24</span>                    -<span style="color: #BB0000;">7</span></span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="restoring-dplyr-methods">Restoring dplyr methods<a class="anchor" aria-label="anchor" href="#restoring-dplyr-methods"></a>
+</h2>
+<p>The same can be achieved by calling <code><a href="../reference/methods_overwrite.html">methods_restore()</a></code>
+after <code><a href="https://duckplyr.tidyverse.org">library(duckplyr)</a></code>.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://duckplyr.tidyverse.org">duckplyr</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Overwriting <span style="color: #0000BB;">dplyr</span> methods with <span style="color: #0000BB;">duckplyr</span> methods.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Turn off with `duckplyr::methods_restore()`.</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/methods_overwrite.html">methods_restore</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Restoring <span style="color: #0000BB;">dplyr</span> methods.</span></span></code></pre></div>
+<p>If the input is a plain data frame, duckplyr is not involved.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">lazy_atteched</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/flights_df.html">flights_df</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>inflight_delay <span class="op">=</span> <span class="va">arr_delay</span> <span class="op">-</span> <span class="va">dep_delay</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in UseMethod("explain"): no applicable method for 'explain' applied to an object of class "c('tbl_df', 'tbl', 'data.frame')"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="own-data">Own data<a class="anchor" aria-label="anchor" href="#own-data"></a>
 </h2>
 <p>Construct duckplyr frames directly with
-<code><a href="../reference/duckdb_tibble.html">duckplyr::duckdb_tibble()</a></code>:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span></span>
-<span>  x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,</span>
+<code><a href="../reference/duckdb_tibble.html">duckdb_tibble()</a></code>:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,</span>
 <span>  y <span class="op">=</span> <span class="fl">5</span>,</span>
-<span>  z <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
+<span>  z <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">data</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 3 variables</span></span></span>
-<span><span class="co">#&gt;        x     y z    </span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     1     5 a    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>     2     5 b    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>     3     5 c    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>     4     5 d    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>     5     5 e    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>     6     5 f    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>     7     5 g    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     8     5 h    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     9     5 i    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>    10     5 j</span></span></code></pre></div>
+<span><span class="co">#&gt;       x     y z    </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1     5 a    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     2     5 b    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3     5 c</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="in-other-packages">In other packages<a class="anchor" aria-label="anchor" href="#in-other-packages"></a>
@@ -267,37 +273,10 @@ achieve this with the usethis package.</p>
 </ul>
 </li>
 </ul>
-<p>Learn more about usethis at <a href="https://usethis.r-lib.org/" class="external-link uri">https://usethis.r-lib.org/</a>.</p>
-</div>
-<div class="section level2">
-<h2 id="prudence">Prudence<a class="anchor" aria-label="anchor" href="#prudence"></a>
-</h2>
-<p>The default mode for <code><a href="../reference/duckdb_tibble.html">as_duckdb_tibble()</a></code> and
-<code><a href="../reference/duckdb_tibble.html">duckdb_tibble()</a></code> is <code>prudence = "lavish"</code>. This
-means that the dplyr operations are carried out by DuckDB when possible,
-and also available as data frames upon first request. Use
-<code>as_duckdb_tibble(prudence = "frugal")</code> or
-<code>duckdb_tibble(.prudence = "frugal")</code> to avoid materializing
-intermediate data and to ensure that all operations are carried out by
-DuckDB or fail. Prudence can also limit the number of rows or cells that
-are materialized:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, .prudence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>rows <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">data</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 1 variable</span></span></span>
-<span><span class="co">#&gt;       x</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>     5</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: Materialization would result in 4 rows, which exceeds the limit of 3. Use collect() or as_tibble() to materialize.</span></span></code></pre></div>
 <p>Learn more about prudence in <code><a href="../articles/prudence.html">vignette("prudence")</a></code>, about
 fallbacks to dplyr in <code><a href="../articles/fallback.html">vignette("fallback")</a></code>, and about the
-translation employed by duckplyr in <code><a href="../articles/limits.html">vignette("limits")</a></code>.</p>
+translation employed by duckplyr in <code><a href="../articles/limits.html">vignette("limits")</a></code>, and
+about the usethis package at <a href="https://usethis.r-lib.org/" class="external-link uri">https://usethis.r-lib.org/</a>.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

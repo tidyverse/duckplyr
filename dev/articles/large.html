@@ -134,8 +134,8 @@ the dplyr and dbplyr packages, and are described in the following
 sections.</p>
 <p>See <code><a href="../articles/prudence.html">vignette("prudence")</a></code> on eager and lazy data,
 <code><a href="../articles/limits.html">vignette("limits")</a></code> for limitations in the translation
-employed by duckplyr, and <code><a href="../reference/fallback.html">?fallback</a></code> for more information on
-fallback.</p>
+employed by duckplyr, and <code><a href="../articles/fallback.html">vignette("fallback")</a></code> for more
+information on fallback.</p>
 </div>
 <div class="section level2">
 <h2 id="to-duckplyr">To duckplyr<a class="anchor" aria-label="anchor" href="#to-duckplyr"></a>
@@ -143,16 +143,14 @@ fallback.</p>
 <p>The <code><a href="../reference/duckdb_tibble.html">duckdb_tibble()</a></code> function creates a duckplyr data
 frame from vectors:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, y <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, y <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">df</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 2 variables</span></span></span>
 <span><span class="co">#&gt;       x y    </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1 a    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     2 b    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3 c    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     4 d    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>     5 e</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3 c</span></span></code></pre></div>
 <p>The <code><a href="../reference/duckdb_tibble.html">duckdb_tibble()</a></code> function is a drop-in replacement
 for <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble()</a></code>, and can be used in the same way.</p>
 <p>Similarly, <code><a href="../reference/duckdb_tibble.html">as_duckdb_tibble()</a></code> can be used to convert a
@@ -184,19 +182,18 @@ to a table:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path_duckdb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".duckdb"</span><span class="op">)</span></span>
 <span><span class="va">con</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html" class="external-link">dbConnect</a></span><span class="op">(</span><span class="fu">duckdb</span><span class="fu">::</span><span class="fu"><a href="https://r.duckdb.org/reference/duckdb.html" class="external-link">duckdb</a></span><span class="op">(</span><span class="va">path_duckdb</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbWriteTable.html" class="external-link">dbWriteTable</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"data"</span>, <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, y <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbWriteTable.html" class="external-link">dbWriteTable</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"data"</span>, <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, y <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">dbplyr_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"data"</span><span class="op">)</span></span>
 <span><span class="va">dbplyr_data</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># Source:   table&lt;"data"&gt; [?? x 2]</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB v1.1.3 [unknown@Linux 6.8.0-1020-azure:R 4.4.2//tmp/RtmpYbaWg3/file43df389fef0f.duckdb]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB v1.1.3 [unknown@Linux 6.8.0-1020-azure:R 4.4.2//tmp/Rtmp9pstTg/file437d37816887.duckdb]</span></span></span>
 <span><span class="co">#&gt;       x y    </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1 a    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     2 b    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3 c    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     4 d    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>     5 e</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3 c</span></span>
+<span></span>
 <span><span class="va">dbplyr_data</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; &lt;SQL&gt;</span></span>
@@ -214,7 +211,7 @@ to a table:</p>
 <span><span class="co">#&gt; │             x             │</span></span>
 <span><span class="co">#&gt; │             y             │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │          ~5 Rows          │</span></span>
+<span><span class="co">#&gt; │          ~3 Rows          │</span></span>
 <span><span class="co">#&gt; └---------------------------┘</span></span></code></pre></div>
 <p>The <code><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain()</a></code> output shows that the data is actually
 coming from a DuckDB table. The <code><a href="../reference/duckdb_tibble.html">as_duckdb_tibble()</a></code> function
@@ -227,9 +224,8 @@ can then be used to seamlessly convert the data to a duckplyr frame:</p>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1 a    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     2 b    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3 c    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     4 d    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>     5 e</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3 c</span></span>
+<span></span>
 <span><span class="va">dbplyr_data</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -242,7 +238,7 @@ can then be used to seamlessly convert the data to a duckplyr frame:</p>
 <span><span class="co">#&gt; │             x             │</span></span>
 <span><span class="co">#&gt; │             y             │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │          ~5 Rows          │</span></span>
+<span><span class="co">#&gt; │          ~3 Rows          │</span></span>
 <span><span class="co">#&gt; └---------------------------┘</span></span></code></pre></div>
 <p>This only works for DuckDB connections. For other databases, turn the
 data into an R data frame or export it to a file before using
@@ -375,9 +371,7 @@ return a duckplyr frame:</p>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1 a    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     2 b    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3 c    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     4 d    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>     5 e</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3 c</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="materialization">Materialization<a class="anchor" aria-label="anchor" href="#materialization"></a>
@@ -460,6 +454,7 @@ a CSV file:</p>
 <span><span class="co">#&gt;       a     b</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1     2</span></span>
+<span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">path_csv_out</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; a,b</span></span>
 <span><span class="co">#&gt; 1.0,2.0</span></span></code></pre></div>
@@ -502,7 +497,9 @@ pragma:</p>
 <span><span class="co">#&gt;   memlimit</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 12.4 GiB</span></span>
+<span></span>
 <span><span class="fu"><a href="../reference/db_exec.html">db_exec</a></span><span class="op">(</span><span class="st">"PRAGMA memory_limit = '1GB'"</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu"><a href="../reference/read_sql_duckdb.html">read_sql_duckdb</a></span><span class="op">(</span><span class="st">"SELECT current_setting('memory_limit') AS memlimit"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 1 variable</span></span></span>
 <span><span class="co">#&gt;   memlimit </span></span>
@@ -541,8 +538,8 @@ write it to a file using <code><a href="../reference/compute_file.html">compute_
 not supported or uses a function that is not supported, the data will be
 read into memory before being processed further. By default, if the data
 pipeline starts with an ingestion function, the data will only be read
-into memory if it is not “too large” (currently defined as 1 million
-cells or values in the table):</p>
+into memory if it is less than 1 million cells or values in the
+table:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">flights_parquet</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Month</span><span class="op">)</span></span>
@@ -578,7 +575,8 @@ this works transparently.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>     1         10 <span style="text-decoration: underline;">16</span>795</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 172 more rows</span></span></span></code></pre></div>
 <p>See <code><a href="../articles/prudence.html">vignette("prudence")</a></code> for the concepts and mechanisms
-at play.</p>
+at play, and <code><a href="../articles/fallback.html">vignette("fallback")</a></code> for a detailed
+explanation of the fallback mechanism.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
