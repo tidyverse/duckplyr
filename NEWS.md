@@ -1,82 +1,6 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# duckplyr 0.99.99.9929 (2025-02-02)
-
-## Features
-
-- Remove support for edge case in `sum()`, `any()` and `all()` for performance (#573).
-
-## Chore
-
-- Giving up.
-
-- Clean cache.
-
-## Documentation
-
-- Final tweaks.
-
-- Try fork.
-
-- Fix width for articles.
-
-- Ideal width for Firefox.
-
-- Review prudence vignette (#577).
-
-- Review large vignette (#576).
-
-- Dev vignette (#574).
-
-- Review limits vignette (#582).
-
-- Review fallback vignette (#575).
-
-- Stable.
-
-- Final tweaks.
-
-- Change wording for fallback in method help pages (#535).
-
-- Add footnote on prudence.
-
-- Add one-paragraph intro (#549).
-
-## Testing
-
-- Snapshot updates (@1741643+krlmlr).
-
-
-# duckplyr 0.99.99.9928 (2025-02-02)
-
-## Features
-
-- Only translate what's actually supported (#569).
-
-- Implement `na.rm` handling for `sum()`, `min()`, `max()`, `any()` and `all()`, with fallback for window functions (#205, #566).
-
-- Create database in a subdirectory of `tempdir()` by default (#561).
-
-## Documentation
-
-- Consistency.
-
-- Document `prudence` argument (#568).
-
-- New `vignette("fallback")` (#563).
-
-- Mention fallback in README (#562).
-
-- Show error source for translation errors (#512, #560).
-
-- Wrap up documentation on prudence (#497, #559).
-
-## Testing
-
-- Ensure TPC-H tests are run by DuckDB (#555).
-
-
-# duckplyr 0.99.99.9927 (2025-02-01)
+# duckplyr 1.0.0 (2025-02-02)
 
 ## Bug fixes
 
@@ -84,599 +8,19 @@
 
 - Correct criterion for inclusion of `meta.R` (#539).
 
-## Features
-
-- Handle `dplyr::desc()` (#550).
-
-- Prudence as concept and as argument (#511, #547).
-
-- Implement argument matching for `funnel` (#546).
-
-- New `funnel = "drip"` (#541).
-
-- `duckdb_tibble()`, `as_duckdb_tibble()` and `collect()` use `new_duckdb_tibble()` (#540).
-
-- `duckdb_tibble()` checks if columns can be represented in DuckDB (#537).
-
-## Chore
-
-- Sync (#556).
-
-- Move code.
-
-- Add prefix to dplyr generated helper files, and skip if env var is set (#538).
-
-## Documentation
-
-- Small README tweaks (#543).
-
-- Document limiting memory usage (#472, #548).
-
-- Tweak funneling (#545).
-
-## Testing
-
-- Snapshot updates (@1741643+krlmlr).
-
-
-# duckplyr 0.99.99.9926 (2025-01-31)
-
-## Features
-
-- Add `funnel` arg to `rel_to_df.duckdb_relation()` (#534).
-
-## Chore
-
-- Reorganize code (#533).
-
-## Documentation
-
-- Remove funneling section in docs (#532).
-
-
-# duckplyr 0.99.99.9925 (2025-01-30)
-
-## Chore
-
-- Use magrittr pipe in tests.
-
-## Documentation
-
-- Change `funnel` values to `"open"` and `"closed"` instead of a logical value (#526).
-
-- Fix erroneous argument (@TimTaylor, #524).
-
-- Review (#516).
-
-
-# duckplyr 0.99.99.9924 (2025-01-29)
-
-## Chore
-
-- Remove space at EOL in limits (#521).
-
-- Remove space at EOL in large (#520).
-
-## Continuous integration
-
-- Avoid autoupload.
-
-## Documentation
-
-- Remove use of word bottleneck (#517, #519).
-
-- Document `.funnel`/`funnel` argument (#513).
-
-## Refactoring
-
-- Rename lazy.R to funnel.R (#509).
-
-
-# duckplyr 0.99.99.9923 (2025-01-28)
-
-## Features
-
-- Move content from README to vignettes (#207, #504).
-
-
-# duckplyr 0.99.99.9922 (2025-01-27)
-
-## Bug fixes
-
 - `as_duckdb_tibble()` for dbplyr `tbl` objects avoids materialization (#502).
 
 - Avoid forwarding `is.na()` to `is.nan()` to support non-numeric data, avoid checking roundtrip for timestamp data (#482).
 
 - Funneled data frames inherit limitation of rows and cells after an operation (#501).
 
-## Chore
-
-- Clean up `DESCRIPTION`.
-
-- The meta functionality is now enabled only if the `DUCKPLYR_META_ENABLE` environment variable is set to `TRUE` (#499).
-
-- Sync.
-
-- Adapt script.
-
-## Documentation
-
-- Tweak wording for readr error message (#503).
-
-## Performance
-
-- Prefer `vctrs::new_data_frame()` over `tibble()` for performance (#500).
-
-
-# duckplyr 0.99.99.9921 (2025-01-26)
-
-## Bug fixes
-
 - Remove startup message after second `load_all()` (#480, #492).
-
-## Chore
-
-- Install duckdb from CRAN (#495).
-
-## Documentation
-
-- Introduce concept of funneling alongside eagerness and lazyness (#473, #496).
-
-
-# duckplyr 0.99.99.9920 (2025-01-25)
-
-## Features
-
-- Support partial funneling (#487).
-
-## Chore
-
-- Bump.
-
-- Fix remote.
-
-- Bump duckdb dependency.
-
-## Continuous integration
-
-- Run fledge before RCC.
-
-## Documentation
-
-- Make flights data workaround explicit thus less scary (@maelle, #488, #490).
-
-
-# duckplyr 0.99.99.9919 (2025-01-23)
-
-## Chore
-
-- Deprecate old I/O functions (#481).
-
-## Documentation
-
-- Convert bullets to info items (#483).
-
-- Render README.
-
-
-# duckplyr 0.99.99.9918 (2025-01-19)
-
-## Documentation
-
-- Tweak examples and titles (#363, #475).
-
-- Fix logo (#476, #478).
-
-
-# duckplyr 0.99.99.9917 (2025-01-18)
-
-## Bug fixes
 
 - Avoid base pipe for compatibility with R 4.0.0 (#463, #466).
 
-## Features
-
-- Point to the native CSV reader if encountering data frames read with readr (#127, #469).
-
-## Chore
-
-- Extract function to reset connection (#471).
-
-- Clean up source in error (#468).
-
-- Improve markup for error message (#467).
-
-## Documentation
-
-- Tweak reference index (#465, #474).
-
-## Testing
-
-- Move dplyr tests (#470).
-
-
-# duckplyr 0.99.99.9916 (2025-01-13)
-
-## Documentation
-
-- Clean up documentation (#444, #460).
-
-
-# duckplyr 0.99.99.9915 (2025-01-12)
-
-## Features
-
-- Rename `duck_exec()` to `db_exec()` and `duck_*()` to `read_*_duckdb()` (#210, #459).
-
-- Rename `duck_tbl()` to `duckdb_tibble()`, and `as_duck_tbl()` to `as_duckdb_tibble()` (#457).
-
-- Improve error message with lazy data frame by explicitly materializing before falling back to dplyr (#432, #456).
-
-- The default DuckDB connection is now based on a file, the location can be controlled with the `DUCKPLYR_TEMP_DIR` environment variable (#439, #448).
-
-## Chore
-
-- Capture and return `rel_try()` error (#454).
-
-- Sync patch (#453).
-
-- Remove noise from patch files (#451).
-
-## Documentation
-
-- Add "Eager and lazy" section to `?duck_tbl`, document `collect()` (#455).
-
-- Review `rel_try()` reasons and docs (#452).
-
-
-# duckplyr 0.99.99.9914 (2025-01-11)
-
-## Features
-
-- `collect()` returns a tibble (#438, #447).
-
-## Chore
-
-- Sync tests (#446).
-
-
-# duckplyr 0.99.99.9913 (2025-01-05)
-
-## Documentation
-
-- Rename help topic (#443).
-
-
-# duckplyr 0.99.99.9912 (2025-01-02)
-
-## Bug fixes
-
 - Remove unneeded cast that breaks the meta functionality (#436).
 
-## Continuous integration
-
-- Remove generated code from coverage analysis (#435).
-
-- Switch to comma-separated list of files.
-
-
-# duckplyr 0.99.99.9911 (2025-01-01)
-
-## Features
-
-- New `compute_parquet()` and `compute_csv()`, implement `compute.duckplyr_df()` (#409, #430).
-
-
-# duckplyr 0.99.99.9910 (2024-12-31)
-
-## Continuous integration
-
-- Adapt to codecov/codecov-action@v5.
-
-
-# duckplyr 0.99.99.9909 (2024-12-30)
-
-## Features
-
-- New `fallback_config()` to create a configuration file for the settings that do not affect behavior (#216, #426).
-
-## Continuous integration
-
-- Pass secret.
-
-- Copy codecov configuration from r-lib/actions.
-
-- Install covr if needed.
-
-- Pass correct covr config.
-
-- Logic.
-
-- Fix codecov.
-
-## Documentation
-
-- Add codecov badge.
-
-- Sync README.
-
-## Testing
-
-- Add tests for fallback configuration (#428).
-
-
-# duckplyr 0.99.99.9908 (2024-12-29)
-
-## Documentation
-
-- Prefer `DUCKPLYR_FALLBACK_INFO` over `DUCKPLYR_FALLBACK_VERBOSE` (#425).
-
-- Adapt README and tests for telemetry (#424).
-
-
-# duckplyr 0.99.99.9907 (2024-12-28)
-
-## Features
-
-- Fallback logging is now on by default, can be disabled with configuration (#422).
-
-
-# duckplyr 0.99.99.9906 (2024-12-27)
-
-## Features
-
-- Add support for `sub()` and `gsub()` (@toppyy, #420).
-
-
-# duckplyr 0.99.99.9905 (2024-12-21)
-
-## Bug fixes
-
 - Avoid workaround for R \< 4.3 (#417, #418).
-
-## Chore
-
-- Update patches.
-
-## Documentation
-
-- Add example for working with remote data (#260, #411).
-
-
-# duckplyr 0.99.99.9904 (2024-12-20)
-
-## Continuous integration
-
-- Disable vignette evaluation for R \< 4.1.
-
-
-# duckplyr 0.99.99.9903 (2024-12-19)
-
-## Features
-
-- Depend on dplyr instead of reexporting all generics (#405).
-
-## Chore
-
-- NEWS.
-
-## Documentation
-
-- Clarify usage by reducing duplication (#400).
-
-- Tweak developer vignette.
-
-- New `flights_df()` used instead of `palmerpenguins::penguins` (#408).
-
-
-# duckplyr 0.99.99.9902 (2024-12-18)
-
-## Features
-
-- New `duck_exec()`, replaces `duckplyr_execute()` (#404).
-
-- `duck_tbl()` and similar (#402).
-
-
-## Chore
-
-- IDE.
-
-
-# duckplyr 0.99.99.9901 (2024-12-17)
-
-## Features
-
-- New `duck_sql()` (duckdb/duckdb-r#32, #397).
-
-- New `duckparquet()`, `duckcsv()`, `duckjson()` and `duckfile()`, deprecating `duckplyr_df_from_*()` and `df_from_*()` functions (#210, #396).
-
-- Deprecate `is_duckplyr_df()` (#392).
-
-- New `is_ducktbl()` (#391).
-
-- Add `"lazy_duckplyr_df"` class that requires `collect()` (#381, #390).
-
-## Chore
-
-- Tweak `as_ducktbl()` for dbplyr lazy tables (#395).
-
-## Documentation
-
-- Add item in checklist when adding a new translation (@maelle, #399).
-
-- Add link to DuckDB configuration (#174, #398).
-
-
-# duckplyr 0.99.99.9900 (2024-12-16)
-
-## Features
-
-- New `duck_sql()` (duckdb/duckdb-r#32, #397).
-
-- New `duckparquet()`, `duckcsv()`, `duckjson()` and `duckfile()`, deprecating `duckplyr_df_from_*()` and `df_from_*()` functions (#210, #396).
-
-- Deprecate `is_duckplyr_df()` (#392).
-
-- New `is_ducktbl()` (#391).
-
-- Add `"lazy_duckplyr_df"` class that requires `collect()` (#381, #390).
-
-- Use `as_duckplyr_df_impl()` in verbs (#386).
-
-- Use `as_ducktbl()` in touchstone script (#385).
-
-- New `as_ducktbl()`, replaces `as_duckplyr_tibble()` and `as_duckplyr_df()` (#383).
-
-- New `ducktbl()` (#382).
-
-- New `last_rel()` to retrieve the last relation object used in materialization (#209, #375).
-
-- Improve `as_duckplyr_df()` error message for invalid `.data` (@maelle, #339).
-
-## Chore
-
-- Tweak `as_ducktbl()` for dbplyr lazy tables (#395).
-
-- Fix comment in touchstone script (#387).
-
-- Use `as_duckplyr_df_impl()` in generated code (#384).
-
-- Legacy duckdb script.
-
-- Add read-only markers for overwrite + restore.
-
-- Cleanup (#377).
-
-- Avoid `"duckdb.materialize_message"` option (#376).
-
-- Update TPCH outputs to account for data changes in duckdb 0.8.0 (#294).
-
-- Sync.
-
-- Bump duckdb dependency.
-
-## Continuous integration
-
-- Avoid failure in fledge workflow if no changes (#368).
-
-## Documentation
-
-- Add link to DuckDB configuration (#174, #398).
-
-- Fix rendering in vanilla session.
-
-- Add vignette about missing parts (@maelle, #218, #371).
-
-- Refactor README (@maelle, #208, #334, #370).
-
-- Tweak method and behavior (#373).
-
-- Add manual pages for dplyr methods (@maelle, #214, #359).
-
-## Performance
-
-- Printing a duckplyr frame no longer materializes (#255, #378).
-
-- Comparison expressions are translated in a way that allows them to be pushed down to Parquet (@toppyy, #270).
-
-## Testing
-
-- Use `ducktbl()` in tests (#388).
-
-- Avoid `as_duckplyr_df()` (#389).
-
-- Skip test that requires dplyr \> 1.1.4.
-
-- Add snapshot test for conversion error in `as_duckplyr_df()`.
-
-
-# duckplyr 0.4.1.9007 (2024-12-16)
-
-## Features
-
-- Use `as_duckplyr_df_impl()` in verbs (#386).
-
-- Use `as_ducktbl()` in touchstone script (#385).
-
-- New `as_ducktbl()`, replaces `as_duckplyr_tibble()` and `as_duckplyr_df()` (#383).
-
-- New `ducktbl()` (#382).
-
-## Chore
-
-- Fix comment in touchstone script (#387).
-
-- Use `as_duckplyr_df_impl()` in generated code (#384).
-
-- Legacy duckdb script.
-
-## Performance
-
-- Printing a duckplyr frame no longer materializes (#255, #378).
-
-## Testing
-
-- Use `ducktbl()` in tests (#388).
-
-- Avoid `as_duckplyr_df()` (#389).
-
-- Skip test that requires dplyr \> 1.1.4.
-
-
-# duckplyr 0.4.1.9006 (2024-12-15)
-
-## Features
-
-- New `last_rel()` to retrieve the last relation object used in materialization (#209, #375).
-
-- Improve `as_duckplyr_df()` error message for invalid `.data` (@maelle, #339).
-
-## Chore
-
-- Add read-only markers for overwrite + restore.
-
-- Cleanup (#377).
-
-- Avoid `"duckdb.materialize_message"` option (#376).
-
-- Update TPCH outputs to account for data changes in duckdb 0.8.0 (#294).
-
-- Sync.
-
-## Documentation
-
-- Fix rendering in vanilla session.
-
-- Add vignette about missing parts (@maelle, #218, #371).
-
-- Refactor README (@maelle, #208, #334, #370).
-
-## Performance
-
-- Comparison expressions are translated in a way that allows them to be pushed down to Parquet (@toppyy, #270).
-
-## Testing
-
-- Add snapshot test for conversion error in `as_duckplyr_df()`.
-
-
-# duckplyr 0.4.1.9005 (2024-12-14)
-
-## Chore
-
-- Bump duckdb dependency.
-
-## Documentation
-
-- Tweak method and behavior (#373).
-
-- Add manual pages for dplyr methods (@maelle, #214, #359).
-
-
-# duckplyr 0.4.1.9004 (2024-12-09)
-
-## Bug fixes
 
 - `check_duplicate_names()` (#317).
 
@@ -695,6 +39,80 @@
 - `expr_scrub()` can handle function-definitions (@toppyy, #268, #271).
 
 ## Features
+
+- Remove support for edge case in `sum()`, `any()` and `all()` for performance (#573).
+
+- Only translate what's actually supported (#569).
+
+- Implement `na.rm` handling for `sum()`, `min()`, `max()`, `any()` and `all()`, with fallback for window functions (#205, #566).
+
+- Create database in a subdirectory of `tempdir()` by default (#561).
+
+- Handle `dplyr::desc()` (#550).
+
+- Prudence as concept and as argument (#511, #547).
+
+- Implement argument matching for `funnel` (#546).
+
+- New `funnel = "drip"` (#541).
+
+- `duckdb_tibble()`, `as_duckdb_tibble()` and `collect()` use `new_duckdb_tibble()` (#540).
+
+- `duckdb_tibble()` checks if columns can be represented in DuckDB (#537).
+
+- Add `funnel` arg to `rel_to_df.duckdb_relation()` (#534).
+
+- Move content from README to vignettes (#207, #504).
+
+- Support partial funneling (#487).
+
+- Point to the native CSV reader if encountering data frames read with readr (#127, #469).
+
+- Rename `duck_exec()` to `db_exec()` and `duck_*()` to `read_*_duckdb()` (#210, #459).
+
+- Rename `duck_tbl()` to `duckdb_tibble()`, and `as_duck_tbl()` to `as_duckdb_tibble()` (#457).
+
+- Improve error message with lazy data frame by explicitly materializing before falling back to dplyr (#432, #456).
+
+- The default DuckDB connection is now based on a file, the location can be controlled with the `DUCKPLYR_TEMP_DIR` environment variable (#439, #448).
+
+- `collect()` returns a tibble (#438, #447).
+
+- New `compute_parquet()` and `compute_csv()`, implement `compute.duckplyr_df()` (#409, #430).
+
+- New `fallback_config()` to create a configuration file for the settings that do not affect behavior (#216, #426).
+
+- Fallback logging is now on by default, can be disabled with configuration (#422).
+
+- Add support for `sub()` and `gsub()` (@toppyy, #420).
+
+- Depend on dplyr instead of reexporting all generics (#405).
+
+- New `duck_exec()`, replaces `duckplyr_execute()` (#404).
+
+- `duck_tbl()` and similar (#402).
+
+- New `duck_sql()` (duckdb/duckdb-r#32, #397).
+
+- New `duckparquet()`, `duckcsv()`, `duckjson()` and `duckfile()`, deprecating `duckplyr_df_from_*()` and `df_from_*()` functions (#210, #396).
+
+- Deprecate `is_duckplyr_df()` (#392).
+
+- New `is_ducktbl()` (#391).
+
+- Add `"lazy_duckplyr_df"` class that requires `collect()` (#381, #390).
+
+- Use `as_duckplyr_df_impl()` in verbs (#386).
+
+- Use `as_ducktbl()` in touchstone script (#385).
+
+- New `as_ducktbl()`, replaces `as_duckplyr_tibble()` and `as_duckplyr_df()` (#383).
+
+- New `ducktbl()` (#382).
+
+- New `last_rel()` to retrieve the last relation object used in materialization (#209, #375).
+
+- Improve `as_duckplyr_df()` error message for invalid `.data` (@maelle, #339).
 
 - `mutate()` constructs intermediate data frames for each new variable (#332).
 
@@ -728,7 +146,85 @@
 
 - Set the `duckdb.materialize_message` option on load only if not previously specified (@stefanlinner, #220).
 
+- Detect functions from the duckplyr package (#246).
+
+- New `duckplyr_execute()` to execute configuration queries against the default duckdb connection (#39, #165, #227).
+
+- `as_duckplyr_tibble()` supports dbplyr connections to a duckdb database (#86, #211, #226).
+
 ## Chore
+
+- Giving up.
+
+- Clean cache.
+
+- Sync (#556).
+
+- Move code.
+
+- Add prefix to dplyr generated helper files, and skip if env var is set (#538).
+
+- Reorganize code (#533).
+
+- Use magrittr pipe in tests.
+
+- Remove space at EOL in limits (#521).
+
+- Remove space at EOL in large (#520).
+
+- Clean up `DESCRIPTION`.
+
+- The meta functionality is now enabled only if the `DUCKPLYR_META_ENABLE` environment variable is set to `TRUE` (#499).
+
+- Sync.
+
+- Adapt script.
+
+- Install duckdb from CRAN (#495).
+
+- Bump.
+
+- Fix remote.
+
+- Bump duckdb dependency.
+
+- Deprecate old I/O functions (#481).
+
+- Extract function to reset connection (#471).
+
+- Clean up source in error (#468).
+
+- Improve markup for error message (#467).
+
+- Capture and return `rel_try()` error (#454).
+
+- Sync patch (#453).
+
+- Remove noise from patch files (#451).
+
+- Sync tests (#446).
+
+- Update patches.
+
+- NEWS.
+
+- IDE.
+
+- Tweak `as_ducktbl()` for dbplyr lazy tables (#395).
+
+- Fix comment in touchstone script (#387).
+
+- Use `as_duckplyr_df_impl()` in generated code (#384).
+
+- Legacy duckdb script.
+
+- Add read-only markers for overwrite + restore.
+
+- Cleanup (#377).
+
+- Avoid `"duckdb.materialize_message"` option (#376).
+
+- Update TPCH outputs to account for data changes in duckdb 0.8.0 (#294).
 
 - Configure IDE.
 
@@ -768,6 +264,30 @@
 
 ## Continuous integration
 
+- Avoid autoupload.
+
+- Run fledge before RCC.
+
+- Remove generated code from coverage analysis (#435).
+
+- Switch to comma-separated list of files.
+
+- Adapt to codecov/codecov-action@v5.
+
+- Pass secret.
+
+- Copy codecov configuration from r-lib/actions.
+
+- Install covr if needed.
+
+- Pass correct covr config.
+
+- Logic.
+
+- Fix codecov.
+
+- Disable vignette evaluation for R \< 4.1.
+
 - Avoid failure in fledge workflow if no changes (#368).
 
 - Fetch tags for fledge workflow to avoid unnecessary NEWS entries (#366).
@@ -802,17 +322,159 @@
 
 - Restrict commit again to own PRs.
 
+- Avoid failures if artifact is missing.
+
+- Store SHA as artifact.
+
+- Move towards external status updates.
+
+- Tweak status workflow.
+
+- Use token.
+
+- Add external workflow to update commit statuses.
+
+- Avoid manually installing package for pkgdown (#245).
+
+- Fix fledge (#243).
+
+- Use proper remote repo (#241).
+
+- Add permissions to fledge workflow (#238).
+
+- Fix tests without suggested packages (#236).
+
+- Add permissions to fledge workflow (#235).
+
+- Add permissions to fledge workflow (#234).
+
+- Add input to fledge workflow (#233).
+
+- Use proper token for fledge (#232).
+
+- Fix fledge workflow (#231).
+
+- Bump version via PR (#230).
+
+- Sync with duckdb.
+
 ## Documentation
+
+- Final tweaks.
+
+- Try fork.
+
+- Fix width for articles.
+
+- Ideal width for Firefox.
+
+- Review prudence vignette (#577).
+
+- Review large vignette (#576).
+
+- Dev vignette (#574).
+
+- Review limits vignette (#582).
+
+- Review fallback vignette (#575).
+
+- Stable.
+
+- Change wording for fallback in method help pages (#535).
+
+- Add footnote on prudence.
+
+- Add one-paragraph intro (#549).
+
+- Consistency.
+
+- Document `prudence` argument (#568).
+
+- New `vignette("fallback")` (#563).
+
+- Mention fallback in README (#562).
+
+- Show error source for translation errors (#512, #560).
+
+- Wrap up documentation on prudence (#497, #559).
+
+- Small README tweaks (#543).
+
+- Document limiting memory usage (#472, #548).
+
+- Tweak funneling (#545).
+
+- Remove funneling section in docs (#532).
+
+- Change `funnel` values to `"open"` and `"closed"` instead of a logical value (#526).
+
+- Fix erroneous argument (@TimTaylor, #524).
+
+- Review (#516).
+
+- Remove use of word bottleneck (#517, #519).
+
+- Document `.funnel`/`funnel` argument (#513).
+
+- Tweak wording for readr error message (#503).
+
+- Introduce concept of funneling alongside eagerness and lazyness (#473, #496).
+
+- Make flights data workaround explicit thus less scary (@maelle, #488, #490).
+
+- Convert bullets to info items (#483).
+
+- Render README.
+
+- Tweak examples and titles (#363, #475).
+
+- Fix logo (#476, #478).
+
+- Tweak reference index (#465, #474).
+
+- Clean up documentation (#444, #460).
+
+- Add "Eager and lazy" section to `?duck_tbl`, document `collect()` (#455).
+
+- Review `rel_try()` reasons and docs (#452).
+
+- Rename help topic (#443).
+
+- Add codecov badge.
+
+- Sync README.
+
+- Prefer `DUCKPLYR_FALLBACK_INFO` over `DUCKPLYR_FALLBACK_VERBOSE` (#425).
+
+- Adapt README and tests for telemetry (#424).
+
+- Add example for working with remote data (#260, #411).
+
+- Clarify usage by reducing duplication (#400).
+
+- Tweak developer vignette.
+
+- New `flights_df()` used instead of `palmerpenguins::penguins` (#408).
+
+- Add item in checklist when adding a new translation (@maelle, #399).
+
+- Add link to DuckDB configuration (#174, #398).
+
+- Fix rendering in vanilla session.
+
+- Add vignette about missing parts (@maelle, #218, #371).
+
+- Refactor README (@maelle, #208, #334, #370).
+
+- Tweak method and behavior (#373).
+
+- Add manual pages for dplyr methods (@maelle, #214, #359).
 
 - Avoid `\code{}` (#340, #354).
 
 - Include section on code generation in contributing guide (#24, #348).
 
 - Update README.
-
-- Sync.
-
-- Sync.
 
 - Sync.
 
@@ -832,7 +494,37 @@
 
 - Use new URL for pkgdown (#247).
 
+- Move to tidyverse (#225).
+
+## Refactoring
+
+- Rename lazy.R to funnel.R (#509).
+
+## Performance
+
+- Prefer `vctrs::new_data_frame()` over `tibble()` for performance (#500).
+
+- Printing a duckplyr frame no longer materializes (#255, #378).
+
+- Comparison expressions are translated in a way that allows them to be pushed down to Parquet (@toppyy, #270).
+
 ## Testing
+
+- Snapshot updates (@1741643+krlmlr).
+
+- Ensure TPC-H tests are run by DuckDB (#555).
+
+- Move dplyr tests (#470).
+
+- Add tests for fallback configuration (#428).
+
+- Use `ducktbl()` in tests (#388).
+
+- Avoid `as_duckplyr_df()` (#389).
+
+- Skip test that requires dplyr \> 1.1.4.
+
+- Add snapshot test for conversion error in `as_duckplyr_df()`.
 
 - Snapshot updates for rcc-smoke (null) (#356).
 
@@ -844,71 +536,9 @@
 
 - Adapt tests to duckdb release candidate (#261).
 
+## Uncategorized
 
-# duckplyr 0.4.1.9003 (2024-08-20)
-
-## Features
-
-  - Detect functions from the duckplyr package (#246).
-
-  - New `duckplyr_execute()` to execute configuration queries against the default duckdb connection (#39, #165, #227).
-
-  - `as_duckplyr_tibble()` supports dbplyr connections to a duckdb database (#86, #211, #226).
-
-## Continuous integration
-
-  - Avoid failures if artifact is missing.
-
-  - Store SHA as artifact.
-
-  - Move towards external status updates.
-
-  - Tweak status workflow.
-
-  - Use token.
-
-  - Add external workflow to update commit statuses.
-
-  - Avoid manually installing package for pkgdown (#245).
-
-  - Fix fledge (#243).
-
-  - Use proper remote repo (#241).
-
-  - Add permissions to fledge workflow (#238).
-
-  - Fix tests without suggested packages (#236).
-
-  - Add permissions to fledge workflow (#235).
-
-  - Add permissions to fledge workflow (#234).
-
-  - Add input to fledge workflow (#233).
-
-  - Use proper token for fledge (#232).
-
-  - Fix fledge workflow (#231).
-
-  - Bump version via PR (#230).
-
-  - Sync with duckdb.
-
-
-# duckplyr 0.4.1.9002 (2024-08-16)
-
-## Documentation
-
-  - Move to tidyverse (#225).
-
-
-# duckplyr 0.4.1.9001 (2024-07-13)
-
-  - Merge branch 'cran-0.4.1'.
-
-
-# duckplyr 0.4.1.9000 (2024-07-12)
-
-  - Merge branch 'cran-0.4.1'.
+- Merge branch 'cran-0.4.1'.
 
 
 # duckplyr 0.4.1 (2024-07-11)
