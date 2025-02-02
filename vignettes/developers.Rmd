@@ -104,8 +104,7 @@ methods_restore()
 If the input is a plain data frame, duckplyr is not involved.
 
 ```{r error = TRUE}
-lazy_atteched <-
-  flights_df() |>
+flights_df() |>
   mutate(inflight_delay = arr_delay - dep_delay) |>
   explain()
 ```
