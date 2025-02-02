@@ -35,7 +35,7 @@
       # A duckplyr data frame: 1 variable
         revenue
           <dbl>
-      1       0
+      1      NA
     Code
       tpch_07()
     Output
@@ -79,7 +79,7 @@
       # A duckplyr data frame: 1 variable
         promo_revenue
                 <dbl>
-      1           NaN
+      1            NA
     Code
       tpch_15()
     Output
@@ -97,7 +97,7 @@
       # A duckplyr data frame: 1 variable
         avg_yearly
              <dbl>
-      1          0
+      1         NA
     Code
       tpch_18()
     Output
@@ -110,7 +110,7 @@
       # A duckplyr data frame: 1 variable
         revenue
           <dbl>
-      1       0
+      1      NA
     Code
       tpch_20()
     Output

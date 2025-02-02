@@ -127,7 +127,7 @@
       rel_translate(expr(sum(a, na.rm = TRUE)), df)
     Output
       List of 3
-       $ name : chr "___sum"
+       $ name : chr "sum"
        $ args :List of 1
         ..$ :List of 3
         .. ..$ name : chr "a"
@@ -271,7 +271,7 @@
       rel_translate(expr(any(a, na.rm = TRUE)), df)
     Output
       List of 3
-       $ name : chr "___any"
+       $ name : chr "any"
        $ args :List of 1
         ..$ :List of 3
         .. ..$ name : chr "a"
@@ -305,7 +305,7 @@
       rel_translate(expr(all(a, na.rm = TRUE)), df)
     Output
       List of 3
-       $ name : chr "___all"
+       $ name : chr "all"
        $ args :List of 1
         ..$ :List of 3
         .. ..$ name : chr "a"

@@ -211,7 +211,7 @@ duckplyr::duckdb_tibble(a = 1:3, b = c(1, 2, 2), .prudence = "frugal") |>
   summarize(
     sum(a), 
     n(),
-    n_distinct(b), # na.rm currently not supported, defaults to TRUE
+    n_distinct(b),
   )
 
 duckplyr::duckdb_tibble(a = 1:3, b = c(1, 2, NA), .prudence = "frugal") |>
@@ -223,8 +223,8 @@ duckplyr::duckdb_tibble(a = 1:3, b = c(1, 2, NA), .prudence = "frugal") |>
 
 duckplyr::duckdb_tibble(a = 1:3, .prudence = "frugal") |>
   summarize(
-    min(a), # min(FALSE) returns FALSE here, not 0
-    max(a), # max(FALSE) returns FALSE here, not 0
+    min(a),
+    max(a),
     any(a > 1), 
     all(a > 1),
   )
@@ -296,7 +296,119 @@ duckplyr::duckdb_tibble(a = 1, .prudence = "frugal") |>
   mutate(suppressWarnings(a + 1))
 ```
 
-### Support for more functions needed?
+## Known incompatibilities
+
+This section tracks known incompatibilities between dplyr and duckplyr.
+Changing these is likely to require substantial effort, and might be best addressed by providing new functions with consistent behavior in both dplyr and DuckDB.
+
+### Output order stability
+
+DuckDB does not guarantee order stability for the output.
+For performance reasons, duckplyr does not enable output order stability by default.
+
+```{r}
+duckplyr::flights_df() |>
+  duckplyr::as_duckdb_tibble() |>
+  distinct(day) |>
+  summarize(paste(day, collapse = " ")) # fallback
+duckplyr::flights_df() |>
+  distinct(day) |>
+  summarize(paste(day, collapse = " "))
+```
+
+This can be changed globally with the `DUCKPLYR_OUTPUT_ORDER` environment variable, see `?config` for details.
+With this setting, the output order is stable, but the plans are more complicated, and DuckDB needs to do more work.
+
+```{r}
+duckplyr::flights_df() |>
+  duckplyr::as_duckdb_tibble() |>
+  distinct(day) |>
+  explain()
+
+withr::with_envvar(
+  c(DUCKPLYR_OUTPUT_ORDER = "TRUE"),
+  duckplyr::flights_df() |>
+    duckplyr::as_duckdb_tibble() |>
+    distinct(day) |>
+    explain()
+)
+```
+
+### `sum()`
+
+In duckplyr, this function returns a numeric value also for integers, due to DuckDB's type stability requirement.
+
+```{r}
+duckplyr::duckdb_tibble(a = 1:100) |>
+  summarize(sum(a))
+duckplyr::duckdb_tibble(a = 1:1000000) |>
+  summarize(sum(a))
+tibble(a = 1:100) |>
+  summarize(sum(a))
+tibble(a = 1:1000000) |>
+  summarize(sum(a))
+```
+
+### Empty vectors in aggregate functions
+
+At the time of writing, empty vectors only occur when summarizing an empty table without grouping.
+In all cases, duckplyr returns `NA`, and the behavior of dplyr is different:
+
+- `sum()` for an empty vector returns `0`
+- `any()` and `all()` return `FALSE`
+- `min()` and `max()` return infinity values (with a warning)
+
+```{r}
+duckplyr::duckdb_tibble(a = integer(), b = logical()) |>
+  summarize(sum(a), any(b), all(b), min(a), max(a))
+tibble(a = integer(), b = logical()) |>
+  summarize(sum(a), any(b), all(b), min(a), max(a))
+```
+
+### `min()` and `max()` for logical input
+
+For completeness, duckplyr returns a logical for `min()` and `max()` when the input is logical, while dplyr returns an integer.
+
+```{r}
+duckplyr::duckdb_tibble(a = c(TRUE, FALSE)) |>
+  summarize(min(a), max(a))
+tibble(a = c(TRUE, FALSE)) |>
+  summarize(min(a), max(a))
+```
+
+### `n_distinct()` and missing values
+
+Unlike most other aggregation functions, `n_distinct()` ignores missing values and does not support the `na.rm` argument.
+This is tracked in <https://github.com/tidyverse/duckplyr/issues/572>.
+
+```{r error = TRUE}
+duckplyr::duckdb_tibble(a = c(1, 2, NA, 1)) |>
+  summarize(n_distinct(a))
+duckplyr::duckdb_tibble(a = c(1, 2, NA, 1), .prudence = "frugal") |>
+  summarize(n_distinct(a, na.rm = TRUE))
+tibble(a = c(1, 2, NA, 1)) |>
+  summarize(n_distinct(a))
+tibble(a = c(1, 2, NA, 1)) |>
+  summarize(n_distinct(a, na.rm = TRUE))
+```
+
+### `is.na()` and `NaN` values
+
+This function returns `FALSE` for `NaN` values in duckplyr, while it returns `TRUE` in dplyr.
+
+```{r}
+duckplyr::duckdb_tibble(a = c(NA, NaN)) |>
+  mutate(is.na(a))
+tibble(a = c(NA, NaN)) |>
+  mutate(is.na(a))
+```
+
+### Other differences
+
+Does the same pipeline give different results with `tibble()` and `duckdb_tibble()`?
+We would love to hear about it!
+
+## Your use case is not supported?
 
 Refer to [our contributing guide](https://duckplyr.tidyverse.org/CONTRIBUTING.html#new-translations-for-functions) to learn how to contribute new translations to the package.
 Ideally, duckplyr will also support adding custom translations for functions for the duration of the current R session.
