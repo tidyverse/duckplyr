@@ -10,10 +10,10 @@ tpch_01 <- function() {
     filter(l_shipdate <= !!as.Date("1998-09-02")) %>%
     select_opt(l_returnflag, l_linestatus, l_quantity, l_extendedprice, l_discount, l_tax) %>%
     summarise(
-      sum_qty = sum(l_quantity),
-      sum_base_price = sum(l_extendedprice),
-      sum_disc_price = sum(l_extendedprice * (1 - l_discount)),
-      sum_charge = sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)),
+      sum_qty = sum(na.rm = TRUE, l_quantity),
+      sum_base_price = sum(na.rm = TRUE, l_extendedprice),
+      sum_disc_price = sum(na.rm = TRUE, l_extendedprice * (1 - l_discount)),
+      sum_charge = sum(na.rm = TRUE, l_extendedprice * (1 - l_discount) * (1 + l_tax)),
       avg_qty = mean(l_quantity),
       avg_price = mean(l_extendedprice),
       avg_disc = mean(l_discount),
@@ -106,7 +106,7 @@ tpch_03 <- function() {
 
   aggr <- loc %>%
     mutate(volume = l_extendedprice * (1 - l_discount)) %>%
-    summarise(revenue = sum(volume), .by = c(l_orderkey, o_orderdate, o_shippriority)) %>%
+    summarise(revenue = sum(na.rm = TRUE, volume), .by = c(l_orderkey, o_orderdate, o_shippriority)) %>%
     select(l_orderkey, revenue, o_orderdate, o_shippriority) %>%
     arrange(desc(revenue), o_orderdate) %>%
     head(10)
@@ -185,7 +185,7 @@ tpch_05 <- function() {
 
   aggr <- lsnroc %>%
     mutate(volume = l_extendedprice * (1 - l_discount)) %>%
-    summarise(revenue = sum(volume), .by = n_name) %>%
+    summarise(revenue = sum(na.rm = TRUE, volume), .by = n_name) %>%
     arrange(desc(revenue))
 
   aggr
@@ -203,7 +203,7 @@ tpch_06 <- function() {
       l_quantity < 24
     ) %>%
     select_opt(l_extendedprice, l_discount) %>%
-    summarise(revenue = sum(l_extendedprice * l_discount))
+    summarise(revenue = sum(na.rm = TRUE, l_extendedprice * l_discount))
 }
 
 #' @autoglobal
@@ -263,7 +263,7 @@ tpch_07 <- function() {
       volume = l_extendedprice * (1 - l_discount)
     ) %>%
     select_opt(supp_nation, cust_nation, l_year, volume) %>%
-    summarise(revenue = sum(volume), .by = c(supp_nation, cust_nation, l_year)) %>%
+    summarise(revenue = sum(na.rm = TRUE, volume), .by = c(supp_nation, cust_nation, l_year)) %>%
     arrange(supp_nation, cust_nation, l_year)
 
   aggr
@@ -345,7 +345,7 @@ tpch_08 <- function() {
     ) %>%
     select_opt(o_year, volume, nation) %>%
     summarise(
-      mkt_share = sum(if_else(nation == "BRAZIL", volume, 0)) / sum(volume),
+      mkt_share = sum(na.rm = TRUE, if_else(nation == "BRAZIL", volume, 0)) / sum(na.rm = TRUE, volume),
       .by = o_year
     ) %>%
     arrange(o_year)
@@ -404,7 +404,7 @@ tpch_09 <- function() {
       amount = l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity
     ) %>%
     select_opt(nation, o_year, amount) %>%
-    summarise(sum_profit = sum(amount), .by = c(nation, o_year)) %>%
+    summarise(sum_profit = sum(na.rm = TRUE, amount), .by = c(nation, o_year)) %>%
     arrange(nation, desc(o_year))
 
   aggr
@@ -432,7 +432,7 @@ tpch_10 <- function() {
 
   lo_aggr <- lo %>%
     mutate(volume = l_extendedprice * (1 - l_discount)) %>%
-    summarise(revenue = sum(volume), .by = o_custkey)
+    summarise(revenue = sum(na.rm = TRUE, volume), .by = o_custkey)
 
   c <- customer %>%
     select_opt(c_custkey, c_nationkey, c_name, c_acctbal, c_phone, c_address, c_comment)

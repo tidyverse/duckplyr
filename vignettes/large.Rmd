@@ -32,7 +32,9 @@ options(conflicts.policy = list(warn = FALSE))
 Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
 ```
 
-This vignette discusses how to work with large data sets using duckplyr.
+Working with large datasets in R can be challenging, especially when performance and memory constraints are a concern.
+The duckplyr package, built on top of DuckDB, offers a powerful solution by enabling efficient data manipulation using familiar dplyr syntax.
+This article explores strategies for handling large datasets with duckplyr, covering ingestion, materialization of intermediate and final results, and good practice.
 
 ```{r attach}
 library(conflicted)
