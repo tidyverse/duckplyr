@@ -68,7 +68,7 @@ The following code aggregates the inflight delay by year and month for
 the first half of the year. We use a variant of the
 `nycflights13::flights` dataset, where the timezone has been set to UTC
 to work around a current limitation of duckplyr, see
-[`vignette("limits")`](https://duckplyr.tidyverse.org/dev/articles/limits.html).
+[`vignette("limits")`](https://duckplyr.tidyverse.org/articles/limits.html).
 
 ``` r
 flights_df()
@@ -353,22 +353,22 @@ flights |>
 
 ## Further reading
 
-- [`vignette("large")`](https://duckplyr.tidyverse.org/dev/articles/large.html):
+- [`vignette("large")`](https://duckplyr.tidyverse.org/articles/large.html):
   Tools for working with large data
 
-- [`vignette("prudence")`](https://duckplyr.tidyverse.org/dev/articles/prudence.html):
+- [`vignette("prudence")`](https://duckplyr.tidyverse.org/articles/prudence.html):
   How duckplyr can help protect memory when working with large data
 
-- [`vignette("fallback")`](https://duckplyr.tidyverse.org/dev/articles/fallback.html):
+- [`vignette("fallback")`](https://duckplyr.tidyverse.org/articles/fallback.html):
   How the fallback to dplyr works internally
 
-- [`vignette("limits")`](https://duckplyr.tidyverse.org/dev/articles/limits.html):
+- [`vignette("limits")`](https://duckplyr.tidyverse.org/articles/limits.html):
   Translation of dplyr employed by duckplyr, and current limitations
 
-- [`vignette("developers")`](https://duckplyr.tidyverse.org/dev/articles/developers.html):
+- [`vignette("developers")`](https://duckplyr.tidyverse.org/articles/developers.html):
   Using duckplyr for individual data frames and in other packages
 
-- [`vignette("telemetry")`](https://duckplyr.tidyverse.org/dev/articles/telemetry.html):
+- [`vignette("telemetry")`](https://duckplyr.tidyverse.org/articles/telemetry.html):
   Telemetry in duckplyr
 
 ## Getting help
