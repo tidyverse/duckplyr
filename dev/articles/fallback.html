@@ -231,10 +231,9 @@ least a part of the operation is handled by dplyr:</p>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │          ~3 Rows          │</span></span>
 <span><span class="co">#&gt; └---------------------------┘</span></span></code></pre></div>
-<p>The final plan now consists of two operations: a data frame scan, and
-a projection (removing the <code>a</code> column). The data frame scan
-is the result of the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> step, which at this stage
-already has been executed by dplyr.</p>
+<p>The final plan now only consists of a data frame scan. This is the
+result of the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> step, which at this stage already
+has been executed by dplyr.</p>
 <p>Converting the final object to a data frame triggers the rest of the
 computation:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -245,6 +244,7 @@ computation:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     4</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     3</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     2</span></span>
+<span></span>
 <span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/last_rel.html">last_rel</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; DuckDB Relation: </span></span>
 <span><span class="co">#&gt; ---------------------</span></span>
