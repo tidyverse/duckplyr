@@ -1,11 +1,5 @@
-duckplyr 0.4.1
+duckplyr 1.0.0
 
-## R CMD check results
+## Cran Repository Policy
 
-- [x] Checked locally, R 4.3.3
-- [x] Checked on CI system, R 4.4.1
-- [x] Checked on win-builder, R devel
-
-## Current CRAN check results
-
-- [x] Checked on 2024-07-11, no problems found.
+- [x] Reviewed CRP last edited 2024-08-27.
