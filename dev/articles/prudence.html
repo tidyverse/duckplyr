@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9927</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9928</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,7 +80,11 @@
 
     
     
-<p>This vignette discusses eager and lazy computation, and prudence.</p>
+<p>Unlike traditional data frames, duckplyr defers computation until
+absolutely necessary, allowing DuckDB to optimize execution. This
+article explains how the concept of <em>prudence</em> allows controlling
+the materialization of data while maintaining a seamless dplyr-like
+experience.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://conflicted.r-lib.org/" class="external-link">conflicted</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
@@ -232,7 +236,7 @@ kept. The result becomes available when accessed:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">mean_arr_delay_ewr</span><span class="op">$</span><span class="va">mean_arr_delay</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.015   0.007   0.018</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.020   0.002   0.017</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="comparison">Comparison<a class="anchor" aria-label="anchor" href="#comparison"></a>
@@ -288,7 +292,7 @@ opportunity for optimization:</p>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.034   0.011   0.045</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.038   0.006   0.045</span></span></code></pre></div>
 <p>See also the <a href="https://duckdb.org/2024/04/02/duckplyr.html" class="external-link">duckplyr: dplyr
 Powered by DuckDB</a> blog post for more information.</p>
 </div>

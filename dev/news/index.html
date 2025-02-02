@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9927</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9928</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,6 +42,28 @@
       <small>Source: <a href="https://github.com/tidyverse/duckplyr/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.99.99.9928" id="duckplyr-099999928-2025-02-02">duckplyr 0.99.99.9928 (2025-02-02)<a class="anchor" aria-label="anchor" href="#duckplyr-099999928-2025-02-02"></a></h2>
+<div class="section level3">
+<h3 id="features-0-99-99-9928">Features<a class="anchor" aria-label="anchor" href="#features-0-99-99-9928"></a></h3>
+<ul><li><p>Only translate what’s actually supported (<a href="https://github.com/tidyverse/duckplyr/issues/569" class="external-link">#569</a>).</p></li>
+<li><p>Implement <code>na.rm</code> handling for <code><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum()</a></code>, <code><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min()</a></code>, <code><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max()</a></code>, <code><a href="https://rdrr.io/r/base/any.html" class="external-link">any()</a></code> and <code><a href="https://rdrr.io/r/base/all.html" class="external-link">all()</a></code>, with fallback for window functions (<a href="https://github.com/tidyverse/duckplyr/issues/205" class="external-link">#205</a>, <a href="https://github.com/tidyverse/duckplyr/issues/566" class="external-link">#566</a>).</p></li>
+<li><p>Create database in a subdirectory of <code><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir()</a></code> by default (<a href="https://github.com/tidyverse/duckplyr/issues/561" class="external-link">#561</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="documentation-0-99-99-9928">Documentation<a class="anchor" aria-label="anchor" href="#documentation-0-99-99-9928"></a></h3>
+<ul><li><p>Consistency.</p></li>
+<li><p>Document <code>prudence</code> argument (<a href="https://github.com/tidyverse/duckplyr/issues/568" class="external-link">#568</a>).</p></li>
+<li><p>New <code><a href="../articles/fallback.html">vignette("fallback")</a></code> (<a href="https://github.com/tidyverse/duckplyr/issues/563" class="external-link">#563</a>).</p></li>
+<li><p>Mention fallback in README (<a href="https://github.com/tidyverse/duckplyr/issues/562" class="external-link">#562</a>).</p></li>
+<li><p>Show error source for translation errors (<a href="https://github.com/tidyverse/duckplyr/issues/512" class="external-link">#512</a>, <a href="https://github.com/tidyverse/duckplyr/issues/560" class="external-link">#560</a>).</p></li>
+<li><p>Wrap up documentation on prudence (<a href="https://github.com/tidyverse/duckplyr/issues/497" class="external-link">#497</a>, <a href="https://github.com/tidyverse/duckplyr/issues/559" class="external-link">#559</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="testing-0-99-99-9928">Testing<a class="anchor" aria-label="anchor" href="#testing-0-99-99-9928"></a></h3>
+<ul><li>Ensure TPC-H tests are run by DuckDB (<a href="https://github.com/tidyverse/duckplyr/issues/555" class="external-link">#555</a>).</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.99.99.9927" id="duckplyr-099999927-2025-02-01">duckplyr 0.99.99.9927 (2025-02-01)<a class="anchor" aria-label="anchor" href="#duckplyr-099999927-2025-02-01"></a></h2>
 <div class="section level3">
