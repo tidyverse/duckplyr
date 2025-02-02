@@ -1,5 +1,34 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9928 (2025-02-02)
+
+## Features
+
+- Only translate what's actually supported (#569).
+
+- Implement `na.rm` handling for `sum()`, `min()`, `max()`, `any()` and `all()`, with fallback for window functions (#205, #566).
+
+- Create database in a subdirectory of `tempdir()` by default (#561).
+
+## Documentation
+
+- Consistency.
+
+- Document `prudence` argument (#568).
+
+- New `vignette("fallback")` (#563).
+
+- Mention fallback in README (#562).
+
+- Show error source for translation errors (#512, #560).
+
+- Wrap up documentation on prudence (#497, #559).
+
+## Testing
+
+- Ensure TPC-H tests are run by DuckDB (#555).
+
+
 # duckplyr 0.99.99.9927 (2025-02-01)
 
 ## Bug fixes
