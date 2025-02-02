@@ -308,7 +308,7 @@ positional matching is implemented.</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, <span class="co"># na.rm currently not supported, defaults to TRUE</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>,</span>
 <span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 3 variables</span></span></span>
 <span><span class="co">#&gt;   `sum(a)` `n()` `n_distinct(b)`</span></span>
@@ -328,8 +328,8 @@ positional matching is implemented.</p>
 <span></span>
 <span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, .prudence <span class="op">=</span> <span class="st">"frugal"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, <span class="co"># min(FALSE) returns FALSE here, not 0</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, <span class="co"># max(FALSE) returns FALSE here, not 0</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="va">a</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span>, </span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="va">a</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span>,</span>
 <span>  <span class="op">)</span></span>
@@ -469,15 +469,306 @@ a constant with up to 100 values:</p>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1                         2</span></span></code></pre></div>
 </div>
+</div>
+<div class="section level2">
+<h2 id="known-incompatibilities">Known incompatibilities<a class="anchor" aria-label="anchor" href="#known-incompatibilities"></a>
+</h2>
+<p>This section tracks known incompatibilities between dplyr and
+duckplyr. Changing these is likely to require substantial effort, and
+might be best addressed by providing new functions with consistent
+behavior in both dplyr and DuckDB.</p>
 <div class="section level3">
-<h3 id="support-for-more-functions-needed">Support for more functions needed?<a class="anchor" aria-label="anchor" href="#support-for-more-functions-needed"></a>
+<h3 id="output-order-stability">Output order stability<a class="anchor" aria-label="anchor" href="#output-order-stability"></a>
 </h3>
+<p>DuckDB does not guarantee order stability for the output. For
+performance reasons, duckplyr does not enable output order stability by
+default.</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/flights_df.html">flights_df</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">day</span>, collapse <span class="op">=</span> <span class="st">" "</span><span class="op">)</span><span class="op">)</span> <span class="co"># fallback</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 1 variable</span></span></span>
+<span><span class="co">#&gt;   `paste(day, collapse = " ")`                                            </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 5 9 11 14 15 16 17 22 26 30 31 2 10 18 28 29 3 4 6 12 20 23 24 1 7 8 13…</span></span>
+<span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/flights_df.html">flights_df</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">day</span>, collapse <span class="op">=</span> <span class="st">" "</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 1</span></span></span>
+<span><span class="co">#&gt;   `paste(day, collapse = " ")`                                            </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27…</span></span></code></pre></div>
+<p>This can be changed globally with the
+<code>DUCKPLYR_OUTPUT_ORDER</code> environment variable, see
+<code><a href="../reference/config.html">?config</a></code> for details. With this setting, the output order is
+stable, but the plans are more complicated, and DuckDB needs to do more
+work.</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/flights_df.html">flights_df</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ┌---------------------------┐</span></span>
+<span><span class="co">#&gt; │       HASH_GROUP_BY       │</span></span>
+<span><span class="co">#&gt; │    --------------------   │</span></span>
+<span><span class="co">#&gt; │         Groups: #0        │</span></span>
+<span><span class="co">#&gt; │                           │</span></span>
+<span><span class="co">#&gt; │        ~336776 Rows       │</span></span>
+<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
+<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
+<span><span class="co">#&gt; │         PROJECTION        │</span></span>
+<span><span class="co">#&gt; │    --------------------   │</span></span>
+<span><span class="co">#&gt; │            day            │</span></span>
+<span><span class="co">#&gt; │                           │</span></span>
+<span><span class="co">#&gt; │        ~336776 Rows       │</span></span>
+<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
+<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
+<span><span class="co">#&gt; │     R_DATAFRAME_SCAN      │</span></span>
+<span><span class="co">#&gt; │    --------------------   │</span></span>
+<span><span class="co">#&gt; │         data.frame        │</span></span>
+<span><span class="co">#&gt; │                           │</span></span>
+<span><span class="co">#&gt; │      Projections: day     │</span></span>
+<span><span class="co">#&gt; │                           │</span></span>
+<span><span class="co">#&gt; │        ~336776 Rows       │</span></span>
+<span><span class="co">#&gt; └---------------------------┘</span></span>
+<span></span>
+<span><span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://withr.r-lib.org/reference/with_envvar.html" class="external-link">with_envvar</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>DUCKPLYR_OUTPUT_ORDER <span class="op">=</span> <span class="st">"TRUE"</span><span class="op">)</span>,</span>
+<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/flights_df.html">flights_df</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; ┌---------------------------┐</span></span>
+<span><span class="co">#&gt; │          ORDER_BY         │</span></span>
+<span><span class="co">#&gt; │    --------------------   │</span></span>
+<span><span class="co">#&gt; │      dataframe_42_42      │</span></span>
+<span><span class="co">#&gt; │ 42.___row_number ASC│</span></span>
+<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
+<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
+<span><span class="co">#&gt; │         PROJECTION        │</span></span>
+<span><span class="co">#&gt; │    --------------------   │</span></span>
+<span><span class="co">#&gt; │            day            │</span></span>
+<span><span class="co">#&gt; │       ___row_number       │</span></span>
+<span><span class="co">#&gt; │                           │</span></span>
+<span><span class="co">#&gt; │        ~67355 Rows        │</span></span>
+<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
+<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
+<span><span class="co">#&gt; │           FILTER          │</span></span>
+<span><span class="co">#&gt; │    --------------------   │</span></span>
+<span><span class="co">#&gt; │   (___row_number_by = 1)  │</span></span>
+<span><span class="co">#&gt; │                           │</span></span>
+<span><span class="co">#&gt; │        ~67355 Rows        │</span></span>
+<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
+<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
+<span><span class="co">#&gt; │         PROJECTION        │</span></span>
+<span><span class="co">#&gt; │    --------------------   │</span></span>
+<span><span class="co">#&gt; │             #0            │</span></span>
+<span><span class="co">#&gt; │             #1            │</span></span>
+<span><span class="co">#&gt; │             #2            │</span></span>
+<span><span class="co">#&gt; │                           │</span></span>
+<span><span class="co">#&gt; │        ~336776 Rows       │</span></span>
+<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
+<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
+<span><span class="co">#&gt; │           WINDOW          │</span></span>
+<span><span class="co">#&gt; │    --------------------   │</span></span>
+<span><span class="co">#&gt; │        Projections:       │</span></span>
+<span><span class="co">#&gt; │     ROW_NUMBER() OVER     │</span></span>
+<span><span class="co">#&gt; │ (PARTITION BY day ORDER BY│</span></span>
+<span><span class="co">#&gt; │   ___row_number ASC NULLS │</span></span>
+<span><span class="co">#&gt; │            LAST)          │</span></span>
+<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
+<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
+<span><span class="co">#&gt; │         PROJECTION        │</span></span>
+<span><span class="co">#&gt; │    --------------------   │</span></span>
+<span><span class="co">#&gt; │             #0            │</span></span>
+<span><span class="co">#&gt; │             #1            │</span></span>
+<span><span class="co">#&gt; │                           │</span></span>
+<span><span class="co">#&gt; │        ~336776 Rows       │</span></span>
+<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
+<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
+<span><span class="co">#&gt; │      STREAMING_WINDOW     │</span></span>
+<span><span class="co">#&gt; │    --------------------   │</span></span>
+<span><span class="co">#&gt; │        Projections:       │</span></span>
+<span><span class="co">#&gt; │    ROW_NUMBER() OVER ()   │</span></span>
+<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
+<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
+<span><span class="co">#&gt; │     R_DATAFRAME_SCAN      │</span></span>
+<span><span class="co">#&gt; │    --------------------   │</span></span>
+<span><span class="co">#&gt; │         data.frame        │</span></span>
+<span><span class="co">#&gt; │                           │</span></span>
+<span><span class="co">#&gt; │      Projections: day     │</span></span>
+<span><span class="co">#&gt; │                           │</span></span>
+<span><span class="co">#&gt; │        ~336776 Rows       │</span></span>
+<span><span class="co">#&gt; └---------------------------┘</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="sum">
+<code>sum()</code><a class="anchor" aria-label="anchor" href="#sum"></a>
+</h3>
+<p>In duckplyr, this function returns a numeric value also for integers,
+due to DuckDB’s type stability requirement.</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 1 variable</span></span></span>
+<span><span class="co">#&gt;   `sum(a)`</span></span>
+<span><span class="co">#&gt;      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     <span style="text-decoration: underline;">5</span>050</span></span>
+<span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">1000000</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 1 variable</span></span></span>
+<span><span class="co">#&gt;       `sum(a)`</span></span>
+<span><span class="co">#&gt;          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> <span style="text-decoration: underline;">500</span>000<span style="text-decoration: underline;">500</span>000</span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 1</span></span></span>
+<span><span class="co">#&gt;   `sum(a)`</span></span>
+<span><span class="co">#&gt;      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     <span style="text-decoration: underline;">5</span>050</span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">1000000</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 1</span></span></span>
+<span><span class="co">#&gt;       `sum(a)`</span></span>
+<span><span class="co">#&gt;          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> <span style="text-decoration: underline;">500</span>000<span style="text-decoration: underline;">500</span>000</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="empty-vectors-in-aggregate-functions">Empty vectors in aggregate functions<a class="anchor" aria-label="anchor" href="#empty-vectors-in-aggregate-functions"></a>
+</h3>
+<p>At the time of writing, empty vectors only occur when summarizing an
+empty table without grouping. In all cases, duckplyr returns
+<code>NA</code>, and the behavior of dplyr is different:</p>
+<ul>
+<li>
+<code><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum()</a></code> for an empty vector returns <code>0</code>
+</li>
+<li>
+<code><a href="https://rdrr.io/r/base/any.html" class="external-link">any()</a></code> and <code><a href="https://rdrr.io/r/base/all.html" class="external-link">all()</a></code> return
+<code>FALSE</code>
+</li>
+<li>
+<code><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min()</a></code> and <code><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max()</a></code> return infinity values
+(with a warning)</li>
+</ul>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer</a></span><span class="op">(</span><span class="op">)</span>, b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 5 variables</span></span></span>
+<span><span class="co">#&gt;   `sum(a)` `any(b)` `all(b)` `min(a)` `max(a)`</span></span>
+<span><span class="co">#&gt;      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>       <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>             <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer</a></span><span class="op">(</span><span class="op">)</span>, b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: There were 2 warnings in `summarize()`.</span></span>
+<span><span class="co">#&gt; The first warning was:</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> In argument: `min(a)`.</span></span>
+<span><span class="co">#&gt; Caused by warning in `min()`:</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> no non-missing arguments to min; returning Inf</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 5</span></span></span>
+<span><span class="co">#&gt;   `sum(a)` `any(b)` `all(b)` `min(a)` `max(a)`</span></span>
+<span><span class="co">#&gt;      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>        0 FALSE    TRUE          <span style="color: #BB0000;">Inf</span>     -<span style="color: #BB0000;">Inf</span></span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="min-and-max-for-logical-input">
+<code>min()</code> and <code>max()</code> for logical input<a class="anchor" aria-label="anchor" href="#min-and-max-for-logical-input"></a>
+</h3>
+<p>For completeness, duckplyr returns a logical for <code><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min()</a></code>
+and <code><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max()</a></code> when the input is logical, while dplyr returns an
+integer.</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 2 variables</span></span></span>
+<span><span class="co">#&gt;   `min(a)` `max(a)`</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> FALSE    TRUE</span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 2</span></span></span>
+<span><span class="co">#&gt;   `min(a)` `max(a)`</span></span>
+<span><span class="co">#&gt;      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>        0        1</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="n_distinct-and-missing-values">
+<code>n_distinct()</code> and missing values<a class="anchor" aria-label="anchor" href="#n_distinct-and-missing-values"></a>
+</h3>
+<p>Unlike most other aggregation functions, <code><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct()</a></code>
+ignores missing values and does not support the <code>na.rm</code>
+argument. This is tracked in <a href="https://github.com/tidyverse/duckplyr/issues/572" class="external-link uri">https://github.com/tidyverse/duckplyr/issues/572</a>.</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 1 variable</span></span></span>
+<span><span class="co">#&gt;   `n_distinct(a)`</span></span>
+<span><span class="co">#&gt;             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>               2</span></span>
+<span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span>, .prudence <span class="op">=</span> <span class="st">"frugal"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a></span><span class="op">(</span><span class="va">a</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `summarize()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> This operation cannot be carried out by DuckDB, and the input is</span></span>
+<span><span class="co">#&gt;   a frugal duckplyr frame.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `compute(prudence = "lavish")` to materialize to temporary storage</span></span>
+<span><span class="co">#&gt;   and continue with <span style="color: #0000BB;">duckplyr</span>.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> See `vignette("prudence")` for other options.</span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Caused by error in `summarize()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't translate named argument `n_distinct(na.rm = )`.</span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 1</span></span></span>
+<span><span class="co">#&gt;   `n_distinct(a)`</span></span>
+<span><span class="co">#&gt;             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>               3</span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a></span><span class="op">(</span><span class="va">a</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 1</span></span></span>
+<span><span class="co">#&gt;   `n_distinct(a, na.rm = TRUE)`</span></span>
+<span><span class="co">#&gt;                           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>                             2</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="is-na-and-nan-values">
+<code>is.na()</code> and <code>NaN</code> values<a class="anchor" aria-label="anchor" href="#is-na-and-nan-values"></a>
+</h3>
+<p>This function returns <code>FALSE</code> for <code>NaN</code> values
+in duckplyr, while it returns <code>TRUE</code> in dplyr.</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NaN</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 2 variables</span></span></span>
+<span><span class="co">#&gt;       a `is.na(a)`</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>    <span style="color: #BB0000;">NA</span> TRUE      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>   <span style="color: #BB0000;">NaN</span> FALSE</span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NaN</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 2</span></span></span>
+<span><span class="co">#&gt;       a `is.na(a)`</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>    <span style="color: #BB0000;">NA</span> TRUE      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>   <span style="color: #BB0000;">NaN</span> TRUE</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="other-differences">Other differences<a class="anchor" aria-label="anchor" href="#other-differences"></a>
+</h3>
+<p>Does the same pipeline give different results with
+<code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble()</a></code> and <code><a href="../reference/duckdb_tibble.html">duckdb_tibble()</a></code>? We would love to
+hear about it!</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="your-use-case-is-not-supported">Your use case is not supported?<a class="anchor" aria-label="anchor" href="#your-use-case-is-not-supported"></a>
+</h2>
 <p>Refer to <a href="https://duckplyr.tidyverse.org/CONTRIBUTING.html#new-translations-for-functions">our
 contributing guide</a> to learn how to contribute new translations to
 the package. Ideally, duckplyr will also support adding custom
 translations for functions for the duration of the current R
 session.</p>
-</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
