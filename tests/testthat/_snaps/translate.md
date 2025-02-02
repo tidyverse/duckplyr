@@ -3,7 +3,7 @@
     Code
       rel_translate(quo(c(1, b = 2)))
     Condition
-      Error in `rel_find_call()`:
+      Error:
       ! No translation for function `c()`.
 
 # a %in% b
