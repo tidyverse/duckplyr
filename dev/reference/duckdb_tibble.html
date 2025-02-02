@@ -4,8 +4,7 @@ in addition to the default classes.
 This ensures that dplyr methods are dispatched correctly.
 For such objects,
 dplyr verbs such as dplyr::mutate(), dplyr::select() or dplyr::filter()  will use DuckDB.
-duckdb_tibble() works like tibble::tibble(), returning a lavish duckplyr data frame by default.
-See vignette("prudence") for details.
+duckdb_tibble() works like tibble::tibble().
 as_duckdb_tibble() converts a data frame or a dplyr lazy table to a duckplyr data frame.
 This is a generic function that can be overridden for custom classes.
 is_duckdb_tibble() returns TRUE if x is a duckplyr data frame.'><meta property="og:description" content='Data frames backed by duckplyr have a special class, "duckplyr_df",
@@ -13,8 +12,7 @@ in addition to the default classes.
 This ensures that dplyr methods are dispatched correctly.
 For such objects,
 dplyr verbs such as dplyr::mutate(), dplyr::select() or dplyr::filter()  will use DuckDB.
-duckdb_tibble() works like tibble::tibble(), returning a lavish duckplyr data frame by default.
-See vignette("prudence") for details.
+duckdb_tibble() works like tibble::tibble().
 as_duckdb_tibble() converts a data frame or a dplyr lazy table to a duckplyr data frame.
 This is a generic function that can be overridden for custom classes.
 is_duckdb_tibble() returns TRUE if x is a duckplyr data frame.'><meta property="og:image" content="https://duckplyr.tidyverse.org/logo.png"><meta name="robots" content="noindex"><script defer data-domain="duckplyr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script></head><body>
@@ -67,8 +65,7 @@ in addition to the default classes.
 This ensures that dplyr methods are dispatched correctly.
 For such objects,
 dplyr verbs such as <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">dplyr::mutate()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code> or <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">dplyr::filter()</a></code>  will use DuckDB.</p>
-<p><code>duckdb_tibble()</code> works like <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble()</a></code>, returning a lavish duckplyr data frame by default.
-See <code><a href="../articles/prudence.html">vignette("prudence")</a></code> for details.</p>
+<p><code>duckdb_tibble()</code> works like <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble()</a></code>.</p>
 <p><code>as_duckdb_tibble()</code> converts a data frame or a dplyr lazy table to a duckplyr data frame.
 This is a generic function that can be overridden for custom classes.</p>
 <p><code>is_duckdb_tibble()</code> returns <code>TRUE</code> if <code>x</code> is a duckplyr data frame.</p>
@@ -92,7 +89,11 @@ This is a generic function that can be overridden for custom classes.</p>
 For <code>as_duckdb_tibble()</code>, passed on to methods.</p></dd>
 
 
-<dt id="arg--prudence-prudence">.prudence, prudence<a class="anchor" aria-label="anchor" href="#arg--prudence-prudence"></a></dt>
+<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
+<dd><p>The object to convert or to test.</p></dd>
+
+
+<dt id="arg-prudence-prudence">prudence, .prudence<a class="anchor" aria-label="anchor" href="#arg-prudence-prudence"></a></dt>
 <dd><p>Controls automatic materialization of data.</p><ul><li><p><code>"lavish"</code>: regardless of size,</p></li>
 <li><p><code>"frugal"</code>: never,</p></li>
 <li><p><code>"thrifty"</code>: up to a maximum size of 1 million cells.</p></li>
@@ -100,14 +101,10 @@ For <code>as_duckdb_tibble()</code>, passed on to methods.</p></dd>
 and may be different for other functions.
 See <code><a href="../articles/prudence.html">vignette("prudence")</a></code> for more information.</p></dd>
 
-
-<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>The object to convert or to test.</p></dd>
-
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>For <code>duckdb_tibble()</code> and <code>as_duckdb_tibble()</code>, an object with the following classes:</p><ul><li><p><code>"prudent_duckplyr_df"</code> if <code>.prudence</code> is not <code>"lavish"</code></p></li>
+    <p>For <code>duckdb_tibble()</code> and <code>as_duckdb_tibble()</code>, an object with the following classes:</p><ul><li><p><code>"prudent_duckplyr_df"</code> if <code>prudence</code> is not <code>"lavish"</code></p></li>
 <li><p><code>"duckplyr_df"</code></p></li>
 <li><p>Classes of a <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble</a></p></li>
 </ul><p>For <code>is_duckdb_tibble()</code>, a scalar logical.</p>
@@ -117,7 +114,7 @@ See <code><a href="../articles/prudence.html">vignette("prudence")</a></code> fo
 
 
 <p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="figures/lifecycle-experimental.svg" alt="[Experimental]"></a></p>
-<p>The <code>prudence</code> or <code>.prudence</code> argument can also be a named numeric vector
+<p>The <code>prudence</code> argument can also be a named numeric vector
 with at least one of <code>cells</code> or <code>rows</code>
 to limit the cells (values) and rows in the resulting data frame
 after automatic materialization.

@@ -121,7 +121,7 @@ of fallback events.</p>
 <span class="r-in"><span>    <span class="fu"><a href="duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fu">add_one</span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error in rel_find_call(expr[[1]], env, call = call) : </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error in mutate(., b = add_one(a)) : </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   No translation for function `add_one()`.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Sys.setenv(DUCKPLYR_FALLBACK_INFO = TRUE)</span></span></span>
@@ -131,7 +131,7 @@ of fallback events.</p>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fu">add_one</span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Error processing duckplyr query with DuckDB, falling back to dplyr.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `rel_find_call()` at duckplyr/R/translate.R:155:3:</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `mutate()`:</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> No translation for function `add_one()`.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A duckplyr data frame: 2 variables</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       a     b</span>
