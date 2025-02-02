@@ -248,12 +248,11 @@ it’s not needed for the result.
 ``` r
 out <-
   flights |>
-  filter(!is.na(DepDelay), !is.na(ArrDelay)) |>
   mutate(InFlightDelay = ArrDelay - DepDelay) |>
   summarize(
     .by = c(Year, Month),
-    MeanInFlightDelay = mean(InFlightDelay),
-    MedianInFlightDelay = median(InFlightDelay),
+    MeanInFlightDelay = mean(InFlightDelay, na.rm = TRUE),
+    MedianInFlightDelay = median(InFlightDelay, na.rm = TRUE),
   ) |>
   filter(Year < 2024)
 
@@ -270,7 +269,7 @@ out |>
 #> │          mean(#2)         │
 #> │         median(#3)        │
 #> │                           │
-#> │       ~1345825 Rows       │
+#> │       ~6729125 Rows       │
 #> └─────────────┬─────────────┘
 #> ┌─────────────┴─────────────┐
 #> │         PROJECTION        │
@@ -280,7 +279,7 @@ out |>
 #> │       InFlightDelay       │
 #> │       InFlightDelay       │
 #> │                           │
-#> │       ~2691650 Rows       │
+#> │       ~13458250 Rows      │
 #> └─────────────┬─────────────┘
 #> ┌─────────────┴─────────────┐
 #> │         PROJECTION        │
@@ -289,26 +288,7 @@ out |>
 #> │           Month           │
 #> │       InFlightDelay       │
 #> │                           │
-#> │       ~2691650 Rows       │
-#> └─────────────┬─────────────┘
-#> ┌─────────────┴─────────────┐
-#> │         PROJECTION        │
-#> │    ────────────────────   │
-#> │            Year           │
-#> │           Month           │
-#> │          DepDelay         │
-#> │          ArrDelay         │
-#> │                           │
-#> │       ~2691650 Rows       │
-#> └─────────────┬─────────────┘
-#> ┌─────────────┴─────────────┐
-#> │           FILTER          │
-#> │    ────────────────────   │
-#> │ ((NOT (DepDelay IS NULL)) │
-#> │    AND (NOT (ArrDelay IS  │
-#> │           NULL)))         │
-#> │                           │
-#> │       ~2691650 Rows       │
+#> │       ~13458250 Rows      │
 #> └─────────────┬─────────────┘
 #> ┌─────────────┴─────────────┐
 #> │       READ_PARQUET        │
@@ -317,16 +297,16 @@ out |>
 #> │        READ_PARQUET       │
 #> │                           │
 #> │        Projections:       │
-#> │          DepDelay         │
-#> │          ArrDelay         │
 #> │            Year           │
 #> │           Month           │
+#> │          DepDelay         │
+#> │          ArrDelay         │
 #> │                           │
 #> │       File Filters:       │
 #> │  (CAST(Year AS DOUBLE) <  │
 #> │           2024.0)         │
 #> │                           │
-#> │    Scanning Files: 2/2    │
+#> │    Scanning Files: 2/3    │
 #> │                           │
 #> │       ~13458250 Rows      │
 #> └───────────────────────────┘
@@ -337,24 +317,34 @@ out |>
 #> # A duckplyr data frame: 4 variables
 #>     Year Month MeanInFlightDelay MedianInFlightDelay
 #>    <dbl> <dbl>             <dbl>               <dbl>
-#>  1  2022     9             -6.00                  -7
-#>  2  2022     5             -5.11                  -6
-#>  3  2023     5             -6.17                  -7
-#>  4  2023     9             -5.37                  -7
-#>  5  2022     1             -6.88                  -8
-#>  6  2023     4             -4.54                  -6
-#>  7  2022     4             -4.88                  -6
-#>  8  2023     1             -5.06                  -7
+#>  1  2023     4             -4.54                  -6
+#>  2  2022     1             -6.88                  -8
+#>  3  2022     9             -6.00                  -7
+#>  4  2022     5             -5.11                  -6
+#>  5  2022    11             -5.21                  -7
+#>  6  2023     2             -5.93                  -7
+#>  7  2023    10             -6.35                  -7
+#>  8  2022     2             -6.52                  -8
 #>  9  2022    10             -5.99                  -7
-#> 10  2022     2             -6.52                  -8
+#> 10  2023     5             -6.17                  -7
 #> # ℹ more rows
 #>    user  system elapsed 
-#>   0.955   0.377   8.586
+#>   1.093   0.411   8.839
 ```
 
 Over 10M rows analyzed in about 10 seconds over the internet, that’s not
 bad. Of course, working with Parquet, CSV, or JSON files downloaded
-locally is possible as well.
+locally is possible as well. For full compatibility, `na.rm = FALSE` by
+default in the aggregation functions:
+
+``` r
+flights |>
+  summarize(mean(ArrDelay - DepDelay))
+#> # A duckplyr data frame: 1 variable
+#>   `mean(ArrDelay - DepDelay)`
+#>                         <dbl>
+#> 1                          NA
+```
 
 ## Further reading
 
