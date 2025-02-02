@@ -166,6 +166,7 @@ Implemented:
 ```{r}
 duckplyr::duckdb_tibble(a = 1, b = NA, .prudence = "frugal") |>
   mutate(is.na(b), if_else(is.na(b), 0, 1), as.integer(b))
+
 duckplyr::duckdb_tibble(
   a = as.POSIXct("2025-01-11 19:23:46", tz = "UTC"),
   .prudence = "frugal") |>
@@ -202,9 +203,9 @@ duckplyr::duckdb_tibble(
 
 Implemented:
 
-    - `sum(x, na.rm)`, `dplyr::n()`, `dplyr::n_distinct()`
-    - `mean(x, na.rm)`, `median(x, na.rm)`, `sd(x, na.rm)`
-    - `min()`, `max()`, `any()`, `all()`
+- `sum(x, na.rm)`, `dplyr::n()`, `dplyr::n_distinct()`
+- `mean(x, na.rm)`, `median(x, na.rm)`, `sd(x, na.rm)`
+- `min()`, `max()`, `any()`, `all()`
 
 ```{r}
 duckplyr::duckdb_tibble(a = 1:3, b = c(1, 2, 2), .prudence = "frugal") |>
@@ -251,10 +252,10 @@ duckplyr::duckdb_tibble(a = 1:3, b = c(2, 3, 1), .prudence = "frugal") |>
 Most functions in DuckDB rank only by the current row number, whereas in dplyr, ranking is done by a column.
 It will be difficult to provide translations for the following ranking functions.
 
-    - `rank()`, `dplyr::min_rank()`, `dplyr::dense_rank()`
-    - `dplyr::percent_rank()`, `dplyr::cume_dist()`
+- `rank()`, `dplyr::min_rank()`, `dplyr::dense_rank()`
+- `dplyr::percent_rank()`, `dplyr::cume_dist()`
 
-Implementing `dplyr::ntile(n)` is possible.
+Implementing `dplyr::ntile()` is feasible for the `n` argument.
 The only ranking function currently implemented is `dplyr::row_number()`.
 
 ```{r}
@@ -296,6 +297,11 @@ duckplyr::duckdb_tibble(a = 1, .prudence = "frugal") |>
   mutate(suppressWarnings(a + 1))
 ```
 
+### Contributing
+
+Refer to [our contributing guide](https://duckplyr.tidyverse.org/CONTRIBUTING.html#new-translations-for-functions) to learn how to contribute new translations to the package.
+Ideally, duckplyr will also support adding custom translations for functions for the duration of the current R session.
+
 ## Known incompatibilities
 
 This section tracks known incompatibilities between dplyr and duckplyr.
@@ -311,6 +317,7 @@ duckplyr::flights_df() |>
   duckplyr::as_duckdb_tibble() |>
   distinct(day) |>
   summarize(paste(day, collapse = " ")) # fallback
+
 duckplyr::flights_df() |>
   distinct(day) |>
   summarize(paste(day, collapse = " "))
@@ -341,10 +348,13 @@ In duckplyr, this function returns a numeric value also for integers, due to Duc
 ```{r}
 duckplyr::duckdb_tibble(a = 1:100) |>
   summarize(sum(a))
+
 duckplyr::duckdb_tibble(a = 1:1000000) |>
   summarize(sum(a))
+
 tibble(a = 1:100) |>
   summarize(sum(a))
+
 tibble(a = 1:1000000) |>
   summarize(sum(a))
 ```
@@ -372,6 +382,7 @@ For completeness, duckplyr returns a logical for `min()` and `max()` when the in
 ```{r}
 duckplyr::duckdb_tibble(a = c(TRUE, FALSE)) |>
   summarize(min(a), max(a))
+
 tibble(a = c(TRUE, FALSE)) |>
   summarize(min(a), max(a))
 ```
@@ -384,10 +395,13 @@ This is tracked in <https://github.com/tidyverse/duckplyr/issues/572>.
 ```{r error = TRUE}
 duckplyr::duckdb_tibble(a = c(1, 2, NA, 1)) |>
   summarize(n_distinct(a))
+
 duckplyr::duckdb_tibble(a = c(1, 2, NA, 1), .prudence = "frugal") |>
   summarize(n_distinct(a, na.rm = TRUE))
+
 tibble(a = c(1, 2, NA, 1)) |>
   summarize(n_distinct(a))
+
 tibble(a = c(1, 2, NA, 1)) |>
   summarize(n_distinct(a, na.rm = TRUE))
 ```
@@ -399,6 +413,7 @@ This function returns `FALSE` for `NaN` values in duckplyr, while it returns `TR
 ```{r}
 duckplyr::duckdb_tibble(a = c(NA, NaN)) |>
   mutate(is.na(a))
+
 tibble(a = c(NA, NaN)) |>
   mutate(is.na(a))
 ```
@@ -406,9 +421,4 @@ tibble(a = c(NA, NaN)) |>
 ### Other differences
 
 Does the same pipeline give different results with `tibble()` and `duckdb_tibble()`?
-We would love to hear about it!
-
-## Your use case is not supported?
-
-Refer to [our contributing guide](https://duckplyr.tidyverse.org/CONTRIBUTING.html#new-translations-for-functions) to learn how to contribute new translations to the package.
-Ideally, duckplyr will also support adding custom translations for functions for the duration of the current R session.
+We would love to hear about it, please file an [issue](https://github.com/tidyverse/duckplyr/issues/new).
