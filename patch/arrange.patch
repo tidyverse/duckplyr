@@ -16,12 +16,12 @@ diff --git b/R/arrange.R a/R/arrange.R
 +
 +  duckplyr_error <- rel_try(list(name = "arrange", x = .data, args = try_list(dots = dots, .by_group = .by_group)),
 +    #' @section Fallbacks:
-+    #' You cannot use `arrange.duckplyr_df()`
++    #' There is no DuckDB translation in `arrange.duckplyr_df()`
 +    #' - with `.by_group = TRUE`,
 +    #' - providing a value for the `.locale` argument,
 +    #' - providing a value for the `dplyr.legacy_locale` option.
 +    #'
-+    #' If you do the code will fall back to `dplyr::arrange()` without any error.
++    #' These features fall back to [dplyr::arrange()], see `vignette("fallback")` for details.
 +    "{.arg .by_group} = {.value TRUE} not supported" = !identical(.by_group, FALSE),
 +    "{.arg .locale} argument not supported" = !is.null(.locale),
 +    "dplyr.legacy_locale not supported" = isTRUE(getOption("dplyr.legacy_locale")),

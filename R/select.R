@@ -18,11 +18,11 @@ select.duckplyr_df <- function(.data, ...) {
     # We could count and create a zero-col data frame, but we can't
     # create a duckplyr frame from it anyway.
     #' @section Fallbacks:
-    #' You cannot use `select.duckplyr_df()`
+    #' There is no DuckDB translation in `select.duckplyr_df()`
     #' - with no expression,
     #' - nor with a selection that returns no columns.
     #'
-    #' If you do the code will fall back to `dplyr::select()` without any error.
+    #' These features fall back to [dplyr::select()], see `vignette("fallback")` for details.
     "Zero-column result set not supported." = (length(exprs) == 0),
     {
       rel <- duckdb_rel_from_df(.data)

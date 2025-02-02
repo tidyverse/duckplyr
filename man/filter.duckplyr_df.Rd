@@ -38,13 +38,13 @@ unlike base subsetting with \code{[}.
 }
 \section{Fallbacks}{
 
-You cannot use \code{filter.duckplyr_df()}
+There is no DuckDB translation in \code{filter.duckplyr_df()}
 \itemize{
 \item with no filter conditions,
 \item nor for a grouped operation (if \code{.by} is set).
 }
 
-If you do the code will fall back to \code{dplyr::filter()} without any error.
+These features fall back to \code{\link[dplyr:filter]{dplyr::filter()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{

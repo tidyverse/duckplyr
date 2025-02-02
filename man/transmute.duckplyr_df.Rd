@@ -31,12 +31,12 @@ It's superseded because you can perform the same job with \code{mutate(.keep = "
 }
 \section{Fallbacks}{
 
-You cannot use \code{transmute.duckplyr_df()}
+There is no DuckDB translation in \code{transmute.duckplyr_df()}
 \itemize{
 \item with a selection that returns no columns:
 }
 
-If you do the code will fall back to \code{dplyr::transmute()} without any error.
+These features fall back to \code{\link[dplyr:transmute]{dplyr::transmute()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{

@@ -64,12 +64,12 @@ and one column for each of the summary statistics that you have specified.
 }
 \section{Fallbacks}{
 
-You cannot use \code{summarise.duckplyr_df()}
+There is no DuckDB translation in \code{summarise.duckplyr_df()}
 \itemize{
 \item with \code{.groups = "rowwise"}.
 }
 
-If you do the code will fall back to \code{dplyr::summarise()} without any error.
+These features fall back to \code{\link[dplyr:summarise]{dplyr::summarise()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{

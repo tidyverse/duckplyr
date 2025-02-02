@@ -16,10 +16,10 @@ pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
 
   duckplyr_error <- rel_try(list(name = "pull", .data = .data),
     #' @section Fallbacks:
-    #' You cannot use `pull.duckplyr_df()`
+    #' There is no DuckDB translation in `pull.duckplyr_df()`
     #' - with a selection that returns no columns.
     #'
-    #' If you do the code will fall back to `dplyr::pull()` without any error.
+    #' These features fall back to [dplyr::pull()], see `vignette("fallback")` for details.
     "Zero-column result set not supported." = (length(exprs) == 0),
     {
       rel <- duckdb_rel_from_df(.data)

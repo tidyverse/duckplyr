@@ -20,13 +20,13 @@ See "Fallbacks" section for differences in implementation.
 }
 \section{Fallbacks}{
 
-You cannot use \code{setdiff.duckplyr_df()}
+There is no DuckDB translation in \code{setdiff.duckplyr_df()}
 \itemize{
 \item if column names are duplicated in one of the tables,
 \item if column names are different in both tables.
 }
 
-If you do the code will fall back to \code{dplyr::setdiff()} without any error.
+These features fall back to \code{\link[dplyr:setops]{dplyr::setdiff()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{

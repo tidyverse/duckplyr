@@ -9,12 +9,12 @@ left_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
   # Our implementation
   duckplyr_error <- rel_try(list(name = "left_join", x = x, y = y, args = try_list(by = if (!is.null(by) && !is_cross_by(by)) as_join_by(by), copy = copy, keep = keep, na_matches = na_matches, multiple = multiple, unmatched = unmatched, relationship = relationship)),
     #' @section Fallbacks:
-    #' You cannot use `left_join.duckplyr_df()`
+    #' There is no DuckDB translation in `left_join.duckplyr_df()`
     #' - for an implicit cross join,
     #' - for a value of the `multiple` argument that isn't the default `"all"`.
     #' - for a value of the `unmatched` argument that isn't the default `"drop"`.
     #'
-    #' If you do the code will fall back to `dplyr::left_join()` without any error.
+    #' These features fall back to [dplyr::left_join()], see `vignette("fallback")` for details.
 
     "No implicit cross joins for {.code left_join()}" = is_cross_by(by),
     "{.arg multiple} not supported" = !identical(multiple, "all"),

@@ -134,13 +134,13 @@ A \code{full_join()} keeps all observations in \code{x} and \code{y}.
 }
 \section{Fallbacks}{
 
-You cannot use \code{full_join.duckplyr_df()}
+There is no DuckDB translation in \code{full_join.duckplyr_df()}
 \itemize{
 \item for an implicit cross join,
 \item for a value of the \code{multiple} argument that isn't the default \code{"all"}.
 }
 
-If you do the code will fall back to \code{dplyr::full_join()} without any error.
+These features fall back to \code{\link[dplyr:mutate-joins]{dplyr::full_join()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{

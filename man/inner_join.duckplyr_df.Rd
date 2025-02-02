@@ -154,14 +154,14 @@ that have a matching key in \code{y}.
 }
 \section{Fallbacks}{
 
-You cannot use \code{inner_join.duckplyr_df()}
+There is no DuckDB translation in \code{inner_join.duckplyr_df()}
 \itemize{
 \item for an implicit crossjoin,
 \item for a value of the \code{multiple} argument that isn't the default \code{"all"}.
 \item for a value of the \code{unmatched} argument that isn't the default \code{"drop"}.
 }
 
-If you do the code will fall back to \code{dplyr::inner_join()} without any error.
+These features fall back to \code{\link[dplyr:mutate-joins]{dplyr::inner_join()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{

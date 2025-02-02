@@ -9,11 +9,11 @@ full_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
   # Our implementation
   duckplyr_error <- rel_try(list(name = "full_join", x = x, y = y, args = try_list(by = if (!is.null(by) && !is_cross_by(by)) as_join_by(by), copy = copy, keep = keep, na_matches = na_matches, multiple = multiple, relationship = relationship)),
     #' @section Fallbacks:
-    #' You cannot use `full_join.duckplyr_df()`
+    #' There is no DuckDB translation in `full_join.duckplyr_df()`
     #' - for an implicit cross join,
     #' - for a value of the `multiple` argument that isn't the default `"all"`.
     #'
-    #' If you do the code will fall back to `dplyr::full_join()` without any error.
+    #' These features fall back to [dplyr::full_join()], see `vignette("fallback")` for details.
     "No implicit cross joins for {.code full_join()}" = is_cross_by(by),
     "{.arg multiple} not supported" = !identical(multiple, "all"),
     {

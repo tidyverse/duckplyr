@@ -20,12 +20,12 @@ Return the first rows of a data.frame
 }
 \section{Fallbacks}{
 
-You cannot use \code{head.duckplyr_df()}
+There is no DuckDB translation in \code{head.duckplyr_df()}
 \itemize{
 \item with a negative \code{n}.
 }
 
-If you do the code will fall back to \code{head()} without any error.
+These features fall back to \code{\link[=head]{head()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{

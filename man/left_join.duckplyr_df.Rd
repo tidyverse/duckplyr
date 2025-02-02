@@ -153,14 +153,14 @@ A \code{left_join()} keeps all observations in \code{x}.
 }
 \section{Fallbacks}{
 
-You cannot use \code{left_join.duckplyr_df()}
+There is no DuckDB translation in \code{left_join.duckplyr_df()}
 \itemize{
 \item for an implicit cross join,
 \item for a value of the \code{multiple} argument that isn't the default \code{"all"}.
 \item for a value of the \code{unmatched} argument that isn't the default \code{"drop"}.
 }
 
-If you do the code will fall back to \code{dplyr::left_join()} without any error.
+These features fall back to \code{\link[dplyr:mutate-joins]{dplyr::left_join()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{
