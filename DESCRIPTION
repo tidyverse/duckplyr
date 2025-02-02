@@ -59,7 +59,7 @@ Enhances:
     reprex,
     rstudioapi
 Config/Needs/check: anthonynorth/roxyglobals
-Config/Needs/website: krlmlr/tidytemplate@patch-1, dbplyr, rmarkdown
+Config/Needs/website: tidyverse/tidytemplate, dbplyr, rmarkdown
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Config/testthat/start-first: rel_api, tpch, as_duckplyr_df, dplyr-mutate,
