@@ -77,9 +77,9 @@ orders) and compatible types.</p></dd>
     <h2 id="fallbacks">Fallbacks<a class="anchor" aria-label="anchor" href="#fallbacks"></a></h2>
 
 
-<p>You cannot use <code>setdiff.duckplyr_df()</code></p><ul><li><p>if column names are duplicated in one of the tables,</p></li>
+<p>There is no DuckDB translation in <code>setdiff.duckplyr_df()</code></p><ul><li><p>if column names are duplicated in one of the tables,</p></li>
 <li><p>if column names are different in both tables.</p></li>
-</ul><p>If you do the code will fall back to <code><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">dplyr::setdiff()</a></code> without any error.</p>
+</ul><p>These features fall back to <code><a href="https://dplyr.tidyverse.org/reference/setops.html" class="external-link">dplyr::setdiff()</a></code>, see <code><a href="../articles/fallback.html">vignette("fallback")</a></code> for details.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -94,14 +94,14 @@ orders) and compatible types.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A duckplyr data frame: 1 variable</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     2</span>
 <span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">df2</span>, <span class="va">df1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A duckplyr data frame: 1 variable</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     5</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

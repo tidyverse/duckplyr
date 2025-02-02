@@ -126,10 +126,10 @@ can't actually affect the output.</p></dd>
     <h2 id="fallbacks">Fallbacks<a class="anchor" aria-label="anchor" href="#fallbacks"></a></h2>
 
 
-<p>You cannot use <code>count.duckplyr_df()</code></p><ul><li><p>with complex expressions in <code>...</code>,</p></li>
+<p>There is no DuckDB translation in <code>count.duckplyr_df()</code></p><ul><li><p>with complex expressions in <code>...</code>,</p></li>
 <li><p>with <code>.drop = FALSE</code>,</p></li>
 <li><p>with <code>sort = TRUE</code>.</p></li>
-</ul><p>If you do the code will fall back to <code><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">dplyr::count()</a></code> without any error.</p>
+</ul><p>These features fall back to <code><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">dplyr::count()</a></code>, see <code><a href="../articles/fallback.html">vignette("fallback")</a></code> for details.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

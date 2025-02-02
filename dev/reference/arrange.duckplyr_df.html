@@ -115,10 +115,10 @@ help page under the <code>Default locale</code> section.</p></dd>
     <h2 id="fallbacks">Fallbacks<a class="anchor" aria-label="anchor" href="#fallbacks"></a></h2>
 
 
-<p>You cannot use <code>arrange.duckplyr_df()</code></p><ul><li><p>with <code>.by_group = TRUE</code>,</p></li>
+<p>There is no DuckDB translation in <code>arrange.duckplyr_df()</code></p><ul><li><p>with <code>.by_group = TRUE</code>,</p></li>
 <li><p>providing a value for the <code>.locale</code> argument,</p></li>
 <li><p>providing a value for the <code>dplyr.legacy_locale</code> option.</p></li>
-</ul><p>If you do the code will fall back to <code><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">dplyr::arrange()</a></code> without any error.</p>
+</ul><p>These features fall back to <code><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">dplyr::arrange()</a></code>, see <code><a href="../articles/fallback.html">vignette("fallback")</a></code> for details.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

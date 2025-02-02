@@ -197,10 +197,10 @@ see <code>unmatched</code>.</p></dd>
     <h2 id="fallbacks">Fallbacks<a class="anchor" aria-label="anchor" href="#fallbacks"></a></h2>
 
 
-<p>You cannot use <code>left_join.duckplyr_df()</code></p><ul><li><p>for an implicit cross join,</p></li>
+<p>There is no DuckDB translation in <code>left_join.duckplyr_df()</code></p><ul><li><p>for an implicit cross join,</p></li>
 <li><p>for a value of the <code>multiple</code> argument that isn't the default <code>"all"</code>.</p></li>
 <li><p>for a value of the <code>unmatched</code> argument that isn't the default <code>"drop"</code>.</p></li>
-</ul><p>If you do the code will fall back to <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::left_join()</a></code> without any error.</p>
+</ul><p>These features fall back to <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::left_join()</a></code>, see <code><a href="../articles/fallback.html">vignette("fallback")</a></code> for details.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

@@ -273,9 +273,9 @@ achieve this with the usethis package.</p>
 <h2 id="prudence">Prudence<a class="anchor" aria-label="anchor" href="#prudence"></a>
 </h2>
 <p>The default mode for <code><a href="../reference/duckdb_tibble.html">as_duckdb_tibble()</a></code> and
-<code><a href="../reference/duckdb_tibble.html">duckdb_tibble()</a></code> is lavish. This means that the dplyr
-operations are carried out by DuckDB when possible, and also available
-as data frames upon first request. Use
+<code><a href="../reference/duckdb_tibble.html">duckdb_tibble()</a></code> is <code>prudence = "lavish"</code>. This
+means that the dplyr operations are carried out by DuckDB when possible,
+and also available as data frames upon first request. Use
 <code>as_duckdb_tibble(prudence = "frugal")</code> or
 <code>duckdb_tibble(.prudence = "frugal")</code> to avoid materializing
 intermediate data and to ensure that all operations are carried out by
