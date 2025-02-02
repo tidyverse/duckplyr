@@ -5,6 +5,8 @@
 #' than `print()`, and is more focused on human readable output than `str()`.
 #'
 #' @inheritParams dplyr::explain
+#'
+#' @return The input, invisibly.
 #' @examples
 #' library(duckplyr)
 #' df <- duckdb_tibble(x = c(1, 2))

@@ -11,6 +11,9 @@
 
 \item{...}{Other parameters possibly used by generic}
 }
+\value{
+The input, invisibly.
+}
 \description{
 This is a method for the \code{\link[dplyr:explain]{dplyr::explain()}} generic.
 This is a generic function which gives more details about an object
