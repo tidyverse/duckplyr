@@ -8,27 +8,29 @@
 #' dplyr verbs such as [mutate()], [select()] or [filter()]  will use DuckDB.
 #'
 #' `duckdb_tibble()` works like [tibble()], returning a lavish duckplyr data frame by default.
-#' See `vignette("funnel")` for details.
+#' See `vignette("prudence")` for details.
 #'
 #' @param ... For `duckdb_tibble()`, passed on to [tibble()].
 #'   For `as_duckdb_tibble()`, passed on to methods.
-#' @param .prudence,prudence Either a string:
-#'   - `"frugal"`:  a frugal data frame,
-#'   - `"lavish"`: a lavish data frame,
-#'   - `"thrifty"`: allow the materialization up to a maximum size of 1 million cells.
+#' @param .prudence,prudence Controls automatic materialization of data.
 #'
-#' Or a named vector with at least one of
-#'   - `cells` (numeric)
-#'   - `rows` (numeric)
+#'   - `"lavish"`: regardless of size,
+#'   - `"frugal"`: never,
+#'   - `"thrifty"`: up to a maximum size of 1 million cells.
 #'
-#' to allow materialization for data up to a certain size,
-#' measured in cells (values) and rows in the resulting data frame.
+#' The default is `"lavish"` for `duckdb_tibble()` and `as_duckdb_tibble()`,
+#' and may be different for other functions.
+#' See `vignette("prudence")` for more information.
+#'
+#' @section Fine-tuning prudence:
+#' `r lifecycle::badge("experimental")`
+#'
+#' The `prudence` or `.prudence` argument can also be a named numeric vector
+#' with at least one of `cells` or `rows`
+#' to limit the cells (values) and rows in the resulting data frame
+#' after automatic materialization.
+#' If both limits are specified, both are enforced.
 #' The equivalent of `"thrifty"` is `c(cells = 1e6)`.
-#'
-#' If `cells` is specified but not `rows`, `rows` is `Inf`.
-#' If `rows` is specified but not `cells`, `cells` is `Inf`.
-#'
-#' The default is to inherit the prudence of the input.
 #'
 #' @return For `duckdb_tibble()` and `as_duckdb_tibble()`, an object with the following classes:
 #'   - `"prudent_duckplyr_df"` if `.prudence` is not `"lavish"`

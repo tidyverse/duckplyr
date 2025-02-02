@@ -13,7 +13,8 @@ articles:
   navbar: ~
   contents:
   - large
-  - funnel
+  - prudence
+  - fallback
   - limits
   - developers
   - telemetry

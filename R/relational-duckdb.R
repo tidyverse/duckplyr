@@ -65,8 +65,9 @@ duckplyr_macros <- c(
 )
 
 create_default_duckdb_connection <- function() {
-  dbroot <- Sys.getenv("DUCKPLYR_TEMP_DIR", tempdir())
+  dbroot <- Sys.getenv("DUCKPLYR_TEMP_DIR", file.path(tempdir(), "duckplyr"))
   dbdir <- tempfile("duckplyr", tmpdir = dbroot, fileext = ".duckdb")
+  dir.create(dbroot, recursive = TRUE, showWarnings = FALSE)
 
   drv <- duckdb::duckdb(dbdir = dbdir)
   con <- DBI::dbConnect(drv)

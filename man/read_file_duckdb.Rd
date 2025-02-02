@@ -41,9 +41,16 @@ read_file_duckdb(
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{prudence}{Logical, whether to create a frugal duckplyr frame.
-By default, a frugal duckplyr frame, with a limit of one million cells, is created.
-See \code{vignette("funnel")} for details.}
+\item{prudence}{Controls automatic materialization of data.
+\itemize{
+\item \code{"thrifty"}: up to a maximum size of 1 million cells,
+\item \code{"lavish"}: regardless of size,
+\item \code{"frugal"}: never.
+}
+
+The default is \code{"thrifty"} for the ingestion functions,
+and may be different for other functions.
+See \code{vignette("prudence")} for more information.}
 
 \item{options}{Arguments to the DuckDB function
 indicated by \code{table_function}.}
@@ -72,6 +79,18 @@ of the available functions and their options.
 To read multiple files with the same schema,
 pass a wildcard or a character vector to the \code{path} argument,
 }
+\section{Fine-tuning prudence}{
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
+The \code{prudence} or \code{.prudence} argument can also be a named numeric vector
+with at least one of \code{cells} or \code{rows}
+to limit the cells (values) and rows in the resulting data frame
+after automatic materialization.
+If both limits are specified, both are enforced.
+The equivalent of \code{"thrifty"} is \code{c(cells = 1e6)}.
+}
+
 \examples{
 # Create simple CSV file
 path <- tempfile("duckplyr_test_", fileext = ".csv")

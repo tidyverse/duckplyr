@@ -1,6 +1,6 @@
 # Documented in `.github/CONTRIBUTING.md`
 
-rel_find_call <- function(fun, env) {
+rel_find_call <- function(fun, env, call = caller_env()) {
   name <- as.character(fun)
 
   if (name[[1]] == "::") {
@@ -16,12 +16,13 @@ rel_find_call <- function(fun, env) {
   # Remember to update limits.Rmd when adding new functions!
   pkgs <- switch(name,
     # Handled in a special way, not mentioned here
-    # "desc" = c("dplyr", "duckplyr"),
+    "desc" = "dplyr",
+
     "==" = "base",
     "/" = "base",
     "$" = "base", # very special, also with constant folding
     "mean" = "base",
-    "n" = c("dplyr", "duckplyr"),
+    "n" = "dplyr",
     ">" = "base",
     "%in%" = "base",
     "sum" = "base",
@@ -38,7 +39,7 @@ rel_find_call <- function(fun, env) {
     "<" = "base",
     # "[" = "base", # won't implement?
     ">=" = "base",
-    "n_distinct" = c("dplyr", "duckplyr"),
+    "n_distinct" = "dplyr",
     "max" = "base",
     "<=" = "base",
     # "as.numeric" = "base",
@@ -56,7 +57,7 @@ rel_find_call <- function(fun, env) {
     # "round" = "base",
     # "paste0" = "base",
     # "length" = "base",
-    # ".data$" = c("dplyr", "duckplyr"), # implemented
+    # ".data$" = "dplyr",
     "sd" = "stats",
     # "[[" = "base", # won't implement?
     # "gsub" = "base",
@@ -64,35 +65,35 @@ rel_find_call <- function(fun, env) {
     "median" = "stats",
     # "~" = "base", # won't implement?
     # "unique" = "base", # what's the use case?
-    # ".$" = c("dplyr", "duckplyr"), # won't implement?
+    # ".$" = "dplyr",
     # "%>%" = "magrittr", # with the help of magrittr?
     # "as.Date" = "base",
     "as.integer" = "base",
     # "nrow" = "base",
     # "as.factor" = "base",
     # "%<=>%" = "???", # what is this?
-    "row_number" = c("dplyr", "duckplyr"),
+    "row_number" = "dplyr",
     # "rev" = "base", # what's the use case?
     # "seq" = "base", # what's the use case?
     # "sqrt" = "base",
     # "abs" = "base",
-    "if_else" = c("dplyr", "duckplyr"),
+    "if_else" = "dplyr",
     #
     "any" = "base",
     "suppressWarnings" = "base",
-    "lag" = c("dplyr", "duckplyr"),
-    "lead" = c("dplyr", "duckplyr"),
-    "first" = c("dplyr", "duckplyr"),
-    "last" = c("dplyr", "duckplyr"),
-    "nth" = c("dplyr", "duckplyr"),
+    "lag" = "dplyr",
+    "lead" = "dplyr",
+    "first" = "dplyr",
+    "last" = "dplyr",
+    "nth" = "dplyr",
     "log10" = "base",
     "log" = "base",
     "rank" = "base",
-    "min_rank" = c("dplyr", "duckplyr"),
-    "dense_rank" = c("dplyr", "duckplyr"),
-    "percent_rank" = c("dplyr", "duckplyr"),
-    "cume_dist" = c("dplyr", "duckplyr"),
-    "ntile" = c("dplyr", "duckplyr"),
+    "min_rank" = "dplyr",
+    "dense_rank" = "dplyr",
+    "percent_rank" = "dplyr",
+    "cume_dist" = "dplyr",
+    "ntile" = "dplyr",
     "hour" = "lubridate",
     "minute" = "lubridate",
     "second" = "lubridate",
@@ -105,7 +106,7 @@ rel_find_call <- function(fun, env) {
   # Remember to update limits.Rmd when adding new functions!
 
   if (is.null(pkgs)) {
-    cli::cli_abort("No translation for function {.code {name}}.")
+    cli::cli_abort("No translation for function {.fun {name}}.")
   }
 
   # https://github.com/tidyverse/dplyr/pull/7046
@@ -122,9 +123,9 @@ rel_find_call <- function(fun, env) {
   }
 
   if (length(pkgs) == 1) {
-    cli::cli_abort("Function {.code {name}} does not map to {.code {pkgs}::{name}}.")
+    cli::cli_abort("Function {.fun {name}} does not map to {.fun {pkgs}::{name}}.", call = call)
   } else {
-    cli::cli_abort("Function {.code {name}} does not map to the corresponding function in {.pkg {pkgs}}.")
+    cli::cli_abort("Function {.fun {name}} does not map to the corresponding function in {.pkg {pkgs}}.", call = call)
   }
 }
 
@@ -157,15 +158,18 @@ rel_translate_lang <- function(
   # FIXME: Perform constant folding instead
   partition,
   in_window,
-  need_window
+  need_window,
+  call = caller_env()
 ) {
-  pkg_name <- rel_find_call(expr[[1]], env)
+  pkg_name <- rel_find_call(expr[[1]], env, call = call)
   pkg <- pkg_name[[1]]
   name <- pkg_name[[2]]
 
 
   if (name %in% c(">", "<", "==", ">=", "<=")) {
-    if (length(expr) != 3) cli::cli_abort("Expected three expressions for comparison. Got {length(expr)}")
+    if (length(expr) != 3) {
+      cli::cli_abort("Expected three expressions for comparison. Got {length(expr)}", call = call)
+    }
 
     class_left <- infer_class_of_expr(expr[[2]], data)
     class_right <- infer_class_of_expr(expr[[3]], data)
@@ -184,7 +188,7 @@ rel_translate_lang <- function(
   if (!(name %in% c("wday", "strftime", "lag", "lead"))) {
     if (!is.null(names(expr)) && any(names(expr) != "")) {
       # Fix grepl() logic below when allowing matching by argument name
-      cli::cli_abort("Can't translate named argument {.code {name}({names(expr)[names(expr) != ''][[1]]} = )}.")
+      cli::cli_abort("Can't translate named argument {.code {name}({names(expr)[names(expr) != ''][[1]]} = )}.", call = call)
     }
   }
 
@@ -195,17 +199,17 @@ rel_translate_lang <- function(
     # Hack
     "wday" = {
       if (!is.null(pkg) && pkg != "lubridate") {
-        cli::cli_abort("Don't know how to translate {.code {pkg}::{name}}.")
+        cli::cli_abort("Don't know how to translate {.code {pkg}::{name}}.", call = call)
       }
       def <- lubridate::wday
       call <- match.call(def, expr, envir = env)
       args <- as.list(call[-1])
       bad <- !(names(args) %in% c("x"))
       if (any(bad)) {
-        cli::cli_abort("{name}({names(args)[which(bad)[[1]]]} = ) not supported")
+        cli::cli_abort("{name}({names(args)[which(bad)[[1]]]} = ) not supported", call = call)
       }
       if (!is.null(getOption("lubridate.week.start"))) {
-        cli::cli_abort('{.code wday()} with {.code option("lubridate.week.start")} not supported')
+        cli::cli_abort('{.code wday()} with {.code option("lubridate.week.start")} not supported', call = call)
       }
     },
     "strftime" = {
@@ -214,7 +218,7 @@ rel_translate_lang <- function(
       args <- as.list(call[-1])
       bad <- !(names(args) %in% c("x", "format"))
       if (any(bad)) {
-        cli::cli_abort("{name}({names(args)[which(bad)[[1]]]} = ) not supported")
+        cli::cli_abort("{name}({names(args)[which(bad)[[1]]]} = ) not supported", call = call)
       }
     },
     "%in%" = {
@@ -236,7 +240,7 @@ rel_translate_lang <- function(
       }
 
       if (length(values) > 100) {
-        cli::cli_abort("Can't translate {.code {name}} with more than 100 values.")
+        cli::cli_abort("Can't translate {.code {name}} with more than 100 values.", call = call)
       }
 
       consts <- map(values, do_translate)
@@ -257,7 +261,7 @@ rel_translate_lang <- function(
         if (exists(var_name, envir = env)) {
           return(do_translate(get(var_name, env), in_window = in_window))
         } else {
-          cli::cli_abort("internal: object not found, should also be triggered by the dplyr fallback")
+          cli::cli_abort("object not found, should also be triggered by the dplyr fallback", call = call)
         }
       }
     }
@@ -328,7 +332,7 @@ rel_translate_lang <- function(
 
   if (name == "grepl") {
     if (!inherits(args[[1]], "relational_relexpr_constant")) {
-      cli::cli_abort("Only constant patterns are supported in {.code grepl()}")
+      cli::cli_abort("Only constant patterns are supported in {.code grepl()}", call = call)
     }
   }
 
@@ -352,11 +356,14 @@ rel_translate_lang <- function(
 }
 
 rel_translate <- function(
-    quo, data,
-    alias = NULL,
-    partition = NULL,
-    need_window = FALSE,
-    names_forbidden = NULL) {
+  quo,
+  data,
+  alias = NULL,
+  partition = NULL,
+  need_window = FALSE,
+  names_forbidden = NULL,
+  call = caller_env()
+) {
   if (is_expression(quo)) {
     expr <- quo
     env <- baseenv()
@@ -377,7 +384,7 @@ rel_translate <- function(
       #
       symbol = {
         if (as.character(expr) %in% names_forbidden) {
-          cli::cli_abort("Can't reuse summary variable {.var {as.character(expr)}}.")
+          cli::cli_abort("Can't reuse summary variable {.var {as.character(expr)}}.", call = call)
         }
         if (as.character(expr) %in% names(data)) {
           ref <- as.character(expr)
@@ -398,10 +405,11 @@ rel_translate <- function(
         env,
         partition,
         in_window,
-        need_window
+        need_window,
+        call = call
       ),
       #
-      cli::cli_abort("Internal: Unknown type {.val {typeof(expr)}}")
+      cli::cli_abort("Internal: Unknown type {.val {typeof(expr)}}", call = call)
     )
   }
 

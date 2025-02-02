@@ -78,17 +78,17 @@ rel_try <- function(call, rel, ...) {
   cli::cli_abort("Must use a {.code return()} in {.code rel_try()}.", .internal = TRUE)
 }
 
-rel_translate_dots <- function(dots, data) {
+rel_translate_dots <- function(dots, data, call = caller_env()) {
   if (is.null(names(dots))) {
-    map(dots, rel_translate, data)
+    map(dots, rel_translate, data, call = call)
   } else {
-    imap(dots, rel_translate, data = data)
+    imap(dots, rel_translate, data = data, call = call)
   }
 }
 
 # Currently does not support referring to names created during the `summarise()` call.
 # Also has specific support for `across()`.
-rel_translate_dots_summarise <- function(dots, data) {
+rel_translate_dots_summarise <- function(dots, data, call = caller_env()) {
   stopifnot(
     !is.null(names(dots))
   )
@@ -101,10 +101,22 @@ rel_translate_dots_summarise <- function(dots, data) {
 
     if (is.null(expanded)) {
       new <- names(dots)[[.y]]
-      translation <- list(rel_translate(dots[[.y]], alias = new, data, names_forbidden = .x$new))
+      translation <- list(rel_translate(
+        dots[[.y]],
+        alias = new,
+        data,
+        names_forbidden = .x$new,
+        call = call
+      ))
     } else {
       new <- names(expanded)
-      translation <- imap(expanded, function(expr, name) rel_translate(expr, alias = name, data, names_forbidden = .x$new))
+      translation <- imap(expanded, function(expr, name) rel_translate(
+        expr,
+        alias = name,
+        data,
+        names_forbidden = .x$new,
+        call = call
+      ))
     }
 
     list(
@@ -132,7 +144,7 @@ check_prudence <- function(x, duckplyr_error, call = caller_env()) {
       "This operation cannot be carried out by DuckDB, and the input is a frugal duckplyr frame.",
       "*" = duckplyr_error_msg,
       "i" = 'Use {.code compute(prudence = "lavish")} to materialize to temporary storage and continue with {.pkg duckplyr}.',
-      "i" = 'See {.run vignette("funnel")} for other options.'
+      "i" = 'See {.run vignette("prudence")} for other options.'
     ))
   }
 }

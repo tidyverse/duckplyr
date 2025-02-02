@@ -69,7 +69,7 @@ Full compatibility means fewer surprises and less cognitive load for the user.
 With DuckDB as the backend, duckplyr can also handle large data sets that do not fit into RAM, keeping full dplyr compatibility.
 The tools for bringing data into and out of R memory are modeled after the dplyr and dbplyr packages, and are described in the following sections.
 
-See `vignette("funnel")` on eager and lazy data, `vignette("limits")` for limitations in the translation employed by duckplyr, and `?fallback` for more information on fallback.
+See `vignette("prudence")` on eager and lazy data, `vignette("limits")` for limitations in the translation employed by duckplyr, and `?fallback` for more information on fallback.
 
 
 ## To duckplyr
@@ -179,7 +179,7 @@ flights_parquet
 In all cases, the data is read lazily: only the metadata is read initially, and the data is read as required.
 This means that data can be read from files that are larger than the available RAM.
 The Parquet format is particularly efficient for this purpose, as it stores data in a columnar format and allows reading only the columns that are required.
-See `vignette("funnel")` for more details on the concept of lazy data.
+See `vignette("prudence")` for more details on the concept of lazy data.
 
 ## From DuckDB
 
@@ -262,6 +262,20 @@ duckdb_tibble(a = 1) |>
 Just like with `compute.duckplyr_df()`, the return value of `compute_csv()` and `compute_parquet()` is a duckplyr frame that uses the created CSV or Parquet file and can be used in further computations.
 At the time of writing, direct JSON export is not supported.
 
+## Memory usage
+
+Computations carried out by DuckDB allocate RAM in the context of the R process.
+This memory separate from the memory used by R objects, and is managed by DuckDB.
+Limit the memory used by DuckDB by setting a pragma:
+
+```{r}
+read_sql_duckdb("SELECT current_setting('memory_limit') AS memlimit")
+db_exec("PRAGMA memory_limit = '1GB'")
+read_sql_duckdb("SELECT current_setting('memory_limit') AS memlimit")
+```
+
+See [the DuckDB documentation](https://duckdb.org/docs/configuration/overview.html) for other configuration options.
+
 ## The big picture
 
 The functions shown in this vignette allow the construction of data transformation pipelines spanning multiple data sources and data that is too large to fit into memory.
@@ -293,4 +307,4 @@ flights_parquet |>
   group_by(Month)
 ```
 
-See `vignette("funnel")` for the concepts and mechanisms at play.
+See `vignette("prudence")` for the concepts and mechanisms at play.

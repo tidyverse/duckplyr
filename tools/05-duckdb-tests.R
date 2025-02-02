@@ -1,5 +1,7 @@
 source("tools/00-funs.R", echo = TRUE)
 
+Sys.setenv("DUCKPLYR_META_ENABLE" = "TRUE")
+
 pkgload::load_all()
 
 first_line <- paste0(

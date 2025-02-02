@@ -28,12 +28,12 @@ forbidden <- fs::path("R", c(
   "zzz-methods.R",
   "duckplyr-package.R",
   "fallback.R",
+  "prudence.R",
   "head.R",
   "meta.R",
   "n-col.R",
   "overwrite.R",
   "qs.R",
-  "relational-altrep-wrap.R",
   "revdep.R",
   "restore.R",
   "telemetry.R",
@@ -43,10 +43,16 @@ forbidden <- fs::path("R", c(
   sprintf("tpch_raw_oo_%.2d.R", 1:22),
   NULL
 ))
+
+setdiff(forbidden, fs::dir_ls("R"))
+stopifnot(all(forbidden %in% fs::dir_ls("R")))
+
 duckplyr_files <- setdiff(fs::dir_ls("R"), forbidden)
 duckplyr_texts <- map_chr(duckplyr_files, brio::read_file)
 duckplyr_texts <- str_replace_all(duckplyr_texts, "dplyr[$]([a-z_]+)[.]data[.]frame", "\\1_data_frame")
 duckplyr_texts <- str_replace_all(duckplyr_texts, fixed(".duckplyr_df <- function("), ".data.frame <- function(")
+duckplyr_texts <- str_replace(duckplyr_texts, "^", paste0("# begin ", duckplyr_files, "\n"))
+duckplyr_texts <- str_replace(duckplyr_texts, "$", paste0("\n# end ", duckplyr_files, "\n"))
 # Write as single file
 brio::write_lines(duckplyr_texts, ".sync/dplyr-revdep/R/zzz-duckplyr.R")
 

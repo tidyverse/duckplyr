@@ -88,14 +88,14 @@ flights_df()
 #> [38;5;246m#   [1mair_time[22m <dbl>, [1mdistance[22m <dbl>, [1mhour[22m <dbl>, [1mminute[22m <dbl>, [1mtime_hour[22m <dttm>[39m
 
 out <-
-  flights_df() %>%
-  filter(!is.na(arr_delay), !is.na(dep_delay)) %>%
-  mutate(inflight_delay = arr_delay - dep_delay) %>%
+  flights_df() |>
+  filter(!is.na(arr_delay), !is.na(dep_delay)) |>
+  mutate(inflight_delay = arr_delay - dep_delay) |>
   summarize(
     .by = c(year, month),
     mean_inflight_delay = mean(inflight_delay),
     median_inflight_delay = median(inflight_delay),
-  ) %>%
+  ) |>
   filter(month <= 6)
 ```
 
@@ -133,6 +133,23 @@ out
 #> [38;5;250m6[39m  [4m2[24m013     6               -[31m4[39m[31m.[39m[31m24[39m                    -[31m7[39m
 ```
 
+If a computation is not supported by DuckDB, duckplyr will automatically fall back to dplyr.
+
+
+``` r
+flights_df() |>
+  summarize(
+    .by = origin,
+    dest = paste(sort(dest), collapse = " ")
+  )
+#> [38;5;246m# A tibble: 3 × 2[39m
+#>   [1morigin[22m [1mdest[22m                                                                   
+#>   [3m[38;5;246m<chr>[39m[23m  [3m[38;5;246m<chr>[39m[23m                                                                  
+#> [38;5;250m1[39m EWR    ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB AL…
+#> [38;5;250m2[39m LGA    ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL AT…
+#> [38;5;250m3[39m JFK    ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ AB…
+```
+
 Restart R, or call `duckplyr::methods_restore()` to revert to the default dplyr implementation.
 
 
@@ -143,7 +160,7 @@ duckplyr::methods_restore()
 
 ## Analyzing larger-than-memory data
 
-An extended variant of this dataset is also available for download as Parquet files.
+An extended variant of the `nycflights13::flights` dataset is also available for download as Parquet files.
 
 
 ``` r
@@ -157,7 +174,7 @@ urls
 #> [3] "https://blobs.duckdb.org/flight-data-partitioned/Year=2024/data_0.parquet"
 ```
 
-Using the httpfs DuckDB extension, we can query these files directly from R, without even downloading them first.
+Using the [httpfs DuckDB extension](https://duckdb.org/docs/extensions/httpfs/overview.html), we can query these files directly from R, without even downloading them first.
 
 
 ``` r
@@ -167,15 +184,15 @@ db_exec("LOAD httpfs")
 flights <- read_parquet_duckdb(urls)
 ```
 
-Unlike with local data frames, the default is to disallow automatic materialization if the result is too large.
+Like with local data frames, queries on the remote data are executed lazily.
+Unlike with local data frames, the default is to disallow automatic materialization if the result is too large in order to protect memory: the results are not materialized until explicitly requested, with a `collect()` call for instance.
 
 
 ``` r
 nrow(flights)
-#> Error: Materialization would result in 9091 rows, which exceeds the limit of 9090. Use collect() or as_tibble() to materialize.
+#> Error: Materialization would result in more than 9090 rows. Use collect() or as_tibble() to materialize.
 ```
 
-Queries on the remote data are executed lazily, and the results are not materialized until explicitly requested.
 For printing, only the first few rows of the result are fetched.
 
 
@@ -316,19 +333,19 @@ out |>
 #> [38;5;246m# A duckplyr data frame: 4 variables[39m
 #>     [1mYear[22m [1mMonth[22m [1mMeanInFlightDelay[22m [1mMedianInFlightDelay[22m
 #>    [3m[38;5;246m<dbl>[39m[23m [3m[38;5;246m<dbl>[39m[23m             [3m[38;5;246m<dbl>[39m[23m               [3m[38;5;246m<dbl>[39m[23m
-#> [38;5;250m 1[39m  [4m2[24m022    11             -[31m5[39m[31m.[39m[31m21[39m                  -[31m7[39m
-#> [38;5;250m 2[39m  [4m2[24m023    11             -[31m7[39m[31m.[39m[31m10[39m                  -[31m8[39m
-#> [38;5;250m 3[39m  [4m2[24m022     7             -[31m5[39m[31m.[39m[31m13[39m                  -[31m7[39m
-#> [38;5;250m 4[39m  [4m2[24m022     8             -[31m5[39m[31m.[39m[31m27[39m                  -[31m7[39m
-#> [38;5;250m 5[39m  [4m2[24m023     4             -[31m4[39m[31m.[39m[31m54[39m                  -[31m6[39m
-#> [38;5;250m 6[39m  [4m2[24m022     1             -[31m6[39m[31m.[39m[31m88[39m                  -[31m8[39m
-#> [38;5;250m 7[39m  [4m2[24m023    12             -[31m7[39m[31m.[39m[31m71[39m                  -[31m8[39m
-#> [38;5;250m 8[39m  [4m2[24m023     3             -[31m4[39m[31m.[39m[31m0[39m[31m6[39m                  -[31m6[39m
-#> [38;5;250m 9[39m  [4m2[24m023     6             -[31m4[39m[31m.[39m[31m35[39m                  -[31m6[39m
+#> [38;5;250m 1[39m  [4m2[24m022     9             -[31m6[39m[31m.[39m[31m00[39m                  -[31m7[39m
+#> [38;5;250m 2[39m  [4m2[24m022     5             -[31m5[39m[31m.[39m[31m11[39m                  -[31m6[39m
+#> [38;5;250m 3[39m  [4m2[24m023     5             -[31m6[39m[31m.[39m[31m17[39m                  -[31m7[39m
+#> [38;5;250m 4[39m  [4m2[24m023     9             -[31m5[39m[31m.[39m[31m37[39m                  -[31m7[39m
+#> [38;5;250m 5[39m  [4m2[24m022     1             -[31m6[39m[31m.[39m[31m88[39m                  -[31m8[39m
+#> [38;5;250m 6[39m  [4m2[24m023     4             -[31m4[39m[31m.[39m[31m54[39m                  -[31m6[39m
+#> [38;5;250m 7[39m  [4m2[24m022     4             -[31m4[39m[31m.[39m[31m88[39m                  -[31m6[39m
+#> [38;5;250m 8[39m  [4m2[24m023     1             -[31m5[39m[31m.[39m[31m0[39m[31m6[39m                  -[31m7[39m
+#> [38;5;250m 9[39m  [4m2[24m022    10             -[31m5[39m[31m.[39m[31m99[39m                  -[31m7[39m
 #> [38;5;250m10[39m  [4m2[24m022     2             -[31m6[39m[31m.[39m[31m52[39m                  -[31m8[39m
 #> [38;5;246m# ℹ more rows[39m
 #>    user  system elapsed 
-#>   1.502   0.463   9.568
+#>   0.955   0.377   8.586
 ```
 
 Over 10M rows analyzed in about 10 seconds over the internet, that's not bad.
@@ -339,7 +356,9 @@ Of course, working with Parquet, CSV, or JSON files downloaded locally is possib
 
 - `vignette("large")`: Tools for working with large data
 
-- `vignette("funnel")`: How duckplyr can help protect memory when working with large data
+- `vignette("prudence")`: How duckplyr can help protect memory when working with large data
+
+- `vignette("fallback")`: How the fallback to dplyr works internally
 
 - `vignette("limits")`: Translation of dplyr employed by duckplyr, and current limitations
 

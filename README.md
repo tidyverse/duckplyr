@@ -93,14 +93,14 @@ flights_df()
 #> #   air_time <dbl>, distance <dbl>, hour <dbl>, minute <dbl>, time_hour <dttm>
 
 out <-
-  flights_df() %>%
-  filter(!is.na(arr_delay), !is.na(dep_delay)) %>%
-  mutate(inflight_delay = arr_delay - dep_delay) %>%
+  flights_df() |>
+  filter(!is.na(arr_delay), !is.na(dep_delay)) |>
+  mutate(inflight_delay = arr_delay - dep_delay) |>
   summarize(
     .by = c(year, month),
     mean_inflight_delay = mean(inflight_delay),
     median_inflight_delay = median(inflight_delay),
-  ) %>%
+  ) |>
   filter(month <= 6)
 ```
 
@@ -135,6 +135,23 @@ out
 #> 6  2013     6               -4.24                    -7
 ```
 
+If a computation is not supported by DuckDB, duckplyr will automatically
+fall back to dplyr.
+
+``` r
+flights_df() |>
+  summarize(
+    .by = origin,
+    dest = paste(sort(dest), collapse = " ")
+  )
+#> # A tibble: 3 × 2
+#>   origin dest                                                                   
+#>   <chr>  <chr>                                                                  
+#> 1 EWR    ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB AL…
+#> 2 LGA    ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL AT…
+#> 3 JFK    ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ AB…
+```
+
 Restart R, or call `duckplyr::methods_restore()` to revert to the
 default dplyr implementation.
 
@@ -145,8 +162,8 @@ duckplyr::methods_restore()
 
 ## Analyzing larger-than-memory data
 
-An extended variant of this dataset is also available for download as
-Parquet files.
+An extended variant of the `nycflights13::flights` dataset is also
+available for download as Parquet files.
 
 ``` r
 year <- 2022:2024
@@ -159,8 +176,10 @@ urls
 #> [3] "https://blobs.duckdb.org/flight-data-partitioned/Year=2024/data_0.parquet"
 ```
 
-Using the httpfs DuckDB extension, we can query these files directly
-from R, without even downloading them first.
+Using the [httpfs DuckDB
+extension](https://duckdb.org/docs/extensions/httpfs/overview.html), we
+can query these files directly from R, without even downloading them
+first.
 
 ``` r
 db_exec("INSTALL httpfs")
@@ -169,17 +188,18 @@ db_exec("LOAD httpfs")
 flights <- read_parquet_duckdb(urls)
 ```
 
-Unlike with local data frames, the default is to disallow automatic
-materialization if the result is too large.
+Like with local data frames, queries on the remote data are executed
+lazily. Unlike with local data frames, the default is to disallow
+automatic materialization if the result is too large in order to protect
+memory: the results are not materialized until explicitly requested,
+with a `collect()` call for instance.
 
 ``` r
 nrow(flights)
-#> Error: Materialization would result in 9091 rows, which exceeds the limit of 9090. Use collect() or as_tibble() to materialize.
+#> Error: Materialization would result in more than 9090 rows. Use collect() or as_tibble() to materialize.
 ```
 
-Queries on the remote data are executed lazily, and the results are not
-materialized until explicitly requested. For printing, only the first
-few rows of the result are fetched.
+For printing, only the first few rows of the result are fetched.
 
 ``` r
 flights
@@ -317,19 +337,19 @@ out |>
 #> # A duckplyr data frame: 4 variables
 #>     Year Month MeanInFlightDelay MedianInFlightDelay
 #>    <dbl> <dbl>             <dbl>               <dbl>
-#>  1  2022    11             -5.21                  -7
-#>  2  2023    11             -7.10                  -8
-#>  3  2022     7             -5.13                  -7
-#>  4  2022     8             -5.27                  -7
-#>  5  2023     4             -4.54                  -6
-#>  6  2022     1             -6.88                  -8
-#>  7  2023    12             -7.71                  -8
-#>  8  2023     3             -4.06                  -6
-#>  9  2023     6             -4.35                  -6
+#>  1  2022     9             -6.00                  -7
+#>  2  2022     5             -5.11                  -6
+#>  3  2023     5             -6.17                  -7
+#>  4  2023     9             -5.37                  -7
+#>  5  2022     1             -6.88                  -8
+#>  6  2023     4             -4.54                  -6
+#>  7  2022     4             -4.88                  -6
+#>  8  2023     1             -5.06                  -7
+#>  9  2022    10             -5.99                  -7
 #> 10  2022     2             -6.52                  -8
 #> # ℹ more rows
 #>    user  system elapsed 
-#>   1.502   0.463   9.568
+#>   0.955   0.377   8.586
 ```
 
 Over 10M rows analyzed in about 10 seconds over the internet, that’s not
@@ -341,8 +361,11 @@ locally is possible as well.
 - [`vignette("large")`](https://duckplyr.tidyverse.org/dev/articles/large.html):
   Tools for working with large data
 
-- [`vignette("funnel")`](https://duckplyr.tidyverse.org/dev/articles/funnel.html):
+- [`vignette("prudence")`](https://duckplyr.tidyverse.org/dev/articles/prudence.html):
   How duckplyr can help protect memory when working with large data
+
+- [`vignette("fallback")`](https://duckplyr.tidyverse.org/dev/articles/fallback.html):
+  How the fallback to dplyr works internally
 
 - [`vignette("limits")`](https://duckplyr.tidyverse.org/dev/articles/limits.html):
   Translation of dplyr employed by duckplyr, and current limitations

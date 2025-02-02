@@ -1,5 +1,48 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9927 (2025-02-01)
+
+## Bug fixes
+
+- No longer support translation of `duckplyr::nth()` and other functions that were previously reexported (#551).
+
+- Correct criterion for inclusion of `meta.R` (#539).
+
+## Features
+
+- Handle `dplyr::desc()` (#550).
+
+- Prudence as concept and as argument (#511, #547).
+
+- Implement argument matching for `funnel` (#546).
+
+- New `funnel = "drip"` (#541).
+
+- `duckdb_tibble()`, `as_duckdb_tibble()` and `collect()` use `new_duckdb_tibble()` (#540).
+
+- `duckdb_tibble()` checks if columns can be represented in DuckDB (#537).
+
+## Chore
+
+- Sync (#556).
+
+- Move code.
+
+- Add prefix to dplyr generated helper files, and skip if env var is set (#538).
+
+## Documentation
+
+- Small README tweaks (#543).
+
+- Document limiting memory usage (#472, #548).
+
+- Tweak funneling (#545).
+
+## Testing
+
+- Snapshot updates (@1741643+krlmlr).
+
+
 # duckplyr 0.99.99.9926 (2025-01-31)
 
 ## Features
