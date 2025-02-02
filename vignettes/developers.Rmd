@@ -38,23 +38,26 @@ library(dplyr)
 conflict_prefer("filter", "dplyr")
 ```
 
-## External data frame
+## Introduction
 
-To enable duckplyr for individual data frames instead of session-wide,
+The default behavior of duckplyr is to enable itself for all data frames in the session.
+This happens when the package is attached with `library(duckplyr)`, or by calling `methods_overwrite()`.
+To enable duckplyr for individual data frames instead of session-wide, it is sufficient to prefix all calls to duckplyr functions with `duckplyr::` and not attach the package.
+Alternatively, `methods_restore()` can be called to undo the session-wide overwrite after `library(duckplyr)`.
 
-- do *not* load duckplyr with `library()`.
-- use `duckplyr::as_duckdb_tibble()` as the first step in your pipe, without attaching the package.
+## External data with explicit qualification
+
+The following example uses `duckplyr::as_duckdb_tibble()` to convert a data frame to a duckplyr frame and to enable duckplyr operation.
 
 ```{r}
 lazy <-
   duckplyr::flights_df() |>
   duckplyr::as_duckdb_tibble() |>
-  filter(!is.na(arr_delay), !is.na(dep_delay)) |>
   mutate(inflight_delay = arr_delay - dep_delay) |>
   summarize(
     .by = c(year, month),
-    mean_inflight_delay = mean(inflight_delay),
-    median_inflight_delay = median(inflight_delay),
+    mean_inflight_delay = mean(inflight_delay, na.rm = TRUE),
+    median_inflight_delay = median(inflight_delay, na.rm = TRUE),
   ) |>
   filter(month <= 6)
 ```
@@ -63,6 +66,7 @@ The result is a tibble, with its own class.
 
 ```{r}
 class(lazy)
+
 names(lazy)
 ```
 
@@ -87,15 +91,35 @@ After the computation has been carried out, the results are preserved and availa
 lazy
 ```
 
-## Own data
+## Restoring dplyr methods
 
-Construct duckplyr frames directly with `duckplyr::duckdb_tibble()`:
+The same can be achieved by calling `methods_restore()` after `library(duckplyr)`.
 
 ```{r}
-data <- duckplyr::duckdb_tibble(
-  x = 1:10,
+library(duckplyr)
+
+methods_restore()
+```
+
+If the input is a plain data frame, duckplyr is not involved.
+
+```{r error = TRUE}
+lazy_atteched <-
+  flights_df() |>
+  mutate(inflight_delay = arr_delay - dep_delay) |>
+  explain()
+```
+
+
+## Own data
+
+Construct duckplyr frames directly with `duckdb_tibble()`:
+
+```{r}
+data <- duckdb_tibble(
+  x = 1:3,
   y = 5,
-  z = letters[1:10]
+  z = letters[1:3]
 )
 data
 ```
@@ -114,23 +138,4 @@ The recipe below shows how to achieve this with the usethis package.
     - Import the duckplyr function with `usethis::use_import_from("duckplyr", "as_duckdb_tibble")`
     - Import the dplyr function with `usethis::use_import_from("dplyr", "filter")`
 
-Learn more about usethis at <https://usethis.r-lib.org/>.
-
-
-## Prudence
-
-The default mode for `as_duckdb_tibble()` and `duckdb_tibble()` is `prudence = "lavish"`.
-This means that the dplyr operations are carried out by DuckDB when possible, and also available as data frames upon first request.
-Use `as_duckdb_tibble(prudence = "frugal")` or `duckdb_tibble(.prudence = "frugal")` to avoid materializing intermediate data and to ensure that all operations are carried out by DuckDB or fail.
-Prudence can also limit the number of rows or cells that are materialized:
-
-```{r}
-data <- duckplyr::duckdb_tibble(x = 1:5, .prudence = c(rows = 3))
-data
-```
-
-```{r error = TRUE}
-nrow(data)
-```
-
-Learn more about prudence in `vignette("prudence")`, about fallbacks to dplyr in `vignette("fallback")`, and about the translation employed by duckplyr in `vignette("limits")`.
+Learn more about prudence in `vignette("prudence")`, about fallbacks to dplyr in `vignette("fallback")`, and about the translation employed by duckplyr in `vignette("limits")`, and about the usethis package at <https://usethis.r-lib.org/>.
