@@ -1,5 +1,52 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 0.99.99.9929 (2025-02-02)
+
+## Features
+
+- Remove support for edge case in `sum()`, `any()` and `all()` for performance (#573).
+
+## Chore
+
+- Giving up.
+
+- Clean cache.
+
+## Documentation
+
+- Final tweaks.
+
+- Try fork.
+
+- Fix width for articles.
+
+- Ideal width for Firefox.
+
+- Review prudence vignette (#577).
+
+- Review large vignette (#576).
+
+- Dev vignette (#574).
+
+- Review limits vignette (#582).
+
+- Review fallback vignette (#575).
+
+- Stable.
+
+- Final tweaks.
+
+- Change wording for fallback in method help pages (#535).
+
+- Add footnote on prudence.
+
+- Add one-paragraph intro (#549).
+
+## Testing
+
+- Snapshot updates (@1741643+krlmlr).
+
+
 # duckplyr 0.99.99.9928 (2025-02-02)
 
 ## Features
