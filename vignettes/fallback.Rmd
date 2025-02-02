@@ -127,13 +127,14 @@ fallback %>%
   explain()
 ```
 
-The final plan now consists of two operations: a data frame scan, and a projection (removing the `a` column).
-The data frame scan is the result of the `mutate()` step, which at this stage already has been executed by dplyr.
+The final plan now only consists of a data frame scan.
+This is the result of the `mutate()` step, which at this stage already has been executed by dplyr.
 
 Converting the final object to a data frame triggers the rest of the computation:
 
 ```{r}
 fallback %>% collect()
+
 duckplyr::last_rel()
 ```
 
