@@ -8,6 +8,7 @@
 #'
 #' @inheritParams dplyr::compute
 #' @inheritParams duckdb_tibble
+#' @param x A duckplyr frame.
 #' @param name The name of the table to store the result in.
 #' @param schema_name The schema to store the result in, defaults to the current schema.
 #' @param temporary Set to `FALSE` to store the result in a permanent table.
@@ -23,6 +24,8 @@
 #' See `vignette("prudence")` for more information.
 #'
 # @inheritSection duckdb_tibble Fine-tuning prudence # Omitting here, too much detail
+#'
+#' @return A duckplyr frame.
 #'
 #' @examples
 #' library(duckplyr)

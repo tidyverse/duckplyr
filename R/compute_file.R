@@ -9,11 +9,14 @@
 #'
 #' @inheritParams rlang::args_dots_empty
 #' @inheritParams compute.duckplyr_df
+#' @param x A duckplyr frame.
 #' @param path The path to store the result in.
 #' @param options A list of additional options to pass to create the storage format,
 #'   see <https://duckdb.org/docs/data/parquet/overview#writing-to-parquet-files>
 #'   or <https://duckdb.org/docs/data/csv/overview#writing-using-the-copy-statement>
 #'   for details.
+#'
+#' @return A duckplyr frame.
 #'
 #' @export
 #' @examples

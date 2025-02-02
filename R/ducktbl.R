@@ -7,12 +7,11 @@
 #' For such objects,
 #' dplyr verbs such as [mutate()], [select()] or [filter()]  will use DuckDB.
 #'
-#' `duckdb_tibble()` works like [tibble()], returning a lavish duckplyr data frame by default.
-#' See `vignette("prudence")` for details.
+#' `duckdb_tibble()` works like [tibble()].
 #'
 #' @param ... For `duckdb_tibble()`, passed on to [tibble()].
 #'   For `as_duckdb_tibble()`, passed on to methods.
-#' @param .prudence,prudence Controls automatic materialization of data.
+#' @param prudence,.prudence Controls automatic materialization of data.
 #'
 #'   - `"lavish"`: regardless of size,
 #'   - `"frugal"`: never,
@@ -25,7 +24,7 @@
 #' @section Fine-tuning prudence:
 #' `r lifecycle::badge("experimental")`
 #'
-#' The `prudence` or `.prudence` argument can also be a named numeric vector
+#' The `prudence` argument can also be a named numeric vector
 #' with at least one of `cells` or `rows`
 #' to limit the cells (values) and rows in the resulting data frame
 #' after automatic materialization.
@@ -33,7 +32,7 @@
 #' The equivalent of `"thrifty"` is `c(cells = 1e6)`.
 #'
 #' @return For `duckdb_tibble()` and `as_duckdb_tibble()`, an object with the following classes:
-#'   - `"prudent_duckplyr_df"` if `.prudence` is not `"lavish"`
+#'   - `"prudent_duckplyr_df"` if `prudence` is not `"lavish"`
 #'   - `"duckplyr_df"`
 #'   - Classes of a [tibble]
 #'

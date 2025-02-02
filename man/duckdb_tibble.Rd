@@ -16,7 +16,9 @@ is_duckdb_tibble(x)
 \item{...}{For \code{duckdb_tibble()}, passed on to \code{\link[tibble:tibble]{tibble::tibble()}}.
 For \code{as_duckdb_tibble()}, passed on to methods.}
 
-\item{.prudence, prudence}{Controls automatic materialization of data.
+\item{x}{The object to convert or to test.}
+
+\item{prudence, .prudence}{Controls automatic materialization of data.
 \itemize{
 \item \code{"lavish"}: regardless of size,
 \item \code{"frugal"}: never,
@@ -26,13 +28,11 @@ For \code{as_duckdb_tibble()}, passed on to methods.}
 The default is \code{"lavish"} for \code{duckdb_tibble()} and \code{as_duckdb_tibble()},
 and may be different for other functions.
 See \code{vignette("prudence")} for more information.}
-
-\item{x}{The object to convert or to test.}
 }
 \value{
 For \code{duckdb_tibble()} and \code{as_duckdb_tibble()}, an object with the following classes:
 \itemize{
-\item \code{"prudent_duckplyr_df"} if \code{.prudence} is not \code{"lavish"}
+\item \code{"prudent_duckplyr_df"} if \code{prudence} is not \code{"lavish"}
 \item \code{"duckplyr_df"}
 \item Classes of a \link[tibble:tibble]{tibble::tibble}
 }
@@ -46,8 +46,7 @@ This ensures that dplyr methods are dispatched correctly.
 For such objects,
 dplyr verbs such as \code{\link[dplyr:mutate]{dplyr::mutate()}}, \code{\link[dplyr:select]{dplyr::select()}} or \code{\link[dplyr:filter]{dplyr::filter()}}  will use DuckDB.
 
-\code{duckdb_tibble()} works like \code{\link[tibble:tibble]{tibble::tibble()}}, returning a lavish duckplyr data frame by default.
-See \code{vignette("prudence")} for details.
+\code{duckdb_tibble()} works like \code{\link[tibble:tibble]{tibble::tibble()}}.
 
 \code{as_duckdb_tibble()} converts a data frame or a dplyr lazy table to a duckplyr data frame.
 This is a generic function that can be overridden for custom classes.
@@ -58,7 +57,7 @@ This is a generic function that can be overridden for custom classes.
 
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-The \code{prudence} or \code{.prudence} argument can also be a named numeric vector
+The \code{prudence} argument can also be a named numeric vector
 with at least one of \code{cells} or \code{rows}
 to limit the cells (values) and rows in the resulting data frame
 after automatic materialization.

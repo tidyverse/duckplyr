@@ -12,8 +12,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 coverage](https://codecov.io/gh/tidyverse/duckplyr/graph/badge.svg)](https://app.codecov.io/gh/tidyverse/duckplyr)
 <!-- badges: end -->
 
-> A **drop-in replacement** for dplyr, powered by DuckDB for **fast
-> operation**.
+> A **drop-in replacement** for dplyr, powered by DuckDB for **speed**.
 
 [dplyr](https://dplyr.tidyverse.org/) is the grammar of data
 manipulation in the tidyverse. The duckplyr package will run all of your
@@ -56,10 +55,10 @@ for the entire session.
 ``` r
 library(conflicted)
 library(duckplyr)
+#> Loading required package: dplyr
+#> ✔ Overwriting dplyr methods with duckplyr methods.
+#> ℹ Turn off with `duckplyr::methods_restore()`.
 ```
-
-    #> ✔ Overwriting dplyr methods with duckplyr methods.
-    #> ℹ Turn off with `duckplyr::methods_restore()`.
 
 ``` r
 conflict_prefer("filter", "dplyr", quiet = TRUE)
@@ -74,23 +73,24 @@ to work around a current limitation of duckplyr, see
 ``` r
 flights_df()
 #> # A tibble: 336,776 × 19
-#>     year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier
-#>    <int> <int> <int>    <int>      <int>   <dbl>   <int>   <int>   <dbl> <chr>  
-#>  1  2013     1     1      517        515       2     830     819      11 UA     
-#>  2  2013     1     1      533        529       4     850     830      20 UA     
-#>  3  2013     1     1      542        540       2     923     850      33 AA     
-#>  4  2013     1     1      544        545      -1    1004    1022     -18 B6     
-#>  5  2013     1     1      554        600      -6     812     837     -25 DL     
-#>  6  2013     1     1      554        558      -4     740     728      12 UA     
-#>  7  2013     1     1      555        600      -5     913     854      19 B6     
-#>  8  2013     1     1      557        600      -3     709     723     -14 EV     
-#>  9  2013     1     1      557        600      -3     838     846      -8 B6     
-#> 10  2013     1     1      558        600      -2     753     745       8 AA     
+#>     year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵
+#>    <int> <int> <int>    <int>      <int>   <dbl>   <int>   <int>   <dbl>
+#>  1  2013     1     1      517        515       2     830     819      11
+#>  2  2013     1     1      533        529       4     850     830      20
+#>  3  2013     1     1      542        540       2     923     850      33
+#>  4  2013     1     1      544        545      -1    1004    1022     -18
+#>  5  2013     1     1      554        600      -6     812     837     -25
+#>  6  2013     1     1      554        558      -4     740     728      12
+#>  7  2013     1     1      555        600      -5     913     854      19
+#>  8  2013     1     1      557        600      -3     709     723     -14
+#>  9  2013     1     1      557        600      -3     838     846      -8
+#> 10  2013     1     1      558        600      -2     753     745       8
 #> # ℹ 336,766 more rows
-#> # ℹ abbreviated names: ¹​sched_dep_time, ²​dep_delay, ³​arr_time, ⁴​sched_arr_time,
-#> #   ⁵​arr_delay
-#> # ℹ 9 more variables: flight <int>, tailnum <chr>, origin <chr>, dest <chr>,
-#> #   air_time <dbl>, distance <dbl>, hour <dbl>, minute <dbl>, time_hour <dttm>
+#> # ℹ abbreviated names: ¹​sched_dep_time, ²​dep_delay, ³​arr_time,
+#> #   ⁴​sched_arr_time, ⁵​arr_delay
+#> # ℹ 10 more variables: carrier <chr>, flight <int>, tailnum <chr>,
+#> #   origin <chr>, dest <chr>, air_time <dbl>, distance <dbl>,
+#> #   hour <dbl>, minute <dbl>, time_hour <dttm>
 
 out <-
   flights_df() |>
@@ -116,7 +116,7 @@ starts the computation:
 
 ``` r
 out$month
-#> [1] 4 2 1 5 3 6
+#> [1] 1 2 3 4 5 6
 ```
 
 Note that, unlike dplyr, the results are not ordered, see `?config` for
@@ -127,11 +127,11 @@ out
 #> # A tibble: 6 × 4
 #>    year month mean_inflight_delay median_inflight_delay
 #>   <int> <int>               <dbl>                 <dbl>
-#> 1  2013     4               -2.67                    -5
+#> 1  2013     1               -3.86                    -5
 #> 2  2013     2               -5.15                    -6
-#> 3  2013     1               -3.86                    -5
-#> 4  2013     5               -9.37                   -10
-#> 5  2013     3               -7.36                    -9
+#> 3  2013     3               -7.36                    -9
+#> 4  2013     4               -2.67                    -5
+#> 5  2013     5               -9.37                   -10
 #> 6  2013     6               -4.24                    -7
 ```
 
@@ -142,14 +142,14 @@ fall back to dplyr.
 flights_df() |>
   summarize(
     .by = origin,
-    dest = paste(sort(dest), collapse = " ")
+    dest = paste(sort(unique(dest)), collapse = " ")
   )
 #> # A tibble: 3 × 2
-#>   origin dest                                                                   
-#>   <chr>  <chr>                                                                  
-#> 1 EWR    ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB ALB AL…
-#> 2 LGA    ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL ATL AT…
-#> 3 JFK    ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ ABQ AB…
+#>   origin dest                                                           
+#>   <chr>  <chr>                                                          
+#> 1 EWR    ALB ANC ATL AUS AVL BDL BNA BOS BQN BTV BUF BWI BZN CAE CHS CL…
+#> 2 LGA    ATL AVL BGR BHM BNA BOS BTV BUF BWI CAE CAK CHO CHS CLE CLT CM…
+#> 3 JFK    ABQ ACK ATL AUS BHM BNA BOS BQN BTV BUF BUR BWI CHS CLE CLT CM…
 ```
 
 Restart R, or call `duckplyr::methods_restore()` to revert to the
@@ -170,10 +170,13 @@ year <- 2022:2024
 base_url <- "https://blobs.duckdb.org/flight-data-partitioned/"
 files <- paste0("Year=", year, "/data_0.parquet")
 urls <- paste0(base_url, files)
-urls
-#> [1] "https://blobs.duckdb.org/flight-data-partitioned/Year=2022/data_0.parquet"
-#> [2] "https://blobs.duckdb.org/flight-data-partitioned/Year=2023/data_0.parquet"
-#> [3] "https://blobs.duckdb.org/flight-data-partitioned/Year=2024/data_0.parquet"
+tibble(urls)
+#> # A tibble: 3 × 1
+#>   urls                                                                  
+#>   <chr>                                                                 
+#> 1 https://blobs.duckdb.org/flight-data-partitioned/Year=2022/data_0.par…
+#> 2 https://blobs.duckdb.org/flight-data-partitioned/Year=2023/data_0.par…
+#> 3 https://blobs.duckdb.org/flight-data-partitioned/Year=2024/data_0.par…
 ```
 
 Using the [httpfs DuckDB
@@ -204,30 +207,30 @@ For printing, only the first few rows of the result are fetched.
 ``` r
 flights
 #> # A duckplyr data frame: 110 variables
-#>     Year Quarter Month DayofMonth DayOfWeek FlightDate Reporti…¹ DOT_I…² IATA_…³
-#>    <dbl>   <dbl> <dbl>      <dbl>     <dbl> <date>     <chr>       <dbl> <chr>  
-#>  1  2022       1     1         14         5 2022-01-14 YX          20452 YX     
-#>  2  2022       1     1         15         6 2022-01-15 YX          20452 YX     
-#>  3  2022       1     1         16         7 2022-01-16 YX          20452 YX     
-#>  4  2022       1     1         17         1 2022-01-17 YX          20452 YX     
-#>  5  2022       1     1         18         2 2022-01-18 YX          20452 YX     
-#>  6  2022       1     1         19         3 2022-01-19 YX          20452 YX     
-#>  7  2022       1     1         20         4 2022-01-20 YX          20452 YX     
-#>  8  2022       1     1         21         5 2022-01-21 YX          20452 YX     
-#>  9  2022       1     1         22         6 2022-01-22 YX          20452 YX     
-#> 10  2022       1     1         23         7 2022-01-23 YX          20452 YX     
+#>     Year Quarter Month DayofMonth DayOfWeek FlightDate Reporti…¹ DOT_I…²
+#>    <dbl>   <dbl> <dbl>      <dbl>     <dbl> <date>     <chr>       <dbl>
+#>  1  2022       1     1         14         5 2022-01-14 YX          20452
+#>  2  2022       1     1         15         6 2022-01-15 YX          20452
+#>  3  2022       1     1         16         7 2022-01-16 YX          20452
+#>  4  2022       1     1         17         1 2022-01-17 YX          20452
+#>  5  2022       1     1         18         2 2022-01-18 YX          20452
+#>  6  2022       1     1         19         3 2022-01-19 YX          20452
+#>  7  2022       1     1         20         4 2022-01-20 YX          20452
+#>  8  2022       1     1         21         5 2022-01-21 YX          20452
+#>  9  2022       1     1         22         6 2022-01-22 YX          20452
+#> 10  2022       1     1         23         7 2022-01-23 YX          20452
 #> # ℹ more rows
-#> # ℹ abbreviated names: ¹​Reporting_Airline, ²​DOT_ID_Reporting_Airline,
-#> #   ³​IATA_CODE_Reporting_Airline
-#> # ℹ 101 more variables: Tail_Number <chr>,
-#> #   Flight_Number_Reporting_Airline <dbl>, OriginAirportID <dbl>,
-#> #   OriginAirportSeqID <dbl>, OriginCityMarketID <dbl>, Origin <chr>,
-#> #   OriginCityName <chr>, OriginState <chr>, OriginStateFips <chr>,
-#> #   OriginStateName <chr>, OriginWac <dbl>, DestAirportID <dbl>,
-#> #   DestAirportSeqID <dbl>, DestCityMarketID <dbl>, Dest <chr>,
-#> #   DestCityName <chr>, DestState <chr>, DestStateFips <chr>,
-#> #   DestStateName <chr>, DestWac <dbl>, CRSDepTime <chr>, DepTime <chr>,
-#> #   DepDelay <dbl>, DepDelayMinutes <dbl>, DepDel15 <dbl>, …
+#> # ℹ abbreviated names: ¹​Reporting_Airline, ²​DOT_ID_Reporting_Airline
+#> # ℹ 102 more variables: IATA_CODE_Reporting_Airline <chr>,
+#> #   Tail_Number <chr>, Flight_Number_Reporting_Airline <dbl>,
+#> #   OriginAirportID <dbl>, OriginAirportSeqID <dbl>,
+#> #   OriginCityMarketID <dbl>, Origin <chr>, OriginCityName <chr>,
+#> #   OriginState <chr>, OriginStateFips <chr>, OriginStateName <chr>,
+#> #   OriginWac <dbl>, DestAirportID <dbl>, DestAirportSeqID <dbl>,
+#> #   DestCityMarketID <dbl>, Dest <chr>, DestCityName <chr>,
+#> #   DestState <chr>, DestStateFips <chr>, DestStateName <chr>,
+#> #   DestWac <dbl>, CRSDepTime <chr>, DepTime <chr>, DepDelay <dbl>,
+#> #   DepDelayMinutes <dbl>, DepDel15 <dbl>, …
 ```
 
 ``` r
@@ -317,25 +320,27 @@ out |>
 #> # A duckplyr data frame: 4 variables
 #>     Year Month MeanInFlightDelay MedianInFlightDelay
 #>    <dbl> <dbl>             <dbl>               <dbl>
-#>  1  2023     4             -4.54                  -6
-#>  2  2022     1             -6.88                  -8
-#>  3  2022     9             -6.00                  -7
-#>  4  2022     5             -5.11                  -6
-#>  5  2022    11             -5.21                  -7
+#>  1  2022     9             -6.00                  -7
+#>  2  2022     5             -5.11                  -6
+#>  3  2023     9             -5.37                  -7
+#>  4  2023     5             -6.17                  -7
+#>  5  2023    10             -6.35                  -7
 #>  6  2023     2             -5.93                  -7
-#>  7  2023    10             -6.35                  -7
-#>  8  2022     2             -6.52                  -8
-#>  9  2022    10             -5.99                  -7
-#> 10  2023     5             -6.17                  -7
+#>  7  2022    11             -5.21                  -7
+#>  8  2022    10             -5.99                  -7
+#>  9  2023    11             -7.10                  -8
+#> 10  2022     1             -6.88                  -8
 #> # ℹ more rows
 #>    user  system elapsed 
-#>   1.093   0.411   8.839
+#>   1.320   0.510   8.783
 ```
 
 Over 10M rows analyzed in about 10 seconds over the internet, that’s not
 bad. Of course, working with Parquet, CSV, or JSON files downloaded
-locally is possible as well. For full compatibility, `na.rm = FALSE` by
-default in the aggregation functions:
+locally is possible as well.
+
+For full compatibility, `na.rm = FALSE` by default in the aggregation
+functions:
 
 ``` r
 flights |>

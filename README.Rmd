@@ -14,8 +14,7 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 
-Sys.setenv(DUCKPLYR_META_ENBALE = FALSE)
-pkgload::load_all()
+Sys.setenv(DUCKPLYR_META_ENABLE = FALSE)
 
 set.seed(20230702)
 
@@ -37,12 +36,13 @@ clean_output <- function(x, options) {
 
 options(
   cli.num_colors = 256,
-  cli.width = 80,
-  width = 80,
+  cli.width = 72,
+  width = 72,
   pillar.bold = TRUE,
   pillar.max_title_chars = 5,
   pillar.min_title_chars = 5,
-  pillar.max_footer_lines = 12
+  pillar.max_footer_lines = 12,
+  conflicts.policy = list(warn = FALSE)
 )
 
 local({
@@ -59,7 +59,7 @@ local({
 [![Codecov test coverage](https://codecov.io/gh/tidyverse/duckplyr/graph/badge.svg)](https://app.codecov.io/gh/tidyverse/duckplyr)
 <!-- badges: end -->
 
-> A **drop-in replacement** for dplyr, powered by DuckDB for **fast operation**.
+> A **drop-in replacement** for dplyr, powered by DuckDB for **speed**.
 
 [dplyr](https://dplyr.tidyverse.org/) is the grammar of data manipulation in the tidyverse.
 The duckplyr package will run all of your existing dplyr code with identical results, using [DuckDB](https://duckdb.org/) where possible to compute the results faster.
@@ -98,10 +98,12 @@ library(conflicted)
 library(duckplyr)
 ```
 
+```{r load-all, include = FALSE}
+# Done after library(duckplyr) to leave the original output
+pkgload::load_all()
+```
+
 ```{r dropin-simulate-library, echo = FALSE}
-# Needed exactly because we use pkgload::load_all() above
-# and because we want to show the "Overwriting" message
-methods_overwrite()
 Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
 ```
 
@@ -110,7 +112,7 @@ conflict_prefer("filter", "dplyr", quiet = TRUE)
 ```
 
 The following code aggregates the inflight delay by year and month for the first half of the year.
-We use a variant of the `nycflights13::flights` dataset, where the timezone has been set to UTC to work around a current limitation of duckplyr, see `vignette("limits.html")`.
+We use a variant of the `nycflights13::flights` dataset, where the timezone has been set to UTC to work around a current limitation of duckplyr, see `vignette("limits")`.
 
 ```{r dropin-pipeline}
 flights_df()
@@ -153,7 +155,7 @@ If a computation is not supported by DuckDB, duckplyr will automatically fall ba
 flights_df() |>
   summarize(
     .by = origin,
-    dest = paste(sort(dest), collapse = " ")
+    dest = paste(sort(unique(dest)), collapse = " ")
   )
 ```
 
@@ -172,7 +174,7 @@ year <- 2022:2024
 base_url <- "https://blobs.duckdb.org/flight-data-partitioned/"
 files <- paste0("Year=", year, "/data_0.parquet")
 urls <- paste0(base_url, files)
-urls
+tibble(urls)
 ```
 
 Using the [httpfs DuckDB extension](https://duckdb.org/docs/extensions/httpfs/overview.html), we can query these files directly from R, without even downloading them first.
@@ -226,6 +228,7 @@ out |>
 
 Over 10M rows analyzed in about 10 seconds over the internet, that's not bad.
 Of course, working with Parquet, CSV, or JSON files downloaded locally is possible as well.
+
 For full compatibility, `na.rm = FALSE` by default in the aggregation functions:
 
 ```{r remote-na-rm, cache = TRUE}

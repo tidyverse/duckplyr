@@ -11,9 +11,7 @@ compute_parquet(x, path, ..., prudence = NULL, options = NULL)
 compute_csv(x, path, ..., prudence = NULL, options = NULL)
 }
 \arguments{
-\item{x}{A data frame, data frame extension (e.g. a tibble), or a lazy
-data frame (e.g. from dbplyr or dtplyr). See \emph{Methods}, below, for more
-details.}
+\item{x}{A duckplyr frame.}
 
 \item{path}{The path to store the result in.}
 
@@ -35,6 +33,9 @@ See \code{vignette("prudence")} for more information.}
 see \url{https://duckdb.org/docs/data/parquet/overview#writing-to-parquet-files}
 or \url{https://duckdb.org/docs/data/csv/overview#writing-using-the-copy-statement}
 for details.}
+}
+\value{
+A duckplyr frame.
 }
 \description{
 These functions apply to duckplyr frames.

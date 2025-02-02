@@ -7,7 +7,7 @@ rel_find_call <- function(fun, env, call = caller_env()) {
     # Fully qualified name, no check needed
     return(c(name[[2]], name[[3]]))
   } else if (length(name) != 1) {
-    cli::cli_abort("Can't translate function {.code {expr_deparse(fun)}}.")
+    cli::cli_abort("Can't translate function {.code {expr_deparse(fun)}}.", call = call)
   }
 
   # Order from https://docs.google.com/spreadsheets/d/1j3AFOKiAknTGpXU1uSH7JzzscgYjVbUEwmdRHS7268E/edit?gid=769885824#gid=769885824,
@@ -97,7 +97,7 @@ rel_find_call <- function(fun, env, call = caller_env()) {
   # Remember to update limits.Rmd when adding new functions!
 
   if (is.null(pkgs)) {
-    cli::cli_abort("No translation for function {.fun {name}}.")
+    cli::cli_abort("No translation for function {.fun {name}}.", call = call)
   }
 
   # https://github.com/tidyverse/dplyr/pull/7046

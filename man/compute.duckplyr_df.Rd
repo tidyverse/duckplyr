@@ -14,9 +14,7 @@
 )
 }
 \arguments{
-\item{x}{A data frame, data frame extension (e.g. a tibble), or a lazy
-data frame (e.g. from dbplyr or dtplyr). See \emph{Methods}, below, for more
-details.}
+\item{x}{A duckplyr frame.}
 
 \item{...}{Arguments passed on to methods}
 
@@ -37,6 +35,9 @@ See \code{vignette("prudence")} for more information.}
 \item{schema_name}{The schema to store the result in, defaults to the current schema.}
 
 \item{temporary}{Set to \code{FALSE} to store the result in a permanent table.}
+}
+\value{
+A duckplyr frame.
 }
 \description{
 This is a method for the \code{\link[dplyr:compute]{dplyr::compute()}} generic.

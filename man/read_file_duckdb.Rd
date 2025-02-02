@@ -83,7 +83,7 @@ pass a wildcard or a character vector to the \code{path} argument,
 
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-The \code{prudence} or \code{.prudence} argument can also be a named numeric vector
+The \code{prudence} argument can also be a named numeric vector
 with at least one of \code{cells} or \code{rows}
 to limit the cells (values) and rows in the resulting data frame
 after automatic materialization.
