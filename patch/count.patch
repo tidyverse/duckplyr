@@ -27,12 +27,12 @@ diff --git b/R/count.R a/R/count.R
 +  # Passing `name` reliably is surprisingly complicated.
 +  duckplyr_error <- rel_try(list(name = "count", x = x, args = try_list(dots = enquos(...), wt = enquo(wt), sort = sort, .drop = .drop)),
 +    #' @section Fallbacks:
-+    #' You cannot use `count.duckplyr_df()`
++    #' There is no DuckDB translation in `count.duckplyr_df()`
 +    #' - with complex expressions in `...`,
 +    #' - with `.drop = FALSE`,
 +    #' - with `sort = TRUE`.
 +    #'
-+    #' If you do the code will fall back to `dplyr::count()` without any error.
++    #' These features fall back to [dplyr::count()], see `vignette("fallback")` for details.
 +    "{.code count()} requires columns in {.arg ...}" = !all(is_name),
 +    "{.code count()} only implemented for {.arg .drop} = {.value TRUE}" = !.drop,
 +    "{.code count()} only implemented for {.arg sort} = {.value FALSE}" = sort,
