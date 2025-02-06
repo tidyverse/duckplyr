@@ -22,6 +22,8 @@ to an in-memory database.
 The \code{db_exec()} function allows running SQL statements
 with this connection to, e.g., set up credentials
 or attach other databases.
+With \code{db_exec()} you can run \code{PRAGMA}, \code{SET} and \code{RESET} statements
+to change configuration options.
 See \url{https://duckdb.org/docs/configuration/overview.html}
 for more information on the configuration options.
 }

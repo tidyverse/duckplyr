@@ -5,6 +5,8 @@
 #' The `db_exec()` function allows running SQL statements
 #' with this connection to, e.g., set up credentials
 #' or attach other databases.
+#' With `db_exec()` you can run `PRAGMA`, `SET` and `RESET` statements
+#' to change configuration options.
 #' See <https://duckdb.org/docs/configuration/overview.html>
 #' for more information on the configuration options.
 #'

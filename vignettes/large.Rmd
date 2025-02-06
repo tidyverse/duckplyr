@@ -280,6 +280,7 @@ read_sql_duckdb("SELECT current_setting('memory_limit') AS memlimit")
 ```
 
 See [the DuckDB documentation](https://duckdb.org/docs/configuration/overview.html) for other configuration options.
+The `db_exec()` function can be used to run `PRAGMA`, `SET` and `RESET` statements.
 
 ## The big picture
 
