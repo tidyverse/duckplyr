@@ -18,11 +18,12 @@
 
 \item{...}{Arguments passed on to methods}
 
-\item{prudence}{Convenience argument to control automatic materialization of data.
+\item{prudence}{Convenience argument to control automatic materialization of data,
+for memory protection.
 \itemize{
-\item \code{"lavish"}: regardless of size,
-\item \code{"frugal"}: never,
-\item \code{"thrifty"}: up to a maximum size of 1 million cells.
+\item \code{"lavish"}: automatically materialize \emph{regardless of size},
+\item \code{"frugal"}: \emph{never} automatically materialize,
+\item \code{"thrifty"}: automatically materialize \emph{up to a maximum size of 1 million cells}.
 }
 
 The default is to inherit from the input.

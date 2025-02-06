@@ -17,11 +17,12 @@ compute_csv(x, path, ..., prudence = NULL, options = NULL)
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{prudence}{Convenience argument to control automatic materialization of data.
+\item{prudence}{Convenience argument to control automatic materialization of data,
+for memory protection.
 \itemize{
-\item \code{"lavish"}: regardless of size,
-\item \code{"frugal"}: never,
-\item \code{"thrifty"}: up to a maximum size of 1 million cells.
+\item \code{"lavish"}: automatically materialize \emph{regardless of size},
+\item \code{"frugal"}: \emph{never} automatically materialize,
+\item \code{"thrifty"}: automatically materialize \emph{up to a maximum size of 1 million cells}.
 }
 
 The default is to inherit from the input.

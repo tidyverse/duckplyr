@@ -16,11 +16,11 @@ read_sql_duckdb(
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{prudence}{Controls automatic materialization of data.
+\item{prudence}{Controls automatic materialization of data, for memory protection.
 \itemize{
-\item \code{"thrifty"}: up to a maximum size of 1 million cells,
-\item \code{"lavish"}: regardless of size,
-\item \code{"frugal"}: never.
+\item \code{"lavish"}: automatically materialize \emph{regardless of size},
+\item \code{"frugal"}: \emph{never} automatically materialize,
+\item \code{"thrifty"}: automatically materialize \emph{up to a maximum size of 1 million cells}.
 }
 
 The default is \code{"thrifty"} for the ingestion functions,

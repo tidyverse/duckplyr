@@ -18,11 +18,12 @@ For \code{as_duckdb_tibble()}, passed on to methods.}
 
 \item{x}{The object to convert or to test.}
 
-\item{prudence, .prudence}{Controls automatic materialization of data.
+\item{prudence, .prudence}{Controls automatic materialization of data,
+for memory protection.
 \itemize{
-\item \code{"lavish"}: regardless of size,
-\item \code{"frugal"}: never,
-\item \code{"thrifty"}: up to a maximum size of 1 million cells.
+\item \code{"lavish"}: automatically materialize \emph{regardless of size},
+\item \code{"frugal"}: \emph{never} automatically materialize,
+\item \code{"thrifty"}: automatically materialize \emph{up to a maximum size of 1 million cells}.
 }
 
 The default is \code{"lavish"} for \code{duckdb_tibble()} and \code{as_duckdb_tibble()},

@@ -90,11 +90,11 @@ read_json_duckdb <- function(path, ..., prudence = c("thrifty", "lavish", "fruga
 #' @param table_function The name of a table-valued
 #'   DuckDB function such as `"read_parquet"`,
 #'   `"read_csv"`, `"read_csv_auto"` or `"read_json"`.
-#' @param prudence Controls automatic materialization of data.
+#' @param prudence Controls automatic materialization of data, for memory protection.
 #'
-#'   - `"thrifty"`: up to a maximum size of 1 million cells,
-#'   - `"lavish"`: regardless of size,
-#'   - `"frugal"`: never.
+#'   - `"lavish"`: automatically materialize _regardless of size_,
+#'   - `"frugal"`: _never_ automatically materialize,
+#'   - `"thrifty"`: automatically materialize _up to a maximum size of 1 million cells_.
 #'
 #' The default is `"thrifty"` for the ingestion functions,
 #' and may be different for other functions.
