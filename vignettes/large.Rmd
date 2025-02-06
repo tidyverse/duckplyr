@@ -55,32 +55,6 @@ When working with large data, that could be larger than the available memory, we
 
 - **Results to also not waste memory.** The duckplyr package lets you control whether automatic materialization will happen, and lets you compute results to a file rather than memory.
 
-### State of the art
-
-A variety of tools have been developed to work with large data sets, also in R.
-One examples is the dbplyr package, a dplyr backend that connects to SQL databases and is designed to work with various databases that support SQL, including DuckDB.
-
-This is a viable approach if the data is already stored in a database, or if the data is stored in Parquet or CSV files and loaded as a lazy table via `duckdb::tbl_file()`.
-
-The dbplyr package translates dplyr code to SQL.
-The syntax and semantics are very similar, but not identical to plain dplyr.
-In contrast, the duckplyr package aims to be a fully compatible drop-in replacement for dplyr, with *exactly* the same syntax and semantics:
-
-- Input and output are data frames or tibbles.
-- All dplyr verbs are supported, with fallback.
-- All R data types and functions are supported, with fallback.
-- No SQL is generated, instead, DuckDB's "relational" interface is used.
-
-Full compatibility means fewer surprises and less cognitive load for the user.
-With DuckDB as the backend, duckplyr can also handle large data sets that do not fit into RAM, keeping full dplyr compatibility.
-
-|             | dbplyr | duckplyr |
-|-------------|:------------:|:-----------:|
-| Speed   |      ✅      |        ✅       |
-| Input  |     databases         |      data frames (or files) |
-| Output  |     databases         |      data frames (or files)   |
-| Syntax|      SQL-flavored dplyr    |      dplyr  |
-
 The tools for bringing data into and out of R memory are modeled after the dplyr and dbplyr packages, and are described in the following sections.
 
 
