@@ -21,7 +21,17 @@ options(conflicts.policy = list(warn = FALSE))
 library(duckplyr)
 ```
 
-## Design principles
+## What is duckplyr
+
+DIAGRAM, described with words.
+
+The duckplyr package is a drop-in replacement for dplyr that uses DuckDB for speed.
+Data is inputted using either conversion (from data in memory) or ingestion (from data in files) functions.
+The data manipulation pipeline uses the exact same syntax as a dplyr pipeline.
+The duckplyr package performs the computation using DuckDB, or, if a specific operation is not supported, fallbacks to dplyr.
+The result can be materialized to memory, or computed temporarily, or computed to a file.
+
+### Design principles: lazy and eager
 
 The duckplyr package uses **DuckDB under the hood** but is also a **drop-in replacement for dplyr**.
 These two facts create a tension:
@@ -35,7 +45,7 @@ These two facts create a tension:
 
 As a consequence, duckplyr is lazy on the inside for all DuckDB operations but eager on the outside, thanks to [ALTREP](https://duckdb.org/2024/04/02/duckplyr.html#eager-vs-lazy-materialization), a powerful R feature that among other things supports **deferred evaluation**.
 
-> "ALTREP allows R objects to have different in-memory representations, and for custom code to be executed whenever those objects are accessed."
+> "ALTREP allows R objects to have different in-memory representations, and for custom code to be executed whenever those objects are accessed." Hannes Mühleisen.
 
 If the duckplyr data.frame is accessed by...
 
@@ -43,6 +53,8 @@ If the duckplyr data.frame is accessed by...
 -   not duckplyr (say, ggplot2), then a special callback is executed, allowing materialization of the data frame.
 
 Therefore, duckplyr can be **both lazy** (within itself) **and not lazy** (for the outside world).
+
+### Memory protection
 
 Now, the default materialization can be problematic if dealing with large data: what if the materialization eats up all memory?
 Therefore, the duckplyr package has a **safeguard called prudence** with three levels.
@@ -84,11 +96,22 @@ With large datasets, you want:
     - prudence (see `vignette("funnel")`) to disable automatic materialization completely or to disable automatic materialization up to a certain output size.
     - computation to files using  `compute_parquet()` or `compute_csv()`.
 
-
-
 A drawback of analyzing large data with duckplyr is that the limitations of duckplyr (unsupported verbs or data types, see `vignette("limits")`) won't be compensated by fallbacks since fallbacks to dplyr necessitate putting data into memory.
 
 ## How to improve duckplyr
 
-- telemetry
+You can help us make duckplyr better!
+
+### Automatically report fallbacks to inform development
+
+If you allow duckplyr to log and upload fallback reports, the duckplyr development team will have better data to decide on what feature to work next.
+See `vignette("telemetry")`.
+
+### Contribute
+
+Please report any issue especially regarding:
+
+
+
+
 - report issues, contribute
