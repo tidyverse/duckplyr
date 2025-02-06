@@ -55,10 +55,10 @@ When working with large data, that could be larger than the available memory, we
 
 - **Results to also not waste memory.** The duckplyr package lets you control whether automatic materialization will happen, and lets you compute results to a file rather than memory.
 
-The tools for bringing data into and out of R memory are modeled after the dplyr and dbplyr packages, and are described in the following sections.
+## Inputting data to duckplyr
 
 
-## To duckplyr
+### Conversion functions
 
 The `duckdb_tibble()` function creates a duckplyr data frame from vectors:
 
@@ -125,7 +125,7 @@ readr::read_csv("a\n1", show_col_types = FALSE) |>
 
 In all cases, `as_tibble()` can be used to proceed with the existing code.
 
-## From files
+### Ingestion functions
 
 DuckDB supports data ingestion from CSV, Parquet, and JSON files.
 The `read_csv_duckdb()` function accepts a file path and returns a duckplyr frame.
@@ -169,7 +169,7 @@ This means that data can be read from files that are larger than the available R
 The Parquet format is particularly efficient for this purpose, as it stores data in a columnar format and allows reading only the columns that are required.
 See `vignette("prudence")` for more details on the concept of lazy data.
 
-## From DuckDB
+### From DuckDB
 
 In addition to `as_duckdb_tibble()`, arbitrary DuckDB queries can be executed and the result can be converted to a duckplyr frame.
 For this, [attach](https://duckdb.org/docs/sql/statements/attach.html) an existing DuckDB database first:
@@ -224,7 +224,7 @@ duckdb_tibble(a = 1) |>
   collect()
 ```
 
-## To files
+### To files
 
 To materialize data in a persistent file, the `compute_csv()` and `compute_parquet()` functions can be used.
 The `compute_csv()` function writes the data to a CSV file:
@@ -251,7 +251,13 @@ duckdb_tibble(a = 1) |>
 Just like with `compute.duckplyr_df()`, the return value of `compute_csv()` and `compute_parquet()` is a duckplyr frame that uses the created CSV or Parquet file and can be used in further computations.
 At the time of writing, direct JSON export is not supported.
 
-## Memory usage
+## Memory protection
+
+### Control automatic materialization
+
+See `vignette("prudence")`.
+
+### Memory usage
 
 Computations carried out by DuckDB allocate RAM in the context of the R process.
 This memory separate from the memory used by R objects, and is managed by DuckDB.
