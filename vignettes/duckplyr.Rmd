@@ -111,9 +111,6 @@ See `vignette("telemetry")`.
 
 ### Contribute
 
-Please report any issue especially regarding:
+Please report any issue especially regarding unknown incompabilities. See `vignette("limits")`.
 
-
-
-
-- report issues, contribute
+You can also contribute further functionality to duckplyr, refer to our [contributing guide](https://duckplyr.tidyverse.org/CONTRIBUTING.html) for details.
