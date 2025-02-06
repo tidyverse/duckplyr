@@ -44,9 +44,13 @@ If the duckplyr data.frame is accessed by...
 
 Therefore, duckplyr can be **both lazy** (within itself) **and not lazy** (for the outside world).
 
-Now, the default materialization can be problematic if dealing with large data: what if the materialization eats up all RAM?
-Therefore, the duckplyr package has a **safeguard called prudence**.
-A _frugal_ data.frame cannot be materialized by default, it needs a call to a `collect.duckplyr_df()` function.
+Now, the default materialization can be problematic if dealing with large data: what if the materialization eats up all memory?
+Therefore, the duckplyr package has a **safeguard called prudence** with three levels.
+
+- `"lavish"`: automatically materialize _regardless of size_,
+- `"frugal"`: _never_ automatically materialize,
+- `"thrifty"`: automatically materialize _up to a maximum size of 1 million cells_.
+
 By default, duckplyr frames are _lavish_, but duckplyr frames created from Parquet data (presumedly large) are _thrifty_.
 
 ## How to use duckplyr
