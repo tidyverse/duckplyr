@@ -43,14 +43,19 @@ conflict_prefer("filter", "dplyr")
 ```
 
 
-## Introduction
+## Working with large data is challenging...
 
-Data frames and other objects in R are stored in RAM.
-This can become problematic:
+But duckplyr can help.
 
-- Data must be loaded into RAM first, even if only part of it is needed.
-- Data must be stored in RAM, even if it is not used.
-- RAM is limited, and data sets can be larger than the available RAM.
+When working with large data, that could be larger than the available memory, we need
+
+- **Input data to be ingested from specific formats such as Parquet, and to not waste all the memory.** Ingestion functions in duckplyr can read data from CSV, JSON, Parquet, into a frame that by default cannot be materialized if its size is larger than a threshold.
+
+- **Efficient computation.** Speed is the whole point of duckplyr, that gives you the power of DuckDB without even having to learn its syntax.
+
+- **Results to also not waste memory.** The duckplyr package lets you control whether automatic materialization will happen, and lets you compute results to a file rather than memory.
+
+### State of the art
 
 A variety of tools have been developed to work with large data sets, also in R.
 One examples is the dbplyr package, a dplyr backend that connects to SQL databases and is designed to work with various databases that support SQL.
