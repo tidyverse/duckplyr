@@ -10,21 +10,21 @@
 read_parquet_duckdb(
   path,
   ...,
-  prudence = c("thrifty", "lavish", "frugal"),
+  prudence = c("thrifty", "lavish", "stingy"),
   options = list()
 )
 
 read_csv_duckdb(
   path,
   ...,
-  prudence = c("thrifty", "lavish", "frugal"),
+  prudence = c("thrifty", "lavish", "stingy"),
   options = list()
 )
 
 read_json_duckdb(
   path,
   ...,
-  prudence = c("thrifty", "lavish", "frugal"),
+  prudence = c("thrifty", "lavish", "stingy"),
   options = list()
 )
 
@@ -32,7 +32,7 @@ read_file_duckdb(
   path,
   table_function,
   ...,
-  prudence = c("thrifty", "lavish", "frugal"),
+  prudence = c("thrifty", "lavish", "stingy"),
   options = list()
 )
 }
@@ -46,7 +46,7 @@ intermediate results in DuckDB-managed memory to data frames in R memory.
 \itemize{
 \item \code{"thrifty"}: up to a maximum size of 1 million cells,
 \item \code{"lavish"}: regardless of size,
-\item \code{"frugal"}: never.
+\item \code{"stingy"}: never.
 }
 
 The default is \code{"thrifty"} for the ingestion functions,

@@ -13,7 +13,7 @@ NULL
 #'
 #' @rdname read_file_duckdb
 #' @export
-read_parquet_duckdb <- function(path, ..., prudence = c("thrifty", "lavish", "frugal"), options = list()) {
+read_parquet_duckdb <- function(path, ..., prudence = c("thrifty", "lavish", "stingy"), options = list()) {
   check_dots_empty()
 
   read_file_duckdb(path, "read_parquet", prudence = prudence, options = options)
@@ -50,7 +50,7 @@ read_parquet_duckdb <- function(path, ..., prudence = c("thrifty", "lavish", "fr
 #'   path,
 #'   options = list(delim = ",", types = list(c("DOUBLE", "VARCHAR")))
 #' )
-read_csv_duckdb <- function(path, ..., prudence = c("thrifty", "lavish", "frugal"), options = list()) {
+read_csv_duckdb <- function(path, ..., prudence = c("thrifty", "lavish", "stingy"), options = list()) {
   check_dots_empty()
 
   read_file_duckdb(path, "read_csv_auto", prudence = prudence, options = options)
@@ -71,7 +71,7 @@ read_csv_duckdb <- function(path, ..., prudence = c("thrifty", "lavish", "frugal
 #' db_exec("INSTALL json")
 #' db_exec("LOAD json")
 #' read_json_duckdb(path)
-read_json_duckdb <- function(path, ..., prudence = c("thrifty", "lavish", "frugal"), options = list()) {
+read_json_duckdb <- function(path, ..., prudence = c("thrifty", "lavish", "stingy"), options = list()) {
   check_dots_empty()
 
   read_file_duckdb(path, "read_json", prudence = prudence, options = options)
@@ -95,7 +95,7 @@ read_json_duckdb <- function(path, ..., prudence = c("thrifty", "lavish", "fruga
 #'
 #'   - `"thrifty"`: up to a maximum size of 1 million cells,
 #'   - `"lavish"`: regardless of size,
-#'   - `"frugal"`: never.
+#'   - `"stingy"`: never.
 #'
 #' The default is `"thrifty"` for the ingestion functions,
 #' and may be different for other functions.
@@ -114,7 +114,7 @@ read_file_duckdb <- function(
   path,
   table_function,
   ...,
-  prudence = c("thrifty", "lavish", "frugal"),
+  prudence = c("thrifty", "lavish", "stingy"),
   options = list()
 ) {
   check_dots_empty()

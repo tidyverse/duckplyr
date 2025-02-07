@@ -7,7 +7,7 @@
 read_sql_duckdb(
   sql,
   ...,
-  prudence = c("thrifty", "lavish", "frugal"),
+  prudence = c("thrifty", "lavish", "stingy"),
   con = NULL
 )
 }
@@ -21,7 +21,7 @@ intermediate results in DuckDB-managed memory to data frames in R memory.
 \itemize{
 \item \code{"thrifty"}: up to a maximum size of 1 million cells,
 \item \code{"lavish"}: regardless of size,
-\item \code{"frugal"}: never.
+\item \code{"stingy"}: never.
 }
 
 The default is \code{"thrifty"} for the ingestion functions,
