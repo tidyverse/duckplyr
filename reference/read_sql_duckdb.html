@@ -73,7 +73,8 @@ Runs a query and returns it as a duckplyr frame."><meta property="og:image" cont
 
 
 <dt id="arg-prudence">prudence<a class="anchor" aria-label="anchor" href="#arg-prudence"></a></dt>
-<dd><p>Controls automatic materialization of data.</p><ul><li><p><code>"thrifty"</code>: up to a maximum size of 1 million cells,</p></li>
+<dd><p>Memory protection, controls if DuckDB may convert
+intermediate results in DuckDB-managed memory to data frames in R memory.</p><ul><li><p><code>"thrifty"</code>: up to a maximum size of 1 million cells,</p></li>
 <li><p><code>"lavish"</code>: regardless of size,</p></li>
 <li><p><code>"frugal"</code>: never.</p></li>
 </ul><p>The default is <code>"thrifty"</code> for the ingestion functions,

@@ -94,7 +94,8 @@ For <code>as_duckdb_tibble()</code>, passed on to methods.</p></dd>
 
 
 <dt id="arg-prudence-prudence">prudence, .prudence<a class="anchor" aria-label="anchor" href="#arg-prudence-prudence"></a></dt>
-<dd><p>Controls automatic materialization of data.</p><ul><li><p><code>"lavish"</code>: regardless of size,</p></li>
+<dd><p>Memory protection, controls if DuckDB may convert
+intermediate results in DuckDB-managed memory to data frames in R memory.</p><ul><li><p><code>"lavish"</code>: regardless of size,</p></li>
 <li><p><code>"frugal"</code>: never,</p></li>
 <li><p><code>"thrifty"</code>: up to a maximum size of 1 million cells.</p></li>
 </ul><p>The default is <code>"lavish"</code> for <code>duckdb_tibble()</code> and <code>as_duckdb_tibble()</code>,
