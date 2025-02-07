@@ -82,21 +82,21 @@ pass a wildcard or a character vector to the <code>path</code> argument,</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_parquet_duckdb</span><span class="op">(</span></span>
 <span>  <span class="va">path</span>,</span>
 <span>  <span class="va">...</span>,</span>
-<span>  prudence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"thrifty"</span>, <span class="st">"lavish"</span>, <span class="st">"frugal"</span><span class="op">)</span>,</span>
+<span>  prudence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"thrifty"</span>, <span class="st">"lavish"</span>, <span class="st">"stingy"</span><span class="op">)</span>,</span>
 <span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">read_csv_duckdb</span><span class="op">(</span></span>
 <span>  <span class="va">path</span>,</span>
 <span>  <span class="va">...</span>,</span>
-<span>  prudence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"thrifty"</span>, <span class="st">"lavish"</span>, <span class="st">"frugal"</span><span class="op">)</span>,</span>
+<span>  prudence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"thrifty"</span>, <span class="st">"lavish"</span>, <span class="st">"stingy"</span><span class="op">)</span>,</span>
 <span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">read_json_duckdb</span><span class="op">(</span></span>
 <span>  <span class="va">path</span>,</span>
 <span>  <span class="va">...</span>,</span>
-<span>  prudence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"thrifty"</span>, <span class="st">"lavish"</span>, <span class="st">"frugal"</span><span class="op">)</span>,</span>
+<span>  prudence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"thrifty"</span>, <span class="st">"lavish"</span>, <span class="st">"stingy"</span><span class="op">)</span>,</span>
 <span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -104,7 +104,7 @@ pass a wildcard or a character vector to the <code>path</code> argument,</p>
 <span>  <span class="va">path</span>,</span>
 <span>  <span class="va">table_function</span>,</span>
 <span>  <span class="va">...</span>,</span>
-<span>  prudence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"thrifty"</span>, <span class="st">"lavish"</span>, <span class="st">"frugal"</span><span class="op">)</span>,</span>
+<span>  prudence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"thrifty"</span>, <span class="st">"lavish"</span>, <span class="st">"stingy"</span><span class="op">)</span>,</span>
 <span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -125,7 +125,7 @@ pass a wildcard or a character vector to the <code>path</code> argument,</p>
 <dd><p>Memory protection, controls if DuckDB may convert
 intermediate results in DuckDB-managed memory to data frames in R memory.</p><ul><li><p><code>"thrifty"</code>: up to a maximum size of 1 million cells,</p></li>
 <li><p><code>"lavish"</code>: regardless of size,</p></li>
-<li><p><code>"frugal"</code>: never.</p></li>
+<li><p><code>"stingy"</code>: never.</p></li>
 </ul><p>The default is <code>"thrifty"</code> for the ingestion functions,
 and may be different for other functions.
 See <code><a href="../articles/prudence.html">vignette("prudence")</a></code> for more information.</p></dd>

@@ -55,7 +55,7 @@ Runs a query and returns it as a duckplyr frame."><meta property="og:image" cont
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_sql_duckdb</span><span class="op">(</span></span>
 <span>  <span class="va">sql</span>,</span>
 <span>  <span class="va">...</span>,</span>
-<span>  prudence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"thrifty"</span>, <span class="st">"lavish"</span>, <span class="st">"frugal"</span><span class="op">)</span>,</span>
+<span>  prudence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"thrifty"</span>, <span class="st">"lavish"</span>, <span class="st">"stingy"</span><span class="op">)</span>,</span>
 <span>  con <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -76,7 +76,7 @@ Runs a query and returns it as a duckplyr frame."><meta property="og:image" cont
 <dd><p>Memory protection, controls if DuckDB may convert
 intermediate results in DuckDB-managed memory to data frames in R memory.</p><ul><li><p><code>"thrifty"</code>: up to a maximum size of 1 million cells,</p></li>
 <li><p><code>"lavish"</code>: regardless of size,</p></li>
-<li><p><code>"frugal"</code>: never.</p></li>
+<li><p><code>"stingy"</code>: never.</p></li>
 </ul><p>The default is <code>"thrifty"</code> for the ingestion functions,
 and may be different for other functions.
 See <code><a href="../articles/prudence.html">vignette("prudence")</a></code> for more information.</p></dd>

@@ -186,7 +186,7 @@ to a table:</p>
 <span><span class="va">dbplyr_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"data"</span><span class="op">)</span></span>
 <span><span class="va">dbplyr_data</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># Source:   table&lt;"data"&gt; [?? x 2]</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB v1.1.3 [unknown@Linux 6.8.0-1020-azure:R 4.4.2//tmp/RtmpjlrJVe/file43816954f781.duckdb]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB v1.1.3 [unknown@Linux 6.8.0-1020-azure:R 4.4.2//tmp/RtmpTrzGsk/file43ae2583d684.duckdb]</span></span></span>
 <span><span class="co">#&gt;       x y    </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1 a    </span></span>
@@ -545,7 +545,7 @@ table:</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Month</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `group_by()`:</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> This operation cannot be carried out by DuckDB, and the input is</span></span>
-<span><span class="co">#&gt;   a frugal duckplyr frame.</span></span>
+<span><span class="co">#&gt;   a stingy duckplyr frame.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Try `summarise(.by = ...)` or `mutate(.by = ...)` instead of</span></span>
 <span><span class="co">#&gt;   `group_by()` and `ungroup()`.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `compute(prudence = "lavish")` to materialize to temporary storage</span></span>
