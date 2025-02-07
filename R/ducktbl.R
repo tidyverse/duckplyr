@@ -14,9 +14,9 @@
 #' @param prudence,.prudence Controls automatic materialization of data,
 #' for memory protection.
 #'
-#'   - `"lavish"`: automatically materialize _regardless of size_,
-#'   - `"frugal"`: _never_ automatically materialize,
-#'   - `"thrifty"`: automatically materialize _up to a maximum size of 1 million cells_.
+#'   - `"lavish"`: regardless of size,
+#'   - `"frugal"`: never,
+#'   - `"thrifty"`: up to a maximum size of 1 million cells.
 #'
 #' The default is `"lavish"` for `duckdb_tibble()` and `as_duckdb_tibble()`,
 #' and may be different for other functions.
