@@ -103,7 +103,7 @@ dplyr, guaranteeing identical behavior.</li>
 </ul>
 </div>
 <div class="section level2">
-<h2 id="duckdb-operation">DuckDB operation<a class="anchor" aria-label="anchor" href="#duckdb-operation"></a>
+<h2 id="duckdb-mode">DuckDB mode<a class="anchor" aria-label="anchor" href="#duckdb-mode"></a>
 </h2>
 <p>The following operation is supported by duckplyr:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -146,9 +146,9 @@ hood:</p>
 <li>a projection (adding the <code>b</code> column and removing the
 <code>a</code> column).</li>
 </ul>
-<p>Because each operation is supported by DuckDB, the resulting object
-contains a plan for the entire pipeline. The plan is only executed when
-the data is needed.</p>
+<p>Each operation is supported by DuckDB. The resulting object contains
+a plan for the entire pipeline that is executed lazily, only when the
+data is needed.</p>
 </div>
 <div class="section level2">
 <h2 id="relation-objects">Relation objects<a class="anchor" aria-label="anchor" href="#relation-objects"></a>
@@ -162,8 +162,8 @@ been materialized:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/last_rel.html">last_rel</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre></div>
-<p>It is NULL because nothing has been computed yet. Converting the
-object to a data frame triggers the computation:</p>
+<p>It is <code>NULL</code> because nothing has been computed yet.
+Converting the object to a data frame triggers the computation:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">duckdb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 1</span></span></span>
@@ -190,7 +190,7 @@ object to a data frame triggers the computation:</p>
 describes logical plan for executing the whole pipeline.</p>
 </div>
 <div class="section level2">
-<h2 id="functionality-not-supported-by-duckdb">Functionality not supported by DuckDB<a class="anchor" aria-label="anchor" href="#functionality-not-supported-by-duckdb"></a>
+<h2 id="help-from-dplyr">Help from dplyr<a class="anchor" aria-label="anchor" href="#help-from-dplyr"></a>
 </h2>
 <p>Using a custom function with a side effect is not supported by DuckDB
 and triggers a dplyr fallback:</p>
@@ -275,7 +275,7 @@ computation:</p>
 </h2>
 <p>For any duck frame, one can control the automatic materialization.
 For fallbacks to dplyr, automatic materialization must be allowed for
-the frame at hand, as dplyr necessitate eager evaluation.</p>
+the frame at hand, as dplyr necessitates eager evaluation.</p>
 <p>Therefore, by making a data frame frugal, one can ensure a pipeline
 will error when a fallback to dplyr would have normally happened. See
 <code><a href="../articles/prudence.html">vignette("prudence")</a></code> for details.</p>
