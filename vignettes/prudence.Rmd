@@ -153,9 +153,9 @@ Prudence is a setting for duckplyr frames that limits the size of the data that 
 
 Three levels of prudence are available:
 
-- _lavish_: always automatically materialize, as in the first example.
-- _stingy_: never automatically materialize, throw an error when attempting to access the data.
-- _thrifty_: only automaticaly materialize the data if it is small, otherwise throw an error.
+- _lavish_ (careless about resources): always automatically materialize, as in the first example.
+- _stingy_ (avoid spending at all cost): never automatically materialize, throw an error when attempting to access the data.
+- _thrifty_ (use resources wisely): only automaticaly materialize the data if it is small, otherwise throw an error.
 
 For lavish duckplyr frames, as in the two previous examples, the underlying DuckDB computation is carried out upon the first request.
 Once the results are computed, they are cached and subsequent requests are fast.
