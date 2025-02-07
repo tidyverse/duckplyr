@@ -51,7 +51,7 @@ This is achieved in two ways:
 - A carefully selected subset of dplyr operations, R functions, and R data types are implemented in DuckDB, focusing on faithful translation.
 - When DuckDB does not support an operation, duckplyr falls back to dplyr, guaranteeing identical behavior.
 
-## DuckDB operation
+## DuckDB mode
 
 The following operation is supported by duckplyr:
 
@@ -76,8 +76,8 @@ The plan shows three operations:
 - a sort operation,
 - a projection (adding the `b` column and removing the `a` column).
 
-Because each operation is supported by DuckDB, the resulting object contains a plan for the entire pipeline.
-The plan is only executed when the data is needed.
+Each operation is supported by DuckDB.
+The resulting object contains a plan for the entire pipeline that is executed lazily, only when the data is needed.
 
 ## Relation objects
 
@@ -91,7 +91,7 @@ The `last_rel()` function shows the last relation that has been materialized:
 duckplyr::last_rel()
 ```
 
-It is NULL because nothing has been computed yet.
+It is `NULL` because nothing has been computed yet.
 Converting the object to a data frame triggers the computation:
 
 ```{r}
@@ -101,7 +101,7 @@ duckplyr::last_rel()
 
 The `last_rel()` function now shows a relation that describes logical plan for executing the whole pipeline.
 
-## Functionality not supported by DuckDB
+## Help from dplyr
 
 Using a custom function with a side effect is not supported by DuckDB and triggers a dplyr fallback:
 
@@ -151,7 +151,7 @@ The `last_rel()` function confirms that only the final `select()` is handled by 
 ## Enforce DuckDB operation
 
 For any duck frame, one can control the automatic materialization.
-For fallbacks to dplyr, automatic materialization must be allowed for the frame at hand, as dplyr necessitate eager evaluation.
+For fallbacks to dplyr, automatic materialization must be allowed for the frame at hand, as dplyr necessitates eager evaluation.
 
 Therefore, by making a data frame frugal, one can ensure a pipeline will error when a fallback to dplyr would have normally happened.
 See `vignette("prudence")` for details.
