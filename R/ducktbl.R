@@ -11,7 +11,8 @@
 #'
 #' @param ... For `duckdb_tibble()`, passed on to [tibble()].
 #'   For `as_duckdb_tibble()`, passed on to methods.
-#' @param prudence,.prudence Controls automatic materialization of data.
+#' @param prudence,.prudence Memory protection, controls if DuckDB may convert
+#'   intermediate results in DuckDB-managed memory to data frames in R memory.
 #'
 #'   - `"lavish"`: regardless of size,
 #'   - `"frugal"`: never,

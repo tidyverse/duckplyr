@@ -12,13 +12,15 @@
 #' @param name The name of the table to store the result in.
 #' @param schema_name The schema to store the result in, defaults to the current schema.
 #' @param temporary Set to `FALSE` to store the result in a permanent table.
-#' @param prudence Convenience argument to control automatic materialization of data.
+#' @param prudence Memory protection, controls if DuckDB may convert
+#'   intermediate results in DuckDB-managed memory to data frames in R memory.
 #'
 #'   - `"lavish"`: regardless of size,
 #'   - `"frugal"`: never,
 #'   - `"thrifty"`: up to a maximum size of 1 million cells.
 #'
 #' The default is to inherit from the input.
+#' This argument is provided here only for convenience.
 #' The same effect can be achieved by forwarding the output to [as_duckdb_tibble()]
 #' with the desired prudence.
 #' See `vignette("prudence")` for more information.
