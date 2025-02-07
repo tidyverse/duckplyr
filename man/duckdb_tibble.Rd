@@ -18,7 +18,8 @@ For \code{as_duckdb_tibble()}, passed on to methods.}
 
 \item{x}{The object to convert or to test.}
 
-\item{prudence, .prudence}{Controls automatic materialization of data.
+\item{prudence, .prudence}{Memory protection, controls if DuckDB may convert
+intermediate results in DuckDB-managed memory to data frames in R memory.
 \itemize{
 \item \code{"lavish"}: regardless of size,
 \item \code{"frugal"}: never,

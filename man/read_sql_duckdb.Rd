@@ -16,7 +16,8 @@ read_sql_duckdb(
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{prudence}{Controls automatic materialization of data.
+\item{prudence}{Memory protection, controls if DuckDB may convert
+intermediate results in DuckDB-managed memory to data frames in R memory.
 \itemize{
 \item \code{"thrifty"}: up to a maximum size of 1 million cells,
 \item \code{"lavish"}: regardless of size,
