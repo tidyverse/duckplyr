@@ -171,7 +171,7 @@ Thrifty duckplyr frames are a compromise between lavish and frugal, discussed fu
 
 ### Example
 
-The example below demonstrates the use of frugal duckplyr frames.
+Passing `prudence = "frugal"` to `as_duckdb_tibble()` creates a frugal duckplyr frame.
 
 ```{r}
 flights_frugal <-
@@ -179,7 +179,6 @@ flights_frugal <-
   duckplyr::as_duckdb_tibble(prudence = "frugal")
 ```
 
-Passing `prudence = "frugal"` to `as_duckdb_tibble()` creates a frugal duckplyr frame.
 The data can be displayed, and column names and types can be accessed.
 
 ```{r}
@@ -200,6 +199,7 @@ nrow(flights_frugal)
 flights_frugal[[1]]
 ```
 
+This means that frugal duckplyr frames can also be used to enforce DuckDB operation for a pipeline.
 
 ### Enforcing DuckDB operation
 

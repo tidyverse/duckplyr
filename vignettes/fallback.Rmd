@@ -57,16 +57,16 @@ The following operation is supported by duckplyr:
 
 ```{r}
 duckdb <-
-  duckplyr::duckdb_tibble(a = 1:3) %>%
-  arrange(desc(a)) %>%
-  mutate(b = a + 1) %>%
+  duckplyr::duckdb_tibble(a = 1:3) |>
+  arrange(desc(a)) |>
+  mutate(b = a + 1) |>
   select(-a)
 ```
 
 The `explain()` function shows what happens under the hood:
 
 ```{r}
-duckdb %>%
+duckdb |>
   explain()
 ```
 
@@ -95,7 +95,7 @@ It is `NULL` because nothing has been computed yet.
 Converting the object to a data frame triggers the computation:
 
 ```{r}
-duckdb %>% collect()
+duckdb |> collect()
 duckplyr::last_rel()
 ```
 
@@ -112,9 +112,9 @@ verbose_plus_one <- function(x) {
 }
 
 fallback <-
-  duckplyr::duckdb_tibble(a = 1:3) %>%
-  arrange(desc(a)) %>%
-  mutate(b = verbose_plus_one(a)) %>%
+  duckplyr::duckdb_tibble(a = 1:3) |>
+  arrange(desc(a)) |>
+  mutate(b = verbose_plus_one(a)) |>
   select(-a)
 ```
 
@@ -131,7 +131,7 @@ Because the dplyr implementation of `mutate()` needs the data before it can proc
 The `explain()` function also confirms indirectly that at least a part of the operation is handled by dplyr:
 
 ```{r}
-fallback %>%
+fallback |>
   explain()
 ```
 
@@ -141,7 +141,7 @@ This is the result of the `mutate()` step, which at this stage already has been 
 Converting the final object to a data frame triggers the rest of the computation:
 
 ```{r}
-fallback %>% collect()
+fallback |> collect()
 
 duckplyr::last_rel()
 ```
@@ -151,7 +151,7 @@ The `last_rel()` function confirms that only the final `select()` is handled by 
 ## Enforce DuckDB operation
 
 For any duck frame, one can control the automatic materialization.
-For fallbacks to dplyr, automatic materialization must be allowed for the frame at hand, as dplyr necessitates eager evaluation.
+For fallbacks to dplyr, automatic materialization must be allowed for the duck frame at hand, as dplyr necessitates eager evaluation.
 
 Therefore, by making a data frame frugal, one can ensure a pipeline will error when a fallback to dplyr would have normally happened.
 See `vignette("prudence")` for details.

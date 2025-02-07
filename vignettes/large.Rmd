@@ -285,7 +285,7 @@ See [the DuckDB documentation](https://duckdb.org/docs/configuration/overview.ht
 
 The functions shown in this vignette allow the construction of data transformation pipelines spanning multiple data sources and data that is too large to fit into memory.
 Full compatibility with dplyr is provided, so existing code can be used with duckplyr with minimal changes.
-The lazy evaluation of duckplyr frames allows for efficient data processing, as only the required data is read from disk.
+The lazy computation of duckplyr frames allows for efficient data processing, as only the required data is read from disk.
 The materialization functions allow the data to be persisted in temporary tables or files, depending on the use case.
 A typical workflow might look like this:
 
