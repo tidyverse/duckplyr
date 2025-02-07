@@ -91,10 +91,16 @@ support for all dplyr verbs and R functions.</p>
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>The duckplyr package aims at providing a fully compatible drop-in
-replacement for dplyr. To achieve this, only a carefully selected subset
-of dplyr’s operations, R functions, and R data types are implemented.
-Whenever a request cannot be handled by DuckDB, duckplyr falls back to
-dplyr.</p>
+replacement for dplyr. All operations, R functions, and data types that
+are supported by dplyr should work in an identical way with duckplyr.
+This is achieved in two ways:</p>
+<ul>
+<li>A carefully selected subset of dplyr operations, R functions, and R
+data types are implemented in DuckDB, focusing on faithful
+translation.</li>
+<li>When DuckDB does not support an operation, duckplyr falls back to
+dplyr, guaranteeing identical behavior.</li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="duckdb-operation">DuckDB operation<a class="anchor" aria-label="anchor" href="#duckdb-operation"></a>
@@ -133,11 +139,16 @@ hood:</p>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │          ~3 Rows          │</span></span>
 <span><span class="co">#&gt; └---------------------------┘</span></span></code></pre></div>
-<p>The plan shows three operations: a data frame scan (the input), a
-sort operation, and a projection (adding the <code>b</code> column and
-removing the <code>a</code> column). Because each operation is supported
-by DuckDB, the resulting object contains a plan for the entire pipeline.
-The plan is only executed when the data is needed.</p>
+<p>The plan shows three operations:</p>
+<ul>
+<li>a data frame scan (the input),</li>
+<li>a sort operation,</li>
+<li>a projection (adding the <code>b</code> column and removing the
+<code>a</code> column).</li>
+</ul>
+<p>Because each operation is supported by DuckDB, the resulting object
+contains a plan for the entire pipeline. The plan is only executed when
+the data is needed.</p>
 </div>
 <div class="section level2">
 <h2 id="relation-objects">Relation objects<a class="anchor" aria-label="anchor" href="#relation-objects"></a>
@@ -196,9 +207,9 @@ and triggers a dplyr fallback:</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">a</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Adding one to 3, 2, 1</span></span></code></pre></div>
 <p>The <code>verbose_plus_one()</code> function is not supported by
-DuckDB, so the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> step is handled by dplyr and
-already executed when the pipeline is defined. This is confirmed by the
-<code><a href="../reference/last_rel.html">last_rel()</a></code> function:</p>
+DuckDB, so the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> step is forwarded to dplyr and
+already executed (eagerly) when the pipeline is defined. This is
+confirmed by the <code><a href="../reference/last_rel.html">last_rel()</a></code> function:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/last_rel.html">last_rel</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; DuckDB Relation: </span></span>
@@ -258,6 +269,33 @@ computation:</p>
 <span><span class="co">#&gt; - b (DOUBLE)</span></span></code></pre></div>
 <p>The <code><a href="../reference/last_rel.html">last_rel()</a></code> function confirms that only the final
 <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code> is handled by DuckDB again.</p>
+</div>
+<div class="section level2">
+<h2 id="enforce-duckdb-operation">Enforce DuckDB operation<a class="anchor" aria-label="anchor" href="#enforce-duckdb-operation"></a>
+</h2>
+<p>For any duck frame, one can control the automatic materialization.
+For fallbacks to dplyr, automatic materialization must be allowed for
+the frame at hand, as dplyr necessitate eager evaluation.</p>
+<p>Therefore, by making a data frame frugal, one can ensure a pipeline
+will error when a fallback to dplyr would have normally happened. See
+<code><a href="../articles/prudence.html">vignette("prudence")</a></code> for details.</p>
+<p>By using operations supported by duckplyr and avoiding fallbacks as
+much as possible, your pipelines will be executed by DuckDB in an
+optimized way.</p>
+</div>
+<div class="section level2">
+<h2 id="configure-fallbacks">Configure fallbacks<a class="anchor" aria-label="anchor" href="#configure-fallbacks"></a>
+</h2>
+<p>Using the <code><a href="../reference/fallback.html">fallback_sitrep()</a></code> and
+<code><a href="../reference/fallback.html">fallback_config()</a></code> functions you can examine and change
+settings related to fallbacks.</p>
+<ul>
+<li><p>You can choose to make fallbacks verbose with
+<code>fallback_config(info = TRUE)</code>.</p></li>
+<li><p>You can change settings related to logging and reporting fallback
+to duckplyr development team to inform their work.</p></li>
+</ul>
+<p>See <code><a href="../articles/telemetry.html">vignette("telemetry")</a></code> for details.</p>
 </div>
 <div class="section level2">
 <h2 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
