@@ -12,7 +12,8 @@
 #' @param name The name of the table to store the result in.
 #' @param schema_name The schema to store the result in, defaults to the current schema.
 #' @param temporary Set to `FALSE` to store the result in a permanent table.
-#' @param prudence Controls automatic materialization of data, for memory protection.
+#' @param prudence Memory protection, controls if DuckDB may convert
+#'   intermediate results in DuckDB-managed memory to data frames in R memory.
 #'
 #'   - `"lavish"`: regardless of size,
 #'   - `"frugal"`: never,
