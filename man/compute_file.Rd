@@ -17,15 +17,16 @@ compute_csv(x, path, ..., prudence = NULL, options = NULL)
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{prudence}{Convenience argument to control automatic materialization of data,
-for memory protection.
+\item{prudence}{Memory protection, controls if DuckDB may convert
+intermediate results in DuckDB-managed memory to data frames in R memory.
 \itemize{
-\item \code{"lavish"}: automatically materialize \emph{regardless of size},
-\item \code{"frugal"}: \emph{never} automatically materialize,
-\item \code{"thrifty"}: automatically materialize \emph{up to a maximum size of 1 million cells}.
+\item \code{"lavish"}: regardless of size,
+\item \code{"frugal"}: never,
+\item \code{"thrifty"}: up to a maximum size of 1 million cells.
 }
 
 The default is to inherit from the input.
+This argument is provided here only for convenience.
 The same effect can be achieved by forwarding the output to \code{\link[=as_duckdb_tibble]{as_duckdb_tibble()}}
 with the desired prudence.
 See \code{vignette("prudence")} for more information.}

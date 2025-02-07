@@ -41,11 +41,12 @@ read_file_duckdb(
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{prudence}{Controls automatic materialization of data, for memory protection.
+\item{prudence}{Memory protection, controls if DuckDB may convert
+intermediate results in DuckDB-managed memory to data frames in R memory.
 \itemize{
-\item \code{"lavish"}: automatically materialize \emph{regardless of size},
-\item \code{"frugal"}: \emph{never} automatically materialize,
-\item \code{"thrifty"}: automatically materialize \emph{up to a maximum size of 1 million cells}.
+\item \code{"thrifty"}: up to a maximum size of 1 million cells,
+\item \code{"lavish"}: regardless of size,
+\item \code{"frugal"}: never.
 }
 
 The default is \code{"thrifty"} for the ingestion functions,
