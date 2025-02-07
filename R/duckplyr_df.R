@@ -78,6 +78,15 @@ prudence_parse <- function(prudence, call = caller_env()) {
   } else if (!is.character(prudence)) {
     cli::cli_abort("{.arg prudence} must be an unnamed character vector or a named numeric vector", call = call)
   } else {
+    if (identical(prudence, "frugal")) {
+      lifecycle::deprecate_warn("1.0.0",
+        I('Use `prudence = "stingy"` instead, `prudence = "frugal"`'),
+        always = TRUE,
+        env = call
+      )
+      prudence <- "stingy"
+    }
+    # Can't change second argument to arg_match() here
     prudence <- arg_match(prudence, c("lavish", "stingy", "thrifty"), error_call = call)
 
     allow_materialization <- !identical(prudence, "stingy")
