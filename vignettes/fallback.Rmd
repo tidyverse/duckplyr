@@ -153,7 +153,7 @@ The `last_rel()` function confirms that only the final `select()` is handled by 
 For any duck frame, one can control the automatic materialization.
 For fallbacks to dplyr, automatic materialization must be allowed for the duck frame at hand, as dplyr necessitates eager evaluation.
 
-Therefore, by making a data frame frugal, one can ensure a pipeline will error when a fallback to dplyr would have normally happened.
+Therefore, by making a data frame stingy, one can ensure a pipeline will error when a fallback to dplyr would have normally happened.
 See `vignette("prudence")` for details.
 
 By using operations supported by duckplyr and avoiding fallbacks as much as possible, your pipelines will be executed by DuckDB in an optimized way.

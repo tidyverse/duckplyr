@@ -74,13 +74,13 @@ prudence_parse <- function(prudence, call = caller_env()) {
       }
     }
     allow_materialization <- is.finite(n_rows) || is.finite(n_cells)
-    prudence <- "frugal"
+    prudence <- "stingy"
   } else if (!is.character(prudence)) {
     cli::cli_abort("{.arg prudence} must be an unnamed character vector or a named numeric vector", call = call)
   } else {
-    prudence <- arg_match(prudence, c("lavish", "frugal", "thrifty"), error_call = call)
+    prudence <- arg_match(prudence, c("lavish", "stingy", "thrifty"), error_call = call)
 
-    allow_materialization <- !identical(prudence, "frugal")
+    allow_materialization <- !identical(prudence, "stingy")
     if (!allow_materialization) {
       n_cells <- 0
     } else if (identical(prudence, "thrifty")) {
@@ -104,7 +104,7 @@ get_prudence_duckplyr_df <- function(x) {
 
   prudence <- attr(x, "prudence")
   if (is.null(prudence)) {
-    return("frugal")
+    return("stingy")
   }
 
   if (identical(prudence, c(cells = 1e6))) {
