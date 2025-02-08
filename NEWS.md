@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.0.0.9000 (2025-02-08)
+
+## Documentation
+
+- Use stingy instead of frugal (#594).
+
+
 # duckplyr 1.0.0 (2025-02-02)
 
 ## Features
