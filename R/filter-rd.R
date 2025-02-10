@@ -1,6 +1,6 @@
 #' @title Keep rows that match a condition
 #'
-#' @description  This is a method for the [dplyr::select()] generic.
+#' @description  This is a method for the [dplyr::filter()] generic.
 #' See "Fallbacks" section for differences in implementation.
 #' The `filter()` function is used to subset a data frame,
 #' retaining all rows that satisfy your conditions.
