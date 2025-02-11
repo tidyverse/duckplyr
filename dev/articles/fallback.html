@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.99.99.9928</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/large.html">Large data</a></li>
-    <li><a class="dropdown-item" href="../articles/prudence.html">Memory protection: Prudence</a></li>
+    <li><a class="dropdown-item" href="../articles/prudence.html">Memory protection: controlling automatic materialization</a></li>
     <li><a class="dropdown-item" href="../articles/fallback.html">Fallback to dplyr</a></li>
     <li><a class="dropdown-item" href="../articles/limits.html">Translations</a></li>
     <li><a class="dropdown-item" href="../articles/developers.html">Selective use of duckplyr</a></li>
@@ -92,25 +92,31 @@ support for all dplyr verbs and R functions.</p>
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>The duckplyr package aims at providing a fully compatible drop-in
-replacement for dplyr. To achieve this, only a carefully selected subset
-of dplyr’s operations, R functions, and R data types are implemented.
-Whenever a request cannot be handled by DuckDB, duckplyr falls back to
-dplyr.</p>
+replacement for dplyr. All operations, R functions, and data types that
+are supported by dplyr should work in an identical way with duckplyr.
+This is achieved in two ways:</p>
+<ul>
+<li>A carefully selected subset of dplyr operations, R functions, and R
+data types are implemented in DuckDB, focusing on faithful
+translation.</li>
+<li>When DuckDB does not support an operation, duckplyr falls back to
+dplyr, guaranteeing identical behavior.</li>
+</ul>
 </div>
 <div class="section level2">
-<h2 id="duckdb-operation">DuckDB operation<a class="anchor" aria-label="anchor" href="#duckdb-operation"></a>
+<h2 id="duckdb-mode">DuckDB mode<a class="anchor" aria-label="anchor" href="#duckdb-mode"></a>
 </h2>
 <p>The following operation is supported by duckplyr:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">duckdb</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>b <span class="op">=</span> <span class="va">a</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>b <span class="op">=</span> <span class="va">a</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">a</span><span class="op">)</span></span></code></pre></div>
 <p>The <code><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain()</a></code> function shows what happens under the
 hood:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">duckdb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">duckdb</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ┌---------------------------┐</span></span>
 <span><span class="co">#&gt; │         PROJECTION        │</span></span>
@@ -134,11 +140,16 @@ hood:</p>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │          ~3 Rows          │</span></span>
 <span><span class="co">#&gt; └---------------------------┘</span></span></code></pre></div>
-<p>The plan shows three operations: a data frame scan (the input), a
-sort operation, and a projection (adding the <code>b</code> column and
-removing the <code>a</code> column). Because each operation is supported
-by DuckDB, the resulting object contains a plan for the entire pipeline.
-The plan is only executed when the data is needed.</p>
+<p>The plan shows three operations:</p>
+<ul>
+<li>a data frame scan (the input),</li>
+<li>a sort operation,</li>
+<li>a projection (adding the <code>b</code> column and removing the
+<code>a</code> column).</li>
+</ul>
+<p>Each operation is supported by DuckDB. The resulting object contains
+a plan for the entire pipeline that is executed lazily, only when the
+data is needed.</p>
 </div>
 <div class="section level2">
 <h2 id="relation-objects">Relation objects<a class="anchor" aria-label="anchor" href="#relation-objects"></a>
@@ -152,10 +163,10 @@ been materialized:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/last_rel.html">last_rel</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre></div>
-<p>It is NULL because nothing has been computed yet. Converting the
-object to a data frame triggers the computation:</p>
+<p>It is <code>NULL</code> because nothing has been computed yet.
+Converting the object to a data frame triggers the computation:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">duckdb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">duckdb</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 1</span></span></span>
 <span><span class="co">#&gt;       b</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -180,7 +191,7 @@ object to a data frame triggers the computation:</p>
 describes logical plan for executing the whole pipeline.</p>
 </div>
 <div class="section level2">
-<h2 id="functionality-not-supported-by-duckdb">Functionality not supported by DuckDB<a class="anchor" aria-label="anchor" href="#functionality-not-supported-by-duckdb"></a>
+<h2 id="help-from-dplyr">Help from dplyr<a class="anchor" aria-label="anchor" href="#help-from-dplyr"></a>
 </h2>
 <p>Using a custom function with a side effect is not supported by DuckDB
 and triggers a dplyr fallback:</p>
@@ -191,15 +202,15 @@ and triggers a dplyr fallback:</p>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="va">fallback</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fu">verbose_plus_one</span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fu">verbose_plus_one</span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">a</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Adding one to 3, 2, 1</span></span></code></pre></div>
 <p>The <code>verbose_plus_one()</code> function is not supported by
-DuckDB, so the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> step is handled by dplyr and
-already executed when the pipeline is defined. This is confirmed by the
-<code><a href="../reference/last_rel.html">last_rel()</a></code> function:</p>
+DuckDB, so the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> step is forwarded to dplyr and
+already executed (eagerly) when the pipeline is defined. This is
+confirmed by the <code><a href="../reference/last_rel.html">last_rel()</a></code> function:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/last_rel.html">last_rel</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; DuckDB Relation: </span></span>
@@ -220,7 +231,7 @@ triggers the materialization of the first step.</p>
 <p>The <code><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain()</a></code> function also confirms indirectly that at
 least a part of the operation is handled by dplyr:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fallback</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">fallback</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ┌---------------------------┐</span></span>
 <span><span class="co">#&gt; │     R_DATAFRAME_SCAN      │</span></span>
@@ -237,7 +248,7 @@ has been executed by dplyr.</p>
 <p>Converting the final object to a data frame triggers the rest of the
 computation:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fallback</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">fallback</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 1</span></span></span>
 <span><span class="co">#&gt;       b</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -259,6 +270,33 @@ computation:</p>
 <span><span class="co">#&gt; - b (DOUBLE)</span></span></code></pre></div>
 <p>The <code><a href="../reference/last_rel.html">last_rel()</a></code> function confirms that only the final
 <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code> is handled by DuckDB again.</p>
+</div>
+<div class="section level2">
+<h2 id="enforce-duckdb-operation">Enforce DuckDB operation<a class="anchor" aria-label="anchor" href="#enforce-duckdb-operation"></a>
+</h2>
+<p>For any duck frame, one can control the automatic materialization.
+For fallbacks to dplyr, automatic materialization must be allowed for
+the duck frame at hand, as dplyr necessitates eager evaluation.</p>
+<p>Therefore, by making a data frame stingy, one can ensure a pipeline
+will error when a fallback to dplyr would have normally happened. See
+<code><a href="../articles/prudence.html">vignette("prudence")</a></code> for details.</p>
+<p>By using operations supported by duckplyr and avoiding fallbacks as
+much as possible, your pipelines will be executed by DuckDB in an
+optimized way.</p>
+</div>
+<div class="section level2">
+<h2 id="configure-fallbacks">Configure fallbacks<a class="anchor" aria-label="anchor" href="#configure-fallbacks"></a>
+</h2>
+<p>Using the <code><a href="../reference/fallback.html">fallback_sitrep()</a></code> and
+<code><a href="../reference/fallback.html">fallback_config()</a></code> functions you can examine and change
+settings related to fallbacks.</p>
+<ul>
+<li><p>You can choose to make fallbacks verbose with
+<code>fallback_config(info = TRUE)</code>.</p></li>
+<li><p>You can change settings related to logging and reporting fallback
+to duckplyr development team to inform their work.</p></li>
+</ul>
+<p>See <code><a href="../articles/telemetry.html">vignette("telemetry")</a></code> for details.</p>
 </div>
 <div class="section level2">
 <h2 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
