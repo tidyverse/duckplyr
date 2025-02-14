@@ -92,7 +92,7 @@ create_default_duckdb_connection <- function() {
   con
 }
 
-duckdb_rel_from_df <- function(df) {
+duckdb_rel_from_df <- function(df, call = caller_env()) {
   # FIXME: make generic
   stopifnot(is.data.frame(df))
 
@@ -114,7 +114,7 @@ duckdb_rel_from_df <- function(df) {
     df <- as_duckplyr_df_impl(df)
   }
 
-  out <- check_df_for_rel(df)
+  out <- check_df_for_rel(df, call)
 
   meta_rel_register_df(out, df)
 

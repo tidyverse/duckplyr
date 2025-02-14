@@ -17,7 +17,7 @@ new_duckdb_tibble <- function(x, class = NULL, prudence = "lavish", adjust_prude
 
   # Before setting class, needs prudence_parsed
   if (adjust_prudence) {
-    rel <- duckdb_rel_from_df(x)
+    rel <- duckdb_rel_from_df(x, call = error_call)
 
     # Copied from rel_to_df.duckdb_relation(), to avoid recursion
     x <- duckdb$rel_to_altrep(

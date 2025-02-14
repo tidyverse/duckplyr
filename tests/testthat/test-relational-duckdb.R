@@ -57,6 +57,12 @@ test_that("duckdb_rel_from_df() and changing column names", {
   expect_equal(x %>% duckplyr_filter(b == 1), data.frame(b = 1))
 })
 
+test_that("duckdb_rel_from_df() error call", {
+  expect_snapshot(error = TRUE, {
+    as_duckdb_tibble(data.frame(a = factor(letters)))
+  })
+})
+
 test_that("rel_aggregate()", {
   skip_if_not_installed("palmerpenguins")
 
