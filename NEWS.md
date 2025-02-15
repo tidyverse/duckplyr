@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.0.0.9002 (2025-02-15)
+
+## Bug fixes
+
+- Show source of error if data frame cannot be converted to duck frame (#614).
+
+
 # duckplyr 1.0.0.9001 (2025-02-12)
 
 ## Bug fixes
