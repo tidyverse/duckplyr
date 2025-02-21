@@ -8,27 +8,21 @@
 
 - Show source of error if data frame cannot be converted to duck frame (#614).
 
-- Fix link in documentation (#600, #601).
-
-## Features
-
-- Break this version with the release of duckdb 2.0.0 (#623).
-
 ## Chore
 
 - Require duckdb \>= 1.2.0 (#619).
+
+- Break this version with the release of duckdb 2.0.0 (#623).
 
 ## Documentation
 
 - Separate `?compute_parquet` and `?compute_csv` (#610, #622).
 
-- Re-render README.
-
 - Italicize book title in README (@wibeasley, #607).
 
-- Fix typo in `filter(.by = ...)` error message (#611).
+- Fix typo in `filter(.by = ...)` error message (@maelle, #611).
 
-- Use stingy instead of frugal (#594).
+- Fix link in documentation (#600, #601).
 
 
 # duckplyr 1.0.0 (2025-02-02)
