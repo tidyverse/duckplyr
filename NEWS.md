@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.0.0.9003 (2025-02-21)
+
+## Documentation
+
+- Fix typo in `filter(.by = ...)` error message (#611).
+
+
 # duckplyr 1.0.0.9002 (2025-02-15)
 
 ## Bug fixes
