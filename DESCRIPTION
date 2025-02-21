@@ -37,6 +37,7 @@ Imports:
 Suggests: 
     arrow,
     brio,
+    callr,
     conflicted,
     constructive (>= 1.0.0),
     curl,
