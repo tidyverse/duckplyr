@@ -35,7 +35,8 @@ reference:
 - subtitle: Computing and materializing data
   contents:
   - compute.duckplyr_df
-  - compute_file
+  - compute_parquet
+  - compute_csv
   - collect.duckplyr_df
   - pull.duckplyr_df
   - explain.duckplyr_df
