@@ -23,7 +23,7 @@ local({
 
 knitr::opts_chunk$set(
   collapse = TRUE,
-  eval = identical(Sys.getenv("IN_PKGDOWN"), "true") || (getRversion() >= "4.1" && rlang::is_installed(c("conflicted", "dbplyr", "nycflights13"))),
+  eval = identical(Sys.getenv("IN_PKGDOWN"), "true") || (getRversion() >= "4.1" && rlang::is_installed(c("conflicted", "dbplyr", "nycflights13", "callr")) && duckplyr:::can_load_extension("httpfs")),
   comment = "#>"
 )
 

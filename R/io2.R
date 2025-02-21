@@ -61,7 +61,7 @@ read_csv_duckdb <- function(path, ..., prudence = c("thrifty", "lavish", "stingy
 #'
 #' @rdname read_file_duckdb
 #' @export
-#' @examples
+#' @examplesIf duckplyr:::can_load_extension("json")
 #'
 #' # Create and read a simple JSON file
 #' path <- tempfile("duckplyr_test_", fileext = ".json")

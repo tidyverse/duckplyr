@@ -118,6 +118,7 @@ read_csv_duckdb(
   path,
   options = list(delim = ",", types = list(c("DOUBLE", "VARCHAR")))
 )
+\dontshow{if (duckplyr:::can_load_extension("json")) withAutoprint(\{ # examplesIf}
 
 # Create and read a simple JSON file
 path <- tempfile("duckplyr_test_", fileext = ".json")
@@ -127,4 +128,5 @@ writeLines('[{"a": 1, "b": "x"}, {"a": 2, "b": "y"}]', path)
 db_exec("INSTALL json")
 db_exec("LOAD json")
 read_json_duckdb(path)
+\dontshow{\}) # examplesIf}
 }
