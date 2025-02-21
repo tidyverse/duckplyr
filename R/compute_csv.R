@@ -10,7 +10,7 @@
 #' @inheritParams compute.duckplyr_df
 #' @inheritParams compute_parquet
 #' @param options A list of additional options to pass to create the storage format,
-#'   see <https://duckdb.org/docs/data/csv/overview#writing-using-the-copy-statement>
+#'   see <https://duckdb.org/docs/sql/statements/copy.html#csv-options>
 #'   for details.
 #'
 #' @return A duckplyr frame.

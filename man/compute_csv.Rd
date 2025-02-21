@@ -28,7 +28,7 @@ with the desired prudence.
 See \code{vignette("prudence")} for more information.}
 
 \item{options}{A list of additional options to pass to create the storage format,
-see \url{https://duckdb.org/docs/data/csv/overview#writing-using-the-copy-statement}
+see \url{https://duckdb.org/docs/sql/statements/copy.html#csv-options}
 for details.}
 }
 \value{

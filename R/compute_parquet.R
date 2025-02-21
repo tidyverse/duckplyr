@@ -11,7 +11,7 @@
 #' @param x A duckplyr frame.
 #' @param path The path of the Parquet file to create.
 #' @param options A list of additional options to pass to create the Parquet file,
-#'   see <https://duckdb.org/docs/data/parquet/overview#writing-to-parquet-files>
+#'   see <https://duckdb.org/docs/sql/statements/copy.html#parquet-options>
 #'   for details.
 #'
 #' @return A duckplyr frame.
