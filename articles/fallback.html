@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,7 +73,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Fallback to dplyr</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/tidyverse/duckplyr/blob/main/vignettes/fallback.Rmd" class="external-link"><code>vignettes/fallback.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidyverse/duckplyr/blob/cran-1.0.1/vignettes/fallback.Rmd" class="external-link"><code>vignettes/fallback.Rmd</code></a></small>
       <div class="d-none name"><code>fallback.Rmd</code></div>
     </div>
 
@@ -85,8 +85,8 @@ support for all dplyr verbs and R functions.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://conflicted.r-lib.org/" class="external-link">conflicted</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://conflicted.r-lib.org/reference/conflict_prefer.html" class="external-link">conflict_prefer</a></span><span class="op">(</span><span class="st">"filter"</span>, <span class="st">"dplyr"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[conflicted]</span> Will prefer <span style="color: #0000BB; font-weight: bold;">dplyr</span>::filter over</span></span>
-<span><span class="co">#&gt; any other package.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #555555;">[conflicted]</span> Will prefer <span style="color: #0000BB; font-weight: bold;">dplyr</span>::filter</span></span>
+<span><span class="co">#&gt; over any other package.</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -133,8 +133,7 @@ hood:</p>
 <span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │     R_DATAFRAME_SCAN      │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │         data.frame        │</span></span>
-<span><span class="co">#&gt; │                           │</span></span>
+<span><span class="co">#&gt; │      Text: data.frame     │</span></span>
 <span><span class="co">#&gt; │       Projections: a      │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │          ~3 Rows          │</span></span>
@@ -235,8 +234,7 @@ least a part of the operation is handled by dplyr:</p>
 <span><span class="co">#&gt; ┌---------------------------┐</span></span>
 <span><span class="co">#&gt; │     R_DATAFRAME_SCAN      │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │         data.frame        │</span></span>
-<span><span class="co">#&gt; │                           │</span></span>
+<span><span class="co">#&gt; │      Text: data.frame     │</span></span>
 <span><span class="co">#&gt; │       Projections: b      │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │          ~3 Rows          │</span></span>

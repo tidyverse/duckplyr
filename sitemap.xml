@@ -20,7 +20,8 @@
 <url><loc>https://duckplyr.tidyverse.org/reference/as_duckplyr_df.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/reference/collect.duckplyr_df.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/reference/compute.duckplyr_df.html</loc></url>
-<url><loc>https://duckplyr.tidyverse.org/reference/compute_file.html</loc></url>
+<url><loc>https://duckplyr.tidyverse.org/reference/compute_csv.html</loc></url>
+<url><loc>https://duckplyr.tidyverse.org/reference/compute_parquet.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/reference/config.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/reference/count.duckplyr_df.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/reference/db_exec.html</loc></url>

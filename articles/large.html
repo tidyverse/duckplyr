@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,7 +73,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Large data</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/tidyverse/duckplyr/blob/main/vignettes/large.Rmd" class="external-link"><code>vignettes/large.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidyverse/duckplyr/blob/cran-1.0.1/vignettes/large.Rmd" class="external-link"><code>vignettes/large.Rmd</code></a></small>
       <div class="d-none name"><code>large.Rmd</code></div>
     </div>
 
@@ -93,8 +93,8 @@ practice.</p>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Overwriting <span style="color: #0000BB;">dplyr</span> methods with <span style="color: #0000BB;">duckplyr</span> methods.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Turn off with `duckplyr::methods_restore()`.</span></span>
 <span><span class="fu"><a href="https://conflicted.r-lib.org/reference/conflict_prefer.html" class="external-link">conflict_prefer</a></span><span class="op">(</span><span class="st">"filter"</span>, <span class="st">"dplyr"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[conflicted]</span> Will prefer <span style="color: #0000BB; font-weight: bold;">dplyr</span>::filter over</span></span>
-<span><span class="co">#&gt; any other package.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #555555;">[conflicted]</span> Will prefer <span style="color: #0000BB; font-weight: bold;">dplyr</span>::filter</span></span>
+<span><span class="co">#&gt; over any other package.</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -172,9 +172,9 @@ data frame or another object to a duckplyr data frame:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>013     1     1      558            600        -<span style="color: #BB0000;">2</span>      753</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 12 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   time_hour &lt;dttm&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;">#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</span></span></span></code></pre></div>
 <p>Existing code that uses DuckDB via dbplyr can also take advantage.
 The following code creates a DuckDB connection and writes a data frame
 to a table:</p>
@@ -186,7 +186,7 @@ to a table:</p>
 <span><span class="va">dbplyr_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"data"</span><span class="op">)</span></span>
 <span><span class="va">dbplyr_data</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># Source:   table&lt;"data"&gt; [?? x 2]</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB v1.1.3 [unknown@Linux 6.8.0-1020-azure:R 4.4.2//tmp/RtmpTrzGsk/file43ae2583d684.duckdb]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB v1.2.0 [unknown@Linux 6.8.0-1021-azure:R 4.4.2//tmp/RtmpyVjlHA/file32b34db3a321.duckdb]</span></span></span>
 <span><span class="co">#&gt;       x y    </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1 a    </span></span>
@@ -204,7 +204,8 @@ to a table:</p>
 <span><span class="co">#&gt; ┌---------------------------┐</span></span>
 <span><span class="co">#&gt; │         SEQ_SCAN          │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │            data           │</span></span>
+<span><span class="co">#&gt; │        Table: data        │</span></span>
+<span><span class="co">#&gt; │   Type: Sequential Scan   │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │        Projections:       │</span></span>
 <span><span class="co">#&gt; │             x             │</span></span>
@@ -231,7 +232,8 @@ can then be used to seamlessly convert the data to a duckplyr frame:</p>
 <span><span class="co">#&gt; ┌---------------------------┐</span></span>
 <span><span class="co">#&gt; │         SEQ_SCAN          │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │            data           │</span></span>
+<span><span class="co">#&gt; │        Table: data        │</span></span>
+<span><span class="co">#&gt; │   Type: Sequential Scan   │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │        Projections:       │</span></span>
 <span><span class="co">#&gt; │             x             │</span></span>
@@ -263,8 +265,8 @@ fails with a helpful error message:</p>
 <span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="st">"a\n1"</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `as_duckdb_tibble()` at duckplyr/R/ducktbl.R:81:3:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> The input is data read by <span style="color: #0000BB;">readr</span>, and <span style="color: #0000BB;">duckplyr</span> supports reading</span></span>
-<span><span class="co">#&gt;   CSV files directly.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> The input is data read by <span style="color: #0000BB;">readr</span>, and <span style="color: #0000BB;">duckplyr</span> supports</span></span>
+<span><span class="co">#&gt;   reading CSV files directly.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `read_csv_duckdb()` to read with the built-in reader.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> To proceed with the data as read by <span style="color: #0000BB;">readr</span>, use `as_tibble()` before</span></span>
 <span><span class="co">#&gt;   `as_duckdb_tibble()`.</span></span></code></pre></div>
@@ -320,25 +322,25 @@ functions can be used with URLs:</p>
 <span><span class="va">flights_parquet</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_file_duckdb.html">read_parquet_duckdb</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span></span>
 <span><span class="va">flights_parquet</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 110 variables</span></span></span>
-<span><span class="co">#&gt;     Year Quarter Month DayofMonth DayOfWeek FlightDate Reporting_Airline</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">2</span>024       1     1          8         1 2024-01-08 9E               </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">2</span>024       1     1          9         2 2024-01-09 9E               </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>024       1     1         10         3 2024-01-10 9E               </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>024       1     1         11         4 2024-01-11 9E               </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">2</span>024       1     1         12         5 2024-01-12 9E               </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">2</span>024       1     1         15         1 2024-01-15 9E               </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">2</span>024       1     1         16         2 2024-01-16 9E               </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>024       1     1         17         3 2024-01-17 9E               </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>024       1     1         18         4 2024-01-18 9E               </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>024       1     1         19         5 2024-01-19 9E               </span></span>
+<span><span class="co">#&gt;     Year Quarter Month DayofMonth DayOfWeek FlightDate</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">2</span>024       1     1          8         1 2024-01-08</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">2</span>024       1     1          9         2 2024-01-09</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>024       1     1         10         3 2024-01-10</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>024       1     1         11         4 2024-01-11</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">2</span>024       1     1         12         5 2024-01-12</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">2</span>024       1     1         15         1 2024-01-15</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">2</span>024       1     1         16         2 2024-01-16</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>024       1     1         17         3 2024-01-17</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>024       1     1         18         4 2024-01-18</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>024       1     1         19         5 2024-01-19</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 103 more variables: DOT_ID_Reporting_Airline &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   IATA_CODE_Reporting_Airline &lt;chr&gt;, Tail_Number &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   Flight_Number_Reporting_Airline &lt;dbl&gt;, OriginAirportID &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   OriginAirportSeqID &lt;dbl&gt;, OriginCityMarketID &lt;dbl&gt;, Origin &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   OriginCityName &lt;chr&gt;, OriginState &lt;chr&gt;, OriginStateFips &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   OriginStateName &lt;chr&gt;, OriginWac &lt;dbl&gt;, DestAirportID &lt;dbl&gt;, …</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 104 more variables: Reporting_Airline &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   DOT_ID_Reporting_Airline &lt;dbl&gt;, IATA_CODE_Reporting_Airline &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Tail_Number &lt;chr&gt;, Flight_Number_Reporting_Airline &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   OriginAirportID &lt;dbl&gt;, OriginAirportSeqID &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   OriginCityMarketID &lt;dbl&gt;, Origin &lt;chr&gt;, OriginCityName &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   OriginState &lt;chr&gt;, OriginStateFips &lt;chr&gt;, OriginStateName &lt;chr&gt;, …</span></span></span></code></pre></div>
 <p>In all cases, the data is read lazily: only the metadata is read
 initially, and the data is read as required. This means that data can be
 read from files that are larger than the available RAM. The Parquet
@@ -397,8 +399,7 @@ in duckplyr:</p>
 <span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │     R_DATAFRAME_SCAN      │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │         data.frame        │</span></span>
-<span><span class="co">#&gt; │                           │</span></span>
+<span><span class="co">#&gt; │      Text: data.frame     │</span></span>
 <span><span class="co">#&gt; │       Projections: a      │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │          ~1 Rows          │</span></span>
@@ -418,7 +419,10 @@ persisted after the session ends:</p>
 <span><span class="co">#&gt; ┌---------------------------┐</span></span>
 <span><span class="co">#&gt; │         SEQ_SCAN          │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
+<span><span class="co">#&gt; │           Table:          │</span></span>
 <span><span class="co">#&gt; │    duckplyr_eexomb92Q9    │</span></span>
+<span><span class="co">#&gt; │                           │</span></span>
+<span><span class="co">#&gt; │   Type: Sequential Scan   │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │        Projections:       │</span></span>
 <span><span class="co">#&gt; │             a             │</span></span>
@@ -441,14 +445,14 @@ returns a plain tibble:</p>
 <h2 id="to-files">To files<a class="anchor" aria-label="anchor" href="#to-files"></a>
 </h2>
 <p>To materialize data in a persistent file, the
-<code><a href="../reference/compute_file.html">compute_csv()</a></code> and <code><a href="../reference/compute_file.html">compute_parquet()</a></code> functions
-can be used. The <code><a href="../reference/compute_file.html">compute_csv()</a></code> function writes the data to
+<code><a href="../reference/compute_csv.html">compute_csv()</a></code> and <code><a href="../reference/compute_parquet.html">compute_parquet()</a></code> functions
+can be used. The <code><a href="../reference/compute_csv.html">compute_csv()</a></code> function writes the data to
 a CSV file:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path_csv_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".csv"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/compute_file.html">compute_csv</a></span><span class="op">(</span><span class="va">path_csv_out</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/compute_csv.html">compute_csv</a></span><span class="op">(</span><span class="va">path_csv_out</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 2 variables</span></span></span>
 <span><span class="co">#&gt;       a     b</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -457,13 +461,13 @@ a CSV file:</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">path_csv_out</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; a,b</span></span>
 <span><span class="co">#&gt; 1.0,2.0</span></span></code></pre></div>
-<p>The <code><a href="../reference/compute_file.html">compute_parquet()</a></code> function writes the data to a
+<p>The <code><a href="../reference/compute_parquet.html">compute_parquet()</a></code> function writes the data to a
 Parquet file:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path_parquet_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".parquet"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/compute_file.html">compute_parquet</a></span><span class="op">(</span><span class="va">path_parquet_out</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/compute_parquet.html">compute_parquet</a></span><span class="op">(</span><span class="va">path_parquet_out</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ┌---------------------------┐</span></span>
 <span><span class="co">#&gt; │       READ_PARQUET        │</span></span>
@@ -478,7 +482,7 @@ Parquet file:</p>
 <span><span class="co">#&gt; │          ~1 Rows          │</span></span>
 <span><span class="co">#&gt; └---------------------------┘</span></span></code></pre></div>
 <p>Just like with <code><a href="../reference/compute.duckplyr_df.html">compute.duckplyr_df()</a></code>, the return value
-of <code><a href="../reference/compute_file.html">compute_csv()</a></code> and <code><a href="../reference/compute_file.html">compute_parquet()</a></code> is a
+of <code><a href="../reference/compute_csv.html">compute_csv()</a></code> and <code><a href="../reference/compute_parquet.html">compute_parquet()</a></code> is a
 duckplyr frame that uses the created CSV or Parquet file and can be used
 in further computations. At the time of writing, direct JSON export is
 not supported.</p>
@@ -526,12 +530,12 @@ files</li>
 <li>Preview intermediate results as usual: the computation will be
 faster because only the first few rows are requested</li>
 <li>To avoid rerunning the whole pipeline all over, use
-<code><a href="../reference/compute.duckplyr_df.html">compute.duckplyr_df()</a></code> or <code><a href="../reference/compute_file.html">compute_parquet()</a></code> to
+<code><a href="../reference/compute.duckplyr_df.html">compute.duckplyr_df()</a></code> or <code><a href="../reference/compute_parquet.html">compute_parquet()</a></code> to
 materialize any intermediate result that is too large to fit into
 memory</li>
 <li>Collect the final result using <code><a href="../reference/collect.duckplyr_df.html">collect.duckplyr_df()</a></code> or
-write it to a file using <code><a href="../reference/compute_file.html">compute_csv()</a></code> or
-<code><a href="../reference/compute_file.html">compute_parquet()</a></code>
+write it to a file using <code><a href="../reference/compute_csv.html">compute_csv()</a></code> or
+<code><a href="../reference/compute_parquet.html">compute_parquet()</a></code>
 </li>
 </ul>
 <p>There is a caveat: due to the design of duckplyr, if a dplyr verb is
@@ -544,12 +548,12 @@ table:</p>
 <code class="sourceCode R"><span><span class="va">flights_parquet</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Month</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `group_by()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> This operation cannot be carried out by DuckDB, and the input is</span></span>
-<span><span class="co">#&gt;   a stingy duckplyr frame.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> This operation cannot be carried out by DuckDB, and the input</span></span>
+<span><span class="co">#&gt;   is a stingy duckplyr frame.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Try `summarise(.by = ...)` or `mutate(.by = ...)` instead of</span></span>
 <span><span class="co">#&gt;   `group_by()` and `ungroup()`.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `compute(prudence = "lavish")` to materialize to temporary storage</span></span>
-<span><span class="co">#&gt;   and continue with <span style="color: #0000BB;">duckplyr</span>.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `compute(prudence = "lavish")` to materialize to temporary</span></span>
+<span><span class="co">#&gt;   storage and continue with <span style="color: #0000BB;">duckplyr</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> See `vignette("prudence")` for other options.</span></span></code></pre></div>
 <p>Because <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code> is not supported, the data will be
 attempted to read into memory before the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code>

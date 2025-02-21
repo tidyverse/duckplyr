@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,7 +73,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Memory protection: controlling automatic materialization</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/tidyverse/duckplyr/blob/main/vignettes/prudence.Rmd" class="external-link"><code>vignettes/prudence.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidyverse/duckplyr/blob/cran-1.0.1/vignettes/prudence.Rmd" class="external-link"><code>vignettes/prudence.Rmd</code></a></small>
       <div class="d-none name"><code>prudence.Rmd</code></div>
     </div>
 
@@ -88,8 +88,8 @@ usage.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://conflicted.r-lib.org/" class="external-link">conflicted</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://conflicted.r-lib.org/reference/conflict_prefer.html" class="external-link">conflict_prefer</a></span><span class="op">(</span><span class="st">"filter"</span>, <span class="st">"dplyr"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[conflicted]</span> Will prefer <span style="color: #0000BB; font-weight: bold;">dplyr</span>::filter over</span></span>
-<span><span class="co">#&gt; any other package.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #555555;">[conflicted]</span> Will prefer <span style="color: #0000BB; font-weight: bold;">dplyr</span>::filter</span></span>
+<span><span class="co">#&gt; over any other package.</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -169,7 +169,7 @@ month:</p>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.009   0.000   0.008</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.008   0.000   0.008</span></span></code></pre></div>
 <p>Setting up the pipeline is fast, the size of the data does not affect
 the setup costs. Because the computation is deferred, DuckDB can
 optimize the whole pipeline, which can be seen in the output below:</p>
@@ -217,8 +217,8 @@ optimize the whole pipeline, which can be seen in the output below:</p>
 <span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │         PROJECTION        │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │           month           │</span></span>
-<span><span class="co">#&gt; │         arr_delay         │</span></span>
+<span><span class="co">#&gt; │             #0            │</span></span>
+<span><span class="co">#&gt; │             #1            │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │        ~67355 Rows        │</span></span>
 <span><span class="co">#&gt; └-------------┬-------------┘</span></span>
@@ -233,7 +233,7 @@ optimize the whole pipeline, which can be seen in the output below:</p>
 <span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │     R_DATAFRAME_SCAN      │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │         data.frame        │</span></span>
+<span><span class="co">#&gt; │      Text: data.frame     │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │        Projections:       │</span></span>
 <span><span class="co">#&gt; │           month           │</span></span>
@@ -248,7 +248,7 @@ kept. The result becomes available when accessed:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">mean_arr_delay_ewr</span><span class="op">$</span><span class="va">mean_arr_delay</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.019   0.001   0.017</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.018   0.002   0.016</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="comparison">Comparison<a class="anchor" aria-label="anchor" href="#comparison"></a>
@@ -305,7 +305,7 @@ optimization:</p>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.037   0.007   0.044</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.034   0.009   0.042</span></span></code></pre></div>
 <p>See also the <a href="https://duckdb.org/2024/04/02/duckplyr.html" class="external-link">duckplyr: dplyr
 Powered by DuckDB</a> blog post for more information.</p>
 </div>
@@ -378,14 +378,15 @@ accessed.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>013     1     1      558            600        -<span style="color: #BB0000;">2</span>      753</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 12 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   time_hour &lt;dttm&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</span></span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">flights_stingy</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
-<span><span class="co">#&gt;  [1] "year"           "month"          "day"            "dep_time"      </span></span>
-<span><span class="co">#&gt;  [5] "sched_dep_time" "dep_delay"      "arr_time"       "sched_arr_time"</span></span>
-<span><span class="co">#&gt;  [9] "arr_delay"      "carrier"</span></span>
+<span><span class="co">#&gt;  [1] "year"           "month"          "day"           </span></span>
+<span><span class="co">#&gt;  [4] "dep_time"       "sched_dep_time" "dep_delay"     </span></span>
+<span><span class="co">#&gt;  [7] "arr_time"       "sched_arr_time" "arr_delay"     </span></span>
+<span><span class="co">#&gt; [10] "carrier"</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">flights_stingy</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "prudent_duckplyr_df" "duckplyr_df"         "tbl_df"             </span></span>
@@ -419,12 +420,12 @@ fallbacks to dplyr are not possible.</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `group_by()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> This operation cannot be carried out by DuckDB, and the input is</span></span>
-<span><span class="co">#&gt;   a stingy duckplyr frame.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> This operation cannot be carried out by DuckDB, and the input</span></span>
+<span><span class="co">#&gt;   is a stingy duckplyr frame.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Try `summarise(.by = ...)` or `mutate(.by = ...)` instead of</span></span>
 <span><span class="co">#&gt;   `group_by()` and `ungroup()`.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `compute(prudence = "lavish")` to materialize to temporary storage</span></span>
-<span><span class="co">#&gt;   and continue with <span style="color: #0000BB;">duckplyr</span>.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `compute(prudence = "lavish")` to materialize to temporary</span></span>
+<span><span class="co">#&gt;   storage and continue with <span style="color: #0000BB;">duckplyr</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> See `vignette("prudence")` for other options.</span></span></code></pre></div>
 <p>The same pipeline with a lavish frame works, but the computation is
 carried out by dplyr:</p>
@@ -504,7 +505,7 @@ fewer than 1,000,000 cells (rows multiplied by columns).</p>
 <code class="sourceCode R"><span><span class="va">flights_partial</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">origin</span>, <span class="va">dest</span>, <span class="va">dep_delay</span>, <span class="va">arr_delay</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: Materialization would result in 250001 rows, which exceeds the limit of 250000. Use collect() or as_tibble() to materialize.</span></span></code></pre></div>
+<span><span class="co">#&gt; Error: Materialization would result in more than 250000 rows. Use collect() or as_tibble() to materialize.</span></span></code></pre></div>
 <p>The original input is too large to be materialized, so the operation
 fails. On the other hand, the result after aggregation is small enough
 to be materialized:</p>
