@@ -22,8 +22,6 @@ new_duckdb_tibble <- function(x, class = NULL, prudence = "lavish", adjust_prude
     # Copied from rel_to_df.duckdb_relation(), to avoid recursion
     x <- duckdb$rel_to_altrep(
       rel,
-      # FIXME: Remove allow_materialization with duckdb >= 1.2.0
-      allow_materialization = prudence_parsed$allow_materialization,
       n_rows = prudence_parsed$n_rows,
       n_cells = prudence_parsed$n_cells
     )
@@ -99,8 +97,6 @@ prudence_parse <- function(prudence, call = caller_env()) {
 
   list(
     prudence = prudence,
-    # FIXME: Remove allow_materialization with duckdb >= 1.2.0
-    allow_materialization = allow_materialization,
     n_rows = n_rows,
     n_cells = n_cells
   )
