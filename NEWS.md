@@ -12,7 +12,7 @@
 
 - Require duckdb \>= 1.2.0 (#619).
 
-- Break this version with the release of duckdb 2.0.0 (#623).
+- Break this version with duckdb 2.0.0 (#623).
 
 ## Documentation
 
