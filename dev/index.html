@@ -81,7 +81,7 @@
 <p>A <strong>drop-in replacement</strong> for dplyr, powered by DuckDB for <strong>speed</strong>.</p>
 </blockquote>
 <p><a href="https://dplyr.tidyverse.org/" class="external-link">dplyr</a> is the grammar of data manipulation in the tidyverse. The duckplyr package will run all of your existing dplyr code with identical results, using <a href="https://duckdb.org/" class="external-link">DuckDB</a> where possible to compute the results faster. In addition, you can analyze larger-than-memory datasets straight from files on your disk or from the web.</p>
-<p>If you are new to dplyr, the best place to start is the <a href="https://r4ds.hadley.nz/data-transform" class="external-link">data transformation chapter</a> in R for Data Science.</p>
+<p>If you are new to dplyr, the best place to start is the <a href="https://r4ds.hadley.nz/data-transform" class="external-link">data transformation chapter</a> in <em>R for Data Science</em>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -204,7 +204,7 @@
 <p>Like with local data frames, queries on the remote data are executed lazily. Unlike with local data frames, the default is to disallow automatic materialization if the result is too large in order to protect memory: the results are not materialized until explicitly requested, with a <code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect()</a></code> call for instance.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">flights</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: Materialization would result in 9091 rows, which exceeds the limit of 9090. Use collect() or as_tibble() to materialize.</span></span></code></pre></div>
+<span><span class="co">#&gt; Error: Materialization would result in more than 9090 rows. Use collect() or as_tibble() to materialize.</span></span></code></pre></div>
 <p>For printing, only the first few rows of the result are fetched.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">flights</span></span>
