@@ -1,5 +1,28 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.0.0.9004 (2025-02-21)
+
+## Bug fixes
+
+- Check if extensions can be loaded before running examples and vignettes (#620).
+
+## Features
+
+- Break this version with the release of duckdb 2.0.0 (#623).
+
+## Chore
+
+- Require duckdb \>= 1.2.0 (#619).
+
+## Documentation
+
+- Separate `?compute_parquet` and `?compute_csv` (#610, #622).
+
+- Re-render README.
+
+- Italicize book title in README (@wibeasley, #607).
+
+
 # duckplyr 1.0.0.9003 (2025-02-21)
 
 ## Documentation
