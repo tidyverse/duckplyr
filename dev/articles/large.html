@@ -187,7 +187,7 @@ to a table:</p>
 <span><span class="va">dbplyr_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"data"</span><span class="op">)</span></span>
 <span><span class="va">dbplyr_data</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># Source:   table&lt;"data"&gt; [?? x 2]</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB v1.2.0 [unknown@Linux 6.8.0-1021-azure:R 4.4.2//tmp/Rtmp5211gl/file43954df0113c.duckdb]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB v1.2.0 [unknown@Linux 6.8.0-1021-azure:R 4.4.2//tmp/Rtmpcmt0xdeadbeef/file432b26d918de.duckdb]</span></span></span>
 <span><span class="co">#&gt;       x y    </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1 a    </span></span>
@@ -446,14 +446,14 @@ returns a plain tibble:</p>
 <h2 id="to-files">To files<a class="anchor" aria-label="anchor" href="#to-files"></a>
 </h2>
 <p>To materialize data in a persistent file, the
-<code><a href="../reference/compute_file.html">compute_csv()</a></code> and <code><a href="../reference/compute_file.html">compute_parquet()</a></code> functions
-can be used. The <code><a href="../reference/compute_file.html">compute_csv()</a></code> function writes the data to
+<code><a href="../reference/compute_csv.html">compute_csv()</a></code> and <code><a href="../reference/compute_parquet.html">compute_parquet()</a></code> functions
+can be used. The <code><a href="../reference/compute_csv.html">compute_csv()</a></code> function writes the data to
 a CSV file:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path_csv_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".csv"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/compute_file.html">compute_csv</a></span><span class="op">(</span><span class="va">path_csv_out</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/compute_csv.html">compute_csv</a></span><span class="op">(</span><span class="va">path_csv_out</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 2 variables</span></span></span>
 <span><span class="co">#&gt;       a     b</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -462,13 +462,13 @@ a CSV file:</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">path_csv_out</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; a,b</span></span>
 <span><span class="co">#&gt; 1.0,2.0</span></span></code></pre></div>
-<p>The <code><a href="../reference/compute_file.html">compute_parquet()</a></code> function writes the data to a
+<p>The <code><a href="../reference/compute_parquet.html">compute_parquet()</a></code> function writes the data to a
 Parquet file:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path_parquet_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".parquet"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/compute_file.html">compute_parquet</a></span><span class="op">(</span><span class="va">path_parquet_out</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/compute_parquet.html">compute_parquet</a></span><span class="op">(</span><span class="va">path_parquet_out</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ┌---------------------------┐</span></span>
 <span><span class="co">#&gt; │       READ_PARQUET        │</span></span>
@@ -483,7 +483,7 @@ Parquet file:</p>
 <span><span class="co">#&gt; │          ~1 Rows          │</span></span>
 <span><span class="co">#&gt; └---------------------------┘</span></span></code></pre></div>
 <p>Just like with <code><a href="../reference/compute.duckplyr_df.html">compute.duckplyr_df()</a></code>, the return value
-of <code><a href="../reference/compute_file.html">compute_csv()</a></code> and <code><a href="../reference/compute_file.html">compute_parquet()</a></code> is a
+of <code><a href="../reference/compute_csv.html">compute_csv()</a></code> and <code><a href="../reference/compute_parquet.html">compute_parquet()</a></code> is a
 duckplyr frame that uses the created CSV or Parquet file and can be used
 in further computations. At the time of writing, direct JSON export is
 not supported.</p>
@@ -531,12 +531,12 @@ files</li>
 <li>Preview intermediate results as usual: the computation will be
 faster because only the first few rows are requested</li>
 <li>To avoid rerunning the whole pipeline all over, use
-<code><a href="../reference/compute.duckplyr_df.html">compute.duckplyr_df()</a></code> or <code><a href="../reference/compute_file.html">compute_parquet()</a></code> to
+<code><a href="../reference/compute.duckplyr_df.html">compute.duckplyr_df()</a></code> or <code><a href="../reference/compute_parquet.html">compute_parquet()</a></code> to
 materialize any intermediate result that is too large to fit into
 memory</li>
 <li>Collect the final result using <code><a href="../reference/collect.duckplyr_df.html">collect.duckplyr_df()</a></code> or
-write it to a file using <code><a href="../reference/compute_file.html">compute_csv()</a></code> or
-<code><a href="../reference/compute_file.html">compute_parquet()</a></code>
+write it to a file using <code><a href="../reference/compute_csv.html">compute_csv()</a></code> or
+<code><a href="../reference/compute_parquet.html">compute_parquet()</a></code>
 </li>
 </ul>
 <p>There is a caveat: due to the design of duckplyr, if a dplyr verb is
