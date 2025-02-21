@@ -226,8 +226,6 @@ rel_to_df.duckdb_relation <- function(
   prudence_parsed <- prudence_parse(prudence)
   out <- duckdb$rel_to_altrep(
     rel,
-    # FIXME: Remove allow_materialization with duckdb >= 1.2.0
-    allow_materialization = prudence_parsed$allow_materialization,
     n_rows = prudence_parsed$n_rows,
     n_cells = prudence_parsed$n_cells
   )

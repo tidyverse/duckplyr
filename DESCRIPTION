@@ -22,7 +22,7 @@ Imports:
     cli,
     collections,
     DBI,
-    duckdb (>= 1.1.3-2),
+    duckdb (>= 1.2.0),
     glue,
     jsonlite,
     lifecycle,
