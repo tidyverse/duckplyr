@@ -1,10 +1,14 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# duckplyr 1.0.0.9004 (2025-02-21)
+# duckplyr 1.0.1 (2025-02-21)
 
 ## Bug fixes
 
 - Check if extensions can be loaded before running examples and vignettes (#620).
+
+- Show source of error if data frame cannot be converted to duck frame (#614).
+
+- Fix link in documentation (#600, #601).
 
 ## Features
 
@@ -22,31 +26,7 @@
 
 - Italicize book title in README (@wibeasley, #607).
 
-
-# duckplyr 1.0.0.9003 (2025-02-21)
-
-## Documentation
-
 - Fix typo in `filter(.by = ...)` error message (#611).
-
-
-# duckplyr 1.0.0.9002 (2025-02-15)
-
-## Bug fixes
-
-- Show source of error if data frame cannot be converted to duck frame (#614).
-
-
-# duckplyr 1.0.0.9001 (2025-02-12)
-
-## Bug fixes
-
-- Fix link in documentation (#600, #601).
-
-
-# duckplyr 1.0.0.9000 (2025-02-08)
-
-## Documentation
 
 - Use stingy instead of frugal (#594).
 
