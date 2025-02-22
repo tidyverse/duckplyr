@@ -8,6 +8,8 @@
 
 - Show source of error if data frame cannot be converted to duck frame (#614).
 
+- Correct formatting for controlled fallbacks with `Sys.setenv(DUCKPLYR_FALLBACK_INFO = TRUE)`
+
 ## Chore
 
 - Require duckdb \>= 1.2.0 (#619).
