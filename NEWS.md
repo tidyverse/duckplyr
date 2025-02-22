@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.0.1.9000 (2025-02-22)
+
+## Bug fixes
+
+- Correct formatting for controlled fallbacks with `Sys.setenv(DUCKPLYR_FALLBACK_INFO = TRUE)`.
+
+
 # duckplyr 1.0.1 (2025-02-21)
 
 ## Bug fixes
