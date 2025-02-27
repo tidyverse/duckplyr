@@ -3,8 +3,8 @@ test_that("rel_try() with reason", {
 
   expect_snapshot({
     rel_try(NULL,
-      "Not affected" = FALSE,
-      "Affected" = TRUE,
+      "Not affected: {.code FALSE}" = FALSE,
+      "Affected: {.code TRUE}" = TRUE,
       {
       }
     )

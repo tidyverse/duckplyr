@@ -43,7 +43,7 @@ rel_try <- function(call, rel, ...) {
         if (Sys.getenv("DUCKPLYR_FALLBACK_INFO") == "TRUE") {
           inform(message = c(
             "Cannot process duckplyr query with DuckDB, falling back to dplyr.",
-            i = message
+            i = cli::format_inline(message)
           ))
         }
         if (Sys.getenv("DUCKPLYR_FORCE") == "TRUE") {
