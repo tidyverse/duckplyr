@@ -27,6 +27,9 @@ reference:
 - title: Using duckplyr
   contents:
   - duckdb_tibble
+  - read_parquet_duckdb
+  - read_csv_duckdb
+  - read_json_duckdb
   - read_file_duckdb
   - read_sql_duckdb
 
