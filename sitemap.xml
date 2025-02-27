@@ -47,7 +47,10 @@
 <url><loc>https://duckplyr.tidyverse.org/reference/new_relational.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/reference/new_relexpr.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/reference/pull.duckplyr_df.html</loc></url>
+<url><loc>https://duckplyr.tidyverse.org/reference/read_csv_duckdb.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/reference/read_file_duckdb.html</loc></url>
+<url><loc>https://duckplyr.tidyverse.org/reference/read_json_duckdb.html</loc></url>
+<url><loc>https://duckplyr.tidyverse.org/reference/read_parquet_duckdb.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/reference/read_sql_duckdb.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/reference/reexports.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/reference/relocate.duckplyr_df.html</loc></url>
