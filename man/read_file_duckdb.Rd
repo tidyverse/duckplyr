@@ -118,7 +118,7 @@ read_csv_duckdb(
   path,
   options = list(delim = ",", types = list(c("DOUBLE", "VARCHAR")))
 )
-\dontshow{if (duckplyr:::can_load_extension("json")) withAutoprint(\{ # examplesIf}
+\dontshow{if (identical(Sys.getenv("IN_PKGDOWN"), "TRUE")) withAutoprint(\{ # examplesIf}
 
 # Create and read a simple JSON file
 path <- tempfile("duckplyr_test_", fileext = ".json")
