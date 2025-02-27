@@ -16,7 +16,7 @@
 
 ## Documentation
 
-- Separate `?compute_parquet` and `?compute_csv` (#610, #622).
+- Separate `?compute_parquet` and `?compute_csv` (#610, #622), and split `?read_file_duckdb`.
 
 - Italicize book title in README (@wibeasley, #607).
 
