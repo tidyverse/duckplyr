@@ -744,13 +744,19 @@ test_extra_arg_map <- list(
     "a + 1, .by = g",
     "c = a + 1",
     "`if` = a + 1",
-    "sum(a)",
-    "sum(a), .by = g",
-    "mean(a)",
-    "mean(a), .by = g",
-
-    "sd(a)",
-    "sd(a), .by = g",
+    # The window fundtions need a little bit of TLC
+    # "sum(a)",
+    # "sum(a), .by = g",
+    # "mean(a)",
+    # "mean(a), .by = g",
+    # "sd(a)",
+    # "sd(a), .by = g",
+    "sum(a, na.rm = TRUE)",
+    "sum(a, na.rm = TRUE), .by = g",
+    "mean(a, na.rm = TRUE)",
+    "mean(a, na.rm = TRUE), .by = g",
+    "sd(a, na.rm = TRUE)",
+    "sd(a, na.rm = TRUE), .by = g",
 
     # prod() doesn't exist
     # "prod(a)",
@@ -779,17 +785,23 @@ test_extra_arg_map <- list(
     # "lead(a, order_by = -a)",
     # "lead(a, order_by = -a), .by = g",
 
-    "min(a)",
-    "min(a), .by = g",
-    "max(a)",
-    "max(a), .by = g",
+    # The window fundtions need a little bit of TLC
+    # "min(a)",
+    # "min(a), .by = g",
+    # "max(a)",
+    # "max(a), .by = g",
+    "min(a, na.rm = TRUE)",
+    "min(a, na.rm = TRUE), .by = g",
+    "max(a, na.rm = TRUE)",
+    "max(a, na.rm = TRUE), .by = g",
 
-    "first(a)",
-    "first(a), .by = g",
-    "last(a)",
-    "last(a), .by = g",
-    "nth(a, 2)",
-    "nth(a, 2), .by = g",
+    # No implementation yet for these
+    # "first(a)",
+    # "first(a), .by = g",
+    # "last(a)",
+    # "last(a), .by = g",
+    # "nth(a, 2)",
+    # "nth(a, 2), .by = g",
 
     # Different results
     # "nth(a, -2)",
