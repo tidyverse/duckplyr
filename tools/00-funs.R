@@ -237,14 +237,10 @@ duckplyr_tests <- head(n = -1, list(
     NULL
   ),
   "test-join-rows.R" = c(
-    "join_rows() gives meaningful many-to-many warnings",
     NULL
   ),
   "test-join.R" = c(
-    "mutating joins trigger multiple match warning",
-    "mutating joins don't trigger multiple match warning when called indirectly",
-
-    "mutating joins trigger many-to-many warning",
+    # FIXME: How to detect an indirect call?
     "mutating joins don't trigger many-to-many warning when called indirectly",
     NULL
   ),
