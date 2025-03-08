@@ -43,15 +43,9 @@ compute.duckplyr_df <- function(
     }
   )
 
-  # dplyr forward
-  check_prudence(x, duckplyr_error)
-
-  compute <- dplyr$compute.data.frame
-  out <- compute(x, ...)
-  return(out)
-
-  # dplyr implementation
-  x
+  # Unconditionally signal error
+  # (If we can't compute, something's weird here.)
+  cnd_signal(duckplyr_error)
 }
 
 duckplyr_compute <- function(x, ...) {
