@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Large data • duckplyr</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="48x48" href="../favicon-48x48.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
 <link rel="icon" sizes="any" href="../favicon.ico">
@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.0.9003</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.1.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -187,7 +187,7 @@ to a table:</p>
 <span><span class="va">dbplyr_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"data"</span><span class="op">)</span></span>
 <span><span class="va">dbplyr_data</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># Source:   table&lt;"data"&gt; [?? x 2]</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB v1.2.0 [unknown@Linux 6.8.0-1021-azure:R 4.4.2//tmp/RtmpdIN0KE/file431849ec7373.duckdb]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB v1.2.0 [unknown@Linux 6.8.0-1021-azure:R 4.4.3//tmp/Rtmpryltjo/file427e54588176.duckdb]</span></span></span>
 <span><span class="co">#&gt;       x y    </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1 a    </span></span>
@@ -278,12 +278,12 @@ the existing code.</p>
 <h2 id="from-files">From files<a class="anchor" aria-label="anchor" href="#from-files"></a>
 </h2>
 <p>DuckDB supports data ingestion from CSV, Parquet, and JSON files. The
-<code><a href="../reference/read_file_duckdb.html">read_csv_duckdb()</a></code> function accepts a file path and returns
+<code><a href="../reference/read_csv_duckdb.html">read_csv_duckdb()</a></code> function accepts a file path and returns
 a duckplyr frame.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path_csv_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".csv"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="st">"x,y\n1,a\n2,b\n3,c"</span>, <span class="va">path_csv_1</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/read_file_duckdb.html">read_csv_duckdb</a></span><span class="op">(</span><span class="va">path_csv_1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/read_csv_duckdb.html">read_csv_duckdb</a></span><span class="op">(</span><span class="va">path_csv_1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 2 variables</span></span></span>
 <span><span class="co">#&gt;       x y    </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
@@ -294,7 +294,7 @@ a duckplyr frame.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path_csv_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".csv"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="st">"x,y\n4,d\n5,e\n6,f"</span>, <span class="va">path_csv_2</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/read_file_duckdb.html">read_csv_duckdb</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">path_csv_1</span>, <span class="va">path_csv_2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/read_csv_duckdb.html">read_csv_duckdb</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">path_csv_1</span>, <span class="va">path_csv_2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 2 variables</span></span></span>
 <span><span class="co">#&gt;       x y    </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
@@ -306,8 +306,8 @@ a duckplyr frame.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>     6 f</span></span></code></pre></div>
 <p>The <code>options</code> argument can be used to control the
 reading.</p>
-<p>Similarly, the <code><a href="../reference/read_file_duckdb.html">read_parquet_duckdb()</a></code> and
-<code><a href="../reference/read_file_duckdb.html">read_json_duckdb()</a></code> functions can be used to read Parquet
+<p>Similarly, the <code><a href="../reference/read_parquet_duckdb.html">read_parquet_duckdb()</a></code> and
+<code><a href="../reference/read_json_duckdb.html">read_json_duckdb()</a></code> functions can be used to read Parquet
 and JSON files, respectively.</p>
 <p>For reading from HTTPS or S3 URLs, the <a href="https://duckdb.org/docs/extensions/httpfs/overview.html" class="external-link">httpfs
 extension</a> must be installed and loaded in each session.</p>
@@ -315,12 +315,12 @@ extension</a> must be installed and loaded in each session.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/db_exec.html">db_exec</a></span><span class="op">(</span><span class="st">"INSTALL httpfs"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/db_exec.html">db_exec</a></span><span class="op">(</span><span class="st">"LOAD httpfs"</span><span class="op">)</span></span></code></pre></div>
 <p>Installation is fast if the extension is already installed. Once
-loaded, the <code><a href="../reference/read_file_duckdb.html">read_csv_duckdb()</a></code>,
-<code><a href="../reference/read_file_duckdb.html">read_parquet_duckdb()</a></code>, and <code><a href="../reference/read_file_duckdb.html">read_json_duckdb()</a></code>
+loaded, the <code><a href="../reference/read_csv_duckdb.html">read_csv_duckdb()</a></code>,
+<code><a href="../reference/read_parquet_duckdb.html">read_parquet_duckdb()</a></code>, and <code><a href="../reference/read_json_duckdb.html">read_json_duckdb()</a></code>
 functions can be used with URLs:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">url</span> <span class="op">&lt;-</span> <span class="st">"https://blobs.duckdb.org/flight-data-partitioned/Year=2024/data_0.parquet"</span></span>
-<span><span class="va">flights_parquet</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_file_duckdb.html">read_parquet_duckdb</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span></span>
+<span><span class="va">flights_parquet</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_parquet_duckdb.html">read_parquet_duckdb</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span></span>
 <span><span class="va">flights_parquet</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 110 variables</span></span></span>
 <span><span class="co">#&gt;     Year Quarter Month DayofMonth DayOfWeek FlightDate</span></span>
