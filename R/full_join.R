@@ -17,7 +17,7 @@ full_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
     "No implicit cross joins for {.code full_join()}" = is_cross_by(by),
     "{.arg multiple} not supported" = !identical(multiple, "all"),
     {
-      out <- rel_join_impl(x, y, by, "full", na_matches, suffix, keep, error_call)
+      out <- rel_join_impl(x, y, by, "full", na_matches, suffix, keep, relationship, error_call)
       return(out)
     }
   )
