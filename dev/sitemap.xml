@@ -58,6 +58,7 @@
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/select.duckplyr_df.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/semi_join.duckplyr_df.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/setdiff.duckplyr_df.html</loc></url>
+<url><loc>https://duckplyr.tidyverse.org/dev/reference/slice_head.duckplyr_df.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/stats_show.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/summarise.duckplyr_df.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/dev/reference/symdiff.duckplyr_df.html</loc></url>
