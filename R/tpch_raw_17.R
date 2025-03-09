@@ -194,7 +194,7 @@ tpch_raw_17 <- function(con, experimental) {
             } else {
               duckdb$expr_constant(0.2)
             },
-            duckdb$expr_function("mean", list(duckdb$expr_reference("l_quantity")))
+            duckdb$expr_function("___mean_na", list(x = duckdb$expr_reference("l_quantity")))
           )
         )
         duckdb$expr_set_alias(tmp_expr, "quantity_threshold")

@@ -3,6 +3,12 @@ duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
+invisible(
+  DBI::dbExecute(
+    con,
+    'CREATE MACRO "___mean_na"(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE AVG(x) END)'
+  )
+)
 invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
 df1 <- lineitem
 "select"
@@ -185,17 +191,17 @@ rel5 <- duckdb$rel_aggregate(
       tmp_expr
     },
     {
-      tmp_expr <- duckdb$expr_function("mean", list(duckdb$expr_reference("l_quantity")))
+      tmp_expr <- duckdb$expr_function("___mean_na", list(x = duckdb$expr_reference("l_quantity")))
       duckdb$expr_set_alias(tmp_expr, "avg_qty")
       tmp_expr
     },
     {
-      tmp_expr <- duckdb$expr_function("mean", list(duckdb$expr_reference("l_extendedprice")))
+      tmp_expr <- duckdb$expr_function("___mean_na", list(x = duckdb$expr_reference("l_extendedprice")))
       duckdb$expr_set_alias(tmp_expr, "avg_price")
       tmp_expr
     },
     {
-      tmp_expr <- duckdb$expr_function("mean", list(duckdb$expr_reference("l_discount")))
+      tmp_expr <- duckdb$expr_function("___mean_na", list(x = duckdb$expr_reference("l_discount")))
       duckdb$expr_set_alias(tmp_expr, "avg_disc")
       tmp_expr
     },

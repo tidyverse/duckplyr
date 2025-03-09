@@ -6,7 +6,12 @@ experimental <- FALSE
 invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "any"(x) AS (bool_or(x))'))
+invisible(
+  DBI::dbExecute(
+    con,
+    'CREATE MACRO "___any_na"(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE bool_or(x) END)'
+  )
+)
 invisible(
   DBI::dbExecute(
     con,
@@ -275,7 +280,7 @@ rel16 <- duckdb$rel_aggregate(
   aggregates = list(
     {
       tmp_expr <- duckdb$expr_function(
-        "any",
+        "___any_na",
         list(
           duckdb$expr_comparison(
             ">",
@@ -708,7 +713,7 @@ rel35 <- duckdb$rel_aggregate(
 )
 "arrange"
 rel36 <- duckdb$rel_order(rel35, list(duckdb$expr_reference("numwait"), duckdb$expr_reference("s_name")))
-"head"
+"slice_head"
 rel37 <- duckdb$rel_limit(rel36, 100)
 rel37
 duckdb$rel_to_altrep(rel37)

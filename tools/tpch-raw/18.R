@@ -269,7 +269,7 @@ rel15 <- duckdb$rel_order(
   rel14,
   list(duckdb$expr_reference("o_totalprice"), duckdb$expr_reference("o_orderdate"))
 )
-"head"
+"slice_head"
 rel16 <- duckdb$rel_limit(rel15, 100)
 rel16
 duckdb$rel_to_altrep(rel16)

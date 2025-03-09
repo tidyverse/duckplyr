@@ -14,6 +14,12 @@ invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y
 invisible(
   DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
 )
+invisible(
+  DBI::dbExecute(
+    con,
+    'CREATE MACRO "___min_na"(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE MIN(x) END)'
+  )
+)
 df1 <- partsupp
 "select"
 rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
@@ -552,7 +558,7 @@ rel31 <- duckdb$rel_aggregate(
   groups = list(duckdb$expr_reference("p_partkey")),
   aggregates = list(
     {
-      tmp_expr <- duckdb$expr_function("min", list(duckdb$expr_reference("ps_supplycost")))
+      tmp_expr <- duckdb$expr_function("___min_na", list(duckdb$expr_reference("ps_supplycost")))
       duckdb$expr_set_alias(tmp_expr, "min_ps_supplycost")
       tmp_expr
     }
@@ -753,7 +759,7 @@ rel39 <- duckdb$rel_order(
   rel38,
   list(duckdb$expr_reference("s_acctbal"), duckdb$expr_reference("n_name"), duckdb$expr_reference("s_name"), duckdb$expr_reference("p_partkey"))
 )
-"head"
+"slice_head"
 rel40 <- duckdb$rel_limit(rel39, 100)
 rel40
 duckdb$rel_to_altrep(rel40)

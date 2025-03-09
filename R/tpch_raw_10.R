@@ -502,7 +502,7 @@ tpch_raw_10 <- function(con, experimental) {
   )
   "arrange"
   rel29 <- duckdb$rel_order(rel28, list(duckdb$expr_reference("revenue")))
-  "head"
+  "slice_head"
   rel30 <- duckdb$rel_limit(rel29, 20)
   rel30
   duckdb$rel_to_altrep(rel30)

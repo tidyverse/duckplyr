@@ -103,6 +103,16 @@ prudence_parse <- function(prudence, call = caller_env()) {
 }
 
 get_prudence_duckplyr_df <- function(x) {
+  if (!is_duckdb_tibble(x)) {
+    # Avoid function calls for speed
+    prudence <- duckplyr_the$default_df_prudence
+    if (is.null(prudence)) {
+      prudence <- "lavish"
+    }
+
+    return(prudence)
+  }
+
   if (!is_prudent_duckplyr_df(x)) {
     return("lavish")
   }

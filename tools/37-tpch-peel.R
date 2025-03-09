@@ -11,6 +11,8 @@ qloadm("tools/tpch/001.qs")
 methods_overwrite()
 withr::defer(methods_restore())
 
+meta_clear()
+
 invisible(tpch_01())
 meta_replay_to_file("tools/tpch-raw/01.R", 'qloadm("tools/tpch/001.qs")')
 meta_replay_to_fun_file("tpch_raw_01", "# nocov start\n", "# nocov end\n")

@@ -254,7 +254,7 @@ tpch_raw_22 <- function(con, experimental) {
     groups = list(),
     aggregates = list(
       {
-        tmp_expr <- duckdb$expr_function("mean", list(duckdb$expr_reference("c_acctbal")))
+        tmp_expr <- duckdb$expr_function("___mean_na", list(x = duckdb$expr_reference("c_acctbal")))
         duckdb$expr_set_alias(tmp_expr, "acctbal_min")
         tmp_expr
       },
