@@ -916,6 +916,7 @@ test_extra_arg_map <- list(
 )
 
 test_skip_map <- c(
+  compute = "# No fallback",
   # FIXME: Fail with group_by()
   dplyr_reconstruct = "Hack",
   group_by = "Grouped",

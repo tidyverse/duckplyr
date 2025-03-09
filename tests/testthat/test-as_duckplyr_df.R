@@ -232,21 +232,8 @@ test_that("as_duckplyr_df_impl() and collect()", {
 })
 
 test_that("as_duckplyr_df_impl() and compute()", {
-  withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
+  # No fallback
 
-  # Data
-  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
-
-  # Run
-  pre <- test_df %>% as_duckplyr_df_impl() %>% compute()
-  post <- test_df %>% compute() %>% as_duckplyr_df_impl()
-
-  # Compare
-  expect_identical(pre, post)
-})
-
-
-test_that("as_duckplyr_df_impl() and compute()", {
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
