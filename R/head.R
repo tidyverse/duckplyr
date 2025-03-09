@@ -9,7 +9,7 @@ head.duckplyr_df <- function(x, n = 6L, ...) {
     #' - with a negative `n`.
     #'
     #' These features fall back to [head()], see `vignette("fallback")` for details.
-    "Can't process negative n" = (n < 0),
+    "{.code slice_head(n = ...)} with negative values not supported" = (n < 0),
     {
       rel <- duckdb_rel_from_df(x)
       out_rel <- rel_limit(rel, n)

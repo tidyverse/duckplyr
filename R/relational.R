@@ -27,7 +27,7 @@ rel_try <- function(call, rel, ...) {
 
   if (Sys.getenv("DUCKPLYR_FALLBACK_FORCE") == "TRUE") {
     stats$fallback <- stats$fallback + 1L
-    return()
+    return("Fallback enforced")
   }
 
   dots <- list(...)

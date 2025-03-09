@@ -881,6 +881,7 @@ test_extra_arg_map <- list(
     NULL
   ),
   semi_join = "join_by(a)",
+  slice_head = 'n = 2',
   slice_max = 'a',
   slice_min = 'a',
   summarise = c(
@@ -934,7 +935,6 @@ test_skip_map <- c(
   rowwise = "Stack overflow",
   sample_frac = "Random seed",
   sample_n = "Random seed",
-  slice_head = "External vector?",
   slice_max = "External vector?",
   slice_min = "External vector?",
   slice_sample = "External vector?",
