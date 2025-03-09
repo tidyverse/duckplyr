@@ -16,8 +16,8 @@ rel_join_impl <- function(
 
   na_matches <- check_na_matches(na_matches, error_call = error_call)
 
-  x_names <- tbl_vars(x)
-  y_names <- tbl_vars(y)
+  x_names <- tbl_vars_safe(x)
+  y_names <- tbl_vars_safe(y)
 
   if (is_null(by)) {
     by <- join_by_common(x_names, y_names, error_call = error_call)
@@ -135,4 +135,13 @@ rel_join_impl <- function(
   out <- duckplyr_reconstruct(out, x)
 
   return(out)
+}
+
+# Needed because dplyr::tbl_vars() calls dplyr::group_vars() which calls dplyr::group_data()
+# https://github.com/tidyverse/dplyr/issues/7668
+tbl_vars_safe <- function(x) {
+  if (inherits(x, "grouped_df")) {
+    return(tbl_vars(x))
+  }
+  names(x)
 }
