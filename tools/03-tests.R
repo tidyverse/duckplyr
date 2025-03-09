@@ -21,6 +21,8 @@ get_test_code <- function(name, code, is_tbl_return) {
     skip <- test_skip_map[name]
     if (is.na(skip)) {
       skip <- ""
+    } else if (grepl("^# ", skip)) {
+      skip <- paste0("  ", skip, "\n\n")
     } else {
       skip <- paste0('  skip("', skip, '")\n\n')
     }

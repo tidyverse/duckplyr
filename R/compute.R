@@ -45,7 +45,11 @@ compute.duckplyr_df <- function(
 
   # Unconditionally signal error
   # (If we can't compute, something's weird here.)
-  cnd_signal(duckplyr_error)
+  if (is.character(duckplyr_error)) {
+    cli::cli_abort(duckplyr_error)
+  } else {
+    cnd_signal(duckplyr_error)
+  }
 }
 
 duckplyr_compute <- function(x, ...) {
