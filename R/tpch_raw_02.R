@@ -539,7 +539,7 @@ tpch_raw_02 <- function(con, experimental) {
     groups = list(duckdb$expr_reference("p_partkey")),
     aggregates = list(
       {
-        tmp_expr <- duckdb$expr_function("min", list(duckdb$expr_reference("ps_supplycost")))
+        tmp_expr <- duckdb$expr_function("___min_na", list(duckdb$expr_reference("ps_supplycost")))
         duckdb$expr_set_alias(tmp_expr, "min_ps_supplycost")
         tmp_expr
       }
@@ -740,7 +740,7 @@ tpch_raw_02 <- function(con, experimental) {
     rel38,
     list(duckdb$expr_reference("s_acctbal"), duckdb$expr_reference("n_name"), duckdb$expr_reference("s_name"), duckdb$expr_reference("p_partkey"))
   )
-  "head"
+  "slice_head"
   rel40 <- duckdb$rel_limit(rel39, 100)
   rel40
   duckdb$rel_to_altrep(rel40)

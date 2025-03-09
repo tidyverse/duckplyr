@@ -96,7 +96,7 @@ tpch_raw_15 <- function(con, experimental) {
     groups = list(duckdb$expr_reference("global_agr_key")),
     aggregates = list(
       {
-        tmp_expr <- duckdb$expr_function("max", list(duckdb$expr_reference("total_revenue")))
+        tmp_expr <- duckdb$expr_function("___max_na", list(duckdb$expr_reference("total_revenue")))
         duckdb$expr_set_alias(tmp_expr, "max_total_revenue")
         tmp_expr
       }

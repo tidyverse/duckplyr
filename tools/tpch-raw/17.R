@@ -8,6 +8,12 @@ invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y
 invisible(
   DBI::dbExecute(
     con,
+    'CREATE MACRO "___mean_na"(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE AVG(x) END)'
+  )
+)
+invisible(
+  DBI::dbExecute(
+    con,
     r"[CREATE MACRO "___divide"(x, y) AS CASE WHEN y = 0 THEN CASE WHEN x = 0 THEN CAST('NaN' AS double) WHEN x > 0 THEN CAST('+Infinity' AS double) ELSE CAST('-Infinity' AS double) END ELSE CAST(x AS double) / y END]"
   )
 )
@@ -204,7 +210,7 @@ rel8 <- duckdb$rel_aggregate(
           } else {
             duckdb$expr_constant(0.2)
           },
-          duckdb$expr_function("mean", list(duckdb$expr_reference("l_quantity")))
+          duckdb$expr_function("___mean_na", list(x = duckdb$expr_reference("l_quantity")))
         )
       )
       duckdb$expr_set_alias(tmp_expr, "quantity_threshold")

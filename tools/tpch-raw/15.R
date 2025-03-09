@@ -3,6 +3,12 @@ duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
 experimental <- FALSE
+invisible(
+  DBI::dbExecute(
+    con,
+    'CREATE MACRO "___max_na"(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE MAX(x) END)'
+  )
+)
 invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(duckdb$rapi_load_rfuns(drv@database_ref))
@@ -101,7 +107,7 @@ rel5 <- duckdb$rel_aggregate(
   groups = list(duckdb$expr_reference("global_agr_key")),
   aggregates = list(
     {
-      tmp_expr <- duckdb$expr_function("max", list(duckdb$expr_reference("total_revenue")))
+      tmp_expr <- duckdb$expr_function("___max_na", list(duckdb$expr_reference("total_revenue")))
       duckdb$expr_set_alias(tmp_expr, "max_total_revenue")
       tmp_expr
     }

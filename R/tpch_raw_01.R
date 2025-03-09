@@ -182,17 +182,17 @@ tpch_raw_01 <- function(con, experimental) {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function("mean", list(duckdb$expr_reference("l_quantity")))
+        tmp_expr <- duckdb$expr_function("___mean_na", list(x = duckdb$expr_reference("l_quantity")))
         duckdb$expr_set_alias(tmp_expr, "avg_qty")
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function("mean", list(duckdb$expr_reference("l_extendedprice")))
+        tmp_expr <- duckdb$expr_function("___mean_na", list(x = duckdb$expr_reference("l_extendedprice")))
         duckdb$expr_set_alias(tmp_expr, "avg_price")
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function("mean", list(duckdb$expr_reference("l_discount")))
+        tmp_expr <- duckdb$expr_function("___mean_na", list(x = duckdb$expr_reference("l_discount")))
         duckdb$expr_set_alias(tmp_expr, "avg_disc")
         tmp_expr
       },

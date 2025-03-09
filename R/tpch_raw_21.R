@@ -262,7 +262,7 @@ tpch_raw_21 <- function(con, experimental) {
     aggregates = list(
       {
         tmp_expr <- duckdb$expr_function(
-          "any",
+          "___any_na",
           list(
             duckdb$expr_comparison(
               ">",
@@ -695,7 +695,7 @@ tpch_raw_21 <- function(con, experimental) {
   )
   "arrange"
   rel36 <- duckdb$rel_order(rel35, list(duckdb$expr_reference("numwait"), duckdb$expr_reference("s_name")))
-  "head"
+  "slice_head"
   rel37 <- duckdb$rel_limit(rel36, 100)
   rel37
   duckdb$rel_to_altrep(rel37)

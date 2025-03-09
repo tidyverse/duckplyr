@@ -7,6 +7,12 @@ invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
+invisible(
+  DBI::dbExecute(
+    con,
+    'CREATE MACRO "___mean_na"(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE AVG(x) END)'
+  )
+)
 invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
 df1 <- customer
@@ -262,7 +268,7 @@ rel3 <- duckdb$rel_aggregate(
   groups = list(),
   aggregates = list(
     {
-      tmp_expr <- duckdb$expr_function("mean", list(duckdb$expr_reference("c_acctbal")))
+      tmp_expr <- duckdb$expr_function("___mean_na", list(x = duckdb$expr_reference("c_acctbal")))
       duckdb$expr_set_alias(tmp_expr, "acctbal_min")
       tmp_expr
     },
