@@ -1,7 +1,7 @@
 Type: Package
 Package: duckplyr
 Title: A 'DuckDB'-Backed Version of 'dplyr'
-Version: 1.0.1.9001
+Version: 1.0.1.9002
 Authors@R: c(
     person("Hannes", "Mühleisen", role = "aut",
            comment = c(ORCID = "0000-0001-8552-0029")),
@@ -56,11 +56,20 @@ Suggests:
     usethis,
     withr
 Enhances: 
+    qs
+Config/Needs/check: anthonynorth/roxyglobals
+Config/Needs/development: 
+    devtools,
     qs,
     reprex,
-    rstudioapi
-Config/Needs/check: anthonynorth/roxyglobals
-Config/Needs/website: tidyverse/tidytemplate, dbplyr, rmarkdown
+    r-lib/roxygen2,
+    anthonynorth/roxyglobals,
+    rstudioapi,
+    tidyverse
+Config/Needs/website: 
+    dbplyr,
+    rmarkdown,
+    tidyverse/tidytemplate
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Config/testthat/start-first: rel_api, tpch, as_duckplyr_df, dplyr-mutate,

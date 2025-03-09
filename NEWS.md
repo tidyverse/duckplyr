@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.0.1.9002 (2025-03-09)
+
+## Chore
+
+- Check loadability of extensino in test (#636).
+
+
 # duckplyr 1.0.1.9001 (2025-02-28)
 
 ## fledge

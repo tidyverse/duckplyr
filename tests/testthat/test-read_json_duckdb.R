@@ -1,4 +1,6 @@
 test_that("Reading from JSON works", {
+  skip_if_not(can_load_extension("json"))
+
   df <- tibble(a = 1:2, b = c("x", "y"))
 
   path_json <- withr::local_tempfile(fileext = ".json")

@@ -49,6 +49,7 @@ reference:
   - arrange.duckplyr_df
   - distinct.duckplyr_df
   - filter.duckplyr_df
+  - slice_head.duckplyr_df
   - head.duckplyr_df
 
 - subtitle: Verbs that affect columns

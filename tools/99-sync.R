@@ -3,6 +3,7 @@
 # - source("tools/30-tpch-export.R", echo = TRUE)
 # - source("tools/31-tpch-load-qs.R", echo = TRUE)
 # - Follow instructions in .sync/README.md
+# - Clone duckdb/duckdb-r in a directory next to duckplyr
 # - Restart R
 
 # Every time you want to sync:
