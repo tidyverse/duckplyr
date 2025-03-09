@@ -56,6 +56,10 @@
       out <- duckplyr_left_join(df1, df2)
     Message
       Joining with `by = join_by(x)`
+    Condition
+      Warning:
+      `is_duckplyr_df()` was deprecated in duckplyr 1.0.0.
+      i Please use `is_duckdb_tibble()` instead.
 
 # filtering joins compute common columns
 
@@ -63,6 +67,10 @@
       out <- duckplyr_semi_join(df1, df2)
     Message
       Joining with `by = join_by(x)`
+    Condition
+      Warning:
+      `is_duckplyr_df()` was deprecated in duckplyr 1.0.0.
+      i Please use `is_duckdb_tibble()` instead.
 
 # mutating joins reference original column in `y` when there are type errors (#6465)
 

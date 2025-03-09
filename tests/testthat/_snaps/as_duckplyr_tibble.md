@@ -8,6 +8,11 @@
       i Please use `as_duckdb_tibble()` instead.
     Output
       # A duckplyr data frame: 1 variable
+    Condition
+      Warning:
+      `is_duckplyr_df()` was deprecated in duckplyr 1.0.0.
+      i Please use `is_duckdb_tibble()` instead.
+    Output
             a
         <dbl>
       1     1

@@ -33,6 +33,10 @@
     Message
       Storing counts in `nn`, as `n` already present in input
       i Use `name = "new_name"` to pick a new name.
+    Condition
+      Warning:
+      `is_duckplyr_df()` was deprecated in duckplyr 1.0.0.
+      i Please use `is_duckdb_tibble()` instead.
     Output
         n nn
       1 1  1

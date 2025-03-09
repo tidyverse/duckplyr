@@ -60,6 +60,11 @@
         {"version":"0.3.1","message":"Can't reuse summary variable `...4`.","name":"summarise","x":{"...1":"numeric","...2":"numeric","...3":"numeric"},"args":{"dots":{"...4":"sum(...2)","...5":"sum(...4)"},"by":["...1"]}}
     Output
       # A duckplyr data frame: 3 variables
+    Condition
+      Warning:
+      `is_duckplyr_df()` was deprecated in duckplyr 1.0.0.
+      i Please use `is_duckdb_tibble()` instead.
+    Output
             a     e     f
         <dbl> <dbl> <dbl>
       1     1     2     2
@@ -91,6 +96,11 @@
         {"version":"0.3.1","message":"`wday()` with `option(\"lubridate.week.start\")` not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"...3::...4(...1)"},".by":"NULL",".keep":["all","used","unused","none"]}}
     Output
       # A duckplyr data frame: 2 variables
+    Condition
+      Warning:
+      `is_duckplyr_df()` was deprecated in duckplyr 1.0.0.
+      i Please use `is_duckdb_tibble()` instead.
+    Output
         a              b
         <date>     <dbl>
       1 2024-03-08     5
@@ -105,6 +115,11 @@
         {"version":"0.3.1","message":"strftime(tz = ) not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"strftime(...1, format = \"<character>\", tz = \"<character>\")"},".by":"NULL",".keep":["all","used","unused","none"]}}
     Output
       # A duckplyr data frame: 2 variables
+    Condition
+      Warning:
+      `is_duckplyr_df()` was deprecated in duckplyr 1.0.0.
+      i Please use `is_duckdb_tibble()` instead.
+    Output
         a          b         
         <date>     <chr>     
       1 2024-03-08 2024-03-08
@@ -131,6 +146,11 @@
         {"version":"0.3.1","message":"No translation for function `foo()`.","name":"mutate","x":{"...1":"numeric","...2":"numeric"},"args":{"dots":{"...3":"foo(...1, ...2)"},".by":"NULL",".keep":["all","used","unused","none"]}}
     Output
       # A duckplyr data frame: 3 variables
+    Condition
+      Warning:
+      `is_duckplyr_df()` was deprecated in duckplyr 1.0.0.
+      i Please use `is_duckdb_tibble()` instead.
+    Output
             a     b     c
         <dbl> <dbl> <dbl>
       1     1     2     3
@@ -139,8 +159,17 @@
 
     Code
       mtcars[1:2, ] %>% as_duckdb_tibble() %>% select(mpg, cyl)
+    Condition
+      Warning:
+      `is_duckplyr_df()` was deprecated in duckplyr 1.0.0.
+      i Please use `is_duckdb_tibble()` instead.
     Output
       # A duckplyr data frame: 2 variables
+    Condition
+      Warning:
+      `is_duckplyr_df()` was deprecated in duckplyr 1.0.0.
+      i Please use `is_duckdb_tibble()` instead.
+    Output
           mpg   cyl
         <dbl> <dbl>
       1    21     6
@@ -179,6 +208,11 @@
         {"version":"0.3.1","message":"Can't use column `...1` already present in rel for order preservation","name":"arrange","x":{"...1":"numeric","...2":"integer"},"args":{"dots":["...2"],".by_group":false}}
     Output
       # A duckplyr data frame: 2 variables
+    Condition
+      Warning:
+      `is_duckplyr_df()` was deprecated in duckplyr 1.0.0.
+      i Please use `is_duckdb_tibble()` instead.
+    Output
         `___row_number`     b
                   <dbl> <int>
       1               1     2
@@ -195,6 +229,11 @@
         {"version":"0.3.1","message":"Try {.code summarise(.by = ...)} or {.code mutate(.by = ...)} instead of {.code group_by()} and {.code ungroup()}."}
     Output
       # A duckplyr data frame: 2 variables
+    Condition
+      Warning:
+      `is_duckplyr_df()` was deprecated in duckplyr 1.0.0.
+      i Please use `is_duckdb_tibble()` instead.
+    Output
             a     n
         <dbl> <int>
       1     1     1
