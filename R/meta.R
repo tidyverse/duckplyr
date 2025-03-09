@@ -10,6 +10,7 @@ df_cache <- collections::dict()
 rel_cache <- collections::dict()
 
 meta_call <- function(name) {
+  name <- gsub("[.].*$", "", name)
   meta_call_start(name)
   withr::defer_parent(meta_call_end())
 }
