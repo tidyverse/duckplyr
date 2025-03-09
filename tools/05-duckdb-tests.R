@@ -9,7 +9,7 @@ first_line <- paste0(
   "do not edit by hand"
 )
 
-get_test_code <- function(name, code, oo) {
+get_duckdb_test_code <- function(name, code, oo) {
   withr::local_envvar(DUCKPLYR_FORCE = TRUE)
 
   formals <- formals(code)
@@ -33,11 +33,11 @@ get_test_code <- function(name, code, oo) {
       return("")
     }
 
-    out <- get_test_code_one(extra_args, pre_step = "", oo, name, two_tables, force, skip)
+    out <- get_duckdb_test_code_one(extra_args, pre_step = "", oo, name, two_tables, force, skip)
   } else {
     out <- paste(pmap_chr(
       list(extra_args, names2(extra_args), oo),
-      get_test_code_one,
+      get_duckdb_test_code_one,
       name,
       two_tables
     ), collapse = "\n")
@@ -56,7 +56,7 @@ get_test_code <- function(name, code, oo) {
   )
 }
 
-get_test_code_one <- function(extra_arg, pre_step, oo, name, two_tables, force = "", skip = "") {
+get_duckdb_test_code_one <- function(extra_arg, pre_step, oo, name, two_tables, force = "", skip = "") {
   post_coerce <- " %>% as.data.frame()"
 
   if (pre_step != "") {
@@ -144,7 +144,7 @@ tests <-
   expand_grid(oo = c(TRUE, FALSE)) %>%
   mutate(sort = lengths(test_extra_arg_map[name])) %>%
   arrange(desc(sort)) %>%
-  mutate(test_code = pmap_chr(list(name, code, oo), get_test_code, .progress = TRUE)) %>%
+  mutate(test_code = pmap_chr(list(name, code, oo), get_duckdb_test_code, .progress = TRUE)) %>%
   filter(test_code != "") %>%
   arrange(name)
 
