@@ -170,6 +170,8 @@ meta_macro_register <- function(name) {
 }
 
 meta_df_register <- function(df) {
+  class(df) <- setdiff(class(df), "duckplyr_df")
+
   if (df_cache$has(df)) {
     return(invisible(df_cache$get(df)))
   }
@@ -195,11 +197,8 @@ meta_df_register <- function(df) {
   df_cache$set(df, name)
 
   if (is.null(df_expr)) {
-    class(df) <- setdiff(class(df), "duckplyr_df")
     meta_record(constructive::construct_multi(list2(!!name := df)))
   } else {
-    # Changes df in-place!
-    class(df) <- setdiff(class(df), "duckplyr_df")
     meta_record(constructive::deparse_call(expr(!!name <- !!df_expr)))
   }
 
