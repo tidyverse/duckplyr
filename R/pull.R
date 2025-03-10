@@ -24,7 +24,7 @@ pull.duckplyr_df <- function(.data, var = -1, name = NULL, ...) {
     {
       rel <- duckdb_rel_from_df(.data)
       out_rel <- rel_project(rel, exprs)
-      out <- rel_to_df(out_rel)
+      out <- rel_to_df(out_rel, prudence = "lavish")
       out <- tibble::deframe(out)
       return(out)
     }
