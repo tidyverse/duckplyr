@@ -93,10 +93,10 @@ test_that("rel_aggregate()", {
 
   expect_snapshot({
     grouped %>%
-      rel_to_df() %>%
+      rel_to_df(prudence = "lavish") %>%
       arrange(species)
     ungrouped %>%
-      rel_to_df()
+      rel_to_df(prudence = "lavish")
   })
 })
 

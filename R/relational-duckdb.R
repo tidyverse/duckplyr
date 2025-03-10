@@ -209,17 +209,9 @@ vec_ptype_safe <- function(x) {
 }
 
 #' @export
-rel_to_df.duckdb_relation <- function(
-  rel,
-  ...,
-  prudence = NULL,
-  allow_materialization = TRUE,
-  n_rows = Inf,
-  n_cells = Inf
-) {
+rel_to_df.duckdb_relation <- function(rel, ..., prudence = NULL) {
   if (is.null(prudence)) {
-    # Legacy
-    return(duckdb$rel_to_altrep(rel, allow_materialization, n_rows, n_cells))
+    cli::cli_abort("Argument {.arg {prudence}} is missing.")
   }
 
   # Same code in new_duckdb_tibble(), to avoid recursion there
