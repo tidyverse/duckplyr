@@ -1,5 +1,22 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.0.1.9003 (2025-03-10)
+
+## Bug fixes
+
+- Joins no longer materialize the input data when the package is used with `methods_overwrite()` or `library(duckplyr)` (#641).
+
+## Features
+
+- `compute()` does not have a fallback, failures are reported to the client (#637).
+
+- Implement `slice_head()` (#640).
+
+## Chore
+
+- Fix sync scripts and add reproducible code (#639).
+
+
 # duckplyr 1.0.1.9002 (2025-03-09)
 
 ## Chore
