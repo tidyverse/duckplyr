@@ -21,7 +21,7 @@ diff --git b/R/slice_head.R a/R/slice_head.R
 +    #' - with a negative `n`.
 +    #'
 +    #' These features fall back to [slice_head()], see `vignette("fallback")` for details.
-+    "{.code slice_head(by = ...)} not supported" = !is.null(by),
++    "{.code slice_head(by = ...)} not supported" = !missing(by),
 +    "{.code slice_head(prop = ...)} not supported" = !missing(prop),
 +    "{.code slice_head(n = ...)} with negative values not supported" = !n_valid,
      {
