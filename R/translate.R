@@ -92,6 +92,9 @@ rel_find_call <- function(fun, env, call = caller_env()) {
     "wday" = "lubridate",
     "strftime" = "base",
     "substr" = "base",
+
+    "coalesce" = "dplyr",
+
     NULL
   )
   # Remember to update limits.Rmd when adding new functions!
@@ -253,6 +256,11 @@ rel_translate_lang <- function(
           cli::cli_abort("object not found, should also be triggered by the dplyr fallback", call = call)
         }
       }
+    },
+    "coalesce" = {
+      if (length(expr) != 3) {
+        cli::cli_abort("Can only translate {.call coalesce(x, y)} with two arguments.", call = call)
+      }
     }
   )
 
@@ -271,6 +279,7 @@ rel_translate_lang <- function(
     ">=" = "r_base::>=",
     "==" = "r_base::==",
     "!=" = "r_base::!=",
+    "coalesce" = "___coalesce",
 
     NULL
   )
