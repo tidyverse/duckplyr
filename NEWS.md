@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.0.1.9004 (2025-03-11)
+
+## Chore
+
+- Internal `rel_to_df()` needs `prudence` argument (#644).
+
+
 # duckplyr 1.0.1.9003 (2025-03-10)
 
 ## Bug fixes
