@@ -1,5 +1,16 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.0.1.9005 (2025-03-12)
+
+## Features
+
+- Translate `dplyr::coalesce()`.
+
+## Chore
+
+- Bring tools and patch up to date (@joakimlinde, #647).
+
+
 # duckplyr 1.0.1.9004 (2025-03-11)
 
 ## Chore
