@@ -81,7 +81,7 @@ duckplyr_df_variable_display_value <- function(x) {
     col_word <- "columns"
   }
 
-  sprintf("[? rows x %s %s]", n_col, col_word)
+  sprintf("[? rows x %s %s] <duckplyr_df>", n_col, col_word)
 }
 
 duckplyr_df_variable_display_type <- function(x) {
