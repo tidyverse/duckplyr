@@ -528,6 +528,7 @@
 
     Code
       # Success: Translate dplyr::n() function
+      # https://github.com/tidyverse/dplyr/pull/7046
       rel_find_call(quote(n), env)
     Output
       [1] "dplyr" "n"    

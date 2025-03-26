@@ -169,6 +169,7 @@ test_that("rel_find_call() success paths", {
 
   expect_snapshot({
     "Success: Translate dplyr::n() function"
+    "https://github.com/tidyverse/dplyr/pull/7046"
     rel_find_call(quote(n), env)
   })
 
