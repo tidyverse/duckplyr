@@ -182,6 +182,8 @@ test_that("rel_find_call() success paths", {
     rel_find_call(quote(sd), new_environment(parent = asNamespace("stats")))
   })
 
+  skip_if_not_installed("lubridate")
+
   expect_snapshot({
     "Success: Translate lubridate function"
     rel_find_call(quote(lubridate::wday), env)
