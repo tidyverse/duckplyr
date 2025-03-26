@@ -733,44 +733,11 @@ integer.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>        0        1</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="n_distinct-and-missing-values">
-<code>n_distinct()</code> and missing values<a class="anchor" aria-label="anchor" href="#n_distinct-and-missing-values"></a>
+<h3 id="n_distinct-and-multiple-arguments">
+<code>n_distinct()</code> and multiple arguments<a class="anchor" aria-label="anchor" href="#n_distinct-and-multiple-arguments"></a>
 </h3>
-<p>Unlike most other aggregation functions, <code><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct()</a></code>
-ignores missing values and does not support the <code>na.rm</code>
-argument. This is tracked in <a href="https://github.com/tidyverse/duckplyr/issues/572" class="external-link uri">https://github.com/tidyverse/duckplyr/issues/572</a>.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 1 variable</span></span></span>
-<span><span class="co">#&gt;   `n_distinct(a)`</span></span>
-<span><span class="co">#&gt;             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>               2</span></span>
-<span></span>
-<span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span>, .prudence <span class="op">=</span> <span class="st">"stingy"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a></span><span class="op">(</span><span class="va">a</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `summarize()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> This operation cannot be carried out by DuckDB, and the input</span></span>
-<span><span class="co">#&gt;   is a stingy duckplyr frame.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `compute(prudence = "lavish")` to materialize to temporary</span></span>
-<span><span class="co">#&gt;   storage and continue with <span style="color: #0000BB;">duckplyr</span>.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> See `vignette("prudence")` for other options.</span></span>
-<span><span class="co">#&gt; <span style="font-weight: bold;">Caused by error in `summarize()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't translate named argument `n_distinct(na.rm = )`.</span></span>
-<span></span>
-<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 1</span></span></span>
-<span><span class="co">#&gt;   `n_distinct(a)`</span></span>
-<span><span class="co">#&gt;             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>               3</span></span>
-<span></span>
-<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a></span><span class="op">(</span><span class="va">a</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 1</span></span></span>
-<span><span class="co">#&gt;   `n_distinct(a, na.rm = TRUE)`</span></span>
-<span><span class="co">#&gt;                           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>                             2</span></span></code></pre></div>
+<p>This function needs exactly one argument besides the optional
+<code>na.rm</code>. Multiple arguments is not supported.</p>
 </div>
 <div class="section level3">
 <h3 id="is-na-and-nan-values">
@@ -778,7 +745,7 @@ argument. This is tracked in <a href="https://github.com/tidyverse/duckplyr/issu
 </h3>
 <p>This function returns <code>FALSE</code> for <code>NaN</code> values
 in duckplyr, while it returns <code>TRUE</code> in dplyr.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NaN</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 2 variables</span></span></span>
