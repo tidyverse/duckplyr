@@ -132,8 +132,8 @@ test_that("aggregation primitives", {
 test_that("aggregation primitives with na.rm and window functions", {
   df <- data.frame(a = 1L, b = TRUE)
 
-  # Test aggregation primitives with na.rm = TRUE in window functions
   expect_snapshot({
+    "Test aggregation primitives with na.rm = TRUE in window functions"
     rel_translate(expr(sum(a, na.rm = TRUE)), df, need_window = TRUE)
   })
 
@@ -149,8 +149,8 @@ test_that("aggregation primitives with na.rm and window functions", {
     rel_translate(expr(mean(a, na.rm = TRUE)), df, need_window = TRUE)
   })
 
-  # Test error when na.rm = FALSE in window functions
   expect_snapshot(error = TRUE, {
+    "Test error when na.rm = FALSE in window functions"
     rel_translate(expr(sum(a, na.rm = FALSE)), df, need_window = TRUE)
   })
 
@@ -162,79 +162,72 @@ test_that("aggregation primitives with na.rm and window functions", {
 test_that("rel_find_call() success paths", {
   env <- baseenv()
 
-  # Success: Translate base function
-  expect_equal(
-    rel_find_call(quote(mean), env),
-    c("base", "mean")
-  )
+  expect_snapshot({
+    "Success: Translate base function"
+    rel_find_call(quote(mean), env)
+  })
 
-  # Success: Translate dplyr::n() function
-  # https://github.com/tidyverse/dplyr/pull/7046
-  expect_equal(
-    rel_find_call(quote(n), env),
-    c("dplyr", "n")
-  )
+  expect_snapshot({
+    "Success: Translate dplyr::n() function"
+    rel_find_call(quote(n), env)
+  })
 
-  # Success: Translate DuckDB function with "d::" prefix
-  expect_equal(
-    rel_find_call(quote(d::ROW), env),
-    c("d", "ROW")
-  )
+  expect_snapshot({
+    "Success: Translate DuckDB function with 'd::' prefix"
+    rel_find_call(quote(d::ROW), env)
+  })
 
-  # Success: Translate stats function when stats is available
-  expect_equal(
-    rel_find_call(quote(sd), new_environment(parent = asNamespace("stats"))),
-    c("stats", "sd")
-  )
+  expect_snapshot({
+    "Success: Translate stats function when stats is available"
+    rel_find_call(quote(sd), new_environment(parent = asNamespace("stats")))
+  })
 
-  # Success: Translate lubridate function
-  expect_equal(
-    rel_find_call(quote(lubridate::wday), env),
-    c("lubridate", "wday")
-  )
+  expect_snapshot({
+    "Success: Translate lubridate function"
+    rel_find_call(quote(lubridate::wday), env)
+  })
 
-  # Success: Translate lubridate function when exported
-  expect_equal(
-    rel_find_call(quote(wday), new_environment(list(wday = lubridate::wday))),
-    c("lubridate", "wday")
-  )
+  expect_snapshot({
+    "Success: Translate lubridate function when exported"
+    rel_find_call(quote(wday), new_environment(list(wday = lubridate::wday)))
+  })
 })
 
 test_that("rel_find_call() error paths", {
   env <- baseenv()
 
-  # Error: Can't translate function with invalid "::" structure
   expect_snapshot(error = TRUE, {
+    "Error: Can't translate function with invalid '::' structure"
     rel_find_call(quote(pkg::""), env)
   })
 
-  # Error: Can't translate function with invalid "::" components
   expect_snapshot(error = TRUE, {
+    "Error: Can't translate function with invalid '::' components"
     rel_find_call(call("::", "pkg", 123), env, env)
   })
 
-  # Error: Can't translate function with invalid name length
   expect_snapshot(error = TRUE, {
+    "Error: Can't translate function with invalid name length"
     rel_find_call(quote(c(1, 2)), env)
   })
 
-  # Error: No translation for unknown function
   expect_snapshot(error = TRUE, {
+    "Error: No translation for unknown function"
     rel_find_call(quote(unknown_function), env)
   })
 
-  # Error: No translation for unknown function from some package
   expect_snapshot(error = TRUE, {
+    "Error: No translation for unknown function from some package"
     rel_find_call(quote(somepkg::unknown_function), env)
   })
 
-  # Error: Function not found in the environment
   expect_snapshot(error = TRUE, {
+    "Error: Function not found in the environment"
     rel_find_call(quote(mean), new_environment())
   })
 
-  # Error: Function does not map to the corresponding package
   expect_snapshot(error = TRUE, {
+    "Error: Function does not map to the corresponding package"
     rel_find_call(quote(mean), new_environment(list(mean = stats::sd)))
   })
 })
