@@ -388,24 +388,9 @@ tibble(a = c(TRUE, FALSE)) |>
   summarize(min(a), max(a))
 ```
 
-### `n_distinct()` and missing values
+### `n_distinct()` and multiple arguments
 
-Unlike most other aggregation functions, `n_distinct()` ignores missing values and does not support the `na.rm` argument.
-This is tracked in <https://github.com/tidyverse/duckplyr/issues/572>.
-
-```{r error = TRUE}
-duckplyr::duckdb_tibble(a = c(1, 2, NA, 1)) |>
-  summarize(n_distinct(a))
-
-duckplyr::duckdb_tibble(a = c(1, 2, NA, 1), .prudence = "stingy") |>
-  summarize(n_distinct(a, na.rm = TRUE))
-
-tibble(a = c(1, 2, NA, 1)) |>
-  summarize(n_distinct(a))
-
-tibble(a = c(1, 2, NA, 1)) |>
-  summarize(n_distinct(a, na.rm = TRUE))
-```
+This function needs exactly one argument besides the optional `na.rm`. Multiple arguments is not supported.
 
 ### `is.na()` and `NaN` values
 
