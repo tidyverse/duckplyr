@@ -63,7 +63,7 @@ Config/Needs/development:
     qs,
     reprex,
     r-lib/roxygen2,
-    anthonynorth/roxyglobals,
+    roxyglobals,
     rstudioapi,
     tidyverse
 Config/Needs/website: 
