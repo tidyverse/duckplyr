@@ -400,3 +400,173 @@
       ! `mean(na.rm = FALSE)` not supported in window functions
       i Use `mean(na.rm = TRUE)` after checking for missing values
 
+# aggregation primitives with na.rm and window functions
+
+    Code
+      rel_translate(expr(sum(a, na.rm = TRUE)), df, need_window = TRUE)
+    Output
+      List of 6
+       $ expr        :List of 3
+        ..$ name : chr "sum"
+        ..$ args :List of 1
+        .. ..$ :List of 3
+        .. .. ..$ name : chr "a"
+        .. .. ..$ rel  : NULL
+        .. .. ..$ alias: NULL
+        .. .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
+        ..$ alias: NULL
+        ..- attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
+       $ partitions  : list()
+       $ order_bys   : list()
+       $ offset_expr : NULL
+       $ default_expr: NULL
+       $ alias       : NULL
+       - attr(*, "class")= chr [1:2] "relational_relexpr_window" "relational_relexpr"
+       - attr(*, "used")= chr "a"
+
+---
+
+    Code
+      rel_translate(expr(min(a, na.rm = TRUE)), df, need_window = TRUE)
+    Output
+      List of 6
+       $ expr        :List of 3
+        ..$ name : chr "min"
+        ..$ args :List of 1
+        .. ..$ :List of 3
+        .. .. ..$ name : chr "a"
+        .. .. ..$ rel  : NULL
+        .. .. ..$ alias: NULL
+        .. .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
+        ..$ alias: NULL
+        ..- attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
+       $ partitions  : list()
+       $ order_bys   : list()
+       $ offset_expr : NULL
+       $ default_expr: NULL
+       $ alias       : NULL
+       - attr(*, "class")= chr [1:2] "relational_relexpr_window" "relational_relexpr"
+       - attr(*, "used")= chr "a"
+
+---
+
+    Code
+      rel_translate(expr(max(a, na.rm = TRUE)), df, need_window = TRUE)
+    Output
+      List of 6
+       $ expr        :List of 3
+        ..$ name : chr "max"
+        ..$ args :List of 1
+        .. ..$ :List of 3
+        .. .. ..$ name : chr "a"
+        .. .. ..$ rel  : NULL
+        .. .. ..$ alias: NULL
+        .. .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
+        ..$ alias: NULL
+        ..- attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
+       $ partitions  : list()
+       $ order_bys   : list()
+       $ offset_expr : NULL
+       $ default_expr: NULL
+       $ alias       : NULL
+       - attr(*, "class")= chr [1:2] "relational_relexpr_window" "relational_relexpr"
+       - attr(*, "used")= chr "a"
+
+---
+
+    Code
+      rel_translate(expr(mean(a, na.rm = TRUE)), df, need_window = TRUE)
+    Output
+      List of 6
+       $ expr        :List of 3
+        ..$ name : chr "mean"
+        ..$ args :List of 1
+        .. ..$ x:List of 3
+        .. .. ..$ name : chr "a"
+        .. .. ..$ rel  : NULL
+        .. .. ..$ alias: NULL
+        .. .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
+        ..$ alias: NULL
+        ..- attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
+       $ partitions  : list()
+       $ order_bys   : list()
+       $ offset_expr : NULL
+       $ default_expr: NULL
+       $ alias       : NULL
+       - attr(*, "class")= chr [1:2] "relational_relexpr_window" "relational_relexpr"
+       - attr(*, "used")= chr "a"
+
+---
+
+    Code
+      rel_translate(expr(sum(a, na.rm = FALSE)), df, need_window = TRUE)
+    Condition
+      Error:
+      ! `sum(na.rm = FALSE)` not supported in window functions
+      i Use `sum(na.rm = TRUE)` after checking for missing values
+
+---
+
+    Code
+      rel_translate(expr(mean(a, na.rm = FALSE)), df, need_window = TRUE)
+    Condition
+      Error:
+      ! `mean(na.rm = FALSE)` not supported in window functions
+      i Use `mean(na.rm = TRUE)` after checking for missing values
+
+# rel_find_call() error paths
+
+    Code
+      rel_find_call(quote(pkg::""), env)
+    Condition
+      Error:
+      ! No translation for function `pkg::()`.
+
+---
+
+    Code
+      rel_find_call(call("::", "pkg", 123), env, env)
+    Condition
+      Error:
+      ! No translation for function `pkg::123()`.
+
+---
+
+    Code
+      rel_find_call(quote(c(1, 2)), env)
+    Condition
+      Error:
+      ! Can't translate function `c(1, 2)`.
+
+---
+
+    Code
+      rel_find_call(quote(unknown_function), env)
+    Condition
+      Error:
+      ! No translation for function `unknown_function()`.
+
+---
+
+    Code
+      rel_find_call(quote(somepkg::unknown_function), env)
+    Condition
+      Error:
+      ! No translation for function `somepkg::unknown_function()`.
+
+---
+
+    Code
+      rel_find_call(quote(mean), new_environment())
+    Condition
+      Error:
+      ! Function `mean()` not found.
+
+---
+
+    Code
+      rel_find_call(quote(mean), new_environment(list(mean = stats::sd)))
+    Condition
+      Error:
+      ! Function `mean()` does not map to `base::mean()`.
+
