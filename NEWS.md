@@ -1,5 +1,22 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.0.1.9006 (2025-03-27)
+
+## Features
+
+- Implement `n_distinct()` as macro with support for `na.rm = TRUE` (@joakimlinde, #572, #655).
+
+## Chore
+
+- Use roxyglobals from CRAN rather than GitHub (@andreranza, #659).
+
+- Space at EOL.
+
+## Documentation
+
+- Recommend `pak::pak()`.
+
+
 # duckplyr 1.0.1.9005 (2025-03-12)
 
 ## Features
