@@ -90,6 +90,7 @@ rel_find_call <- function(fun, env, call = caller_env()) {
     "minute" = "lubridate",
     "second" = "lubridate",
     "wday" = "lubridate",
+    "month" = "lubridate",
     "strftime" = "base",
     "substr" = "base",
 
