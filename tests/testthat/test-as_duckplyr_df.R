@@ -1647,6 +1647,19 @@ test_that("as_duckplyr_df_impl() and mutate(d = if_else(a > 1, \"ok\", NA))", {
   expect_identical(pre, post)
 })
 
+
+test_that("as_duckplyr_df_impl() and mutate(d = month(d))", {
+  # Data
+  test_df <- data.frame(d = "2025-03-26")
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(d = month(d))
+  post <- test_df %>% mutate(d = month(d)) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
 test_that("as_duckplyr_df_impl() and n_groups()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
