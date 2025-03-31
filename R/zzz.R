@@ -10,7 +10,6 @@ on_load({
 
 .onLoad <- function(lib, pkg) {
   run_on_load()
-  ark_register_methods()
 }
 
 .onAttach <- function(lib, pkg) {

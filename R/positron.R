@@ -1,78 +1,44 @@
+on_load({
+  ark_register_methods()
+})
+
 ark_register_methods <- function() {
-  # TODO: Actually bump this to 0.1.176 after Ark PR merges and we bump the version
-  if (!ark_has_version("0.1.174")) {
-    return()
-  }
-
-  tryCatch(
-    ark_register_methods_impl(),
-    error = function(err) {
-      cli::cli_warn("Failed to register Ark methods.", parent = err)
-    }
-  )
-}
-
-ark_register_methods_impl <- function() {
   ark_register_method(
     "ark_positron_variable_display_value",
     "duckplyr_df",
-    function(x, ...) {
-      duckplyr_df_variable_display_value(x)
-    }
+    duckplyr_df_variable_display_value
   )
-
   ark_register_method(
     "ark_positron_variable_display_type",
     "duckplyr_df",
-    function(x, ...) {
-      duckplyr_df_variable_display_type(x)
-    }
+    duckplyr_df_variable_display_type
   )
 }
 
+# Registration either succeeds or silently fails to be as unobtrusive as possible
 ark_register_method <- function(generic, class, method) {
-  ARK_REGISTER_METHOD_FUNCTION <- ".ark.register_method"
-
-  if (!exists(ARK_REGISTER_METHOD_FUNCTION, mode = "function")) {
-    return()
-  }
-
-  call <- call(
-    ARK_REGISTER_METHOD_FUNCTION,
-    quote(generic),
-    quote(class),
-    quote(method)
-  )
-
-  eval(call, envir = environment())
-}
-
-# This Ark API for the Ark version is not stable, so we carefully bail
-# and return `FALSE` if anything looks wrong
-ark_has_version <- function(minimum_version) {
-  ARK_VERSION_FUNCTION <- ".ps.ark.version"
-
-  if (!exists(ARK_VERSION_FUNCTION, mode = "function")) {
-    return(FALSE)
-  }
-
-  call <- call(ARK_VERSION_FUNCTION)
-  info <- eval(call, envir = environment())
-  version <- info[["version"]]
-
-  if (!is_string(version)) {
-    return(FALSE)
-  }
-
   tryCatch(
-    numeric_version(version) >= numeric_version(minimum_version),
+    eval(call(
+      ".ark.register_method",
+      quote(generic),
+      quote(class),
+      quote(method)
+    )),
     error = function(cnd) {
-      FALSE
+      # Errors indicate that we aren't in ark and `.ark.register_method()`
+      # doesn't exist, or we called it wrong.
+      NULL
+    },
+    warning = function(cnd) {
+      # Warnings likely indicate that we are in ark < 0.1.176, where duckplyr
+      # was not yet allowed to register ark methods, and ark would warn about
+      # this.
+      NULL
     }
   )
 }
 
-duckplyr_df_variable_display_value <- function(x) {
+duckplyr_df_variable_display_value <- function(x, ...) {
   n_col <- df_n_col(x)
 
   if (n_col == 1L) {
@@ -81,9 +47,12 @@ duckplyr_df_variable_display_value <- function(x) {
     col_word <- "columns"
   }
 
-  sprintf("[? rows x %s %s] <duckplyr_df>", n_col, col_word)
+  paste0("[? rows x ", n_col, " ", col_word, "] <duckplyr_df>")
 }
 
-duckplyr_df_variable_display_type <- function(x) {
+# You don't ever see this on the Positron side because it's a table and we
+# show the table icon instead, but we still need this because Ark will otherwise
+# try and compute the number of rows (materializing the query).
+duckplyr_df_variable_display_type <- function(x, ...) {
   "duckplyr_df"
 }
