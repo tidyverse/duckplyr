@@ -185,7 +185,7 @@ duckplyr::duckdb_tibble(a = "abbc", .prudence = "stingy") |>
 
 ### Date manipulation
 
-Implemented: `lubridate::hour()`, `lubridate::minute()`, `lubridate::second()`, `lubridate::wday()`.
+Implemented: `lubridate::hour()`, `lubridate::minute()`, `lubridate::second()`, `lubridate::wday()`, `lubridate::month()`.
 
 ```{r}
 duckplyr::duckdb_tibble(
@@ -196,7 +196,8 @@ duckplyr::duckdb_tibble(
     hour = lubridate::hour(a), 
     minute = lubridate::minute(a), 
     second = lubridate::second(a), 
-    wday = lubridate::wday(a)
+    wday = lubridate::wday(a),
+    month = lubridate::month(a)
   )
 ```
 
