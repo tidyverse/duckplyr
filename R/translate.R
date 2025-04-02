@@ -4,10 +4,22 @@ rel_find_call <- function(fun, env, call = caller_env()) {
   name <- as.character(fun)
 
   if (name[[1]] == "::") {
-    # Fully qualified name, no check needed
-    return(c(name[[2]], name[[3]]))
+    my_pkg <- name[[2]]
+    name <- name[[3]]
+
+    if (typeof(my_pkg) != "character" || typeof(name) != "character") {
+      cli::cli_abort("Can't translate function {.code {expr_deparse(fun)}}.", call = call)
+    }
+
+    # Passthrough for functions prefixed with d::
+    if (identical(my_pkg, "d")) {
+      # Fully qualified name, no check needed
+      return(c(my_pkg, name))
+    }
   } else if (length(name) != 1) {
     cli::cli_abort("Can't translate function {.code {expr_deparse(fun)}}.", call = call)
+  } else {
+    my_pkg <- NULL
   }
 
   # Order from https://docs.google.com/spreadsheets/d/1j3AFOKiAknTGpXU1uSH7JzzscgYjVbUEwmdRHS7268E/edit?gid=769885824#gid=769885824,
@@ -99,8 +111,19 @@ rel_find_call <- function(fun, env, call = caller_env()) {
   )
   # Remember to update limits.Rmd when adding new functions!
 
-  if (is.null(pkgs)) {
-    cli::cli_abort("No translation for function {.fun {name}}.", call = call)
+  if (is.null(my_pkg)) {
+    # Package name inferred from the function name
+    if (is.null(pkgs)) {
+      cli::cli_abort("No translation for function {.fun {name}}.", call = call)
+    }
+  } else {
+    # Package name provided by the user
+    if (is.null(pkgs) || !(my_pkg %in% pkgs)) {
+      cli::cli_abort("No translation for function {.fun {my_pkg}::{name}}.", call = call)
+    }
+
+    # We're good to go
+    return(c(my_pkg, name))
   }
 
   # https://github.com/tidyverse/dplyr/pull/7046
@@ -109,6 +132,9 @@ rel_find_call <- function(fun, env, call = caller_env()) {
   }
 
   fun_val <- get0(as.character(fun), env, mode = "function", inherits = TRUE)
+  if (is.null(fun_val)) {
+    cli::cli_abort("Function {.fun {name}} not found.", call = call)
+  }
 
   for (pkg in pkgs) {
     if (identical(fun_val, get(name, envir = asNamespace(pkg)))) {
