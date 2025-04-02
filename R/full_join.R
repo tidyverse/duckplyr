@@ -4,7 +4,6 @@
 full_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ..., keep = NULL, na_matches = c("na", "never"), multiple = "all", relationship = NULL) {
   check_dots_empty0(...)
   error_call <- caller_env()
-  y <- auto_copy(x, y, copy = copy)
 
   # Our implementation
   duckplyr_error <- rel_try(list(name = "full_join", x = x, y = y, args = try_list(by = if (!is.null(by) && !is_cross_by(by)) as_join_by(by), copy = copy, keep = keep, na_matches = na_matches, multiple = multiple, relationship = relationship)),
@@ -17,7 +16,7 @@ full_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x"
     "No implicit cross joins for {.code full_join()}" = is_cross_by(by),
     "{.arg multiple} not supported" = !identical(multiple, "all"),
     {
-      out <- rel_join_impl(x, y, by, "full", na_matches, suffix, keep, error_call)
+      out <- rel_join_impl(x, y, by, copy, "full", na_matches, suffix, keep, error_call)
       return(out)
     }
   )
