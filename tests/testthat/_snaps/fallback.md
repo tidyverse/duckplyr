@@ -76,7 +76,7 @@
       # A duckplyr data frame: 2 variables
     Message
       i dplyr fallback recorded
-        {"version":"0.3.1","message":"Can't convert columns of class <ordered/factor> to relational. Affected column: `...2`.","name":"head","x":{"...1":"Date","...2":"ordered/factor"},"args":{"n":11}}
+        {"version":"0.3.1","message":"Can't convert columns of class <ordered/factor> to relational. Affected column: `...2`.","name":"head","x":{"...1":"Date","...2":"ordered/factor"},"args":{"n":21}}
     Output
         a          b    
         <date>     <ord>
