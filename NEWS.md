@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.0.1.9007 (2025-04-02)
+
+## Features
+
+- Register Ark methods for Positron's Variables Pane (@DavisVaughan, #661).
+
+
 # duckplyr 1.0.1.9006 (2025-03-27)
 
 ## Features

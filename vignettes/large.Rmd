@@ -53,7 +53,7 @@ This can become problematic:
 - RAM is limited, and data sets can be larger than the available RAM.
 
 A variety of tools have been developed to work with large data sets, also in R.
-One examples is the dbplyr package, a dplyr backend that connects to SQL databases and is designed to work with various databases that support SQL.
+One example is the dbplyr package, a dplyr backend that connects to SQL databases and is designed to work with various databases that support SQL.
 This is a viable approach if the data is already stored in a database, or if the data is stored in Parquet or CSV files and loaded as a lazy table via `duckdb::tbl_file()`.
 
 The dbplyr package translates dplyr code to SQL.
@@ -126,13 +126,25 @@ DBI::dbDisconnect(con)
 
 For other common cases, the `duckdb_tibble()` function fails with a helpful error message:
 
+- duckplyr does not support `group_by()`:
+
 ```{r error = TRUE}
 duckdb_tibble(a = 1) |>
   group_by(a) |>
   as_duckdb_tibble()
+```
+
+- duckplyr does not support `rowwise()`:
+
+```{r error = TRUE}
 duckdb_tibble(a = 1) |>
   rowwise() |>
   as_duckdb_tibble()
+```
+
+- Use `read_csv_duckdb()` to read with the built-in reader:
+
+```{r error = TRUE}
 readr::read_csv("a\n1", show_col_types = FALSE) |>
   as_duckdb_tibble()
 ```
@@ -296,7 +308,7 @@ A typical workflow might look like this:
 - Collect the final result using `collect.duckplyr_df()` or write it to a file using `compute_csv()` or `compute_parquet()`
 
 There is a caveat: due to the design of duckplyr, if a dplyr verb is not supported or uses a function that is not supported, the data will be read into memory before being processed further.
-By default, if the data pipeline starts with an ingestion function, the data will only be read into memory if it is less than 1 million cells or values in the table:
+By default, if the data pipeline starts with an ingestion function, the data will only be read into memory if it has less than 1 million cells or values in the table:
 
 ```{r error = TRUE}
 flights_parquet |>
