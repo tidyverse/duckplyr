@@ -13,6 +13,16 @@ ark_register_methods <- function() {
     "duckplyr_df",
     duckplyr_df_variable_display_type
   )
+  ark_register_method(
+    "ark_positron_variable_has_children",
+    "duckplyr_df",
+    duckplyr_df_variable_has_children
+  )
+  ark_register_method(
+    "ark_positron_variable_kind",
+    "duckplyr_df",
+    duckplyr_df_variable_kind
+  )
 }
 
 # Registration either succeeds or silently fails to be as unobtrusive as possible
@@ -47,7 +57,7 @@ duckplyr_df_variable_display_value <- function(x, ...) {
     col_word <- "columns"
   }
 
-  paste0("[? rows x ", n_col, " ", col_word, "] <duckplyr_df>")
+  paste0("<duckplyr_df> [", n_col, " ", col_word, "] ")
 }
 
 # You don't ever see this on the Positron side because it's a table and we
@@ -55,4 +65,14 @@ duckplyr_df_variable_display_value <- function(x, ...) {
 # try and compute the number of rows (materializing the query).
 duckplyr_df_variable_display_type <- function(x, ...) {
   "duckplyr_df"
+}
+
+# We disable children and kind for safety,
+# until Positron catches errors in materialization
+duckplyr_df_variable_has_children <- function(x, ...) {
+  FALSE
+}
+
+duckplyr_df_variable_kind <- function(x, ...) {
+  "empty"
 }
