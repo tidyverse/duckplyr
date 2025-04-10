@@ -138,3 +138,28 @@ test_that("duckdb_rel_from_df() uses materialized results", {
 
   expect_equal(n_calls, 1)
 })
+
+test_that("duckdb_rel_from_df() uses materialized intermediate results", {
+  skip_if(identical(Sys.getenv("R_COVR"), "true"))
+
+  withr::local_envvar(DUCKPLYR_OUTPUT_ORDER = FALSE)
+
+  df1 <- duckdb_tibble(a = 1)
+  df2 <- df1 |> arrange(a)
+  df3 <- df2 |> mutate(b = 2)
+
+  rel2 <- duckdb:::rel_from_altrep_df(df2, wrap = TRUE)
+  expect_length(strsplit(duckdb:::rel_tostring(rel2, "tree"), "\n")[[1]], 4)
+
+  rel3 <- duckdb:::rel_from_altrep_df(df3, wrap = TRUE)
+  expect_length(strsplit(duckdb:::rel_tostring(rel3, "tree"), "\n")[[1]], 6)
+
+  # Side effect: trigger intermediate materialization
+  nrow(df2)
+
+  # The depth of the rel2 tree is shorter thanks to `wrap = TRUE`
+  expect_length(strsplit(duckdb:::rel_tostring(rel2, "tree"), "\n")[[1]], 2)
+
+  # The depth of the rel3 tree is shorter now too
+  expect_length(strsplit(duckdb:::rel_tostring(rel3, "tree"), "\n")[[1]], 4)
+})
