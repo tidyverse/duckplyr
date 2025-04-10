@@ -7,7 +7,8 @@
       ---------------------
       --- Relation Tree ---
       ---------------------
-      Scan Table [duckplyr_4hYuvhNS26]
+      AltrepDataFrame [0x55d9090e7d18]
+        Scan Table [duckplyr_4hYuvhNS26]
       
       ---------------------
       -- Result Columns  --
