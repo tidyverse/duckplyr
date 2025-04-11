@@ -1,7 +1,7 @@
 Type: Package
 Package: duckplyr
 Title: A 'DuckDB'-Backed Version of 'dplyr'
-Version: 1.0.1.9008
+Version: 1.0.1.9009
 Authors@R: c(
     person("Hannes", "Mühleisen", role = "aut",
            comment = c(ORCID = "0000-0001-8552-0029")),
@@ -28,7 +28,7 @@ Imports:
     lifecycle,
     magrittr,
     memoise,
-    pillar (>= 1.10.1),
+    pillar (>= 1.10.2),
     rlang (>= 1.0.6),
     tibble,
     tidyselect,
