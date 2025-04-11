@@ -119,7 +119,7 @@ duckplyr::duckdb_tibble(
   b = c(2, NA, 3),
   c = c(NA, 3, 4),
   .prudence = "stingy"
-) |> 
+) |>
   mutate(a > b, b != c, c < a, a >= b, b <= c)
 ```
 
@@ -193,9 +193,9 @@ duckplyr::duckdb_tibble(
   .prudence = "stingy"
 ) |>
   mutate(
-    hour = lubridate::hour(a), 
-    minute = lubridate::minute(a), 
-    second = lubridate::second(a), 
+    hour = lubridate::hour(a),
+    minute = lubridate::minute(a),
+    second = lubridate::second(a),
     wday = lubridate::wday(a)
   )
 ```
@@ -211,14 +211,14 @@ Implemented:
 ```{r}
 duckplyr::duckdb_tibble(a = 1:3, b = c(1, 2, 2), .prudence = "stingy") |>
   summarize(
-    sum(a), 
+    sum(a),
     n(),
     n_distinct(b),
   )
 
 duckplyr::duckdb_tibble(a = 1:3, b = c(1, 2, NA), .prudence = "stingy") |>
   summarize(
-    mean(b, na.rm = TRUE), 
+    mean(b, na.rm = TRUE),
     median(a),
     sd(b),
   )
@@ -227,7 +227,7 @@ duckplyr::duckdb_tibble(a = 1:3, .prudence = "stingy") |>
   summarize(
     min(a),
     max(a),
-    any(a > 1), 
+    any(a > 1),
     all(a > 1),
   )
 ```
@@ -278,7 +278,7 @@ duckplyr::duckdb_tibble(a = 1, b = 2, .prudence = "stingy") |>
 
 ```{r}
 duckplyr::duckdb_tibble(a = 1:3, .prudence = "stingy") |>
-  mutate(a %in% c(1, 3)) |> 
+  mutate(a %in% c(1, 3)) |>
   collect()
 duckplyr::last_rel()
 ```
@@ -287,14 +287,14 @@ duckplyr::last_rel()
 
 ```{r}
 duckplyr::duckdb_tibble(a = 1:3, .prudence = "stingy") |>
-  arrange(desc(a)) |> 
+  arrange(desc(a)) |>
   explain()
 ```
 
 `suppressWarnings()` is a no-op:
 
 ```{r}
-duckplyr::duckdb_tibble(a = 1, .prudence = "stingy") |> 
+duckplyr::duckdb_tibble(a = 1, .prudence = "stingy") |>
   mutate(suppressWarnings(a + 1))
 ```
 
