@@ -32,6 +32,7 @@ Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
 
 This article describes the translations provided by duckplyr for different data types, verbs, and functions within verbs.
 If a translation is not provided, duckplyr falls back to dplyr, see `vignette("fallback")` for details.
+The translation layer can be bypassed, see `vignette("duckdb")` for details.
 
 ```{r attach}
 library(conflicted)

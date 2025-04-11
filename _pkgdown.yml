@@ -16,6 +16,7 @@ articles:
   - prudence
   - fallback
   - limits
+  - duckdb
   - developers
   - telemetry
 

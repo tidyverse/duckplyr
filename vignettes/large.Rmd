@@ -69,7 +69,7 @@ Full compatibility means fewer surprises and less cognitive load for the user.
 With DuckDB as the backend, duckplyr can also handle large data sets that do not fit into RAM, keeping full dplyr compatibility.
 The tools for bringing data into and out of R memory are modeled after the dplyr and dbplyr packages, and are described in the following sections.
 
-See `vignette("prudence")` on eager and lazy data, `vignette("limits")` for limitations in the translation employed by duckplyr, and `vignette("fallback")` for more information on fallback.
+See `vignette("prudence")` on eager and lazy data, `vignette("limits")` for limitations in the translation employed by duckplyr, `vignette("duckdb")` for a way to overcome these limitations, and `vignette("fallback")` for more information on fallback.
 
 
 ## To duckplyr

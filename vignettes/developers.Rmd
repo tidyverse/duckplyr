@@ -137,4 +137,4 @@ The recipe below shows how to achieve this with the usethis package.
     - Import the duckplyr function with `usethis::use_import_from("duckplyr", "as_duckdb_tibble")`
     - Import the dplyr function with `usethis::use_import_from("dplyr", "filter")`
 
-Learn more about prudence in `vignette("prudence")`, about fallbacks to dplyr in `vignette("fallback")`, and about the translation employed by duckplyr in `vignette("limits")`, and about the usethis package at <https://usethis.r-lib.org/>.
+Learn more about prudence in `vignette("prudence")`, about fallbacks to dplyr in `vignette("fallback")`, about the translation employed by duckplyr in `vignette("limits")`, about direct use of DuckDB functions in `vignette("duckdb")`, and about the usethis package at <https://usethis.r-lib.org/>.
