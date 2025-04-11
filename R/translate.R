@@ -204,6 +204,13 @@ rel_translate_lang <- function(
   pkg <- pkg_name[[1]]
   name <- pkg_name[[2]]
 
+  # Special case: passthrough to DuckDB
+  if (pkg == "dd") {
+    # FIXME: How to deal with window functions?
+    args <- map(as.list(expr[-1]), do_translate, in_window = in_window)
+    fun <- relexpr_function(name, args)
+    return(fun)
+  }
 
   if (name %in% c(">", "<", "==", ">=", "<=")) {
     if (length(expr) != 3) {

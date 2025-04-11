@@ -229,3 +229,9 @@ test_that("rel_find_call() error paths", {
     rel_find_call(quote(mean), new_environment(list(mean = stats::sd)))
   })
 })
+
+test_that("dd$ prefix", {
+  out <- duckdb_tibble(a = "duckdb") |>
+    mutate(b = dd$ascii(a))
+  expect_equal(out, duckdb_tibble(a = "duckdb", b = 100L))
+})
