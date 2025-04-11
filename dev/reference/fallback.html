@@ -70,7 +70,6 @@ fallback_purge() deletes some or all available reports."><meta property="og:imag
     <li><a class="dropdown-item" href="../articles/prudence.html">Memory protection: controlling automatic materialization</a></li>
     <li><a class="dropdown-item" href="../articles/fallback.html">Fallback to dplyr</a></li>
     <li><a class="dropdown-item" href="../articles/limits.html">Translations</a></li>
-    <li><a class="dropdown-item" href="../articles/duckdb.html">Interoperability with DuckDB and dbplyr</a></li>
     <li><a class="dropdown-item" href="../articles/developers.html">Selective use of duckplyr</a></li>
     <li><a class="dropdown-item" href="../articles/telemetry.html">Telemetry</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -88,7 +87,7 @@ fallback_purge() deletes some or all available reports."><meta property="og:imag
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Fallback to dplyr</h1>
-      <small class="dont-index">Source: <a href="https://github.com/tidyverse/duckplyr/blob/docs-duckdb-vignette/R/fallback.R" class="external-link"><code>R/fallback.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidyverse/duckplyr/blob/main/R/fallback.R" class="external-link"><code>R/fallback.R</code></a></small>
       <div class="d-none name"><code>fallback.Rd</code></div>
     </div>
 
@@ -243,7 +242,7 @@ and mostly useful for <span class="pkg">duckplyr</span>'s internal tests.</p></l
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Fallback logging is not controlled, see `?duckplyr::fallback()`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Logs are written to <span style="color: #0000BB;">/home/runner/.cache/R/duckplyr/telemetry</span>.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> Automatic fallback uploading is disabled.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Number of reports ready for upload: <span style="font-weight: bold;">1</span>.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Number of reports ready for upload: <span style="font-weight: bold;">2</span>.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → Review with `duckplyr::fallback_review()`, upload with</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   `duckplyr::fallback_upload()`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> See `?duckplyr::fallback_config()` for details.</span>

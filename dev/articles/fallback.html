@@ -46,7 +46,6 @@
     <li><a class="dropdown-item" href="../articles/prudence.html">Memory protection: controlling automatic materialization</a></li>
     <li><a class="dropdown-item" href="../articles/fallback.html">Fallback to dplyr</a></li>
     <li><a class="dropdown-item" href="../articles/limits.html">Translations</a></li>
-    <li><a class="dropdown-item" href="../articles/duckdb.html">Interoperability with DuckDB and dbplyr</a></li>
     <li><a class="dropdown-item" href="../articles/developers.html">Selective use of duckplyr</a></li>
     <li><a class="dropdown-item" href="../articles/telemetry.html">Telemetry</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -75,7 +74,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Fallback to dplyr</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/tidyverse/duckplyr/blob/docs-duckdb-vignette/vignettes/fallback.Rmd" class="external-link"><code>vignettes/fallback.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidyverse/duckplyr/blob/main/vignettes/fallback.Rmd" class="external-link"><code>vignettes/fallback.Rmd</code></a></small>
       <div class="d-none name"><code>fallback.Rmd</code></div>
     </div>
 
@@ -281,8 +280,7 @@ will error when a fallback to dplyr would have normally happened. See
 <code><a href="../articles/prudence.html">vignette("prudence")</a></code> for details.</p>
 <p>By using operations supported by duckplyr and avoiding fallbacks as
 much as possible, your pipelines will be executed by DuckDB in an
-optimized way. As of duckplyr 1.1.0, most DuckDB functions can be used
-directly, see <code><a href="../articles/duckdb.html">vignette("duckdb")</a></code> for details.</p>
+optimized way.</p>
 </div>
 <div class="section level2">
 <h2 id="configure-fallbacks">Configure fallbacks<a class="anchor" aria-label="anchor" href="#configure-fallbacks"></a>
@@ -308,8 +306,7 @@ medium-sized data sets, it will not even be noticeable in most
 settings.</p>
 <p>See <code><a href="../articles/large.html">vignette("large")</a></code> for techniques for working with
 large data, <code><a href="../articles/limits.html">vignette("limits")</a></code> for the currently
-implementated translations, <code><a href="../articles/duckdb.html">vignette("duckdb")</a></code> for direct
-access to DuckDB functions, <code><a href="../articles/prudence.html">vignette("prudence")</a></code> for
+implementated translations, <code><a href="../articles/prudence.html">vignette("prudence")</a></code> for
 details on controlling fallback behavior, and
 <code><a href="../articles/telemetry.html">vignette("telemetry")</a></code> for the automatic reporting of
 fallback situations.</p>
