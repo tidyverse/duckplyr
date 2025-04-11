@@ -20,6 +20,7 @@ including hand-written SQL queries.
 Use \code{\link[=as_duckdb_tibble]{as_duckdb_tibble()}} to convert back to a lazy duckplyr frame.
 }
 \examples{
+\dontshow{if (requireNamespace("dbplyr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 df <- duckdb_tibble(a = 1L)
 df
 
@@ -29,4 +30,5 @@ tbl
 tbl \%>\%
   mutate(b = sql("a + 1")) \%>\%
   as_duckdb_tibble()
+\dontshow{\}) # examplesIf}
 }

@@ -9,7 +9,7 @@
 #' @param .data A lazy duckplyr frame or a data frame.
 #' @return A dbplyr table.
 #' @export
-#' @examples
+#' @examplesIf requireNamespace("dbplyr", quietly = TRUE)
 #' df <- duckdb_tibble(a = 1L)
 #' df
 #'
