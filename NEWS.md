@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.0.1.9009 (2025-04-11)
+
+## Documentation
+
+- Verbose `conflict_prefer()` (#667, #684).
+
+
 # duckplyr 1.0.1.9008 (2025-04-10)
 
 ## Documentation
