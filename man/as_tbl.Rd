@@ -13,6 +13,8 @@ as_tbl(.data)
 A dbplyr table.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
 This function converts a lazy duckplyr frame or a data frame
 to a dbplyr table in duckplyr's internal connection.
 This allows using dbplyr functions on the data,
