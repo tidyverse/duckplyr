@@ -361,6 +361,8 @@ flights |>
 
 - `vignette("limits")`: Translation of dplyr employed by duckplyr, and current limitations
 
+- `vignette("duckdb")`: Using the full power of DuckDB
+
 - `vignette("developers")`: Using duckplyr for individual data frames and in other packages
 
 - `vignette("telemetry")`: Telemetry in duckplyr
