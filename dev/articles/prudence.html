@@ -46,6 +46,7 @@
     <li><a class="dropdown-item" href="../articles/prudence.html">Memory protection: controlling automatic materialization</a></li>
     <li><a class="dropdown-item" href="../articles/fallback.html">Fallback to dplyr</a></li>
     <li><a class="dropdown-item" href="../articles/limits.html">Translations</a></li>
+    <li><a class="dropdown-item" href="../articles/duckdb.html">Interoperability with DuckDB and dbplyr</a></li>
     <li><a class="dropdown-item" href="../articles/developers.html">Selective use of duckplyr</a></li>
     <li><a class="dropdown-item" href="../articles/telemetry.html">Telemetry</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -74,7 +75,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Memory protection: controlling automatic materialization</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/tidyverse/duckplyr/blob/main/vignettes/prudence.Rmd" class="external-link"><code>vignettes/prudence.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidyverse/duckplyr/blob/docs-duckdb-vignette/vignettes/prudence.Rmd" class="external-link"><code>vignettes/prudence.Rmd</code></a></small>
       <div class="d-none name"><code>prudence.Rmd</code></div>
     </div>
 
@@ -249,7 +250,7 @@ kept. The result becomes available when accessed:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">mean_arr_delay_ewr</span><span class="op">$</span><span class="va">mean_arr_delay</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.019   0.003   0.017</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.018   0.003   0.017</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="comparison">Comparison<a class="anchor" aria-label="anchor" href="#comparison"></a>
@@ -306,7 +307,7 @@ optimization:</p>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.040   0.005   0.044</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.039   0.004   0.044</span></span></code></pre></div>
 <p>See also the <a href="https://duckdb.org/2024/04/02/duckplyr.html" class="external-link">duckplyr: dplyr
 Powered by DuckDB</a> blog post for more information.</p>
 </div>
@@ -537,8 +538,9 @@ materialized <em>always</em> (“lavish” frames), <em>never</em> (“stingy”
 frames) or <em>up to a certain size</em> (“thrifty” frames).</p>
 <p>See <code><a href="../articles/large.html">vignette("large")</a></code> for more details on working with
 large data sets, <code><a href="../articles/fallback.html">vignette("fallback")</a></code> for fallbacks to
-dplyr, and <code><a href="../articles/limits.html">vignette("limits")</a></code> for the operations supported
-by duckplyr.</p>
+dplyr, <code><a href="../articles/limits.html">vignette("limits")</a></code> for the operations supported by
+duckplyr, and <code><a href="../articles/duckdb.html">vignette("duckdb")</a></code> for using DuckDB functions
+directly.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
