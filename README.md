@@ -61,7 +61,9 @@ library(duckplyr)
 ```
 
 ``` r
-conflict_prefer("filter", "dplyr", quiet = TRUE)
+conflict_prefer("filter", "dplyr")
+#> [conflicted] Will prefer dplyr::filter
+#> over any other package.
 ```
 
 The following code aggregates the inflight delay by year and month for
