@@ -46,6 +46,7 @@
     <li><a class="dropdown-item" href="../articles/prudence.html">Memory protection: controlling automatic materialization</a></li>
     <li><a class="dropdown-item" href="../articles/fallback.html">Fallback to dplyr</a></li>
     <li><a class="dropdown-item" href="../articles/limits.html">Translations</a></li>
+    <li><a class="dropdown-item" href="../articles/duckdb.html">Interoperability with DuckDB and dbplyr</a></li>
     <li><a class="dropdown-item" href="../articles/developers.html">Selective use of duckplyr</a></li>
     <li><a class="dropdown-item" href="../articles/telemetry.html">Telemetry</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -83,7 +84,8 @@
 <p>This article describes the translations provided by duckplyr for
 different data types, verbs, and functions within verbs. If a
 translation is not provided, duckplyr falls back to dplyr, see
-<code><a href="../articles/fallback.html">vignette("fallback")</a></code> for details.</p>
+<code><a href="../articles/fallback.html">vignette("fallback")</a></code> for details. The translation layer can
+be bypassed, see <code><a href="../articles/duckdb.html">vignette("duckdb")</a></code> for details.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://conflicted.r-lib.org/" class="external-link">conflicted</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
