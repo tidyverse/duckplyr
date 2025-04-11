@@ -157,6 +157,7 @@ Therefore, by making a data frame stingy, one can ensure a pipeline will error w
 See `vignette("prudence")` for details.
 
 By using operations supported by duckplyr and avoiding fallbacks as much as possible, your pipelines will be executed by DuckDB in an optimized way.
+As of duckplyr 1.1.0, most DuckDB functions can be used directly, see `vignette("duckdb")` for details.
 
 ## Configure fallbacks
 
@@ -174,4 +175,4 @@ The fallback mechanism in duckplyr allows for a seamless integration of dplyr ve
 It is transparent to the user and only triggers when necessary.
 With small or medium-sized data sets, it will not even be noticeable in most settings.
 
-See `vignette("large")` for techniques for working with large data, `vignette("limits")` for the currently implementated translations, `vignette("prudence")` for details on controlling fallback behavior, and `vignette("telemetry")` for the automatic reporting of fallback situations.
+See `vignette("large")` for techniques for working with large data, `vignette("limits")` for the currently implementated translations, `vignette("duckdb")` for direct access to DuckDB functions, `vignette("prudence")` for details on controlling fallback behavior, and `vignette("telemetry")` for the automatic reporting of fallback situations.

@@ -61,7 +61,9 @@ library(duckplyr)
 ```
 
 ``` r
-conflict_prefer("filter", "dplyr", quiet = TRUE)
+conflict_prefer("filter", "dplyr")
+#> [conflicted] Will prefer dplyr::filter
+#> over any other package.
 ```
 
 The following code aggregates the inflight delay by year and month for
@@ -364,6 +366,9 @@ flights |>
 
 - [`vignette("limits")`](https://duckplyr.tidyverse.org/articles/limits.html):
   Translation of dplyr employed by duckplyr, and current limitations
+
+- [`vignette("duckdb")`](https://duckplyr.tidyverse.org/articles/duckdb.html):
+  Using the full power of DuckDB
 
 - [`vignette("developers")`](https://duckplyr.tidyverse.org/articles/developers.html):
   Using duckplyr for individual data frames and in other packages

@@ -16,6 +16,7 @@ articles:
   - prudence
   - fallback
   - limits
+  - duckdb
   - developers
   - telemetry
 
@@ -40,6 +41,7 @@ reference:
   - compute.duckplyr_df
   - compute_parquet
   - compute_csv
+  - as_tbl
   - collect.duckplyr_df
   - pull.duckplyr_df
   - explain.duckplyr_df
