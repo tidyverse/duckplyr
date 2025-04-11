@@ -1,32 +1,8 @@
 # Documented in `.github/CONTRIBUTING.md`
 
-rel_find_call <- function(fun, env, call = caller_env()) {
-  name <- as.character(fun)
-
-  if (name[[1]] == "::") {
-    my_pkg <- name[[2]]
-    name <- name[[3]]
-
-    if (typeof(my_pkg) != "character" || typeof(name) != "character") {
-      cli::cli_abort("Can't translate function {.code {expr_deparse(fun)}}.", call = call)
-    }
-
-    # Passthrough for functions prefixed with d::
-    if (identical(my_pkg, "d")) {
-      # Fully qualified name, no check needed
-      return(c(my_pkg, name))
-    }
-  } else if (length(name) != 1) {
-    cli::cli_abort("Can't translate function {.code {expr_deparse(fun)}}.", call = call)
-  } else {
-    my_pkg <- NULL
-  }
-
-  # Order from https://docs.google.com/spreadsheets/d/1j3AFOKiAknTGpXU1uSH7JzzscgYjVbUEwmdRHS7268E/edit?gid=769885824#gid=769885824,
-  # generated as `expr_result` by 63-gh-detail.R
-
+rel_find_packages <- function(name) {
   # Remember to update limits.Rmd when adding new functions!
-  pkgs <- switch(name,
+  switch(name,
     # Handled in a special way, not mentioned here
     "desc" = "dplyr",
 
@@ -110,21 +86,64 @@ rel_find_call <- function(fun, env, call = caller_env()) {
     NULL
   )
   # Remember to update limits.Rmd when adding new functions!
+}
 
-  if (is.null(my_pkg)) {
-    # Package name inferred from the function name
-    if (is.null(pkgs)) {
-      cli::cli_abort("No translation for function {.fun {name}}.", call = call)
-    }
-  } else {
-    # Package name provided by the user
-    if (is.null(pkgs) || !(my_pkg %in% pkgs)) {
-      cli::cli_abort("No translation for function {.fun {my_pkg}::{name}}.", call = call)
-    }
+rel_find_call_candidates <- function(fun, call = caller_env()) {
+  name <- as.character(fun)
 
-    # We're good to go
-    return(c(my_pkg, name))
+  if (length(name) == 1) {
+    pkgs <- rel_find_packages(name)
+
+    if (!is.null(pkgs)) {
+      return(list(
+        packages = pkgs,
+        name = name,
+        check = TRUE
+      ))
+    }
+  } else if (name[[1]] == "::") {
+    my_pkg <- name[[2]]
+    name <- name[[3]]
+    pkgs <- rel_find_packages(name)
+
+    if (my_pkg %in% pkgs) {
+      # Package name provided by the user, shortcut if found in list of packages
+      # (requires non-NULL pkgs), no check needed
+      return(list(
+        packages = my_pkg,
+        name = name,
+        check = FALSE
+      ))
+    }
+  } else if (name[[1]] == "$") {
+    # Passthrough for functions prefixed with dd$
+    my_pkg <- name[[2]]
+    name <- name[[3]]
+
+    if (identical(my_pkg, "dd")) {
+      # Check performed by DuckDB
+      return(list(
+        packages = my_pkg,
+        name = name,
+        check = FALSE
+      ))
+    }
   }
+
+  cli::cli_abort("Can't translate function {.code {expr_deparse(fun)}()}.", call = call)
+}
+
+rel_find_call <- function(fun, env, call = caller_env()) {
+  call_cand <- rel_find_call_candidates(fun, call = call)
+  pkgs <- call_cand$packages
+  name <- call_cand$name
+
+  if (!isTRUE(call_cand$check)) {
+    return(c(pkgs, name))
+  }
+
+  # Order from https://docs.google.com/spreadsheets/d/1j3AFOKiAknTGpXU1uSH7JzzscgYjVbUEwmdRHS7268E/edit?gid=769885824#gid=769885824,
+  # generated as `expr_result` by 63-gh-detail.R
 
   # https://github.com/tidyverse/dplyr/pull/7046
   if (name == "n") {
@@ -409,7 +428,7 @@ rel_translate_lang <- function(
         aliased_name <- paste0("___", name, "_na") # ___sum_na, ___min_na, ___max_na
       } else if (identical(na_rm, TRUE)) {
         if (name == "n_distinct") {
-          aliased_name <- paste0("___", name)         
+          aliased_name <- paste0("___", name)
         }
       } else {
         cli::cli_abort("Invalid value for {.arg na.rm} in call to {.fun {name}}", call = call)

@@ -4,7 +4,7 @@
       rel_translate(quo(c(1, b = 2)))
     Condition
       Error:
-      ! No translation for function `c()`.
+      ! Can't translate function `c()`.
 
 # a %in% b
 
@@ -536,10 +536,10 @@
 ---
 
     Code
-      # Success: Translate DuckDB function with 'd::' prefix
-      rel_find_call(quote(d::ROW), env)
+      # Success: Translate DuckDB function with 'dd$' prefix
+      rel_find_call(quote(dd$ROW), env)
     Output
-      [1] "d"   "ROW"
+      [1] "dd"  "ROW"
 
 ---
 
@@ -572,7 +572,7 @@
       rel_find_call(quote(pkg::""), env)
     Condition
       Error:
-      ! No translation for function `pkg::()`.
+      ! Can't translate function `pkg::""()`.
 
 ---
 
@@ -581,16 +581,7 @@
       rel_find_call(call("::", "pkg", 123), env, env)
     Condition
       Error:
-      ! No translation for function `pkg::123()`.
-
----
-
-    Code
-      # Error: Can't translate function with invalid name length
-      rel_find_call(quote(c(1, 2)), env)
-    Condition
-      Error:
-      ! Can't translate function `c(1, 2)`.
+      ! Can't translate function `"pkg"::123()`.
 
 ---
 
@@ -599,7 +590,7 @@
       rel_find_call(quote(unknown_function), env)
     Condition
       Error:
-      ! No translation for function `unknown_function()`.
+      ! Can't translate function `unknown_function()`.
 
 ---
 
@@ -608,7 +599,7 @@
       rel_find_call(quote(somepkg::unknown_function), env)
     Condition
       Error:
-      ! No translation for function `somepkg::unknown_function()`.
+      ! Can't translate function `somepkg::unknown_function()`.
 
 ---
 

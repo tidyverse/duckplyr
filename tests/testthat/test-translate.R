@@ -174,8 +174,8 @@ test_that("rel_find_call() success paths", {
   })
 
   expect_snapshot({
-    "Success: Translate DuckDB function with 'd::' prefix"
-    rel_find_call(quote(d::ROW), env)
+    "Success: Translate DuckDB function with 'dd$' prefix"
+    rel_find_call(quote(dd$ROW), env)
   })
 
   expect_snapshot({
@@ -207,11 +207,6 @@ test_that("rel_find_call() error paths", {
   expect_snapshot(error = TRUE, {
     "Error: Can't translate function with invalid '::' components"
     rel_find_call(call("::", "pkg", 123), env, env)
-  })
-
-  expect_snapshot(error = TRUE, {
-    "Error: Can't translate function with invalid name length"
-    rel_find_call(quote(c(1, 2)), env)
   })
 
   expect_snapshot(error = TRUE, {
