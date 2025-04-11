@@ -70,7 +70,7 @@
 <div class="section level2">
 <h2 id="new-translations-for-functions">New translations for functions<a class="anchor" aria-label="anchor" href="#new-translations-for-functions"></a></h2>
 <p>For all functions used in dplyr verbs, translations must be provided. The code lives in <code>translate.R</code> . New translations must change code in two places:</p>
-<ol style="list-style-type: decimal"><li><p>The <code><a href="https://rdrr.io/r/base/switch.html" class="external-link">switch()</a></code> in <code>rel_find_call()</code> needs a new entry, together with the package that is home to the function. The top 60 functions, ranked by importance, are already part of that <code><a href="https://rdrr.io/r/base/switch.html" class="external-link">switch()</a></code>, as a comment if they are not implemented yet.</p></li>
+<ol style="list-style-type: decimal"><li><p>The <code><a href="https://rdrr.io/r/base/switch.html" class="external-link">switch()</a></code> in <code>rel_find_packages()</code> needs a new entry, together with the package that is home to the function. The top 60 functions, ranked by importance, are already part of that <code><a href="https://rdrr.io/r/base/switch.html" class="external-link">switch()</a></code>, as a comment if they are not implemented yet.</p></li>
 <li><p>The actual translation must be implemented in <code>rel_translate_lang()</code>. This is easy for some functions that have similar functions that are already translated, but harder for others. This part of the code is not very clear yet, in particular, argument matching by name is only available for a few functions but should be generalized.</p></li>
 <li>
 <p>Test your implementation in the console with code of the form:</p>
