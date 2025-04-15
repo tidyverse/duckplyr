@@ -28,7 +28,6 @@ clean_output <- function(x, options) {
   index <- strsplit(paste(index, collapse = "\n"), "\n---\n")[[1]][[2]]
   writeLines(index, "index.md")
 
-  # FIXME: Change to the main site after release
   x <- gsub('(`vignette[(]"([^"]+)"[)]`)', "[\\1](https://duckplyr.tidyverse.org/articles/\\2.html)", x)
   x <- fansi::strip_sgr(x)
   x
@@ -108,7 +107,7 @@ Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
 ```
 
 ```{r dropin-dplyr}
-conflict_prefer("filter", "dplyr", quiet = TRUE)
+conflict_prefer("filter", "dplyr")
 ```
 
 The following code aggregates the inflight delay by year and month for the first half of the year.
@@ -246,6 +245,8 @@ flights |>
 - `vignette("fallback")`: How the fallback to dplyr works internally
 
 - `vignette("limits")`: Translation of dplyr employed by duckplyr, and current limitations
+
+- `vignette("duckdb")`: Using the full power of DuckDB
 
 - `vignette("developers")`: Using duckplyr for individual data frames and in other packages
 

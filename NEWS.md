@@ -1,5 +1,44 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.0.1.9010 (2025-04-12)
+
+## Features
+
+- Passthrough of functions prefixed with `dd$`, e.g., `dd$ROW()` will be translated as DuckDB's `ROW()` function (#658).
+
+- New `as_tbl()` to convert to a dbplyr tbl object (#634, #685).
+
+## Chore
+
+- Remove space at EOL.
+
+- Bump required version of pillar.
+
+## Documentation
+
+- Add `vignette("duckdb")` (#690).
+
+- Add experimental badge.
+
+
+# duckplyr 1.0.1.9009 (2025-04-11)
+
+## Documentation
+
+- Verbose `conflict_prefer()` (#667, #684).
+
+
+# duckplyr 1.0.1.9008 (2025-04-10)
+
+## Documentation
+
+- Typos + clarification edits to "large" vignette (@mine-cetinkaya-rundel, #665).
+
+## Testing
+
+- Snapshot updates for rcc-smoke (null) (#675).
+
+
 # duckplyr 1.0.1.9007 (2025-04-02)
 
 ## Features

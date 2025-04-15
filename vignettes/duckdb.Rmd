@@ -1,0 +1,139 @@
+---
+title: "Interoperability with DuckDB and dbplyr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{25 Interoperability with DuckDB and dbplyr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+clean_output <- function(x, options) {
+  x <- gsub("0x[0-9a-f]+", "0xdeadbeef", x)
+  x <- gsub("dataframe_[0-9]*_[0-9]*", "      dataframe_42_42      ", x)
+  x <- gsub("[0-9]*\\.___row_number ASC", "42.___row_number ASC", x)
+  x <- gsub("─", "-", x)
+  x
+}
+
+local({
+  hook_source <- knitr::knit_hooks$get("document")
+  knitr::knit_hooks$set(document = clean_output)
+})
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  eval = identical(Sys.getenv("IN_PKGDOWN"), "true") || (getRversion() >= "4.1" && rlang::is_installed(c("conflicted", "dbplyr", "nycflights13", "callr")) && duckplyr:::can_load_extension("httpfs")),
+  comment = "#>"
+)
+
+options(conflicts.policy = list(warn = FALSE))
+
+Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
+```
+
+This article describes how to use the full power of DuckDB with duckplyr.
+Two options are discussed: interoperability with dbplyr and the use of DuckDB's functions in duckplyr.
+
+
+```{r attach}
+library(conflicted)
+library(duckplyr)
+conflict_prefer("filter", "dplyr")
+```
+
+
+## Introduction
+
+The duckplyr package is a drop-in replacement for dplyr, designed to work with DuckDB as the backend.
+There is a translation layer that converts R function calls to DuckDB functions or macros, aiming at full compatibility with R.
+Many functions are translated already, and many more are not.
+For functions that cannot be translated, duckplyr falls back to the original R implementation, disrupting the DuckDB pipeline and materializing intermediate results.
+
+Furthermore, DuckDB has functions with no R equivalent.
+These might be used already by code that interacts with DuckDB through dbplyr, either making use of its passthrough feature (unknown functions are translated to SQL verbatim), or by using the `mutate(x = sql(...))` pattern.
+When working with duckplyr, this functionality is still accessible, albeit through experimental interfaces:
+
+- `as_tbl()` converts a duckplyr table to a duckdb `tbl` object
+- for a duckplyr table, the escape hatch `dd$fun(...)` can be used to call arbitrary DuckDB functions
+
+## From duckplyr to dbplyr
+
+The experimental `as_tbl()` function, introduced in duckplyr 1.1.0, transparently converts a duckplyr frame to a dbplyr `tbl` object:
+
+```{r}
+df <- duckdb_tibble(a = 2L)
+df
+
+tbl <- as_tbl(df)
+tbl
+```
+
+It achieves this by creating a temporary view that points to the relational object created internally by duckplyr, in the same DBI connection as the duckplyr object.
+No data is copied in this operation.
+The view is discarded when the `tbl` object goes out of scope.
+
+This allows using arbitrary SQL code, either through `sql()` or by relying on dbplyr's passthrough feature.
+
+```{r}
+tbl %>%
+  mutate(b = sql("a + 1"), c = least_common_multiple(a, b)) %>%
+  show_query()
+```
+
+There is no R function called `least_common_multiple()`, it is interpreted as a SQL function.
+
+```{r, error = TRUE}
+least_common_multiple(2, 3)
+```
+
+```{r}
+tbl %>%
+  mutate(b = sql("a + 1"), c = least_common_multiple(a, b))
+```
+
+To continue processing with duckplyr, use `as_duckdb_tibble()`:
+
+```{r}
+tbl %>%
+  mutate(b = sql("a + 1"), c = least_common_multiple(a, b)) %>%
+  as_duckdb_tibble()
+```
+
+## Call arbitrary functions in duckplyr
+
+The escape hatch, also introduced in duckplyr 1.1.0, allows calling arbitrary DuckDB functions directly from duckplyr, without going through SQL:
+
+```{r}
+duckdb_tibble(a = 2L, b = 3L) %>%
+  mutate(c = dd$least_common_multiple(a, b))
+```
+
+The `dd` prefix has been picked for the following reasons:
+
+- it is an abbreviation of "DuckDB"
+- it is short and easy to type
+- there is no package of this name
+- objects are not commonly named `dd` in R
+
+A prefix is necessary to avoid name clashes with existing R functions.
+If this is used widely, large-scale code analysis may help prioritize the translation of functions that are not yet supported by duckplyr.
+
+The [dd package](https://github.com/krlmlr/dd), when attached, will provide a `dd` object containing many known DuckDB functions.
+This adds support for autocomplete:
+
+![Screenshot for autocomplete with the dd package](dd.png)
+
+This package is not necessary to use duckplyr, and the list of functions is incomplete and growing.
+In case you're wondering:
+
+```{r}
+duckdb_tibble(a = "dbplyr", b = "duckplyr") %>%
+  mutate(c = dd$damerau_levenshtein(a, b))
+```
+
+## Conclusion
+
+While duckplyr is designed to be a drop-in replacement for dplyr, it still allows to harness most if not all of the power of DuckDB.
+
+See `vignette("limits")` for limitations in the translation employed by duckplyr, `vignette("fallback")` for more information on fallback, and `vignette("telemetry")` for existing attempts to prioritize work on the translation layer.

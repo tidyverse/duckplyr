@@ -60,7 +60,9 @@ library(duckplyr)
 
 
 ``` r
-conflict_prefer("filter", "dplyr", quiet = TRUE)
+conflict_prefer("filter", "dplyr")
+#> [1m[22m[90m[conflicted][39m Will prefer [1m[34mdplyr[39m[22m::filter
+#> over any other package.
 ```
 
 The following code aggregates the inflight delay by year and month for the first half of the year.
@@ -358,6 +360,8 @@ flights |>
 - `vignette("fallback")`: How the fallback to dplyr works internally
 
 - `vignette("limits")`: Translation of dplyr employed by duckplyr, and current limitations
+
+- `vignette("duckdb")`: Using the full power of DuckDB
 
 - `vignette("developers")`: Using duckplyr for individual data frames and in other packages
 
