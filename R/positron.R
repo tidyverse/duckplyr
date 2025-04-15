@@ -57,7 +57,7 @@ duckplyr_df_variable_display_value <- function(x, ...) {
     col_word <- "columns"
   }
 
-  paste0("<duckplyr_df> [", n_col, " ", col_word, "] ")
+  paste0("[? rows x ", n_col, " ", col_word, "] <duckplyr_df>")
 }
 
 # You don't ever see this on the Positron side because it's a table and we
