@@ -1,20 +1,8 @@
 # Documented in `.github/CONTRIBUTING.md`
 
-rel_find_call <- function(fun, env, call = caller_env()) {
-  name <- as.character(fun)
-
-  if (name[[1]] == "::") {
-    # Fully qualified name, no check needed
-    return(c(name[[2]], name[[3]]))
-  } else if (length(name) != 1) {
-    cli::cli_abort("Can't translate function {.code {expr_deparse(fun)}}.", call = call)
-  }
-
-  # Order from https://docs.google.com/spreadsheets/d/1j3AFOKiAknTGpXU1uSH7JzzscgYjVbUEwmdRHS7268E/edit?gid=769885824#gid=769885824,
-  # generated as `expr_result` by 63-gh-detail.R
-
+rel_find_packages <- function(name) {
   # Remember to update limits.Rmd when adding new functions!
-  pkgs <- switch(name,
+  switch(name,
     # Handled in a special way, not mentioned here
     "desc" = "dplyr",
 
@@ -99,10 +87,64 @@ rel_find_call <- function(fun, env, call = caller_env()) {
     NULL
   )
   # Remember to update limits.Rmd when adding new functions!
+}
 
-  if (is.null(pkgs)) {
-    cli::cli_abort("No translation for function {.fun {name}}.", call = call)
+rel_find_call_candidates <- function(fun, call = caller_env()) {
+  name <- as.character(fun)
+
+  if (length(name) == 1) {
+    pkgs <- rel_find_packages(name)
+
+    if (!is.null(pkgs)) {
+      return(list(
+        packages = pkgs,
+        name = name,
+        check = TRUE
+      ))
+    }
+  } else if (name[[1]] == "::") {
+    my_pkg <- name[[2]]
+    name <- name[[3]]
+    pkgs <- rel_find_packages(name)
+
+    if (my_pkg %in% pkgs) {
+      # Package name provided by the user, shortcut if found in list of packages
+      # (requires non-NULL pkgs), no check needed
+      return(list(
+        packages = my_pkg,
+        name = name,
+        check = FALSE
+      ))
+    }
+  } else if (name[[1]] == "$") {
+    # Passthrough for functions prefixed with dd$
+    my_pkg <- name[[2]]
+    name <- name[[3]]
+
+    if (identical(my_pkg, "dd")) {
+      # Check performed by DuckDB
+      return(list(
+        packages = my_pkg,
+        name = name,
+        check = FALSE
+      ))
+    }
   }
+
+  cli::cli_abort("Can't translate function {.code {expr_deparse(fun)}()}.", call = call)
+}
+
+rel_find_call <- function(fun, env, call = caller_env()) {
+  call_cand <- rel_find_call_candidates(fun, call = call)
+  pkgs <- call_cand$packages
+  name <- call_cand$name
+
+  if (!isTRUE(call_cand$check)) {
+    return(c(pkgs, name))
+  }
+
+  # Order from https://docs.google.com/spreadsheets/d/1j3AFOKiAknTGpXU1uSH7JzzscgYjVbUEwmdRHS7268E/edit?gid=769885824#gid=769885824,
+  # generated as `expr_result` by 63-gh-detail.R
 
   # https://github.com/tidyverse/dplyr/pull/7046
   if (name == "n") {
@@ -110,6 +152,9 @@ rel_find_call <- function(fun, env, call = caller_env()) {
   }
 
   fun_val <- get0(as.character(fun), env, mode = "function", inherits = TRUE)
+  if (is.null(fun_val)) {
+    cli::cli_abort("Function {.fun {name}} not found.", call = call)
+  }
 
   for (pkg in pkgs) {
     if (identical(fun_val, get(name, envir = asNamespace(pkg)))) {
@@ -160,6 +205,13 @@ rel_translate_lang <- function(
   pkg <- pkg_name[[1]]
   name <- pkg_name[[2]]
 
+  # Special case: passthrough to DuckDB
+  if (pkg == "dd") {
+    # FIXME: How to deal with window functions?
+    args <- map(as.list(expr[-1]), do_translate, in_window = in_window)
+    fun <- relexpr_function(name, args)
+    return(fun)
+  }
 
   if (name %in% c(">", "<", "==", ">=", "<=")) {
     if (length(expr) != 3) {
@@ -180,7 +232,7 @@ rel_translate_lang <- function(
   }
 
 
-  if (!(name %in% c("wday", "strftime", "lag", "lead", "sum", "min", "max", "any", "all", "mean", "median", "sd"))) {
+  if (!(name %in% c("wday", "strftime", "lag", "lead", "sum", "min", "max", "any", "all", "mean", "median", "sd", "n_distinct"))) {
     if (!is.null(names(expr)) && any(names(expr) != "")) {
       # Fix grepl() and sum()/min()/max() logic below when allowing matching by argument name
       cli::cli_abort("Can't translate named argument {.code {name}({names(expr)[names(expr) != ''][[1]]} = )}.", call = call)
@@ -297,6 +349,7 @@ rel_translate_lang <- function(
 
     # Aggregates
     "sum", "min", "max", "any", "all", "mean", "sd", "median",
+    "n_distinct",
     #
     NULL
   )
@@ -335,7 +388,7 @@ rel_translate_lang <- function(
 
   # Other primitives: prod, range
   # Other aggregates: var(), cum*(), quantile()
-  if (name %in% c("sum", "min", "max", "any", "all", "mean", "sd", "median")) {
+  if (name %in% c("sum", "min", "max", "any", "all", "mean", "sd", "median", "n_distinct")) {
     is_primitive <- (name %in% c("sum", "min", "max", "any", "all"))
 
     if (is_primitive) {
@@ -366,18 +419,26 @@ rel_translate_lang <- function(
     }
 
     if (window) {
-      if (identical(na_rm, FALSE)) {
-        cli::cli_abort(call = call, c(
-          "{.code {name}(na.rm = FALSE)} not supported in window functions",
-          i = "Use {.code {name}(na.rm = TRUE)} after checking for missing values"
-        ))
-      } else if (!identical(na_rm, TRUE)) {
-        cli::cli_abort("Invalid value for {.arg na.rm} in call to {.fun {name}}", call = call)
+      if (name == "n_distinct") {
+        cli::cli_abort("{.code {name}()} not supported in window functions", call = call)
+      } else {
+        if (identical(na_rm, FALSE)) {
+          cli::cli_abort(call = call, c(
+            "{.code {name}(na.rm = FALSE)} not supported in window functions",
+            i = "Use {.code {name}(na.rm = TRUE)} after checking for missing values"
+          ))
+        } else if (!identical(na_rm, TRUE)) {
+          cli::cli_abort("Invalid value for {.arg na.rm} in call to {.fun {name}}", call = call)
+        }
       }
     } else {
       if (identical(na_rm, FALSE)) {
         aliased_name <- paste0("___", name, "_na") # ___sum_na, ___min_na, ___max_na
-      } else if (!identical(na_rm, TRUE)) {
+      } else if (identical(na_rm, TRUE)) {
+        if (name == "n_distinct") {
+          aliased_name <- paste0("___", name)
+        }
+      } else {
         cli::cli_abort("Invalid value for {.arg na.rm} in call to {.fun {name}}", call = call)
       }
     }
