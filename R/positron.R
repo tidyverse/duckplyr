@@ -19,9 +19,9 @@ ark_register_methods <- function() {
     duckplyr_df_variable_has_children
   )
   ark_register_method(
-    "ark_positron_has_value",
+    "ark_positron_variable_has_viewer",
     "duckplyr_df",
-    duckplyr_df_has_value
+    duckplyr_df_variable_has_viewer
   )
 }
 
@@ -75,6 +75,6 @@ duckplyr_df_variable_has_children <- function(x, ...) {
 
 # This is to hide the viewer button,
 # until the viewer can handle thrifty duckplyr frames
-duckplyr_df_variable_has_value <- function(x, ...) {
+duckplyr_df_variable_has_viewer <- function(x, ...) {
   FALSE
 }
