@@ -1653,8 +1653,8 @@ test_that("as_duckplyr_df_impl() and mutate(d = month(d))", {
   test_df <- data.frame(d = as.Date("2025-03-26"))
 
   # Run
-  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(d = month(d))
-  post <- test_df %>% mutate(d = month(d)) %>% as_duckplyr_df_impl()
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(d = lubridate::month(d))
+  post <- test_df %>% mutate(d = lubridate::month(d)) %>% as_duckplyr_df_impl()
 
   # Compare
   expect_identical(pre, post)
