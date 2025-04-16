@@ -1650,7 +1650,7 @@ test_that("as_duckplyr_df_impl() and mutate(d = if_else(a > 1, \"ok\", NA))", {
 
 test_that("as_duckplyr_df_impl() and mutate(d = month(d))", {
   # Data
-  test_df <- data.frame(d = "2025-03-26")
+  test_df <- data.frame(d = as.Date("2025-03-26"))
 
   # Run
   pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(d = month(d))
