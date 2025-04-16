@@ -1647,14 +1647,62 @@ test_that("as_duckplyr_df_impl() and mutate(d = if_else(a > 1, \"ok\", NA))", {
   expect_identical(pre, post)
 })
 
+test_that("as_duckplyr_df_impl() and mutate(d = lubridate::day(d))", {
+  # Data
+  test_df <- data.frame(d = as.Date("2025-03-26"))
 
-test_that("as_duckplyr_df_impl() and mutate(d = month(d))", {
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(d = lubridate::day(d))
+  post <- test_df %>% mutate(d = lubridate::day(d)) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+test_that("as_duckplyr_df_impl() and mutate(d = lubridate::month(d))", {
   # Data
   test_df <- data.frame(d = as.Date("2025-03-26"))
 
   # Run
   pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(d = lubridate::month(d))
   post <- test_df %>% mutate(d = lubridate::month(d)) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df_impl() and mutate(d = lubridate::year(d))", {
+  # Data
+  test_df <- data.frame(d = as.Date("2025-03-26"))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(d = lubridate::year(d))
+  post <- test_df %>% mutate(d = lubridate::year(d)) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+test_that("as_duckplyr_df_impl() and mutate(d = lubridate::quarter(d))", {
+  # Data
+  test_df <- data.frame(d = as.Date("2025-03-26"))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(d = lubridate::quarter(d))
+  post <- test_df %>% mutate(d = lubridate::quarter(d)) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+test_that("as_duckplyr_df_impl() and mutate(d = lubridate::ymd(d))", {
+  # Data
+  test_df <- data.frame(d = "2025-03-26")
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(d = lubridate::ymd(d))
+  post <- test_df %>% mutate(d = lubridate::ymd(d)) %>% as_duckplyr_df_impl()
 
   # Compare
   expect_identical(pre, post)
