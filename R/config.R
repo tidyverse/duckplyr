@@ -20,10 +20,6 @@
 #' This is slow, and mostly useful for debugging.
 #' The default is to check roundtrip of attributes.
 #'
-#' `DUCKPLYR_EXPERIMENTAL`: If `TRUE`, pass `experimental = TRUE`
-#' to certain duckdb functions.
-#' Currently unused.
-#'
 #' `DUCKPLYR_METHODS_OVERWRITE`: If `TRUE`, call `methods_overwrite()`
 #' when the package is loaded.
 #'
