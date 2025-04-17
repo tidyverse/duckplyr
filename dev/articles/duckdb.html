@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.1.9010</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.1.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -135,7 +135,7 @@ duckplyr 1.1.0, transparently converts a duckplyr frame to a dbplyr
 <span><span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_tbl.html">as_tbl</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
 <span><span class="va">tbl</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># Source:   table&lt;as_tbl_duckplyr_SwlKLUUEdL&gt; [?? x 1]</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.5.0//tmp/Rtmpe9UYEZ/duckplyr/duckplyr43d56a8d45fc.duckdb]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.5.0//tmp/RtmpPQrOUj/duckplyr/duckplyr430a3a72af1c.duckdb]</span></span></span>
 <span><span class="co">#&gt;       a</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     2</span></span></code></pre></div>
@@ -165,7 +165,7 @@ it is interpreted as a SQL function.</p>
 <code class="sourceCode R"><span><span class="va">tbl</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sql.html" class="external-link">sql</a></span><span class="op">(</span><span class="st">"a + 1"</span><span class="op">)</span>, c <span class="op">=</span> <span class="fu">least_common_multiple</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># Source:   SQL [?? x 3]</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.5.0//tmp/Rtmpe9UYEZ/duckplyr/duckplyr43d56a8d45fc.duckdb]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB v1.2.1 [unknown@Linux 6.8.0-1021-azure:R 4.5.0//tmp/RtmpPQrOUj/duckplyr/duckplyr430a3a72af1c.duckdb]</span></span></span>
 <span><span class="co">#&gt;       a     b     c</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     2     3     6</span></span></code></pre></div>
@@ -205,7 +205,7 @@ reasons:</p>
 functions. If this is used widely, large-scale code analysis may help
 prioritize the translation of functions that are not yet supported by
 duckplyr.</p>
-<p>The <a href="https://github.com/krlmlr/dd" class="external-link">dd package</a>, when
+<p>The <a href="https://github.com/cynkra/dd" class="external-link">dd package</a>, when
 attached, will provide a <code>dd</code> object containing many known
 DuckDB functions. This adds support for autocomplete:</p>
 <div class="float">
