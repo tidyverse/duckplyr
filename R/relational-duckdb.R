@@ -177,8 +177,7 @@ check_df_for_rel <- function(df, call = caller_env()) {
 
   # FIXME: For some other reason, it seems crucial to assign the result to a
   # variable before returning it
-  experimental <- (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE")
-  out <- duckdb$rel_from_df(con, df, experimental = experimental)
+  out <- duckdb$rel_from_df(con, df)
 
   roundtrip <- duckdb$rapi_rel_to_altrep(out)
   if (Sys.getenv("DUCKPLYR_CHECK_ROUNDTRIP") == "TRUE") {
@@ -468,12 +467,8 @@ to_duckdb_expr <- function(x) {
       # Example: https://github.com/dschafer/activatr/issues/18
       check_df_for_rel(vctrs::new_data_frame(list(constant = x$val)))
 
-      if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-        experimental <- (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE")
-        out <- duckdb$expr_constant(x$val, experimental = experimental)
-      } else {
-        out <- duckdb$expr_constant(x$val)
-      }
+      out <- duckdb$expr_constant(x$val)
+
       if (!is.null(x$alias)) {
         duckdb$expr_set_alias(out, x$alias)
       }
@@ -546,16 +541,7 @@ to_duckdb_expr_meta <- function(x) {
       out
     },
     relational_relexpr_constant = {
-      out <- expr(
-        # FIXME: always pass experimental flag once it's merged
-        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          # experimental is set at the top,
-          # the sym() gymnastics are to satisfy R CMD check
-          duckdb$expr_constant(!!x$val, experimental = !!sym("experimental"))
-        } else {
-          duckdb$expr_constant(!!x$val)
-        }
-      )
+      out <- expr(duckdb$expr_constant(!!x$val))
 
       if (!is.null(x$alias)) {
         out <- expr({
