@@ -12,7 +12,7 @@ test_that("no homonyms", {
     "join_ptype_common",
 
     # needs dplyr > 1.1.4
-    "ncol", "df_n_col", "mat_n_col",
+    "ncol", "df_n_col", "mat_n_col", "check_compatible", "is_compatible",
 
     # internal or deprecated functions
     "all_exprs", "any_exprs", "compute_groups", "dplyr_legacy_locale",
