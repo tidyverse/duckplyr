@@ -1,5 +1,20 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.0.1.9012 (2025-04-18)
+
+## Bug fixes
+
+- Set functions like `union()` no longer trigger materialization (#654, #692).
+
+## Features
+
+- Remove experimental flag (#682, #695).
+
+## Documentation
+
+- Move package.
+
+
 # duckplyr 1.0.1.9011 (2025-04-17)
 
 ## Features
