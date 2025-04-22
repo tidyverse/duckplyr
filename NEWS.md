@@ -1,5 +1,14 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.0.1.9013 (2025-04-22)
+
+## Chore
+
+- Remove superfluous check.
+
+- Fix lints.
+
+
 # duckplyr 1.0.1.9012 (2025-04-18)
 
 ## Bug fixes
