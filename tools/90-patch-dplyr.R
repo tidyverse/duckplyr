@@ -31,6 +31,7 @@ forbidden <- fs::path("R", c(
   "prudence.R",
   "head.R",
   "meta.R",
+  "n-col.R",
   "overwrite.R",
   "qs.R",
   "revdep.R",
