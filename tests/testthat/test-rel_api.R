@@ -7,20 +7,19 @@ test_that("relational anti_join(join_by(a)) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
   df1 <- data.frame(a = 1:4, b = 2)
 
   "anti_join"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "anti_join"
   rel2 <- duckdb$rel_set_alias(rel1, "lhs")
   df2 <- data.frame(a = 2:5, b = 2)
 
   "anti_join"
-  rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel3 <- duckdb$rel_from_df(con, df2)
   "anti_join"
   rel4 <- duckdb$rel_set_alias(rel3, "rhs")
   "anti_join"
@@ -87,20 +86,19 @@ test_that("relational anti_join(join_by(a)) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
   df1 <- data.frame(a = 1:4, b = 2)
 
   "anti_join"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "anti_join"
   rel2 <- duckdb$rel_set_alias(rel1, "lhs")
   df2 <- data.frame(a = 2:5, b = 2)
 
   "anti_join"
-  rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel3 <- duckdb$rel_from_df(con, df2)
   "anti_join"
   rel4 <- duckdb$rel_set_alias(rel3, "rhs")
   "anti_join"
@@ -130,11 +128,10 @@ test_that("relational arrange() order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "arrange"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   rel1
   out <- duckdb$rel_to_altrep(rel1)
   expect_identical(
@@ -149,11 +146,10 @@ test_that("relational arrange(a) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "arrange"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "arrange"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -217,11 +213,10 @@ test_that("relational arrange(g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "arrange"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "arrange"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -285,11 +280,10 @@ test_that("relational arrange(g, a) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "arrange"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "arrange"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -356,11 +350,10 @@ test_that("relational arrange(a, g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "arrange"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "arrange"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -429,13 +422,12 @@ test_that("relational arrange() order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "arrange"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "arrange"
-  rel2 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel2 <- duckdb$rel_from_df(con, df1)
   "arrange"
   rel3 <- duckdb$rel_order(
     rel2,
@@ -455,11 +447,10 @@ test_that("relational arrange(a) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "arrange"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "arrange"
   rel2 <- duckdb$rel_order(rel1, list(duckdb$expr_reference("a")))
   "arrange"
@@ -481,11 +472,10 @@ test_that("relational arrange(g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "arrange"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "arrange"
   rel2 <- duckdb$rel_order(rel1, list(duckdb$expr_reference("g")))
   "arrange"
@@ -507,11 +497,10 @@ test_that("relational arrange(g, a) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "arrange"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "arrange"
   rel2 <- duckdb$rel_order(rel1, list(duckdb$expr_reference("g"), duckdb$expr_reference("a")))
   "arrange"
@@ -533,11 +522,10 @@ test_that("relational arrange(a, g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "arrange"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "arrange"
   rel2 <- duckdb$rel_order(rel1, list(duckdb$expr_reference("a"), duckdb$expr_reference("g")))
   "arrange"
@@ -554,27 +542,6 @@ test_that("relational arrange(a, g) order-enforcing", {
   DBI::dbDisconnect(con, shutdown = TRUE)
 })
 
-# compute order-preserving -------------------------------------------------------------
-
-test_that("relational compute() order-preserving", {
-  # Autogenerated
-  duckdb <- asNamespace("duckdb")
-  drv <- duckdb::duckdb()
-  con <- DBI::dbConnect(drv)
-  experimental <- FALSE
-  df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
-
-  "compute"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
-  rel1
-  out <- duckdb$rel_to_altrep(rel1)
-  expect_identical(
-    out,
-    data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
-  )
-  DBI::dbDisconnect(con, shutdown = TRUE)
-})
-
 # count order-preserving ---------------------------------------------------------------
 
 test_that("relational count() order-preserving", {
@@ -582,12 +549,11 @@ test_that("relational count() order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "count"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "count"
   rel2 <- duckdb$rel_aggregate(
     rel1,
@@ -614,12 +580,11 @@ test_that("relational count(a) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "count"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "count"
   rel2 <- duckdb$rel_aggregate(
     rel1,
@@ -663,12 +628,11 @@ test_that("relational count(b) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "count"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "count"
   rel2 <- duckdb$rel_aggregate(
     rel1,
@@ -712,12 +676,11 @@ test_that("relational count(g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "count"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "count"
   rel2 <- duckdb$rel_aggregate(
     rel1,
@@ -761,12 +724,11 @@ test_that("relational count(g, a) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "count"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "count"
   rel2 <- duckdb$rel_aggregate(
     rel1,
@@ -820,12 +782,11 @@ test_that("relational count(b, g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "count"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "count"
   rel2 <- duckdb$rel_aggregate(
     rel1,
@@ -881,12 +842,11 @@ test_that("relational count() order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "count"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "count"
   rel2 <- duckdb$rel_aggregate(
     rel1,
@@ -915,12 +875,11 @@ test_that("relational count(a) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "count"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "count"
   rel2 <- duckdb$rel_aggregate(
     rel1,
@@ -966,12 +925,11 @@ test_that("relational count(b) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "count"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "count"
   rel2 <- duckdb$rel_aggregate(
     rel1,
@@ -1017,12 +975,11 @@ test_that("relational count(g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "count"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "count"
   rel2 <- duckdb$rel_aggregate(
     rel1,
@@ -1068,12 +1025,11 @@ test_that("relational count(g, a) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "count"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "count"
   rel2 <- duckdb$rel_aggregate(
     rel1,
@@ -1132,12 +1088,11 @@ test_that("relational count(b, g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "count"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "count"
   rel2 <- duckdb$rel_aggregate(
     rel1,
@@ -1198,11 +1153,10 @@ test_that("relational distinct() order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "distinct"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -1282,17 +1236,7 @@ test_that("relational distinct() order-preserving", {
   rel4 <- duckdb$rel_filter(
     rel3,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("___row_number_by"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("___row_number_by"), duckdb$expr_constant(1L)))
     )
   )
   "distinct"
@@ -1332,11 +1276,10 @@ test_that("relational distinct(a) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "distinct"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -1396,17 +1339,7 @@ test_that("relational distinct(a) order-preserving", {
   rel4 <- duckdb$rel_filter(
     rel3,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("___row_number_by"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("___row_number_by"), duckdb$expr_constant(1L)))
     )
   )
   "distinct"
@@ -1436,11 +1369,10 @@ test_that("relational distinct(a, b) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "distinct"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -1510,17 +1442,7 @@ test_that("relational distinct(a, b) order-preserving", {
   rel4 <- duckdb$rel_filter(
     rel3,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("___row_number_by"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("___row_number_by"), duckdb$expr_constant(1L)))
     )
   )
   "distinct"
@@ -1555,11 +1477,10 @@ test_that("relational distinct(b, b) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "distinct"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -1619,17 +1540,7 @@ test_that("relational distinct(b, b) order-preserving", {
   rel4 <- duckdb$rel_filter(
     rel3,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("___row_number_by"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("___row_number_by"), duckdb$expr_constant(1L)))
     )
   )
   "distinct"
@@ -1659,11 +1570,10 @@ test_that("relational distinct(g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "distinct"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -1723,17 +1633,7 @@ test_that("relational distinct(g) order-preserving", {
   rel4 <- duckdb$rel_filter(
     rel3,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("___row_number_by"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("___row_number_by"), duckdb$expr_constant(1L)))
     )
   )
   "distinct"
@@ -1763,15 +1663,14 @@ test_that("relational union_all(data.frame(a = 1L, b = 3, g = 2L)) %>% distinct(
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "union_all"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   df2 <- data.frame(a = 1L, b = 3, g = 2L)
 
   "union_all"
-  rel2 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel2 <- duckdb$rel_from_df(con, df2)
   "union_all"
   rel3 <- duckdb$rel_project(
     rel1,
@@ -1797,11 +1696,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 3, g = 2L)) %>% distinct(
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_integer_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_integer_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_integer_)
         duckdb$expr_set_alias(tmp_expr, "___row_number_y")
         tmp_expr
       }
@@ -1827,11 +1722,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 3, g = 2L)) %>% distinct(
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_integer_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_integer_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_integer_)
         duckdb$expr_set_alias(tmp_expr, "___row_number_x")
         tmp_expr
       },
@@ -1929,17 +1820,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 3, g = 2L)) %>% distinct(
   rel10 <- duckdb$rel_filter(
     rel9,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("___row_number_by"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("___row_number_by"), duckdb$expr_constant(1L)))
     )
   )
   "distinct"
@@ -1969,15 +1850,14 @@ test_that("relational union_all(data.frame(a = 1L, b = 4, g = 2L)) %>% distinct(
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "union_all"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   df2 <- data.frame(a = 1L, b = 4, g = 2L)
 
   "union_all"
-  rel2 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel2 <- duckdb$rel_from_df(con, df2)
   "union_all"
   rel3 <- duckdb$rel_project(
     rel1,
@@ -2003,11 +1883,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 4, g = 2L)) %>% distinct(
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_integer_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_integer_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_integer_)
         duckdb$expr_set_alias(tmp_expr, "___row_number_y")
         tmp_expr
       }
@@ -2033,11 +1909,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 4, g = 2L)) %>% distinct(
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_integer_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_integer_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_integer_)
         duckdb$expr_set_alias(tmp_expr, "___row_number_x")
         tmp_expr
       },
@@ -2135,17 +2007,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 4, g = 2L)) %>% distinct(
   rel10 <- duckdb$rel_filter(
     rel9,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("___row_number_by"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("___row_number_by"), duckdb$expr_constant(1L)))
     )
   )
   "distinct"
@@ -2175,15 +2037,14 @@ test_that("relational union_all(data.frame(a = 1L, b = 5, g = 2L)) %>% distinct(
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "union_all"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   df2 <- data.frame(a = 1L, b = 5, g = 2L)
 
   "union_all"
-  rel2 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel2 <- duckdb$rel_from_df(con, df2)
   "union_all"
   rel3 <- duckdb$rel_project(
     rel1,
@@ -2209,11 +2070,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 5, g = 2L)) %>% distinct(
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_integer_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_integer_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_integer_)
         duckdb$expr_set_alias(tmp_expr, "___row_number_y")
         tmp_expr
       }
@@ -2239,11 +2096,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 5, g = 2L)) %>% distinct(
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_integer_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_integer_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_integer_)
         duckdb$expr_set_alias(tmp_expr, "___row_number_x")
         tmp_expr
       },
@@ -2341,17 +2194,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 5, g = 2L)) %>% distinct(
   rel10 <- duckdb$rel_filter(
     rel9,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("___row_number_by"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("___row_number_by"), duckdb$expr_constant(1L)))
     )
   )
   "distinct"
@@ -2381,15 +2224,14 @@ test_that("relational union_all(data.frame(a = 1L, b = 6, g = 2L)) %>% distinct(
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "union_all"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   df2 <- data.frame(a = 1L, b = 6, g = 2L)
 
   "union_all"
-  rel2 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel2 <- duckdb$rel_from_df(con, df2)
   "union_all"
   rel3 <- duckdb$rel_project(
     rel1,
@@ -2415,11 +2257,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 6, g = 2L)) %>% distinct(
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_integer_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_integer_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_integer_)
         duckdb$expr_set_alias(tmp_expr, "___row_number_y")
         tmp_expr
       }
@@ -2445,11 +2283,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 6, g = 2L)) %>% distinct(
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_integer_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_integer_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_integer_)
         duckdb$expr_set_alias(tmp_expr, "___row_number_x")
         tmp_expr
       },
@@ -2547,17 +2381,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 6, g = 2L)) %>% distinct(
   rel10 <- duckdb$rel_filter(
     rel9,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("___row_number_by"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("___row_number_by"), duckdb$expr_constant(1L)))
     )
   )
   "distinct"
@@ -2587,15 +2411,14 @@ test_that("relational union_all(data.frame(a = 1L, b = 7, g = 2L)) %>% distinct(
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "union_all"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   df2 <- data.frame(a = 1L, b = 7, g = 2L)
 
   "union_all"
-  rel2 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel2 <- duckdb$rel_from_df(con, df2)
   "union_all"
   rel3 <- duckdb$rel_project(
     rel1,
@@ -2621,11 +2444,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 7, g = 2L)) %>% distinct(
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_integer_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_integer_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_integer_)
         duckdb$expr_set_alias(tmp_expr, "___row_number_y")
         tmp_expr
       }
@@ -2651,11 +2470,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 7, g = 2L)) %>% distinct(
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_integer_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_integer_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_integer_)
         duckdb$expr_set_alias(tmp_expr, "___row_number_x")
         tmp_expr
       },
@@ -2753,17 +2568,7 @@ test_that("relational union_all(data.frame(a = 1L, b = 7, g = 2L)) %>% distinct(
   rel10 <- duckdb$rel_filter(
     rel9,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("___row_number_by"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("___row_number_by"), duckdb$expr_constant(1L)))
     )
   )
   "distinct"
@@ -2793,11 +2598,10 @@ test_that("relational distinct(g, .keep_all = TRUE) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "distinct"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -2867,17 +2671,7 @@ test_that("relational distinct(g, .keep_all = TRUE) order-preserving", {
   rel4 <- duckdb$rel_filter(
     rel3,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("___row_number_by"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("___row_number_by"), duckdb$expr_constant(1L)))
     )
   )
   "distinct"
@@ -2919,11 +2713,10 @@ test_that("relational distinct() order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "distinct"
   rel2 <- duckdb$rel_distinct(rel1)
   "arrange"
@@ -2945,11 +2738,10 @@ test_that("relational distinct(a) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "distinct"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -2979,11 +2771,10 @@ test_that("relational distinct(a, b) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "distinct"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -3018,11 +2809,10 @@ test_that("relational distinct(b, b) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "distinct"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -3052,11 +2842,10 @@ test_that("relational distinct(g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "distinct"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -3086,15 +2875,14 @@ test_that("relational union_all(data.frame(a = 1L, b = 3, g = 2L)) %>% distinct(
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "union_all"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   df2 <- data.frame(a = 1L, b = 3, g = 2L)
 
   "union_all"
-  rel2 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel2 <- duckdb$rel_from_df(con, df2)
   "union_all"
   rel3 <- duckdb$rel_union_all(rel1, rel2)
   "distinct"
@@ -3126,15 +2914,14 @@ test_that("relational union_all(data.frame(a = 1L, b = 4, g = 2L)) %>% distinct(
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "union_all"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   df2 <- data.frame(a = 1L, b = 4, g = 2L)
 
   "union_all"
-  rel2 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel2 <- duckdb$rel_from_df(con, df2)
   "union_all"
   rel3 <- duckdb$rel_union_all(rel1, rel2)
   "distinct"
@@ -3166,15 +2953,14 @@ test_that("relational union_all(data.frame(a = 1L, b = 5, g = 2L)) %>% distinct(
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "union_all"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   df2 <- data.frame(a = 1L, b = 5, g = 2L)
 
   "union_all"
-  rel2 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel2 <- duckdb$rel_from_df(con, df2)
   "union_all"
   rel3 <- duckdb$rel_union_all(rel1, rel2)
   "distinct"
@@ -3206,15 +2992,14 @@ test_that("relational union_all(data.frame(a = 1L, b = 6, g = 2L)) %>% distinct(
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "union_all"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   df2 <- data.frame(a = 1L, b = 6, g = 2L)
 
   "union_all"
-  rel2 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel2 <- duckdb$rel_from_df(con, df2)
   "union_all"
   rel3 <- duckdb$rel_union_all(rel1, rel2)
   "distinct"
@@ -3246,15 +3031,14 @@ test_that("relational union_all(data.frame(a = 1L, b = 7, g = 2L)) %>% distinct(
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "union_all"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   df2 <- data.frame(a = 1L, b = 7, g = 2L)
 
   "union_all"
-  rel2 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel2 <- duckdb$rel_from_df(con, df2)
   "union_all"
   rel3 <- duckdb$rel_union_all(rel1, rel2)
   "distinct"
@@ -3286,11 +3070,10 @@ test_that("relational distinct(g, .keep_all = TRUE) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "distinct"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "distinct"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -3360,17 +3143,7 @@ test_that("relational distinct(g, .keep_all = TRUE) order-enforcing", {
   rel4 <- duckdb$rel_filter(
     rel3,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("___row_number_by"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("___row_number_by"), duckdb$expr_constant(1L)))
     )
   )
   "distinct"
@@ -3417,11 +3190,10 @@ test_that("relational filter(a == 1) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "filter"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "filter"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -3452,17 +3224,7 @@ test_that("relational filter(a == 1) order-preserving", {
   rel3 <- duckdb$rel_filter(
     rel2,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("a"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1)
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("a"), duckdb$expr_constant(1)))
     )
   )
   "filter"
@@ -3502,14 +3264,13 @@ test_that("relational filter(a %in% 2:3, g == 2) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "filter"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "filter"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -3546,48 +3307,14 @@ test_that("relational filter(a %in% 2:3, g == 2) order-preserving", {
           duckdb$expr_function(
             "|",
             list(
-              duckdb$expr_function(
-                "r_base::==",
-                list(
-                  duckdb$expr_reference("a"),
-                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                    duckdb$expr_constant(2L, experimental = experimental)
-                  } else {
-                    duckdb$expr_constant(2L)
-                  }
-                )
-              ),
-              duckdb$expr_function(
-                "r_base::==",
-                list(
-                  duckdb$expr_reference("a"),
-                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                    duckdb$expr_constant(3L, experimental = experimental)
-                  } else {
-                    duckdb$expr_constant(3L)
-                  }
-                )
-              )
+              duckdb$expr_function("r_base::==", list(duckdb$expr_reference("a"), duckdb$expr_constant(2L))),
+              duckdb$expr_function("r_base::==", list(duckdb$expr_reference("a"), duckdb$expr_constant(3L)))
             )
           ),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(FALSE, experimental = experimental)
-          } else {
-            duckdb$expr_constant(FALSE)
-          }
+          duckdb$expr_constant(FALSE)
         )
       ),
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("g"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(2, experimental = experimental)
-          } else {
-            duckdb$expr_constant(2)
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("g"), duckdb$expr_constant(2)))
     )
   )
   "filter"
@@ -3627,7 +3354,6 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
@@ -3635,7 +3361,7 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-preserving", {
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "filter"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "filter"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -3675,48 +3401,14 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-preserving", {
               duckdb$expr_function(
                 "|",
                 list(
-                  duckdb$expr_function(
-                    "r_base::==",
-                    list(
-                      duckdb$expr_reference("a"),
-                      if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                        duckdb$expr_constant(2L, experimental = experimental)
-                      } else {
-                        duckdb$expr_constant(2L)
-                      }
-                    )
-                  ),
-                  duckdb$expr_function(
-                    "r_base::==",
-                    list(
-                      duckdb$expr_reference("a"),
-                      if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                        duckdb$expr_constant(3L, experimental = experimental)
-                      } else {
-                        duckdb$expr_constant(3L)
-                      }
-                    )
-                  )
+                  duckdb$expr_function("r_base::==", list(duckdb$expr_reference("a"), duckdb$expr_constant(2L))),
+                  duckdb$expr_function("r_base::==", list(duckdb$expr_reference("a"), duckdb$expr_constant(3L)))
                 )
               ),
-              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                duckdb$expr_constant(FALSE, experimental = experimental)
-              } else {
-                duckdb$expr_constant(FALSE)
-              }
+              duckdb$expr_constant(FALSE)
             )
           ),
-          duckdb$expr_comparison(
-            "==",
-            list(
-              duckdb$expr_reference("g"),
-              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                duckdb$expr_constant(2, experimental = experimental)
-              } else {
-                duckdb$expr_constant(2)
-              }
-            )
-          )
+          duckdb$expr_comparison("==", list(duckdb$expr_reference("g"), duckdb$expr_constant(2)))
         )
       )
     )
@@ -3758,13 +3450,12 @@ test_that("relational filter(a != 2 | g != 2) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "filter"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "filter"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -3798,28 +3489,8 @@ test_that("relational filter(a != 2 | g != 2) order-preserving", {
       duckdb$expr_function(
         "|",
         list(
-          duckdb$expr_function(
-            "r_base::!=",
-            list(
-              duckdb$expr_reference("a"),
-              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                duckdb$expr_constant(2, experimental = experimental)
-              } else {
-                duckdb$expr_constant(2)
-              }
-            )
-          ),
-          duckdb$expr_function(
-            "r_base::!=",
-            list(
-              duckdb$expr_reference("g"),
-              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                duckdb$expr_constant(2, experimental = experimental)
-              } else {
-                duckdb$expr_constant(2)
-              }
-            )
-          )
+          duckdb$expr_function("r_base::!=", list(duckdb$expr_reference("a"), duckdb$expr_constant(2))),
+          duckdb$expr_function("r_base::!=", list(duckdb$expr_reference("g"), duckdb$expr_constant(2)))
         )
       )
     )
@@ -3863,26 +3534,15 @@ test_that("relational filter(a == 1) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "filter"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "filter"
   rel2 <- duckdb$rel_filter(
     rel1,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("a"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1)
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("a"), duckdb$expr_constant(1)))
     )
   )
   "arrange"
@@ -3904,14 +3564,13 @@ test_that("relational filter(a %in% 2:3, g == 2) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "filter"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "filter"
   rel2 <- duckdb$rel_filter(
     rel1,
@@ -3922,48 +3581,14 @@ test_that("relational filter(a %in% 2:3, g == 2) order-enforcing", {
           duckdb$expr_function(
             "|",
             list(
-              duckdb$expr_function(
-                "r_base::==",
-                list(
-                  duckdb$expr_reference("a"),
-                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                    duckdb$expr_constant(2L, experimental = experimental)
-                  } else {
-                    duckdb$expr_constant(2L)
-                  }
-                )
-              ),
-              duckdb$expr_function(
-                "r_base::==",
-                list(
-                  duckdb$expr_reference("a"),
-                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                    duckdb$expr_constant(3L, experimental = experimental)
-                  } else {
-                    duckdb$expr_constant(3L)
-                  }
-                )
-              )
+              duckdb$expr_function("r_base::==", list(duckdb$expr_reference("a"), duckdb$expr_constant(2L))),
+              duckdb$expr_function("r_base::==", list(duckdb$expr_reference("a"), duckdb$expr_constant(3L)))
             )
           ),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(FALSE, experimental = experimental)
-          } else {
-            duckdb$expr_constant(FALSE)
-          }
+          duckdb$expr_constant(FALSE)
         )
       ),
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("g"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(2, experimental = experimental)
-          } else {
-            duckdb$expr_constant(2)
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("g"), duckdb$expr_constant(2)))
     )
   )
   "arrange"
@@ -3985,7 +3610,6 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
@@ -3993,7 +3617,7 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-enforcing", {
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "filter"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "filter"
   rel2 <- duckdb$rel_filter(
     rel1,
@@ -4007,48 +3631,14 @@ test_that("relational filter(a %in% 2:3 & g == 2) order-enforcing", {
               duckdb$expr_function(
                 "|",
                 list(
-                  duckdb$expr_function(
-                    "r_base::==",
-                    list(
-                      duckdb$expr_reference("a"),
-                      if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                        duckdb$expr_constant(2L, experimental = experimental)
-                      } else {
-                        duckdb$expr_constant(2L)
-                      }
-                    )
-                  ),
-                  duckdb$expr_function(
-                    "r_base::==",
-                    list(
-                      duckdb$expr_reference("a"),
-                      if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                        duckdb$expr_constant(3L, experimental = experimental)
-                      } else {
-                        duckdb$expr_constant(3L)
-                      }
-                    )
-                  )
+                  duckdb$expr_function("r_base::==", list(duckdb$expr_reference("a"), duckdb$expr_constant(2L))),
+                  duckdb$expr_function("r_base::==", list(duckdb$expr_reference("a"), duckdb$expr_constant(3L)))
                 )
               ),
-              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                duckdb$expr_constant(FALSE, experimental = experimental)
-              } else {
-                duckdb$expr_constant(FALSE)
-              }
+              duckdb$expr_constant(FALSE)
             )
           ),
-          duckdb$expr_comparison(
-            "==",
-            list(
-              duckdb$expr_reference("g"),
-              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                duckdb$expr_constant(2, experimental = experimental)
-              } else {
-                duckdb$expr_constant(2)
-              }
-            )
-          )
+          duckdb$expr_comparison("==", list(duckdb$expr_reference("g"), duckdb$expr_constant(2)))
         )
       )
     )
@@ -4072,13 +3662,12 @@ test_that("relational filter(a != 2 | g != 2) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "filter"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "filter"
   rel2 <- duckdb$rel_filter(
     rel1,
@@ -4086,28 +3675,8 @@ test_that("relational filter(a != 2 | g != 2) order-enforcing", {
       duckdb$expr_function(
         "|",
         list(
-          duckdb$expr_function(
-            "r_base::!=",
-            list(
-              duckdb$expr_reference("a"),
-              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                duckdb$expr_constant(2, experimental = experimental)
-              } else {
-                duckdb$expr_constant(2)
-              }
-            )
-          ),
-          duckdb$expr_function(
-            "r_base::!=",
-            list(
-              duckdb$expr_reference("g"),
-              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                duckdb$expr_constant(2, experimental = experimental)
-              } else {
-                duckdb$expr_constant(2)
-              }
-            )
-          )
+          duckdb$expr_function("r_base::!=", list(duckdb$expr_reference("a"), duckdb$expr_constant(2))),
+          duckdb$expr_function("r_base::!=", list(duckdb$expr_reference("g"), duckdb$expr_constant(2)))
         )
       )
     )
@@ -4133,7 +3702,6 @@ test_that("relational full_join(join_by(a)) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
@@ -4141,13 +3709,13 @@ test_that("relational full_join(join_by(a)) order-preserving", {
   df1 <- data.frame(a = 1:4, b = 2)
 
   "full_join"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "full_join"
   rel2 <- duckdb$rel_set_alias(rel1, "lhs")
   df2 <- data.frame(a = 2:5, b = 2)
 
   "full_join"
-  rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel3 <- duckdb$rel_from_df(con, df2)
   "full_join"
   rel4 <- duckdb$rel_set_alias(rel3, "rhs")
   "full_join"
@@ -4275,7 +3843,6 @@ test_that("relational full_join(join_by(a)) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
@@ -4283,13 +3850,13 @@ test_that("relational full_join(join_by(a)) order-enforcing", {
   df1 <- data.frame(a = 1:4, b = 2)
 
   "full_join"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "full_join"
   rel2 <- duckdb$rel_set_alias(rel1, "lhs")
   df2 <- data.frame(a = 2:5, b = 2)
 
   "full_join"
-  rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel3 <- duckdb$rel_from_df(con, df2)
   "full_join"
   rel4 <- duckdb$rel_set_alias(rel3, "rhs")
   "full_join"
@@ -4375,7 +3942,6 @@ test_that("relational inner_join(join_by(a)) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
@@ -4383,13 +3949,13 @@ test_that("relational inner_join(join_by(a)) order-preserving", {
   df1 <- data.frame(a = 1:4, b = 2)
 
   "inner_join"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "inner_join"
   rel2 <- duckdb$rel_set_alias(rel1, "lhs")
   df2 <- data.frame(a = 2:5, b = 2)
 
   "inner_join"
-  rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel3 <- duckdb$rel_from_df(con, df2)
   "inner_join"
   rel4 <- duckdb$rel_set_alias(rel3, "rhs")
   "inner_join"
@@ -4517,7 +4083,6 @@ test_that("relational inner_join(join_by(a)) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
@@ -4525,13 +4090,13 @@ test_that("relational inner_join(join_by(a)) order-enforcing", {
   df1 <- data.frame(a = 1:4, b = 2)
 
   "inner_join"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "inner_join"
   rel2 <- duckdb$rel_set_alias(rel1, "lhs")
   df2 <- data.frame(a = 2:5, b = 2)
 
   "inner_join"
-  rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel3 <- duckdb$rel_from_df(con, df2)
   "inner_join"
   rel4 <- duckdb$rel_set_alias(rel3, "rhs")
   "inner_join"
@@ -4617,20 +4182,19 @@ test_that("relational intersect() order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
   df1 <- data.frame(a = 1:4, b = 2)
 
   "semi_join"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "semi_join"
   rel2 <- duckdb$rel_set_alias(rel1, "lhs")
   df2 <- data.frame(a = 2:5, b = 2)
 
   "semi_join"
-  rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel3 <- duckdb$rel_from_df(con, df2)
   "semi_join"
   rel4 <- duckdb$rel_set_alias(rel3, "rhs")
   "semi_join"
@@ -4746,17 +4310,7 @@ test_that("relational intersect() order-preserving", {
   rel11 <- duckdb$rel_filter(
     rel10,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("___row_number_by"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("___row_number_by"), duckdb$expr_constant(1L)))
     )
   )
   "distinct"
@@ -4793,15 +4347,14 @@ test_that("relational intersect() order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = 1:4, b = 2)
 
   "intersect"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   df2 <- data.frame(a = 2:5, b = 2)
 
   "intersect"
-  rel2 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel2 <- duckdb$rel_from_df(con, df2)
   "intersect"
   rel3 <- duckdb$rel_set_intersect(rel1, rel2)
   "arrange"
@@ -4822,7 +4375,6 @@ test_that("relational left_join(join_by(a)) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
@@ -4830,13 +4382,13 @@ test_that("relational left_join(join_by(a)) order-preserving", {
   df1 <- data.frame(a = 1:4, b = 2)
 
   "left_join"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "left_join"
   rel2 <- duckdb$rel_set_alias(rel1, "lhs")
   df2 <- data.frame(a = 2:5, b = 2)
 
   "left_join"
-  rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel3 <- duckdb$rel_from_df(con, df2)
   "left_join"
   rel4 <- duckdb$rel_set_alias(rel3, "rhs")
   "left_join"
@@ -4964,7 +4516,6 @@ test_that("relational left_join(join_by(a)) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
@@ -4972,13 +4523,13 @@ test_that("relational left_join(join_by(a)) order-enforcing", {
   df1 <- data.frame(a = 1:4, b = 2)
 
   "left_join"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "left_join"
   rel2 <- duckdb$rel_set_alias(rel1, "lhs")
   df2 <- data.frame(a = 2:5, b = 2)
 
   "left_join"
-  rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel3 <- duckdb$rel_from_df(con, df2)
   "left_join"
   rel4 <- duckdb$rel_set_alias(rel3, "rhs")
   "left_join"
@@ -5064,11 +4615,10 @@ test_that("relational mutate() order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   rel1
   out <- duckdb$rel_to_altrep(rel1)
   expect_identical(
@@ -5083,11 +4633,10 @@ test_that("relational mutate(a + 1) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -5108,17 +4657,7 @@ test_that("relational mutate(a + 1) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function(
-          "+",
-          list(
-            duckdb$expr_reference("a"),
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(1, experimental = experimental)
-            } else {
-              duckdb$expr_constant(1)
-            }
-          )
-        )
+        tmp_expr <- duckdb$expr_function("+", list(duckdb$expr_reference("a"), duckdb$expr_constant(1)))
         duckdb$expr_set_alias(tmp_expr, "a + 1")
         tmp_expr
       }
@@ -5144,11 +4683,10 @@ test_that("relational mutate(a + 1, .by = g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -5200,17 +4738,7 @@ test_that("relational mutate(a + 1, .by = g) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function(
-          "+",
-          list(
-            duckdb$expr_reference("a"),
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(1, experimental = experimental)
-            } else {
-              duckdb$expr_constant(1)
-            }
-          )
-        )
+        tmp_expr <- duckdb$expr_function("+", list(duckdb$expr_reference("a"), duckdb$expr_constant(1)))
         duckdb$expr_set_alias(tmp_expr, "a + 1")
         tmp_expr
       }
@@ -5264,11 +4792,10 @@ test_that("relational mutate(c = a + 1) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -5289,17 +4816,7 @@ test_that("relational mutate(c = a + 1) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function(
-          "+",
-          list(
-            duckdb$expr_reference("a"),
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(1, experimental = experimental)
-            } else {
-              duckdb$expr_constant(1)
-            }
-          )
-        )
+        tmp_expr <- duckdb$expr_function("+", list(duckdb$expr_reference("a"), duckdb$expr_constant(1)))
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -5324,11 +4841,10 @@ test_that("relational mutate(`if` = a + 1) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -5349,17 +4865,7 @@ test_that("relational mutate(`if` = a + 1) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function(
-          "+",
-          list(
-            duckdb$expr_reference("a"),
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(1, experimental = experimental)
-            } else {
-              duckdb$expr_constant(1)
-            }
-          )
-        )
+        tmp_expr <- duckdb$expr_function("+", list(duckdb$expr_reference("a"), duckdb$expr_constant(1)))
         duckdb$expr_set_alias(tmp_expr, "if")
         tmp_expr
       }
@@ -5385,11 +4891,10 @@ test_that("relational mutate(sum(a, na.rm = TRUE)) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -5436,11 +4941,10 @@ test_that("relational mutate(sum(a, na.rm = TRUE), .by = g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -5546,11 +5050,10 @@ test_that("relational mutate(mean(a, na.rm = TRUE)) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -5597,11 +5100,10 @@ test_that("relational mutate(mean(a, na.rm = TRUE), .by = g) order-preserving", 
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -5707,11 +5209,10 @@ test_that("relational mutate(sd(a, na.rm = TRUE)) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -5758,11 +5259,10 @@ test_that("relational mutate(sd(a, na.rm = TRUE), .by = g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -5868,11 +5368,10 @@ test_that("relational mutate(lag(a)) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -5893,17 +5392,7 @@ test_that("relational mutate(lag(a)) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))),
-          list(),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          },
-          default_expr = NULL
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))), list(), list(), offset_expr = duckdb$expr_constant(1L), default_expr = NULL)
         duckdb$expr_set_alias(tmp_expr, "lag(a)")
         tmp_expr
       }
@@ -5929,11 +5418,10 @@ test_that("relational mutate(lag(a), .by = g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -5985,17 +5473,7 @@ test_that("relational mutate(lag(a), .by = g) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))),
-          list(duckdb$expr_reference("g")),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          },
-          default_expr = NULL
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))), list(duckdb$expr_reference("g")), list(), offset_expr = duckdb$expr_constant(1L), default_expr = NULL)
         duckdb$expr_set_alias(tmp_expr, "lag(a)")
         tmp_expr
       }
@@ -6049,11 +5527,10 @@ test_that("relational mutate(lead(a)) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -6074,17 +5551,7 @@ test_that("relational mutate(lead(a)) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))),
-          list(),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          },
-          default_expr = NULL
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))), list(), list(), offset_expr = duckdb$expr_constant(1L), default_expr = NULL)
         duckdb$expr_set_alias(tmp_expr, "lead(a)")
         tmp_expr
       }
@@ -6110,11 +5577,10 @@ test_that("relational mutate(lead(a), .by = g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -6166,17 +5632,7 @@ test_that("relational mutate(lead(a), .by = g) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))),
-          list(duckdb$expr_reference("g")),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          },
-          default_expr = NULL
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))), list(duckdb$expr_reference("g")), list(), offset_expr = duckdb$expr_constant(1L), default_expr = NULL)
         duckdb$expr_set_alias(tmp_expr, "lead(a)")
         tmp_expr
       }
@@ -6230,11 +5686,10 @@ test_that("relational mutate(lag(a, 2)) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -6255,17 +5710,7 @@ test_that("relational mutate(lag(a, 2)) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))),
-          list(),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(2, experimental = experimental)
-          } else {
-            duckdb$expr_constant(2)
-          },
-          default_expr = NULL
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))), list(), list(), offset_expr = duckdb$expr_constant(2), default_expr = NULL)
         duckdb$expr_set_alias(tmp_expr, "lag(a, 2)")
         tmp_expr
       }
@@ -6291,11 +5736,10 @@ test_that("relational mutate(lag(a, 2), .by = g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -6347,17 +5791,7 @@ test_that("relational mutate(lag(a, 2), .by = g) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))),
-          list(duckdb$expr_reference("g")),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(2, experimental = experimental)
-          } else {
-            duckdb$expr_constant(2)
-          },
-          default_expr = NULL
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))), list(duckdb$expr_reference("g")), list(), offset_expr = duckdb$expr_constant(2), default_expr = NULL)
         duckdb$expr_set_alias(tmp_expr, "lag(a, 2)")
         tmp_expr
       }
@@ -6411,11 +5845,10 @@ test_that("relational mutate(lead(a, 2)) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -6436,17 +5869,7 @@ test_that("relational mutate(lead(a, 2)) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))),
-          list(),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(2, experimental = experimental)
-          } else {
-            duckdb$expr_constant(2)
-          },
-          default_expr = NULL
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))), list(), list(), offset_expr = duckdb$expr_constant(2), default_expr = NULL)
         duckdb$expr_set_alias(tmp_expr, "lead(a, 2)")
         tmp_expr
       }
@@ -6472,11 +5895,10 @@ test_that("relational mutate(lead(a, 2), .by = g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -6528,17 +5950,7 @@ test_that("relational mutate(lead(a, 2), .by = g) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))),
-          list(duckdb$expr_reference("g")),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(2, experimental = experimental)
-          } else {
-            duckdb$expr_constant(2)
-          },
-          default_expr = NULL
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))), list(duckdb$expr_reference("g")), list(), offset_expr = duckdb$expr_constant(2), default_expr = NULL)
         duckdb$expr_set_alias(tmp_expr, "lead(a, 2)")
         tmp_expr
       }
@@ -6592,11 +6004,10 @@ test_that("relational mutate(lag(a, 4)) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -6617,17 +6028,7 @@ test_that("relational mutate(lag(a, 4)) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))),
-          list(),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(4, experimental = experimental)
-          } else {
-            duckdb$expr_constant(4)
-          },
-          default_expr = NULL
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))), list(), list(), offset_expr = duckdb$expr_constant(4), default_expr = NULL)
         duckdb$expr_set_alias(tmp_expr, "lag(a, 4)")
         tmp_expr
       }
@@ -6653,11 +6054,10 @@ test_that("relational mutate(lag(a, 4), .by = g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -6709,17 +6109,7 @@ test_that("relational mutate(lag(a, 4), .by = g) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))),
-          list(duckdb$expr_reference("g")),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(4, experimental = experimental)
-          } else {
-            duckdb$expr_constant(4)
-          },
-          default_expr = NULL
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))), list(duckdb$expr_reference("g")), list(), offset_expr = duckdb$expr_constant(4), default_expr = NULL)
         duckdb$expr_set_alias(tmp_expr, "lag(a, 4)")
         tmp_expr
       }
@@ -6773,11 +6163,10 @@ test_that("relational mutate(lead(a, 4)) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -6798,17 +6187,7 @@ test_that("relational mutate(lead(a, 4)) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))),
-          list(),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(4, experimental = experimental)
-          } else {
-            duckdb$expr_constant(4)
-          },
-          default_expr = NULL
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))), list(), list(), offset_expr = duckdb$expr_constant(4), default_expr = NULL)
         duckdb$expr_set_alias(tmp_expr, "lead(a, 4)")
         tmp_expr
       }
@@ -6834,11 +6213,10 @@ test_that("relational mutate(lead(a, 4), .by = g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -6890,17 +6268,7 @@ test_that("relational mutate(lead(a, 4), .by = g) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))),
-          list(duckdb$expr_reference("g")),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(4, experimental = experimental)
-          } else {
-            duckdb$expr_constant(4)
-          },
-          default_expr = NULL
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))), list(duckdb$expr_reference("g")), list(), offset_expr = duckdb$expr_constant(4), default_expr = NULL)
         duckdb$expr_set_alias(tmp_expr, "lead(a, 4)")
         tmp_expr
       }
@@ -6954,11 +6322,10 @@ test_that("relational mutate(lag(a, default = 0)) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -6979,21 +6346,7 @@ test_that("relational mutate(lag(a, default = 0)) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))),
-          list(),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          },
-          default_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(0, experimental = experimental)
-          } else {
-            duckdb$expr_constant(0)
-          }
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))), list(), list(), offset_expr = duckdb$expr_constant(1L), default_expr = duckdb$expr_constant(0))
         duckdb$expr_set_alias(tmp_expr, "lag(a, default = 0)")
         tmp_expr
       }
@@ -7019,11 +6372,10 @@ test_that("relational mutate(lag(a, default = 0), .by = g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -7075,21 +6427,7 @@ test_that("relational mutate(lag(a, default = 0), .by = g) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))),
-          list(duckdb$expr_reference("g")),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          },
-          default_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(0, experimental = experimental)
-          } else {
-            duckdb$expr_constant(0)
-          }
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))), list(duckdb$expr_reference("g")), list(), offset_expr = duckdb$expr_constant(1L), default_expr = duckdb$expr_constant(0))
         duckdb$expr_set_alias(tmp_expr, "lag(a, default = 0)")
         tmp_expr
       }
@@ -7143,11 +6481,10 @@ test_that("relational mutate(lead(a, default = 1000)) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -7168,21 +6505,7 @@ test_that("relational mutate(lead(a, default = 1000)) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))),
-          list(),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          },
-          default_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1000, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1000)
-          }
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))), list(), list(), offset_expr = duckdb$expr_constant(1L), default_expr = duckdb$expr_constant(1000))
         duckdb$expr_set_alias(tmp_expr, "lead(a, default = 1000)")
         tmp_expr
       }
@@ -7208,11 +6531,10 @@ test_that("relational mutate(lead(a, default = 1000), .by = g) order-preserving"
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -7264,21 +6586,7 @@ test_that("relational mutate(lead(a, default = 1000), .by = g) order-preserving"
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))),
-          list(duckdb$expr_reference("g")),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          },
-          default_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1000, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1000)
-          }
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))), list(duckdb$expr_reference("g")), list(), offset_expr = duckdb$expr_constant(1L), default_expr = duckdb$expr_constant(1000))
         duckdb$expr_set_alias(tmp_expr, "lead(a, default = 1000)")
         tmp_expr
       }
@@ -7332,11 +6640,10 @@ test_that("relational mutate(min(a, na.rm = TRUE)) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -7383,11 +6690,10 @@ test_that("relational mutate(min(a, na.rm = TRUE), .by = g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -7493,11 +6799,10 @@ test_that("relational mutate(max(a, na.rm = TRUE)) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -7544,11 +6849,10 @@ test_that("relational mutate(max(a, na.rm = TRUE), .by = g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -7654,7 +6958,6 @@ test_that("relational mutate(a / b) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -7664,7 +6967,7 @@ test_that("relational mutate(a / b) order-preserving", {
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -7711,7 +7014,6 @@ test_that("relational mutate(d = 0, e = 1 / d, f = 0 / d, g = -1 / d) order-pres
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -7721,7 +7023,7 @@ test_that("relational mutate(d = 0, e = 1 / d, f = 0 / d, g = -1 / d) order-pres
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -7742,11 +7044,7 @@ test_that("relational mutate(d = 0, e = 1 / d, f = 0 / d, g = -1 / d) order-pres
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(0, experimental = experimental)
-        } else {
-          duckdb$expr_constant(0)
-        }
+        tmp_expr <- duckdb$expr_constant(0)
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
       }
@@ -7777,17 +7075,7 @@ test_that("relational mutate(d = 0, e = 1 / d, f = 0 / d, g = -1 / d) order-pres
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function(
-          "___divide",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(1, experimental = experimental)
-            } else {
-              duckdb$expr_constant(1)
-            },
-            duckdb$expr_reference("d")
-          )
-        )
+        tmp_expr <- duckdb$expr_function("___divide", list(duckdb$expr_constant(1), duckdb$expr_reference("d")))
         duckdb$expr_set_alias(tmp_expr, "e")
         tmp_expr
       }
@@ -7823,17 +7111,7 @@ test_that("relational mutate(d = 0, e = 1 / d, f = 0 / d, g = -1 / d) order-pres
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function(
-          "___divide",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(0, experimental = experimental)
-            } else {
-              duckdb$expr_constant(0)
-            },
-            duckdb$expr_reference("d")
-          )
-        )
+        tmp_expr <- duckdb$expr_function("___divide", list(duckdb$expr_constant(0), duckdb$expr_reference("d")))
         duckdb$expr_set_alias(tmp_expr, "f")
         tmp_expr
       }
@@ -7856,19 +7134,7 @@ test_that("relational mutate(d = 0, e = 1 / d, f = 0 / d, g = -1 / d) order-pres
       {
         tmp_expr <- duckdb$expr_function(
           "___divide",
-          list(
-            duckdb$expr_function(
-              "-",
-              list(
-                if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                  duckdb$expr_constant(1, experimental = experimental)
-                } else {
-                  duckdb$expr_constant(1)
-                }
-              )
-            ),
-            duckdb$expr_reference("d")
-          )
+          list(duckdb$expr_function("-", list(duckdb$expr_constant(1))), duckdb$expr_reference("d"))
         )
         duckdb$expr_set_alias(tmp_expr, "g")
         tmp_expr
@@ -7904,7 +7170,6 @@ test_that("relational mutate(c = 0, d = -1, e = log(c), f = suppressWarnings(log
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -7915,7 +7180,7 @@ test_that("relational mutate(c = 0, d = -1, e = log(c), f = suppressWarnings(log
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -7936,11 +7201,7 @@ test_that("relational mutate(c = 0, d = -1, e = log(c), f = suppressWarnings(log
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(0, experimental = experimental)
-        } else {
-          duckdb$expr_constant(0)
-        }
+        tmp_expr <- duckdb$expr_constant(0)
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -7971,16 +7232,7 @@ test_that("relational mutate(c = 0, d = -1, e = log(c), f = suppressWarnings(log
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function(
-          "-",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(1, experimental = experimental)
-            } else {
-              duckdb$expr_constant(1)
-            }
-          )
-        )
+        tmp_expr <- duckdb$expr_function("-", list(duckdb$expr_constant(1)))
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
       }
@@ -8085,7 +7337,6 @@ test_that("relational mutate(c = 0, d = -1, e = log10(c), f = suppressWarnings(l
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -8096,7 +7347,7 @@ test_that("relational mutate(c = 0, d = -1, e = log10(c), f = suppressWarnings(l
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -8117,11 +7368,7 @@ test_that("relational mutate(c = 0, d = -1, e = log10(c), f = suppressWarnings(l
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(0, experimental = experimental)
-        } else {
-          duckdb$expr_constant(0)
-        }
+        tmp_expr <- duckdb$expr_constant(0)
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -8152,16 +7399,7 @@ test_that("relational mutate(c = 0, d = -1, e = log10(c), f = suppressWarnings(l
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function(
-          "-",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(1, experimental = experimental)
-            } else {
-              duckdb$expr_constant(1)
-            }
-          )
-        )
+        tmp_expr <- duckdb$expr_function("-", list(duckdb$expr_constant(1)))
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
       }
@@ -8266,7 +7504,6 @@ test_that("relational mutate(c = 10, d = log(c)) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -8276,7 +7513,7 @@ test_that("relational mutate(c = 10, d = log(c)) order-preserving", {
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -8297,11 +7534,7 @@ test_that("relational mutate(c = 10, d = log(c)) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(10, experimental = experimental)
-        } else {
-          duckdb$expr_constant(10)
-        }
+        tmp_expr <- duckdb$expr_constant(10)
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -8358,7 +7591,6 @@ test_that("relational mutate(c = 10, d = log10(c)) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -8368,7 +7600,7 @@ test_that("relational mutate(c = 10, d = log10(c)) order-preserving", {
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -8389,11 +7621,7 @@ test_that("relational mutate(c = 10, d = log10(c)) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(10, experimental = experimental)
-        } else {
-          duckdb$expr_constant(10)
-        }
+        tmp_expr <- duckdb$expr_constant(10)
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -8444,7 +7672,6 @@ test_that("relational mutate(c = NA_character_, d = grepl('.', c)) order-preserv
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -8454,7 +7681,7 @@ test_that("relational mutate(c = NA_character_, d = grepl('.', c)) order-preserv
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -8475,11 +7702,7 @@ test_that("relational mutate(c = NA_character_, d = grepl('.', c)) order-preserv
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_character_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_character_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_character_)
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -8510,17 +7733,7 @@ test_that("relational mutate(c = NA_character_, d = grepl('.', c)) order-preserv
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function(
-          "grepl",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(".", experimental = experimental)
-            } else {
-              duckdb$expr_constant(".")
-            },
-            duckdb$expr_reference("c")
-          )
-        )
+        tmp_expr <- duckdb$expr_function("grepl", list(duckdb$expr_constant("."), duckdb$expr_reference("c")))
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
       }
@@ -8546,7 +7759,6 @@ test_that("relational mutate(c = 'abbc', d = gsub('(b|c)', 'z' , c)) order-prese
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -8556,7 +7768,7 @@ test_that("relational mutate(c = 'abbc', d = gsub('(b|c)', 'z' , c)) order-prese
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -8577,11 +7789,7 @@ test_that("relational mutate(c = 'abbc', d = gsub('(b|c)', 'z' , c)) order-prese
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant("abbc", experimental = experimental)
-        } else {
-          duckdb$expr_constant("abbc")
-        }
+        tmp_expr <- duckdb$expr_constant("abbc")
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -8614,19 +7822,7 @@ test_that("relational mutate(c = 'abbc', d = gsub('(b|c)', 'z' , c)) order-prese
       {
         tmp_expr <- duckdb$expr_function(
           "gsub",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant("(b|c)", experimental = experimental)
-            } else {
-              duckdb$expr_constant("(b|c)")
-            },
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant("z", experimental = experimental)
-            } else {
-              duckdb$expr_constant("z")
-            },
-            duckdb$expr_reference("c")
-          )
+          list(duckdb$expr_constant("(b|c)"), duckdb$expr_constant("z"), duckdb$expr_reference("c"))
         )
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
@@ -8653,7 +7849,6 @@ test_that("relational mutate(c = 'abbc', d = sub('(b|c)', 'z' , c)) order-preser
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -8663,7 +7858,7 @@ test_that("relational mutate(c = 'abbc', d = sub('(b|c)', 'z' , c)) order-preser
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -8684,11 +7879,7 @@ test_that("relational mutate(c = 'abbc', d = sub('(b|c)', 'z' , c)) order-preser
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant("abbc", experimental = experimental)
-        } else {
-          duckdb$expr_constant("abbc")
-        }
+        tmp_expr <- duckdb$expr_constant("abbc")
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -8721,19 +7912,7 @@ test_that("relational mutate(c = 'abbc', d = sub('(b|c)', 'z' , c)) order-preser
       {
         tmp_expr <- duckdb$expr_function(
           "sub",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant("(b|c)", experimental = experimental)
-            } else {
-              duckdb$expr_constant("(b|c)")
-            },
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant("z", experimental = experimental)
-            } else {
-              duckdb$expr_constant("z")
-            },
-            duckdb$expr_reference("c")
-          )
+          list(duckdb$expr_constant("(b|c)"), duckdb$expr_constant("z"), duckdb$expr_reference("c"))
         )
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
@@ -8760,7 +7939,6 @@ test_that("relational mutate(c = NA_character_, d = gsub('.', '-' , c)) order-pr
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -8770,7 +7948,7 @@ test_that("relational mutate(c = NA_character_, d = gsub('.', '-' , c)) order-pr
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -8791,11 +7969,7 @@ test_that("relational mutate(c = NA_character_, d = gsub('.', '-' , c)) order-pr
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_character_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_character_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_character_)
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -8828,19 +8002,7 @@ test_that("relational mutate(c = NA_character_, d = gsub('.', '-' , c)) order-pr
       {
         tmp_expr <- duckdb$expr_function(
           "gsub",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(".", experimental = experimental)
-            } else {
-              duckdb$expr_constant(".")
-            },
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant("-", experimental = experimental)
-            } else {
-              duckdb$expr_constant("-")
-            },
-            duckdb$expr_reference("c")
-          )
+          list(duckdb$expr_constant("."), duckdb$expr_constant("-"), duckdb$expr_reference("c"))
         )
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
@@ -8867,7 +8029,6 @@ test_that("relational mutate(c = NA_character_, d = sub('.', '-' , c)) order-pre
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -8877,7 +8038,7 @@ test_that("relational mutate(c = NA_character_, d = sub('.', '-' , c)) order-pre
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -8898,11 +8059,7 @@ test_that("relational mutate(c = NA_character_, d = sub('.', '-' , c)) order-pre
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_character_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_character_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_character_)
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -8935,19 +8092,7 @@ test_that("relational mutate(c = NA_character_, d = sub('.', '-' , c)) order-pre
       {
         tmp_expr <- duckdb$expr_function(
           "sub",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(".", experimental = experimental)
-            } else {
-              duckdb$expr_constant(".")
-            },
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant("-", experimental = experimental)
-            } else {
-              duckdb$expr_constant("-")
-            },
-            duckdb$expr_reference("c")
-          )
+          list(duckdb$expr_constant("."), duckdb$expr_constant("-"), duckdb$expr_reference("c"))
         )
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
@@ -8974,12 +8119,11 @@ test_that("relational mutate(d = a %in% NA_real_) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(DBI::dbExecute(con, 'CREATE MACRO "is.na"(x) AS (x IS NULL)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -9020,11 +8164,10 @@ test_that("relational mutate(d = a %in% NULL) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -9045,11 +8188,7 @@ test_that("relational mutate(d = a %in% NULL) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(FALSE, experimental = experimental)
-        } else {
-          duckdb$expr_constant(FALSE)
-        }
+        tmp_expr <- duckdb$expr_constant(FALSE)
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
       }
@@ -9069,11 +8208,10 @@ test_that("relational mutate(d = a %in% integer()) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -9094,11 +8232,7 @@ test_that("relational mutate(d = a %in% integer()) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(FALSE, experimental = experimental)
-        } else {
-          duckdb$expr_constant(FALSE)
-        }
+        tmp_expr <- duckdb$expr_constant(FALSE)
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
       }
@@ -9118,12 +8252,11 @@ test_that("relational mutate(d = NA_real_, e = is.na(d)) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(DBI::dbExecute(con, 'CREATE MACRO "is.na"(x) AS (x IS NULL)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -9144,11 +8277,7 @@ test_that("relational mutate(d = NA_real_, e = is.na(d)) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_real_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_real_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_real_)
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
       }
@@ -9205,12 +8334,11 @@ test_that("relational mutate(d = row_number()) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -9256,12 +8384,11 @@ test_that("relational mutate(d = row_number(), .by = g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -9371,11 +8498,10 @@ test_that("relational mutate(c = .data$b) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -9416,12 +8542,11 @@ test_that("relational mutate(d = NA) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(DBI::dbExecute(con, 'CREATE MACRO "___null"() AS CAST(NULL AS BOOLEAN)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -9462,11 +8587,10 @@ test_that("relational mutate(d = NA_integer_) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -9487,11 +8611,7 @@ test_that("relational mutate(d = NA_integer_) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_integer_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_integer_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_integer_)
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
       }
@@ -9511,11 +8631,10 @@ test_that("relational mutate(d = NA_real_) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -9536,11 +8655,7 @@ test_that("relational mutate(d = NA_real_) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_real_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_real_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_real_)
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
       }
@@ -9560,11 +8675,10 @@ test_that("relational mutate(d = NA_character_) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -9585,11 +8699,7 @@ test_that("relational mutate(d = NA_character_) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_character_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_character_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_character_)
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
       }
@@ -9609,7 +8719,6 @@ test_that("relational mutate(d = if_else(a > 1, \"ok\", NA)) order-preserving", 
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -9619,7 +8728,7 @@ test_that("relational mutate(d = if_else(a > 1, \"ok\", NA)) order-preserving", 
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -9643,27 +8752,9 @@ test_that("relational mutate(d = if_else(a > 1, \"ok\", NA)) order-preserving", 
         tmp_expr <- duckdb$expr_function(
           "if_else",
           list(
-            duckdb$expr_comparison(
-              ">",
-              list(
-                duckdb$expr_reference("a"),
-                if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                  duckdb$expr_constant(1, experimental = experimental)
-                } else {
-                  duckdb$expr_constant(1)
-                }
-              )
-            ),
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant("ok", experimental = experimental)
-            } else {
-              duckdb$expr_constant("ok")
-            },
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(NA, experimental = experimental)
-            } else {
-              duckdb$expr_constant(NA)
-            }
+            duckdb$expr_comparison(">", list(duckdb$expr_reference("a"), duckdb$expr_constant(1))),
+            duckdb$expr_constant("ok"),
+            duckdb$expr_constant(NA)
           )
         )
         duckdb$expr_set_alias(tmp_expr, "d")
@@ -9692,11 +8783,10 @@ test_that("relational mutate() order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "arrange"
   rel2 <- duckdb$rel_order(
     rel1,
@@ -9716,11 +8806,10 @@ test_that("relational mutate(a + 1) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -9741,17 +8830,7 @@ test_that("relational mutate(a + 1) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function(
-          "+",
-          list(
-            duckdb$expr_reference("a"),
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(1, experimental = experimental)
-            } else {
-              duckdb$expr_constant(1)
-            }
-          )
-        )
+        tmp_expr <- duckdb$expr_function("+", list(duckdb$expr_reference("a"), duckdb$expr_constant(1)))
         duckdb$expr_set_alias(tmp_expr, "a + 1")
         tmp_expr
       }
@@ -9782,11 +8861,10 @@ test_that("relational mutate(a + 1, .by = g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -9807,17 +8885,7 @@ test_that("relational mutate(a + 1, .by = g) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function(
-          "+",
-          list(
-            duckdb$expr_reference("a"),
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(1, experimental = experimental)
-            } else {
-              duckdb$expr_constant(1)
-            }
-          )
-        )
+        tmp_expr <- duckdb$expr_function("+", list(duckdb$expr_reference("a"), duckdb$expr_constant(1)))
         duckdb$expr_set_alias(tmp_expr, "a + 1")
         tmp_expr
       }
@@ -9848,11 +8916,10 @@ test_that("relational mutate(c = a + 1) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -9873,17 +8940,7 @@ test_that("relational mutate(c = a + 1) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function(
-          "+",
-          list(
-            duckdb$expr_reference("a"),
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(1, experimental = experimental)
-            } else {
-              duckdb$expr_constant(1)
-            }
-          )
-        )
+        tmp_expr <- duckdb$expr_function("+", list(duckdb$expr_reference("a"), duckdb$expr_constant(1)))
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -9913,11 +8970,10 @@ test_that("relational mutate(`if` = a + 1) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -9938,17 +8994,7 @@ test_that("relational mutate(`if` = a + 1) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function(
-          "+",
-          list(
-            duckdb$expr_reference("a"),
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(1, experimental = experimental)
-            } else {
-              duckdb$expr_constant(1)
-            }
-          )
-        )
+        tmp_expr <- duckdb$expr_function("+", list(duckdb$expr_reference("a"), duckdb$expr_constant(1)))
         duckdb$expr_set_alias(tmp_expr, "if")
         tmp_expr
       }
@@ -9979,11 +9025,10 @@ test_that("relational mutate(sum(a, na.rm = TRUE)) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -10035,11 +9080,10 @@ test_that("relational mutate(sum(a, na.rm = TRUE), .by = g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -10091,11 +9135,10 @@ test_that("relational mutate(mean(a, na.rm = TRUE)) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -10147,11 +9190,10 @@ test_that("relational mutate(mean(a, na.rm = TRUE), .by = g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -10203,11 +9245,10 @@ test_that("relational mutate(sd(a, na.rm = TRUE)) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -10259,11 +9300,10 @@ test_that("relational mutate(sd(a, na.rm = TRUE), .by = g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -10315,11 +9355,10 @@ test_that("relational mutate(lag(a)) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -10340,17 +9379,7 @@ test_that("relational mutate(lag(a)) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))),
-          list(),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          },
-          default_expr = NULL
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))), list(), list(), offset_expr = duckdb$expr_constant(1L), default_expr = NULL)
         duckdb$expr_set_alias(tmp_expr, "lag(a)")
         tmp_expr
       }
@@ -10381,11 +9410,10 @@ test_that("relational mutate(lag(a), .by = g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -10406,17 +9434,7 @@ test_that("relational mutate(lag(a), .by = g) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))),
-          list(duckdb$expr_reference("g")),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          },
-          default_expr = NULL
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))), list(duckdb$expr_reference("g")), list(), offset_expr = duckdb$expr_constant(1L), default_expr = NULL)
         duckdb$expr_set_alias(tmp_expr, "lag(a)")
         tmp_expr
       }
@@ -10447,11 +9465,10 @@ test_that("relational mutate(lead(a)) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -10472,17 +9489,7 @@ test_that("relational mutate(lead(a)) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))),
-          list(),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          },
-          default_expr = NULL
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))), list(), list(), offset_expr = duckdb$expr_constant(1L), default_expr = NULL)
         duckdb$expr_set_alias(tmp_expr, "lead(a)")
         tmp_expr
       }
@@ -10513,11 +9520,10 @@ test_that("relational mutate(lead(a), .by = g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -10538,17 +9544,7 @@ test_that("relational mutate(lead(a), .by = g) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))),
-          list(duckdb$expr_reference("g")),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          },
-          default_expr = NULL
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))), list(duckdb$expr_reference("g")), list(), offset_expr = duckdb$expr_constant(1L), default_expr = NULL)
         duckdb$expr_set_alias(tmp_expr, "lead(a)")
         tmp_expr
       }
@@ -10579,11 +9575,10 @@ test_that("relational mutate(lag(a, 2)) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -10604,17 +9599,7 @@ test_that("relational mutate(lag(a, 2)) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))),
-          list(),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(2, experimental = experimental)
-          } else {
-            duckdb$expr_constant(2)
-          },
-          default_expr = NULL
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))), list(), list(), offset_expr = duckdb$expr_constant(2), default_expr = NULL)
         duckdb$expr_set_alias(tmp_expr, "lag(a, 2)")
         tmp_expr
       }
@@ -10645,11 +9630,10 @@ test_that("relational mutate(lag(a, 2), .by = g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -10670,17 +9654,7 @@ test_that("relational mutate(lag(a, 2), .by = g) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))),
-          list(duckdb$expr_reference("g")),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(2, experimental = experimental)
-          } else {
-            duckdb$expr_constant(2)
-          },
-          default_expr = NULL
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))), list(duckdb$expr_reference("g")), list(), offset_expr = duckdb$expr_constant(2), default_expr = NULL)
         duckdb$expr_set_alias(tmp_expr, "lag(a, 2)")
         tmp_expr
       }
@@ -10711,11 +9685,10 @@ test_that("relational mutate(lead(a, 2)) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -10736,17 +9709,7 @@ test_that("relational mutate(lead(a, 2)) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))),
-          list(),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(2, experimental = experimental)
-          } else {
-            duckdb$expr_constant(2)
-          },
-          default_expr = NULL
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))), list(), list(), offset_expr = duckdb$expr_constant(2), default_expr = NULL)
         duckdb$expr_set_alias(tmp_expr, "lead(a, 2)")
         tmp_expr
       }
@@ -10777,11 +9740,10 @@ test_that("relational mutate(lead(a, 2), .by = g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -10802,17 +9764,7 @@ test_that("relational mutate(lead(a, 2), .by = g) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))),
-          list(duckdb$expr_reference("g")),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(2, experimental = experimental)
-          } else {
-            duckdb$expr_constant(2)
-          },
-          default_expr = NULL
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))), list(duckdb$expr_reference("g")), list(), offset_expr = duckdb$expr_constant(2), default_expr = NULL)
         duckdb$expr_set_alias(tmp_expr, "lead(a, 2)")
         tmp_expr
       }
@@ -10843,11 +9795,10 @@ test_that("relational mutate(lag(a, 4)) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -10868,17 +9819,7 @@ test_that("relational mutate(lag(a, 4)) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))),
-          list(),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(4, experimental = experimental)
-          } else {
-            duckdb$expr_constant(4)
-          },
-          default_expr = NULL
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))), list(), list(), offset_expr = duckdb$expr_constant(4), default_expr = NULL)
         duckdb$expr_set_alias(tmp_expr, "lag(a, 4)")
         tmp_expr
       }
@@ -10909,11 +9850,10 @@ test_that("relational mutate(lag(a, 4), .by = g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -10934,17 +9874,7 @@ test_that("relational mutate(lag(a, 4), .by = g) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))),
-          list(duckdb$expr_reference("g")),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(4, experimental = experimental)
-          } else {
-            duckdb$expr_constant(4)
-          },
-          default_expr = NULL
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))), list(duckdb$expr_reference("g")), list(), offset_expr = duckdb$expr_constant(4), default_expr = NULL)
         duckdb$expr_set_alias(tmp_expr, "lag(a, 4)")
         tmp_expr
       }
@@ -10975,11 +9905,10 @@ test_that("relational mutate(lead(a, 4)) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -11000,17 +9929,7 @@ test_that("relational mutate(lead(a, 4)) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))),
-          list(),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(4, experimental = experimental)
-          } else {
-            duckdb$expr_constant(4)
-          },
-          default_expr = NULL
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))), list(), list(), offset_expr = duckdb$expr_constant(4), default_expr = NULL)
         duckdb$expr_set_alias(tmp_expr, "lead(a, 4)")
         tmp_expr
       }
@@ -11041,11 +9960,10 @@ test_that("relational mutate(lead(a, 4), .by = g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -11066,17 +9984,7 @@ test_that("relational mutate(lead(a, 4), .by = g) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))),
-          list(duckdb$expr_reference("g")),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(4, experimental = experimental)
-          } else {
-            duckdb$expr_constant(4)
-          },
-          default_expr = NULL
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))), list(duckdb$expr_reference("g")), list(), offset_expr = duckdb$expr_constant(4), default_expr = NULL)
         duckdb$expr_set_alias(tmp_expr, "lead(a, 4)")
         tmp_expr
       }
@@ -11107,11 +10015,10 @@ test_that("relational mutate(lag(a, default = 0)) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -11132,21 +10039,7 @@ test_that("relational mutate(lag(a, default = 0)) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))),
-          list(),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          },
-          default_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(0, experimental = experimental)
-          } else {
-            duckdb$expr_constant(0)
-          }
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))), list(), list(), offset_expr = duckdb$expr_constant(1L), default_expr = duckdb$expr_constant(0))
         duckdb$expr_set_alias(tmp_expr, "lag(a, default = 0)")
         tmp_expr
       }
@@ -11177,11 +10070,10 @@ test_that("relational mutate(lag(a, default = 0), .by = g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -11202,21 +10094,7 @@ test_that("relational mutate(lag(a, default = 0), .by = g) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))),
-          list(duckdb$expr_reference("g")),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          },
-          default_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(0, experimental = experimental)
-          } else {
-            duckdb$expr_constant(0)
-          }
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lag", list(x = duckdb$expr_reference("a"))), list(duckdb$expr_reference("g")), list(), offset_expr = duckdb$expr_constant(1L), default_expr = duckdb$expr_constant(0))
         duckdb$expr_set_alias(tmp_expr, "lag(a, default = 0)")
         tmp_expr
       }
@@ -11247,11 +10125,10 @@ test_that("relational mutate(lead(a, default = 1000)) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -11272,21 +10149,7 @@ test_that("relational mutate(lead(a, default = 1000)) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))),
-          list(),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          },
-          default_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1000, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1000)
-          }
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))), list(), list(), offset_expr = duckdb$expr_constant(1L), default_expr = duckdb$expr_constant(1000))
         duckdb$expr_set_alias(tmp_expr, "lead(a, default = 1000)")
         tmp_expr
       }
@@ -11317,11 +10180,10 @@ test_that("relational mutate(lead(a, default = 1000), .by = g) order-enforcing",
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -11342,21 +10204,7 @@ test_that("relational mutate(lead(a, default = 1000), .by = g) order-enforcing",
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(
-          duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))),
-          list(duckdb$expr_reference("g")),
-          list(),
-          offset_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          },
-          default_expr = if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1000, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1000)
-          }
-        )
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("lead", list(x = duckdb$expr_reference("a"))), list(duckdb$expr_reference("g")), list(), offset_expr = duckdb$expr_constant(1L), default_expr = duckdb$expr_constant(1000))
         duckdb$expr_set_alias(tmp_expr, "lead(a, default = 1000)")
         tmp_expr
       }
@@ -11387,11 +10235,10 @@ test_that("relational mutate(min(a, na.rm = TRUE)) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -11443,11 +10290,10 @@ test_that("relational mutate(min(a, na.rm = TRUE), .by = g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -11499,11 +10345,10 @@ test_that("relational mutate(max(a, na.rm = TRUE)) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -11555,11 +10400,10 @@ test_that("relational mutate(max(a, na.rm = TRUE), .by = g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -11611,7 +10455,6 @@ test_that("relational mutate(a / b) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -11621,7 +10464,7 @@ test_that("relational mutate(a / b) order-enforcing", {
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -11673,7 +10516,6 @@ test_that("relational mutate(d = 0, e = 1 / d, f = 0 / d, g = -1 / d) order-enfo
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -11683,7 +10525,7 @@ test_that("relational mutate(d = 0, e = 1 / d, f = 0 / d, g = -1 / d) order-enfo
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -11704,11 +10546,7 @@ test_that("relational mutate(d = 0, e = 1 / d, f = 0 / d, g = -1 / d) order-enfo
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(0, experimental = experimental)
-        } else {
-          duckdb$expr_constant(0)
-        }
+        tmp_expr <- duckdb$expr_constant(0)
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
       }
@@ -11739,17 +10577,7 @@ test_that("relational mutate(d = 0, e = 1 / d, f = 0 / d, g = -1 / d) order-enfo
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function(
-          "___divide",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(1, experimental = experimental)
-            } else {
-              duckdb$expr_constant(1)
-            },
-            duckdb$expr_reference("d")
-          )
-        )
+        tmp_expr <- duckdb$expr_function("___divide", list(duckdb$expr_constant(1), duckdb$expr_reference("d")))
         duckdb$expr_set_alias(tmp_expr, "e")
         tmp_expr
       }
@@ -11785,17 +10613,7 @@ test_that("relational mutate(d = 0, e = 1 / d, f = 0 / d, g = -1 / d) order-enfo
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function(
-          "___divide",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(0, experimental = experimental)
-            } else {
-              duckdb$expr_constant(0)
-            },
-            duckdb$expr_reference("d")
-          )
-        )
+        tmp_expr <- duckdb$expr_function("___divide", list(duckdb$expr_constant(0), duckdb$expr_reference("d")))
         duckdb$expr_set_alias(tmp_expr, "f")
         tmp_expr
       }
@@ -11818,19 +10636,7 @@ test_that("relational mutate(d = 0, e = 1 / d, f = 0 / d, g = -1 / d) order-enfo
       {
         tmp_expr <- duckdb$expr_function(
           "___divide",
-          list(
-            duckdb$expr_function(
-              "-",
-              list(
-                if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                  duckdb$expr_constant(1, experimental = experimental)
-                } else {
-                  duckdb$expr_constant(1)
-                }
-              )
-            ),
-            duckdb$expr_reference("d")
-          )
+          list(duckdb$expr_function("-", list(duckdb$expr_constant(1))), duckdb$expr_reference("d"))
         )
         duckdb$expr_set_alias(tmp_expr, "g")
         tmp_expr
@@ -11871,7 +10677,6 @@ test_that("relational mutate(c = 0, d = -1, e = log(c), f = suppressWarnings(log
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -11882,7 +10687,7 @@ test_that("relational mutate(c = 0, d = -1, e = log(c), f = suppressWarnings(log
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -11903,11 +10708,7 @@ test_that("relational mutate(c = 0, d = -1, e = log(c), f = suppressWarnings(log
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(0, experimental = experimental)
-        } else {
-          duckdb$expr_constant(0)
-        }
+        tmp_expr <- duckdb$expr_constant(0)
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -11938,16 +10739,7 @@ test_that("relational mutate(c = 0, d = -1, e = log(c), f = suppressWarnings(log
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function(
-          "-",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(1, experimental = experimental)
-            } else {
-              duckdb$expr_constant(1)
-            }
-          )
-        )
+        tmp_expr <- duckdb$expr_function("-", list(duckdb$expr_constant(1)))
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
       }
@@ -12057,7 +10849,6 @@ test_that("relational mutate(c = 0, d = -1, e = log10(c), f = suppressWarnings(l
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -12068,7 +10859,7 @@ test_that("relational mutate(c = 0, d = -1, e = log10(c), f = suppressWarnings(l
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -12089,11 +10880,7 @@ test_that("relational mutate(c = 0, d = -1, e = log10(c), f = suppressWarnings(l
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(0, experimental = experimental)
-        } else {
-          duckdb$expr_constant(0)
-        }
+        tmp_expr <- duckdb$expr_constant(0)
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -12124,16 +10911,7 @@ test_that("relational mutate(c = 0, d = -1, e = log10(c), f = suppressWarnings(l
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function(
-          "-",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(1, experimental = experimental)
-            } else {
-              duckdb$expr_constant(1)
-            }
-          )
-        )
+        tmp_expr <- duckdb$expr_function("-", list(duckdb$expr_constant(1)))
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
       }
@@ -12243,7 +11021,6 @@ test_that("relational mutate(c = 10, d = log(c)) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -12253,7 +11030,7 @@ test_that("relational mutate(c = 10, d = log(c)) order-enforcing", {
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -12274,11 +11051,7 @@ test_that("relational mutate(c = 10, d = log(c)) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(10, experimental = experimental)
-        } else {
-          duckdb$expr_constant(10)
-        }
+        tmp_expr <- duckdb$expr_constant(10)
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -12340,7 +11113,6 @@ test_that("relational mutate(c = 10, d = log10(c)) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -12350,7 +11122,7 @@ test_that("relational mutate(c = 10, d = log10(c)) order-enforcing", {
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -12371,11 +11143,7 @@ test_that("relational mutate(c = 10, d = log10(c)) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(10, experimental = experimental)
-        } else {
-          duckdb$expr_constant(10)
-        }
+        tmp_expr <- duckdb$expr_constant(10)
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -12431,7 +11199,6 @@ test_that("relational mutate(c = NA_character_, d = grepl('.', c)) order-enforci
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -12441,7 +11208,7 @@ test_that("relational mutate(c = NA_character_, d = grepl('.', c)) order-enforci
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -12462,11 +11229,7 @@ test_that("relational mutate(c = NA_character_, d = grepl('.', c)) order-enforci
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_character_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_character_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_character_)
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -12497,17 +11260,7 @@ test_that("relational mutate(c = NA_character_, d = grepl('.', c)) order-enforci
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function(
-          "grepl",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(".", experimental = experimental)
-            } else {
-              duckdb$expr_constant(".")
-            },
-            duckdb$expr_reference("c")
-          )
-        )
+        tmp_expr <- duckdb$expr_function("grepl", list(duckdb$expr_constant("."), duckdb$expr_reference("c")))
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
       }
@@ -12538,7 +11291,6 @@ test_that("relational mutate(c = 'abbc', d = gsub('(b|c)', 'z' , c)) order-enfor
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -12548,7 +11300,7 @@ test_that("relational mutate(c = 'abbc', d = gsub('(b|c)', 'z' , c)) order-enfor
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -12569,11 +11321,7 @@ test_that("relational mutate(c = 'abbc', d = gsub('(b|c)', 'z' , c)) order-enfor
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant("abbc", experimental = experimental)
-        } else {
-          duckdb$expr_constant("abbc")
-        }
+        tmp_expr <- duckdb$expr_constant("abbc")
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -12606,19 +11354,7 @@ test_that("relational mutate(c = 'abbc', d = gsub('(b|c)', 'z' , c)) order-enfor
       {
         tmp_expr <- duckdb$expr_function(
           "gsub",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant("(b|c)", experimental = experimental)
-            } else {
-              duckdb$expr_constant("(b|c)")
-            },
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant("z", experimental = experimental)
-            } else {
-              duckdb$expr_constant("z")
-            },
-            duckdb$expr_reference("c")
-          )
+          list(duckdb$expr_constant("(b|c)"), duckdb$expr_constant("z"), duckdb$expr_reference("c"))
         )
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
@@ -12650,7 +11386,6 @@ test_that("relational mutate(c = 'abbc', d = sub('(b|c)', 'z' , c)) order-enforc
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -12660,7 +11395,7 @@ test_that("relational mutate(c = 'abbc', d = sub('(b|c)', 'z' , c)) order-enforc
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -12681,11 +11416,7 @@ test_that("relational mutate(c = 'abbc', d = sub('(b|c)', 'z' , c)) order-enforc
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant("abbc", experimental = experimental)
-        } else {
-          duckdb$expr_constant("abbc")
-        }
+        tmp_expr <- duckdb$expr_constant("abbc")
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -12718,19 +11449,7 @@ test_that("relational mutate(c = 'abbc', d = sub('(b|c)', 'z' , c)) order-enforc
       {
         tmp_expr <- duckdb$expr_function(
           "sub",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant("(b|c)", experimental = experimental)
-            } else {
-              duckdb$expr_constant("(b|c)")
-            },
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant("z", experimental = experimental)
-            } else {
-              duckdb$expr_constant("z")
-            },
-            duckdb$expr_reference("c")
-          )
+          list(duckdb$expr_constant("(b|c)"), duckdb$expr_constant("z"), duckdb$expr_reference("c"))
         )
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
@@ -12762,7 +11481,6 @@ test_that("relational mutate(c = NA_character_, d = gsub('.', '-' , c)) order-en
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -12772,7 +11490,7 @@ test_that("relational mutate(c = NA_character_, d = gsub('.', '-' , c)) order-en
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -12793,11 +11511,7 @@ test_that("relational mutate(c = NA_character_, d = gsub('.', '-' , c)) order-en
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_character_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_character_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_character_)
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -12830,19 +11544,7 @@ test_that("relational mutate(c = NA_character_, d = gsub('.', '-' , c)) order-en
       {
         tmp_expr <- duckdb$expr_function(
           "gsub",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(".", experimental = experimental)
-            } else {
-              duckdb$expr_constant(".")
-            },
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant("-", experimental = experimental)
-            } else {
-              duckdb$expr_constant("-")
-            },
-            duckdb$expr_reference("c")
-          )
+          list(duckdb$expr_constant("."), duckdb$expr_constant("-"), duckdb$expr_reference("c"))
         )
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
@@ -12874,7 +11576,6 @@ test_that("relational mutate(c = NA_character_, d = sub('.', '-' , c)) order-enf
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -12884,7 +11585,7 @@ test_that("relational mutate(c = NA_character_, d = sub('.', '-' , c)) order-enf
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -12905,11 +11606,7 @@ test_that("relational mutate(c = NA_character_, d = sub('.', '-' , c)) order-enf
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_character_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_character_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_character_)
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -12942,19 +11639,7 @@ test_that("relational mutate(c = NA_character_, d = sub('.', '-' , c)) order-enf
       {
         tmp_expr <- duckdb$expr_function(
           "sub",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(".", experimental = experimental)
-            } else {
-              duckdb$expr_constant(".")
-            },
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant("-", experimental = experimental)
-            } else {
-              duckdb$expr_constant("-")
-            },
-            duckdb$expr_reference("c")
-          )
+          list(duckdb$expr_constant("."), duckdb$expr_constant("-"), duckdb$expr_reference("c"))
         )
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
@@ -12986,12 +11671,11 @@ test_that("relational mutate(d = a %in% NA_real_) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(DBI::dbExecute(con, 'CREATE MACRO "is.na"(x) AS (x IS NULL)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -13037,11 +11721,10 @@ test_that("relational mutate(d = a %in% NULL) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -13062,11 +11745,7 @@ test_that("relational mutate(d = a %in% NULL) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(FALSE, experimental = experimental)
-        } else {
-          duckdb$expr_constant(FALSE)
-        }
+        tmp_expr <- duckdb$expr_constant(FALSE)
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
       }
@@ -13091,11 +11770,10 @@ test_that("relational mutate(d = a %in% integer()) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -13116,11 +11794,7 @@ test_that("relational mutate(d = a %in% integer()) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(FALSE, experimental = experimental)
-        } else {
-          duckdb$expr_constant(FALSE)
-        }
+        tmp_expr <- duckdb$expr_constant(FALSE)
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
       }
@@ -13145,12 +11819,11 @@ test_that("relational mutate(d = NA_real_, e = is.na(d)) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(DBI::dbExecute(con, 'CREATE MACRO "is.na"(x) AS (x IS NULL)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -13171,11 +11844,7 @@ test_that("relational mutate(d = NA_real_, e = is.na(d)) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_real_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_real_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_real_)
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
       }
@@ -13237,12 +11906,11 @@ test_that("relational mutate(d = row_number()) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -13293,12 +11961,11 @@ test_that("relational mutate(d = row_number(), .by = g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(duckdb$rapi_load_rfuns(drv@database_ref))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -13354,11 +12021,10 @@ test_that("relational mutate(c = .data$b) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -13404,12 +12070,11 @@ test_that("relational mutate(d = NA) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(DBI::dbExecute(con, 'CREATE MACRO "___null"() AS CAST(NULL AS BOOLEAN)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -13455,11 +12120,10 @@ test_that("relational mutate(d = NA_integer_) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -13480,11 +12144,7 @@ test_that("relational mutate(d = NA_integer_) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_integer_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_integer_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_integer_)
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
       }
@@ -13509,11 +12169,10 @@ test_that("relational mutate(d = NA_real_) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -13534,11 +12193,7 @@ test_that("relational mutate(d = NA_real_) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_real_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_real_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_real_)
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
       }
@@ -13563,11 +12218,10 @@ test_that("relational mutate(d = NA_character_) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -13588,11 +12242,7 @@ test_that("relational mutate(d = NA_character_) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_character_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_character_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_character_)
         duckdb$expr_set_alias(tmp_expr, "d")
         tmp_expr
       }
@@ -13617,7 +12267,6 @@ test_that("relational mutate(d = if_else(a > 1, \"ok\", NA)) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -13627,7 +12276,7 @@ test_that("relational mutate(d = if_else(a > 1, \"ok\", NA)) order-enforcing", {
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "mutate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "mutate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -13651,27 +12300,9 @@ test_that("relational mutate(d = if_else(a > 1, \"ok\", NA)) order-enforcing", {
         tmp_expr <- duckdb$expr_function(
           "if_else",
           list(
-            duckdb$expr_comparison(
-              ">",
-              list(
-                duckdb$expr_reference("a"),
-                if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                  duckdb$expr_constant(1, experimental = experimental)
-                } else {
-                  duckdb$expr_constant(1)
-                }
-              )
-            ),
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant("ok", experimental = experimental)
-            } else {
-              duckdb$expr_constant("ok")
-            },
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(NA, experimental = experimental)
-            } else {
-              duckdb$expr_constant(NA)
-            }
+            duckdb$expr_comparison(">", list(duckdb$expr_reference("a"), duckdb$expr_constant(1))),
+            duckdb$expr_constant("ok"),
+            duckdb$expr_constant(NA)
           )
         )
         duckdb$expr_set_alias(tmp_expr, "d")
@@ -13705,11 +12336,10 @@ test_that("relational relocate(g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "relocate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "relocate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -13745,11 +12375,10 @@ test_that("relational relocate(a) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "relocate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "relocate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -13785,11 +12414,10 @@ test_that("relational relocate(g, .before = b) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "relocate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "relocate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -13825,11 +12453,10 @@ test_that("relational relocate(a:b, .after = g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "relocate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "relocate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -13867,11 +12494,10 @@ test_that("relational relocate(g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "relocate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "relocate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -13912,11 +12538,10 @@ test_that("relational relocate(a) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "relocate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "relocate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -13957,11 +12582,10 @@ test_that("relational relocate(g, .before = b) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "relocate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "relocate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -14002,11 +12626,10 @@ test_that("relational relocate(a:b, .after = g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "relocate"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "relocate"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -14049,11 +12672,10 @@ test_that("relational rename() order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "rename"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "rename"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -14089,11 +12711,10 @@ test_that("relational rename(c = a) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "rename"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "rename"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -14131,11 +12752,10 @@ test_that("relational rename() order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "rename"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "rename"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -14176,11 +12796,10 @@ test_that("relational rename(c = a) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "rename"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "rename"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -14223,20 +12842,19 @@ test_that("relational right_join(join_by(a)) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
   df1 <- data.frame(a = 1:4, b = 2)
 
   "right_join"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "right_join"
   rel2 <- duckdb$rel_set_alias(rel1, "lhs")
   df2 <- data.frame(a = 2:5, b = 2)
 
   "right_join"
-  rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel3 <- duckdb$rel_from_df(con, df2)
   "right_join"
   rel4 <- duckdb$rel_set_alias(rel3, "rhs")
   "right_join"
@@ -14364,20 +12982,19 @@ test_that("relational right_join(join_by(a)) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
   df1 <- data.frame(a = 1:4, b = 2)
 
   "right_join"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "right_join"
   rel2 <- duckdb$rel_set_alias(rel1, "lhs")
   df2 <- data.frame(a = 2:5, b = 2)
 
   "right_join"
-  rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel3 <- duckdb$rel_from_df(con, df2)
   "right_join"
   rel4 <- duckdb$rel_set_alias(rel3, "rhs")
   "right_join"
@@ -14463,11 +13080,10 @@ test_that("relational select(a) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "select"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "select"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -14493,11 +13109,10 @@ test_that("relational select(-g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "select"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "select"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -14528,11 +13143,10 @@ test_that("relational select(everything()) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "select"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "select"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -14570,11 +13184,10 @@ test_that("relational select(a) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "select"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "select"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -14602,11 +13215,10 @@ test_that("relational select(-g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "select"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "select"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -14639,11 +13251,10 @@ test_that("relational select(everything()) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "select"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "select"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -14686,20 +13297,19 @@ test_that("relational semi_join(join_by(a)) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
   df1 <- data.frame(a = 1:4, b = 2)
 
   "semi_join"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "semi_join"
   rel2 <- duckdb$rel_set_alias(rel1, "lhs")
   df2 <- data.frame(a = 2:5, b = 2)
 
   "semi_join"
-  rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel3 <- duckdb$rel_from_df(con, df2)
   "semi_join"
   rel4 <- duckdb$rel_set_alias(rel3, "rhs")
   "semi_join"
@@ -14766,20 +13376,19 @@ test_that("relational semi_join(join_by(a)) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
   df1 <- data.frame(a = 1:4, b = 2)
 
   "semi_join"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "semi_join"
   rel2 <- duckdb$rel_set_alias(rel1, "lhs")
   df2 <- data.frame(a = 2:5, b = 2)
 
   "semi_join"
-  rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel3 <- duckdb$rel_from_df(con, df2)
   "semi_join"
   rel4 <- duckdb$rel_set_alias(rel3, "rhs")
   "semi_join"
@@ -14809,20 +13418,19 @@ test_that("relational setdiff() order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
   df1 <- data.frame(a = 1:4, b = 2)
 
   "anti_join"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "anti_join"
   rel2 <- duckdb$rel_set_alias(rel1, "lhs")
   df2 <- data.frame(a = 2:5, b = 2)
 
   "anti_join"
-  rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel3 <- duckdb$rel_from_df(con, df2)
   "anti_join"
   rel4 <- duckdb$rel_set_alias(rel3, "rhs")
   "anti_join"
@@ -14938,17 +13546,7 @@ test_that("relational setdiff() order-preserving", {
   rel11 <- duckdb$rel_filter(
     rel10,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("___row_number_by"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("___row_number_by"), duckdb$expr_constant(1L)))
     )
   )
   "distinct"
@@ -14985,15 +13583,14 @@ test_that("relational setdiff() order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = 1:4, b = 2)
 
   "setdiff"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   df2 <- data.frame(a = 2:5, b = 2)
 
   "setdiff"
-  rel2 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel2 <- duckdb$rel_from_df(con, df2)
   "setdiff"
   rel3 <- duckdb$rel_set_diff(rel1, rel2)
   "arrange"
@@ -15014,11 +13611,10 @@ test_that("relational slice_head(n = 2) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "slice_head"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "slice_head"
   rel2 <- duckdb$rel_limit(rel1, 2)
   rel2
@@ -15037,11 +13633,10 @@ test_that("relational slice_head(n = 2) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "slice_head"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "slice_head"
   rel2 <- duckdb$rel_limit(rel1, 2)
   "arrange"
@@ -15065,7 +13660,6 @@ test_that("relational summarise(c = mean(a)) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -15075,7 +13669,7 @@ test_that("relational summarise(c = mean(a)) order-preserving", {
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "summarise"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "summarise"
   rel2 <- duckdb$rel_aggregate(
     rel1,
@@ -15104,7 +13698,6 @@ test_that("relational summarise(c = mean(a), .by = b) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -15120,7 +13713,7 @@ test_that("relational summarise(c = mean(a), .by = b) order-preserving", {
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "summarise"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "summarise"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -15196,7 +13789,6 @@ test_that("relational summarise(c = mean(a), .by = g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -15212,7 +13804,7 @@ test_that("relational summarise(c = mean(a), .by = g) order-preserving", {
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "summarise"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "summarise"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -15288,22 +13880,17 @@ test_that("relational summarise(c = 1) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "summarise"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "summarise"
   rel2 <- duckdb$rel_aggregate(
     rel1,
     groups = list(),
     aggregates = list(
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(1, experimental = experimental)
-        } else {
-          duckdb$expr_constant(1)
-        }
+        tmp_expr <- duckdb$expr_constant(1)
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -15325,7 +13912,6 @@ test_that("relational summarise(c = 1, .by = g) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -15335,7 +13921,7 @@ test_that("relational summarise(c = 1, .by = g) order-preserving", {
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "summarise"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "summarise"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -15373,11 +13959,7 @@ test_that("relational summarise(c = 1, .by = g) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(1, experimental = experimental)
-        } else {
-          duckdb$expr_constant(1)
-        }
+        tmp_expr <- duckdb$expr_constant(1)
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -15415,7 +13997,6 @@ test_that("relational summarise(n = n(), n = n() + 1L, .by = g) order-preserving
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -15426,7 +14007,7 @@ test_that("relational summarise(n = n(), n = n() + 1L, .by = g) order-preserving
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "summarise"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "summarise"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -15464,17 +14045,7 @@ test_that("relational summarise(n = n(), n = n() + 1L, .by = g) order-preserving
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function(
-          "+",
-          list(
-            duckdb$expr_function("n", list()),
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(1L, experimental = experimental)
-            } else {
-              duckdb$expr_constant(1L)
-            }
-          )
-        )
+        tmp_expr <- duckdb$expr_function("+", list(duckdb$expr_function("n", list()), duckdb$expr_constant(1L)))
         duckdb$expr_set_alias(tmp_expr, "n")
         tmp_expr
       }
@@ -15512,29 +14083,18 @@ test_that("relational summarise(n = n(), n = n() + 1L) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "summarise"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "summarise"
   rel2 <- duckdb$rel_aggregate(
     rel1,
     groups = list(),
     aggregates = list(
       {
-        tmp_expr <- duckdb$expr_function(
-          "+",
-          list(
-            duckdb$expr_function("n", list()),
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(1L, experimental = experimental)
-            } else {
-              duckdb$expr_constant(1L)
-            }
-          )
-        )
+        tmp_expr <- duckdb$expr_function("+", list(duckdb$expr_function("n", list()), duckdb$expr_constant(1L)))
         duckdb$expr_set_alias(tmp_expr, "n")
         tmp_expr
       }
@@ -15558,7 +14118,6 @@ test_that("relational summarise(c = mean(a)) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -15568,7 +14127,7 @@ test_that("relational summarise(c = mean(a)) order-enforcing", {
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "summarise"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "summarise"
   rel2 <- duckdb$rel_aggregate(
     rel1,
@@ -15599,7 +14158,6 @@ test_that("relational summarise(c = mean(a), .by = b) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -15609,7 +14167,7 @@ test_that("relational summarise(c = mean(a), .by = b) order-enforcing", {
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "summarise"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "summarise"
   rel2 <- duckdb$rel_aggregate(
     rel1,
@@ -15638,7 +14196,6 @@ test_that("relational summarise(c = mean(a), .by = g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(
       con,
@@ -15648,7 +14205,7 @@ test_that("relational summarise(c = mean(a), .by = g) order-enforcing", {
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "summarise"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "summarise"
   rel2 <- duckdb$rel_aggregate(
     rel1,
@@ -15677,22 +14234,17 @@ test_that("relational summarise(c = 1) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "summarise"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "summarise"
   rel2 <- duckdb$rel_aggregate(
     rel1,
     groups = list(),
     aggregates = list(
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(1, experimental = experimental)
-        } else {
-          duckdb$expr_constant(1)
-        }
+        tmp_expr <- duckdb$expr_constant(1)
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -15716,22 +14268,17 @@ test_that("relational summarise(c = 1, .by = g) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "summarise"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "summarise"
   rel2 <- duckdb$rel_aggregate(
     rel1,
     groups = list(duckdb$expr_reference("g")),
     aggregates = list(
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(1, experimental = experimental)
-        } else {
-          duckdb$expr_constant(1)
-        }
+        tmp_expr <- duckdb$expr_constant(1)
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -15753,29 +14300,18 @@ test_that("relational summarise(n = n(), n = n() + 1L, .by = g) order-enforcing"
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "summarise"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "summarise"
   rel2 <- duckdb$rel_aggregate(
     rel1,
     groups = list(duckdb$expr_reference("g")),
     aggregates = list(
       {
-        tmp_expr <- duckdb$expr_function(
-          "+",
-          list(
-            duckdb$expr_function("n", list()),
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(1L, experimental = experimental)
-            } else {
-              duckdb$expr_constant(1L)
-            }
-          )
-        )
+        tmp_expr <- duckdb$expr_function("+", list(duckdb$expr_function("n", list()), duckdb$expr_constant(1L)))
         duckdb$expr_set_alias(tmp_expr, "n")
         tmp_expr
       }
@@ -15797,29 +14333,18 @@ test_that("relational summarise(n = n(), n = n() + 1L) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "summarise"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "summarise"
   rel2 <- duckdb$rel_aggregate(
     rel1,
     groups = list(),
     aggregates = list(
       {
-        tmp_expr <- duckdb$expr_function(
-          "+",
-          list(
-            duckdb$expr_function("n", list()),
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(1L, experimental = experimental)
-            } else {
-              duckdb$expr_constant(1L)
-            }
-          )
-        )
+        tmp_expr <- duckdb$expr_function("+", list(duckdb$expr_function("n", list()), duckdb$expr_constant(1L)))
         duckdb$expr_set_alias(tmp_expr, "n")
         tmp_expr
       }
@@ -15845,20 +14370,19 @@ test_that("relational symdiff() order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(
     DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
   )
   df1 <- data.frame(a = 1:4, b = 2)
 
   "anti_join"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "anti_join"
   rel2 <- duckdb$rel_set_alias(rel1, "lhs")
   df2 <- data.frame(a = 2:5, b = 2)
 
   "anti_join"
-  rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel3 <- duckdb$rel_from_df(con, df2)
   "anti_join"
   rel4 <- duckdb$rel_set_alias(rel3, "rhs")
   "anti_join"
@@ -15910,14 +14434,36 @@ test_that("relational symdiff() order-preserving", {
       }
     )
   )
-  df3 <- data.frame(a = 1L, b = 2)
+  df3 <- data.frame(a = 5L, b = 2)
 
   "union_all"
-  rel9 <- duckdb$rel_from_df(con, df3, experimental = experimental)
-  df4 <- data.frame(a = 5L, b = 2)
-
+  rel9 <- duckdb$rel_from_df(con, df3)
   "union_all"
-  rel10 <- duckdb$rel_from_df(con, df4, experimental = experimental)
+  rel10 <- duckdb$rel_project(
+    rel8,
+    list(
+      {
+        tmp_expr <- duckdb$expr_reference("a")
+        duckdb$expr_set_alias(tmp_expr, "a")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_reference("b")
+        duckdb$expr_set_alias(tmp_expr, "b")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
+        duckdb$expr_set_alias(tmp_expr, "___row_number_x")
+        tmp_expr
+      },
+      {
+        tmp_expr <- duckdb$expr_constant(NA_integer_)
+        duckdb$expr_set_alias(tmp_expr, "___row_number_y")
+        tmp_expr
+      }
+    )
+  )
   "union_all"
   rel11 <- duckdb$rel_project(
     rel9,
@@ -15933,41 +14479,7 @@ test_that("relational symdiff() order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(duckdb$expr_function("row_number", list()), list(), list(), offset_expr = NULL, default_expr = NULL)
-        duckdb$expr_set_alias(tmp_expr, "___row_number_x")
-        tmp_expr
-      },
-      {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_integer_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_integer_)
-        }
-        duckdb$expr_set_alias(tmp_expr, "___row_number_y")
-        tmp_expr
-      }
-    )
-  )
-  "union_all"
-  rel12 <- duckdb$rel_project(
-    rel10,
-    list(
-      {
-        tmp_expr <- duckdb$expr_reference("a")
-        duckdb$expr_set_alias(tmp_expr, "a")
-        tmp_expr
-      },
-      {
-        tmp_expr <- duckdb$expr_reference("b")
-        duckdb$expr_set_alias(tmp_expr, "b")
-        tmp_expr
-      },
-      {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_integer_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_integer_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_integer_)
         duckdb$expr_set_alias(tmp_expr, "___row_number_x")
         tmp_expr
       },
@@ -15979,15 +14491,15 @@ test_that("relational symdiff() order-preserving", {
     )
   )
   "union_all"
-  rel13 <- duckdb$rel_union_all(rel11, rel12)
+  rel12 <- duckdb$rel_union_all(rel10, rel11)
   "union_all"
-  rel14 <- duckdb$rel_order(
-    rel13,
+  rel13 <- duckdb$rel_order(
+    rel12,
     list(duckdb$expr_reference("___row_number_x"), duckdb$expr_reference("___row_number_y"))
   )
   "union_all"
-  rel15 <- duckdb$rel_project(
-    rel14,
+  rel14 <- duckdb$rel_project(
+    rel13,
     list(
       {
         tmp_expr <- duckdb$expr_reference("a")
@@ -16002,8 +14514,8 @@ test_that("relational symdiff() order-preserving", {
     )
   )
   "distinct"
-  rel16 <- duckdb$rel_project(
-    rel15,
+  rel15 <- duckdb$rel_project(
+    rel14,
     list(
       {
         tmp_expr <- duckdb$expr_reference("a")
@@ -16023,8 +14535,8 @@ test_that("relational symdiff() order-preserving", {
     )
   )
   "distinct"
-  rel17 <- duckdb$rel_project(
-    rel16,
+  rel16 <- duckdb$rel_project(
+    rel15,
     list(
       {
         tmp_expr <- duckdb$expr_reference("a")
@@ -16062,27 +14574,17 @@ test_that("relational symdiff() order-preserving", {
     )
   )
   "distinct"
-  rel18 <- duckdb$rel_filter(
-    rel17,
+  rel17 <- duckdb$rel_filter(
+    rel16,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("___row_number_by"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("___row_number_by"), duckdb$expr_constant(1L)))
     )
   )
   "distinct"
-  rel19 <- duckdb$rel_order(rel18, list(duckdb$expr_reference("___row_number")))
+  rel18 <- duckdb$rel_order(rel17, list(duckdb$expr_reference("___row_number")))
   "distinct"
-  rel20 <- duckdb$rel_project(
-    rel19,
+  rel19 <- duckdb$rel_project(
+    rel18,
     list(
       {
         tmp_expr <- duckdb$expr_reference("a")
@@ -16096,8 +14598,8 @@ test_that("relational symdiff() order-preserving", {
       }
     )
   )
-  rel20
-  out <- duckdb$rel_to_altrep(rel20)
+  rel19
+  out <- duckdb$rel_to_altrep(rel19)
   expect_identical(
     out,
     data.frame(a = c(1L, 5L), b = 2)
@@ -16112,15 +14614,14 @@ test_that("relational symdiff() order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = 1:4, b = 2)
 
   "symdiff"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   df2 <- data.frame(a = 2:5, b = 2)
 
   "symdiff"
-  rel2 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel2 <- duckdb$rel_from_df(con, df2)
   "symdiff"
   rel3 <- duckdb$rel_set_symdiff(rel1, rel2)
   "arrange"
@@ -16141,12 +14642,11 @@ test_that("relational tally() order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "summarise"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "summarise"
   rel2 <- duckdb$rel_aggregate(
     rel1,
@@ -16177,12 +14677,11 @@ test_that("relational tally() order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "summarise"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "summarise"
   rel2 <- duckdb$rel_aggregate(
     rel1,
@@ -16215,27 +14714,16 @@ test_that("relational transmute(c = a + 1) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "transmute"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "transmute"
   rel2 <- duckdb$rel_project(
     rel1,
     list(
       c = {
-        tmp_expr <- duckdb$expr_function(
-          "+",
-          list(
-            duckdb$expr_reference("a"),
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(1, experimental = experimental)
-            } else {
-              duckdb$expr_constant(1)
-            }
-          )
-        )
+        tmp_expr <- duckdb$expr_function("+", list(duckdb$expr_reference("a"), duckdb$expr_constant(1)))
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -16255,11 +14743,10 @@ test_that("relational transmute(row = a) order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "transmute"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "transmute"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -16287,27 +14774,16 @@ test_that("relational transmute(c = a + 1) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "transmute"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "transmute"
   rel2 <- duckdb$rel_project(
     rel1,
     list(
       c = {
-        tmp_expr <- duckdb$expr_function(
-          "+",
-          list(
-            duckdb$expr_reference("a"),
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(1, experimental = experimental)
-            } else {
-              duckdb$expr_constant(1)
-            }
-          )
-        )
+        tmp_expr <- duckdb$expr_function("+", list(duckdb$expr_reference("a"), duckdb$expr_constant(1)))
         duckdb$expr_set_alias(tmp_expr, "c")
         tmp_expr
       }
@@ -16329,11 +14805,10 @@ test_that("relational transmute(row = a) order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = seq(1, 6, by = 1), b = 2, g = c(1L, 2L, 2L, 3L, 3L, 3L))
 
   "transmute"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "transmute"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -16363,15 +14838,14 @@ test_that("relational union() order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = 1:4, b = 2)
 
   "union_all"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   df2 <- data.frame(a = 2:5, b = 2)
 
   "union_all"
-  rel2 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel2 <- duckdb$rel_from_df(con, df2)
   "union_all"
   rel3 <- duckdb$rel_project(
     rel1,
@@ -16392,11 +14866,7 @@ test_that("relational union() order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_integer_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_integer_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_integer_)
         duckdb$expr_set_alias(tmp_expr, "___row_number_y")
         tmp_expr
       }
@@ -16417,11 +14887,7 @@ test_that("relational union() order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_integer_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_integer_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_integer_)
         duckdb$expr_set_alias(tmp_expr, "___row_number_x")
         tmp_expr
       },
@@ -16519,17 +14985,7 @@ test_that("relational union() order-preserving", {
   rel10 <- duckdb$rel_filter(
     rel9,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("___row_number_by"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("___row_number_by"), duckdb$expr_constant(1L)))
     )
   )
   "distinct"
@@ -16566,15 +15022,14 @@ test_that("relational union() order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = 1:4, b = 2)
 
   "union_all"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   df2 <- data.frame(a = 2:5, b = 2)
 
   "union_all"
-  rel2 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel2 <- duckdb$rel_from_df(con, df2)
   "union_all"
   rel3 <- duckdb$rel_union_all(rel1, rel2)
   "distinct"
@@ -16597,15 +15052,14 @@ test_that("relational union_all() order-preserving", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = 1:4, b = 2)
 
   "union_all"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   df2 <- data.frame(a = 2:5, b = 2)
 
   "union_all"
-  rel2 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel2 <- duckdb$rel_from_df(con, df2)
   "union_all"
   rel3 <- duckdb$rel_project(
     rel1,
@@ -16626,11 +15080,7 @@ test_that("relational union_all() order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_integer_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_integer_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_integer_)
         duckdb$expr_set_alias(tmp_expr, "___row_number_y")
         tmp_expr
       }
@@ -16651,11 +15101,7 @@ test_that("relational union_all() order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(NA_integer_, experimental = experimental)
-        } else {
-          duckdb$expr_constant(NA_integer_)
-        }
+        tmp_expr <- duckdb$expr_constant(NA_integer_)
         duckdb$expr_set_alias(tmp_expr, "___row_number_x")
         tmp_expr
       },
@@ -16705,15 +15151,14 @@ test_that("relational union_all() order-enforcing", {
   duckdb <- asNamespace("duckdb")
   drv <- duckdb::duckdb()
   con <- DBI::dbConnect(drv)
-  experimental <- FALSE
   df1 <- data.frame(a = 1:4, b = 2)
 
   "union_all"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   df2 <- data.frame(a = 2:5, b = 2)
 
   "union_all"
-  rel2 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel2 <- duckdb$rel_from_df(con, df2)
   "union_all"
   rel3 <- duckdb$rel_union_all(rel1, rel2)
   "arrange"
