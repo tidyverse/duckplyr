@@ -74,12 +74,8 @@
         {"version":"0.3.1","message":"wday(label = ) not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"...3::...4(...1, label = TRUE)"},".by":"NULL",".keep":["all","used","unused","none"]}}
     Output
       # A duckplyr data frame: 2 variables
-    Message
-      i dplyr fallback recorded
-        {"version":"0.3.1","message":"Can't convert columns of class <ordered/factor> to relational. Affected column: `...2`.","name":"head","x":{"...1":"Date","...2":"ordered/factor"},"args":{"n":21}}
-    Output
         a          b    
-        <date>     <ord>
+        <date>     <fct>
       1 2024-03-08 Fri  
 
 ---
@@ -161,14 +157,6 @@
     Condition
       Error in `duckdb_tibble()`:
       ! Can't convert arrays or matrices to relational. Affected column: `a`.
-
-# list column
-
-    Code
-      duckdb_tibble(a = 1, b = 2, c = list(3))
-    Condition
-      Error in `duckdb_tibble()`:
-      ! Can't convert columns of class <list> to relational. Affected column: `c`.
 
 # __row_number
 

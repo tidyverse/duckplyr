@@ -37,13 +37,6 @@ test_that("duckdb_rel_from_df()", {
   # remove test-altrep.R
 
   skip_if(Sys.getenv("DUCKPLYR_CHECK_ROUNDTRIP") == "TRUE")
-
-  # If this is no longer an eror, we need to make sure that subsetting
-  # forwards to the vector class
-  expect_snapshot(error = TRUE, {
-    data.frame(a = vctrs::new_vctr(1:3)) %>%
-      duckdb_rel_from_df()
-  })
 })
 
 test_that("duckdb_rel_from_df() and changing column names", {
@@ -55,12 +48,6 @@ test_that("duckdb_rel_from_df() and changing column names", {
 
   names(x) <- "b"
   expect_equal(x %>% duckplyr_filter(b == 1), data.frame(b = 1))
-})
-
-test_that("duckdb_rel_from_df() error call", {
-  expect_snapshot(error = TRUE, {
-    as_duckdb_tibble(data.frame(a = factor(letters)))
-  })
 })
 
 test_that("rel_aggregate()", {

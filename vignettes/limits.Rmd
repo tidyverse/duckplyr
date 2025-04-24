@@ -60,7 +60,7 @@ duckplyr::duckdb_tibble(
   numeric = 1.1,
   character = "a",
   Date = as.Date("2025-01-11"),
-  POSIXct = as.POSIXct("2025-01-11 19:23:00", tz = "UTC"),
+  POSIXct = as.POSIXct("2025-01-11 19:23:00"),
   difftime = as.difftime(1, units = "secs"),
 ) |>
   compute()
@@ -170,7 +170,7 @@ duckplyr::duckdb_tibble(a = 1, b = NA, .prudence = "stingy") |>
   mutate(is.na(b), if_else(is.na(b), 0, 1), as.integer(b))
 
 duckplyr::duckdb_tibble(
-  a = as.POSIXct("2025-01-11 19:23:46", tz = "UTC"),
+  a = as.POSIXct("2025-01-11 19:23:46"),
   .prudence = "stingy") |>
   mutate(strftime(a, "%H:%M:%S"))
 ```
@@ -190,7 +190,7 @@ Implemented: `lubridate::hour()`, `lubridate::minute()`, `lubridate::second()`, 
 
 ```{r}
 duckplyr::duckdb_tibble(
-  a = as.POSIXct("2025-01-11 19:23:46", tz = "UTC"),
+  a = as.POSIXct("2025-01-11 19:23:46"),
   .prudence = "stingy"
 ) |>
   mutate(

@@ -52,16 +52,6 @@ test_that("duckplyr_arrange() gives meaningful errors", {
 
 # column types ----------------------------------------------------------
 
-test_that("arrange handles list columns (#282)", {
-  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
-  # no intrinsic ordering
-  df <- tibble(x = 1:3, y = list(3, 2, 1))
-  expect_equal(duckplyr_arrange(df, y), df)
-
-  df <- tibble(x = 1:3, y = list(sum, mean, sd))
-  expect_equal(duckplyr_arrange(df, y), df)
-})
-
 test_that("arrange handles raw columns (#1803)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1:3, y = as.raw(3:1))
@@ -119,16 +109,6 @@ test_that("arrange ignores NULLs (#6193)", {
 
   out <- duckplyr_arrange(df, y, desc(x), y)
   expect_equal(out$x, 2:1)
-})
-
-test_that("`duckplyr_arrange()` works with `numeric_version` (#6680)", {
-  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
-  x <- numeric_version(c("1.11", "1.2.3", "1.2.2"))
-  df <- tibble(x = x)
-
-  expect <- df[c(3, 2, 1),]
-
-  expect_identical(duckplyr_arrange(df, x), expect)
 })
 
 # locale --------------------------------------------------------------

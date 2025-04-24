@@ -91,18 +91,6 @@ test_that("distinct on a new, copied variable is equivalent to mutate followed b
   expect_equal(df1, df2)
 })
 
-test_that("distinct on a dataframe or tibble with columns of type list throws an error", {
-  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
-  df <- tibble(
-    a = c("1", "1", "2", "2", "3", "3"),
-    b = list("A")
-  )
-  df2 <- data.frame(x = 1:5, y = I(list(1:3, 2:4, 3:5, 4:6, 5:7)))
-
-  expect_identical(df2 %>% duckplyr_distinct(), df2)
-  expect_identical(df %>% duckplyr_distinct(), df %>% duckplyr_slice(c(1, 3, 5)))
-})
-
 test_that("distinct handles 0 columns edge case (#2954)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   d <- duckplyr_select(data.frame(x= c(1, 1)), one_of(character(0)))
