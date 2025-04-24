@@ -54,7 +54,7 @@ meta_replay <- function(add_pre_code = TRUE) {
     con_exprs <- list(
       expr(duckdb <- asNamespace("duckdb")),
       expr(drv <- duckdb::duckdb()),
-      expr(con <- DBI::dbConnect(drv)),
+      expr(con <- DBI::dbConnect(drv))
     )
     con_code <- map(con_exprs, constructive::deparse_call)
     pre_code <- c(
