@@ -55,7 +55,6 @@ meta_replay <- function(add_pre_code = TRUE) {
       expr(duckdb <- asNamespace("duckdb")),
       expr(drv <- duckdb::duckdb()),
       expr(con <- DBI::dbConnect(drv)),
-      expr(experimental <- !!(Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
     )
     con_code <- map(con_exprs, constructive::deparse_call)
     pre_code <- c(
@@ -209,7 +208,7 @@ meta_df_register <- function(df) {
 meta_rel_register_df <- function(rel, df) {
   df_name <- meta_df_register(df)
   # Expect experimental argument from outside
-  rel_expr <- expr(duckdb$rel_from_df(con, !!df_name, experimental = experimental))
+  rel_expr <- expr(duckdb$rel_from_df(con, !!df_name))
   meta_rel_register(rel, rel_expr)
 }
 

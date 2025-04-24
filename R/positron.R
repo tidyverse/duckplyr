@@ -13,6 +13,16 @@ ark_register_methods <- function() {
     "duckplyr_df",
     duckplyr_df_variable_display_type
   )
+  ark_register_method(
+    "ark_positron_variable_has_children",
+    "duckplyr_df",
+    duckplyr_df_variable_has_children
+  )
+  ark_register_method(
+    "ark_positron_variable_has_viewer",
+    "duckplyr_df",
+    duckplyr_df_variable_has_viewer
+  )
 }
 
 # Registration either succeeds or silently fails to be as unobtrusive as possible
@@ -55,4 +65,16 @@ duckplyr_df_variable_display_value <- function(x, ...) {
 # try and compute the number of rows (materializing the query).
 duckplyr_df_variable_display_type <- function(x, ...) {
   "duckplyr_df"
+}
+
+# We disable children and kind for safety,
+# until Positron catches errors in materialization
+duckplyr_df_variable_has_children <- function(x, ...) {
+  FALSE
+}
+
+# This is to hide the viewer button,
+# until the viewer can handle thrifty duckplyr frames
+duckplyr_df_variable_has_viewer <- function(x, ...) {
+  FALSE
 }

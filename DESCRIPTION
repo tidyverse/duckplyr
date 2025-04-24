@@ -1,13 +1,14 @@
 Type: Package
 Package: duckplyr
 Title: A 'DuckDB'-Backed Version of 'dplyr'
-Version: 1.0.1.9008
+Version: 1.0.1.9013
 Authors@R: c(
     person("Hannes", "Mühleisen", role = "aut",
            comment = c(ORCID = "0000-0001-8552-0029")),
     person("Kirill", "Müller", , "kirill@cynkra.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-1416-3412")),
-    person("Posit Software, PBC", role = c("cph", "fnd"))
+    person("Posit Software, PBC", role = c("cph", "fnd"),
+           comment = c(ROR = "03wc8by49"))
   )
 Description: A drop-in replacement for 'dplyr', powered by 'DuckDB' for
     performance.  Offers convenient utilities for working with in-memory and
@@ -22,13 +23,13 @@ Imports:
     cli,
     collections,
     DBI,
-    duckdb (>= 1.2.0),
+    duckdb (>= 1.2.1),
     glue,
     jsonlite,
     lifecycle,
     magrittr,
     memoise,
-    pillar (>= 1.10.1),
+    pillar (>= 1.10.2),
     rlang (>= 1.0.6),
     tibble,
     tidyselect,

@@ -305,4 +305,4 @@ The duckplyr package provides
 Automatic materialization can be dangerous for memory with large data, so duckplyr provides a setting called `prudence` that controls automatic materialization:
 is the data automatically materialized _always_ ("lavish" frames), _never_ ("stingy" frames) or _up to a certain size_ ("thrifty" frames).
 
-See `vignette("large")` for more details on working with large data sets, `vignette("fallback")` for fallbacks to dplyr, and `vignette("limits")` for the operations supported by duckplyr.
+See `vignette("large")` for more details on working with large data sets, `vignette("fallback")` for fallbacks to dplyr, `vignette("limits")` for the operations supported by duckplyr, and `vignette("duckdb")` for using DuckDB functions directly.

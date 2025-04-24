@@ -47,7 +47,7 @@ For all functions used in dplyr verbs, translations must be provided.
 The code lives in `translate.R` .
 New translations must change code in two places:
 
-1. The `switch()` in `rel_find_call()` needs a new entry, together with the package that is home to the function. The top 60 functions, ranked by importance, are already part of that `switch()`, as a comment if they are not implemented yet.
+1. The `switch()` in `rel_find_packages()` needs a new entry, together with the package that is home to the function. The top 60 functions, ranked by importance, are already part of that `switch()`, as a comment if they are not implemented yet.
 1. The actual translation must be implemented in `rel_translate_lang()`. This is easy for some functions that have similar functions that are already translated, but harder for others. This part of the code is not very clear yet, in particular, argument matching by name is only available for a few functions but should be generalized.
 1. Test your implementation in the console with code of the form:
 
