@@ -2,13 +2,24 @@ qloadm("tools/tpch/001.qs")
 duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
-experimental <- FALSE
+invisible(
+  DBI::dbExecute(
+    con,
+    'CREATE MACRO "___min_na"(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE MIN(x) END)'
+  )
+)
+invisible(
+  DBI::dbExecute(
+    con,
+    'CREATE MACRO "___max_na"(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE MAX(x) END)'
+  )
+)
 invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 df1 <- lineitem
 "filter"
-rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+rel1 <- duckdb$rel_from_df(con, df1)
 "filter"
 rel2 <- duckdb$rel_project(
   rel1,
@@ -106,25 +117,11 @@ rel3 <- duckdb$rel_filter(
   list(
     duckdb$expr_comparison(
       ">=",
-      list(
-        duckdb$expr_reference("l_shipdate"),
-        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(as.Date("1996-01-01"), experimental = experimental)
-        } else {
-          duckdb$expr_constant(as.Date("1996-01-01"))
-        }
-      )
+      list(duckdb$expr_reference("l_shipdate"), duckdb$expr_constant(as.Date("1996-01-01")))
     ),
     duckdb$expr_comparison(
       "<",
-      list(
-        duckdb$expr_reference("l_shipdate"),
-        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(as.Date("1996-04-01"), experimental = experimental)
-        } else {
-          duckdb$expr_constant(as.Date("1996-04-01"))
-        }
-      )
+      list(duckdb$expr_reference("l_shipdate"), duckdb$expr_constant(as.Date("1996-04-01")))
     )
   )
 )
@@ -313,7 +310,7 @@ rel7 <- duckdb$rel_aggregate(
   groups = list(duckdb$expr_reference("l_suppkey")),
   aggregates = list(
     {
-      tmp_expr <- duckdb$expr_function("min", list(duckdb$expr_reference("___row_number")))
+      tmp_expr <- duckdb$expr_function("___min_na", list(duckdb$expr_reference("___row_number")))
       duckdb$expr_set_alias(tmp_expr, "___row_number")
       tmp_expr
     },
@@ -325,17 +322,7 @@ rel7 <- duckdb$rel_aggregate(
             "*",
             list(
               duckdb$expr_reference("l_extendedprice"),
-              duckdb$expr_function(
-                "-",
-                list(
-                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                    duckdb$expr_constant(1, experimental = experimental)
-                  } else {
-                    duckdb$expr_constant(1)
-                  },
-                  duckdb$expr_reference("l_discount")
-                )
-              )
+              duckdb$expr_function("-", list(duckdb$expr_constant(1), duckdb$expr_reference("l_discount")))
             )
           )
         )
@@ -378,11 +365,7 @@ rel10 <- duckdb$rel_project(
       tmp_expr
     },
     {
-      tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-        duckdb$expr_constant(1L, experimental = experimental)
-      } else {
-        duckdb$expr_constant(1L)
-      }
+      tmp_expr <- duckdb$expr_constant(1L)
       duckdb$expr_set_alias(tmp_expr, "global_agr_key")
       tmp_expr
     }
@@ -420,12 +403,12 @@ rel12 <- duckdb$rel_aggregate(
   groups = list(duckdb$expr_reference("global_agr_key")),
   aggregates = list(
     {
-      tmp_expr <- duckdb$expr_function("min", list(duckdb$expr_reference("___row_number")))
+      tmp_expr <- duckdb$expr_function("___min_na", list(duckdb$expr_reference("___row_number")))
       duckdb$expr_set_alias(tmp_expr, "___row_number")
       tmp_expr
     },
     {
-      tmp_expr <- duckdb$expr_function("max", list(duckdb$expr_reference("total_revenue")))
+      tmp_expr <- duckdb$expr_function("___max_na", list(duckdb$expr_reference("total_revenue")))
       duckdb$expr_set_alias(tmp_expr, "max_total_revenue")
       tmp_expr
     }
@@ -464,11 +447,7 @@ rel15 <- duckdb$rel_project(
       tmp_expr
     },
     {
-      tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-        duckdb$expr_constant(1L, experimental = experimental)
-      } else {
-        duckdb$expr_constant(1L)
-      }
+      tmp_expr <- duckdb$expr_constant(1L)
       duckdb$expr_set_alias(tmp_expr, "global_agr_key")
       tmp_expr
     }
@@ -655,11 +634,7 @@ rel26 <- duckdb$rel_filter(
             )
           )
         ),
-        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(1e-09, experimental = experimental)
-        } else {
-          duckdb$expr_constant(1e-09)
-        }
+        duckdb$expr_constant(1e-09)
       )
     )
   )
@@ -696,7 +671,7 @@ rel28 <- duckdb$rel_project(
 rel29 <- duckdb$rel_set_alias(rel28, "lhs")
 df2 <- supplier
 "inner_join"
-rel30 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+rel30 <- duckdb$rel_from_df(con, df2)
 "inner_join"
 rel31 <- duckdb$rel_set_alias(rel30, "rhs")
 "inner_join"

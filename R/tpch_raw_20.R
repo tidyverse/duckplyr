@@ -3,27 +3,17 @@
 tpch_raw_20 <- function(con, experimental) {
   df1 <- nation
   "filter"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "filter"
   rel2 <- duckdb$rel_filter(
     rel1,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("n_name"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant("CANADA", experimental = experimental)
-          } else {
-            duckdb$expr_constant("CANADA")
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("n_name"), duckdb$expr_constant("CANADA")))
     )
   )
   df2 <- supplier
   "inner_join"
-  rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel3 <- duckdb$rel_from_df(con, df2)
   "inner_join"
   rel4 <- duckdb$rel_set_alias(rel3, "lhs")
   "inner_join"
@@ -122,27 +112,17 @@ tpch_raw_20 <- function(con, experimental) {
   )
   df3 <- part
   "filter"
-  rel9 <- duckdb$rel_from_df(con, df3, experimental = experimental)
+  rel9 <- duckdb$rel_from_df(con, df3)
   "filter"
   rel10 <- duckdb$rel_filter(
     rel9,
     list(
-      duckdb$expr_function(
-        "grepl",
-        list(
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant("^forest", experimental = experimental)
-          } else {
-            duckdb$expr_constant("^forest")
-          },
-          duckdb$expr_reference("p_name")
-        )
-      )
+      duckdb$expr_function("grepl", list(duckdb$expr_constant("^forest"), duckdb$expr_reference("p_name")))
     )
   )
   df4 <- partsupp
   "semi_join"
-  rel11 <- duckdb$rel_from_df(con, df4, experimental = experimental)
+  rel11 <- duckdb$rel_from_df(con, df4)
   "semi_join"
   rel12 <- duckdb$rel_set_alias(rel11, "lhs")
   "semi_join"
@@ -177,32 +157,18 @@ tpch_raw_20 <- function(con, experimental) {
   )
   df5 <- lineitem
   "filter"
-  rel18 <- duckdb$rel_from_df(con, df5, experimental = experimental)
+  rel18 <- duckdb$rel_from_df(con, df5)
   "filter"
   rel19 <- duckdb$rel_filter(
     rel18,
     list(
       duckdb$expr_comparison(
         ">=",
-        list(
-          duckdb$expr_reference("l_shipdate"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(as.Date("1994-01-01"), experimental = experimental)
-          } else {
-            duckdb$expr_constant(as.Date("1994-01-01"))
-          }
-        )
+        list(duckdb$expr_reference("l_shipdate"), duckdb$expr_constant(as.Date("1994-01-01")))
       ),
       duckdb$expr_comparison(
         "<",
-        list(
-          duckdb$expr_reference("l_shipdate"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(as.Date("1995-01-01"), experimental = experimental)
-          } else {
-            duckdb$expr_constant(as.Date("1995-01-01"))
-          }
-        )
+        list(duckdb$expr_reference("l_shipdate"), duckdb$expr_constant(as.Date("1995-01-01")))
       )
     )
   )
@@ -234,14 +200,7 @@ tpch_raw_20 <- function(con, experimental) {
       {
         tmp_expr <- duckdb$expr_function(
           "*",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(0.5, experimental = experimental)
-            } else {
-              duckdb$expr_constant(0.5)
-            },
-            duckdb$expr_function("sum", list(duckdb$expr_reference("l_quantity")))
-          )
+          list(duckdb$expr_constant(0.5), duckdb$expr_function("sum", list(duckdb$expr_reference("l_quantity"))))
         )
         duckdb$expr_set_alias(tmp_expr, "qty_threshold")
         tmp_expr

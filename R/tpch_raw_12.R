@@ -3,7 +3,7 @@
 tpch_raw_12 <- function(con, experimental) {
   df1 <- lineitem
   "filter"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "filter"
   rel2 <- duckdb$rel_filter(
     rel1,
@@ -14,35 +14,11 @@ tpch_raw_12 <- function(con, experimental) {
           duckdb$expr_function(
             "|",
             list(
-              duckdb$expr_function(
-                "r_base::==",
-                list(
-                  duckdb$expr_reference("l_shipmode"),
-                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                    duckdb$expr_constant("MAIL", experimental = experimental)
-                  } else {
-                    duckdb$expr_constant("MAIL")
-                  }
-                )
-              ),
-              duckdb$expr_function(
-                "r_base::==",
-                list(
-                  duckdb$expr_reference("l_shipmode"),
-                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                    duckdb$expr_constant("SHIP", experimental = experimental)
-                  } else {
-                    duckdb$expr_constant("SHIP")
-                  }
-                )
-              )
+              duckdb$expr_function("r_base::==", list(duckdb$expr_reference("l_shipmode"), duckdb$expr_constant("MAIL"))),
+              duckdb$expr_function("r_base::==", list(duckdb$expr_reference("l_shipmode"), duckdb$expr_constant("SHIP")))
             )
           ),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(FALSE, experimental = experimental)
-          } else {
-            duckdb$expr_constant(FALSE)
-          }
+          duckdb$expr_constant(FALSE)
         )
       ),
       duckdb$expr_comparison(
@@ -55,25 +31,11 @@ tpch_raw_12 <- function(con, experimental) {
       ),
       duckdb$expr_comparison(
         ">=",
-        list(
-          duckdb$expr_reference("l_receiptdate"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(as.Date("1994-01-01"), experimental = experimental)
-          } else {
-            duckdb$expr_constant(as.Date("1994-01-01"))
-          }
-        )
+        list(duckdb$expr_reference("l_receiptdate"), duckdb$expr_constant(as.Date("1994-01-01")))
       ),
       duckdb$expr_comparison(
         "<",
-        list(
-          duckdb$expr_reference("l_receiptdate"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(as.Date("1995-01-01"), experimental = experimental)
-          } else {
-            duckdb$expr_constant(as.Date("1995-01-01"))
-          }
-        )
+        list(duckdb$expr_reference("l_receiptdate"), duckdb$expr_constant(as.Date("1995-01-01")))
       )
     )
   )
@@ -81,7 +43,7 @@ tpch_raw_12 <- function(con, experimental) {
   rel3 <- duckdb$rel_set_alias(rel2, "lhs")
   df2 <- orders
   "inner_join"
-  rel4 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel4 <- duckdb$rel_from_df(con, df2)
   "inner_join"
   rel5 <- duckdb$rel_set_alias(rel4, "rhs")
   "inner_join"
@@ -242,38 +204,13 @@ tpch_raw_12 <- function(con, experimental) {
                   list(
                     duckdb$expr_comparison(
                       "==",
-                      list(
-                        duckdb$expr_reference("o_orderpriority"),
-                        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                          duckdb$expr_constant("1-URGENT", experimental = experimental)
-                        } else {
-                          duckdb$expr_constant("1-URGENT")
-                        }
-                      )
+                      list(duckdb$expr_reference("o_orderpriority"), duckdb$expr_constant("1-URGENT"))
                     ),
-                    duckdb$expr_comparison(
-                      "==",
-                      list(
-                        duckdb$expr_reference("o_orderpriority"),
-                        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                          duckdb$expr_constant("2-HIGH", experimental = experimental)
-                        } else {
-                          duckdb$expr_constant("2-HIGH")
-                        }
-                      )
-                    )
+                    duckdb$expr_comparison("==", list(duckdb$expr_reference("o_orderpriority"), duckdb$expr_constant("2-HIGH")))
                   )
                 ),
-                if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                  duckdb$expr_constant(1L, experimental = experimental)
-                } else {
-                  duckdb$expr_constant(1L)
-                },
-                if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                  duckdb$expr_constant(0L, experimental = experimental)
-                } else {
-                  duckdb$expr_constant(0L)
-                }
+                duckdb$expr_constant(1L),
+                duckdb$expr_constant(0L)
               )
             )
           )
@@ -293,38 +230,13 @@ tpch_raw_12 <- function(con, experimental) {
                   list(
                     duckdb$expr_function(
                       "r_base::!=",
-                      list(
-                        duckdb$expr_reference("o_orderpriority"),
-                        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                          duckdb$expr_constant("1-URGENT", experimental = experimental)
-                        } else {
-                          duckdb$expr_constant("1-URGENT")
-                        }
-                      )
+                      list(duckdb$expr_reference("o_orderpriority"), duckdb$expr_constant("1-URGENT"))
                     ),
-                    duckdb$expr_function(
-                      "r_base::!=",
-                      list(
-                        duckdb$expr_reference("o_orderpriority"),
-                        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                          duckdb$expr_constant("2-HIGH", experimental = experimental)
-                        } else {
-                          duckdb$expr_constant("2-HIGH")
-                        }
-                      )
-                    )
+                    duckdb$expr_function("r_base::!=", list(duckdb$expr_reference("o_orderpriority"), duckdb$expr_constant("2-HIGH")))
                   )
                 ),
-                if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                  duckdb$expr_constant(1L, experimental = experimental)
-                } else {
-                  duckdb$expr_constant(1L)
-                },
-                if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                  duckdb$expr_constant(0L, experimental = experimental)
-                } else {
-                  duckdb$expr_constant(0L)
-                }
+                duckdb$expr_constant(1L),
+                duckdb$expr_constant(0L)
               )
             )
           )

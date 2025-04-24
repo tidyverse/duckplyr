@@ -2,7 +2,6 @@ qloadm("tools/tpch/001.qs")
 duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
-experimental <- FALSE
 invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
@@ -21,7 +20,7 @@ invisible(
 invisible(DBI::dbExecute(con, 'CREATE MACRO "&"(x, y) AS (x AND y)'))
 df1 <- lineitem
 "count"
-rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+rel1 <- duckdb$rel_from_df(con, df1)
 "count"
 rel2 <- duckdb$rel_aggregate(
   rel1,
@@ -77,21 +76,11 @@ rel4 <- duckdb$rel_aggregate(
 rel5 <- duckdb$rel_filter(
   rel4,
   list(
-    duckdb$expr_comparison(
-      ">",
-      list(
-        duckdb$expr_reference("n_supplier"),
-        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(1, experimental = experimental)
-        } else {
-          duckdb$expr_constant(1)
-        }
-      )
-    )
+    duckdb$expr_comparison(">", list(duckdb$expr_reference("n_supplier"), duckdb$expr_constant(1)))
   )
 )
 "semi_join"
-rel6 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+rel6 <- duckdb$rel_from_df(con, df1)
 "semi_join"
 rel7 <- duckdb$rel_set_alias(rel6, "lhs")
 "semi_join"
@@ -112,7 +101,7 @@ rel9 <- duckdb$rel_join(
 rel10 <- duckdb$rel_set_alias(rel9, "lhs")
 df2 <- orders
 "inner_join"
-rel11 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+rel11 <- duckdb$rel_from_df(con, df2)
 "inner_join"
 rel12 <- duckdb$rel_set_alias(rel11, "rhs")
 "inner_join"
@@ -260,17 +249,7 @@ rel14 <- duckdb$rel_project(
 rel15 <- duckdb$rel_filter(
   rel14,
   list(
-    duckdb$expr_comparison(
-      "==",
-      list(
-        duckdb$expr_reference("o_orderstatus"),
-        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant("F", experimental = experimental)
-        } else {
-          duckdb$expr_constant("F")
-        }
-      )
-    )
+    duckdb$expr_comparison("==", list(duckdb$expr_reference("o_orderstatus"), duckdb$expr_constant("F")))
   )
 )
 "summarise"
@@ -309,19 +288,7 @@ rel17 <- duckdb$rel_aggregate(
         list(
           duckdb$expr_function(
             "if_else",
-            list(
-              duckdb$expr_reference("failed_delivery_commit"),
-              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                duckdb$expr_constant(1, experimental = experimental)
-              } else {
-                duckdb$expr_constant(1)
-              },
-              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                duckdb$expr_constant(0, experimental = experimental)
-              } else {
-                duckdb$expr_constant(0)
-              }
-            )
+            list(duckdb$expr_reference("failed_delivery_commit"), duckdb$expr_constant(1), duckdb$expr_constant(0))
           )
         )
       )
@@ -337,34 +304,14 @@ rel18 <- duckdb$rel_filter(
     duckdb$expr_function(
       "&",
       list(
-        duckdb$expr_comparison(
-          ">",
-          list(
-            duckdb$expr_reference("n_supplier"),
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(1, experimental = experimental)
-            } else {
-              duckdb$expr_constant(1)
-            }
-          )
-        ),
-        duckdb$expr_comparison(
-          "==",
-          list(
-            duckdb$expr_reference("num_failed"),
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(1, experimental = experimental)
-            } else {
-              duckdb$expr_constant(1)
-            }
-          )
-        )
+        duckdb$expr_comparison(">", list(duckdb$expr_reference("n_supplier"), duckdb$expr_constant(1))),
+        duckdb$expr_comparison("==", list(duckdb$expr_reference("num_failed"), duckdb$expr_constant(1)))
       )
     )
   )
 )
 "semi_join"
-rel19 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+rel19 <- duckdb$rel_from_df(con, df1)
 "semi_join"
 rel20 <- duckdb$rel_set_alias(rel19, "lhs")
 "semi_join"
@@ -383,7 +330,7 @@ rel22 <- duckdb$rel_join(
 )
 df3 <- supplier
 "inner_join"
-rel23 <- duckdb$rel_from_df(con, df3, experimental = experimental)
+rel23 <- duckdb$rel_from_df(con, df3)
 "inner_join"
 rel24 <- duckdb$rel_set_alias(rel23, "lhs")
 "inner_join"
@@ -533,7 +480,7 @@ rel28 <- duckdb$rel_filter(
 rel29 <- duckdb$rel_set_alias(rel28, "lhs")
 df4 <- nation
 "inner_join"
-rel30 <- duckdb$rel_from_df(con, df4, experimental = experimental)
+rel30 <- duckdb$rel_from_df(con, df4)
 "inner_join"
 rel31 <- duckdb$rel_set_alias(rel30, "rhs")
 "inner_join"
@@ -686,17 +633,7 @@ rel33 <- duckdb$rel_project(
 rel34 <- duckdb$rel_filter(
   rel33,
   list(
-    duckdb$expr_comparison(
-      "==",
-      list(
-        duckdb$expr_reference("n_name"),
-        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant("SAUDI ARABIA", experimental = experimental)
-        } else {
-          duckdb$expr_constant("SAUDI ARABIA")
-        }
-      )
-    )
+    duckdb$expr_comparison("==", list(duckdb$expr_reference("n_name"), duckdb$expr_constant("SAUDI ARABIA")))
   )
 )
 "summarise"
