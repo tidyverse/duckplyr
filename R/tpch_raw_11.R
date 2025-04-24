@@ -3,32 +3,22 @@
 tpch_raw_11 <- function(con, experimental) {
   df1 <- nation
   "filter"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "filter"
   rel2 <- duckdb$rel_filter(
     rel1,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("n_name"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant("GERMANY", experimental = experimental)
-          } else {
-            duckdb$expr_constant("GERMANY")
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("n_name"), duckdb$expr_constant("GERMANY")))
     )
   )
   df2 <- partsupp
   "inner_join"
-  rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel3 <- duckdb$rel_from_df(con, df2)
   "inner_join"
   rel4 <- duckdb$rel_set_alias(rel3, "lhs")
   df3 <- supplier
   "inner_join"
-  rel5 <- duckdb$rel_from_df(con, df3, experimental = experimental)
+  rel5 <- duckdb$rel_from_df(con, df3)
   "inner_join"
   rel6 <- duckdb$rel_set_alias(rel5, "rhs")
   "inner_join"
@@ -220,11 +210,7 @@ tpch_raw_11 <- function(con, experimental) {
                 )
               )
             ),
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(1e-04, experimental = experimental)
-            } else {
-              duckdb$expr_constant(1e-04)
-            }
+            duckdb$expr_constant(1e-04)
           )
         )
         duckdb$expr_set_alias(tmp_expr, "global_value")
@@ -244,11 +230,7 @@ tpch_raw_11 <- function(con, experimental) {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(1L, experimental = experimental)
-        } else {
-          duckdb$expr_constant(1L)
-        }
+        tmp_expr <- duckdb$expr_constant(1L)
         duckdb$expr_set_alias(tmp_expr, "global_agr_key")
         tmp_expr
       }
@@ -289,11 +271,7 @@ tpch_raw_11 <- function(con, experimental) {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(1L, experimental = experimental)
-        } else {
-          duckdb$expr_constant(1L)
-        }
+        tmp_expr <- duckdb$expr_constant(1L)
         duckdb$expr_set_alias(tmp_expr, "global_agr_key")
         tmp_expr
       }

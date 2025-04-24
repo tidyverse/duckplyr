@@ -3,7 +3,7 @@
 tpch_raw_oo_04 <- function(con, experimental) {
   df1 <- lineitem
   "select"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "select"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -97,7 +97,7 @@ tpch_raw_oo_04 <- function(con, experimental) {
   )
   df2 <- orders
   "select"
-  rel8 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel8 <- duckdb$rel_from_df(con, df2)
   "select"
   rel9 <- duckdb$rel_project(
     rel8,
@@ -151,25 +151,11 @@ tpch_raw_oo_04 <- function(con, experimental) {
     list(
       duckdb$expr_comparison(
         ">=",
-        list(
-          duckdb$expr_reference("o_orderdate"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(as.Date("1993-07-01"), experimental = experimental)
-          } else {
-            duckdb$expr_constant(as.Date("1993-07-01"))
-          }
-        )
+        list(duckdb$expr_reference("o_orderdate"), duckdb$expr_constant(as.Date("1993-07-01")))
       ),
       duckdb$expr_comparison(
         "<",
-        list(
-          duckdb$expr_reference("o_orderdate"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(as.Date("1993-10-01"), experimental = experimental)
-          } else {
-            duckdb$expr_constant(as.Date("1993-10-01"))
-          }
-        )
+        list(duckdb$expr_reference("o_orderdate"), duckdb$expr_constant(as.Date("1993-10-01")))
       )
     )
   )
@@ -353,17 +339,7 @@ tpch_raw_oo_04 <- function(con, experimental) {
   rel24 <- duckdb$rel_filter(
     rel23,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("___row_number_by"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1L, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1L)
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("___row_number_by"), duckdb$expr_constant(1L)))
     )
   )
   "distinct"
@@ -417,7 +393,7 @@ tpch_raw_oo_04 <- function(con, experimental) {
     groups = list(duckdb$expr_reference("o_orderpriority")),
     aggregates = list(
       {
-        tmp_expr <- duckdb$expr_function("min", list(duckdb$expr_reference("___row_number")))
+        tmp_expr <- duckdb$expr_function("___min_na", list(duckdb$expr_reference("___row_number")))
         duckdb$expr_set_alias(tmp_expr, "___row_number")
         tmp_expr
       },

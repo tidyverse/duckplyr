@@ -2,12 +2,11 @@ qloadm("tools/tpch/001.qs")
 duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
-experimental <- FALSE
 invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 df1 <- lineitem
 "summarise"
-rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+rel1 <- duckdb$rel_from_df(con, df1)
 "summarise"
 rel2 <- duckdb$rel_aggregate(
   rel1,
@@ -24,22 +23,12 @@ rel2 <- duckdb$rel_aggregate(
 rel3 <- duckdb$rel_filter(
   rel2,
   list(
-    duckdb$expr_comparison(
-      ">",
-      list(
-        duckdb$expr_reference("sum"),
-        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(300, experimental = experimental)
-        } else {
-          duckdb$expr_constant(300)
-        }
-      )
-    )
+    duckdb$expr_comparison(">", list(duckdb$expr_reference("sum"), duckdb$expr_constant(300)))
   )
 )
 df2 <- orders
 "inner_join"
-rel4 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+rel4 <- duckdb$rel_from_df(con, df2)
 "inner_join"
 rel5 <- duckdb$rel_set_alias(rel4, "lhs")
 "inner_join"
@@ -119,7 +108,7 @@ rel8 <- duckdb$rel_project(
 rel9 <- duckdb$rel_set_alias(rel8, "lhs")
 df3 <- customer
 "inner_join"
-rel10 <- duckdb$rel_from_df(con, df3, experimental = experimental)
+rel10 <- duckdb$rel_from_df(con, df3)
 "inner_join"
 rel11 <- duckdb$rel_set_alias(rel10, "rhs")
 "inner_join"

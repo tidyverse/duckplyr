@@ -2,7 +2,6 @@ qloadm("tools/tpch/001.qs")
 duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
-experimental <- FALSE
 invisible(DBI::dbExecute(con, 'CREATE MACRO "!"(x) AS (NOT x)'))
 invisible(
   DBI::dbExecute(
@@ -15,6 +14,12 @@ invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y
 invisible(
   DBI::dbExecute(
     con,
+    'CREATE MACRO "___min_na"(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE MIN(x) END)'
+  )
+)
+invisible(
+  DBI::dbExecute(
+    con,
     'CREATE MACRO "if_else"(test, yes, no) AS (CASE WHEN test IS NULL THEN NULL ELSE CASE WHEN test THEN yes ELSE no END END)'
   )
 )
@@ -22,7 +27,7 @@ invisible(DBI::dbExecute(con, 'CREATE MACRO "is.na"(x) AS (x IS NULL)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
 df1 <- orders
 "filter"
-rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+rel1 <- duckdb$rel_from_df(con, df1)
 "filter"
 rel2 <- duckdb$rel_project(
   rel1,
@@ -88,14 +93,7 @@ rel3 <- duckdb$rel_filter(
       list(
         duckdb$expr_function(
           "grepl",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant("special.*?requests", experimental = experimental)
-            } else {
-              duckdb$expr_constant("special.*?requests")
-            },
-            duckdb$expr_reference("o_comment")
-          )
+          list(duckdb$expr_constant("special.*?requests"), duckdb$expr_reference("o_comment"))
         )
       )
     )
@@ -156,7 +154,7 @@ rel5 <- duckdb$rel_project(
 )
 df2 <- customer
 "left_join"
-rel6 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+rel6 <- duckdb$rel_from_df(con, df2)
 "left_join"
 rel7 <- duckdb$rel_set_alias(rel6, "lhs")
 "left_join"
@@ -471,7 +469,7 @@ rel15 <- duckdb$rel_aggregate(
   groups = list(duckdb$expr_reference("c_custkey")),
   aggregates = list(
     {
-      tmp_expr <- duckdb$expr_function("min", list(duckdb$expr_reference("___row_number")))
+      tmp_expr <- duckdb$expr_function("___min_na", list(duckdb$expr_reference("___row_number")))
       duckdb$expr_set_alias(tmp_expr, "___row_number")
       tmp_expr
     },
@@ -481,19 +479,7 @@ rel15 <- duckdb$rel_aggregate(
         list(
           duckdb$expr_function(
             "if_else",
-            list(
-              duckdb$expr_function("is.na", list(duckdb$expr_reference("o_orderkey"))),
-              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                duckdb$expr_constant(0L, experimental = experimental)
-              } else {
-                duckdb$expr_constant(0L)
-              },
-              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                duckdb$expr_constant(1L, experimental = experimental)
-              } else {
-                duckdb$expr_constant(1L)
-              }
-            )
+            list(duckdb$expr_function("is.na", list(duckdb$expr_reference("o_orderkey"))), duckdb$expr_constant(0L), duckdb$expr_constant(1L))
           )
         )
       )
@@ -547,7 +533,7 @@ rel19 <- duckdb$rel_aggregate(
   groups = list(duckdb$expr_reference("c_count")),
   aggregates = list(
     {
-      tmp_expr <- duckdb$expr_function("min", list(duckdb$expr_reference("___row_number")))
+      tmp_expr <- duckdb$expr_function("___min_na", list(duckdb$expr_reference("___row_number")))
       duckdb$expr_set_alias(tmp_expr, "___row_number")
       tmp_expr
     },

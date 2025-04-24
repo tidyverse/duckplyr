@@ -2,13 +2,18 @@ qloadm("tools/tpch/001.qs")
 duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
-experimental <- FALSE
 invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
+invisible(
+  DBI::dbExecute(
+    con,
+    'CREATE MACRO "___min_na"(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE MIN(x) END)'
+  )
+)
 invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
 df1 <- lineitem
 "select"
-rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+rel1 <- duckdb$rel_from_df(con, df1)
 "select"
 rel2 <- duckdb$rel_project(
   rel1,
@@ -102,7 +107,7 @@ rel7 <- duckdb$rel_project(
 )
 df2 <- orders
 "select"
-rel8 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+rel8 <- duckdb$rel_from_df(con, df2)
 "select"
 rel9 <- duckdb$rel_project(
   rel8,
@@ -156,25 +161,11 @@ rel11 <- duckdb$rel_filter(
   list(
     duckdb$expr_comparison(
       ">=",
-      list(
-        duckdb$expr_reference("o_orderdate"),
-        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(as.Date("1993-07-01"), experimental = experimental)
-        } else {
-          duckdb$expr_constant(as.Date("1993-07-01"))
-        }
-      )
+      list(duckdb$expr_reference("o_orderdate"), duckdb$expr_constant(as.Date("1993-07-01")))
     ),
     duckdb$expr_comparison(
       "<",
-      list(
-        duckdb$expr_reference("o_orderdate"),
-        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(as.Date("1993-10-01"), experimental = experimental)
-        } else {
-          duckdb$expr_constant(as.Date("1993-10-01"))
-        }
-      )
+      list(duckdb$expr_reference("o_orderdate"), duckdb$expr_constant(as.Date("1993-10-01")))
     )
   )
 )
@@ -358,17 +349,7 @@ rel23 <- duckdb$rel_project(
 rel24 <- duckdb$rel_filter(
   rel23,
   list(
-    duckdb$expr_comparison(
-      "==",
-      list(
-        duckdb$expr_reference("___row_number_by"),
-        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(1L, experimental = experimental)
-        } else {
-          duckdb$expr_constant(1L)
-        }
-      )
-    )
+    duckdb$expr_comparison("==", list(duckdb$expr_reference("___row_number_by"), duckdb$expr_constant(1L)))
   )
 )
 "distinct"
@@ -422,7 +403,7 @@ rel29 <- duckdb$rel_aggregate(
   groups = list(duckdb$expr_reference("o_orderpriority")),
   aggregates = list(
     {
-      tmp_expr <- duckdb$expr_function("min", list(duckdb$expr_reference("___row_number")))
+      tmp_expr <- duckdb$expr_function("___min_na", list(duckdb$expr_reference("___row_number")))
       duckdb$expr_set_alias(tmp_expr, "___row_number")
       tmp_expr
     },

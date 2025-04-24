@@ -2,7 +2,6 @@ qloadm("tools/tpch/001.qs")
 duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
-experimental <- FALSE
 invisible(
   DBI::dbExecute(
     con,
@@ -14,32 +13,18 @@ invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y
 invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 df1 <- lineitem
 "filter"
-rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+rel1 <- duckdb$rel_from_df(con, df1)
 "filter"
 rel2 <- duckdb$rel_filter(
   rel1,
   list(
     duckdb$expr_comparison(
       ">=",
-      list(
-        duckdb$expr_reference("l_shipdate"),
-        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(as.Date("1996-01-01"), experimental = experimental)
-        } else {
-          duckdb$expr_constant(as.Date("1996-01-01"))
-        }
-      )
+      list(duckdb$expr_reference("l_shipdate"), duckdb$expr_constant(as.Date("1996-01-01")))
     ),
     duckdb$expr_comparison(
       "<",
-      list(
-        duckdb$expr_reference("l_shipdate"),
-        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(as.Date("1996-04-01"), experimental = experimental)
-        } else {
-          duckdb$expr_constant(as.Date("1996-04-01"))
-        }
-      )
+      list(duckdb$expr_reference("l_shipdate"), duckdb$expr_constant(as.Date("1996-04-01")))
     )
   )
 )
@@ -56,17 +41,7 @@ rel3 <- duckdb$rel_aggregate(
             "*",
             list(
               duckdb$expr_reference("l_extendedprice"),
-              duckdb$expr_function(
-                "-",
-                list(
-                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                    duckdb$expr_constant(1, experimental = experimental)
-                  } else {
-                    duckdb$expr_constant(1)
-                  },
-                  duckdb$expr_reference("l_discount")
-                )
-              )
+              duckdb$expr_function("-", list(duckdb$expr_constant(1), duckdb$expr_reference("l_discount")))
             )
           )
         )
@@ -91,11 +66,7 @@ rel4 <- duckdb$rel_project(
       tmp_expr
     },
     {
-      tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-        duckdb$expr_constant(1L, experimental = experimental)
-      } else {
-        duckdb$expr_constant(1L)
-      }
+      tmp_expr <- duckdb$expr_constant(1L)
       duckdb$expr_set_alias(tmp_expr, "global_agr_key")
       tmp_expr
     }
@@ -128,11 +99,7 @@ rel6 <- duckdb$rel_project(
       tmp_expr
     },
     {
-      tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-        duckdb$expr_constant(1L, experimental = experimental)
-      } else {
-        duckdb$expr_constant(1L)
-      }
+      tmp_expr <- duckdb$expr_constant(1L)
       duckdb$expr_set_alias(tmp_expr, "global_agr_key")
       tmp_expr
     }
@@ -236,11 +203,7 @@ rel13 <- duckdb$rel_filter(
             )
           )
         ),
-        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(1e-09, experimental = experimental)
-        } else {
-          duckdb$expr_constant(1e-09)
-        }
+        duckdb$expr_constant(1e-09)
       )
     )
   )
@@ -249,7 +212,7 @@ rel13 <- duckdb$rel_filter(
 rel14 <- duckdb$rel_set_alias(rel13, "lhs")
 df2 <- supplier
 "inner_join"
-rel15 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+rel15 <- duckdb$rel_from_df(con, df2)
 "inner_join"
 rel16 <- duckdb$rel_set_alias(rel15, "rhs")
 "inner_join"
