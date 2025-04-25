@@ -160,21 +160,30 @@ check_df_for_rel <- function(df, call = caller_env()) {
     # When adding new classes, make sure to adapt the first test in test-relational-duckdb.R
 
     col_class <- class(col)
-
-    valid <- inherits(col_class, c(
-      "logical",
-      "integer",
-      "numeric",
-      "character",
-      "raw",
-      "Date",
-      "POSIXct",
-      "difftime",
-      "factor",
-      "list",
-      "blob"
-    ))
-
+    if (length(col_class) == 1) {
+      valid <- col_class %in% c(
+        "logical",
+        "integer",
+        "numeric",
+        "character",
+        "raw",
+        "Date",
+        "difftime",
+        "factor",
+        "list",
+        "data.frame"
+      )
+    } else if (identical(col_class, c("POSIXct", "POSIXt"))) {
+      valid <- TRUE
+    } else if (identical(col_class, c("hms", "difftime"))) {
+      valid <- TRUE
+    } else if (identical(col_class, c("tbl_df", "tbl", "data.frame"))) {
+      valid <- TRUE
+    } else if (identical(col_class, c("blob", "vctrs_list_of", "vctrs_vctr", "list"))) {
+      valid <- TRUE
+    } else {
+      valid <- FALSE
+    }
     if (!valid) {
       cli::cli_abort("Can't convert columns of class {.cls {col_class}} to relational. Affected column: {.var {names(df)[[i]]}}.", call = call)
     }

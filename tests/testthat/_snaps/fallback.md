@@ -74,8 +74,12 @@
         {"version":"0.3.1","message":"wday(label = ) not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"...3::...4(...1, label = TRUE)"},".by":"NULL",".keep":["all","used","unused","none"]}}
     Output
       # A duckplyr data frame: 2 variables
+    Message
+      i dplyr fallback recorded
+        {"version":"0.3.1","message":"Can't convert columns of class <ordered/factor> to relational. Affected column: `...2`.","name":"head","x":{"...1":"Date","...2":"ordered/factor"},"args":{"n":21}}
+    Output
         a          b    
-        <date>     <fct>
+        <date>     <ord>
       1 2024-03-08 Fri  
 
 ---

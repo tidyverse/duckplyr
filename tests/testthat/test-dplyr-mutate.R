@@ -97,6 +97,16 @@ test_that("can mutate a data frame with zero columns", {
   expect_equal(duckplyr_mutate(df, x = 1), data.frame(x = c(1, 1)))
 })
 
+test_that("duckplyr_mutate() handles symbol expressions", {
+  df <- tibble(x = structure(1, class = "alien"))
+  res <- duckplyr_mutate(df, y = x)
+  expect_identical(df$x, res$y)
+
+  gf <- duckplyr_group_by(df, x)
+  res <- duckplyr_mutate(df, y = x)
+  expect_identical(df$x, res$y)
+})
+
 test_that("duckplyr_mutate() supports constants (#6056, #6305)", {
   df <- data.frame(x = 1:10, g = rep(1:2, each = 5))
   y <- 1:10
