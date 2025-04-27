@@ -161,26 +161,9 @@ check_df_for_rel <- function(df, call = caller_env()) {
 
     col_class <- class(col)
     if (length(col_class) == 1) {
-      valid <- col_class %in% c(
-        "logical",
-        "integer",
-        "numeric",
-        "character",
-        "raw",
-        "Date",
-        "difftime",
-        "factor",
-        "list",
-        "data.frame"
-      )
-    } else if (identical(col_class, c("POSIXct", "POSIXt"))) {
-      valid <- TRUE
-    } else if (identical(col_class, c("hms", "difftime"))) {
-      valid <- TRUE
-    } else if (identical(col_class, c("tbl_df", "tbl", "data.frame"))) {
-      valid <- TRUE
-    } else if (identical(col_class, c("blob", "vctrs_list_of", "vctrs_vctr", "list"))) {
-      valid <- TRUE
+      valid <- col_class %in% c("logical", "integer", "numeric", "character", "Date", "difftime")
+    } else if (length(col_class) == 2) {
+      valid <- identical(col_class, c("POSIXct", "POSIXt")) || identical(col_class, c("hms", "difftime"))
     } else {
       valid <- FALSE
     }

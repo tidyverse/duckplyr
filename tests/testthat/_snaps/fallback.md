@@ -162,6 +162,14 @@
       Error in `duckdb_tibble()`:
       ! Can't convert arrays or matrices to relational. Affected column: `a`.
 
+# list column
+
+    Code
+      duckdb_tibble(a = 1, b = 2, c = list(3))
+    Condition
+      Error in `duckdb_tibble()`:
+      ! Can't convert columns of class <list> to relational. Affected column: `c`.
+
 # __row_number
 
     Code

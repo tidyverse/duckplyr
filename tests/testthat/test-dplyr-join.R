@@ -62,6 +62,13 @@ test_that("keys are coerced to symmetric type", {
   expect_type(duckplyr_inner_join(bar, foo, by = "id")$id, "character")
 })
 
+test_that("factor keys are coerced to the union factor type", {
+  df1 <- tibble(x = 1, y = factor("a"))
+  df2 <- tibble(x = 2, y = factor("b"))
+  out <- duckplyr_full_join(df1, df2, by = c("x", "y"))
+  expect_equal(out$y, factor(c("a", "b")))
+})
+
 test_that("keys of non-equi conditions are not coerced if `keep = NULL`", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   foo <- tibble(id = factor(c("a", "b")), col1 = c(1, 2), var1 = "foo")
@@ -411,6 +418,31 @@ test_that("mutating joins finalize unspecified columns (#6804)", {
   expect_identical(
     duckplyr_inner_join(df1, df2, by = join_by(x)),
     tibble(x = logical())
+  )
+})
+
+test_that("filtering joins finalize unspecified columns (#6804)", {
+  df1 <- tibble(x = NA)
+  df2 <- tibble(x = NA)
+
+  expect_identical(
+    duckplyr_semi_join(df1, df2, by = join_by(x)),
+    tibble(x = NA)
+  )
+  expect_identical(
+    duckplyr_semi_join(df1, df2, by = join_by(x), na_matches = "never"),
+    tibble(x = logical())
+  )
+
+  # Pre-existing `unspecified()` vectors aren't finalized,
+  # because we don't take the common type of the keys.
+  # We retain the exact type of `x`.
+  df1 <- tibble(x = unspecified())
+  df2 <- tibble(x = NA)
+
+  expect_identical(
+    duckplyr_semi_join(df1, df2, by = join_by(x)),
+    tibble(x = unspecified())
   )
 })
 

@@ -1,3 +1,19 @@
+# duckdb_rel_from_df()
+
+    Code
+      data.frame(a = vctrs::new_vctr(1:3)) %>% duckdb_rel_from_df()
+    Condition
+      Error:
+      ! Can't convert columns of class <vctrs_vctr> to relational. Affected column: `a`.
+
+# duckdb_rel_from_df() error call
+
+    Code
+      as_duckdb_tibble(data.frame(a = factor(letters)))
+    Condition
+      Error in `as_duckdb_tibble()`:
+      ! Can't convert columns of class <factor> to relational. Affected column: `a`.
+
 # rel_aggregate()
 
     Code
