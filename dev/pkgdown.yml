@@ -1,6 +1,6 @@
 pandoc: 3.1.11
 pkgdown: 2.1.1.9000
-pkgdown_sha: f362d538fc903126060a4d6d85cbf6681030043c
+pkgdown_sha: 2f04495db2502e7a621ffcb38d823c30a952b84a
 articles:
   developers: developers.html
   duckdb: duckdb.html
@@ -10,7 +10,7 @@ articles:
   limits: limits.html
   prudence: prudence.html
   telemetry: telemetry.html
-last_built: 2025-04-25T04:49Z
+last_built: 2025-04-27T11:08Z
 urls:
   reference: https://duckplyr.tidyverse.org/reference
   article: https://duckplyr.tidyverse.org/articles
