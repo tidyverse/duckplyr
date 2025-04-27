@@ -9,7 +9,7 @@
 # duckdb_rel_from_df() error call
 
     Code
-      as_duckdb_tibble(data.frame(a = factor(letters)))
+      as_duckdb_tibble(data.frame(a = ordered(letters)))
     Condition
       Error in `duckdb_rel_from_df()`:
       ! Can't convert column `a` to relational.
