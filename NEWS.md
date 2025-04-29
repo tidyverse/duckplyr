@@ -1,10 +1,40 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# duckplyr 1.0.1.9014 (2025-04-29)
+# duckplyr 1.0.99.9900 (2025-04-29)
+
+## fledge
+
+- CRAN release v1.0.1 (#624).
 
 ## Bug fixes
 
 - Syntax in code generation.
+
+- Set functions like `union()` no longer trigger materialization (#654, #692).
+
+- Joins no longer materialize the input data when the package is used with `methods_overwrite()` or `library(duckplyr)` (#641).
+
+- Correct formatting for controlled fallbacks with `Sys.setenv(DUCKPLYR_FALLBACK_INFO = TRUE)`.
+
+## Features
+
+- Remove experimental flag (#682, #695).
+
+- Register `has_children` and `has_viewer` methods for Positron (#678).
+
+- Passthrough of functions prefixed with `dd$`, e.g., `dd$ROW()` will be translated as DuckDB's `ROW()` function (#658).
+
+- New `as_tbl()` to convert to a dbplyr tbl object (#634, #685).
+
+- Register Ark methods for Positron's Variables Pane (@DavisVaughan, #661).
+
+- Implement `n_distinct()` as macro with support for `na.rm = TRUE` (@joakimlinde, #572, #655).
+
+- Translate `dplyr::coalesce()`.
+
+- `compute()` does not have a fallback, failures are reported to the client (#637).
+
+- Implement `slice_head()` (#640).
 
 ## Chore
 
@@ -12,7 +42,25 @@
 
 - Sync.
 
-- Sync.
+- Remove superfluous check.
+
+- Fix lints.
+
+- Remove space at EOL.
+
+- Bump required version of pillar.
+
+- Use roxyglobals from CRAN rather than GitHub (@andreranza, #659).
+
+- Space at EOL.
+
+- Bring tools and patch up to date (@joakimlinde, #647).
+
+- Internal `rel_to_df()` needs `prudence` argument (#644).
+
+- Fix sync scripts and add reproducible code (#639).
+
+- Check loadability of extensino in test (#636).
 
 ## Continuous integration
 
@@ -32,163 +80,25 @@
 
 - Document `slice_head()` as supported.
 
-## Testing
-
-- Skip tests using `grep()` or `sub()` on CRAN.
-
-
-# duckplyr 1.0.1.9013 (2025-04-22)
-
-## Chore
-
-- Remove superfluous check.
-
-- Fix lints.
-
-
-# duckplyr 1.0.1.9012 (2025-04-18)
-
-## Bug fixes
-
-- Set functions like `union()` no longer trigger materialization (#654, #692).
-
-## Features
-
-- Remove experimental flag (#682, #695).
-
-## Documentation
-
 - Move package.
 
-
-# duckplyr 1.0.1.9011 (2025-04-17)
-
-## Features
-
-- Register `has_children` and `has_viewer` methods for Positron (#678).
-
-## Documentation
-
 - Add Posit's ROR ID (#592).
-
-
-# duckplyr 1.0.1.9010 (2025-04-12)
-
-## Features
-
-- Passthrough of functions prefixed with `dd$`, e.g., `dd$ROW()` will be translated as DuckDB's `ROW()` function (#658).
-
-- New `as_tbl()` to convert to a dbplyr tbl object (#634, #685).
-
-## Chore
-
-- Remove space at EOL.
-
-- Bump required version of pillar.
-
-## Documentation
 
 - Add `vignette("duckdb")` (#690).
 
 - Add experimental badge.
 
-
-# duckplyr 1.0.1.9009 (2025-04-11)
-
-## Documentation
-
 - Verbose `conflict_prefer()` (#667, #684).
-
-
-# duckplyr 1.0.1.9008 (2025-04-10)
-
-## Documentation
 
 - Typos + clarification edits to "large" vignette (@mine-cetinkaya-rundel, #665).
 
-## Testing
-
-- Snapshot updates for rcc-smoke (null) (#675).
-
-
-# duckplyr 1.0.1.9007 (2025-04-02)
-
-## Features
-
-- Register Ark methods for Positron's Variables Pane (@DavisVaughan, #661).
-
-
-# duckplyr 1.0.1.9006 (2025-03-27)
-
-## Features
-
-- Implement `n_distinct()` as macro with support for `na.rm = TRUE` (@joakimlinde, #572, #655).
-
-## Chore
-
-- Use roxyglobals from CRAN rather than GitHub (@andreranza, #659).
-
-- Space at EOL.
-
-## Documentation
-
 - Recommend `pak::pak()`.
 
+## Testing
 
-# duckplyr 1.0.1.9005 (2025-03-12)
+- Skip tests using `grep()` or `sub()` on CRAN.
 
-## Features
-
-- Translate `dplyr::coalesce()`.
-
-## Chore
-
-- Bring tools and patch up to date (@joakimlinde, #647).
-
-
-# duckplyr 1.0.1.9004 (2025-03-11)
-
-## Chore
-
-- Internal `rel_to_df()` needs `prudence` argument (#644).
-
-
-# duckplyr 1.0.1.9003 (2025-03-10)
-
-## Bug fixes
-
-- Joins no longer materialize the input data when the package is used with `methods_overwrite()` or `library(duckplyr)` (#641).
-
-## Features
-
-- `compute()` does not have a fallback, failures are reported to the client (#637).
-
-- Implement `slice_head()` (#640).
-
-## Chore
-
-- Fix sync scripts and add reproducible code (#639).
-
-
-# duckplyr 1.0.1.9002 (2025-03-09)
-
-## Chore
-
-- Check loadability of extensino in test (#636).
-
-
-# duckplyr 1.0.1.9001 (2025-02-28)
-
-## fledge
-
-- CRAN release v1.0.1 (#624).
-
-
-# duckplyr 1.0.1.9000 (2025-02-22)
-
-## Bug fixes
-
-- Correct formatting for controlled fallbacks with `Sys.setenv(DUCKPLYR_FALLBACK_INFO = TRUE)`.
+- Snapshot updates for rcc-smoke (null) (#675).
 
 
 # duckplyr 1.0.1 (2025-02-21)
