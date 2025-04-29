@@ -1,5 +1,42 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.0.1.9014 (2025-04-29)
+
+## Bug fixes
+
+- Syntax in code generation.
+
+## Chore
+
+- Remove access of unknown variable.
+
+- Sync.
+
+- Sync.
+
+## Continuous integration
+
+- Permissions, better tests for missing suggests, lints (#710).
+
+- Only fail covr builds if token is given (#707).
+
+- Always use `_R_CHECK_FORCE_SUGGESTS_=false` (#706).
+
+- Correct installation of xml2 (#703).
+
+- Add xml2 for covr, print testthat results (#701).
+
+- Sync (#700).
+
+## Documentation
+
+- Document `slice_head()` as supported.
+
+## Testing
+
+- Skip tests using `grep()` or `sub()` on CRAN.
+
+
 # duckplyr 1.0.1.9013 (2025-04-22)
 
 ## Chore
