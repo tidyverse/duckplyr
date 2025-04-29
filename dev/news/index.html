@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.1.9013</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.99.9900</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,155 +40,73 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/tidyverse/duckplyr/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/tidyverse/duckplyr/blob/cran-1.0.99.9900/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.0.1.9013" id="duckplyr-1019013-2025-04-22">duckplyr 1.0.1.9013 (2025-04-22)<a class="anchor" aria-label="anchor" href="#duckplyr-1019013-2025-04-22"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.0.99.9900" id="duckplyr-10999900-2025-04-29">duckplyr 1.0.99.9900 (2025-04-29)<a class="anchor" aria-label="anchor" href="#duckplyr-10999900-2025-04-29"></a></h2>
 <div class="section level3">
-<h3 id="chore-1-0-1-9013">Chore<a class="anchor" aria-label="anchor" href="#chore-1-0-1-9013"></a></h3>
-<ul><li><p>Remove superfluous check.</p></li>
-<li><p>Fix lints.</p></li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.0.1.9012" id="duckplyr-1019012-2025-04-18">duckplyr 1.0.1.9012 (2025-04-18)<a class="anchor" aria-label="anchor" href="#duckplyr-1019012-2025-04-18"></a></h2>
-<div class="section level3">
-<h3 id="bug-fixes-1-0-1-9012">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-1-9012"></a></h3>
-<ul><li>Set functions like <code><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">union()</a></code> no longer trigger materialization (<a href="https://github.com/tidyverse/duckplyr/issues/654" class="external-link">#654</a>, <a href="https://github.com/tidyverse/duckplyr/issues/692" class="external-link">#692</a>).</li>
+<h3 id="fledge-1-0-99-9900">fledge<a class="anchor" aria-label="anchor" href="#fledge-1-0-99-9900"></a></h3>
+<ul><li>CRAN release v1.0.1 (<a href="https://github.com/tidyverse/duckplyr/issues/624" class="external-link">#624</a>).</li>
 </ul></div>
 <div class="section level3">
-<h3 id="features-1-0-1-9012">Features<a class="anchor" aria-label="anchor" href="#features-1-0-1-9012"></a></h3>
-<ul><li>Remove experimental flag (<a href="https://github.com/tidyverse/duckplyr/issues/682" class="external-link">#682</a>, <a href="https://github.com/tidyverse/duckplyr/issues/695" class="external-link">#695</a>).</li>
+<h3 id="bug-fixes-1-0-99-9900">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-99-9900"></a></h3>
+<ul><li><p>Syntax in code generation.</p></li>
+<li><p>Set functions like <code><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">union()</a></code> no longer trigger materialization (<a href="https://github.com/tidyverse/duckplyr/issues/654" class="external-link">#654</a>, <a href="https://github.com/tidyverse/duckplyr/issues/692" class="external-link">#692</a>).</p></li>
+<li><p>Joins no longer materialize the input data when the package is used with <code><a href="../reference/methods_overwrite.html">methods_overwrite()</a></code> or <code><a href="https://duckplyr.tidyverse.org">library(duckplyr)</a></code> (<a href="https://github.com/tidyverse/duckplyr/issues/641" class="external-link">#641</a>).</p></li>
+<li><p>Correct formatting for controlled fallbacks with <code>Sys.setenv(DUCKPLYR_FALLBACK_INFO = TRUE)</code>.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="documentation-1-0-1-9012">Documentation<a class="anchor" aria-label="anchor" href="#documentation-1-0-1-9012"></a></h3>
-<ul><li>Move package.</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.0.1.9011" id="duckplyr-1019011-2025-04-17">duckplyr 1.0.1.9011 (2025-04-17)<a class="anchor" aria-label="anchor" href="#duckplyr-1019011-2025-04-17"></a></h2>
-<div class="section level3">
-<h3 id="features-1-0-1-9011">Features<a class="anchor" aria-label="anchor" href="#features-1-0-1-9011"></a></h3>
-<ul><li>Register <code>has_children</code> and <code>has_viewer</code> methods for Positron (<a href="https://github.com/tidyverse/duckplyr/issues/678" class="external-link">#678</a>).</li>
-</ul></div>
-<div class="section level3">
-<h3 id="documentation-1-0-1-9011">Documentation<a class="anchor" aria-label="anchor" href="#documentation-1-0-1-9011"></a></h3>
-<ul><li>Add Posit’s ROR ID (<a href="https://github.com/tidyverse/duckplyr/issues/592" class="external-link">#592</a>).</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.0.1.9010" id="duckplyr-1019010-2025-04-12">duckplyr 1.0.1.9010 (2025-04-12)<a class="anchor" aria-label="anchor" href="#duckplyr-1019010-2025-04-12"></a></h2>
-<div class="section level3">
-<h3 id="features-1-0-1-9010">Features<a class="anchor" aria-label="anchor" href="#features-1-0-1-9010"></a></h3>
-<ul><li><p>Passthrough of functions prefixed with <code>dd$</code>, e.g., <code>dd$ROW()</code> will be translated as DuckDB’s <code>ROW()</code> function (<a href="https://github.com/tidyverse/duckplyr/issues/658" class="external-link">#658</a>).</p></li>
+<h3 id="features-1-0-99-9900">Features<a class="anchor" aria-label="anchor" href="#features-1-0-99-9900"></a></h3>
+<ul><li><p>Remove experimental flag (<a href="https://github.com/tidyverse/duckplyr/issues/682" class="external-link">#682</a>, <a href="https://github.com/tidyverse/duckplyr/issues/695" class="external-link">#695</a>).</p></li>
+<li><p>Register <code>has_children</code> and <code>has_viewer</code> methods for Positron (<a href="https://github.com/tidyverse/duckplyr/issues/678" class="external-link">#678</a>).</p></li>
+<li><p>Passthrough of functions prefixed with <code>dd$</code>, e.g., <code>dd$ROW()</code> will be translated as DuckDB’s <code>ROW()</code> function (<a href="https://github.com/tidyverse/duckplyr/issues/658" class="external-link">#658</a>).</p></li>
 <li><p>New <code><a href="../reference/as_tbl.html">as_tbl()</a></code> to convert to a dbplyr tbl object (<a href="https://github.com/tidyverse/duckplyr/issues/634" class="external-link">#634</a>, <a href="https://github.com/tidyverse/duckplyr/issues/685" class="external-link">#685</a>).</p></li>
-</ul></div>
-<div class="section level3">
-<h3 id="chore-1-0-1-9010">Chore<a class="anchor" aria-label="anchor" href="#chore-1-0-1-9010"></a></h3>
-<ul><li><p>Remove space at EOL.</p></li>
-<li><p>Bump required version of pillar.</p></li>
-</ul></div>
-<div class="section level3">
-<h3 id="documentation-1-0-1-9010">Documentation<a class="anchor" aria-label="anchor" href="#documentation-1-0-1-9010"></a></h3>
-<ul><li><p>Add <code><a href="../articles/duckdb.html">vignette("duckdb")</a></code> (<a href="https://github.com/tidyverse/duckplyr/issues/690" class="external-link">#690</a>).</p></li>
-<li><p>Add experimental badge.</p></li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.0.1.9009" id="duckplyr-1019009-2025-04-11">duckplyr 1.0.1.9009 (2025-04-11)<a class="anchor" aria-label="anchor" href="#duckplyr-1019009-2025-04-11"></a></h2>
-<div class="section level3">
-<h3 id="documentation-1-0-1-9009">Documentation<a class="anchor" aria-label="anchor" href="#documentation-1-0-1-9009"></a></h3>
-<ul><li>Verbose <code><a href="https://conflicted.r-lib.org/reference/conflict_prefer.html" class="external-link">conflict_prefer()</a></code> (<a href="https://github.com/tidyverse/duckplyr/issues/667" class="external-link">#667</a>, <a href="https://github.com/tidyverse/duckplyr/issues/684" class="external-link">#684</a>).</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.0.1.9008" id="duckplyr-1019008-2025-04-10">duckplyr 1.0.1.9008 (2025-04-10)<a class="anchor" aria-label="anchor" href="#duckplyr-1019008-2025-04-10"></a></h2>
-<div class="section level3">
-<h3 id="documentation-1-0-1-9008">Documentation<a class="anchor" aria-label="anchor" href="#documentation-1-0-1-9008"></a></h3>
-<ul><li>Typos + clarification edits to “large” vignette (<a href="https://github.com/mine-cetinkaya-rundel" class="external-link">@mine-cetinkaya-rundel</a>, <a href="https://github.com/tidyverse/duckplyr/issues/665" class="external-link">#665</a>).</li>
-</ul></div>
-<div class="section level3">
-<h3 id="testing-1-0-1-9008">Testing<a class="anchor" aria-label="anchor" href="#testing-1-0-1-9008"></a></h3>
-<ul><li>Snapshot updates for rcc-smoke (null) (<a href="https://github.com/tidyverse/duckplyr/issues/675" class="external-link">#675</a>).</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.0.1.9007" id="duckplyr-1019007-2025-04-02">duckplyr 1.0.1.9007 (2025-04-02)<a class="anchor" aria-label="anchor" href="#duckplyr-1019007-2025-04-02"></a></h2>
-<div class="section level3">
-<h3 id="features-1-0-1-9007">Features<a class="anchor" aria-label="anchor" href="#features-1-0-1-9007"></a></h3>
-<ul><li>Register Ark methods for Positron’s Variables Pane (<a href="https://github.com/DavisVaughan" class="external-link">@DavisVaughan</a>, <a href="https://github.com/tidyverse/duckplyr/issues/661" class="external-link">#661</a>).</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.0.1.9006" id="duckplyr-1019006-2025-03-27">duckplyr 1.0.1.9006 (2025-03-27)<a class="anchor" aria-label="anchor" href="#duckplyr-1019006-2025-03-27"></a></h2>
-<div class="section level3">
-<h3 id="features-1-0-1-9006">Features<a class="anchor" aria-label="anchor" href="#features-1-0-1-9006"></a></h3>
-<ul><li>Implement <code><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct()</a></code> as macro with support for <code>na.rm = TRUE</code> (<a href="https://github.com/joakimlinde" class="external-link">@joakimlinde</a>, <a href="https://github.com/tidyverse/duckplyr/issues/572" class="external-link">#572</a>, <a href="https://github.com/tidyverse/duckplyr/issues/655" class="external-link">#655</a>).</li>
-</ul></div>
-<div class="section level3">
-<h3 id="chore-1-0-1-9006">Chore<a class="anchor" aria-label="anchor" href="#chore-1-0-1-9006"></a></h3>
-<ul><li><p>Use roxyglobals from CRAN rather than GitHub (<a href="https://github.com/andreranza" class="external-link">@andreranza</a>, <a href="https://github.com/tidyverse/duckplyr/issues/659" class="external-link">#659</a>).</p></li>
-<li><p>Space at EOL.</p></li>
-</ul></div>
-<div class="section level3">
-<h3 id="documentation-1-0-1-9006">Documentation<a class="anchor" aria-label="anchor" href="#documentation-1-0-1-9006"></a></h3>
-<ul><li>Recommend <code><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak::pak()</a></code>.</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.0.1.9005" id="duckplyr-1019005-2025-03-12">duckplyr 1.0.1.9005 (2025-03-12)<a class="anchor" aria-label="anchor" href="#duckplyr-1019005-2025-03-12"></a></h2>
-<div class="section level3">
-<h3 id="features-1-0-1-9005">Features<a class="anchor" aria-label="anchor" href="#features-1-0-1-9005"></a></h3>
-<ul><li>Translate <code><a href="https://dplyr.tidyverse.org/reference/coalesce.html" class="external-link">dplyr::coalesce()</a></code>.</li>
-</ul></div>
-<div class="section level3">
-<h3 id="chore-1-0-1-9005">Chore<a class="anchor" aria-label="anchor" href="#chore-1-0-1-9005"></a></h3>
-<ul><li>Bring tools and patch up to date (<a href="https://github.com/joakimlinde" class="external-link">@joakimlinde</a>, <a href="https://github.com/tidyverse/duckplyr/issues/647" class="external-link">#647</a>).</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.0.1.9004" id="duckplyr-1019004-2025-03-11">duckplyr 1.0.1.9004 (2025-03-11)<a class="anchor" aria-label="anchor" href="#duckplyr-1019004-2025-03-11"></a></h2>
-<div class="section level3">
-<h3 id="chore-1-0-1-9004">Chore<a class="anchor" aria-label="anchor" href="#chore-1-0-1-9004"></a></h3>
-<ul><li>Internal <code><a href="../reference/new_relational.html">rel_to_df()</a></code> needs <code>prudence</code> argument (<a href="https://github.com/tidyverse/duckplyr/issues/644" class="external-link">#644</a>).</li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.0.1.9003" id="duckplyr-1019003-2025-03-10">duckplyr 1.0.1.9003 (2025-03-10)<a class="anchor" aria-label="anchor" href="#duckplyr-1019003-2025-03-10"></a></h2>
-<div class="section level3">
-<h3 id="bug-fixes-1-0-1-9003">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-1-9003"></a></h3>
-<ul><li>Joins no longer materialize the input data when the package is used with <code><a href="../reference/methods_overwrite.html">methods_overwrite()</a></code> or <code><a href="https://duckplyr.tidyverse.org">library(duckplyr)</a></code> (<a href="https://github.com/tidyverse/duckplyr/issues/641" class="external-link">#641</a>).</li>
-</ul></div>
-<div class="section level3">
-<h3 id="features-1-0-1-9003">Features<a class="anchor" aria-label="anchor" href="#features-1-0-1-9003"></a></h3>
-<ul><li><p><code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">compute()</a></code> does not have a fallback, failures are reported to the client (<a href="https://github.com/tidyverse/duckplyr/issues/637" class="external-link">#637</a>).</p></li>
+<li><p>Register Ark methods for Positron’s Variables Pane (<a href="https://github.com/DavisVaughan" class="external-link">@DavisVaughan</a>, <a href="https://github.com/tidyverse/duckplyr/issues/661" class="external-link">#661</a>).</p></li>
+<li><p>Implement <code><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct()</a></code> as macro with support for <code>na.rm = TRUE</code> (<a href="https://github.com/joakimlinde" class="external-link">@joakimlinde</a>, <a href="https://github.com/tidyverse/duckplyr/issues/572" class="external-link">#572</a>, <a href="https://github.com/tidyverse/duckplyr/issues/655" class="external-link">#655</a>).</p></li>
+<li><p>Translate <code><a href="https://dplyr.tidyverse.org/reference/coalesce.html" class="external-link">dplyr::coalesce()</a></code>.</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">compute()</a></code> does not have a fallback, failures are reported to the client (<a href="https://github.com/tidyverse/duckplyr/issues/637" class="external-link">#637</a>).</p></li>
 <li><p>Implement <code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head()</a></code> (<a href="https://github.com/tidyverse/duckplyr/issues/640" class="external-link">#640</a>).</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="chore-1-0-1-9003">Chore<a class="anchor" aria-label="anchor" href="#chore-1-0-1-9003"></a></h3>
-<ul><li>Fix sync scripts and add reproducible code (<a href="https://github.com/tidyverse/duckplyr/issues/639" class="external-link">#639</a>).</li>
+<h3 id="chore-1-0-99-9900">Chore<a class="anchor" aria-label="anchor" href="#chore-1-0-99-9900"></a></h3>
+<ul><li><p>Remove access of unknown variable.</p></li>
+<li><p>Sync.</p></li>
+<li><p>Remove superfluous check.</p></li>
+<li><p>Fix lints.</p></li>
+<li><p>Remove space at EOL.</p></li>
+<li><p>Bump required version of pillar.</p></li>
+<li><p>Use roxyglobals from CRAN rather than GitHub (<a href="https://github.com/andreranza" class="external-link">@andreranza</a>, <a href="https://github.com/tidyverse/duckplyr/issues/659" class="external-link">#659</a>).</p></li>
+<li><p>Space at EOL.</p></li>
+<li><p>Bring tools and patch up to date (<a href="https://github.com/joakimlinde" class="external-link">@joakimlinde</a>, <a href="https://github.com/tidyverse/duckplyr/issues/647" class="external-link">#647</a>).</p></li>
+<li><p>Internal <code><a href="../reference/new_relational.html">rel_to_df()</a></code> needs <code>prudence</code> argument (<a href="https://github.com/tidyverse/duckplyr/issues/644" class="external-link">#644</a>).</p></li>
+<li><p>Fix sync scripts and add reproducible code (<a href="https://github.com/tidyverse/duckplyr/issues/639" class="external-link">#639</a>).</p></li>
+<li><p>Check loadability of extensino in test (<a href="https://github.com/tidyverse/duckplyr/issues/636" class="external-link">#636</a>).</p></li>
 </ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.0.1.9002" id="duckplyr-1019002-2025-03-09">duckplyr 1.0.1.9002 (2025-03-09)<a class="anchor" aria-label="anchor" href="#duckplyr-1019002-2025-03-09"></a></h2>
 <div class="section level3">
-<h3 id="chore-1-0-1-9002">Chore<a class="anchor" aria-label="anchor" href="#chore-1-0-1-9002"></a></h3>
-<ul><li>Check loadability of extensino in test (<a href="https://github.com/tidyverse/duckplyr/issues/636" class="external-link">#636</a>).</li>
+<h3 id="continuous-integration-1-0-99-9900">Continuous integration<a class="anchor" aria-label="anchor" href="#continuous-integration-1-0-99-9900"></a></h3>
+<ul><li><p>Permissions, better tests for missing suggests, lints (<a href="https://github.com/tidyverse/duckplyr/issues/710" class="external-link">#710</a>).</p></li>
+<li><p>Only fail covr builds if token is given (<a href="https://github.com/tidyverse/duckplyr/issues/707" class="external-link">#707</a>).</p></li>
+<li><p>Always use <code>_R_CHECK_FORCE_SUGGESTS_=false</code> (<a href="https://github.com/tidyverse/duckplyr/issues/706" class="external-link">#706</a>).</p></li>
+<li><p>Correct installation of xml2 (<a href="https://github.com/tidyverse/duckplyr/issues/703" class="external-link">#703</a>).</p></li>
+<li><p>Add xml2 for covr, print testthat results (<a href="https://github.com/tidyverse/duckplyr/issues/701" class="external-link">#701</a>).</p></li>
+<li><p>Sync (<a href="https://github.com/tidyverse/duckplyr/issues/700" class="external-link">#700</a>).</p></li>
 </ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.0.1.9001" id="duckplyr-1019001-2025-02-28">duckplyr 1.0.1.9001 (2025-02-28)<a class="anchor" aria-label="anchor" href="#duckplyr-1019001-2025-02-28"></a></h2>
 <div class="section level3">
-<h3 id="fledge-1-0-1-9001">fledge<a class="anchor" aria-label="anchor" href="#fledge-1-0-1-9001"></a></h3>
-<ul><li>CRAN release v1.0.1 (<a href="https://github.com/tidyverse/duckplyr/issues/624" class="external-link">#624</a>).</li>
+<h3 id="documentation-1-0-99-9900">Documentation<a class="anchor" aria-label="anchor" href="#documentation-1-0-99-9900"></a></h3>
+<ul><li><p>Document <code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head()</a></code> as supported.</p></li>
+<li><p>Move package.</p></li>
+<li><p>Add Posit’s ROR ID (<a href="https://github.com/tidyverse/duckplyr/issues/592" class="external-link">#592</a>).</p></li>
+<li><p>Add <code><a href="../articles/duckdb.html">vignette("duckdb")</a></code> (<a href="https://github.com/tidyverse/duckplyr/issues/690" class="external-link">#690</a>).</p></li>
+<li><p>Add experimental badge.</p></li>
+<li><p>Verbose <code><a href="https://conflicted.r-lib.org/reference/conflict_prefer.html" class="external-link">conflict_prefer()</a></code> (<a href="https://github.com/tidyverse/duckplyr/issues/667" class="external-link">#667</a>, <a href="https://github.com/tidyverse/duckplyr/issues/684" class="external-link">#684</a>).</p></li>
+<li><p>Typos + clarification edits to “large” vignette (<a href="https://github.com/mine-cetinkaya-rundel" class="external-link">@mine-cetinkaya-rundel</a>, <a href="https://github.com/tidyverse/duckplyr/issues/665" class="external-link">#665</a>).</p></li>
+<li><p>Recommend <code><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak::pak()</a></code>.</p></li>
 </ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.0.1.9000" id="duckplyr-1019000-2025-02-22">duckplyr 1.0.1.9000 (2025-02-22)<a class="anchor" aria-label="anchor" href="#duckplyr-1019000-2025-02-22"></a></h2>
 <div class="section level3">
-<h3 id="bug-fixes-1-0-1-9000">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-1-9000"></a></h3>
-<ul><li>Correct formatting for controlled fallbacks with <code>Sys.setenv(DUCKPLYR_FALLBACK_INFO = TRUE)</code>.</li>
+<h3 id="testing-1-0-99-9900">Testing<a class="anchor" aria-label="anchor" href="#testing-1-0-99-9900"></a></h3>
+<ul><li><p>Skip tests using <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep()</a></code> or <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub()</a></code> on CRAN.</p></li>
+<li><p>Snapshot updates for rcc-smoke (null) (<a href="https://github.com/tidyverse/duckplyr/issues/675" class="external-link">#675</a>).</p></li>
 </ul></div>
 </div>
     <div class="section level2">
