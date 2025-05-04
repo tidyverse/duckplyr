@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.0.99.9902 (2025-05-04)
+
+## Continuous integration
+
+- Enhance permissions for workflow (#717).
+
+
 # duckplyr 1.0.99.9901 (2025-05-02)
 
 ## Chore
