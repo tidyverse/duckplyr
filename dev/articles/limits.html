@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.99.9901</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.99.9902</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -129,8 +129,8 @@ be bypassed, see <code><a href="../articles/duckdb.html">vignette("duckdb")</a><
 as input nor as a result.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `duckplyr::duckdb_tibble()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't convert empty data frame to relational.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `duckdb_rel_from_df()` at duckplyr/R/duckplyr_df.R:20:5:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> rel_from_df: Can't convert empty data frame to relational.</span></span>
 <span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, .prudence <span class="op">=</span> <span class="st">"stingy"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">a</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select()`:</span></span></span>
@@ -478,7 +478,7 @@ a constant with up to 100 values:</p>
 <span><span class="co">#&gt; │          ORDER_BY         │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │      dataframe_42_42      │</span></span>
-<span><span class="co">#&gt; │      32008990.a DESC      │</span></span>
+<span><span class="co">#&gt; │       4391854.a DESC      │</span></span>
 <span><span class="co">#&gt; └-------------┬-------------┘</span></span>
 <span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │     R_DATAFRAME_SCAN      │</span></span>
@@ -528,7 +528,7 @@ default.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 1 variable</span></span></span>
 <span><span class="co">#&gt;   `paste(day, collapse = " ")`                                         </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                                </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 5 9 11 14 15 16 17 22 26 30 31 1 7 8 13 19 21 25 27 2 10 18 28 29 3 …</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 1 7 8 13 19 21 25 27 3 4 6 12 20 23 24 5 9 11 14 15 16 17 22 26 30 3…</span></span>
 <span></span>
 <span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/flights_df.html">flights_df</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -581,7 +581,7 @@ work.</p>
 <span><span class="co">#&gt; │          ORDER_BY         │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │      dataframe_42_42      │</span></span>
-<span><span class="co">#&gt; │ 42.___row_number ASC │</span></span>
+<span><span class="co">#&gt; │ 42.___row_number ASC│</span></span>
 <span><span class="co">#&gt; └-------------┬-------------┘</span></span>
 <span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │         PROJECTION        │</span></span>
