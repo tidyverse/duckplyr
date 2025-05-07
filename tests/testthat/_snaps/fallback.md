@@ -76,7 +76,7 @@
       # A duckplyr data frame: 2 variables
     Message
       i dplyr fallback recorded
-        {"version":"0.3.1","message":"Can't convert columns of class <ordered/factor> to relational. Affected column: `...2`.","name":"head","x":{"...1":"Date","...2":"ordered/factor"},"args":{"n":21}}
+        {"version":"0.3.1","message":"Can't convert column `...2` to relational.","name":"head","x":{"...1":"Date","...2":"ordered/factor"},"args":{"n":21}}
     Output
         a          b    
         <date>     <ord>
@@ -151,7 +151,7 @@
     Code
       duckdb_tibble(a = c(x = 1))
     Condition
-      Error in `duckdb_tibble()`:
+      Error in `duckdb_rel_from_df()`:
       ! Can't convert named vectors to relational. Affected column: `a`.
 
 ---
@@ -159,16 +159,8 @@
     Code
       duckdb_tibble(a = matrix(1:4, ncol = 2))
     Condition
-      Error in `duckdb_tibble()`:
+      Error in `duckdb_rel_from_df()`:
       ! Can't convert arrays or matrices to relational. Affected column: `a`.
-
-# list column
-
-    Code
-      duckdb_tibble(a = 1, b = 2, c = list(3))
-    Condition
-      Error in `duckdb_tibble()`:
-      ! Can't convert columns of class <list> to relational. Affected column: `c`.
 
 # __row_number
 
