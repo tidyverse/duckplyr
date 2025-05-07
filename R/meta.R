@@ -234,7 +234,7 @@ meta_rel_register <- function(rel, rel_expr) {
   # https://github.com/cynkra/constructive/issues/102
   meta_record(constructive::deparse_call(expr(!!name <- !!rel_expr)))
 
-  obj <- list(rel = rel, name = name, df = df)
+  obj <- list(rel = rel, name = name)
   hash <- deparse(rel)
 
   rel_cache$set(hash, obj)
