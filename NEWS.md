@@ -11,7 +11,7 @@ See `vignette("duckdb")` for details.
 
 - New `as_tbl()` to convert to a dbplyr tbl object (#634, #685).
 
-- Register Ark methods for Positron's Variables Pane (@DavisVaughan, #661, #678).
+- Register Ark methods for Positron's "Variables" pane (@DavisVaughan, #661, #678). DuckDB tibbles are no longer displayed as data frames in the "Variables" pane due to a limitation in Positron. Use `collect()` to convert them to data frames if you rely on the viewer functionality.
 
 - Translate `n_distinct()` as macro with support for `na.rm = TRUE` (@joakimlinde, #572, #655).
 
