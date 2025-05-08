@@ -1,42 +1,27 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# duckplyr 1.0.99.9904 (2025-05-08)
+# duckplyr 1.1.0 (2025-05-08)
 
-## Chore
+This release improves compatibility with dbplyr and DuckDB.
+See `vignette("duckdb")` for details.
 
-- Move compat checks back to duckplyr.
+## Features
 
+- Pass functions prefixed with `dd$` directly to DuckDB, e.g., `dd$ROW()` will be translated as DuckDB's `ROW()` function (#658).
 
-# duckplyr 1.0.99.9903 (2025-05-08)
+- New `as_tbl()` to convert to a dbplyr tbl object (#634, #685).
 
-## Chore
+- Register Ark methods for Positron's "Variables" pane (@DavisVaughan, #661, #678). DuckDB tibbles are no longer displayed as data frames in the "Variables" pane due to a limitation in Positron. Use `collect()` to convert them to data frames if you rely on the viewer functionality.
 
-- Move compatibility checks to duckdb (#699).
+- Translate `n_distinct()` as macro with support for `na.rm = TRUE` (@joakimlinde, #572, #655).
 
+- Translate `coalesce()`.
 
-# duckplyr 1.0.99.9902 (2025-05-04)
+- `compute()` does not have a fallback, failures are reported to the client (#637).
 
-## Continuous integration
-
-- Enhance permissions for workflow (#717).
-
-
-# duckplyr 1.0.99.9901 (2025-05-02)
-
-## Chore
-
-- Bump duckdb dependency.
-
-
-# duckplyr 1.0.99.9900 (2025-04-29)
-
-## fledge
-
-- CRAN release v1.0.1 (#624).
+- Implement `slice_head()` (#640).
 
 ## Bug fixes
-
-- Syntax in code generation.
 
 - Set functions like `union()` no longer trigger materialization (#654, #692).
 
@@ -44,43 +29,11 @@
 
 - Correct formatting for controlled fallbacks with `Sys.setenv(DUCKPLYR_FALLBACK_INFO = TRUE)`.
 
-## Features
-
-- Remove experimental flag (#682, #695).
-
-- Register `has_children` and `has_viewer` methods for Positron (#678).
-
-- Passthrough of functions prefixed with `dd$`, e.g., `dd$ROW()` will be translated as DuckDB's `ROW()` function (#658).
-
-- New `as_tbl()` to convert to a dbplyr tbl object (#634, #685).
-
-- Register Ark methods for Positron's Variables Pane (@DavisVaughan, #661).
-
-- Implement `n_distinct()` as macro with support for `na.rm = TRUE` (@joakimlinde, #572, #655).
-
-- Translate `dplyr::coalesce()`.
-
-- `compute()` does not have a fallback, failures are reported to the client (#637).
-
-- Implement `slice_head()` (#640).
-
 ## Chore
 
-- Remove access of unknown variable.
-
-- Sync.
-
-- Remove superfluous check.
-
-- Fix lints.
-
-- Remove space at EOL.
-
-- Bump required version of pillar.
+- Bump duckdb and pillar dependencies.
 
 - Use roxyglobals from CRAN rather than GitHub (@andreranza, #659).
-
-- Space at EOL.
 
 - Bring tools and patch up to date (@joakimlinde, #647).
 
@@ -88,27 +41,11 @@
 
 - Fix sync scripts and add reproducible code (#639).
 
-- Check loadability of extensino in test (#636).
-
-## Continuous integration
-
-- Permissions, better tests for missing suggests, lints (#710).
-
-- Only fail covr builds if token is given (#707).
-
-- Always use `_R_CHECK_FORCE_SUGGESTS_=false` (#706).
-
-- Correct installation of xml2 (#703).
-
-- Add xml2 for covr, print testthat results (#701).
-
-- Sync (#700).
+- Check loadability of extensions in test (#636).
 
 ## Documentation
 
 - Document `slice_head()` as supported.
-
-- Move package.
 
 - Add Posit's ROR ID (#592).
 
@@ -120,13 +57,9 @@
 
 - Typos + clarification edits to "large" vignette (@mine-cetinkaya-rundel, #665).
 
-- Recommend `pak::pak()`.
-
 ## Testing
 
 - Skip tests using `grep()` or `sub()` on CRAN.
-
-- Snapshot updates for rcc-smoke (null) (#675).
 
 
 # duckplyr 1.0.1 (2025-02-21)
