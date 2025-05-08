@@ -1,34 +1,6 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# duckplyr 1.0.99.9904 (2025-05-08)
-
-## Chore
-
-- Move compat checks back to duckplyr.
-
-
-# duckplyr 1.0.99.9903 (2025-05-08)
-
-## Chore
-
-- Move compatibility checks to duckdb (#699).
-
-
-# duckplyr 1.0.99.9902 (2025-05-04)
-
-## Continuous integration
-
-- Enhance permissions for workflow (#717).
-
-
-# duckplyr 1.0.99.9901 (2025-05-02)
-
-## Chore
-
-- Bump duckdb dependency.
-
-
-# duckplyr 1.0.99.9900 (2025-04-29)
+# duckplyr 1.1.0 (2025-05-08)
 
 ## fledge
 
@@ -66,6 +38,12 @@
 
 ## Chore
 
+- Move compat checks back to duckplyr.
+
+- Move compatibility checks to duckdb (#699).
+
+- Bump duckdb dependency.
+
 - Remove access of unknown variable.
 
 - Sync.
@@ -91,6 +69,8 @@
 - Check loadability of extensino in test (#636).
 
 ## Continuous integration
+
+- Enhance permissions for workflow (#717).
 
 - Permissions, better tests for missing suggests, lints (#710).
 
