@@ -5,6 +5,7 @@
 <url><loc>https://duckplyr.tidyverse.org/LICENSE-text.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/LICENSE.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/articles/developers.html</loc></url>
+<url><loc>https://duckplyr.tidyverse.org/articles/duckdb.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/articles/extend.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/articles/fallback.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/articles/index.html</loc></url>
@@ -18,6 +19,7 @@
 <url><loc>https://duckplyr.tidyverse.org/reference/anti_join.duckplyr_df.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/reference/arrange.duckplyr_df.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/reference/as_duckplyr_df.html</loc></url>
+<url><loc>https://duckplyr.tidyverse.org/reference/as_tbl.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/reference/collect.duckplyr_df.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/reference/compute.duckplyr_df.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/reference/compute_csv.html</loc></url>
@@ -59,6 +61,7 @@
 <url><loc>https://duckplyr.tidyverse.org/reference/select.duckplyr_df.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/reference/semi_join.duckplyr_df.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/reference/setdiff.duckplyr_df.html</loc></url>
+<url><loc>https://duckplyr.tidyverse.org/reference/slice_head.duckplyr_df.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/reference/stats_show.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/reference/summarise.duckplyr_df.html</loc></url>
 <url><loc>https://duckplyr.tidyverse.org/reference/symdiff.duckplyr_df.html</loc></url>
