@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.0.99.9904 (2025-05-08)
+
+## Chore
+
+- Move compat checks back to duckplyr.
+
+
 # duckplyr 1.0.99.9903 (2025-05-08)
 
 ## Chore
