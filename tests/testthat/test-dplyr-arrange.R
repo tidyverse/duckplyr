@@ -53,6 +53,7 @@ test_that("duckplyr_arrange() gives meaningful errors", {
 # column types ----------------------------------------------------------
 
 test_that("arrange handles list columns (#282)", {
+  skip("TODO duckdb")
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   # no intrinsic ordering
   df <- tibble(x = 1:3, y = list(3, 2, 1))
