@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.1.0.9000 (2025-05-09)
+
+- Switching to development version.
+
+
 # duckplyr 1.1.0 (2025-05-08)
 
 This release improves compatibility with dbplyr and DuckDB.
