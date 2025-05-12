@@ -1,133 +1,70 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# duckplyr 1.0.1.9011 (2025-04-17)
+# duckplyr 1.1.0.9000 (2025-05-09)
+
+- Switching to development version.
+
+
+# duckplyr 1.1.0 (2025-05-08)
+
+This release improves compatibility with dbplyr and DuckDB.
+See `vignette("duckdb")` for details.
 
 ## Features
 
-- Register `has_children` and `has_viewer` methods for Positron (#678).
-
-## Documentation
-
-- Add Posit's ROR ID (#592).
-
-
-# duckplyr 1.0.1.9010 (2025-04-12)
-
-## Features
-
-- Passthrough of functions prefixed with `dd$`, e.g., `dd$ROW()` will be translated as DuckDB's `ROW()` function (#658).
+- Pass functions prefixed with `dd$` directly to DuckDB, e.g., `dd$ROW()` will be translated as DuckDB's `ROW()` function (#658).
 
 - New `as_tbl()` to convert to a dbplyr tbl object (#634, #685).
 
-## Chore
+- Register Ark methods for Positron's "Variables" pane (@DavisVaughan, #661, #678). DuckDB tibbles are no longer displayed as data frames in the "Variables" pane due to a limitation in Positron. Use `collect()` to convert them to data frames if you rely on the viewer functionality.
 
-- Remove space at EOL.
+- Translate `n_distinct()` as macro with support for `na.rm = TRUE` (@joakimlinde, #572, #655).
 
-- Bump required version of pillar.
-
-## Documentation
-
-- Add `vignette("duckdb")` (#690).
-
-- Add experimental badge.
-
-
-# duckplyr 1.0.1.9009 (2025-04-11)
-
-## Documentation
-
-- Verbose `conflict_prefer()` (#667, #684).
-
-
-# duckplyr 1.0.1.9008 (2025-04-10)
-
-## Documentation
-
-- Typos + clarification edits to "large" vignette (@mine-cetinkaya-rundel, #665).
-
-## Testing
-
-- Snapshot updates for rcc-smoke (null) (#675).
-
-
-# duckplyr 1.0.1.9007 (2025-04-02)
-
-## Features
-
-- Register Ark methods for Positron's Variables Pane (@DavisVaughan, #661).
-
-
-# duckplyr 1.0.1.9006 (2025-03-27)
-
-## Features
-
-- Implement `n_distinct()` as macro with support for `na.rm = TRUE` (@joakimlinde, #572, #655).
-
-## Chore
-
-- Use roxyglobals from CRAN rather than GitHub (@andreranza, #659).
-
-- Space at EOL.
-
-## Documentation
-
-- Recommend `pak::pak()`.
-
-
-# duckplyr 1.0.1.9005 (2025-03-12)
-
-## Features
-
-- Translate `dplyr::coalesce()`.
-
-## Chore
-
-- Bring tools and patch up to date (@joakimlinde, #647).
-
-
-# duckplyr 1.0.1.9004 (2025-03-11)
-
-## Chore
-
-- Internal `rel_to_df()` needs `prudence` argument (#644).
-
-
-# duckplyr 1.0.1.9003 (2025-03-10)
-
-## Bug fixes
-
-- Joins no longer materialize the input data when the package is used with `methods_overwrite()` or `library(duckplyr)` (#641).
-
-## Features
+- Translate `coalesce()`.
 
 - `compute()` does not have a fallback, failures are reported to the client (#637).
 
 - Implement `slice_head()` (#640).
 
+## Bug fixes
+
+- Set functions like `union()` no longer trigger materialization (#654, #692).
+
+- Joins no longer materialize the input data when the package is used with `methods_overwrite()` or `library(duckplyr)` (#641).
+
+- Correct formatting for controlled fallbacks with `Sys.setenv(DUCKPLYR_FALLBACK_INFO = TRUE)`.
+
 ## Chore
+
+- Bump duckdb and pillar dependencies.
+
+- Use roxyglobals from CRAN rather than GitHub (@andreranza, #659).
+
+- Bring tools and patch up to date (@joakimlinde, #647).
+
+- Internal `rel_to_df()` needs `prudence` argument (#644).
 
 - Fix sync scripts and add reproducible code (#639).
 
+- Check loadability of extensions in test (#636).
 
-# duckplyr 1.0.1.9002 (2025-03-09)
+## Documentation
 
-## Chore
+- Document `slice_head()` as supported.
 
-- Check loadability of extensino in test (#636).
+- Add Posit's ROR ID (#592).
 
+- Add `vignette("duckdb")` (#690).
 
-# duckplyr 1.0.1.9001 (2025-02-28)
+- Add experimental badge.
 
-## fledge
+- Verbose `conflict_prefer()` (#667, #684).
 
-- CRAN release v1.0.1 (#624).
+- Typos + clarification edits to "large" vignette (@mine-cetinkaya-rundel, #665).
 
+## Testing
 
-# duckplyr 1.0.1.9000 (2025-02-22)
-
-## Bug fixes
-
-- Correct formatting for controlled fallbacks with `Sys.setenv(DUCKPLYR_FALLBACK_INFO = TRUE)`.
+- Skip tests using `grep()` or `sub()` on CRAN.
 
 
 # duckplyr 1.0.1 (2025-02-21)

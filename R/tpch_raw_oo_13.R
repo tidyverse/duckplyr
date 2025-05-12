@@ -3,7 +3,7 @@
 tpch_raw_oo_13 <- function(con, experimental) {
   df1 <- orders
   "filter"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "filter"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -69,14 +69,7 @@ tpch_raw_oo_13 <- function(con, experimental) {
         list(
           duckdb$expr_function(
             "grepl",
-            list(
-              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                duckdb$expr_constant("special.*?requests", experimental = experimental)
-              } else {
-                duckdb$expr_constant("special.*?requests")
-              },
-              duckdb$expr_reference("o_comment")
-            )
+            list(duckdb$expr_constant("special.*?requests"), duckdb$expr_reference("o_comment"))
           )
         )
       )
@@ -137,7 +130,7 @@ tpch_raw_oo_13 <- function(con, experimental) {
   )
   df2 <- customer
   "left_join"
-  rel6 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel6 <- duckdb$rel_from_df(con, df2)
   "left_join"
   rel7 <- duckdb$rel_set_alias(rel6, "lhs")
   "left_join"
@@ -452,7 +445,7 @@ tpch_raw_oo_13 <- function(con, experimental) {
     groups = list(duckdb$expr_reference("c_custkey")),
     aggregates = list(
       {
-        tmp_expr <- duckdb$expr_function("min", list(duckdb$expr_reference("___row_number")))
+        tmp_expr <- duckdb$expr_function("___min_na", list(duckdb$expr_reference("___row_number")))
         duckdb$expr_set_alias(tmp_expr, "___row_number")
         tmp_expr
       },
@@ -462,19 +455,7 @@ tpch_raw_oo_13 <- function(con, experimental) {
           list(
             duckdb$expr_function(
               "if_else",
-              list(
-                duckdb$expr_function("is.na", list(duckdb$expr_reference("o_orderkey"))),
-                if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                  duckdb$expr_constant(0L, experimental = experimental)
-                } else {
-                  duckdb$expr_constant(0L)
-                },
-                if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                  duckdb$expr_constant(1L, experimental = experimental)
-                } else {
-                  duckdb$expr_constant(1L)
-                }
-              )
+              list(duckdb$expr_function("is.na", list(duckdb$expr_reference("o_orderkey"))), duckdb$expr_constant(0L), duckdb$expr_constant(1L))
             )
           )
         )
@@ -528,7 +509,7 @@ tpch_raw_oo_13 <- function(con, experimental) {
     groups = list(duckdb$expr_reference("c_count")),
     aggregates = list(
       {
-        tmp_expr <- duckdb$expr_function("min", list(duckdb$expr_reference("___row_number")))
+        tmp_expr <- duckdb$expr_function("___min_na", list(duckdb$expr_reference("___row_number")))
         duckdb$expr_set_alias(tmp_expr, "___row_number")
         tmp_expr
       },

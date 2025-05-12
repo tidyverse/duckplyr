@@ -119,7 +119,7 @@ The `dd` prefix has been picked for the following reasons:
 A prefix is necessary to avoid name clashes with existing R functions.
 If this is used widely, large-scale code analysis may help prioritize the translation of functions that are not yet supported by duckplyr.
 
-The [dd package](https://github.com/krlmlr/dd), when attached, will provide a `dd` object containing many known DuckDB functions.
+The [dd package](https://github.com/cynkra/dd), when attached, will provide a `dd` object containing many known DuckDB functions.
 This adds support for autocomplete:
 
 ![Screenshot for autocomplete with the dd package](dd.png)

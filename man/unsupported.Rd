@@ -38,7 +38,6 @@ For these verbs, duckplyr will fall back to dplyr.
 \item \code{\link[dplyr:rows]{dplyr::rows_upsert()}}
 \item \code{\link[dplyr:rowwise]{dplyr::rowwise()}}
 \item \code{\link[generics:setops]{generics::setequal()}}
-\item \code{\link[dplyr:slice]{dplyr::slice_head()}}
 \item \code{\link[dplyr:slice]{dplyr::slice_sample()}}
 \item \code{\link[dplyr:slice]{dplyr::slice_tail()}}
 \item \code{\link[dplyr:slice]{dplyr::slice()}}

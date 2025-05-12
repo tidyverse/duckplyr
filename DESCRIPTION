@@ -1,7 +1,7 @@
 Type: Package
 Package: duckplyr
 Title: A 'DuckDB'-Backed Version of 'dplyr'
-Version: 1.0.1.9011
+Version: 1.1.0.9000
 Authors@R: c(
     person("Hannes", "Mühleisen", role = "aut",
            comment = c(ORCID = "0000-0001-8552-0029")),
@@ -23,7 +23,7 @@ Imports:
     cli,
     collections,
     DBI,
-    duckdb (>= 1.2.1),
+    duckdb (>= 1.2.2),
     glue,
     jsonlite,
     lifecycle,

@@ -3,7 +3,7 @@
 tpch_raw_oo_09 <- function(con, experimental) {
   df1 <- part
   "select"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "select"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -45,17 +45,7 @@ tpch_raw_oo_09 <- function(con, experimental) {
   rel4 <- duckdb$rel_filter(
     rel3,
     list(
-      duckdb$expr_function(
-        "grepl",
-        list(
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant("green", experimental = experimental)
-          } else {
-            duckdb$expr_constant("green")
-          },
-          duckdb$expr_reference("p_name")
-        )
-      )
+      duckdb$expr_function("grepl", list(duckdb$expr_constant("green"), duckdb$expr_reference("p_name")))
     )
   )
   "filter"
@@ -89,7 +79,7 @@ tpch_raw_oo_09 <- function(con, experimental) {
   )
   df2 <- partsupp
   "select"
-  rel8 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel8 <- duckdb$rel_from_df(con, df2)
   "select"
   rel9 <- duckdb$rel_project(
     rel8,
@@ -200,7 +190,7 @@ tpch_raw_oo_09 <- function(con, experimental) {
   )
   df3 <- supplier
   "select"
-  rel17 <- duckdb$rel_from_df(con, df3, experimental = experimental)
+  rel17 <- duckdb$rel_from_df(con, df3)
   "select"
   rel18 <- duckdb$rel_project(
     rel17,
@@ -219,7 +209,7 @@ tpch_raw_oo_09 <- function(con, experimental) {
   )
   df4 <- nation
   "select"
-  rel19 <- duckdb$rel_from_df(con, df4, experimental = experimental)
+  rel19 <- duckdb$rel_from_df(con, df4)
   "select"
   rel20 <- duckdb$rel_project(
     rel19,
@@ -438,7 +428,7 @@ tpch_raw_oo_09 <- function(con, experimental) {
   )
   df5 <- lineitem
   "select"
-  rel36 <- duckdb$rel_from_df(con, df5, experimental = experimental)
+  rel36 <- duckdb$rel_from_df(con, df5)
   "select"
   rel37 <- duckdb$rel_project(
     rel36,
@@ -662,7 +652,7 @@ tpch_raw_oo_09 <- function(con, experimental) {
   )
   df6 <- orders
   "select"
-  rel46 <- duckdb$rel_from_df(con, df6, experimental = experimental)
+  rel46 <- duckdb$rel_from_df(con, df6)
   "select"
   rel47 <- duckdb$rel_project(
     rel46,
@@ -926,17 +916,7 @@ tpch_raw_oo_09 <- function(con, experimental) {
         tmp_expr <- duckdb$expr_function(
           "r_base::as.integer",
           list(
-            duckdb$expr_function(
-              "strftime",
-              list(
-                duckdb$expr_reference("o_orderdate"),
-                if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                  duckdb$expr_constant("%Y", experimental = experimental)
-                } else {
-                  duckdb$expr_constant("%Y")
-                }
-              )
-            )
+            duckdb$expr_function("strftime", list(duckdb$expr_reference("o_orderdate"), duckdb$expr_constant("%Y")))
           )
         )
         duckdb$expr_set_alias(tmp_expr, "o_year")
@@ -996,17 +976,7 @@ tpch_raw_oo_09 <- function(con, experimental) {
               "*",
               list(
                 duckdb$expr_reference("l_extendedprice"),
-                duckdb$expr_function(
-                  "-",
-                  list(
-                    if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                      duckdb$expr_constant(1, experimental = experimental)
-                    } else {
-                      duckdb$expr_constant(1)
-                    },
-                    duckdb$expr_reference("l_discount")
-                  )
-                )
+                duckdb$expr_function("-", list(duckdb$expr_constant(1), duckdb$expr_reference("l_discount")))
               )
             ),
             duckdb$expr_function(
@@ -1073,7 +1043,7 @@ tpch_raw_oo_09 <- function(con, experimental) {
     groups = list(duckdb$expr_reference("nation"), duckdb$expr_reference("o_year")),
     aggregates = list(
       {
-        tmp_expr <- duckdb$expr_function("min", list(duckdb$expr_reference("___row_number")))
+        tmp_expr <- duckdb$expr_function("___min_na", list(duckdb$expr_reference("___row_number")))
         duckdb$expr_set_alias(tmp_expr, "___row_number")
         tmp_expr
       },
