@@ -12,16 +12,6 @@
 #' @param .data A lazy duckplyr frame or a data frame.
 #' @return A dbplyr table.
 #' @export
-#' @examplesIf requireNamespace("dbplyr", quietly = TRUE)
-#' df <- duckdb_tibble(a = 1L)
-#' df
-#'
-#' tbl <- as_tbl(df)
-#' tbl
-#'
-#' tbl %>%
-#'   mutate(b = sql("a + 1")) %>%
-#'   as_duckdb_tibble()
 as_tbl <- function(.data) {
   check_installed("dbplyr")
 
