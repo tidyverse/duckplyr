@@ -159,20 +159,6 @@ executed by the relational object.
 to be used by \code{\link[=colnames]{colnames()}}.
 }
 \examples{
-\dontshow{if (requireNamespace("dplyr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
-rel_join.dfrel <- function(left, right, conds, join, ...) {
-  left_df <- unclass(left)[[1]]
-  right_df <- unclass(right)[[1]]
-
-  # A real implementation would evaluate the expressions
-  # defined by the conds argument,
-  # use different join types based on the join argument,
-  # and implement the join itself instead of relaying to left_join().
-  new_dfrel(dplyr::left_join(left_df, right_df))
-}
-
-rel_join(new_dfrel(data.frame(mpg = 21)), mtcars_rel)
-\dontshow{\}) # examplesIf}
 
 rel_limit.dfrel <- function(rel, n, ...) {
   df <- unclass(rel)[[1]]

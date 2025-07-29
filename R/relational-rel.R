@@ -117,19 +117,6 @@ rel_order <- function(rel, orders, ascending, ...) {
 #' @param join_ref_type The ref type of join.
 #' @rdname new_relational
 #' @export
-#' @examplesIf requireNamespace("dplyr", quietly = TRUE)
-#' rel_join.dfrel <- function(left, right, conds, join, ...) {
-#'   left_df <- unclass(left)[[1]]
-#'   right_df <- unclass(right)[[1]]
-#'
-#'   # A real implementation would evaluate the expressions
-#'   # defined by the conds argument,
-#'   # use different join types based on the join argument,
-#'   # and implement the join itself instead of relaying to left_join().
-#'   new_dfrel(dplyr::left_join(left_df, right_df))
-#' }
-#'
-#' rel_join(new_dfrel(data.frame(mpg = 21)), mtcars_rel)
 rel_join <- function(left,
                      right,
                      conds,
