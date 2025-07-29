@@ -17,14 +17,6 @@ details.}
 This is a method for the \code{\link[dplyr:compute]{dplyr::collect()}} generic.
 \code{collect()} converts the input to a tibble, materializing any lazy operations.
 }
-\examples{
-library(duckplyr)
-df <- duckdb_tibble(x = c(1, 2), .lazy = TRUE)
-df
-try(print(df$x))
-df <- collect(df)
-df
-}
 \seealso{
 \code{\link[dplyr:compute]{dplyr::collect()}}
 }
