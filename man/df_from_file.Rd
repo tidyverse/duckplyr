@@ -86,24 +86,6 @@ An existing file will be overwritten.
 This function requires duckdb >= 0.10.0.
 }
 \examples{
-# Create simple CSV file
-path <- tempfile("duckplyr_test_", fileext = ".csv")
-write.csv(data.frame(a = 1:3, b = letters[4:6]), path, row.names = FALSE)
-
-# Reading is immediate
-df <- df_from_csv(path)
-
-# Materialization only upon access
-names(df)
-df$a
-
-# Return as tibble, specify column types:
-df_from_file(
-  path,
-  "read_csv",
-  options = list(delim = ",", types = list(c("DOUBLE", "VARCHAR"))),
-  class = class(tibble())
-)
 
 # Read multiple file at once
 path2 <- tempfile("duckplyr_test_", fileext = ".csv")
