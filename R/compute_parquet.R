@@ -17,13 +17,6 @@
 #' @return A duckplyr frame.
 #'
 #' @export
-#' @examples
-#' library(duckplyr)
-#' df <- data.frame(x = c(1, 2))
-#' df <- mutate(df, y = 2)
-#' path <- tempfile(fileext = ".parquet")
-#' df <- compute_parquet(df, path)
-#' explain(df)
 #' @seealso [compute_csv()], [compute.duckplyr_df()], [dplyr::collect()]
 compute_parquet <- function(x, path, ..., prudence = NULL, options = NULL) {
   check_dots_empty()
