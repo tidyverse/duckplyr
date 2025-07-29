@@ -8,9 +8,6 @@
 
 #'
 #' @inheritParams dplyr::transmute
-#' @examples
-#' library(duckplyr)
-#' transmute(mtcars, mpg2 = mpg*2)
 #' @seealso [dplyr::transmute()]
 #' @rdname transmute.duckplyr_df
 #' @name transmute.duckplyr_df

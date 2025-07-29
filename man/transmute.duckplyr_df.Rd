@@ -39,10 +39,6 @@ There is no DuckDB translation in \code{transmute.duckplyr_df()}
 These features fall back to \code{\link[dplyr:transmute]{dplyr::transmute()}}, see \code{vignette("fallback")} for details.
 }
 
-\examples{
-library(duckplyr)
-transmute(mtcars, mpg2 = mpg*2)
-}
 \seealso{
 \code{\link[dplyr:transmute]{dplyr::transmute()}}
 }
