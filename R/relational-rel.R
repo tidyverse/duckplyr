@@ -100,20 +100,6 @@ rel_aggregate <- function(rel, groups, aggregates, ...) {
 #' @param ascending A logical vector describing the sort order.
 #' @rdname new_relational
 #' @export
-#' @examples
-#'
-#' rel_order.dfrel <- function(rel, exprs, ...) {
-#'   df <- unclass(rel)[[1]]
-#'
-#'   # A real implementation would evaluate the expressions defined
-#'   # by the exprs argument
-#'   new_dfrel(df[order(df[[1]]), ])
-#' }
-#'
-#' rel_order(
-#'   mtcars_rel,
-#'   list(relexpr_reference("mpg"))
-#' )
 rel_order <- function(rel, orders, ascending, ...) {
   rel_stats_env$rel_order <- (rel_stats_env$rel_order %||% 0L) + 1L
   UseMethod("rel_order")

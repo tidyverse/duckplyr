@@ -159,19 +159,6 @@ executed by the relational object.
 to be used by \code{\link[=colnames]{colnames()}}.
 }
 \examples{
-
-rel_order.dfrel <- function(rel, exprs, ...) {
-  df <- unclass(rel)[[1]]
-
-  # A real implementation would evaluate the expressions defined
-  # by the exprs argument
-  new_dfrel(df[order(df[[1]]), ])
-}
-
-rel_order(
-  mtcars_rel,
-  list(relexpr_reference("mpg"))
-)
 \dontshow{if (requireNamespace("dplyr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 rel_join.dfrel <- function(left, right, conds, join, ...) {
   left_df <- unclass(left)[[1]]
