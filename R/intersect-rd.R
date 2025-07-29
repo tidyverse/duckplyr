@@ -5,10 +5,6 @@
 #' `intersect(x, y)` finds all rows in both `x` and `y`.
 #'
 #' @inheritParams dplyr::intersect
-#' @examples
-#' df1 <- duckdb_tibble(x = 1:3)
-#' df2 <- duckdb_tibble(x = 3:5)
-#' intersect(df1, df2)
 #' @seealso [dplyr::intersect()]
 #' @rdname intersect.duckplyr_df
 #' @name intersect.duckplyr_df

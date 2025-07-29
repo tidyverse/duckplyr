@@ -29,11 +29,6 @@ There is no DuckDB translation in \code{intersect.duckplyr_df()}
 These features fall back to \code{\link[dplyr:setops]{dplyr::intersect()}}, see \code{vignette("fallback")} for details.
 }
 
-\examples{
-df1 <- duckdb_tibble(x = 1:3)
-df2 <- duckdb_tibble(x = 3:5)
-intersect(df1, df2)
-}
 \seealso{
 \code{\link[dplyr:setops]{dplyr::intersect()}}
 }
