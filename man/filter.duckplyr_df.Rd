@@ -47,10 +47,6 @@ There is no DuckDB translation in \code{filter.duckplyr_df()}
 These features fall back to \code{\link[dplyr:filter]{dplyr::filter()}}, see \code{vignette("fallback")} for details.
 }
 
-\examples{
-df <- duckdb_tibble(x = 1:3, y = 3:1)
-filter(df, x >= 2)
-}
 \seealso{
 \code{\link[dplyr:filter]{dplyr::filter()}}
 }
