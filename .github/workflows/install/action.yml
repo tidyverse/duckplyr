@@ -60,6 +60,7 @@ runs:
         # echo "_R_CHECK_CRAN_INCOMING_=true" | tee -a $GITHUB_ENV
         echo "_R_CHECK_CRAN_INCOMING_SKIP_LARGE_VERSION_=true" | tee -a $GITHUB_ENV
         echo "_R_CHECK_FORCE_SUGGESTS_=false" | tee -a $GITHUB_ENV
+        echo "_R_CHECK_THINGS_IN_OTHER_DIRS_=true" | tee -a $GITHUB_ENV
       shell: bash
 
     - name: Set environment variables (non-Windows only)
