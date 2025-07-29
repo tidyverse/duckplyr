@@ -160,14 +160,6 @@ to be used by \code{\link[=colnames]{colnames()}}.
 }
 \examples{
 
-rel_limit.dfrel <- function(rel, n, ...) {
-  df <- unclass(rel)[[1]]
-
-  new_dfrel(df[seq_len(n), ])
-}
-
-rel_limit(mtcars_rel, 3)
-
 rel_distinct.dfrel <- function(rel, ...) {
   df <- unclass(rel)[[1]]
 

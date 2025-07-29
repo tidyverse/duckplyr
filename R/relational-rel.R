@@ -135,15 +135,6 @@ rel_join <- function(left,
 #' @param n The number of rows.
 #' @rdname new_relational
 #' @export
-#' @examples
-#'
-#' rel_limit.dfrel <- function(rel, n, ...) {
-#'   df <- unclass(rel)[[1]]
-#'
-#'   new_dfrel(df[seq_len(n), ])
-#' }
-#'
-#' rel_limit(mtcars_rel, 3)
 rel_limit <- function(rel, n, ...) {
   rel_stats_env$rel_limit <- (rel_stats_env$rel_limit %||% 0L) + 1L
   UseMethod("rel_limit")
