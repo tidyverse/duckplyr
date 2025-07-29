@@ -6,8 +6,6 @@
 #' Call [as_duckdb_tibble()] to enable duckplyr operations.
 #'
 #' @export
-#' @examplesIf requireNamespace("nycflights13", quietly = TRUE)
-#' flights_df()
 flights_df <- function() {
   check_installed("nycflights13")
 
