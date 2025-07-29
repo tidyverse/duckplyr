@@ -36,10 +36,6 @@ There is no DuckDB translation in \code{select.duckplyr_df()}
 These features fall back to \code{\link[dplyr:select]{dplyr::select()}}, see \code{vignette("fallback")} for details.
 }
 
-\examples{
-library(duckplyr)
-select(mtcars, mpg)
-}
 \seealso{
 \code{\link[dplyr:select]{dplyr::select()}}
 }

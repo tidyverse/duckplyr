@@ -9,9 +9,6 @@
 #' (e.g. `where(is.numeric)` selects all numeric columns).
 #'
 #' @inheritParams dplyr::select
-#' @examples
-#' library(duckplyr)
-#' select(mtcars, mpg)
 #' @seealso [dplyr::select()]
 #' @rdname select.duckplyr_df
 #' @name select.duckplyr_df
