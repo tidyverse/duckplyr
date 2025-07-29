@@ -22,6 +22,12 @@ on_load({
 })
 
 tel_fallback_logging <- function() {
+  # Volkswagen
+  cran <- Sys.getenv("_R_CHECK_THINGS_IN_OTHER_DIRS_")
+  if (cran != "") {
+    return(FALSE)
+  }
+
   val <- Sys.getenv("DUCKPLYR_FALLBACK_COLLECT")
   if (val == "") {
     return(TRUE)
