@@ -19,8 +19,6 @@
 #' @inheritParams read_sql_duckdb
 #' @return The return value of the [DBI::dbExecute()] call, invisibly.
 #' @export
-#' @examples
-#' db_exec("SET threads TO 2")
 db_exec <- function(sql, ..., con = NULL) {
   check_dots_empty()
 

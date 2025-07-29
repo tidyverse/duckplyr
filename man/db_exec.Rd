@@ -30,9 +30,6 @@ for more information on the configuration options,
 and \url{https://duckdb.org/docs/sql/statements/attach.html}
 for attaching databases.
 }
-\examples{
-db_exec("SET threads TO 2")
-}
 \seealso{
 \code{\link[=read_sql_duckdb]{read_sql_duckdb()}}
 }
