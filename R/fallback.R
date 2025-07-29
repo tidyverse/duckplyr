@@ -60,8 +60,6 @@
 #' [`telemetry.R`](https://github.com/tidyverse/duckplyr/blob/main/R/telemetry.R) files.
 #'
 #' @name fallback
-#' @examples
-#' fallback_sitrep()
 NULL
 
 #' fallback_sitrep
