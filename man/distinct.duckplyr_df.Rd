@@ -25,14 +25,6 @@ This is a method for the \code{\link[dplyr:distinct]{dplyr::distinct()}} generic
 Keep only unique/distinct rows from a data frame.
 This is similar to \code{unique.data.frame()} but considerably faster.
 }
-\examples{
-df <- duckdb_tibble(
-  x = sample(10, 100, rep = TRUE),
-  y = sample(10, 100, rep = TRUE)
-)
-nrow(df)
-nrow(distinct(df))
-}
 \seealso{
 \code{\link[dplyr:distinct]{dplyr::distinct()}}
 }
