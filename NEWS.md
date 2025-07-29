@@ -1,6 +1,6 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# duckplyr 1.1.0.9001 (2025-07-29)
+# duckplyr 1.1.1 (2025-07-29)
 
 ## Chore
 
@@ -14,8 +14,7 @@
 
 - Add strictness.
 
-
-# duckplyr 1.1.0.9000 (2025-05-09)
+## Uncategorized
 
 - Switching to development version.
 
