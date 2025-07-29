@@ -6,9 +6,6 @@
 #' using `new_name = old_name` syntax.
 #'
 #' @inheritParams dplyr::rename
-#' @examples
-#' library(duckplyr)
-#' rename(mtcars, thing = mpg)
 #' @seealso [dplyr::rename()]
 #' @rdname rename.duckplyr_df
 #' @name rename.duckplyr_df

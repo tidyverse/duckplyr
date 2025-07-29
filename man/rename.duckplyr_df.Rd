@@ -32,10 +32,6 @@ There is no DuckDB translation in \code{rename.duckplyr_df()}
 These features fall back to \code{\link[dplyr:rename]{dplyr::rename()}}, see \code{vignette("fallback")} for details.
 }
 
-\examples{
-library(duckplyr)
-rename(mtcars, thing = mpg)
-}
 \seealso{
 \code{\link[dplyr:rename]{dplyr::rename()}}
 }
