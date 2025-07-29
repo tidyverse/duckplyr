@@ -87,14 +87,6 @@ This function requires duckdb >= 0.10.0.
 }
 \examples{
 
-# Read multiple file at once
-path2 <- tempfile("duckplyr_test_", fileext = ".csv")
-write.csv(data.frame(a = 4:6, b = letters[7:9]), path2, row.names = FALSE)
-
-duckplyr_df_from_csv(file.path(tempdir(), "duckplyr_test_*.csv"))
-
-unlink(c(path, path2))
-
 # Write a Parquet file:
 path_parquet <- tempfile(fileext = ".parquet")
 df_to_parquet(df, path_parquet)

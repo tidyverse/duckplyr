@@ -23,15 +23,6 @@ df_from_csv <- function(path, ..., options = list(), class = NULL) {
 #'
 #' @rdname df_from_file
 #' @export
-#' @examples
-#'
-#' # Read multiple file at once
-#' path2 <- tempfile("duckplyr_test_", fileext = ".csv")
-#' write.csv(data.frame(a = 4:6, b = letters[7:9]), path2, row.names = FALSE)
-#'
-#' duckplyr_df_from_csv(file.path(tempdir(), "duckplyr_test_*.csv"))
-#'
-#' unlink(c(path, path2))
 duckplyr_df_from_csv <- function(path, ..., options = list(), class = NULL) {
   check_dots_empty()
   lifecycle::deprecate_soft("1.0.0", "duckplyr_df_from_csv()", "read_csv_duckdb()")
