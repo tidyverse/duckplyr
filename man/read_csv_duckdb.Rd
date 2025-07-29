@@ -33,33 +33,6 @@ See \code{vignette("prudence")} for more information.}
 \description{
 \code{read_csv_duckdb()} reads a CSV file using DuckDB's \code{read_csv_auto()} table function.
 }
-\examples{
-# Create simple CSV file
-path <- tempfile("duckplyr_test_", fileext = ".csv")
-write.csv(data.frame(a = 1:3, b = letters[4:6]), path, row.names = FALSE)
-
-# Reading is immediate
-df <- read_csv_duckdb(path)
-
-# Names are always available
-names(df)
-
-# Materialization upon access is turned off by default
-try(print(df$a))
-
-# Materialize explicitly
-collect(df)$a
-
-# Automatic materialization with prudence = "lavish"
-df <- read_csv_duckdb(path, prudence = "lavish")
-df$a
-
-# Specify column types
-read_csv_duckdb(
-  path,
-  options = list(delim = ",", types = list(c("DOUBLE", "VARCHAR")))
-)
-}
 \seealso{
 \code{\link[=read_parquet_duckdb]{read_parquet_duckdb()}}, \code{\link[=read_json_duckdb]{read_json_duckdb()}}
 }
