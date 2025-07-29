@@ -37,11 +37,66 @@ jobs:
         run: |
           # Get name of corresponding base branch by stripping the "each-" prefix
           base_branch=${GITHUB_REF#refs/heads/each-}
-          commits=$(git log --reverse --pretty=format:"%H" origin/${base_branch}.. --)
-          echo $commits
+          commits_array=($(git log --reverse --pretty=format:"%H" origin/${base_branch}.. --))
+          echo "Original commit order: ${commits_array[@]}"
+
+          # Function to reorder commits in bisection order
+          reorder_commits() {
+            local -n arr=$1
+            local -n result=$2
+            local len=${#arr[@]}
+
+            if [ $len -eq 0 ]; then
+              return
+            fi
+
+            # Add first and last commits first
+            if [ $len -ge 1 ]; then
+              result+=(${arr[0]})
+            fi
+            if [ $len -ge 2 ]; then
+              result+=(${arr[$((len-1))]})
+            fi
+
+            # Recursively add bisection points
+            bisect_recursive() {
+              local start=$1
+              local end=$2
+              local depth=$3
+
+              if [ $start -ge $end ]; then
+                return
+              fi
+
+              local mid=$(( (start + end) / 2 ))
+
+              # Skip if we already added this commit (first or last)
+              if [ $mid -ne 0 ] && [ $mid -ne $((len-1)) ]; then
+                result+=(${arr[$mid]})
+              fi
+
+              # Recursively process left and right halves
+              if [ $((mid - start)) -gt 0 ]; then
+                bisect_recursive $start $((mid-1)) $((depth+1))
+              fi
+              if [ $((end - mid)) -gt 0 ]; then
+                bisect_recursive $((mid+1)) $end $((depth+1))
+              fi
+            }
+
+            # Start bisection for the middle range (excluding first and last)
+            if [ $len -gt 2 ]; then
+              bisect_recursive 1 $((len-2)) 0
+            fi
+          }
+
+          # Reorder commits in bisection order
+          bisection_commits=()
+          reorder_commits commits_array bisection_commits
+          echo "Bisection order: ${bisection_commits[@]}"
 
           # Run workflow for each commit where the status of the rcc workflow isn't "pending" or "success"
-          for commit in $commits; do
+          for commit in "${bisection_commits[@]}"; do
             echo $commit
             # Get first status of the workflow with the name "rcc"
             status=$(gh api repos/{owner}/{repo}/commits/${commit}/statuses | jq -r '.[] | select(.context == "rcc") | .state' | head -n 1)
