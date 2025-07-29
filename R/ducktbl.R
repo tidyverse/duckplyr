@@ -37,20 +37,6 @@
 #'   - `"duckplyr_df"`
 #'   - Classes of a [tibble]
 #'
-#' @examples
-#' x <- duckdb_tibble(a = 1)
-#' x
-#'
-#' library(dplyr)
-#' x %>%
-#'   mutate(b = 2)
-#'
-#' x$a
-#'
-#' y <- duckdb_tibble(a = 1, .prudence = "stingy")
-#' y
-#' try(length(y$a))
-#' length(collect(y)$a)
 #' @export
 duckdb_tibble <- function(..., .prudence = c("lavish", "thrifty", "stingy")) {
   out <- tibble::tibble(...)

@@ -66,18 +66,3 @@ If both limits are specified, both are enforced.
 The equivalent of \code{"thrifty"} is \code{c(cells = 1e6)}.
 }
 
-\examples{
-x <- duckdb_tibble(a = 1)
-x
-
-library(dplyr)
-x \%>\%
-  mutate(b = 2)
-
-x$a
-
-y <- duckdb_tibble(a = 1, .prudence = "stingy")
-y
-try(length(y$a))
-length(collect(y)$a)
-}
