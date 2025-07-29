@@ -15,17 +15,6 @@
 #' @name new_relexpr
 #' @return an object of class `"relational_relexpr"`
 #' @export
-#' @examples
-#' relexpr_set_alias(
-#'   alias = "my_predicate",
-#'   relexpr_function(
-#'     "<",
-#'     list(
-#'       relexpr_reference("my_number"),
-#'       relexpr_constant(42)
-#'     )
-#'   )
-#' )
 new_relexpr <- function(x, class = NULL) {
   structure(x, class = unique(c(class, "relational_relexpr"), fromLast = TRUE))
 }
