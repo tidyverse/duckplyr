@@ -242,15 +242,6 @@ rel_set_alias <- function(rel, alias, ...) {
 #'
 #' @rdname new_relational
 #' @export
-#' @examples
-#'
-#' rel_names.dfrel <- function(rel, ...) {
-#'   df <- unclass(rel)[[1]]
-#'
-#'   names(df)
-#' }
-#'
-#' rel_names(mtcars_rel)
 rel_names <- function(rel, ...) {
   rel_stats_env$rel_names <- (rel_stats_env$rel_names %||% 0L) + 1L
   UseMethod("rel_names")

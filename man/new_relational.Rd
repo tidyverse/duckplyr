@@ -158,13 +158,3 @@ executed by the relational object.
 \code{rel_names()} returns the column names as character vector,
 to be used by \code{\link[=colnames]{colnames()}}.
 }
-\examples{
-
-rel_names.dfrel <- function(rel, ...) {
-  df <- unclass(rel)[[1]]
-
-  names(df)
-}
-
-rel_names(mtcars_rel)
-}
