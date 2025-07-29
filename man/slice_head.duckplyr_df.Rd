@@ -52,12 +52,6 @@ There is no DuckDB translation in \code{slice_head.duckplyr_df()}
 These features fall back to \code{\link[dplyr:slice]{dplyr::slice_head()}}, see \code{vignette("fallback")} for details.
 }
 
-\examples{
-library(duckplyr)
-df <- data.frame(x = 1:3)
-df <- slice_head(df, n = 2)
-df
-}
 \seealso{
 \code{\link[dplyr:slice]{dplyr::slice_head()}}
 }
