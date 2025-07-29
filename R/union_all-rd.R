@@ -5,10 +5,6 @@
 #' `union_all(x, y)` finds all rows in either x or y, including duplicates.
 #'
 #' @inheritParams dplyr::union_all
-#' @examples
-#' df1 <- duckdb_tibble(x = 1:3)
-#' df2 <- duckdb_tibble(x = 3:5)
-#' union_all(df1, df2)
 #' @seealso [dplyr::union_all()]
 #' @rdname union_all.duckplyr_df
 #' @name union_all.duckplyr_df
