@@ -7,19 +7,6 @@
 #'
 #' @return Called for their side effects.
 #' @export
-#' @examples
-#' tibble(a = 1:3) %>%
-#'   mutate(b = a + 1)
-#'
-#' methods_overwrite()
-#'
-#' tibble(a = 1:3) %>%
-#'   mutate(b = a + 1)
-#'
-#' methods_restore()
-#'
-#' tibble(a = 1:3) %>%
-#'   mutate(b = a + 1)
 methods_overwrite <- function() {
   cli::cli_inform(
     c(
