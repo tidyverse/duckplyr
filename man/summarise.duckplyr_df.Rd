@@ -72,10 +72,6 @@ There is no DuckDB translation in \code{summarise.duckplyr_df()}
 These features fall back to \code{\link[dplyr:summarise]{dplyr::summarise()}}, see \code{vignette("fallback")} for details.
 }
 
-\examples{
-library(duckplyr)
-summarise(mtcars, mean = mean(disp), n = n())
-}
 \seealso{
 \code{\link[dplyr:summarise]{dplyr::summarise()}}
 }

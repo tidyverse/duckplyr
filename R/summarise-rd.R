@@ -10,9 +10,6 @@
 #' and one column for each of the summary statistics that you have specified.
 #'
 #' @inheritParams dplyr::summarise
-#' @examples
-#' library(duckplyr)
-#' summarise(mtcars, mean = mean(disp), n = n())
 #' @seealso [dplyr::summarise()]
 #' @rdname summarise.duckplyr_df
 #' @name summarise.duckplyr_df
