@@ -85,20 +85,4 @@ If the data frame is a \code{duckplyr_df}, the materialization occurs outside of
 An existing file will be overwritten.
 This function requires duckdb >= 0.10.0.
 }
-\examples{
-
-# Write a Parquet file:
-path_parquet <- tempfile(fileext = ".parquet")
-df_to_parquet(df, path_parquet)
-
-# With a duckplyr_df, the materialization occurs outside of R:
-df \%>\%
-  as_duckplyr_df() \%>\%
-  mutate(b = a + 1) \%>\%
-  df_to_parquet(path_parquet)
-
-duckplyr_df_from_parquet(path_parquet)
-
-unlink(path_parquet)
-}
 \keyword{internal}
