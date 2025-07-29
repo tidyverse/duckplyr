@@ -39,9 +39,6 @@ Runs a query and returns it as a duckplyr frame.
 Using data frames from the calling environment is not supported yet,
 see \url{https://github.com/duckdb/duckdb-r/issues/645} for details.
 }
-\examples{
-read_sql_duckdb("FROM duckdb_settings()")
-}
 \seealso{
 \code{\link[=db_exec]{db_exec()}}
 }
