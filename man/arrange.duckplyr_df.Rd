@@ -59,11 +59,6 @@ There is no DuckDB translation in \code{arrange.duckplyr_df()}
 These features fall back to \code{\link[dplyr:arrange]{dplyr::arrange()}}, see \code{vignette("fallback")} for details.
 }
 
-\examples{
-library(duckplyr)
-arrange(mtcars, cyl, disp)
-arrange(mtcars, desc(disp))
-}
 \seealso{
 \code{\link[dplyr:arrange]{dplyr::arrange()}}
 }

@@ -12,10 +12,6 @@
 #'
 #'
 #' @inheritParams dplyr::arrange
-#' @examples
-#' library(duckplyr)
-#' arrange(mtcars, cyl, disp)
-#' arrange(mtcars, desc(disp))
 #' @seealso [dplyr::arrange()]
 #' @rdname arrange.duckplyr_df
 #' @name arrange.duckplyr_df
