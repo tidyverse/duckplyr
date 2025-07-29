@@ -160,14 +160,6 @@ to be used by \code{\link[=colnames]{colnames()}}.
 }
 \examples{
 
-rel_distinct.dfrel <- function(rel, ...) {
-  df <- unclass(rel)[[1]]
-
-  new_dfrel(df[!duplicated(df), ])
-}
-
-rel_distinct(new_dfrel(mtcars[1:3, 1:4]))
-
 rel_names.dfrel <- function(rel, ...) {
   df <- unclass(rel)[[1]]
 

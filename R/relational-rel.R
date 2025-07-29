@@ -147,15 +147,6 @@ rel_limit <- function(rel, n, ...) {
 #'
 #' @rdname new_relational
 #' @export
-#' @examples
-#'
-#' rel_distinct.dfrel <- function(rel, ...) {
-#'   df <- unclass(rel)[[1]]
-#'
-#'   new_dfrel(df[!duplicated(df), ])
-#' }
-#'
-#' rel_distinct(new_dfrel(mtcars[1:3, 1:4]))
 rel_distinct <- function(rel, ...) {
   rel_stats_env$rel_distinct <- (rel_stats_env$rel_distinct %||% 0L) + 1L
   UseMethod("rel_distinct")
