@@ -66,10 +66,6 @@ There is no DuckDB translation in \code{count.duckplyr_df()}
 These features fall back to \code{\link[dplyr:count]{dplyr::count()}}, see \code{vignette("fallback")} for details.
 }
 
-\examples{
-library(duckplyr)
-count(mtcars, am)
-}
 \seealso{
 \code{\link[dplyr:count]{dplyr::count()}}
 }

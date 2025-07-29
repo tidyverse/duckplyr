@@ -10,9 +10,6 @@
 #' switching the summary from `n = n()` to `n = sum(wt)`.
 #'
 #' @inheritParams dplyr::count
-#' @examples
-#' library(duckplyr)
-#' count(mtcars, am)
 #' @seealso [dplyr::count()]
 #' @rdname count.duckplyr_df
 #' @name count.duckplyr_df
