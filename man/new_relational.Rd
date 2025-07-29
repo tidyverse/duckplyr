@@ -159,11 +159,6 @@ executed by the relational object.
 to be used by \code{\link[=colnames]{colnames()}}.
 }
 \examples{
-new_dfrel <- function(x) {
-  stopifnot(is.data.frame(x))
-  new_relational(list(x), class = "dfrel")
-}
-mtcars_rel <- new_dfrel(mtcars[1:5, 1:4])
 
 rel_to_df.dfrel <- function(rel, ...) {
   unclass(rel)[[1]]

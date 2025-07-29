@@ -32,12 +32,6 @@ rel_stats_get <- function() {
 #' - All other generics return a modified relational object.
 #' @name new_relational
 #' @export
-#' @examples
-#' new_dfrel <- function(x) {
-#'   stopifnot(is.data.frame(x))
-#'   new_relational(list(x), class = "dfrel")
-#' }
-#' mtcars_rel <- new_dfrel(mtcars[1:5, 1:4])
 new_relational <- function(..., class = NULL) {
   structure(..., class = unique(c(class, "relational"), fromLast = TRUE))
 }
