@@ -1,5 +1,20 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.1.0.9001 (2025-07-29)
+
+## Chore
+
+- Fix CRAN failure with `_R_CHECK_THINGS_IN_OTHER_DIRS_=true`.
+
+## Continuous integration
+
+- Bisection order.
+
+- Add each workflow.
+
+- Add strictness.
+
+
 # duckplyr 1.1.0.9000 (2025-05-09)
 
 - Switching to development version.
