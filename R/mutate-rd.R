@@ -6,11 +6,6 @@
 #' and delete columns (by setting their value to `NULL`).
 #'
 #' @inheritParams dplyr::mutate
-#' @examples
-#' library(duckplyr)
-#' df <- data.frame(x = c(1, 2))
-#' df <- mutate(df, y = 2)
-#' df
 #' @seealso [dplyr::mutate()]
 #' @rdname mutate.duckplyr_df
 #' @name mutate.duckplyr_df

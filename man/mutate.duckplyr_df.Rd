@@ -60,12 +60,6 @@ This is a method for the \code{\link[dplyr:mutate]{dplyr::mutate()}} generic.
 It can also modify (if the name is the same as an existing column)
 and delete columns (by setting their value to \code{NULL}).
 }
-\examples{
-library(duckplyr)
-df <- data.frame(x = c(1, 2))
-df <- mutate(df, y = 2)
-df
-}
 \seealso{
 \code{\link[dplyr:mutate]{dplyr::mutate()}}
 }
