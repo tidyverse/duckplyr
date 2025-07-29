@@ -7,8 +7,6 @@
 #' @param x A data.frame
 #' @param n A positive integer, how many rows to return.
 #' @param ... Not used yet.
-#' @examples
-#' head(mtcars, 2)
 #' @seealso [head()]
 #' @rdname head.duckplyr_df
 #' @name head.duckplyr_df

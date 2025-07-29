@@ -28,9 +28,6 @@ There is no DuckDB translation in \code{head.duckplyr_df()}
 These features fall back to \code{\link[=head]{head()}}, see \code{vignette("fallback")} for details.
 }
 
-\examples{
-head(mtcars, 2)
-}
 \seealso{
 \code{\link[=head]{head()}}
 }
