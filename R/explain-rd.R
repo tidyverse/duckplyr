@@ -7,11 +7,6 @@
 #' @inheritParams dplyr::explain
 #'
 #' @return The input, invisibly.
-#' @examples
-#' library(duckplyr)
-#' df <- duckdb_tibble(x = c(1, 2))
-#' df <- mutate(df, y = 2)
-#' explain(df)
 #' @seealso [dplyr::explain()]
 #' @rdname explain.duckplyr_df
 #' @name explain.duckplyr_df

@@ -19,12 +19,6 @@ This is a method for the \code{\link[dplyr:explain]{dplyr::explain()}} generic.
 This is a generic function which gives more details about an object
 than \code{print()}, and is more focused on human readable output than \code{str()}.
 }
-\examples{
-library(duckplyr)
-df <- duckdb_tibble(x = c(1, 2))
-df <- mutate(df, y = 2)
-explain(df)
-}
 \seealso{
 \code{\link[dplyr:explain]{dplyr::explain()}}
 }
