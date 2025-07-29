@@ -1,0 +1,449 @@
+---
+title: "Package Internals: Architecture and Execution Flow"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{90 Package Internals: Architecture and Execution Flow}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+clean_output <- function(x, options) {
+  x <- gsub("0x[0-9a-f]+", "0xdeadbeef", x)
+  x <- gsub("dataframe_[0-9]*_[0-9]*", "      dataframe_42_42      ", x)
+  x <- gsub("[0-9]*\\.___row_number ASC", "42.___row_number ASC", x)
+  x <- gsub("─", "-", x)
+  x
+}
+
+local({
+  hook_source <- knitr::knit_hooks$get("document")
+  knitr::knit_hooks$set(document = clean_output)
+})
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  eval = identical(Sys.getenv("IN_PKGDOWN"), "true") || (getRversion() >= "4.1" && rlang::is_installed(c("conflicted", "nycflights13"))),
+  comment = "#>"
+)
+
+Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
+```
+
+This vignette provides a deep dive into the internal architecture and execution flow of the duckplyr package, explaining how it achieves seamless integration between dplyr's user interface and DuckDB's high-performance execution engine.
+
+```{r attach}
+library(conflicted)
+library(duckplyr)
+conflict_prefer("filter", "dplyr")
+```
+
+## Package Architecture Overview
+
+The duckplyr package is built around several core architectural components that work together to provide a drop-in replacement for dplyr while leveraging DuckDB's performance:
+
+### Core Components
+
+1. **Method Overwriting System**: Intercepts standard dplyr method calls
+2. **Relational Abstraction Layer**: Translates dplyr operations to DuckDB relations
+3. **Fallback Mechanism**: Gracefully degrades to dplyr when DuckDB cannot handle operations
+4. **Lazy Evaluation Engine**: Defers computation until materialization is required
+5. **Prudence System**: Controls automatic materialization to prevent memory issues
+6. **Telemetry & Error Handling**: Tracks usage patterns and fallback scenarios
+
+### Class Hierarchy
+
+The package defines several key classes:
+
+- `duckplyr_df`: The main data frame class that extends tibble functionality
+- `prudent_duckplyr_df`: A variant that controls materialization behavior
+- `duckdb_relation`: DuckDB's internal relational representation
+- `relational`: Abstract base class for relational operations
+
+## Method Interception and Dispatch
+
+### Sequence Diagram: Method Overwriting System
+
+```text
+User Code → dplyr::filter() → S3 Dispatch → filter.duckplyr_df()
+                                                   ↓
+filter.duckplyr_df() → rel_try() → DuckDB Translation
+                           ↓              ↓
+                     Error Check    Success Path
+                           ↓              ↓
+                  Fallback to dplyr   Return Result
+```
+
+When duckplyr is loaded with `library(duckplyr)`, the `methods_overwrite_impl()` function registers S3 methods for all supported dplyr verbs. This creates a transparent interception layer where:
+
+1. User calls standard dplyr functions (e.g., `filter()`, `mutate()`)
+2. R's S3 dispatch system routes calls to duckplyr's implementations
+3. Each method attempts DuckDB translation via `rel_try()`
+4. On failure, graceful fallback to original dplyr occurs
+
+```{r}
+# Example: View the registered methods
+methods(class = "duckplyr_df") |> head(10)
+```
+
+## Relational Translation Pipeline
+
+### Sequence Diagram: Expression Translation
+
+```text
+dplyr Expression → rel_translate() → Expression Analysis
+                                           ↓
+                                    Symbol Resolution
+                                           ↓
+                                  Function Translation
+                                           ↓
+                              DuckDB Macro/Function Call
+                                           ↓
+                               Relational Expression Tree
+```
+
+The heart of duckplyr is its ability to translate R expressions into DuckDB's relational algebra. This happens through several layers:
+
+### 1. Expression Parsing
+
+R expressions from dplyr verbs are captured as quosures and analyzed for:
+
+- Variable references (`relexpr_reference`)
+- Constants (`relexpr_constant`)
+- Function calls (`relexpr_function`)
+- Window operations (`relexpr_window`)
+
+### 2. Symbol Resolution
+
+The translation system resolves R symbols to:
+
+- Data frame column references
+- Built-in R functions with DuckDB equivalents
+- Custom macros defined in `duckplyr_macros`
+
+### 3. Macro System
+
+DuckDB macros provide R-compatible behavior for operations like:
+
+```{r eval=FALSE}
+# Division with R-like behavior for edge cases
+"___divide" = "(x, y) AS CASE WHEN y = 0 THEN
+               CASE WHEN x = 0 THEN CAST('NaN' AS double)
+               WHEN x > 0 THEN CAST('+Infinity' AS double)
+               ELSE CAST('-Infinity' AS double) END
+               ELSE CAST(x AS double) / y END"
+```
+
+## Lazy Evaluation and Relation Building
+
+### Sequence Diagram: Lazy Operation Chain
+
+```text
+Data Frame → dplyr::filter() → rel_filter() → Relation Object
+                                     ↓
+           dplyr::mutate() → rel_project() → Updated Relation
+                                     ↓
+           dplyr::summarise() → rel_aggregate() → Final Relation
+                                     ↓
+                              nrow() or print() → rel_to_df()
+                                     ↓
+                              DuckDB Execution → Materialized Result
+```
+
+Duckplyr builds a tree of relational operations without executing them immediately:
+
+1. **Relation Creation**: `duckdb_rel_from_df()` creates initial relation from data frame
+2. **Operation Chaining**: Each dplyr verb adds a new node to the relation tree
+3. **Deferred Execution**: No computation occurs until materialization is triggered
+4. **Optimization**: DuckDB optimizes the entire pipeline before execution
+
+```{r}
+# Example: Building a lazy pipeline
+flights <- duckplyr::flights_df()
+lazy_result <- flights |>
+  filter(origin == "EWR") |>
+  mutate(speed = distance / air_time * 60) |>
+  summarise(avg_speed = mean(speed, na.rm = TRUE))
+
+# At this point, no computation has occurred
+class(lazy_result)
+```
+
+## Fallback Mechanism
+
+### Sequence Diagram: Fallback Decision Process
+
+```text
+Method Call → rel_try() → Translation Attempt
+                   ↓
+             Success Check → Failure Detected
+                   ↓              ↓
+            Return Result    Error Analysis
+                                   ↓
+                            Prudence Check
+                                   ↓
+                           Telemetry Logging
+                                   ↓
+                        Fallback to dplyr::method()
+```
+
+The fallback mechanism ensures compatibility when DuckDB cannot handle specific operations:
+
+### 1. Error Detection
+
+`rel_try()` wraps DuckDB translation attempts and catches:
+
+- Unsupported functions or operations
+- Complex expressions beyond current translation capability
+- Data type incompatibilities
+
+### 2. Prudence Integration
+
+Before falling back, the system checks if the data frame allows materialization:
+
+- "stingy" frames prevent materialization to avoid memory issues
+- "thrifty" frames allow limited materialization
+- "lavish" frames permit full materialization
+
+### 3. Telemetry Collection
+
+Fallback events are logged for development insights:
+
+```{r eval=FALSE}
+# Fallback information is collected automatically
+fallback_sitrep()
+```
+
+## Memory Management and Prudence
+
+### Sequence Diagram: Prudence-Controlled Materialization
+
+```text
+Data Access → Prudence Check → Memory Limit Check
+                     ↓                ↓
+              Allowed Access    Limit Exceeded
+                     ↓                ↓
+            Trigger Computation   Abort with Error
+                     ↓
+            DuckDB Execution
+                     ↓
+           Materialized Result
+```
+
+The prudence system provides fine-grained control over when and how data is materialized:
+
+### Prudence Levels
+
+- **"lavish"**: No restrictions, full materialization allowed
+- **"thrifty"**: Limited materialization (default: 1M cells)
+- **"stingy"**: Prevents materialization, forces lazy evaluation
+
+```{r}
+# Example: Creating frames with different prudence levels
+df_stingy <- duckdb_tibble(x = 1:1000, prudence = "stingy")
+df_thrifty <- duckdb_tibble(x = 1:1000, prudence = "thrifty")
+```
+
+## DuckDB Integration Layer
+
+### Sequence Diagram: DuckDB Connection and Execution
+
+```
+Package Load → get_default_duckdb_connection() → Create Connection
+                          ↓
+               Set Temporary Directory
+                          ↓
+              Load R Function Extensions
+                          ↓
+              Register Custom Macros
+                          ↓
+           Connection Ready for Operations
+                          ↓
+Relation Execution → rel_to_df() → DuckDB Query Execution
+                          ↓
+                 ALTREP Result Vector
+                          ↓
+                Data Frame Construction
+```
+
+DuckDB integration occurs through several mechanisms:
+
+### 1. Connection Management
+A singleton connection is maintained throughout the session:
+- Temporary database with optimized settings
+- R function integration via `rapi_load_rfuns()`
+- Custom macro registration for R compatibility
+
+### 2. ALTREP Integration
+DuckDB results use R's Alternative Representation (ALTREP) system:
+- Memory-efficient lazy vectors
+- On-demand computation when accessed
+- Seamless integration with R's type system
+
+### 3. Query Optimization
+DuckDB's query planner optimizes the entire operation pipeline:
+- Predicate pushdown for early filtering
+- Column pruning to reduce data transfer
+- Join reordering for optimal execution
+
+## Error Handling and Telemetry
+
+### Sequence Diagram: Error Processing and Telemetry
+
+```
+Operation Failure → Error Capture → Error Classification
+                          ↓               ↓
+                  Telemetry Logging   User Notification
+                          ↓               ↓
+                  JSON Serialization  Fallback Message
+                          ↓               ↓
+                   Local Storage      Continue Execution
+                          ↓
+              Optional Upload (User Consent)
+```
+
+The package includes comprehensive error handling and telemetry:
+
+### Error Classification:
+- Translation failures (unsupported operations)
+- Type compatibility issues
+- Memory constraint violations
+- DuckDB execution errors
+
+### Telemetry Data:
+- Error messages and stack traces
+- Operation context (function, arguments)
+- Data structure information (types only, no actual data)
+- Package version and environment details
+
+## Performance Optimizations
+
+### Key Optimization Strategies:
+
+1. **Lazy Evaluation**: Defers computation until absolutely necessary
+2. **Vectorized Operations**: Leverages DuckDB's columnar processing
+3. **Memory Mapping**: Uses DuckDB's zero-copy operations where possible
+4. **Query Planning**: Benefits from DuckDB's advanced query optimizer
+5. **ALTREP Integration**: Minimizes memory copying between R and DuckDB
+
+### Sequence Diagram: Performance-Critical Path
+
+```
+Large Dataset → Lazy Pipeline → DuckDB Optimizer → Columnar Execution
+                      ↓                ↓                  ↓
+              Minimal Memory    Query Planning    SIMD Operations
+                      ↓                ↓                  ↓
+              ALTREP Result → Memory Efficient → Fast Access
+```
+
+## Integration with the Broader Ecosystem
+
+### dbplyr Interoperability
+The package provides bridges to dbplyr for advanced SQL operations:
+```{r eval=FALSE}
+# Convert to dbplyr tbl for advanced SQL
+df |> as_tbl() |> mutate(custom_sql = sql("complex_sql_function(column)"))
+```
+
+### Extension Loading
+Support for DuckDB extensions enables additional functionality:
+```{r eval=FALSE}
+# Example: Loading spatial extensions
+duckplyr_execute("INSTALL spatial; LOAD spatial;")
+```
+
+## Debugging and Introspection
+
+The package provides several tools for understanding execution:
+
+```{r eval=FALSE}
+# View the last executed relation
+last_rel()
+
+# Explain query execution plan
+df |> filter(x > 10) |> explain()
+
+# Check fallback statistics
+fallback_sitrep()
+```
+
+## End-to-End Execution Flow
+
+### Textual Sequence Diagram: Complete Operation Lifecycle
+
+```text
+1. User Code Execution
+   User → dplyr::filter(df, x > 10)
+
+2. Method Dispatch
+   dplyr::filter() → filter.duckplyr_df()
+
+3. Translation Phase
+   filter.duckplyr_df() → rel_try() → rel_translate_dots()
+                                        ↓
+                              Expression Analysis
+                                        ↓
+                               R → DuckDB Mapping
+
+4. Relation Building
+   Translation Success → duckdb_rel_from_df() → rel_filter()
+                                                      ↓
+                                               Lazy Relation Tree
+
+5. Deferred Execution
+   Lazy Relation → User Accesses Data → Materialization Trigger
+                                              ↓
+                                        rel_to_df()
+
+6. DuckDB Execution
+   rel_to_df() → DuckDB Query Engine → Optimized Execution Plan
+                                             ↓
+                                      Columnar Processing
+
+7. Result Construction
+   DuckDB Results → ALTREP Vectors → duckplyr_df Construction
+                                           ↓
+                                   Return to User
+
+8. Fallback Path (if translation fails)
+   Translation Failure → Prudence Check → Telemetry Logging
+                                                ↓
+                                         dplyr::filter.data.frame()
+                                                ↓
+                                           Standard dplyr Result
+```
+
+### Alternative Flow: Fallback Scenario
+
+```text
+1. Unsupported Operation
+   User → dplyr::summarise(df, complex_function(x))
+
+2. Translation Attempt
+   summarise.duckplyr_df() → rel_try() → Translation Failure
+
+3. Error Handling
+   Translation Failure → Error Classification → Telemetry Collection
+
+4. Prudence Check
+   Error Handler → check_prudence() → Materialization Policy Check
+
+5. Fallback Execution
+   Prudence Pass → dplyr$summarise.data.frame() → Standard dplyr Processing
+
+6. Result Return
+   dplyr Result → Class Preservation → Return to User
+```
+
+## Conclusion
+
+The duckplyr package achieves its goal of being a drop-in dplyr replacement through a sophisticated architecture that:
+
+1. Transparently intercepts dplyr method calls through S3 method registration
+2. Translates R expressions to DuckDB's relational algebra via `rel_translate()`
+3. Provides graceful fallback when translation is impossible via `rel_try()`
+4. Manages memory usage through prudence controls and lazy evaluation
+5. Optimizes performance via DuckDB's execution engine and ALTREP integration
+6. Maintains compatibility through comprehensive error handling and telemetry
+
+This design enables users to benefit from DuckDB's performance improvements while maintaining full compatibility with existing dplyr-based code, making high-performance data manipulation accessible without requiring changes to user workflows. The layered architecture ensures that the complexity of DuckDB integration remains hidden from users while providing extensibility points for advanced use cases.
