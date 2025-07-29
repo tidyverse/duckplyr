@@ -33,10 +33,6 @@ There is no DuckDB translation in \code{relocate.duckplyr_df()}
 These features fall back to \code{\link[dplyr:relocate]{dplyr::relocate()}}, see \code{vignette("fallback")} for details.
 }
 
-\examples{
-df <- duckdb_tibble(a = 1, b = 1, c = 1, d = "a", e = "a", f = "a")
-relocate(df, f)
-}
 \seealso{
 \code{\link[dplyr:relocate]{dplyr::relocate()}}
 }
