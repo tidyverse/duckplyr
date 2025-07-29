@@ -164,10 +164,6 @@ There is no DuckDB translation in \code{inner_join.duckplyr_df()}
 These features fall back to \code{\link[dplyr:mutate-joins]{dplyr::inner_join()}}, see \code{vignette("fallback")} for details.
 }
 
-\examples{
-library(duckplyr)
-inner_join(band_members, band_instruments)
-}
 \seealso{
 \code{\link[dplyr:mutate-joins]{dplyr::inner_join()}}
 }

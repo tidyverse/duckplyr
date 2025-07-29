@@ -6,9 +6,6 @@
 #' that have a matching key in `y`.
 #'
 #' @inheritParams dplyr::inner_join
-#' @examples
-#' library(duckplyr)
-#' inner_join(band_members, band_instruments)
 #' @seealso [dplyr::inner_join()]
 #' @rdname inner_join.duckplyr_df
 #' @name inner_join.duckplyr_df
