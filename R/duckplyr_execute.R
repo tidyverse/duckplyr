@@ -15,8 +15,6 @@
 #' @return The return value of the [DBI::dbExecute()] call, invisibly.
 #' @keywords internal
 #' @export
-#' @examples
-#' duckplyr_execute("SET threads TO 2")
 duckplyr_execute <- function(sql) {
   lifecycle::deprecate_soft("1.0.0", "duckplyr_execute()", "db_exec()")
 

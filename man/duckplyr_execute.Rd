@@ -23,7 +23,4 @@ or attach other databases.
 See \url{https://duckdb.org/docs/configuration/overview.html}
 for more information on the configuration options.
 }
-\examples{
-duckplyr_execute("SET threads TO 2")
-}
 \keyword{internal}
