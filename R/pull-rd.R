@@ -7,10 +7,6 @@
 #' it also works with remote data frames, and it can optionally name the output.
 #'
 #' @inheritParams dplyr::pull
-#' @examples
-#' library(duckplyr)
-#' pull(mtcars, cyl)
-#' pull(mtcars, 1)
 #' @seealso [dplyr::pull()]
 #' @rdname pull.duckplyr_df
 #' @name pull.duckplyr_df

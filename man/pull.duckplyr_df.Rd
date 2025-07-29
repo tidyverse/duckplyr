@@ -47,11 +47,6 @@ There is no DuckDB translation in \code{pull.duckplyr_df()}
 These features fall back to \code{\link[dplyr:pull]{dplyr::pull()}}, see \code{vignette("fallback")} for details.
 }
 
-\examples{
-library(duckplyr)
-pull(mtcars, cyl)
-pull(mtcars, 1)
-}
 \seealso{
 \code{\link[dplyr:pull]{dplyr::pull()}}
 }
