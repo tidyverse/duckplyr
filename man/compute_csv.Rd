@@ -41,14 +41,6 @@ without converting it to an R data frame.
 The result is a duckplyr frame that can be used with subsequent dplyr verbs.
 This function can also be used as a CSV writer for regular data frames.
 }
-\examples{
-library(duckplyr)
-df <- data.frame(x = c(1, 2))
-df <- mutate(df, y = 2)
-path <- tempfile(fileext = ".csv")
-df <- compute_csv(df, path)
-readLines(path)
-}
 \seealso{
 \code{\link[=compute_parquet]{compute_parquet()}}, \code{\link[=compute.duckplyr_df]{compute.duckplyr_df()}}, \code{\link[dplyr:compute]{dplyr::collect()}}
 }

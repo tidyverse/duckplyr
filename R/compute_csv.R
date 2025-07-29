@@ -16,13 +16,6 @@
 #' @return A duckplyr frame.
 #'
 #' @export
-#' @examples
-#' library(duckplyr)
-#' df <- data.frame(x = c(1, 2))
-#' df <- mutate(df, y = 2)
-#' path <- tempfile(fileext = ".csv")
-#' df <- compute_csv(df, path)
-#' readLines(path)
 #' @seealso [compute_parquet()], [compute.duckplyr_df()], [dplyr::collect()]
 compute_csv <- function(x, path, ..., prudence = NULL, options = NULL) {
   check_dots_empty()
