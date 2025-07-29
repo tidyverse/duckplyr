@@ -33,19 +33,6 @@ See \code{vignette("prudence")} for more information.}
 \description{
 \code{read_json_duckdb()} reads a JSON file using DuckDB's \code{read_json()} table function.
 }
-\examples{
-\dontshow{if (identical(Sys.getenv("IN_PKGDOWN"), "TRUE")) withAutoprint(\{ # examplesIf}
-
-# Create and read a simple JSON file
-path <- tempfile("duckplyr_test_", fileext = ".json")
-writeLines('[{"a": 1, "b": "x"}, {"a": 2, "b": "y"}]', path)
-
-# Reading needs the json extension
-db_exec("INSTALL json")
-db_exec("LOAD json")
-read_json_duckdb(path)
-\dontshow{\}) # examplesIf}
-}
 \seealso{
 \code{\link[=read_csv_duckdb]{read_csv_duckdb()}}, \code{\link[=read_parquet_duckdb]{read_parquet_duckdb()}}
 }
