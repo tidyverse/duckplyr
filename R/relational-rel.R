@@ -72,20 +72,6 @@ rel_filter <- function(rel, exprs, ...) {
 #'
 #' @rdname new_relational
 #' @export
-#' @examples
-#'
-#' rel_project.dfrel <- function(rel, exprs, ...) {
-#'   df <- unclass(rel)[[1]]
-#'
-#'   # A real implementation would evaluate the expressions defined
-#'   # by the exprs argument
-#'   new_dfrel(df[seq_len(min(3, ncol(df)))])
-#' }
-#'
-#' rel_project(
-#'   mtcars_rel,
-#'   list(relexpr_reference("cyl"), relexpr_reference("disp"))
-#' )
 rel_project <- function(rel, exprs, ...) {
   rel_stats_env$rel_project <- (rel_stats_env$rel_project %||% 0L) + 1L
   UseMethod("rel_project")

@@ -160,19 +160,6 @@ to be used by \code{\link[=colnames]{colnames()}}.
 }
 \examples{
 
-rel_project.dfrel <- function(rel, exprs, ...) {
-  df <- unclass(rel)[[1]]
-
-  # A real implementation would evaluate the expressions defined
-  # by the exprs argument
-  new_dfrel(df[seq_len(min(3, ncol(df)))])
-}
-
-rel_project(
-  mtcars_rel,
-  list(relexpr_reference("cyl"), relexpr_reference("disp"))
-)
-
 rel_order.dfrel <- function(rel, exprs, ...) {
   df <- unclass(rel)[[1]]
 
