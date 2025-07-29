@@ -29,12 +29,6 @@ There is no DuckDB translation in \code{setdiff.duckplyr_df()}
 These features fall back to \code{\link[dplyr:setops]{dplyr::setdiff()}}, see \code{vignette("fallback")} for details.
 }
 
-\examples{
-df1 <- duckdb_tibble(x = 1:3)
-df2 <- duckdb_tibble(x = 3:5)
-setdiff(df1, df2)
-setdiff(df2, df1)
-}
 \seealso{
 \code{\link[dplyr:setops]{dplyr::setdiff()}}
 }
