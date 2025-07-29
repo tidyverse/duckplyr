@@ -160,11 +160,6 @@ to be used by \code{\link[=colnames]{colnames()}}.
 }
 \examples{
 
-rel_to_df.dfrel <- function(rel, ...) {
-  unclass(rel)[[1]]
-}
-rel_to_df(mtcars_rel)
-
 rel_filter.dfrel <- function(rel, exprs, ...) {
   df <- unclass(rel)[[1]]
 

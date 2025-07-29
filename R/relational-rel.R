@@ -45,12 +45,6 @@ new_relational <- function(..., class = NULL) {
 #' @param ... Reserved for future extensions, must be empty.
 #' @rdname new_relational
 #' @export
-#' @examples
-#'
-#' rel_to_df.dfrel <- function(rel, ...) {
-#'   unclass(rel)[[1]]
-#' }
-#' rel_to_df(mtcars_rel)
 rel_to_df <- function(rel, ...) {
   rel_stats_env$rel_to_df <- (rel_stats_env$rel_to_df %||% 0L) + 1L
   UseMethod("rel_to_df")
