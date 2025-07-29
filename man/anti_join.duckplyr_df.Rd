@@ -60,10 +60,6 @@ for database sources and to \code{base::merge(incomparables = NA)}.
 This is a method for the \code{\link[dplyr:filter-joins]{dplyr::anti_join()}} generic.
 \code{anti_join()} returns all rows from \code{x} with\strong{out} a match in \code{y}.
 }
-\examples{
-library(duckplyr)
-band_members \%>\% anti_join(band_instruments)
-}
 \seealso{
 \code{\link[dplyr:filter-joins]{dplyr::anti_join()}}
 }
