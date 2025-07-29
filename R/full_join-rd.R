@@ -5,9 +5,6 @@
 #' A `full_join()` keeps all observations in `x` and `y`.
 #'
 #' @inheritParams dplyr::full_join
-#' @examples
-#' library(duckplyr)
-#' full_join(band_members, band_instruments)
 #' @seealso [dplyr::full_join()]
 #' @rdname full_join.duckplyr_df
 #' @name full_join.duckplyr_df
