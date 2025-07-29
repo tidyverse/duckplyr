@@ -163,10 +163,6 @@ There is no DuckDB translation in \code{right_join.duckplyr_df()}
 These features fall back to \code{\link[dplyr:mutate-joins]{dplyr::right_join()}}, see \code{vignette("fallback")} for details.
 }
 
-\examples{
-library(duckplyr)
-right_join(band_members, band_instruments)
-}
 \seealso{
 \code{\link[dplyr:mutate-joins]{dplyr::right_join()}}
 }

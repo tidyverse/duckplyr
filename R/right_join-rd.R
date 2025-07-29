@@ -5,9 +5,6 @@
 #' A `right_join()` keeps all observations in `y`.
 #'
 #' @inheritParams dplyr::right_join
-#' @examples
-#' library(duckplyr)
-#' right_join(band_members, band_instruments)
 #' @seealso [dplyr::right_join()]
 #' @rdname right_join.duckplyr_df
 #' @name right_join.duckplyr_df
