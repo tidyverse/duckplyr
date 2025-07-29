@@ -160,24 +160,6 @@ to be used by \code{\link[=colnames]{colnames()}}.
 }
 \examples{
 
-rel_filter.dfrel <- function(rel, exprs, ...) {
-  df <- unclass(rel)[[1]]
-
-  # A real implementation would evaluate the predicates defined
-  # by the exprs argument
-  new_dfrel(df[seq_len(min(3, nrow(df))), ])
-}
-
-rel_filter(
-  mtcars_rel,
-  list(
-    relexpr_function(
-      "gt",
-      list(relexpr_reference("cyl"), relexpr_constant("6"))
-    )
-  )
-)
-
 rel_project.dfrel <- function(rel, exprs, ...) {
   df <- unclass(rel)[[1]]
 
