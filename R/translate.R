@@ -206,8 +206,15 @@ rel_translate_lang <- function(
 
   # Special case: passthrough to DuckDB
   if (pkg == "dd") {
+    args_r <- as.list(expr[-1])
+
     # FIXME: How to deal with window functions?
-    args <- map(as.list(expr[-1]), do_translate, in_window = in_window)
+    args <- map(args_r, do_translate, in_window = in_window)
+
+    if (!is.null(names(args_r))) {
+      need_names <- (names(args_r) != "")
+      args[need_names] <- map2(args[need_names], names(args_r)[need_names], relexpr_set_alias)
+    }
     fun <- relexpr_function(name, args)
     return(fun)
   }
