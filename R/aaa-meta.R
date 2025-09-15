@@ -1,4 +1,5 @@
 # Overwritten in meta.R
+meta_reset <- function(...) {}
 meta_call <- function(...) {}
 meta_ext_register <- function(...) {}
 meta_rel_register <- function(...) {}
