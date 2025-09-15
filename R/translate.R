@@ -297,7 +297,7 @@ rel_translate_lang <- function(
       consts <- map(values, do_translate)
       ops <- map(consts, ~ list(lhs, .x))
       cmp <- map(ops, relexpr_function, name = "r_base::==")
-      alt <- reduce(cmp, function(.x, .y) {
+      alt <- bisect_reduce(cmp, function(.x, .y) {
         relexpr_function("|", list(.x, .y))
       })
       coalesce <- relexpr_function("___coalesce", list(alt, relexpr_constant(has_na)))
