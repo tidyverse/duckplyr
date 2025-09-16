@@ -211,13 +211,13 @@ vec_ptype_safe <- function(x) {
 }
 
 #' @export
-rel_to_df.duckdb_relation <- function(rel, ..., prudence = NULL) {
+rel_to_df.duckdb_relation <- function(rel, ..., prudence = NULL, remote = FALSE) {
   if (is.null(prudence)) {
     cli::cli_abort("Argument {.arg {prudence}} is missing.")
   }
 
   # Same code in new_duckdb_tibble(), to avoid recursion there
-  prudence_parsed <- prudence_parse(prudence)
+  prudence_parsed <- prudence_parse(prudence, remote)
   out <- duckdb$rel_to_altrep(
     rel,
     n_rows = prudence_parsed$n_rows,
