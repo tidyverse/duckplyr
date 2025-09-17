@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.99.9904</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.1.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -171,7 +171,7 @@ month:</p>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.014   0.002   0.016</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.013   0.002   0.015</span></span></code></pre></div>
 <p>Setting up the pipeline is fast, the size of the data does not affect
 the setup costs. Because the computation is deferred, DuckDB can
 optimize the whole pipeline, which can be seen in the output below:</p>
@@ -187,7 +187,23 @@ optimize the whole pipeline, which can be seen in the output below:</p>
 <span><span class="co">#&gt; │       max_arr_delay       │</span></span>
 <span><span class="co">#&gt; │      median_arr_delay     │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │        ~33677 Rows        │</span></span>
+<span><span class="co">#&gt; │        ~61046 Rows        │</span></span>
+<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
+<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
+<span><span class="co">#&gt; │         PROJECTION        │</span></span>
+<span><span class="co">#&gt; │    --------------------   │</span></span>
+<span><span class="co">#&gt; │           month           │</span></span>
+<span><span class="co">#&gt; │     (sum(CASE  WHEN (     │</span></span>
+<span><span class="co">#&gt; │ (arr_delay IS NULL)) THEN │</span></span>
+<span><span class="co">#&gt; │ (CAST(1 AS INTEGER)) ELSE │</span></span>
+<span><span class="co">#&gt; │  CAST(0 AS INTEGER) END) &gt;│</span></span>
+<span><span class="co">#&gt; │             0)            │</span></span>
+<span><span class="co">#&gt; │       avg(arr_delay)      │</span></span>
+<span><span class="co">#&gt; │       min(arr_delay)      │</span></span>
+<span><span class="co">#&gt; │       max(arr_delay)      │</span></span>
+<span><span class="co">#&gt; │  quantile_cont(arr_delay) │</span></span>
+<span><span class="co">#&gt; │                           │</span></span>
+<span><span class="co">#&gt; │        ~61046 Rows        │</span></span>
 <span><span class="co">#&gt; └-------------┬-------------┘</span></span>
 <span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │       HASH_GROUP_BY       │</span></span>
@@ -201,7 +217,7 @@ optimize the whole pipeline, which can be seen in the output below:</p>
 <span><span class="co">#&gt; │          max(#4)          │</span></span>
 <span><span class="co">#&gt; │     quantile_cont(#5)     │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │        ~33677 Rows        │</span></span>
+<span><span class="co">#&gt; │        ~61046 Rows        │</span></span>
 <span><span class="co">#&gt; └-------------┬-------------┘</span></span>
 <span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │         PROJECTION        │</span></span>
@@ -250,7 +266,7 @@ kept. The result becomes available when accessed:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">mean_arr_delay_ewr</span><span class="op">$</span><span class="va">mean_arr_delay</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.018   0.003   0.017</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.027   0.000   0.020</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="comparison">Comparison<a class="anchor" aria-label="anchor" href="#comparison"></a>
@@ -307,7 +323,7 @@ optimization:</p>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.034   0.012   0.046</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.035   0.009   0.044</span></span></code></pre></div>
 <p>See also the <a href="https://duckdb.org/2024/04/02/duckplyr.html" class="external-link">duckplyr: dplyr
 Powered by DuckDB</a> blog post for more information.</p>
 </div>
@@ -400,10 +416,14 @@ accessed.</p>
 rows triggers an error:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">flights_stingy</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: Materialization is disabled, use collect() or as_tibble() to materialize.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;">:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Materialization is disabled, use `collect()` or `as_tibble()` to materialize.</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> Context: GetQueryResult</span></span>
 <span></span>
 <span><span class="va">flights_stingy</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="co">#&gt; Error: Materialization is disabled, use collect() or as_tibble() to materialize.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;">:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Materialization is disabled, use `collect()` or `as_tibble()` to materialize.</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> Context: GetQueryResult</span></span></code></pre></div>
 <p>This means that stingy duckplyr frames can also be used to enforce
 DuckDB operation for a pipeline.</p>
 </div>
@@ -507,7 +527,9 @@ fewer than 1,000,000 cells (rows multiplied by columns).</p>
 <code class="sourceCode R"><span><span class="va">flights_partial</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">origin</span>, <span class="va">dest</span>, <span class="va">dep_delay</span>, <span class="va">arr_delay</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: Materialization would result in more than 250000 rows. Use collect() or as_tibble() to materialize.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;">:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Materialization would result in more than 250000 rows. Use `collect()` or `as_tibble()` to materialize.</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> Context: GetQueryResult</span></span></code></pre></div>
 <p>The original input is too large to be materialized, so the operation
 fails. On the other hand, the result after aggregation is small enough
 to be materialized:</p>
@@ -517,9 +539,27 @@ to be materialized:</p>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 3</span></span></code></pre></div>
 <p>Thrifty is a good choice for data sets where the cost of
-materializing the data is prohibitive only for large results. This is
-the default for the ingestion functions like
-<code><a href="../reference/read_parquet_duckdb.html">read_parquet_duckdb()</a></code>.</p>
+materializing the data is prohibitive only for large results.</p>
+<div class="section level3">
+<h3 id="file-ingestion-and-custom-limits">File ingestion and custom limits<a class="anchor" aria-label="anchor" href="#file-ingestion-and-custom-limits"></a>
+</h3>
+<p>Thrifty is the default for the ingestion functions like
+<code><a href="../reference/read_parquet_duckdb.html">read_parquet_duckdb()</a></code>. Here, the limit is adapted depending
+on the source of the data:</p>
+<ul>
+<li>For local files, the limit is 1,000,000 cells.</li>
+<li>For remote files (if the file name starts with a URL protocol
+specifier), the limit is 1,000 cells.</li>
+</ul>
+<p>A custom limit can be set by passing a named vector to
+<code>prudence</code>, with elements <code>cells</code> and/or
+<code>rows</code>:</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/read_parquet_duckdb.html">read_parquet_duckdb</a></span><span class="op">(</span></span>
+<span>  <span class="st">"personas.parquet"</span>,</span>
+<span>  prudence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>cells <span class="op">=</span> <span class="fl">10000</span>, rows <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
@@ -555,7 +595,7 @@ directly.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.9000.</p>
 </div>
 
   </div></footer>
