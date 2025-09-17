@@ -104,9 +104,8 @@ rel_find_call_candidates <- function(fun, call = caller_env()) {
   } else if (name[[1]] == "::") {
     my_pkg <- name[[2]]
     name <- name[[3]]
-    pkgs <- rel_find_packages(name)
 
-    if (my_pkg %in% pkgs) {
+    if (my_pkg == "dd" || my_pkg %in% rel_find_packages(name)) {
       # Package name provided by the user, shortcut if found in list of packages
       # (requires non-NULL pkgs), no check needed
       return(list(
