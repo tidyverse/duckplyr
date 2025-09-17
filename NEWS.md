@@ -1,10 +1,18 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# duckplyr 1.1.1.9001 (2025-09-17)
+# duckplyr 1.1.2 (2025-09-17)
 
 ## Features
 
 - Fully support `dd::...()` syntax (#795).
+
+- Threshold for `prudence = "thrifty"` is reduced to 1000 cells when the data comes from a remote data source.
+
+- Support named arguments for `dd$...()` functions.
+
+## Chore
+
+- Add and use `meta_reset()`.
 
 ## Continuous integration
 
@@ -15,19 +23,6 @@
 ## Documentation
 
 - Fix clone path.
-
-
-# duckplyr 1.1.1.9000 (2025-09-16)
-
-## Features
-
-- Threshold for `prudence = "thrifty"` is reduced to 1000 cells when the data comes from a remote data source.
-
-- Support named arguments for `dd$...()` functions.
-
-## Chore
-
-- Add and use `meta_reset()`.
 
 ## Performance
 
