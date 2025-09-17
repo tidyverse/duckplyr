@@ -1,5 +1,22 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.1.1.9000 (2025-09-16)
+
+## Features
+
+- Threshold for `prudence = "thrifty"` is reduced to 1000 cells when the data comes from a remote data source.
+
+- Support named arguments for `dd$...()` functions.
+
+## Chore
+
+- Add and use `meta_reset()`.
+
+## Performance
+
+- Generate a more balanced expresion when translating `%in%` to avoid performance problems in duckdb v1.4.0.
+
+
 # duckplyr 1.1.1 (2025-07-29)
 
 ## Chore

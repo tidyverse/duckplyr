@@ -292,7 +292,23 @@ flights_partial |>
 ```
 
 Thrifty is a good choice for data sets where the cost of materializing the data is prohibitive only for large results.
-This is the default for the ingestion functions like `read_parquet_duckdb()`.
+
+### File ingestion and custom limits
+
+Thrifty is the default for the ingestion functions like `read_parquet_duckdb()`.
+Here, the limit is adapted depending on the source of the data:
+
+- For local files, the limit is 1,000,000 cells.
+- For remote files (if the file name starts with a URL protocol specifier), the limit is 1,000 cells.
+
+A custom limit can be set by passing a named vector to `prudence`, with elements `cells` and/or `rows`:
+
+```r
+read_parquet_duckdb(
+  "personas.parquet",
+  prudence = c(cells = 10000, rows = 1000)
+)
+```
 
 
 ## Conclusion

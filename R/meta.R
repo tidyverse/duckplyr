@@ -9,6 +9,16 @@ macro_cache <- collections::dict()
 df_cache <- collections::dict()
 rel_cache <- collections::dict()
 
+meta_reset <- function() {
+  call_stack$clear()
+  pre_code_cache$clear()
+  code_cache$clear()
+  ext_cache$clear()
+  macro_cache$clear()
+  df_cache$clear()
+  rel_cache$clear()
+}
+
 meta_call <- function(name) {
   name <- gsub("[.].*$", "", name)
   meta_call_start(name)
