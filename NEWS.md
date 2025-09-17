@@ -8,21 +8,7 @@
 
 - Threshold for `prudence = "thrifty"` is reduced to 1000 cells when the data comes from a remote data source.
 
-- Support named arguments for `dd$...()` functions.
-
-## Chore
-
-- Add and use `meta_reset()`.
-
-## Continuous integration
-
-- Format with air, check detritus, better handling of `extra-packages` (#738).
-
-- Skip tests.
-
-## Documentation
-
-- Fix clone path.
+- Support named arguments for `dd::...()` functions.
 
 ## Performance
 
