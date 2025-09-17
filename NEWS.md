@@ -1,5 +1,22 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.1.1.9001 (2025-09-17)
+
+## Features
+
+- Fully support `dd::...()` syntax (#795).
+
+## Continuous integration
+
+- Format with air, check detritus, better handling of `extra-packages` (#738).
+
+- Skip tests.
+
+## Documentation
+
+- Fix clone path.
+
+
 # duckplyr 1.1.1.9000 (2025-09-16)
 
 ## Features
