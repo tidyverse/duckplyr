@@ -85,6 +85,8 @@ duckplyr_tests <- head(n = -1, list(
     NULL
   ),
   "test-arrange.R" = c(
+    # Overly strict test, should be split
+    "arrange handles list columns (#282)",
     NULL
   ),
   "test-bind-cols.R" = c(

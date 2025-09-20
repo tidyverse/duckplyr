@@ -59,7 +59,7 @@ test_that("duckdb_rel_from_df() and changing column names", {
 
 test_that("duckdb_rel_from_df() error call", {
   expect_snapshot(error = TRUE, {
-    as_duckdb_tibble(data.frame(a = factor(letters)))
+    as_duckdb_tibble(data.frame(a = ordered(letters)))
   })
 })
 

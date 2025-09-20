@@ -117,8 +117,14 @@ duckdb_rel_from_df <- function(df, call = caller_env()) {
     df <- as_duckplyr_df_impl(df)
   }
 
-  out <- check_df_for_rel(df, call)
+  con <- get_default_duckdb_connection()
 
+  # FIXME: For some reason, it seems crucial to assign the result to a
+  # variable before returning it
+  experimental <- (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE")
+  out <- duckdb$rel_from_df(con, df, experimental = experimental)
+
+  check_df_for_rel(out, df, call)
   meta_rel_register_df(out, df)
 
   out
@@ -127,78 +133,19 @@ duckdb_rel_from_df <- function(df, call = caller_env()) {
   # duckdb$rel_from_df(get_default_duckdb_connection(), df)
 }
 
-# FIXME: This should be duckdb's responsibility
-check_df_for_rel <- function(df, call = caller_env()) {
-  rni <- .row_names_info(df, 0L)
-  if (is.character(rni)) {
-    cli::cli_abort("Need data frame without row names to convert to relational, got character row names.", call = call)
-  }
-  if (length(rni) != 0) {
-    if (length(rni) != 2L || !is.na(rni[[1]])) {
-      cli::cli_abort("Need data frame without row names to convert to relational, got numeric row names.", call = call)
-    }
+check_df_for_rel <- function(rel, df, call = caller_env()) {
+  if (Sys.getenv("DUCKPLYR_CHECK_ROUNDTRIP") != "TRUE") {
+    return()
   }
 
-  if (length(df) == 0L) {
-    cli::cli_abort("Can't convert empty data frame to relational.", call = call)
-  }
-
-  for (i in seq_along(df)) {
-    col <- .subset2(df, i)
-    if (!is.null(names(col))) {
-      cli::cli_abort("Can't convert named vectors to relational. Affected column: {.var {names(df)[[i]]}}.", call = call)
-    }
-    if (!is.null(dim(col))) {
-      cli::cli_abort("Can't convert arrays or matrices to relational. Affected column: {.var {names(df)[[i]]}}.", call = call)
-    }
-    if (isS4(col)) {
-      cli::cli_abort("Can't convert S4 columns to relational. Affected column: {.var {names(df)[[i]]}}.", call = call)
-    }
-
-    # Factors: https://github.com/duckdb/duckdb/issues/8561
-
-    # When adding new classes, make sure to adapt the first test in test-relational-duckdb.R
-
-    col_class <- class(col)
-    if (length(col_class) == 1) {
-      valid <- col_class %in% c("logical", "integer", "numeric", "character", "Date", "difftime")
-    } else if (length(col_class) == 2) {
-      valid <- identical(col_class, c("POSIXct", "POSIXt")) || identical(col_class, c("hms", "difftime"))
-    } else {
-      valid <- FALSE
-    }
-    if (!valid) {
-      cli::cli_abort("Can't convert columns of class {.cls {col_class}} to relational. Affected column: {.var {names(df)[[i]]}}.", call = call)
-    }
-  }
-
-  # FIXME: For some reason, it's important to create an alias here
-  con <- get_default_duckdb_connection()
-
-  # FIXME: For some other reason, it seems crucial to assign the result to a
-  # variable before returning it
-  out <- duckdb$rel_from_df(con, df)
-
-  roundtrip <- duckdb$rapi_rel_to_altrep(out)
-  if (Sys.getenv("DUCKPLYR_CHECK_ROUNDTRIP") == "TRUE") {
-    rlang::with_options(duckdb.materialize_callback = NULL, {
-      for (i in seq_along(df)) {
-        if (!identical(df[[i]], roundtrip[[i]])) {
-          cli::cli_abort("Imperfect roundtrip. Affected column: {.var {names(df)[[i]]}}.", call = call)
-        }
-      }
-    })
-  } else {
+  roundtrip <- duckdb$rapi_rel_to_altrep(rel)
+  rlang::with_options(duckdb.materialize_callback = NULL, {
     for (i in seq_along(df)) {
-      df_attrib <- attributes(df[[i]])
-      roundtrip_attrib <- attributes(roundtrip[[i]])
-      if (!identical(df_attrib, roundtrip_attrib)) {
-        cli::cli_abort("Attributes are lost during conversion. Affected column: {.var {names(df)[[i]]}}.", call = call)
+      if (!identical(df[[i]], roundtrip[[i]])) {
+        cli::cli_abort("Imperfect roundtrip. Affected column: {.var {names(df)[[i]]}}.", call = call)
       }
     }
-  }
-
-  out
+  })
 }
 
 # https://github.com/r-lib/vctrs/issues/1956
@@ -463,12 +410,7 @@ to_duckdb_expr <- function(x) {
       out
     },
     relational_relexpr_constant = {
-      # FIXME: Should be duckdb's responsibility
-      # Example: https://github.com/dschafer/activatr/issues/18
-      check_df_for_rel(vctrs::new_data_frame(list(constant = x$val)))
-
       out <- duckdb$expr_constant(x$val)
-
       if (!is.null(x$alias)) {
         duckdb$expr_set_alias(out, x$alias)
       }
