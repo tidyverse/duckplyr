@@ -177,7 +177,7 @@ check_df_for_rel <- function(df, call = caller_env()) {
 
   # FIXME: For some other reason, it seems crucial to assign the result to a
   # variable before returning it
-  out <- duckdb$rel_from_df(con, df)
+  out <- duckdb$rel_from_df(con, df, strict = TRUE)
 
   roundtrip <- duckdb$rapi_rel_to_altrep(out)
   if (Sys.getenv("DUCKPLYR_CHECK_ROUNDTRIP") == "TRUE") {
@@ -188,14 +188,6 @@ check_df_for_rel <- function(df, call = caller_env()) {
         }
       }
     })
-  } else {
-    for (i in seq_along(df)) {
-      df_attrib <- attributes(df[[i]])
-      roundtrip_attrib <- attributes(roundtrip[[i]])
-      if (!identical(df_attrib, roundtrip_attrib)) {
-        cli::cli_abort("Attributes are lost during conversion. Affected column: {.var {names(df)[[i]]}}.", call = call)
-      }
-    }
   }
 
   out
