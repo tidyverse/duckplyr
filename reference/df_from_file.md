@@ -140,12 +140,12 @@ duckplyr_df_from_csv(file.path(tempdir(), "duckplyr_test_*.csv"))
 #> # A duckplyr data frame: 2 variables
 #>       a b    
 #>   <dbl> <chr>
-#> 1     4 g    
-#> 2     5 h    
-#> 3     6 i    
-#> 4     1 d    
-#> 5     2 e    
-#> 6     3 f    
+#> 1     1 d    
+#> 2     2 e    
+#> 3     3 f    
+#> 4     4 g    
+#> 5     5 h    
+#> 6     6 i    
 
 unlink(c(path, path2))
 
