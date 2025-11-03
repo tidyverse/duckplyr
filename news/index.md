@@ -12,9 +12,13 @@
 
 - Avoid example failing in R 4.2 and older.
 
-### Documentation
+### Uncategorized
 
-- Add “Supported by Posit” badge.
+- Merge pull request
+  [\#801](https://github.com/tidyverse/duckplyr/issues/801) from
+  jeroenjanssens/supported-by-posit.
+
+- Switching to development version.
 
 ## duckplyr 1.1.2 (2025-09-17)
 
