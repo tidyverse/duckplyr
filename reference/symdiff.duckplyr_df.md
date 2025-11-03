@@ -52,8 +52,8 @@ symdiff(df1, df2)
 #> # A duckplyr data frame: 1 variable
 #>       x
 #>   <int>
-#> 1     2
-#> 2     5
-#> 3     1
-#> 4     4
+#> 1     4
+#> 2     1
+#> 3     2
+#> 4     5
 ```
