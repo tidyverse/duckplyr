@@ -19,7 +19,7 @@
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Memory protection: controlling automatic materialization">
 <meta name="robots" content="noindex">
-<script defer data-domain="duckplyr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/posit-dev/supported-by-posit/js/badge.min.js" data-max-height="43" data-light-bg="#666f76" data-light-fg="#f9f9f9"></script><script defer data-domain="duckplyr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
 </head>
 <body>
     <a href="#container" class="visually-hidden-focusable">Skip to content</a>
@@ -171,7 +171,7 @@ month:</p>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.014   0.002   0.016</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.010   0.005   0.015</span></span></code></pre></div>
 <p>Setting up the pipeline is fast, the size of the data does not affect
 the setup costs. Because the computation is deferred, DuckDB can
 optimize the whole pipeline, which can be seen in the output below:</p>
@@ -266,7 +266,7 @@ kept. The result becomes available when accessed:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">mean_arr_delay_ewr</span><span class="op">$</span><span class="va">mean_arr_delay</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.041   0.004   0.021</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.056   0.007   0.030</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="comparison">Comparison<a class="anchor" aria-label="anchor" href="#comparison"></a>
@@ -323,7 +323,7 @@ optimization:</p>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.038   0.007   0.045</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.036   0.009   0.045</span></span></code></pre></div>
 <p>See also the <a href="https://duckdb.org/2024/04/02/duckplyr.html" class="external-link">duckplyr: dplyr
 Powered by DuckDB</a> blog post for more information.</p>
 </div>
