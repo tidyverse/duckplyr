@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.1.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.1.2.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -189,7 +189,7 @@ to a table:</p>
 <span><span class="va">dbplyr_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"data"</span><span class="op">)</span></span>
 <span><span class="va">dbplyr_data</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># Source:   table&lt;"data"&gt; [?? x 2]</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.3.3-dev231 [unknown@Linux 6.11.0-1018-azure:R 4.5.1//tmp/Rtmp9VUsr9/file4ead1cc502cd.duckdb]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.4.1 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpSaIVmH/file45a6185e5f46.duckdb]</span></span></span>
 <span><span class="co">#&gt;       x y    </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1 a    </span></span>
@@ -214,7 +214,7 @@ to a table:</p>
 <span><span class="co">#&gt; │             x             │</span></span>
 <span><span class="co">#&gt; │             y             │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │          ~3 Rows          │</span></span>
+<span><span class="co">#&gt; │          ~3 rows          │</span></span>
 <span><span class="co">#&gt; └---------------------------┘</span></span></code></pre></div>
 <p>The <code><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain()</a></code> output shows that the data is actually
 coming from a DuckDB table. The <code><a href="../reference/duckdb_tibble.html">as_duckdb_tibble()</a></code> function
@@ -242,7 +242,7 @@ can then be used to seamlessly convert the data to a duckplyr frame:</p>
 <span><span class="co">#&gt; │             x             │</span></span>
 <span><span class="co">#&gt; │             y             │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │          ~3 Rows          │</span></span>
+<span><span class="co">#&gt; │          ~3 rows          │</span></span>
 <span><span class="co">#&gt; └---------------------------┘</span></span></code></pre></div>
 <p>This only works for DuckDB connections. For other databases, turn the
 data into an R data frame or export it to a file before using
@@ -409,7 +409,7 @@ in duckplyr:</p>
 <span><span class="co">#&gt; │             a             │</span></span>
 <span><span class="co">#&gt; │             b             │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │          ~1 Rows          │</span></span>
+<span><span class="co">#&gt; │           ~1 row          │</span></span>
 <span><span class="co">#&gt; └-------------┬-------------┘</span></span>
 <span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │     R_DATAFRAME_SCAN      │</span></span>
@@ -417,7 +417,7 @@ in duckplyr:</p>
 <span><span class="co">#&gt; │      Text: data.frame     │</span></span>
 <span><span class="co">#&gt; │       Projections: a      │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │          ~1 Rows          │</span></span>
+<span><span class="co">#&gt; │           ~1 row          │</span></span>
 <span><span class="co">#&gt; └---------------------------┘</span></span>
 <span></span>
 <span><span class="va">simple_data_computed</span> <span class="op">&lt;-</span></span>
@@ -443,7 +443,7 @@ persisted after the session ends:</p>
 <span><span class="co">#&gt; │             a             │</span></span>
 <span><span class="co">#&gt; │             b             │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │          ~1 Rows          │</span></span>
+<span><span class="co">#&gt; │           ~1 row          │</span></span>
 <span><span class="co">#&gt; └---------------------------┘</span></span></code></pre></div>
 <p>The <code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect()</a></code> function brings the data into R memory and
 returns a plain tibble:</p>
@@ -494,7 +494,7 @@ Parquet file:</p>
 <span><span class="co">#&gt; │             a             │</span></span>
 <span><span class="co">#&gt; │             b             │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │          ~1 Rows          │</span></span>
+<span><span class="co">#&gt; │           ~1 row          │</span></span>
 <span><span class="co">#&gt; └---------------------------┘</span></span></code></pre></div>
 <p>Just like with <code><a href="../reference/compute.duckplyr_df.html">compute.duckplyr_df()</a></code>, the return value
 of <code><a href="../reference/compute_csv.html">compute_csv()</a></code> and <code><a href="../reference/compute_parquet.html">compute_parquet()</a></code> is a

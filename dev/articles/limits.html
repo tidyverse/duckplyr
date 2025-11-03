@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.1.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.1.2.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -486,7 +486,7 @@ a constant with up to 100 values:</p>
 <span><span class="co">#&gt; │      Text: data.frame     │</span></span>
 <span><span class="co">#&gt; │       Projections: a      │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │          ~3 Rows          │</span></span>
+<span><span class="co">#&gt; │          ~3 rows          │</span></span>
 <span><span class="co">#&gt; └---------------------------┘</span></span></code></pre></div>
 <p><code><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings()</a></code> is a no-op:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
@@ -552,14 +552,14 @@ work.</p>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │         Groups: #0        │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │        ~336776 Rows       │</span></span>
+<span><span class="co">#&gt; │       ~336,776 rows       │</span></span>
 <span><span class="co">#&gt; └-------------┬-------------┘</span></span>
 <span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │         PROJECTION        │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │            day            │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │        ~336776 Rows       │</span></span>
+<span><span class="co">#&gt; │       ~336,776 rows       │</span></span>
 <span><span class="co">#&gt; └-------------┬-------------┘</span></span>
 <span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │     R_DATAFRAME_SCAN      │</span></span>
@@ -567,7 +567,7 @@ work.</p>
 <span><span class="co">#&gt; │      Text: data.frame     │</span></span>
 <span><span class="co">#&gt; │      Projections: day     │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │        ~336776 Rows       │</span></span>
+<span><span class="co">#&gt; │       ~336,776 rows       │</span></span>
 <span><span class="co">#&gt; └---------------------------┘</span></span>
 <span></span>
 <span><span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://withr.r-lib.org/reference/with_envvar.html" class="external-link">with_envvar</a></span><span class="op">(</span></span>
@@ -589,14 +589,14 @@ work.</p>
 <span><span class="co">#&gt; │             #0            │</span></span>
 <span><span class="co">#&gt; │             #1            │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │        ~67355 Rows        │</span></span>
+<span><span class="co">#&gt; │        ~67,355 rows       │</span></span>
 <span><span class="co">#&gt; └-------------┬-------------┘</span></span>
 <span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │           FILTER          │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │   (___row_number_by = 1)  │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │        ~67355 Rows        │</span></span>
+<span><span class="co">#&gt; │        ~67,355 rows       │</span></span>
 <span><span class="co">#&gt; └-------------┬-------------┘</span></span>
 <span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │         PROJECTION        │</span></span>
@@ -605,7 +605,7 @@ work.</p>
 <span><span class="co">#&gt; │             #1            │</span></span>
 <span><span class="co">#&gt; │             #2            │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │        ~336776 Rows       │</span></span>
+<span><span class="co">#&gt; │       ~336,776 rows       │</span></span>
 <span><span class="co">#&gt; └-------------┬-------------┘</span></span>
 <span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │           WINDOW          │</span></span>
@@ -622,7 +622,7 @@ work.</p>
 <span><span class="co">#&gt; │             #0            │</span></span>
 <span><span class="co">#&gt; │             #1            │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │        ~336776 Rows       │</span></span>
+<span><span class="co">#&gt; │       ~336,776 rows       │</span></span>
 <span><span class="co">#&gt; └-------------┬-------------┘</span></span>
 <span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │      STREAMING_WINDOW     │</span></span>
@@ -636,7 +636,7 @@ work.</p>
 <span><span class="co">#&gt; │      Text: data.frame     │</span></span>
 <span><span class="co">#&gt; │      Projections: day     │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │        ~336776 Rows       │</span></span>
+<span><span class="co">#&gt; │       ~336,776 rows       │</span></span>
 <span><span class="co">#&gt; └---------------------------┘</span></span></code></pre></div>
 </div>
 <div class="section level3">
