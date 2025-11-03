@@ -1,6 +1,6 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# duckplyr 1.1.2.9001 (2025-11-04)
+# duckplyr 1.1.3 (2025-11-04)
 
 ## Features
 
@@ -13,9 +13,6 @@
 ## Uncategorized
 
 - Merge pull request #801 from jeroenjanssens/supported-by-posit.
-
-
-# duckplyr 1.1.2.9000 (2025-09-19)
 
 - Switching to development version.
 
