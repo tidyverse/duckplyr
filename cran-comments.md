@@ -1,4 +1,4 @@
-duckplyr 1.1.2
+duckplyr 1.1.3
 
 ## Cran Repository Policy
 
