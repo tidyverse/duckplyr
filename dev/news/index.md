@@ -1,8 +1,29 @@
 # Changelog
 
-## duckplyr 1.1.2.9000 (2025-09-19)
+## duckplyr 1.1.3.9000 (2025-11-04)
 
-- Switching to development version.
+### fledge
+
+- CRAN release v1.1.3
+  ([\#803](https://github.com/tidyverse/duckplyr/issues/803)).
+
+## duckplyr 1.1.3 (2025-11-04)
+
+CRAN release: 2025-11-04
+
+### Features
+
+- [`read_file_duckdb()`](https://duckplyr.tidyverse.org/dev/reference/read_file_duckdb.md)
+  only wraps `path` into a list if the length is not equal to one, to
+  support `read_stat()`.
+
+### Continuous integration
+
+- Avoid example failing in R 4.2 and older.
+
+### Documentation
+
+- Add “Supported by Posit” badge.
 
 ## duckplyr 1.1.2 (2025-09-17)
 

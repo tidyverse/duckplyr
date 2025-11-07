@@ -92,7 +92,7 @@ system.time(
     )
 )
 #>    user  system elapsed 
-#>   0.010   0.005   0.015
+#>   0.011   0.005   0.016
 ```
 
 Setting up the pipeline is fast, the size of the data does not affect
@@ -193,7 +193,7 @@ available when accessed:
 ``` r
 system.time(mean_arr_delay_ewr$mean_arr_delay[[1]])
 #>    user  system elapsed 
-#>   0.056   0.007   0.030
+#>   0.032   0.000   0.023
 ```
 
 ### Comparison
@@ -229,7 +229,7 @@ system.time(
     )
 )
 #>    user  system elapsed 
-#>   0.036   0.009   0.045
+#>   0.038   0.008   0.045
 ```
 
 See also the [duckplyr: dplyr Powered by
