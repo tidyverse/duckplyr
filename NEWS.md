@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.1.3.9001 (2025-11-08)
+
+## Continuous integration
+
+- Sync (#805).
+
+
 # duckplyr 1.1.3.9000 (2025-11-04)
 
 ## fledge
