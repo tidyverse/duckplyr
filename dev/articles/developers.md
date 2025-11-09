@@ -122,7 +122,7 @@ first request.
 
 ``` r
 lazy$mean_inflight_delay
-#> [1] -5.147220 -9.370201 -3.855519 -7.356713 -2.673124 -4.244284
+#> [1] -5.147220 -3.855519 -9.370201 -7.356713 -2.673124 -4.244284
 ```
 
 After the computation has been carried out, the results are preserved
@@ -134,8 +134,8 @@ lazy
 #>    year month mean_inflight_delay median_inflight_delay
 #>   <int> <int>               <dbl>                 <dbl>
 #> 1  2013     2               -5.15                    -6
-#> 2  2013     5               -9.37                   -10
-#> 3  2013     1               -3.86                    -5
+#> 2  2013     1               -3.86                    -5
+#> 3  2013     5               -9.37                   -10
 #> 4  2013     3               -7.36                    -9
 #> 5  2013     4               -2.67                    -5
 #> 6  2013     6               -4.24                    -7
