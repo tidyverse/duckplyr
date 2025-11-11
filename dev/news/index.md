@@ -1,5 +1,12 @@
 # Changelog
 
+## duckplyr 1.1.3.9002 (2025-11-11)
+
+### Continuous integration
+
+- Use workflows for fledge
+  ([\#807](https://github.com/tidyverse/duckplyr/issues/807)).
+
 ## duckplyr 1.1.3.9001 (2025-11-08)
 
 ### Continuous integration
