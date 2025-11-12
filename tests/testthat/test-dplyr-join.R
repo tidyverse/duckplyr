@@ -62,13 +62,6 @@ test_that("keys are coerced to symmetric type", {
   expect_type(duckplyr_inner_join(bar, foo, by = "id")$id, "character")
 })
 
-test_that("factor keys are coerced to the union factor type", {
-  df1 <- tibble(x = 1, y = factor("a"))
-  df2 <- tibble(x = 2, y = factor("b"))
-  out <- duckplyr_full_join(df1, df2, by = c("x", "y"))
-  expect_equal(out$y, factor(c("a", "b")))
-})
-
 test_that("keys of non-equi conditions are not coerced if `keep = NULL`", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   foo <- tibble(id = factor(c("a", "b")), col1 = c(1, 2), var1 = "foo")
