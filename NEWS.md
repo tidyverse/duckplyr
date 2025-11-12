@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.1.3.9003 (2025-11-12)
+
+## Continuous integration
+
+- Fix reviewdog and add commenting workflow (#810).
+
+
 # duckplyr 1.1.3.9002 (2025-11-11)
 
 ## Continuous integration
