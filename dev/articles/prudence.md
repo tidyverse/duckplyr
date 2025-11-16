@@ -229,7 +229,7 @@ system.time(
     )
 )
 #>    user  system elapsed 
-#>   0.032   0.012   0.044
+#>   0.035   0.011   0.045
 ```
 
 See also the [duckplyr: dplyr Powered by

@@ -37,9 +37,9 @@ union(df1, df2)
 #> # A duckplyr data frame: 1 variable
 #>       x
 #>   <int>
-#> 1     1
-#> 2     3
-#> 3     4
-#> 4     2
-#> 5     5
+#> 1     5
+#> 2     2
+#> 3     3
+#> 4     4
+#> 5     1
 ```
