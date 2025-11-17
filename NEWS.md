@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.1.3.9004 (2025-11-17)
+
+## Continuous integration
+
+- Install binaries from r-universe for dev workflow (#813).
+
+
 # duckplyr 1.1.3.9003 (2025-11-12)
 
 ## Continuous integration
