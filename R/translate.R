@@ -292,7 +292,7 @@ rel_translate_lang <- function(
   }
 
 
-  if (!(name %in% c("wday", "strftime", "lag", "lead", "sum", "min", "max", "any", "all", "mean", "median", "sd", "n_distinct"))) {
+  if (!(name %in% c("wday", "strftime", "lag", "lead", "sum", "min", "max", "any", "all", "mean", "median", "sd", "n_distinct", "if_else"))) {
     if (!is.null(names(expr)) && any(names(expr) != "")) {
       # Fix grepl() and sum()/min()/max() logic below when allowing matching by argument name
       cli::cli_abort("Can't translate named argument {.code {name}({names(expr)[names(expr) != ''][[1]]} = )}.", call = call)
@@ -324,6 +324,15 @@ rel_translate_lang <- function(
       bad <- !(names(args) %in% c("x", "format"))
       if (any(bad)) {
         cli::cli_abort("{name}({names(args)[which(bad)[[1]]]} = ) not supported", call = call)
+      }
+    },
+    "if_else" = {
+      # Match arguments to dplyr::if_else signature
+      expr <- call_match(expr, dplyr::if_else, dots_env = env)
+      args <- as.list(expr[-1])
+      bad <- !(names(args) %in% c("condition", "true", "false"))
+      if (any(bad)) {
+        cli::cli_abort("{.code {name}({names(args)[which(bad)[[1]]]} = )} not supported", call = call)
       }
     },
     "%in%" = {

@@ -235,3 +235,35 @@ test_that("dd$ prefix", {
     mutate(b = dd$ascii(a))
   expect_equal(out, duckdb_tibble(a = "duckdb", b = 100L))
 })
+
+test_that("if_else with named arguments", {
+  df <- data.frame(a = c(TRUE, FALSE, NA), b = 1:3, c = 4:6)
+
+  # Named arguments should be normalized and work
+  expect_identical(
+    rel_translate(quo(if_else(a, true = b, false = c)), df),
+    rel_translate(quo(if_else(a, b, c)), df)
+  )
+
+  # Arguments can be reordered using names
+  expect_identical(
+    rel_translate(quo(if_else(a, false = c, true = b)), df),
+    rel_translate(quo(if_else(a, b, c)), df)
+  )
+
+  # condition argument can be named
+  expect_identical(
+    rel_translate(quo(if_else(condition = a, true = b, false = c)), df),
+    rel_translate(quo(if_else(a, b, c)), df)
+  )
+
+  # missing= argument is not supported
+  expect_snapshot(error = TRUE, {
+    rel_translate(quo(if_else(a, true = b, false = c, missing = NA)), df)
+  })
+
+  # ptype= argument is not supported
+  expect_snapshot(error = TRUE, {
+    rel_translate(quo(if_else(a, true = b, false = c, ptype = integer())), df)
+  })
+})
