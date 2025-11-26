@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Implementer’s interface</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Implementer’s interface</h1>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(conflicted)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">conflict_prefer</span>(<span class="st">&quot;filter&quot;</span>, <span class="st">&quot;dplyr&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co">#&gt; [conflicted] Removing existing preference.</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt; [conflicted] Will prefer dplyr::filter over any other package.</span></span></code></pre></div>
+<p>duckplyr also defines a set of generics that provide a low-level
+implementer’s interface for dplyr’s high-level user interface. Other
+packages may then implement methods for those generics.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(conflicted)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">conflict_prefer</span>(<span class="st">&quot;filter&quot;</span>, <span class="st">&quot;dplyr&quot;</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt; [conflicted] Removing existing preference.</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt; [conflicted] Will prefer dplyr::filter over any other package.</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="fu">library</span>(duckplyr)</span></code></pre></div>
+<pre><code>#&gt; ✔ Overwriting dplyr methods with duckplyr methods.
+#&gt; ℹ Turn off with `duckplyr::methods_restore()`.</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># Create a relational to be used by examples below</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>new_dfrel <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="fu">stopifnot</span>(<span class="fu">is.data.frame</span>(x))</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  <span class="fu">new_relational</span>(<span class="fu">list</span>(x), <span class="at">class =</span> <span class="st">&quot;dfrel&quot;</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>}</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>mtcars_rel <span class="ot">&lt;-</span> <span class="fu">new_dfrel</span>(mtcars[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co"># Example 1: return a data.frame</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>rel_to_df.dfrel <span class="ot">&lt;-</span> <span class="cf">function</span>(rel, ...) {</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>  <span class="fu">unclass</span>(rel)[[<span class="dv">1</span>]]</span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>}</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="fu">rel_to_df</span>(mtcars_rel)</span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt;                    mpg cyl disp  hp</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co">#&gt; Mazda RX4         21.0   6  160 110</span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">#&gt; Mazda RX4 Wag     21.0   6  160 110</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">#&gt; Datsun 710        22.8   4  108  93</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">#&gt; Hornet 4 Drive    21.4   6  258 110</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="co">#&gt; Hornet Sportabout 18.7   8  360 175</span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="co"># Example 2: A (random) filter</span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>rel_filter.dfrel <span class="ot">&lt;-</span> <span class="cf">function</span>(rel, exprs, ...) {</span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">unclass</span>(rel)[[<span class="dv">1</span>]]</span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a>  <span class="co"># A real implementation would evaluate the predicates defined</span></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a>  <span class="co"># by the exprs argument</span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a>  <span class="fu">new_dfrel</span>(df[<span class="fu">sample.int</span>(<span class="fu">nrow</span>(df), <span class="dv">3</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>), ])</span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a>}</span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a><span class="fu">rel_filter</span>(</span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a>  mtcars_rel,</span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a>    <span class="fu">relexpr_function</span>(</span>
+<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a>      <span class="st">&quot;gt&quot;</span>,</span>
+<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a>      <span class="fu">list</span>(<span class="fu">relexpr_reference</span>(<span class="st">&quot;cyl&quot;</span>), <span class="fu">relexpr_constant</span>(<span class="st">&quot;6&quot;</span>))</span>
+<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a>    )</span>
+<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a>  )</span>
+<span id="cb4-37"><a href="#cb4-37" tabindex="-1"></a>)</span>
+<span id="cb4-38"><a href="#cb4-38" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb4-39"><a href="#cb4-39" tabindex="-1"></a><span class="co">#&gt;                    mpg cyl disp  hp</span></span>
+<span id="cb4-40"><a href="#cb4-40" tabindex="-1"></a><span class="co">#&gt; Mazda RX4         21.0   6  160 110</span></span>
+<span id="cb4-41"><a href="#cb4-41" tabindex="-1"></a><span class="co">#&gt; Mazda RX4 Wag     21.0   6  160 110</span></span>
+<span id="cb4-42"><a href="#cb4-42" tabindex="-1"></a><span class="co">#&gt; Hornet Sportabout 18.7   8  360 175</span></span>
+<span id="cb4-43"><a href="#cb4-43" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-44"><a href="#cb4-44" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;class&quot;)</span></span>
+<span id="cb4-45"><a href="#cb4-45" tabindex="-1"></a><span class="co">#&gt; [1] &quot;dfrel&quot;      &quot;relational&quot;</span></span>
+<span id="cb4-46"><a href="#cb4-46" tabindex="-1"></a></span>
+<span id="cb4-47"><a href="#cb4-47" tabindex="-1"></a><span class="co"># Example 3: A custom projection</span></span>
+<span id="cb4-48"><a href="#cb4-48" tabindex="-1"></a>rel_project.dfrel <span class="ot">&lt;-</span> <span class="cf">function</span>(rel, exprs, ...) {</span>
+<span id="cb4-49"><a href="#cb4-49" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">unclass</span>(rel)[[<span class="dv">1</span>]]</span>
+<span id="cb4-50"><a href="#cb4-50" tabindex="-1"></a></span>
+<span id="cb4-51"><a href="#cb4-51" tabindex="-1"></a>  <span class="co"># A real implementation would evaluate the expressions defined</span></span>
+<span id="cb4-52"><a href="#cb4-52" tabindex="-1"></a>  <span class="co"># by the exprs argument</span></span>
+<span id="cb4-53"><a href="#cb4-53" tabindex="-1"></a>  <span class="fu">new_dfrel</span>(df[<span class="fu">seq_len</span>(<span class="fu">min</span>(<span class="dv">3</span>, base<span class="sc">::</span><span class="fu">ncol</span>(df)))])</span>
+<span id="cb4-54"><a href="#cb4-54" tabindex="-1"></a>}</span>
+<span id="cb4-55"><a href="#cb4-55" tabindex="-1"></a></span>
+<span id="cb4-56"><a href="#cb4-56" tabindex="-1"></a><span class="fu">rel_project</span>(</span>
+<span id="cb4-57"><a href="#cb4-57" tabindex="-1"></a>  mtcars_rel,</span>
+<span id="cb4-58"><a href="#cb4-58" tabindex="-1"></a>  <span class="fu">list</span>(<span class="fu">relexpr_reference</span>(<span class="st">&quot;cyl&quot;</span>), <span class="fu">relexpr_reference</span>(<span class="st">&quot;disp&quot;</span>))</span>
+<span id="cb4-59"><a href="#cb4-59" tabindex="-1"></a>)</span>
+<span id="cb4-60"><a href="#cb4-60" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb4-61"><a href="#cb4-61" tabindex="-1"></a><span class="co">#&gt;                    mpg cyl disp</span></span>
+<span id="cb4-62"><a href="#cb4-62" tabindex="-1"></a><span class="co">#&gt; Mazda RX4         21.0   6  160</span></span>
+<span id="cb4-63"><a href="#cb4-63" tabindex="-1"></a><span class="co">#&gt; Mazda RX4 Wag     21.0   6  160</span></span>
+<span id="cb4-64"><a href="#cb4-64" tabindex="-1"></a><span class="co">#&gt; Datsun 710        22.8   4  108</span></span>
+<span id="cb4-65"><a href="#cb4-65" tabindex="-1"></a><span class="co">#&gt; Hornet 4 Drive    21.4   6  258</span></span>
+<span id="cb4-66"><a href="#cb4-66" tabindex="-1"></a><span class="co">#&gt; Hornet Sportabout 18.7   8  360</span></span>
+<span id="cb4-67"><a href="#cb4-67" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-68"><a href="#cb4-68" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;class&quot;)</span></span>
+<span id="cb4-69"><a href="#cb4-69" tabindex="-1"></a><span class="co">#&gt; [1] &quot;dfrel&quot;      &quot;relational&quot;</span></span>
+<span id="cb4-70"><a href="#cb4-70" tabindex="-1"></a></span>
+<span id="cb4-71"><a href="#cb4-71" tabindex="-1"></a><span class="co"># Example 4: A custom ordering (eg, ascending by mpg)</span></span>
+<span id="cb4-72"><a href="#cb4-72" tabindex="-1"></a>rel_order.dfrel <span class="ot">&lt;-</span> <span class="cf">function</span>(rel, exprs, ...) {</span>
+<span id="cb4-73"><a href="#cb4-73" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">unclass</span>(rel)[[<span class="dv">1</span>]]</span>
+<span id="cb4-74"><a href="#cb4-74" tabindex="-1"></a></span>
+<span id="cb4-75"><a href="#cb4-75" tabindex="-1"></a>  <span class="co"># A real implementation would evaluate the expressions defined</span></span>
+<span id="cb4-76"><a href="#cb4-76" tabindex="-1"></a>  <span class="co"># by the exprs argument</span></span>
+<span id="cb4-77"><a href="#cb4-77" tabindex="-1"></a>  <span class="fu">new_dfrel</span>(df[<span class="fu">order</span>(df[[<span class="dv">1</span>]]), ])</span>
+<span id="cb4-78"><a href="#cb4-78" tabindex="-1"></a>}</span>
+<span id="cb4-79"><a href="#cb4-79" tabindex="-1"></a></span>
+<span id="cb4-80"><a href="#cb4-80" tabindex="-1"></a><span class="fu">rel_order</span>(</span>
+<span id="cb4-81"><a href="#cb4-81" tabindex="-1"></a>  mtcars_rel,</span>
+<span id="cb4-82"><a href="#cb4-82" tabindex="-1"></a>  <span class="fu">list</span>(<span class="fu">relexpr_reference</span>(<span class="st">&quot;mpg&quot;</span>))</span>
+<span id="cb4-83"><a href="#cb4-83" tabindex="-1"></a>)</span>
+<span id="cb4-84"><a href="#cb4-84" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb4-85"><a href="#cb4-85" tabindex="-1"></a><span class="co">#&gt;                    mpg cyl disp  hp</span></span>
+<span id="cb4-86"><a href="#cb4-86" tabindex="-1"></a><span class="co">#&gt; Hornet Sportabout 18.7   8  360 175</span></span>
+<span id="cb4-87"><a href="#cb4-87" tabindex="-1"></a><span class="co">#&gt; Mazda RX4         21.0   6  160 110</span></span>
+<span id="cb4-88"><a href="#cb4-88" tabindex="-1"></a><span class="co">#&gt; Mazda RX4 Wag     21.0   6  160 110</span></span>
+<span id="cb4-89"><a href="#cb4-89" tabindex="-1"></a><span class="co">#&gt; Hornet 4 Drive    21.4   6  258 110</span></span>
+<span id="cb4-90"><a href="#cb4-90" tabindex="-1"></a><span class="co">#&gt; Datsun 710        22.8   4  108  93</span></span>
+<span id="cb4-91"><a href="#cb4-91" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-92"><a href="#cb4-92" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;class&quot;)</span></span>
+<span id="cb4-93"><a href="#cb4-93" tabindex="-1"></a><span class="co">#&gt; [1] &quot;dfrel&quot;      &quot;relational&quot;</span></span>
+<span id="cb4-94"><a href="#cb4-94" tabindex="-1"></a></span>
+<span id="cb4-95"><a href="#cb4-95" tabindex="-1"></a><span class="co"># Example 5: A custom join</span></span>
+<span id="cb4-96"><a href="#cb4-96" tabindex="-1"></a>rel_join.dfrel <span class="ot">&lt;-</span> <span class="cf">function</span>(left, right, conds, join, ...) {</span>
+<span id="cb4-97"><a href="#cb4-97" tabindex="-1"></a>  left_df <span class="ot">&lt;-</span> <span class="fu">unclass</span>(left)[[<span class="dv">1</span>]]</span>
+<span id="cb4-98"><a href="#cb4-98" tabindex="-1"></a>  right_df <span class="ot">&lt;-</span> <span class="fu">unclass</span>(right)[[<span class="dv">1</span>]]</span>
+<span id="cb4-99"><a href="#cb4-99" tabindex="-1"></a></span>
+<span id="cb4-100"><a href="#cb4-100" tabindex="-1"></a>  <span class="co"># A real implementation would evaluate the expressions</span></span>
+<span id="cb4-101"><a href="#cb4-101" tabindex="-1"></a>  <span class="co"># defined by the conds argument,</span></span>
+<span id="cb4-102"><a href="#cb4-102" tabindex="-1"></a>  <span class="co"># use different join types based on the join argument,</span></span>
+<span id="cb4-103"><a href="#cb4-103" tabindex="-1"></a>  <span class="co"># and implement the join itself instead of relaying to left_join().</span></span>
+<span id="cb4-104"><a href="#cb4-104" tabindex="-1"></a>  <span class="fu">new_dfrel</span>(dplyr<span class="sc">::</span><span class="fu">left_join</span>(left_df, right_df))</span>
+<span id="cb4-105"><a href="#cb4-105" tabindex="-1"></a>}</span>
+<span id="cb4-106"><a href="#cb4-106" tabindex="-1"></a></span>
+<span id="cb4-107"><a href="#cb4-107" tabindex="-1"></a><span class="fu">rel_join</span>(<span class="fu">new_dfrel</span>(<span class="fu">data.frame</span>(<span class="at">mpg =</span> <span class="dv">21</span>)), mtcars_rel)</span>
+<span id="cb4-108"><a href="#cb4-108" tabindex="-1"></a><span class="co">#&gt; Joining with `by = join_by(mpg)`</span></span>
+<span id="cb4-109"><a href="#cb4-109" tabindex="-1"></a><span class="co">#&gt; Joining with `by = join_by(mpg)`</span></span>
+<span id="cb4-110"><a href="#cb4-110" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb4-111"><a href="#cb4-111" tabindex="-1"></a><span class="co">#&gt;   mpg cyl disp  hp</span></span>
+<span id="cb4-112"><a href="#cb4-112" tabindex="-1"></a><span class="co">#&gt; 1  21   6  160 110</span></span>
+<span id="cb4-113"><a href="#cb4-113" tabindex="-1"></a><span class="co">#&gt; 2  21   6  160 110</span></span>
+<span id="cb4-114"><a href="#cb4-114" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-115"><a href="#cb4-115" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;class&quot;)</span></span>
+<span id="cb4-116"><a href="#cb4-116" tabindex="-1"></a><span class="co">#&gt; [1] &quot;dfrel&quot;      &quot;relational&quot;</span></span>
+<span id="cb4-117"><a href="#cb4-117" tabindex="-1"></a></span>
+<span id="cb4-118"><a href="#cb4-118" tabindex="-1"></a><span class="co"># Example 6: Limit the maximum rows returned</span></span>
+<span id="cb4-119"><a href="#cb4-119" tabindex="-1"></a>rel_limit.dfrel <span class="ot">&lt;-</span> <span class="cf">function</span>(rel, n, ...) {</span>
+<span id="cb4-120"><a href="#cb4-120" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">unclass</span>(rel)[[<span class="dv">1</span>]]</span>
+<span id="cb4-121"><a href="#cb4-121" tabindex="-1"></a></span>
+<span id="cb4-122"><a href="#cb4-122" tabindex="-1"></a>  <span class="fu">new_dfrel</span>(df[<span class="fu">seq_len</span>(n), ])</span>
+<span id="cb4-123"><a href="#cb4-123" tabindex="-1"></a>}</span>
+<span id="cb4-124"><a href="#cb4-124" tabindex="-1"></a></span>
+<span id="cb4-125"><a href="#cb4-125" tabindex="-1"></a><span class="fu">rel_limit</span>(mtcars_rel, <span class="dv">3</span>)</span>
+<span id="cb4-126"><a href="#cb4-126" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb4-127"><a href="#cb4-127" tabindex="-1"></a><span class="co">#&gt;                mpg cyl disp  hp</span></span>
+<span id="cb4-128"><a href="#cb4-128" tabindex="-1"></a><span class="co">#&gt; Mazda RX4     21.0   6  160 110</span></span>
+<span id="cb4-129"><a href="#cb4-129" tabindex="-1"></a><span class="co">#&gt; Mazda RX4 Wag 21.0   6  160 110</span></span>
+<span id="cb4-130"><a href="#cb4-130" tabindex="-1"></a><span class="co">#&gt; Datsun 710    22.8   4  108  93</span></span>
+<span id="cb4-131"><a href="#cb4-131" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-132"><a href="#cb4-132" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;class&quot;)</span></span>
+<span id="cb4-133"><a href="#cb4-133" tabindex="-1"></a><span class="co">#&gt; [1] &quot;dfrel&quot;      &quot;relational&quot;</span></span>
+<span id="cb4-134"><a href="#cb4-134" tabindex="-1"></a></span>
+<span id="cb4-135"><a href="#cb4-135" tabindex="-1"></a><span class="co"># Example 7: Suppress duplicate rows</span></span>
+<span id="cb4-136"><a href="#cb4-136" tabindex="-1"></a><span class="co">#  (ignoring row names)</span></span>
+<span id="cb4-137"><a href="#cb4-137" tabindex="-1"></a>rel_distinct.dfrel <span class="ot">&lt;-</span> <span class="cf">function</span>(rel, ...) {</span>
+<span id="cb4-138"><a href="#cb4-138" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">unclass</span>(rel)[[<span class="dv">1</span>]]</span>
+<span id="cb4-139"><a href="#cb4-139" tabindex="-1"></a></span>
+<span id="cb4-140"><a href="#cb4-140" tabindex="-1"></a>  <span class="fu">new_dfrel</span>(df[<span class="sc">!</span><span class="fu">duplicated</span>(df), ])</span>
+<span id="cb4-141"><a href="#cb4-141" tabindex="-1"></a>}</span>
+<span id="cb4-142"><a href="#cb4-142" tabindex="-1"></a></span>
+<span id="cb4-143"><a href="#cb4-143" tabindex="-1"></a><span class="fu">rel_distinct</span>(<span class="fu">new_dfrel</span>(mtcars[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]))</span>
+<span id="cb4-144"><a href="#cb4-144" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb4-145"><a href="#cb4-145" tabindex="-1"></a><span class="co">#&gt;             mpg cyl disp  hp</span></span>
+<span id="cb4-146"><a href="#cb4-146" tabindex="-1"></a><span class="co">#&gt; Mazda RX4  21.0   6  160 110</span></span>
+<span id="cb4-147"><a href="#cb4-147" tabindex="-1"></a><span class="co">#&gt; Datsun 710 22.8   4  108  93</span></span>
+<span id="cb4-148"><a href="#cb4-148" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-149"><a href="#cb4-149" tabindex="-1"></a><span class="co">#&gt; attr(,&quot;class&quot;)</span></span>
+<span id="cb4-150"><a href="#cb4-150" tabindex="-1"></a><span class="co">#&gt; [1] &quot;dfrel&quot;      &quot;relational&quot;</span></span>
+<span id="cb4-151"><a href="#cb4-151" tabindex="-1"></a></span>
+<span id="cb4-152"><a href="#cb4-152" tabindex="-1"></a><span class="co"># Example 8: Return column names</span></span>
+<span id="cb4-153"><a href="#cb4-153" tabindex="-1"></a>rel_names.dfrel <span class="ot">&lt;-</span> <span class="cf">function</span>(rel, ...) {</span>
+<span id="cb4-154"><a href="#cb4-154" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">unclass</span>(rel)[[<span class="dv">1</span>]]</span>
+<span id="cb4-155"><a href="#cb4-155" tabindex="-1"></a></span>
+<span id="cb4-156"><a href="#cb4-156" tabindex="-1"></a>  <span class="fu">names</span>(df)</span>
+<span id="cb4-157"><a href="#cb4-157" tabindex="-1"></a>}</span>
+<span id="cb4-158"><a href="#cb4-158" tabindex="-1"></a></span>
+<span id="cb4-159"><a href="#cb4-159" tabindex="-1"></a><span class="fu">rel_names</span>(mtcars_rel)</span>
+<span id="cb4-160"><a href="#cb4-160" tabindex="-1"></a><span class="co">#&gt; [1] &quot;mpg&quot;  &quot;cyl&quot;  &quot;disp&quot; &quot;hp&quot;</span></span></code></pre></div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

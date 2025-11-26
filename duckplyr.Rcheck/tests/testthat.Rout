@@ -1,0 +1,262 @@
+
+R version 4.5.2 (2025-10-31) -- "[Not] Part in a Rumble"
+Copyright (C) 2025 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # This file is part of the standard setup for testthat.
+> # It is recommended that you do not modify it.
+> #
+> # Where should you do additional test configuration?
+> # Learn more about the roles of various files in:
+> # * https://r-pkgs.org/tests.html
+> # * https://testthat.r-lib.org/reference/test_package.html#special-files
+> 
+> library(testthat)
+> library(duckplyr)
+Loading required package: dplyr
+
+Attaching package: 'dplyr'
+
+The following objects are masked from 'package:stats':
+
+    filter, lag
+
+The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union
+
+✔ Overwriting dplyr methods with duckplyr methods.
+ℹ Turn off with `duckplyr::methods_restore()`.
+> 
+> test_check("duckplyr")
+[ FAIL 0 | WARN 0 | SKIP 338 | PASS 2844 ]
+
+══ Skipped tests (338) ═════════════════════════════════════════════════════════
+• Always returns tibble (1): 'test-as_duckplyr_df.R:743:3'
+• Can't set a non-UTF-8 encoding (2): 'test-dplyr-mutate.R:451:3',
+  'test-dplyr-group-by.R:272:3'
+• Can't use 'en_US' locale (2): 'test-dplyr-arrange.R:352:3',
+  'test-dplyr-grouped-df.R:213:3'
+• External vector? (4): 'test-as_duckplyr_df.R:2366:3',
+  'test-as_duckplyr_df.R:2382:3', 'test-as_duckplyr_df.R:2396:3',
+  'test-as_duckplyr_df.R:2412:3'
+• Grouped (4): 'test-as_duckplyr_df.R:669:3', 'test-as_duckplyr_df.R:727:3',
+  'test-as_duckplyr_df.R:789:3', 'test-as_duckplyr_df.R:2658:3'
+• Hack (1): 'test-as_duckplyr_df.R:560:3'
+• Missing or empty names not allowed. (6): 'test-dplyr-mutate.R:909:3',
+  'test-dplyr-filter.R:653:3', 'test-dplyr-select.R:47:3',
+  'test-dplyr-select.R:143:3', 'test-dplyr-select.R:152:3',
+  'test-dplyr-summarise.R:469:3'
+• Must pass a plain data frame or a tibble, not NULL. (1):
+  'test-dplyr-copy-to.R:19:3'
+• Must pass a plain data frame or a tibble, not a <dplyr_foobar> object. (2):
+  'test-dplyr-filter.R:584:3', 'test-dplyr-arrange.R:306:3'
+• Must pass a plain data frame or a tibble, not a <dplyr_test_broken_operator>
+  object. (1): 'test-dplyr-select.R:183:3'
+• Must pass a plain data frame or a tibble, not a <foo_df> object. (4):
+  'test-dplyr-filter.R:573:3', 'test-dplyr-arrange.R:295:3',
+  'test-dplyr-group-split.R:122:3', 'test-dplyr-group-split.R:137:3'
+• Must pass a plain data frame or a tibble, not a <grouped_df> object. (207):
+  'test-dplyr-mutate.R:14:3', 'test-dplyr-mutate.R:56:3',
+  'test-dplyr-mutate.R:84:3', 'test-dplyr-mutate.R:116:3',
+  'test-dplyr-mutate.R:156:3', 'test-dplyr-mutate.R:176:3',
+  'test-dplyr-mutate.R:249:3', 'test-dplyr-mutate.R:263:3',
+  'test-dplyr-mutate.R:300:3', 'test-dplyr-mutate.R:309:3',
+  'test-dplyr-mutate.R:321:3', 'test-dplyr-mutate.R:407:3',
+  'test-dplyr-mutate.R:432:3', 'test-dplyr-mutate.R:462:3',
+  'test-dplyr-mutate.R:492:3', 'test-dplyr-mutate.R:587:3',
+  'test-dplyr-mutate.R:634:3', 'test-dplyr-mutate.R:643:3',
+  'test-dplyr-mutate.R:672:3', 'test-dplyr-mutate.R:681:3',
+  'test-dplyr-mutate.R:702:3', 'test-dplyr-mutate.R:753:3',
+  'test-dplyr-mutate.R:778:3', 'test-dplyr-mutate.R:799:3',
+  'test-dplyr-mutate.R:899:3', 'test-dplyr-filter.R:15:5',
+  'test-dplyr-filter.R:34:3', 'test-dplyr-filter.R:61:3',
+  'test-dplyr-filter.R:124:3', 'test-dplyr-filter.R:164:3',
+  'test-dplyr-filter.R:191:3', 'test-dplyr-filter.R:235:3',
+  'test-dplyr-filter.R:243:3', 'test-dplyr-filter.R:309:3',
+  'test-dplyr-filter.R:325:3', 'test-dplyr-filter.R:367:3',
+  'test-dplyr-filter.R:418:3', 'test-dplyr-filter.R:443:3',
+  'test-dplyr-filter.R:550:3', 'test-dplyr-filter.R:626:3',
+  'test-dplyr-filter.R:638:3', 'test-dplyr-filter.R:709:3',
+  'test-dplyr-count-tally.R:64:3', 'test-dplyr-count-tally.R:73:3',
+  'test-dplyr-count-tally.R:84:3', 'test-dplyr-count-tally.R:166:3',
+  'test-dplyr-count-tally.R:182:3', 'test-dplyr-across.R:21:3',
+  'test-dplyr-across.R:28:3', 'test-dplyr-across.R:222:3',
+  'test-dplyr-across.R:330:3', 'test-dplyr-across.R:340:3',
+  'test-dplyr-across.R:685:3', 'test-dplyr-across.R:700:5',
+  'test-dplyr-across.R:1104:3', 'test-dplyr-across.R:1197:3',
+  'test-dplyr-across.R:1235:3', 'test-dplyr-across.R:1262:3',
+  'test-dplyr-across.R:1412:3', 'test-dplyr-across.R:1426:3',
+  'test-dplyr-arrange.R:16:3', 'test-dplyr-arrange.R:213:3',
+  'test-dplyr-arrange.R:220:3', 'test-dplyr-arrange.R:226:3',
+  'test-dplyr-arrange.R:344:3', 'test-dplyr-arrange.R:388:3',
+  'test-dplyr-bind-rows.R:88:3', 'test-dplyr-conditions.R:10:3',
+  'test-dplyr-context.R:16:3', 'test-dplyr-context.R:30:3',
+  'test-dplyr-context.R:38:3', 'test-dplyr-context.R:57:3',
+  'test-dplyr-distinct.R:57:3', 'test-dplyr-distinct.R:63:3',
+  'test-dplyr-distinct.R:71:3', 'test-dplyr-distinct.R:122:3',
+  'test-dplyr-distinct.R:163:3', 'test-dplyr-group-by.R:14:3',
+  'test-dplyr-group-by.R:25:3', 'test-dplyr-group-by.R:54:3',
+  'test-dplyr-group-by.R:65:3', 'test-dplyr-group-by.R:77:3',
+  'test-dplyr-group-by.R:86:3', 'test-dplyr-group-by.R:94:3',
+  'test-dplyr-group-by.R:124:5', 'test-dplyr-group-by.R:132:3',
+  'test-dplyr-group-by.R:176:3', 'test-dplyr-group-by.R:187:3',
+  'test-dplyr-group-by.R:202:3', 'test-dplyr-group-by.R:235:3',
+  'test-dplyr-group-by.R:252:3', 'test-dplyr-group-by.R:298:3',
+  'test-dplyr-group-by.R:317:3', 'test-dplyr-group-by.R:325:3',
+  'test-dplyr-group-by.R:355:3', 'test-dplyr-group-by.R:365:3',
+  'test-dplyr-group-by.R:375:3', 'test-dplyr-group-by.R:381:3',
+  'test-dplyr-group-by.R:387:3', 'test-dplyr-group-by.R:424:3',
+  'test-dplyr-group-by.R:444:3', 'test-dplyr-group-by.R:467:3',
+  'test-dplyr-group-by.R:485:3', 'test-dplyr-group-by.R:503:3',
+  'test-dplyr-group-by.R:590:3', 'test-dplyr-group-by.R:614:3',
+  'test-dplyr-group-data.R:56:3', 'test-dplyr-group-data.R:95:3',
+  'test-dplyr-group-data.R:103:3', 'test-dplyr-group-data.R:123:3',
+  'test-dplyr-group-data.R:131:3', 'test-dplyr-group-map.R:9:3',
+  'test-dplyr-group-map.R:27:3', 'test-dplyr-group-map.R:41:3',
+  'test-dplyr-group-map.R:66:3', 'test-dplyr-group-map.R:78:3',
+  'test-dplyr-group-map.R:90:3', 'test-dplyr-group-map.R:111:3',
+  'test-dplyr-group-map.R:127:3', 'test-dplyr-group-nest.R:35:3',
+  'test-dplyr-group-nest.R:49:3', 'test-dplyr-group-split.R:40:3',
+  'test-dplyr-group-split.R:50:3', 'test-dplyr-group-split.R:79:3',
+  'test-dplyr-group-split.R:104:3', 'test-dplyr-group-trim.R:13:3',
+  'test-dplyr-group-trim.R:21:3', 'test-dplyr-grouped-df.R:13:3',
+  'test-dplyr-grouped-df.R:99:3', 'test-dplyr-join.R:630:3',
+  'test-dplyr-join.R:652:3', 'test-dplyr-join.R:675:3',
+  'test-dplyr-nest-by.R:26:3', 'test-dplyr-pick.R:40:3',
+  'test-dplyr-pick.R:77:3', 'test-dplyr-pick.R:100:3',
+  'test-dplyr-pick.R:141:3', 'test-dplyr-pick.R:166:3',
+  'test-dplyr-pick.R:199:3', 'test-dplyr-pick.R:223:3',
+  'test-dplyr-pick.R:271:3', 'test-dplyr-pick.R:377:3',
+  'test-dplyr-rank.R:58:3', 'test-dplyr-rank.R:104:3',
+  'test-dplyr-reframe.R:33:3', 'test-dplyr-reframe.R:51:3',
+  'test-dplyr-reframe.R:85:3', 'test-dplyr-reframe.R:101:3',
+  'test-dplyr-reframe.R:123:3', 'test-dplyr-reframe.R:136:3',
+  'test-dplyr-reframe.R:211:3', 'test-dplyr-reframe.R:219:3',
+  'test-dplyr-reframe.R:231:3', 'test-dplyr-reframe.R:241:3',
+  'test-dplyr-reframe.R:296:3', 'test-dplyr-rename.R:16:3',
+  'test-dplyr-rename.R:38:3', 'test-dplyr-rowwise.R:69:3',
+  'test-dplyr-sample.R:28:3', 'test-dplyr-sample.R:46:3',
+  'test-dplyr-sample.R:100:3', 'test-dplyr-select-helpers.R:13:3',
+  'test-dplyr-select.R:11:3', 'test-dplyr-select.R:19:3',
+  'test-dplyr-select.R:35:3', 'test-dplyr-select.R:94:3',
+  'test-dplyr-select.R:113:3', 'test-dplyr-sets.R:45:3',
+  'test-dplyr-slice.R:15:3', 'test-dplyr-slice.R:28:3',
+  'test-dplyr-slice.R:38:3', 'test-dplyr-slice.R:55:3',
+  'test-dplyr-slice.R:86:3', 'test-dplyr-slice.R:106:3',
+  'test-dplyr-slice.R:130:3', 'test-dplyr-slice.R:142:3',
+  'test-dplyr-slice.R:209:3', 'test-dplyr-slice.R:341:3',
+  'test-dplyr-slice.R:400:3', 'test-dplyr-slice.R:594:3',
+  'test-dplyr-slice.R:620:3', 'test-dplyr-slice.R:641:3',
+  'test-dplyr-summarise.R:26:3', 'test-dplyr-summarise.R:52:3',
+  'test-dplyr-summarise.R:68:3', 'test-dplyr-summarise.R:83:3',
+  'test-dplyr-summarise.R:126:3', 'test-dplyr-summarise.R:161:3',
+  'test-dplyr-summarise.R:200:3', 'test-dplyr-summarise.R:219:3',
+  'test-dplyr-summarise.R:236:3', 'test-dplyr-summarise.R:241:3',
+  'test-dplyr-summarise.R:251:3', 'test-dplyr-summarise.R:265:3',
+  'test-dplyr-summarise.R:271:3', 'test-dplyr-summarise.R:302:3',
+  'test-dplyr-summarise.R:314:3', 'test-dplyr-summarise.R:354:3',
+  'test-dplyr-summarise.R:367:3', 'test-dplyr-summarise.R:375:3',
+  'test-dplyr-summarise.R:435:3', 'test-dplyr-summarise.R:581:3',
+  'test-dplyr-transmute.R:9:3', 'test-dplyr-transmute.R:16:3',
+  'test-dplyr-transmute.R:34:3', 'test-dplyr-transmute.R:56:3',
+  'test-dplyr-transmute.R:89:3'
+• Must pass a plain data frame or a tibble, not a <myclass> object. (1):
+  'test-dplyr-summarise.R:92:3'
+• Must pass a plain data frame or a tibble, not a <noisy> object. (1):
+  'test-dplyr-slice.R:386:3'
+• Must pass a plain data frame or a tibble, not a <rowwise_df> object. (34):
+  'test-dplyr-mutate.R:336:3', 'test-dplyr-mutate.R:367:3',
+  'test-dplyr-mutate.R:373:3', 'test-dplyr-mutate.R:380:3',
+  'test-dplyr-mutate.R:414:3', 'test-dplyr-mutate.R:472:3',
+  'test-dplyr-mutate.R:596:3', 'test-dplyr-mutate.R:742:3',
+  'test-dplyr-mutate.R:767:3', 'test-dplyr-mutate.R:784:3',
+  'test-dplyr-filter.R:229:3', 'test-dplyr-filter.R:718:3',
+  'test-dplyr-across.R:1163:3', 'test-dplyr-across.R:1289:3',
+  'test-dplyr-group-by.R:267:3', 'test-dplyr-group-data.R:117:3',
+  'test-dplyr-group-split.R:44:3', 'test-dplyr-group-split.R:111:3',
+  'test-dplyr-join.R:499:3', 'test-dplyr-join.R:685:3',
+  'test-dplyr-nest-by.R:13:3', 'test-dplyr-pick.R:65:3',
+  'test-dplyr-pick.R:88:3', 'test-dplyr-pick.R:332:3',
+  'test-dplyr-reframe.R:249:3', 'test-dplyr-reframe.R:259:3',
+  'test-dplyr-reframe.R:268:3', 'test-dplyr-reframe.R:305:3',
+  'test-dplyr-rowwise.R:11:3', 'test-dplyr-rowwise.R:46:3',
+  'test-dplyr-rowwise.R:78:3', 'test-dplyr-slice.R:218:3',
+  'test-dplyr-summarise.R:285:3', 'test-dplyr-summarise.R:444:3'
+• Must pass a plain data frame or a tibble, not a character vector. (1):
+  'test-dplyr-group-nest.R:19:3'
+• Must pass a plain data frame or a tibble, not a number. (1):
+  'test-dplyr-sets.R:143:3'
+• Must pass a plain data frame or a tibble, not an integer vector. (1):
+  'test-dplyr-sets.R:53:3'
+• On CI (10): 'test-fallback.R:2:3', 'test-fallback.R:18:3',
+  'test-fallback.R:34:3', 'test-fallback.R:63:3', 'test-fallback.R:82:3',
+  'test-fallback.R:110:3', 'test-fallback.R:127:3', 'test-fallback.R:144:3',
+  'test-fallback.R:211:3', 'test-fallback.R:227:3'
+• Random seed (2): 'test-as_duckplyr_df.R:2136:3',
+  'test-as_duckplyr_df.R:2152:3'
+• Special (5): 'test-as_duckplyr_df.R:683:3', 'test-as_duckplyr_df.R:699:3',
+  'test-as_duckplyr_df.R:759:3', 'test-as_duckplyr_df.R:834:3',
+  'test-as_duckplyr_df.R:1653:3'
+• Stack overflow (1): 'test-as_duckplyr_df.R:2120:3'
+• TODO duckdb (17): 'test-dplyr-mutate.R:438:3', 'test-dplyr-mutate.R:558:3',
+  'test-dplyr-across.R:911:3', 'test-dplyr-across.R:937:3',
+  'test-dplyr-all-equal.R:187:3', 'test-dplyr-copy-to.R:9:3',
+  'test-dplyr-funs.R:85:3', 'test-dplyr-funs.R:103:3',
+  'test-dplyr-generics.R:167:3', 'test-dplyr-group-by.R:570:3',
+  'test-dplyr-group-nest.R:53:3', 'test-dplyr-join-rows.R:200:3',
+  'test-dplyr-join.R:363:3', 'test-dplyr-join.R:369:3',
+  'test-dplyr-summarise.R:37:3', 'test-dplyr-summarise.R:337:3',
+  'test-dplyr-summarise.R:478:3'
+• WAT (3): 'test-as_duckplyr_df.R:713:3', 'test-as_duckplyr_df.R:773:3',
+  'test-as_duckplyr_df.R:1667:3'
+• Won't need (1): 'test-prom.R:2:3'
+• argument ".data" is missing, with no default (1):
+  'test-dplyr-group-data.R:71:3'
+• can_load_extension("json") is not TRUE (1): 'test-read_json_duckdb.R:2:3'
+• dplyr:::compute_groups() is only needed to test dplyr internals (3):
+  'test-dplyr-group-by.R:579:3', 'test-dplyr-grouped-df.R:202:3',
+  'test-dplyr-grouped-df.R:208:3'
+• dplyr:::err_locs() is only needed to test dplyr internals (1):
+  'test-dplyr-conditions.R:34:3'
+• dplyr:::expand_pick() is only needed to test dplyr internals (2):
+  'test-dplyr-pick.R:552:3', 'test-dplyr-pick.R:569:3'
+• dplyr:::group_labels_details() is only needed to test dplyr internals (1):
+  'test-dplyr-context.R:76:3'
+• dplyr:::reset_dplyr_warnings() is only needed to test dplyr internals (4):
+  'test-dplyr-conditions.R:68:3', 'test-dplyr-conditions.R:135:3',
+  'test-dplyr-conditions.R:164:3', 'test-dplyr-conditions.R:188:3'
+• dplyr:::shift() is only needed to test dplyr internals (9):
+  'test-dplyr-lead-lag.R:94:3', 'test-dplyr-lead-lag.R:104:3',
+  'test-dplyr-lead-lag.R:113:3', 'test-dplyr-lead-lag.R:125:3',
+  'test-dplyr-lead-lag.R:140:3', 'test-dplyr-lead-lag.R:151:3',
+  'test-dplyr-lead-lag.R:159:3', 'test-dplyr-lead-lag.R:168:3',
+  'test-dplyr-lead-lag.R:174:3'
+• i In argument: `.result = (1 + "") * am`. (1): 'test-dplyr-conditions.R:25:5'
+• {RSQLite} is not installed (2): 'test-dplyr-count-tally.R:93:3',
+  'test-dplyr-count-tally.R:105:3'
+
+[ FAIL 0 | WARN 0 | SKIP 338 | PASS 2844 ]
+
+🛠: 2271
+🔨: 1189
+🦆: 1082
+add_count, anti_join, anti_join.data.frame, arrange, arrange.data.frame, compute, count, count.data.frame, cross_join, distinct, distinct.data.frame, do, eval, filter, filter.data.frame, full_join, group_by, group_indices, group_keys, group_map, group_modify, group_nest, group_size, group_split, group_trim, head, inner_join, inner_join.data.frame, intersect, left_join, left_join.data.frame, mutate, mutate.data.frame, n_groups, nest_by, nest_join, pull, reframe, relocate, rename, rename_with, right_join, rows_append, rows_delete, rows_insert, rows_patch, rows_update, rows_upsert, rowwise, select, select.data.frame, semi_join, semi_join.data.frame, setdiff, setequal, slice, slice_head, slice_head.data.frame, slice_sample, slice_tail, summarise, summarise.data.frame, symdiff, transmute, ungroup, union_all
+
+00:01:27.612433
+> 
+> proc.time()
+   user  system elapsed 
+ 82.484   7.193  88.473 
