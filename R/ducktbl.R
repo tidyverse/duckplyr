@@ -51,6 +51,18 @@
 #' y
 #' try(length(y$a))
 #' length(collect(y)$a)
+#'
+#' # Convert a dbplyr connection to a duckplyr tibble:
+#' @examplesIf requireNamespace("dbplyr", quietly = TRUE)
+#' library(duckdb)
+#' con <- DBI::dbConnect(duckdb())
+#' DBI::dbWriteTable(con, "data", data.frame(a = 1:3))
+#' tbl <- dplyr::tbl(con, "data")
+#' tbl
+#'
+#' as_duckdb_tibble(tbl)
+#'
+#' DBI::dbDisconnect(con)
 #' @export
 duckdb_tibble <- function(..., .prudence = c("lavish", "thrifty", "stingy")) {
   out <- tibble::tibble(...)

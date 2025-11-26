@@ -54,6 +54,7 @@ Furthermore, DuckDB has functions with no R equivalent.
 These might be used already by code that interacts with DuckDB through dbplyr, either making use of its passthrough feature (unknown functions are translated to SQL verbatim), or by using the `mutate(x = sql(...))` pattern.
 When working with duckplyr, this functionality is still accessible, albeit through experimental interfaces:
 
+- `as_duckdb_tibble()` converts a dbplyr `tbl` object referencing a DuckDB connection to a duckplyr data frame, see `vignette("large")`
 - `as_tbl()` converts a duckplyr table to a duckdb `tbl` object
 - for a duckplyr table, the escape hatch `dd$fun(...)` can be used to call arbitrary DuckDB functions
 
