@@ -48,14 +48,21 @@ read_file_duckdb <- function(
     cli::cli_abort("{.arg path} must be a character vector.")
   }
 
+  remote <- any(grepl("^[a-zA-Z]+://", path))
+
   if (length(path) != 1) {
     path <- list(path)
   }
 
-  duckfun(table_function, c(list(path), options), prudence = prudence)
+  duckfun(
+    table_function,
+    c(list(path), options),
+    prudence = prudence,
+    remote = remote
+  )
 }
 
-duckfun <- function(table_function, args, ..., prudence) {
+duckfun <- function(table_function, args, ..., prudence, remote = FALSE) {
   if (!is.list(args)) {
     cli::cli_abort("{.arg args} must be a list.")
   }
@@ -79,5 +86,5 @@ duckfun <- function(table_function, args, ..., prudence) {
 
   meta_rel_register_file(rel, table_function, path, options)
 
-  rel_to_df(rel, prudence = prudence)
+  rel_to_df(rel, prudence = prudence, remote = remote)
 }

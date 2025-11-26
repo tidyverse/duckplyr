@@ -46,7 +46,7 @@ is_prudent_duckplyr_df <- function(x) {
   inherits(x, "prudent_duckplyr_df")
 }
 
-prudence_parse <- function(prudence, call = caller_env()) {
+prudence_parse <- function(prudence, remote, call = caller_env()) {
   n_rows <- Inf
   n_cells <- Inf
 
@@ -91,7 +91,11 @@ prudence_parse <- function(prudence, call = caller_env()) {
     if (!allow_materialization) {
       n_cells <- 0
     } else if (identical(prudence, "thrifty")) {
-      n_cells <- 1e6
+      if (isTRUE(remote)) {
+        n_cells <- 1e3
+      } else {
+        n_cells <- 1e6
+      }
     }
   }
 

@@ -31,3 +31,5 @@ zone_map <- duckdb_tibble(
   Zone = character(0),
   service_zone = character(0)
 )
+
+meta_reset()

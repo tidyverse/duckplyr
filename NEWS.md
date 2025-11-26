@@ -1,5 +1,77 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.1.3.9004 (2025-11-17)
+
+## Continuous integration
+
+- Install binaries from r-universe for dev workflow (#813).
+
+
+# duckplyr 1.1.3.9003 (2025-11-12)
+
+## Continuous integration
+
+- Fix reviewdog and add commenting workflow (#810).
+
+
+# duckplyr 1.1.3.9002 (2025-11-11)
+
+## Continuous integration
+
+- Use workflows for fledge (#807).
+
+
+# duckplyr 1.1.3.9001 (2025-11-08)
+
+## Continuous integration
+
+- Sync (#805).
+
+
+# duckplyr 1.1.3.9000 (2025-11-04)
+
+## fledge
+
+- CRAN release v1.1.3 (#803).
+
+
+# duckplyr 1.1.3 (2025-11-04)
+
+## Features
+
+- `read_file_duckdb()` only wraps `path` into a list if the length is not equal to one, to support `read_stat()`.
+
+## Continuous integration
+
+- Avoid example failing in R 4.2 and older.
+
+## Documentation
+
+- Add "Supported by Posit" badge.
+
+
+# duckplyr 1.1.2 (2025-09-17)
+
+## Features
+
+- Fully support `dd::...()` syntax (#795).
+
+- Threshold for `prudence = "thrifty"` is reduced to 1000 cells when the data comes from a remote data source.
+
+- Support named arguments for `dd::...()` functions.
+
+## Performance
+
+- Generate a more balanced expresion when translating `%in%` to avoid performance problems in duckdb v1.4.0.
+
+
+# duckplyr 1.1.1 (2025-07-29)
+
+## Chore
+
+- Fix CRAN failure with `_R_CHECK_THINGS_IN_OTHER_DIRS_=true`.
+
+
 # duckplyr 1.1.0 (2025-05-08)
 
 This release improves compatibility with dbplyr and DuckDB.
