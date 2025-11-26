@@ -143,6 +143,41 @@ rel_find_packages <- function(name) {
   # Remember to update limits.Rmd when adding new functions!
 }
 
+# Returns the function definition to use with call_match() for normalizing named arguments
+# Returns NULL for operators, primitives with ... signatures, and functions that don't support named argument matching
+# Note: Aggregation functions (sum, min, max, any, all, mean, sd, median, n_distinct) are handled
+# specially with custom definitions in rel_translate_lang() to support na.rm argument
+rel_get_call_match_def <- function(name) {
+  switch(name,
+    # dplyr functions
+    "if_else" = dplyr::if_else,
+    "coalesce" = dplyr::coalesce,
+    "lag" = dplyr::lag,
+    "lead" = dplyr::lead,
+    "row_number" = dplyr::row_number,
+    "n" = dplyr::n,
+    # base functions (excluding primitives with ... that are handled specially)
+    "abs" = base::abs,
+    "log" = base::log,
+    "log10" = base::log10,
+    "is.na" = base::is.na,
+    "as.integer" = base::as.integer,
+    "sub" = base::sub,
+    "gsub" = base::gsub,
+    "grepl" = base::grepl,
+    "strftime" = base::strftime,
+    "substr" = base::substr,
+    "suppressWarnings" = base::suppressWarnings,
+    # lubridate functions
+    "wday" = lubridate::wday,
+    "hour" = lubridate::hour,
+    "minute" = lubridate::minute,
+    "second" = lubridate::second,
+    # Default: no call_match definition (operators, special functions, primitives with ...)
+    NULL
+  )
+}
+
 rel_find_call_candidates <- function(fun, call = caller_env()) {
   name <- as.character(fun)
 
@@ -291,10 +326,14 @@ rel_translate_lang <- function(
     }
   }
 
-
-  if (!(name %in% c("wday", "strftime", "lag", "lead", "sum", "min", "max", "any", "all", "mean", "median", "sd", "n_distinct", "if_else"))) {
-    if (!is.null(names(expr)) && any(names(expr) != "")) {
-      # Fix grepl() and sum()/min()/max() logic below when allowing matching by argument name
+  # Apply call_match() to normalize named arguments for supported functions
+  call_match_def <- rel_get_call_match_def(name)
+  if (!is.null(call_match_def)) {
+    expr <- call_match(expr, call_match_def, dots_env = env)
+  } else if (!is.null(names(expr)) && any(names(expr) != "")) {
+    # Functions without call_match definition: check if they're handled specially
+    # Aggregation functions (sum, min, max, any, all, mean, sd, median, n_distinct) are handled later
+    if (!(name %in% c("sum", "min", "max", "any", "all", "mean", "sd", "median", "n_distinct"))) {
       cli::cli_abort("Can't translate named argument {.code {name}({names(expr)[names(expr) != ''][[1]]} = )}.", call = call)
     }
   }
@@ -308,27 +347,26 @@ rel_translate_lang <- function(
       if (!is.null(pkg) && pkg != "lubridate") {
         cli::cli_abort("Don't know how to translate {.code {pkg}::{name}}.", call = call)
       }
-      call <- call_match(expr, lubridate::wday, dots_env = env)
-      args <- as.list(call[-1])
+      # call_match() already applied above
+      args <- as.list(expr[-1])
       bad <- !(names(args) %in% c("x"))
       if (any(bad)) {
-        cli::cli_abort("{name}({names(args)[which(bad)[[1]]]} = ) not supported", call = call)
+        cli::cli_abort("{.code {name}({names(args)[which(bad)[[1]]]} = )} not supported", call = call)
       }
       if (!is.null(getOption("lubridate.week.start"))) {
         cli::cli_abort('{.code wday()} with {.code option("lubridate.week.start")} not supported', call = call)
       }
     },
     "strftime" = {
-      call <- call_match(expr, strftime, dots_env = env)
-      args <- as.list(call[-1])
+      # call_match() already applied above
+      args <- as.list(expr[-1])
       bad <- !(names(args) %in% c("x", "format"))
       if (any(bad)) {
-        cli::cli_abort("{name}({names(args)[which(bad)[[1]]]} = ) not supported", call = call)
+        cli::cli_abort("{.code {name}({names(args)[which(bad)[[1]]]} = )} not supported", call = call)
       }
     },
     "if_else" = {
-      # Match arguments to dplyr::if_else signature
-      expr <- call_match(expr, dplyr::if_else, dots_env = env)
+      # call_match() already applied above; validate only supported args are used
       args <- as.list(expr[-1])
       bad <- !(names(args) %in% c("condition", "true", "false"))
       if (any(bad)) {
@@ -438,8 +476,8 @@ rel_translate_lang <- function(
   offset_expr <- NULL
   default_expr <- NULL
   if (name %in% c("lag", "lead")) {
+    # call_match() already applied above; extract special arguments
     # x, n = 1L, default = NULL, order_by = NULL
-    expr <- call_match(expr, lag, dots_env = env)
 
     offset_expr <- relexpr_constant(expr$n %||% 1L)
     expr$n <- NULL
