@@ -57,23 +57,24 @@ read_tbl_duckdb <- function(
   # Normalize path for consistent database aliasing
   path <- normalizePath(path, mustWork = TRUE)
 
-  # Generate a deterministic alias based on the file path
-  # Use a simple hash based on the sum of raw bytes of the path
-  path_bytes <- charToRaw(path)
-  path_hash <- sprintf("%08x", sum(as.integer(path_bytes)) %% .Machine$integer.max)
+  # Generate a deterministic alias based on the file path using rlang::hash()
+  path_hash <- substr(rlang::hash(path), 1, 16)
   db_alias <- paste0("duckplyr_db_", path_hash)
 
   # Check if database is already attached, attach if not
-
   attached_dbs <- DBI::dbGetQuery(con, "SELECT database_name FROM duckdb_databases()")
   if (!(db_alias %in% attached_dbs$database_name)) {
-    attach_sql <- paste0("ATTACH '", path, "' AS \"", db_alias, "\" (READ_ONLY)")
+    # Escape path for SQL (replace single quotes with escaped quotes)
+    escaped_path <- gsub("'", "''", path)
+    attach_sql <- paste0("ATTACH '", escaped_path, "' AS \"", db_alias, "\" (READ_ONLY)")
     DBI::dbExecute(con, attach_sql)
   }
 
   # Construct SQL to read the table
-  # Using FROM syntax with fully qualified table name
-  sql <- paste0("SELECT * FROM \"", db_alias, "\".\"", schema, "\".\"", table_name, "\"")
+  # Escape identifiers by doubling any double quotes
+  escaped_schema <- gsub('"', '""', schema)
+  escaped_table <- gsub('"', '""', table_name)
+  sql <- paste0("SELECT * FROM \"", db_alias, "\".\"", escaped_schema, "\".\"", escaped_table, "\"")
 
   rel <- duckdb$rel_from_sql(con, sql)
 
