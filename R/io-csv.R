@@ -21,11 +21,19 @@
 #' names(df)
 #' df$a
 #'
-#' # Return as tibble, specify column types:
+#' # Return as tibble, specify column types positionally:
 #' df_from_file(
 #'   path,
 #'   "read_csv",
 #'   options = list(delim = ",", types = list(c("DOUBLE", "VARCHAR"))),
+#'   class = class(tibble())
+#' )
+#'
+#' # Specify column types by name:
+#' df_from_file(
+#'   path,
+#'   "read_csv",
+#'   options = list(delim = ",", types = list(c(a = "DOUBLE", b = "VARCHAR"))),
 #'   class = class(tibble())
 #' )
 df_from_csv <- function(path, ..., options = list(), class = NULL) {
