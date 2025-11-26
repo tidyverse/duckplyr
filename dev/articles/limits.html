@@ -129,8 +129,8 @@ be bypassed, see <code><a href="../articles/duckdb.html">vignette("duckdb")</a><
 as input nor as a result.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `duckplyr::duckdb_tibble()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't convert empty data frame to relational.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `duckdb_rel_from_df()` at duckplyr/R/duckplyr_df.R:20:5:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> rel_from_df: Can't convert empty data frame to relational.</span></span>
 <span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, .prudence <span class="op">=</span> <span class="st">"stingy"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">a</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select()`:</span></span></span>
@@ -478,7 +478,7 @@ a constant with up to 100 values:</p>
 <span><span class="co">#&gt; │          ORDER_BY         │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │      dataframe_42_42      │</span></span>
-<span><span class="co">#&gt; │      32008990.a DESC      │</span></span>
+<span><span class="co">#&gt; │       4391854.a DESC      │</span></span>
 <span><span class="co">#&gt; └-------------┬-------------┘</span></span>
 <span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │     R_DATAFRAME_SCAN      │</span></span>
@@ -581,7 +581,7 @@ work.</p>
 <span><span class="co">#&gt; │          ORDER_BY         │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │      dataframe_42_42      │</span></span>
-<span><span class="co">#&gt; │ 42.___row_number ASC │</span></span>
+<span><span class="co">#&gt; │ 42.___row_number ASC│</span></span>
 <span><span class="co">#&gt; └-------------┬-------------┘</span></span>
 <span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │         PROJECTION        │</span></span>

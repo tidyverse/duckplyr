@@ -54,8 +54,8 @@ input nor as a result.
 
 ``` r
 duckplyr::duckdb_tibble()
-#> Error in `duckplyr::duckdb_tibble()`:
-#> ! Can't convert empty data frame to relational.
+#> Error in `duckdb_rel_from_df()` at duckplyr/R/duckplyr_df.R:20:5:
+#> ! rel_from_df: Can't convert empty data frame to relational.
 duckplyr::duckdb_tibble(a = 1, .prudence = "stingy") |>
   select(-a)
 #> Error in `select()`:
@@ -429,7 +429,7 @@ duckplyr::duckdb_tibble(a = 1:3, .prudence = "stingy") |>
 #> │          ORDER_BY         │
 #> │    --------------------   │
 #> │      dataframe_42_42      │
-#> │      32008990.a DESC      │
+#> │       4391854.a DESC      │
 #> └-------------┬-------------┘
 #> ┌-------------┴-------------┐
 #> │     R_DATAFRAME_SCAN      │
@@ -537,7 +537,7 @@ withr::with_envvar(
 #> │          ORDER_BY         │
 #> │    --------------------   │
 #> │      dataframe_42_42      │
-#> │ 42.___row_number ASC │
+#> │ 42.___row_number ASC│
 #> └-------------┬-------------┘
 #> ┌-------------┴-------------┐
 #> │         PROJECTION        │
