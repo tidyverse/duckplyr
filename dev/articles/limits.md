@@ -481,7 +481,7 @@ duckplyr::flights_df() |>
 #> # A duckplyr data frame: 1 variable
 #>   `paste(day, collapse = " ")`                                         
 #>   <chr>                                                                
-#> 1 2 10 18 28 29 1 7 8 13 19 21 25 27 5 9 11 14 15 16 17 22 26 30 31 3 …
+#> 1 5 9 11 14 15 16 17 22 26 30 31 2 10 18 28 29 3 4 6 12 20 23 24 1 7 8…
 
 duckplyr::flights_df() |>
   distinct(day) |>
@@ -715,6 +715,52 @@ tibble(a = c(NA, NaN)) |>
 #>   <dbl> <lgl>     
 #> 1    NA TRUE      
 #> 2   NaN TRUE
+```
+
+### Row names
+
+DuckDB does not support data frames with row names. When converting a
+data frame with row names to a duckplyr data frame, the row names are
+silently stripped. This is relevant when working with data frames that
+have row names, such as `mtcars`.
+
+``` r
+# mtcars has character row names
+head(rownames(mtcars))
+#> [1] "Mazda RX4"         "Mazda RX4 Wag"     "Datsun 710"       
+#> [4] "Hornet 4 Drive"    "Hornet Sportabout" "Valiant"
+# After conversion, the row names are lost
+mtcars |>
+  duckplyr::as_duckdb_tibble() |>
+  head()
+#> # A duckplyr data frame: 11 variables
+#>     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+#>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+#> 1  21       6   160   110  3.9   2.62  16.5     0     1     4     4
+#> 2  21       6   160   110  3.9   2.88  17.0     0     1     4     4
+#> 3  22.8     4   108    93  3.85  2.32  18.6     1     1     4     1
+#> 4  21.4     6   258   110  3.08  3.22  19.4     1     0     3     1
+#> 5  18.7     8   360   175  3.15  3.44  17.0     0     0     3     2
+#> 6  18.1     6   225   105  2.76  3.46  20.2     1     0     3     1
+```
+
+To preserve row names, convert them to a column before using duckplyr:
+
+``` r
+mtcars |>
+  tibble::rownames_to_column("name") |>
+  duckplyr::as_duckdb_tibble() |>
+  head()
+#> # A duckplyr data frame: 12 variables
+#>   name        mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear
+#>   <chr>     <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+#> 1 Mazda RX4  21       6   160   110  3.9   2.62  16.5     0     1     4
+#> 2 Mazda RX…  21       6   160   110  3.9   2.88  17.0     0     1     4
+#> 3 Datsun 7…  22.8     4   108    93  3.85  2.32  18.6     1     1     4
+#> 4 Hornet 4…  21.4     6   258   110  3.08  3.22  19.4     1     0     3
+#> 5 Hornet S…  18.7     8   360   175  3.15  3.44  17.0     0     0     3
+#> 6 Valiant    18.1     6   225   105  2.76  3.46  20.2     1     0     3
+#> # ℹ 1 more variable: carb <dbl>
 ```
 
 ### Other differences
