@@ -30,10 +30,16 @@
 #' df <- read_csv_duckdb(path, prudence = "lavish")
 #' df$a
 #'
-#' # Specify column types
+#' # Specify column types positionally
 #' read_csv_duckdb(
 #'   path,
 #'   options = list(delim = ",", types = list(c("DOUBLE", "VARCHAR")))
+#' )
+#'
+#' # Specify column types by name
+#' read_csv_duckdb(
+#'   path,
+#'   options = list(types = list(c(a = "DOUBLE", b = "VARCHAR")))
 #' )
 read_csv_duckdb <- function(path, ..., prudence = c("thrifty", "lavish", "stingy"), options = list()) {
   check_dots_empty()
