@@ -1,4 +1,4 @@
-DBI::dbExecute(duckdb:::default_connection(), "INSTALL tpch")
+duckdb::sql_exec("INSTALL tpch")
 
 generate_tpch <- function(sf, target_dir) {
   fs::dir_create(target_dir)
