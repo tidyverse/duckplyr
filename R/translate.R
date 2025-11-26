@@ -143,40 +143,19 @@ rel_find_packages <- function(name) {
   # Remember to update limits.Rmd when adding new functions!
 }
 
-# Returns the function definition to use with call_match() for normalizing named arguments
-# Returns NULL for operators, primitives with ... signatures, and functions that don't support named argument matching
-# Note: Aggregation functions (sum, min, max, any, all, mean, sd, median, n_distinct) are handled
-# specially with custom definitions in rel_translate_lang() to support na.rm argument
-rel_get_call_match_def <- function(name) {
-  switch(name,
-    # dplyr functions
-    "if_else" = dplyr::if_else,
-    "coalesce" = dplyr::coalesce,
-    "lag" = dplyr::lag,
-    "lead" = dplyr::lead,
-    "row_number" = dplyr::row_number,
-    "n" = dplyr::n,
-    # base functions (excluding primitives with ... that are handled specially)
-    "abs" = base::abs,
-    "log" = base::log,
-    "log10" = base::log10,
-    "is.na" = base::is.na,
-    "as.integer" = base::as.integer,
-    "sub" = base::sub,
-    "gsub" = base::gsub,
-    "grepl" = base::grepl,
-    "strftime" = base::strftime,
-    "substr" = base::substr,
-    "suppressWarnings" = base::suppressWarnings,
-    # lubridate functions
-    "wday" = lubridate::wday,
-    "hour" = lubridate::hour,
-    "minute" = lubridate::minute,
-    "second" = lubridate::second,
-    # Default: no call_match definition (operators, special functions, primitives with ...)
-    NULL
-  )
-}
+# Operators and primitives that don't need call_match() for named argument normalization
+rel_primitives <- c(
+  # Comparison operators
+  "<", "<=", ">", ">=", "==", "!=",
+  # Logical operators
+  "|", "&", "!",
+  # Arithmetic operators
+  "+", "-", "*", "/",
+  # Special functions
+  "(", "$", "%in%",
+  # Aggregation functions with ... signatures (handled specially with custom definitions)
+  "sum", "min", "max", "any", "all", "mean", "sd", "median", "n_distinct"
+)
 
 rel_find_call_candidates <- function(fun, call = caller_env()) {
   name <- as.character(fun)
@@ -326,15 +305,13 @@ rel_translate_lang <- function(
     }
   }
 
-  # Apply call_match() to normalize named arguments for supported functions
-  call_match_def <- rel_get_call_match_def(name)
-  if (!is.null(call_match_def)) {
-    expr <- call_match(expr, call_match_def, dots_env = env)
-  } else if (!is.null(names(expr)) && any(names(expr) != "")) {
-    # Functions without call_match definition: check if they're handled specially
-    # Aggregation functions (sum, min, max, any, all, mean, sd, median, n_distinct) are handled later
-    if (!(name %in% c("sum", "min", "max", "any", "all", "mean", "sd", "median", "n_distinct"))) {
-      cli::cli_abort("Can't translate named argument {.code {name}({names(expr)[names(expr) != ''][[1]]} = )}.", call = call)
+  # Apply call_match() to normalize named arguments for non-primitive functions
+  # For primitives/operators, skip call_match and rely on positional argument handling
+  if (!(name %in% rel_primitives)) {
+    # Get function definition from the package namespace
+    fn_def <- get0(name, envir = asNamespace(pkg), mode = "function")
+    if (!is.null(fn_def)) {
+      expr <- call_match(expr, fn_def, dots_env = env)
     }
   }
 
