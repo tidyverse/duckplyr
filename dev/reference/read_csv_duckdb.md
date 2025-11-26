@@ -76,10 +76,22 @@ df <- read_csv_duckdb(path, prudence = "lavish")
 df$a
 #> [1] 1 2 3
 
-# Specify column types
+# Specify column types positionally
 read_csv_duckdb(
   path,
   options = list(delim = ",", types = list(c("DOUBLE", "VARCHAR")))
+)
+#> # A duckplyr data frame: 2 variables
+#>       a b    
+#>   <dbl> <chr>
+#> 1     1 d    
+#> 2     2 e    
+#> 3     3 f    
+
+# Specify column types by name
+read_csv_duckdb(
+  path,
+  options = list(types = list(c(a = "DOUBLE", b = "VARCHAR")))
 )
 #> # A duckplyr data frame: 2 variables
 #>       a b    

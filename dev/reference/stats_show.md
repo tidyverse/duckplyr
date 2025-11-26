@@ -18,9 +18,9 @@ Called for its side effect.
 
 ``` r
 stats_show()
-#> 🛠: 53
+#> 🛠: 54
 #> 🔨:  7
-#> 🦆: 46
+#> 🦆: 47
 #> anti_join.data.frame, arrange.data.frame, compute, count.data.frame, distinct, explain, filter, full_join.data.frame, group_by.data.frame, head, inner_join, inner_join.data.frame, intersect, left_join.data.frame, mutate, mutate.data.frame, relocate, setdiff
 
 tibble(a = 1:3) %>%
@@ -36,8 +36,8 @@ tibble(a = 1:3) %>%
 #> 3     3     4
 
 stats_show()
-#> 🛠: 55
+#> 🛠: 56
 #> 🔨:  7
-#> 🦆: 48
+#> 🦆: 49
 #> anti_join.data.frame, arrange.data.frame, compute, count.data.frame, distinct, explain, filter, full_join.data.frame, group_by.data.frame, head, inner_join, inner_join.data.frame, intersect, left_join.data.frame, mutate, mutate.data.frame, relocate, setdiff
 ```
