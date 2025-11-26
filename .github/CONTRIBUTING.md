@@ -20,7 +20,7 @@ See our guide on [how to create a great issue](https://code-review.tidyverse.org
 
 *   Fork the package and clone onto your computer. If you haven't done this before, we recommend using `usethis::create_from_github("tidyverse/duckplyr", fork = TRUE)`.
 
-*   Install all development dependencies with `pak::pak()`, and then make sure the package passes R CMD check by running `devtools::check()`.
+*   Install all development dependencies with `pak::pak(dependencies = c("Depends", "Imports", "Suggests", "Config/Needs/development"))`, and then make sure the package passes `R CMD check` by running `devtools::check()`.
     If R CMD check doesn't pass cleanly, it's a good idea to ask for help before continuing.
 
 *   Create a Git branch for your pull request (PR). We recommend using `usethis::pr_init("brief-description-of-change")`.
@@ -47,18 +47,44 @@ For all functions used in dplyr verbs, translations must be provided.
 The code lives in `translate.R` .
 New translations must change code in two places:
 
-1. The `switch()` in `rel_find_packages()` needs a new entry, together with the package that is home to the function. The top 60 functions, ranked by importance, are already part of that `switch()`, as a comment if they are not implemented yet.
-1. The actual translation must be implemented in `rel_translate_lang()`. This is easy for some functions that have similar functions that are already translated, but harder for others. This part of the code is not very clear yet, in particular, argument matching by name is only available for a few functions but should be generalized.
-1. Test your implementation in the console with code of the form:
+1. The `switch()` in `rel_find_packages()` needs a new entry, paired with the name of the package that is home to the function.
+    The top 60 functions, ranked by importance, are already part of that `switch()`, as a comment if they are not implemented yet.
+    Example: For adding `lubridate::month()`, add a line of the following form to the `switch()`:
 
     ```r
-    rel_translate(quo(a + 1), data.frame(a = 1)) |>
+    "month" = "lubridate",
+    ```
+
+1. The actual translation must be implemented in `rel_translate_lang()`.
+    This is easy for some functions, in particular if similar functions are already translated, but harder for others.
+    This part of the code is not very clear yet, in particular, argument matching by name is only available for a few functions but should be generalized.
+
+    - In some cases (like with `lubridate::month()`), a function of the exact same name already exists in DuckDB, and there's nothing more to do.
+
+    - In other cases, a macro must be defined in `relational-duckdb.R` that implements the translation.
+
+    - Do you need to do even more work? Let's discuss!
+
+2. Test your implementation in the console with code of the form:
+
+    ```r
+    rel_translate(quo(lubridate::month(a)), data.frame(a = Sys.Date())) |>
       constructive::construct()
     ```
 
-1. Add a test for the new translation to the `mutate =` section of `test_extra_arg_map` in `00-funs.R`. (At some point we want to have more specific tests for the translations, for now, this is what it is.)
-1. Run `03-tests.R`, commit the changes to the generated code to version control.
-1. Update the list in the `limits.Rmd` vignette.
+3. Ensure that your implementation computes what you want it to:
+
+    ```r
+    duckdb_tibble(a = Sys.Date(), .prudence = "stingy") |>
+      mutate(lubridate::month(a))
+    ```
+
+4. Add a test for the new translation to the `mutate =` section of `test_extra_arg_map` in `00-funs.R`.
+    (At some point we want to have more specific tests for the translations, for now, this is what it is.)
+
+5. Run `03-tests.R`, commit the changes to the generated code to version control.
+
+6. Update the list in the `limits.Rmd` vignette.
 
 ## Support more options for verbs
 
