@@ -54,7 +54,7 @@
 - [`mutate(`*`<duckplyr_df>`*`)`](https://duckplyr.tidyverse.org/dev/reference/mutate.duckplyr_df.md)
   : Create, modify, and delete columns
 - [`transmute(`*`<duckplyr_df>`*`)`](https://duckplyr.tidyverse.org/dev/reference/transmute.duckplyr_df.md)
-  : Create, modify, and delete columns
+  **\[superseded\]** : Create, modify, and delete columns
 - [`select(`*`<duckplyr_df>`*`)`](https://duckplyr.tidyverse.org/dev/reference/select.duckplyr_df.md)
   : Keep or drop columns using their names and types
 - [`rename(`*`<duckplyr_df>`*`)`](https://duckplyr.tidyverse.org/dev/reference/rename.duckplyr_df.md)
