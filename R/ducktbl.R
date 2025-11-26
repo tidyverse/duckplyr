@@ -11,10 +11,11 @@
 #'
 #' @param ... For `duckdb_tibble()`, passed on to [tibble()].
 #'   For `as_duckdb_tibble()`, passed on to methods.
-#' @param prudence,.prudence Controls automatic materialization of data.
+#' @param prudence,.prudence Memory protection, controls if DuckDB may convert
+#'   intermediate results in DuckDB-managed memory to data frames in R memory.
 #'
 #'   - `"lavish"`: regardless of size,
-#'   - `"frugal"`: never,
+#'   - `"stingy"`: never,
 #'   - `"thrifty"`: up to a maximum size of 1 million cells.
 #'
 #' The default is `"lavish"` for `duckdb_tibble()` and `as_duckdb_tibble()`,
@@ -46,19 +47,13 @@
 #'
 #' x$a
 #'
-#' y <- duckdb_tibble(a = 1, .prudence = "frugal")
+#' y <- duckdb_tibble(a = 1, .prudence = "stingy")
 #' y
 #' try(length(y$a))
 #' length(collect(y)$a)
 #' @export
-duckdb_tibble <- function(..., .prudence = c("lavish", "thrifty", "frugal")) {
+duckdb_tibble <- function(..., .prudence = c("lavish", "thrifty", "stingy")) {
   out <- tibble::tibble(...)
-
-  # Side effect: check compatibility
-  # No telemetry, this doesn't seem to be useful data
-  # (and conflicts with test-telemetry.R)
-  # FIXME: May be handled by other methods
-  check_df_for_rel(out)
 
   new_duckdb_tibble(out, class(out), prudence = .prudence, adjust_prudence = TRUE)
 }
@@ -71,7 +66,7 @@ duckdb_tibble <- function(..., .prudence = c("lavish", "thrifty", "frugal")) {
 #' @param x The object to convert or to test.
 #' @rdname duckdb_tibble
 #' @export
-as_duckdb_tibble <- function(x, ..., prudence = c("lavish", "thrifty", "frugal")) {
+as_duckdb_tibble <- function(x, ..., prudence = c("lavish", "thrifty", "stingy")) {
   # Handle the prudence arg in the generic, only the other args will be dispatched
   as_duckdb_tibble <- function(x, ...) {
     UseMethod("as_duckdb_tibble")
@@ -89,7 +84,7 @@ as_duckdb_tibble.tbl_duckdb_connection <- function(x, ...) {
   sql <- dbplyr::remote_query(x)
 
   # Start restrictive to avoid accidental materialization
-  read_sql_duckdb(sql, prudence = "frugal", con = con)
+  read_sql_duckdb(sql, prudence = "stingy", con = con)
 }
 
 #' @export

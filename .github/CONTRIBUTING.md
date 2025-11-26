@@ -5,14 +5,14 @@ For a detailed discussion on contributing to this and other tidyverse packages, 
 
 ## Fixing typos
 
-You can fix typos, spelling mistakes, or grammatical errors in the documentation directly using the GitHub web interface, as long as the changes are made in the _source_ file. 
-This generally means you'll need to edit [roxygen2 comments](https://roxygen2.r-lib.org/articles/roxygen2.html) in an `.R`, not a `.Rd` file. 
+You can fix typos, spelling mistakes, or grammatical errors in the documentation directly using the GitHub web interface, as long as the changes are made in the _source_ file.
+This generally means you'll need to edit [roxygen2 comments](https://roxygen2.r-lib.org/articles/roxygen2.html) in an `.R`, not a `.Rd` file.
 You can find the `.R` file that generates the `.Rd` by reading the comment in the first line.
 
 ## Bigger changes
 
-If you want to make a bigger change, it's a good idea to first file an issue and make sure someone from the team agrees that it’s needed. 
-If you’ve found a bug, please file an issue that illustrates the bug with a minimal 
+If you want to make a bigger change, it's a good idea to first file an issue and make sure someone from the team agrees that it’s needed.
+If you’ve found a bug, please file an issue that illustrates the bug with a minimal
 [reprex](https://www.tidyverse.org/help/#reprex) (this will also help you write a unit test, if needed).
 See our guide on [how to create a great issue](https://code-review.tidyverse.org/issues/) for more advice.
 
@@ -20,8 +20,9 @@ See our guide on [how to create a great issue](https://code-review.tidyverse.org
 
 *   Fork the package and clone onto your computer. If you haven't done this before, we recommend using `usethis::create_from_github("tidyverse/duckplyr", fork = TRUE)`.
 
-*   Install all development dependencies with `devtools::install_dev_deps()`, and then make sure the package passes R CMD check by running `devtools::check()`. 
-    If R CMD check doesn't pass cleanly, it's a good idea to ask for help before continuing. 
+*   Install all development dependencies with `pak::pak(dependencies = c("Depends", "Imports", "Suggests", "Config/Needs/development"))`, and then make sure the package passes `R CMD check` by running `devtools::check()`.
+    If R CMD check doesn't pass cleanly, it's a good idea to ask for help before continuing.
+
 *   Create a Git branch for your pull request (PR). We recommend using `usethis::pr_init("brief-description-of-change")`.
 
 *   Make your changes, commit to git, and then create a PR by running `usethis::pr_push()`, and following the prompts in your browser.
@@ -32,13 +33,13 @@ See our guide on [how to create a great issue](https://code-review.tidyverse.org
 
 ### Code style
 
-*   New code should follow the tidyverse [style guide](https://style.tidyverse.org). 
-    You can use the [styler](https://CRAN.R-project.org/package=styler) package to apply these styles, but please don't restyle code that has nothing to do with your PR.  
+*   New code should follow the tidyverse [style guide](https://style.tidyverse.org).
+    You can use the [styler](https://CRAN.R-project.org/package=styler) package to apply these styles, but please don't restyle code that has nothing to do with your PR.
 
-*  We use [roxygen2](https://cran.r-project.org/package=roxygen2), with [Markdown syntax](https://cran.r-project.org/web/packages/roxygen2/vignettes/rd-formatting.html), for documentation.  
+*  We use [roxygen2](https://cran.r-project.org/package=roxygen2), with [Markdown syntax](https://cran.r-project.org/web/packages/roxygen2/vignettes/rd-formatting.html), for documentation.
 
-*  We use [testthat](https://cran.r-project.org/package=testthat) for unit tests. 
-   Contributions with test cases included are easier to accept.  
+*  We use [testthat](https://cran.r-project.org/package=testthat) for unit tests.
+   Contributions with test cases included are easier to accept.
 
 ## New translations for functions
 
@@ -46,18 +47,44 @@ For all functions used in dplyr verbs, translations must be provided.
 The code lives in `translate.R` .
 New translations must change code in two places:
 
-1. The `switch()` in `rel_find_call()` needs a new entry, together with the package that is home to the function. The top 60 functions, ranked by importance, are already part of that `switch()`, as a comment if they are not implemented yet.
-1. The actual translation must be implemented in `rel_translate_lang()`. This is easy for some functions that have similar functions that are already translated, but harder for others. This part of the code is not very clear yet, in particular, argument matching by name is only available for a few functions but should be generalized.
-1. Test your implementation in the console with code of the form:
+1. The `switch()` in `rel_find_packages()` needs a new entry, paired with the name of the package that is home to the function.
+    The top 60 functions, ranked by importance, are already part of that `switch()`, as a comment if they are not implemented yet.
+    Example: For adding `lubridate::month()`, add a line of the following form to the `switch()`:
 
     ```r
-    rel_translate(quo(a + 1), data.frame(a = 1)) |>
+    "month" = "lubridate",
+    ```
+
+1. The actual translation must be implemented in `rel_translate_lang()`.
+    This is easy for some functions, in particular if similar functions are already translated, but harder for others.
+    This part of the code is not very clear yet, in particular, argument matching by name is only available for a few functions but should be generalized.
+
+    - In some cases (like with `lubridate::month()`), a function of the exact same name already exists in DuckDB, and there's nothing more to do.
+
+    - In other cases, a macro must be defined in `relational-duckdb.R` that implements the translation.
+
+    - Do you need to do even more work? Let's discuss!
+
+2. Test your implementation in the console with code of the form:
+
+    ```r
+    rel_translate(quo(lubridate::month(a)), data.frame(a = Sys.Date())) |>
       constructive::construct()
     ```
 
-1. Add a test for the new translation to the `mutate =` section of `test_extra_arg_map` in `00-funs.R`. (At some point we want to have more specific tests for the translations, for now, this is what it is.)
-1. Run `03-tests.R`, commit the changes to the generated code to version control.
-1. Update the list in the `limits.Rmd` vignette.
+3. Ensure that your implementation computes what you want it to:
+
+    ```r
+    duckdb_tibble(a = Sys.Date(), .prudence = "stingy") |>
+      mutate(lubridate::month(a))
+    ```
+
+4. Add a test for the new translation to the `mutate =` section of `test_extra_arg_map` in `00-funs.R`.
+    (At some point we want to have more specific tests for the translations, for now, this is what it is.)
+
+5. Run `03-tests.R`, commit the changes to the generated code to version control.
+
+6. Update the list in the `limits.Rmd` vignette.
 
 ## Support more options for verbs
 

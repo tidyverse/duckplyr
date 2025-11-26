@@ -2,12 +2,17 @@ qloadm("tools/tpch/001.qs")
 duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
-experimental <- FALSE
+invisible(
+  DBI::dbExecute(
+    con,
+    'CREATE MACRO "___min_na"(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE MIN(x) END)'
+  )
+)
 invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 df1 <- lineitem
 "summarise"
-rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+rel1 <- duckdb$rel_from_df(con, df1)
 "summarise"
 rel2 <- duckdb$rel_project(
   rel1,
@@ -105,7 +110,7 @@ rel3 <- duckdb$rel_aggregate(
   groups = list(duckdb$expr_reference("l_orderkey")),
   aggregates = list(
     {
-      tmp_expr <- duckdb$expr_function("min", list(duckdb$expr_reference("___row_number")))
+      tmp_expr <- duckdb$expr_function("___min_na", list(duckdb$expr_reference("___row_number")))
       duckdb$expr_set_alias(tmp_expr, "___row_number")
       tmp_expr
     },
@@ -159,17 +164,7 @@ rel6 <- duckdb$rel_project(
 rel7 <- duckdb$rel_filter(
   rel6,
   list(
-    duckdb$expr_comparison(
-      ">",
-      list(
-        duckdb$expr_reference("sum"),
-        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(300, experimental = experimental)
-        } else {
-          duckdb$expr_constant(300)
-        }
-      )
-    )
+    duckdb$expr_comparison(">", list(duckdb$expr_reference("sum"), duckdb$expr_constant(300)))
   )
 )
 "filter"
@@ -192,7 +187,7 @@ rel9 <- duckdb$rel_project(
 )
 df2 <- orders
 "inner_join"
-rel10 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+rel10 <- duckdb$rel_from_df(con, df2)
 "inner_join"
 rel11 <- duckdb$rel_set_alias(rel10, "lhs")
 "inner_join"
@@ -354,7 +349,7 @@ rel17 <- duckdb$rel_project(
 rel18 <- duckdb$rel_set_alias(rel17, "lhs")
 df3 <- customer
 "inner_join"
-rel19 <- duckdb$rel_from_df(con, df3, experimental = experimental)
+rel19 <- duckdb$rel_from_df(con, df3)
 "inner_join"
 rel20 <- duckdb$rel_set_alias(rel19, "rhs")
 "inner_join"
@@ -698,7 +693,7 @@ rel29 <- duckdb$rel_project(
     }
   )
 )
-"head"
+"slice_head"
 rel30 <- duckdb$rel_limit(rel29, 100)
 rel30
 duckdb$rel_to_altrep(rel30)

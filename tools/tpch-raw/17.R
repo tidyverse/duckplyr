@@ -2,9 +2,14 @@ qloadm("tools/tpch/001.qs")
 duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
-experimental <- FALSE
 invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
+invisible(
+  DBI::dbExecute(
+    con,
+    'CREATE MACRO "___mean_na"(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE AVG(x) END)'
+  )
+)
 invisible(
   DBI::dbExecute(
     con,
@@ -13,38 +18,18 @@ invisible(
 )
 df1 <- part
 "filter"
-rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+rel1 <- duckdb$rel_from_df(con, df1)
 "filter"
 rel2 <- duckdb$rel_filter(
   rel1,
   list(
-    duckdb$expr_comparison(
-      "==",
-      list(
-        duckdb$expr_reference("p_brand"),
-        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant("Brand#23", experimental = experimental)
-        } else {
-          duckdb$expr_constant("Brand#23")
-        }
-      )
-    ),
-    duckdb$expr_comparison(
-      "==",
-      list(
-        duckdb$expr_reference("p_container"),
-        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant("MED BOX", experimental = experimental)
-        } else {
-          duckdb$expr_constant("MED BOX")
-        }
-      )
-    )
+    duckdb$expr_comparison("==", list(duckdb$expr_reference("p_brand"), duckdb$expr_constant("Brand#23"))),
+    duckdb$expr_comparison("==", list(duckdb$expr_reference("p_container"), duckdb$expr_constant("MED BOX")))
   )
 )
 df2 <- lineitem
 "inner_join"
-rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+rel3 <- duckdb$rel_from_df(con, df2)
 "inner_join"
 rel4 <- duckdb$rel_set_alias(rel3, "lhs")
 "inner_join"
@@ -199,12 +184,8 @@ rel8 <- duckdb$rel_aggregate(
       tmp_expr <- duckdb$expr_function(
         "*",
         list(
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(0.2, experimental = experimental)
-          } else {
-            duckdb$expr_constant(0.2)
-          },
-          duckdb$expr_function("mean", list(duckdb$expr_reference("l_quantity")))
+          duckdb$expr_constant(0.2),
+          duckdb$expr_function("___mean_na", list(x = duckdb$expr_reference("l_quantity")))
         )
       )
       duckdb$expr_set_alias(tmp_expr, "quantity_threshold")
@@ -522,14 +503,7 @@ rel16 <- duckdb$rel_aggregate(
     {
       tmp_expr <- duckdb$expr_function(
         "___divide",
-        list(
-          duckdb$expr_function("sum", list(duckdb$expr_reference("l_extendedprice"))),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(7, experimental = experimental)
-          } else {
-            duckdb$expr_constant(7)
-          }
-        )
+        list(duckdb$expr_function("sum", list(duckdb$expr_reference("l_extendedprice"))), duckdb$expr_constant(7))
       )
       duckdb$expr_set_alias(tmp_expr, "avg_yearly")
       tmp_expr

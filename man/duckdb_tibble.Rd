@@ -6,9 +6,9 @@
 \alias{is_duckdb_tibble}
 \title{duckplyr data frames}
 \usage{
-duckdb_tibble(..., .prudence = c("lavish", "thrifty", "frugal"))
+duckdb_tibble(..., .prudence = c("lavish", "thrifty", "stingy"))
 
-as_duckdb_tibble(x, ..., prudence = c("lavish", "thrifty", "frugal"))
+as_duckdb_tibble(x, ..., prudence = c("lavish", "thrifty", "stingy"))
 
 is_duckdb_tibble(x)
 }
@@ -18,10 +18,11 @@ For \code{as_duckdb_tibble()}, passed on to methods.}
 
 \item{x}{The object to convert or to test.}
 
-\item{prudence, .prudence}{Controls automatic materialization of data.
+\item{prudence, .prudence}{Memory protection, controls if DuckDB may convert
+intermediate results in DuckDB-managed memory to data frames in R memory.
 \itemize{
 \item \code{"lavish"}: regardless of size,
-\item \code{"frugal"}: never,
+\item \code{"stingy"}: never,
 \item \code{"thrifty"}: up to a maximum size of 1 million cells.
 }
 
@@ -75,7 +76,7 @@ x \%>\%
 
 x$a
 
-y <- duckdb_tibble(a = 1, .prudence = "frugal")
+y <- duckdb_tibble(a = 1, .prudence = "stingy")
 y
 try(length(y$a))
 length(collect(y)$a)

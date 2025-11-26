@@ -27,7 +27,7 @@ rel_try <- function(call, rel, ...) {
 
   if (Sys.getenv("DUCKPLYR_FALLBACK_FORCE") == "TRUE") {
     stats$fallback <- stats$fallback + 1L
-    return()
+    return("Fallback enforced")
   }
 
   dots <- list(...)
@@ -43,7 +43,7 @@ rel_try <- function(call, rel, ...) {
         if (Sys.getenv("DUCKPLYR_FALLBACK_INFO") == "TRUE") {
           inform(message = c(
             "Cannot process duckplyr query with DuckDB, falling back to dplyr.",
-            i = message
+            i = cli::format_inline(message)
           ))
         }
         if (Sys.getenv("DUCKPLYR_FORCE") == "TRUE") {
@@ -141,7 +141,7 @@ check_prudence <- function(x, duckplyr_error, call = caller_env()) {
     duckplyr_error_msg <- if (is.character(duckplyr_error)) duckplyr_error
     duckplyr_error_parent <- if (is_condition(duckplyr_error)) duckplyr_error
     cli::cli_abort(parent = duckplyr_error_parent, call = call, c(
-      "This operation cannot be carried out by DuckDB, and the input is a frugal duckplyr frame.",
+      "This operation cannot be carried out by DuckDB, and the input is a stingy duckplyr frame.",
       "*" = duckplyr_error_msg,
       "i" = 'Use {.code compute(prudence = "lavish")} to materialize to temporary storage and continue with {.pkg duckplyr}.',
       "i" = 'See {.run vignette("prudence")} for other options.'

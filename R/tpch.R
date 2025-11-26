@@ -77,7 +77,7 @@ tpch_02 <- function() {
       s_address, s_phone, s_comment
     ) %>%
     arrange(desc(s_acctbal), n_name, s_name, p_partkey) %>%
-    head(100)
+    slice_head(n = 100)
 
   res
 }
@@ -109,7 +109,7 @@ tpch_03 <- function() {
     summarise(revenue = sum(na.rm = TRUE, volume), .by = c(l_orderkey, o_orderdate, o_shippriority)) %>%
     select(l_orderkey, revenue, o_orderdate, o_shippriority) %>%
     arrange(desc(revenue), o_orderdate) %>%
-    head(10)
+    slice_head(n = 10)
   aggr
 }
 
@@ -450,7 +450,7 @@ tpch_10 <- function() {
       c_address, c_phone, c_comment
     ) %>%
     arrange(desc(revenue)) %>%
-    head(20)
+    slice_head(n = 20)
 
   res
 }

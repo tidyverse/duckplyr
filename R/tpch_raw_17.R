@@ -3,38 +3,18 @@
 tpch_raw_17 <- function(con, experimental) {
   df1 <- part
   "filter"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "filter"
   rel2 <- duckdb$rel_filter(
     rel1,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("p_brand"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant("Brand#23", experimental = experimental)
-          } else {
-            duckdb$expr_constant("Brand#23")
-          }
-        )
-      ),
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("p_container"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant("MED BOX", experimental = experimental)
-          } else {
-            duckdb$expr_constant("MED BOX")
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("p_brand"), duckdb$expr_constant("Brand#23"))),
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("p_container"), duckdb$expr_constant("MED BOX")))
     )
   )
   df2 <- lineitem
   "inner_join"
-  rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel3 <- duckdb$rel_from_df(con, df2)
   "inner_join"
   rel4 <- duckdb$rel_set_alias(rel3, "lhs")
   "inner_join"
@@ -189,12 +169,8 @@ tpch_raw_17 <- function(con, experimental) {
         tmp_expr <- duckdb$expr_function(
           "*",
           list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(0.2, experimental = experimental)
-            } else {
-              duckdb$expr_constant(0.2)
-            },
-            duckdb$expr_function("mean", list(duckdb$expr_reference("l_quantity")))
+            duckdb$expr_constant(0.2),
+            duckdb$expr_function("___mean_na", list(x = duckdb$expr_reference("l_quantity")))
           )
         )
         duckdb$expr_set_alias(tmp_expr, "quantity_threshold")
@@ -512,14 +488,7 @@ tpch_raw_17 <- function(con, experimental) {
       {
         tmp_expr <- duckdb$expr_function(
           "___divide",
-          list(
-            duckdb$expr_function("sum", list(duckdb$expr_reference("l_extendedprice"))),
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(7, experimental = experimental)
-            } else {
-              duckdb$expr_constant(7)
-            }
-          )
+          list(duckdb$expr_function("sum", list(duckdb$expr_reference("l_extendedprice"))), duckdb$expr_constant(7))
         )
         duckdb$expr_set_alias(tmp_expr, "avg_yearly")
         tmp_expr

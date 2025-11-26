@@ -2,14 +2,19 @@ qloadm("tools/tpch/001.qs")
 duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
-experimental <- FALSE
 invisible(
   DBI::dbExecute(con, 'CREATE MACRO "___eq_na_matches_na"(x, y) AS (x IS NOT DISTINCT FROM y)')
 )
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
+invisible(
+  DBI::dbExecute(
+    con,
+    'CREATE MACRO "___min_na"(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE MIN(x) END)'
+  )
+)
 df1 <- orders
 "select"
-rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+rel1 <- duckdb$rel_from_df(con, df1)
 "select"
 rel2 <- duckdb$rel_project(
   rel1,
@@ -73,14 +78,7 @@ rel4 <- duckdb$rel_filter(
   list(
     duckdb$expr_comparison(
       "<",
-      list(
-        duckdb$expr_reference("o_orderdate"),
-        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(as.Date("1995-03-15"), experimental = experimental)
-        } else {
-          duckdb$expr_constant(as.Date("1995-03-15"))
-        }
-      )
+      list(duckdb$expr_reference("o_orderdate"), duckdb$expr_constant(as.Date("1995-03-15")))
     )
   )
 )
@@ -114,7 +112,7 @@ rel6 <- duckdb$rel_project(
 )
 df2 <- customer
 "select"
-rel7 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+rel7 <- duckdb$rel_from_df(con, df2)
 "select"
 rel8 <- duckdb$rel_project(
   rel7,
@@ -156,17 +154,7 @@ rel9 <- duckdb$rel_project(
 rel10 <- duckdb$rel_filter(
   rel9,
   list(
-    duckdb$expr_comparison(
-      "==",
-      list(
-        duckdb$expr_reference("c_mktsegment"),
-        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant("BUILDING", experimental = experimental)
-        } else {
-          duckdb$expr_constant("BUILDING")
-        }
-      )
-    )
+    duckdb$expr_comparison("==", list(duckdb$expr_reference("c_mktsegment"), duckdb$expr_constant("BUILDING")))
   )
 )
 "filter"
@@ -317,7 +305,7 @@ rel20 <- duckdb$rel_project(
 )
 df3 <- lineitem
 "select"
-rel21 <- duckdb$rel_from_df(con, df3, experimental = experimental)
+rel21 <- duckdb$rel_from_df(con, df3)
 "select"
 rel22 <- duckdb$rel_project(
   rel21,
@@ -381,14 +369,7 @@ rel24 <- duckdb$rel_filter(
   list(
     duckdb$expr_comparison(
       ">",
-      list(
-        duckdb$expr_reference("l_shipdate"),
-        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(as.Date("1995-03-15"), experimental = experimental)
-        } else {
-          duckdb$expr_constant(as.Date("1995-03-15"))
-        }
-      )
+      list(duckdb$expr_reference("l_shipdate"), duckdb$expr_constant(as.Date("1995-03-15")))
     )
   )
 )
@@ -582,17 +563,7 @@ rel35 <- duckdb$rel_project(
         "*",
         list(
           duckdb$expr_reference("l_extendedprice"),
-          duckdb$expr_function(
-            "-",
-            list(
-              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                duckdb$expr_constant(1, experimental = experimental)
-              } else {
-                duckdb$expr_constant(1)
-              },
-              duckdb$expr_reference("l_discount")
-            )
-          )
+          duckdb$expr_function("-", list(duckdb$expr_constant(1), duckdb$expr_reference("l_discount")))
         )
       )
       duckdb$expr_set_alias(tmp_expr, "volume")
@@ -647,7 +618,7 @@ rel37 <- duckdb$rel_aggregate(
   groups = list(duckdb$expr_reference("l_orderkey"), duckdb$expr_reference("o_orderdate"), duckdb$expr_reference("o_shippriority")),
   aggregates = list(
     {
-      tmp_expr <- duckdb$expr_function("min", list(duckdb$expr_reference("___row_number")))
+      tmp_expr <- duckdb$expr_function("___min_na", list(duckdb$expr_reference("___row_number")))
       duckdb$expr_set_alias(tmp_expr, "___row_number")
       tmp_expr
     },
@@ -774,7 +745,7 @@ rel43 <- duckdb$rel_project(
     }
   )
 )
-"head"
+"slice_head"
 rel44 <- duckdb$rel_limit(rel43, 10)
 rel44
 duckdb$rel_to_altrep(rel44)

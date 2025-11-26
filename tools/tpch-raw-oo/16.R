@@ -2,7 +2,6 @@ qloadm("tools/tpch/001.qs")
 duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
-experimental <- FALSE
 invisible(duckdb$rapi_load_rfuns(drv@database_ref))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "!"(x) AS (NOT x)'))
 invisible(
@@ -14,10 +13,21 @@ invisible(
 invisible(DBI::dbExecute(con, 'CREATE MACRO "___coalesce"(x, y) AS COALESCE(x, y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "|"(x, y) AS (x OR y)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "=="(x, y) AS (x == y)'))
-invisible(DBI::dbExecute(con, 'CREATE MACRO "n_distinct"(x) AS (COUNT(DISTINCT x))'))
+invisible(
+  DBI::dbExecute(
+    con,
+    'CREATE MACRO "___min_na"(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE MIN(x) END)'
+  )
+)
+invisible(
+  DBI::dbExecute(
+    con,
+    'CREATE MACRO "___n_distinct_na"(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN (COUNT(DISTINCT x)+1) ELSE COUNT(DISTINCT x) END)'
+  )
+)
 df1 <- part
 "filter"
-rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+rel1 <- duckdb$rel_from_df(con, df1)
 "filter"
 rel2 <- duckdb$rel_project(
   rel1,
@@ -78,31 +88,11 @@ rel2 <- duckdb$rel_project(
 rel3 <- duckdb$rel_filter(
   rel2,
   list(
-    duckdb$expr_function(
-      "r_base::!=",
-      list(
-        duckdb$expr_reference("p_brand"),
-        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant("Brand#45", experimental = experimental)
-        } else {
-          duckdb$expr_constant("Brand#45")
-        }
-      )
-    ),
+    duckdb$expr_function("r_base::!=", list(duckdb$expr_reference("p_brand"), duckdb$expr_constant("Brand#45"))),
     duckdb$expr_function(
       "!",
       list(
-        duckdb$expr_function(
-          "grepl",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant("^MEDIUM POLISHED", experimental = experimental)
-            } else {
-              duckdb$expr_constant("^MEDIUM POLISHED")
-            },
-            duckdb$expr_reference("p_type")
-          )
-        )
+        duckdb$expr_function("grepl", list(duckdb$expr_constant("^MEDIUM POLISHED"), duckdb$expr_reference("p_type")))
       )
     ),
     duckdb$expr_function(
@@ -129,113 +119,29 @@ rel3 <- duckdb$rel_filter(
                                 duckdb$expr_function(
                                   "|",
                                   list(
-                                    duckdb$expr_function(
-                                      "r_base::==",
-                                      list(
-                                        duckdb$expr_reference("p_size"),
-                                        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                          duckdb$expr_constant(49, experimental = experimental)
-                                        } else {
-                                          duckdb$expr_constant(49)
-                                        }
-                                      )
-                                    ),
-                                    duckdb$expr_function(
-                                      "r_base::==",
-                                      list(
-                                        duckdb$expr_reference("p_size"),
-                                        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                          duckdb$expr_constant(14, experimental = experimental)
-                                        } else {
-                                          duckdb$expr_constant(14)
-                                        }
-                                      )
-                                    )
+                                    duckdb$expr_function("r_base::==", list(duckdb$expr_reference("p_size"), duckdb$expr_constant(49))),
+                                    duckdb$expr_function("r_base::==", list(duckdb$expr_reference("p_size"), duckdb$expr_constant(14)))
                                   )
                                 ),
-                                duckdb$expr_function(
-                                  "r_base::==",
-                                  list(
-                                    duckdb$expr_reference("p_size"),
-                                    if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                      duckdb$expr_constant(23, experimental = experimental)
-                                    } else {
-                                      duckdb$expr_constant(23)
-                                    }
-                                  )
-                                )
+                                duckdb$expr_function("r_base::==", list(duckdb$expr_reference("p_size"), duckdb$expr_constant(23)))
                               )
                             ),
-                            duckdb$expr_function(
-                              "r_base::==",
-                              list(
-                                duckdb$expr_reference("p_size"),
-                                if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                  duckdb$expr_constant(45, experimental = experimental)
-                                } else {
-                                  duckdb$expr_constant(45)
-                                }
-                              )
-                            )
+                            duckdb$expr_function("r_base::==", list(duckdb$expr_reference("p_size"), duckdb$expr_constant(45)))
                           )
                         ),
-                        duckdb$expr_function(
-                          "r_base::==",
-                          list(
-                            duckdb$expr_reference("p_size"),
-                            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                              duckdb$expr_constant(19, experimental = experimental)
-                            } else {
-                              duckdb$expr_constant(19)
-                            }
-                          )
-                        )
+                        duckdb$expr_function("r_base::==", list(duckdb$expr_reference("p_size"), duckdb$expr_constant(19)))
                       )
                     ),
-                    duckdb$expr_function(
-                      "r_base::==",
-                      list(
-                        duckdb$expr_reference("p_size"),
-                        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                          duckdb$expr_constant(3, experimental = experimental)
-                        } else {
-                          duckdb$expr_constant(3)
-                        }
-                      )
-                    )
+                    duckdb$expr_function("r_base::==", list(duckdb$expr_reference("p_size"), duckdb$expr_constant(3)))
                   )
                 ),
-                duckdb$expr_function(
-                  "r_base::==",
-                  list(
-                    duckdb$expr_reference("p_size"),
-                    if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                      duckdb$expr_constant(36, experimental = experimental)
-                    } else {
-                      duckdb$expr_constant(36)
-                    }
-                  )
-                )
+                duckdb$expr_function("r_base::==", list(duckdb$expr_reference("p_size"), duckdb$expr_constant(36)))
               )
             ),
-            duckdb$expr_function(
-              "r_base::==",
-              list(
-                duckdb$expr_reference("p_size"),
-                if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                  duckdb$expr_constant(9, experimental = experimental)
-                } else {
-                  duckdb$expr_constant(9)
-                }
-              )
-            )
+            duckdb$expr_function("r_base::==", list(duckdb$expr_reference("p_size"), duckdb$expr_constant(9)))
           )
         ),
-        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(FALSE, experimental = experimental)
-        } else {
-          duckdb$expr_constant(FALSE)
-        }
+        duckdb$expr_constant(FALSE)
       )
     )
   )
@@ -295,7 +201,7 @@ rel5 <- duckdb$rel_project(
 )
 df2 <- supplier
 "filter"
-rel6 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+rel6 <- duckdb$rel_from_df(con, df2)
 "filter"
 rel7 <- duckdb$rel_project(
   rel6,
@@ -351,14 +257,7 @@ rel8 <- duckdb$rel_filter(
       list(
         duckdb$expr_function(
           "grepl",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant("Customer.*?Complaints", experimental = experimental)
-            } else {
-              duckdb$expr_constant("Customer.*?Complaints")
-            },
-            duckdb$expr_reference("s_comment")
-          )
+          list(duckdb$expr_constant("Customer.*?Complaints"), duckdb$expr_reference("s_comment"))
         )
       )
     )
@@ -409,7 +308,7 @@ rel10 <- duckdb$rel_project(
 )
 df3 <- partsupp
 "inner_join"
-rel11 <- duckdb$rel_from_df(con, df3, experimental = experimental)
+rel11 <- duckdb$rel_from_df(con, df3)
 "inner_join"
 rel12 <- duckdb$rel_set_alias(rel11, "lhs")
 "inner_join"
@@ -817,12 +716,12 @@ rel28 <- duckdb$rel_aggregate(
   groups = list(duckdb$expr_reference("p_brand"), duckdb$expr_reference("p_type"), duckdb$expr_reference("p_size")),
   aggregates = list(
     {
-      tmp_expr <- duckdb$expr_function("min", list(duckdb$expr_reference("___row_number")))
+      tmp_expr <- duckdb$expr_function("___min_na", list(duckdb$expr_reference("___row_number")))
       duckdb$expr_set_alias(tmp_expr, "___row_number")
       tmp_expr
     },
     {
-      tmp_expr <- duckdb$expr_function("n_distinct", list(duckdb$expr_reference("ps_suppkey")))
+      tmp_expr <- duckdb$expr_function("___n_distinct_na", list(x = duckdb$expr_reference("ps_suppkey")))
       duckdb$expr_set_alias(tmp_expr, "supplier_cnt")
       tmp_expr
     }
