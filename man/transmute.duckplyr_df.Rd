@@ -24,6 +24,8 @@ if ungrouped).
 }}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
+
 This is a method for the \code{\link[dplyr:transmute]{dplyr::transmute()}} generic.
 See "Fallbacks" section for differences in implementation.
 \code{transmute()} creates a new data frame containing only the specified computations.
