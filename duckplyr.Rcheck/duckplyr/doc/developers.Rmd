@@ -1,0 +1,140 @@
+---
+title: "Selective use of duckplyr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{30 Selective use of duckplyr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+clean_output <- function(x, options) {
+  x <- gsub("0x[0-9a-f]+", "0xdeadbeef", x)
+  x <- gsub("dataframe_[0-9]*_[0-9]*", "      dataframe_42_42      ", x)
+  x <- gsub("[0-9]*\\.___row_number ASC", "42.___row_number ASC", x)
+  x <- gsub("─", "-", x)
+  x
+}
+
+local({
+  hook_source <- knitr::knit_hooks$get("document")
+  knitr::knit_hooks$set(document = clean_output)
+})
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  eval = identical(Sys.getenv("IN_PKGDOWN"), "true") || (getRversion() >= "4.1" && rlang::is_installed(c("conflicted", "nycflights13"))),
+  comment = "#>"
+)
+
+Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
+```
+
+This vignette demonstrates how to use duckplyr selectively, for individual data frames or for other packages.
+
+```{r attach}
+library(conflicted)
+library(dplyr)
+conflict_prefer("filter", "dplyr")
+```
+
+## Introduction
+
+The default behavior of duckplyr is to enable itself for all data frames in the session.
+This happens when the package is attached with `library(duckplyr)`, or by calling `methods_overwrite()`.
+To enable duckplyr for individual data frames instead of session-wide, it is sufficient to prefix all calls to duckplyr functions with `duckplyr::` and not attach the package.
+Alternatively, `methods_restore()` can be called to undo the session-wide overwrite after `library(duckplyr)`.
+
+## External data with explicit qualification
+
+The following example uses `duckplyr::as_duckdb_tibble()` to convert a data frame to a duckplyr frame and to enable duckplyr operation.
+
+```{r}
+lazy <-
+  duckplyr::flights_df() |>
+  duckplyr::as_duckdb_tibble() |>
+  mutate(inflight_delay = arr_delay - dep_delay) |>
+  summarize(
+    .by = c(year, month),
+    mean_inflight_delay = mean(inflight_delay, na.rm = TRUE),
+    median_inflight_delay = median(inflight_delay, na.rm = TRUE),
+  ) |>
+  filter(month <= 6)
+```
+
+The result is a tibble, with its own class.
+
+```{r}
+class(lazy)
+
+names(lazy)
+```
+
+DuckDB is responsible for eventually carrying out the operations.
+Despite the filter coming very late in the pipeline, it is applied to the raw data.
+
+```{r}
+lazy |>
+  explain()
+```
+
+All data frame operations are supported.
+Computation happens upon the first request.
+
+```{r}
+lazy$mean_inflight_delay
+```
+
+After the computation has been carried out, the results are preserved and available immediately:
+
+```{r}
+lazy
+```
+
+## Restoring dplyr methods
+
+The same can be achieved by calling `methods_restore()` after `library(duckplyr)`.
+
+```{r}
+library(duckplyr)
+
+methods_restore()
+```
+
+If the input is a plain data frame, duckplyr is not involved.
+
+```{r error = TRUE}
+flights_df() |>
+  mutate(inflight_delay = arr_delay - dep_delay) |>
+  explain()
+```
+
+
+## Own data
+
+Construct duckplyr frames directly with `duckdb_tibble()`:
+
+```{r}
+data <- duckdb_tibble(
+  x = 1:3,
+  y = 5,
+  z = letters[1:3]
+)
+data
+```
+
+
+## In other packages
+
+Like other dependencies, duckplyr must be declared in the `DESCRIPTION` file and optionally imported in the `NAMESPACE` file.
+Because duckplyr does not import dplyr, it is necessary to import both packages.
+The recipe below shows how to achieve this with the usethis package.
+
+- Add dplyr as a dependency with `usethis::use_package("dplyr")`
+- Add duckplyr as a dependency with `usethis::use_package("duckplyr")`
+- In your code, use a pattern like `data |> duckplyr::as_duckdb_tibble() |> dplyr::filter(...)`
+- To avoid the package prefix and simply write `as_duckdb_tibble()` or `filter()`:
+    - Import the duckplyr function with `usethis::use_import_from("duckplyr", "as_duckdb_tibble")`
+    - Import the dplyr function with `usethis::use_import_from("dplyr", "filter")`
+
+Learn more about prudence in `vignette("prudence")`, about fallbacks to dplyr in `vignette("fallback")`, about the translation employed by duckplyr in `vignette("limits")`, about direct use of DuckDB functions in `vignette("duckdb")`, and about the usethis package at <https://usethis.r-lib.org/>.

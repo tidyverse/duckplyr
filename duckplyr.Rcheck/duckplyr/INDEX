@@ -1,0 +1,51 @@
+anti_join.duckplyr_df   Anti join
+arrange.duckplyr_df     Order rows using column values
+as_tbl                  Convert a duckplyr frame to a dbplyr table
+collect.duckplyr_df     Force conversion to a data frame
+compute.duckplyr_df     Compute results
+compute_csv             Compute results to a CSV file
+compute_parquet         Compute results to a Parquet file
+config                  Configuration options
+count.duckplyr_df       Count the observations in each group
+db_exec                 Execute a statement for the default connection
+distinct.duckplyr_df    Keep distinct/unique rows
+duckdb_tibble           duckplyr data frames
+explain.duckplyr_df     Explain details of a tbl
+fallback                Fallback to dplyr
+filter.duckplyr_df      Keep rows that match a condition
+flights_df              Flight data
+full_join.duckplyr_df   Full join
+head.duckplyr_df        Return the First Parts of an Object
+inner_join.duckplyr_df
+                        Inner join
+intersect.duckplyr_df   Intersect
+last_rel                Retrieve details about the most recent
+                        computation
+left_join.duckplyr_df   Left join
+methods_overwrite       Forward all dplyr methods to duckplyr
+mutate.duckplyr_df      Create, modify, and delete columns
+new_relational          Relational implementer's interface
+new_relexpr             Relational expressions
+pull.duckplyr_df        Extract a single column
+read_csv_duckdb         Read CSV files using DuckDB
+read_file_duckdb        Read files using DuckDB
+read_json_duckdb        Read JSON files using DuckDB
+read_parquet_duckdb     Read Parquet files using DuckDB
+read_sql_duckdb         Return SQL query as duckdb_tibble
+relocate.duckplyr_df    Change column order
+rename.duckplyr_df      Rename columns
+right_join.duckplyr_df
+                        Right join
+select.duckplyr_df      Keep or drop columns using their names and
+                        types
+semi_join.duckplyr_df   Semi join
+setdiff.duckplyr_df     Set difference
+slice_head.duckplyr_df
+                        Subset rows using their positions
+stats_show              Show stats
+summarise.duckplyr_df   Summarise each group down to one row
+symdiff.duckplyr_df     Symmetric difference
+transmute.duckplyr_df   Create, modify, and delete columns
+union.duckplyr_df       Union
+union_all.duckplyr_df   Union of all
+unsupported             Verbs not implemented in duckplyr
