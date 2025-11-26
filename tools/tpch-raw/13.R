@@ -2,7 +2,6 @@ qloadm("tools/tpch/001.qs")
 duckdb <- asNamespace("duckdb")
 drv <- duckdb::duckdb()
 con <- DBI::dbConnect(drv)
-experimental <- FALSE
 invisible(DBI::dbExecute(con, 'CREATE MACRO "!"(x) AS (NOT x)'))
 invisible(
   DBI::dbExecute(
@@ -22,7 +21,7 @@ invisible(DBI::dbExecute(con, 'CREATE MACRO "is.na"(x) AS (x IS NULL)'))
 invisible(DBI::dbExecute(con, 'CREATE MACRO "n"() AS CAST(COUNT(*) AS int32)'))
 df1 <- orders
 "filter"
-rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+rel1 <- duckdb$rel_from_df(con, df1)
 "filter"
 rel2 <- duckdb$rel_filter(
   rel1,
@@ -32,14 +31,7 @@ rel2 <- duckdb$rel_filter(
       list(
         duckdb$expr_function(
           "grepl",
-          list(
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant("special.*?requests", experimental = experimental)
-            } else {
-              duckdb$expr_constant("special.*?requests")
-            },
-            duckdb$expr_reference("o_comment")
-          )
+          list(duckdb$expr_constant("special.*?requests"), duckdb$expr_reference("o_comment"))
         )
       )
     )
@@ -47,7 +39,7 @@ rel2 <- duckdb$rel_filter(
 )
 df2 <- customer
 "left_join"
-rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+rel3 <- duckdb$rel_from_df(con, df2)
 "left_join"
 rel4 <- duckdb$rel_set_alias(rel3, "lhs")
 "left_join"
@@ -164,19 +156,7 @@ rel8 <- duckdb$rel_aggregate(
         list(
           duckdb$expr_function(
             "if_else",
-            list(
-              duckdb$expr_function("is.na", list(duckdb$expr_reference("o_orderkey"))),
-              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                duckdb$expr_constant(0L, experimental = experimental)
-              } else {
-                duckdb$expr_constant(0L)
-              },
-              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                duckdb$expr_constant(1L, experimental = experimental)
-              } else {
-                duckdb$expr_constant(1L)
-              }
-            )
+            list(duckdb$expr_function("is.na", list(duckdb$expr_reference("o_orderkey"))), duckdb$expr_constant(0L), duckdb$expr_constant(1L))
           )
         )
       )

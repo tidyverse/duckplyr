@@ -9,6 +9,16 @@ macro_cache <- collections::dict()
 df_cache <- collections::dict()
 rel_cache <- collections::dict()
 
+meta_reset <- function() {
+  call_stack$clear()
+  pre_code_cache$clear()
+  code_cache$clear()
+  ext_cache$clear()
+  macro_cache$clear()
+  df_cache$clear()
+  rel_cache$clear()
+}
+
 meta_call <- function(name) {
   name <- gsub("[.].*$", "", name)
   meta_call_start(name)
@@ -54,8 +64,7 @@ meta_replay <- function(add_pre_code = TRUE) {
     con_exprs <- list(
       expr(duckdb <- asNamespace("duckdb")),
       expr(drv <- duckdb::duckdb()),
-      expr(con <- DBI::dbConnect(drv)),
-      expr(experimental <- !!(Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE"))
+      expr(con <- DBI::dbConnect(drv))
     )
     con_code <- map(con_exprs, constructive::deparse_call)
     pre_code <- c(
@@ -209,7 +218,7 @@ meta_df_register <- function(df) {
 meta_rel_register_df <- function(rel, df) {
   df_name <- meta_df_register(df)
   # Expect experimental argument from outside
-  rel_expr <- expr(duckdb$rel_from_df(con, !!df_name, experimental = experimental))
+  rel_expr <- expr(duckdb$rel_from_df(con, !!df_name))
   meta_rel_register(rel, rel_expr)
 }
 
@@ -235,7 +244,7 @@ meta_rel_register <- function(rel, rel_expr) {
   # https://github.com/cynkra/constructive/issues/102
   meta_record(constructive::deparse_call(expr(!!name <- !!rel_expr)))
 
-  obj <- list(rel = rel, name = name, df = df)
+  obj <- list(rel = rel, name = name)
   hash <- deparse(rel)
 
   rel_cache$set(hash, obj)

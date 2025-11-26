@@ -24,12 +24,12 @@ duckplyr_macros <- c(
   # https://github.com/duckdb/duckdb-r/pull/156
   "___null" = "() AS CAST(NULL AS BOOLEAN)",
   #
-  "<" = '(x, y) AS (x < y)',
-  "<=" = '(x, y) AS (x <= y)',
-  ">" = '(x, y) AS (x > y)',
-  ">=" = '(x, y) AS (x >= y)',
-  "==" = '(x, y) AS (x == y)',
-  "!=" = '(x, y) AS (x != y)',
+  "<" = "(x, y) AS (x < y)",
+  "<=" = "(x, y) AS (x <= y)",
+  ">" = "(x, y) AS (x > y)",
+  ">=" = "(x, y) AS (x >= y)",
+  "==" = "(x, y) AS (x == y)",
+  "!=" = "(x, y) AS (x != y)",
   #
   "___divide" = "(x, y) AS CASE WHEN y = 0 THEN CASE WHEN x = 0 THEN CAST('NaN' AS double) WHEN x > 0 THEN CAST('+Infinity' AS double) ELSE CAST('-Infinity' AS double) END ELSE CAST(x AS double) / y END",
   #
@@ -50,7 +50,6 @@ duckplyr_macros <- c(
   "|" = "(x, y) AS (x OR y)",
   "&" = "(x, y) AS (x AND y)",
   "!" = "(x) AS (NOT x)",
-  "n_distinct" = "(x) AS (COUNT(DISTINCT x))",
   #
   "wday" = "(x) AS CAST(weekday(CAST (x AS DATE)) + 1 AS int32)",
   #
@@ -68,6 +67,10 @@ duckplyr_macros <- c(
   "___mean_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE AVG(x) END)",
   "___sd_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE STDDEV(x) END)",
   "___median_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE percentile_cont(0.5) WITHIN GROUP (ORDER BY x) END)",
+  #
+  # In n_distinct() many NAs count as 1 if not filtered out with na.rm = TRUE
+  "___n_distinct_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN (COUNT(DISTINCT x)+1) ELSE COUNT(DISTINCT x) END)",
+  "___n_distinct" = "(x) AS (COUNT(DISTINCT x))",
   #
   NULL
 )
@@ -174,8 +177,7 @@ check_df_for_rel <- function(df, call = caller_env()) {
 
   # FIXME: For some other reason, it seems crucial to assign the result to a
   # variable before returning it
-  experimental <- (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE")
-  out <- duckdb$rel_from_df(con, df, experimental = experimental)
+  out <- duckdb$rel_from_df(con, df)
 
   roundtrip <- duckdb$rapi_rel_to_altrep(out)
   if (Sys.getenv("DUCKPLYR_CHECK_ROUNDTRIP") == "TRUE") {
@@ -209,13 +211,13 @@ vec_ptype_safe <- function(x) {
 }
 
 #' @export
-rel_to_df.duckdb_relation <- function(rel, ..., prudence = NULL) {
+rel_to_df.duckdb_relation <- function(rel, ..., prudence = NULL, remote = FALSE) {
   if (is.null(prudence)) {
     cli::cli_abort("Argument {.arg {prudence}} is missing.")
   }
 
   # Same code in new_duckdb_tibble(), to avoid recursion there
-  prudence_parsed <- prudence_parse(prudence)
+  prudence_parsed <- prudence_parse(prudence, remote)
   out <- duckdb$rel_to_altrep(
     rel,
     n_rows = prudence_parsed$n_rows,
@@ -436,7 +438,7 @@ to_duckdb_expr <- function(x) {
     relational_relexpr_comparison = {
       out <- duckdb$expr_comparison(x$cmp_op, to_duckdb_exprs(x$exprs))
       if (!is.null(x$alias)) {
-          duckdb$expr_set_alias(out, x$alias)
+        duckdb$expr_set_alias(out, x$alias)
       }
       out
     },
@@ -465,12 +467,8 @@ to_duckdb_expr <- function(x) {
       # Example: https://github.com/dschafer/activatr/issues/18
       check_df_for_rel(vctrs::new_data_frame(list(constant = x$val)))
 
-      if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-        experimental <- (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE")
-        out <- duckdb$expr_constant(x$val, experimental = experimental)
-      } else {
-        out <- duckdb$expr_constant(x$val)
-      }
+      out <- duckdb$expr_constant(x$val)
+
       if (!is.null(x$alias)) {
         duckdb$expr_set_alias(out, x$alias)
       }
@@ -543,16 +541,7 @@ to_duckdb_expr_meta <- function(x) {
       out
     },
     relational_relexpr_constant = {
-      out <- expr(
-        # FIXME: always pass experimental flag once it's merged
-        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          # experimental is set at the top,
-          # the sym() gymnastics are to satisfy R CMD check
-          duckdb$expr_constant(!!x$val, experimental = !!sym("experimental"))
-        } else {
-          duckdb$expr_constant(!!x$val)
-        }
-      )
+      out <- expr(duckdb$expr_constant(!!x$val))
 
       if (!is.null(x$alias)) {
         out <- expr({

@@ -40,7 +40,9 @@ Using data frames from the calling environment is not supported yet,
 see \url{https://github.com/duckdb/duckdb-r/issues/645} for details.
 }
 \examples{
+\dontshow{if (getRversion() >= "4.3") withAutoprint(\{ # examplesIf}
 read_sql_duckdb("FROM duckdb_settings()")
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=db_exec]{db_exec()}}

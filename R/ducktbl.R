@@ -55,12 +55,6 @@
 duckdb_tibble <- function(..., .prudence = c("lavish", "thrifty", "stingy")) {
   out <- tibble::tibble(...)
 
-  # Side effect: check compatibility
-  # No telemetry, this doesn't seem to be useful data
-  # (and conflicts with test-telemetry.R)
-  # FIXME: May be handled by other methods
-  check_df_for_rel(out)
-
   new_duckdb_tibble(out, class(out), prudence = .prudence, adjust_prudence = TRUE)
 }
 

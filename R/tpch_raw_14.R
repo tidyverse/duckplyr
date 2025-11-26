@@ -3,32 +3,18 @@
 tpch_raw_14 <- function(con, experimental) {
   df1 <- lineitem
   "filter"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "filter"
   rel2 <- duckdb$rel_filter(
     rel1,
     list(
       duckdb$expr_comparison(
         ">=",
-        list(
-          duckdb$expr_reference("l_shipdate"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(as.Date("1995-09-01"), experimental = experimental)
-          } else {
-            duckdb$expr_constant(as.Date("1995-09-01"))
-          }
-        )
+        list(duckdb$expr_reference("l_shipdate"), duckdb$expr_constant(as.Date("1995-09-01")))
       ),
       duckdb$expr_comparison(
         "<",
-        list(
-          duckdb$expr_reference("l_shipdate"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(as.Date("1995-10-01"), experimental = experimental)
-          } else {
-            duckdb$expr_constant(as.Date("1995-10-01"))
-          }
-        )
+        list(duckdb$expr_reference("l_shipdate"), duckdb$expr_constant(as.Date("1995-10-01")))
       )
     )
   )
@@ -36,7 +22,7 @@ tpch_raw_14 <- function(con, experimental) {
   rel3 <- duckdb$rel_set_alias(rel2, "lhs")
   df2 <- part
   "inner_join"
-  rel4 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel4 <- duckdb$rel_from_df(con, df2)
   "inner_join"
   rel5 <- duckdb$rel_set_alias(rel4, "rhs")
   "inner_join"
@@ -192,50 +178,22 @@ tpch_raw_14 <- function(con, experimental) {
             duckdb$expr_function(
               "*",
               list(
-                if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                  duckdb$expr_constant(100, experimental = experimental)
-                } else {
-                  duckdb$expr_constant(100)
-                },
+                duckdb$expr_constant(100),
                 duckdb$expr_function(
                   "sum",
                   list(
                     duckdb$expr_function(
                       "if_else",
                       list(
-                        duckdb$expr_function(
-                          "grepl",
-                          list(
-                            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                              duckdb$expr_constant("^PROMO", experimental = experimental)
-                            } else {
-                              duckdb$expr_constant("^PROMO")
-                            },
-                            duckdb$expr_reference("p_type")
-                          )
-                        ),
+                        duckdb$expr_function("grepl", list(duckdb$expr_constant("^PROMO"), duckdb$expr_reference("p_type"))),
                         duckdb$expr_function(
                           "*",
                           list(
                             duckdb$expr_reference("l_extendedprice"),
-                            duckdb$expr_function(
-                              "-",
-                              list(
-                                if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                  duckdb$expr_constant(1, experimental = experimental)
-                                } else {
-                                  duckdb$expr_constant(1)
-                                },
-                                duckdb$expr_reference("l_discount")
-                              )
-                            )
+                            duckdb$expr_function("-", list(duckdb$expr_constant(1), duckdb$expr_reference("l_discount")))
                           )
                         ),
-                        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                          duckdb$expr_constant(0, experimental = experimental)
-                        } else {
-                          duckdb$expr_constant(0)
-                        }
+                        duckdb$expr_constant(0)
                       )
                     )
                   )
@@ -249,17 +207,7 @@ tpch_raw_14 <- function(con, experimental) {
                   "*",
                   list(
                     duckdb$expr_reference("l_extendedprice"),
-                    duckdb$expr_function(
-                      "-",
-                      list(
-                        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                          duckdb$expr_constant(1, experimental = experimental)
-                        } else {
-                          duckdb$expr_constant(1)
-                        },
-                        duckdb$expr_reference("l_discount")
-                      )
-                    )
+                    duckdb$expr_function("-", list(duckdb$expr_constant(1), duckdb$expr_reference("l_discount")))
                   )
                 )
               )

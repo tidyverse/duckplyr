@@ -47,7 +47,7 @@ For all functions used in dplyr verbs, translations must be provided.
 The code lives in `translate.R` .
 New translations must change code in two places:
 
-1. The `switch()` in `rel_find_call()` needs a new entry, paired with the name of the package that is home to the function.
+1. The `switch()` in `rel_find_packages()` needs a new entry, paired with the name of the package that is home to the function.
     The top 60 functions, ranked by importance, are already part of that `switch()`, as a comment if they are not implemented yet.
     Example: For adding `lubridate::month()`, add a line of the following form to the `switch()`:
 

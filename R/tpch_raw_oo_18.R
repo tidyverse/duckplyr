@@ -3,7 +3,7 @@
 tpch_raw_oo_18 <- function(con, experimental) {
   df1 <- lineitem
   "summarise"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "summarise"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -101,7 +101,7 @@ tpch_raw_oo_18 <- function(con, experimental) {
     groups = list(duckdb$expr_reference("l_orderkey")),
     aggregates = list(
       {
-        tmp_expr <- duckdb$expr_function("min", list(duckdb$expr_reference("___row_number")))
+        tmp_expr <- duckdb$expr_function("___min_na", list(duckdb$expr_reference("___row_number")))
         duckdb$expr_set_alias(tmp_expr, "___row_number")
         tmp_expr
       },
@@ -155,17 +155,7 @@ tpch_raw_oo_18 <- function(con, experimental) {
   rel7 <- duckdb$rel_filter(
     rel6,
     list(
-      duckdb$expr_comparison(
-        ">",
-        list(
-          duckdb$expr_reference("sum"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(300, experimental = experimental)
-          } else {
-            duckdb$expr_constant(300)
-          }
-        )
-      )
+      duckdb$expr_comparison(">", list(duckdb$expr_reference("sum"), duckdb$expr_constant(300)))
     )
   )
   "filter"
@@ -188,7 +178,7 @@ tpch_raw_oo_18 <- function(con, experimental) {
   )
   df2 <- orders
   "inner_join"
-  rel10 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel10 <- duckdb$rel_from_df(con, df2)
   "inner_join"
   rel11 <- duckdb$rel_set_alias(rel10, "lhs")
   "inner_join"
@@ -350,7 +340,7 @@ tpch_raw_oo_18 <- function(con, experimental) {
   rel18 <- duckdb$rel_set_alias(rel17, "lhs")
   df3 <- customer
   "inner_join"
-  rel19 <- duckdb$rel_from_df(con, df3, experimental = experimental)
+  rel19 <- duckdb$rel_from_df(con, df3)
   "inner_join"
   rel20 <- duckdb$rel_set_alias(rel19, "rhs")
   "inner_join"
@@ -694,7 +684,7 @@ tpch_raw_oo_18 <- function(con, experimental) {
       }
     )
   )
-  "head"
+  "slice_head"
   rel30 <- duckdb$rel_limit(rel29, 100)
   rel30
   duckdb$rel_to_altrep(rel30)

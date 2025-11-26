@@ -3,12 +3,12 @@
 tpch_raw_19 <- function(con, experimental) {
   df1 <- lineitem
   "inner_join"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "inner_join"
   rel2 <- duckdb$rel_set_alias(rel1, "lhs")
   df2 <- part
   "inner_join"
-  rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel3 <- duckdb$rel_from_df(con, df2)
   "inner_join"
   rel4 <- duckdb$rel_set_alias(rel3, "rhs")
   "inner_join"
@@ -183,17 +183,7 @@ tpch_raw_19 <- function(con, experimental) {
                                       duckdb$expr_function(
                                         "&",
                                         list(
-                                          duckdb$expr_comparison(
-                                            "==",
-                                            list(
-                                              duckdb$expr_reference("p_brand"),
-                                              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                                duckdb$expr_constant("Brand#12", experimental = experimental)
-                                              } else {
-                                                duckdb$expr_constant("Brand#12")
-                                              }
-                                            )
-                                          ),
+                                          duckdb$expr_comparison("==", list(duckdb$expr_reference("p_brand"), duckdb$expr_constant("Brand#12"))),
                                           duckdb$expr_function(
                                             "___coalesce",
                                             list(
@@ -206,125 +196,37 @@ tpch_raw_19 <- function(con, experimental) {
                                                       duckdb$expr_function(
                                                         "|",
                                                         list(
-                                                          duckdb$expr_function(
-                                                            "r_base::==",
-                                                            list(
-                                                              duckdb$expr_reference("p_container"),
-                                                              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                                                duckdb$expr_constant("SM CASE", experimental = experimental)
-                                                              } else {
-                                                                duckdb$expr_constant("SM CASE")
-                                                              }
-                                                            )
-                                                          ),
-                                                          duckdb$expr_function(
-                                                            "r_base::==",
-                                                            list(
-                                                              duckdb$expr_reference("p_container"),
-                                                              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                                                duckdb$expr_constant("SM BOX", experimental = experimental)
-                                                              } else {
-                                                                duckdb$expr_constant("SM BOX")
-                                                              }
-                                                            )
-                                                          )
+                                                          duckdb$expr_function("r_base::==", list(duckdb$expr_reference("p_container"), duckdb$expr_constant("SM CASE"))),
+                                                          duckdb$expr_function("r_base::==", list(duckdb$expr_reference("p_container"), duckdb$expr_constant("SM BOX")))
                                                         )
                                                       ),
-                                                      duckdb$expr_function(
-                                                        "r_base::==",
-                                                        list(
-                                                          duckdb$expr_reference("p_container"),
-                                                          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                                            duckdb$expr_constant("SM PACK", experimental = experimental)
-                                                          } else {
-                                                            duckdb$expr_constant("SM PACK")
-                                                          }
-                                                        )
-                                                      )
+                                                      duckdb$expr_function("r_base::==", list(duckdb$expr_reference("p_container"), duckdb$expr_constant("SM PACK")))
                                                     )
                                                   ),
-                                                  duckdb$expr_function(
-                                                    "r_base::==",
-                                                    list(
-                                                      duckdb$expr_reference("p_container"),
-                                                      if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                                        duckdb$expr_constant("SM PKG", experimental = experimental)
-                                                      } else {
-                                                        duckdb$expr_constant("SM PKG")
-                                                      }
-                                                    )
-                                                  )
+                                                  duckdb$expr_function("r_base::==", list(duckdb$expr_reference("p_container"), duckdb$expr_constant("SM PKG")))
                                                 )
                                               ),
-                                              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                                duckdb$expr_constant(FALSE, experimental = experimental)
-                                              } else {
-                                                duckdb$expr_constant(FALSE)
-                                              }
+                                              duckdb$expr_constant(FALSE)
                                             )
                                           )
                                         )
                                       ),
-                                      duckdb$expr_comparison(
-                                        ">=",
-                                        list(
-                                          duckdb$expr_reference("l_quantity"),
-                                          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                            duckdb$expr_constant(1, experimental = experimental)
-                                          } else {
-                                            duckdb$expr_constant(1)
-                                          }
-                                        )
-                                      )
+                                      duckdb$expr_comparison(">=", list(duckdb$expr_reference("l_quantity"), duckdb$expr_constant(1)))
                                     )
                                   ),
                                   duckdb$expr_function(
                                     "r_base::<=",
                                     list(
                                       duckdb$expr_reference("l_quantity"),
-                                      duckdb$expr_function(
-                                        "+",
-                                        list(
-                                          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                            duckdb$expr_constant(1, experimental = experimental)
-                                          } else {
-                                            duckdb$expr_constant(1)
-                                          },
-                                          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                            duckdb$expr_constant(10, experimental = experimental)
-                                          } else {
-                                            duckdb$expr_constant(10)
-                                          }
-                                        )
-                                      )
+                                      duckdb$expr_function("+", list(duckdb$expr_constant(1), duckdb$expr_constant(10)))
                                     )
                                   )
                                 )
                               ),
-                              duckdb$expr_comparison(
-                                ">=",
-                                list(
-                                  duckdb$expr_reference("p_size"),
-                                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                    duckdb$expr_constant(1, experimental = experimental)
-                                  } else {
-                                    duckdb$expr_constant(1)
-                                  }
-                                )
-                              )
+                              duckdb$expr_comparison(">=", list(duckdb$expr_reference("p_size"), duckdb$expr_constant(1)))
                             )
                           ),
-                          duckdb$expr_comparison(
-                            "<=",
-                            list(
-                              duckdb$expr_reference("p_size"),
-                              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                duckdb$expr_constant(5, experimental = experimental)
-                              } else {
-                                duckdb$expr_constant(5)
-                              }
-                            )
-                          )
+                          duckdb$expr_comparison("<=", list(duckdb$expr_reference("p_size"), duckdb$expr_constant(5)))
                         )
                       ),
                       duckdb$expr_function(
@@ -333,49 +235,18 @@ tpch_raw_19 <- function(con, experimental) {
                           duckdb$expr_function(
                             "|",
                             list(
-                              duckdb$expr_function(
-                                "r_base::==",
-                                list(
-                                  duckdb$expr_reference("l_shipmode"),
-                                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                    duckdb$expr_constant("AIR", experimental = experimental)
-                                  } else {
-                                    duckdb$expr_constant("AIR")
-                                  }
-                                )
-                              ),
-                              duckdb$expr_function(
-                                "r_base::==",
-                                list(
-                                  duckdb$expr_reference("l_shipmode"),
-                                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                    duckdb$expr_constant("AIR REG", experimental = experimental)
-                                  } else {
-                                    duckdb$expr_constant("AIR REG")
-                                  }
-                                )
-                              )
+                              duckdb$expr_function("r_base::==", list(duckdb$expr_reference("l_shipmode"), duckdb$expr_constant("AIR"))),
+                              duckdb$expr_function("r_base::==", list(duckdb$expr_reference("l_shipmode"), duckdb$expr_constant("AIR REG")))
                             )
                           ),
-                          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                            duckdb$expr_constant(FALSE, experimental = experimental)
-                          } else {
-                            duckdb$expr_constant(FALSE)
-                          }
+                          duckdb$expr_constant(FALSE)
                         )
                       )
                     )
                   ),
                   duckdb$expr_comparison(
                     "==",
-                    list(
-                      duckdb$expr_reference("l_shipinstruct"),
-                      if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                        duckdb$expr_constant("DELIVER IN PERSON", experimental = experimental)
-                      } else {
-                        duckdb$expr_constant("DELIVER IN PERSON")
-                      }
-                    )
+                    list(duckdb$expr_reference("l_shipinstruct"), duckdb$expr_constant("DELIVER IN PERSON"))
                   )
                 )
               ),
@@ -400,17 +271,7 @@ tpch_raw_19 <- function(con, experimental) {
                                       duckdb$expr_function(
                                         "&",
                                         list(
-                                          duckdb$expr_comparison(
-                                            "==",
-                                            list(
-                                              duckdb$expr_reference("p_brand"),
-                                              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                                duckdb$expr_constant("Brand#23", experimental = experimental)
-                                              } else {
-                                                duckdb$expr_constant("Brand#23")
-                                              }
-                                            )
-                                          ),
+                                          duckdb$expr_comparison("==", list(duckdb$expr_reference("p_brand"), duckdb$expr_constant("Brand#23"))),
                                           duckdb$expr_function(
                                             "___coalesce",
                                             list(
@@ -423,125 +284,37 @@ tpch_raw_19 <- function(con, experimental) {
                                                       duckdb$expr_function(
                                                         "|",
                                                         list(
-                                                          duckdb$expr_function(
-                                                            "r_base::==",
-                                                            list(
-                                                              duckdb$expr_reference("p_container"),
-                                                              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                                                duckdb$expr_constant("MED BAG", experimental = experimental)
-                                                              } else {
-                                                                duckdb$expr_constant("MED BAG")
-                                                              }
-                                                            )
-                                                          ),
-                                                          duckdb$expr_function(
-                                                            "r_base::==",
-                                                            list(
-                                                              duckdb$expr_reference("p_container"),
-                                                              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                                                duckdb$expr_constant("MED BOX", experimental = experimental)
-                                                              } else {
-                                                                duckdb$expr_constant("MED BOX")
-                                                              }
-                                                            )
-                                                          )
+                                                          duckdb$expr_function("r_base::==", list(duckdb$expr_reference("p_container"), duckdb$expr_constant("MED BAG"))),
+                                                          duckdb$expr_function("r_base::==", list(duckdb$expr_reference("p_container"), duckdb$expr_constant("MED BOX")))
                                                         )
                                                       ),
-                                                      duckdb$expr_function(
-                                                        "r_base::==",
-                                                        list(
-                                                          duckdb$expr_reference("p_container"),
-                                                          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                                            duckdb$expr_constant("MED PKG", experimental = experimental)
-                                                          } else {
-                                                            duckdb$expr_constant("MED PKG")
-                                                          }
-                                                        )
-                                                      )
+                                                      duckdb$expr_function("r_base::==", list(duckdb$expr_reference("p_container"), duckdb$expr_constant("MED PKG")))
                                                     )
                                                   ),
-                                                  duckdb$expr_function(
-                                                    "r_base::==",
-                                                    list(
-                                                      duckdb$expr_reference("p_container"),
-                                                      if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                                        duckdb$expr_constant("MED PACK", experimental = experimental)
-                                                      } else {
-                                                        duckdb$expr_constant("MED PACK")
-                                                      }
-                                                    )
-                                                  )
+                                                  duckdb$expr_function("r_base::==", list(duckdb$expr_reference("p_container"), duckdb$expr_constant("MED PACK")))
                                                 )
                                               ),
-                                              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                                duckdb$expr_constant(FALSE, experimental = experimental)
-                                              } else {
-                                                duckdb$expr_constant(FALSE)
-                                              }
+                                              duckdb$expr_constant(FALSE)
                                             )
                                           )
                                         )
                                       ),
-                                      duckdb$expr_comparison(
-                                        ">=",
-                                        list(
-                                          duckdb$expr_reference("l_quantity"),
-                                          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                            duckdb$expr_constant(10, experimental = experimental)
-                                          } else {
-                                            duckdb$expr_constant(10)
-                                          }
-                                        )
-                                      )
+                                      duckdb$expr_comparison(">=", list(duckdb$expr_reference("l_quantity"), duckdb$expr_constant(10)))
                                     )
                                   ),
                                   duckdb$expr_function(
                                     "r_base::<=",
                                     list(
                                       duckdb$expr_reference("l_quantity"),
-                                      duckdb$expr_function(
-                                        "+",
-                                        list(
-                                          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                            duckdb$expr_constant(10, experimental = experimental)
-                                          } else {
-                                            duckdb$expr_constant(10)
-                                          },
-                                          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                            duckdb$expr_constant(10, experimental = experimental)
-                                          } else {
-                                            duckdb$expr_constant(10)
-                                          }
-                                        )
-                                      )
+                                      duckdb$expr_function("+", list(duckdb$expr_constant(10), duckdb$expr_constant(10)))
                                     )
                                   )
                                 )
                               ),
-                              duckdb$expr_comparison(
-                                ">=",
-                                list(
-                                  duckdb$expr_reference("p_size"),
-                                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                    duckdb$expr_constant(1, experimental = experimental)
-                                  } else {
-                                    duckdb$expr_constant(1)
-                                  }
-                                )
-                              )
+                              duckdb$expr_comparison(">=", list(duckdb$expr_reference("p_size"), duckdb$expr_constant(1)))
                             )
                           ),
-                          duckdb$expr_comparison(
-                            "<=",
-                            list(
-                              duckdb$expr_reference("p_size"),
-                              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                duckdb$expr_constant(10, experimental = experimental)
-                              } else {
-                                duckdb$expr_constant(10)
-                              }
-                            )
-                          )
+                          duckdb$expr_comparison("<=", list(duckdb$expr_reference("p_size"), duckdb$expr_constant(10)))
                         )
                       ),
                       duckdb$expr_function(
@@ -550,49 +323,18 @@ tpch_raw_19 <- function(con, experimental) {
                           duckdb$expr_function(
                             "|",
                             list(
-                              duckdb$expr_function(
-                                "r_base::==",
-                                list(
-                                  duckdb$expr_reference("l_shipmode"),
-                                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                    duckdb$expr_constant("AIR", experimental = experimental)
-                                  } else {
-                                    duckdb$expr_constant("AIR")
-                                  }
-                                )
-                              ),
-                              duckdb$expr_function(
-                                "r_base::==",
-                                list(
-                                  duckdb$expr_reference("l_shipmode"),
-                                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                    duckdb$expr_constant("AIR REG", experimental = experimental)
-                                  } else {
-                                    duckdb$expr_constant("AIR REG")
-                                  }
-                                )
-                              )
+                              duckdb$expr_function("r_base::==", list(duckdb$expr_reference("l_shipmode"), duckdb$expr_constant("AIR"))),
+                              duckdb$expr_function("r_base::==", list(duckdb$expr_reference("l_shipmode"), duckdb$expr_constant("AIR REG")))
                             )
                           ),
-                          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                            duckdb$expr_constant(FALSE, experimental = experimental)
-                          } else {
-                            duckdb$expr_constant(FALSE)
-                          }
+                          duckdb$expr_constant(FALSE)
                         )
                       )
                     )
                   ),
                   duckdb$expr_comparison(
                     "==",
-                    list(
-                      duckdb$expr_reference("l_shipinstruct"),
-                      if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                        duckdb$expr_constant("DELIVER IN PERSON", experimental = experimental)
-                      } else {
-                        duckdb$expr_constant("DELIVER IN PERSON")
-                      }
-                    )
+                    list(duckdb$expr_reference("l_shipinstruct"), duckdb$expr_constant("DELIVER IN PERSON"))
                   )
                 )
               )
@@ -619,17 +361,7 @@ tpch_raw_19 <- function(con, experimental) {
                                   duckdb$expr_function(
                                     "&",
                                     list(
-                                      duckdb$expr_comparison(
-                                        "==",
-                                        list(
-                                          duckdb$expr_reference("p_brand"),
-                                          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                            duckdb$expr_constant("Brand#34", experimental = experimental)
-                                          } else {
-                                            duckdb$expr_constant("Brand#34")
-                                          }
-                                        )
-                                      ),
+                                      duckdb$expr_comparison("==", list(duckdb$expr_reference("p_brand"), duckdb$expr_constant("Brand#34"))),
                                       duckdb$expr_function(
                                         "___coalesce",
                                         list(
@@ -642,125 +374,37 @@ tpch_raw_19 <- function(con, experimental) {
                                                   duckdb$expr_function(
                                                     "|",
                                                     list(
-                                                      duckdb$expr_function(
-                                                        "r_base::==",
-                                                        list(
-                                                          duckdb$expr_reference("p_container"),
-                                                          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                                            duckdb$expr_constant("LG CASE", experimental = experimental)
-                                                          } else {
-                                                            duckdb$expr_constant("LG CASE")
-                                                          }
-                                                        )
-                                                      ),
-                                                      duckdb$expr_function(
-                                                        "r_base::==",
-                                                        list(
-                                                          duckdb$expr_reference("p_container"),
-                                                          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                                            duckdb$expr_constant("LG BOX", experimental = experimental)
-                                                          } else {
-                                                            duckdb$expr_constant("LG BOX")
-                                                          }
-                                                        )
-                                                      )
+                                                      duckdb$expr_function("r_base::==", list(duckdb$expr_reference("p_container"), duckdb$expr_constant("LG CASE"))),
+                                                      duckdb$expr_function("r_base::==", list(duckdb$expr_reference("p_container"), duckdb$expr_constant("LG BOX")))
                                                     )
                                                   ),
-                                                  duckdb$expr_function(
-                                                    "r_base::==",
-                                                    list(
-                                                      duckdb$expr_reference("p_container"),
-                                                      if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                                        duckdb$expr_constant("LG PACK", experimental = experimental)
-                                                      } else {
-                                                        duckdb$expr_constant("LG PACK")
-                                                      }
-                                                    )
-                                                  )
+                                                  duckdb$expr_function("r_base::==", list(duckdb$expr_reference("p_container"), duckdb$expr_constant("LG PACK")))
                                                 )
                                               ),
-                                              duckdb$expr_function(
-                                                "r_base::==",
-                                                list(
-                                                  duckdb$expr_reference("p_container"),
-                                                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                                    duckdb$expr_constant("LG PKG", experimental = experimental)
-                                                  } else {
-                                                    duckdb$expr_constant("LG PKG")
-                                                  }
-                                                )
-                                              )
+                                              duckdb$expr_function("r_base::==", list(duckdb$expr_reference("p_container"), duckdb$expr_constant("LG PKG")))
                                             )
                                           ),
-                                          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                            duckdb$expr_constant(FALSE, experimental = experimental)
-                                          } else {
-                                            duckdb$expr_constant(FALSE)
-                                          }
+                                          duckdb$expr_constant(FALSE)
                                         )
                                       )
                                     )
                                   ),
-                                  duckdb$expr_comparison(
-                                    ">=",
-                                    list(
-                                      duckdb$expr_reference("l_quantity"),
-                                      if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                        duckdb$expr_constant(20, experimental = experimental)
-                                      } else {
-                                        duckdb$expr_constant(20)
-                                      }
-                                    )
-                                  )
+                                  duckdb$expr_comparison(">=", list(duckdb$expr_reference("l_quantity"), duckdb$expr_constant(20)))
                                 )
                               ),
                               duckdb$expr_function(
                                 "r_base::<=",
                                 list(
                                   duckdb$expr_reference("l_quantity"),
-                                  duckdb$expr_function(
-                                    "+",
-                                    list(
-                                      if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                        duckdb$expr_constant(20, experimental = experimental)
-                                      } else {
-                                        duckdb$expr_constant(20)
-                                      },
-                                      if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                        duckdb$expr_constant(10, experimental = experimental)
-                                      } else {
-                                        duckdb$expr_constant(10)
-                                      }
-                                    )
-                                  )
+                                  duckdb$expr_function("+", list(duckdb$expr_constant(20), duckdb$expr_constant(10)))
                                 )
                               )
                             )
                           ),
-                          duckdb$expr_comparison(
-                            ">=",
-                            list(
-                              duckdb$expr_reference("p_size"),
-                              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                duckdb$expr_constant(1, experimental = experimental)
-                              } else {
-                                duckdb$expr_constant(1)
-                              }
-                            )
-                          )
+                          duckdb$expr_comparison(">=", list(duckdb$expr_reference("p_size"), duckdb$expr_constant(1)))
                         )
                       ),
-                      duckdb$expr_comparison(
-                        "<=",
-                        list(
-                          duckdb$expr_reference("p_size"),
-                          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                            duckdb$expr_constant(15, experimental = experimental)
-                          } else {
-                            duckdb$expr_constant(15)
-                          }
-                        )
-                      )
+                      duckdb$expr_comparison("<=", list(duckdb$expr_reference("p_size"), duckdb$expr_constant(15)))
                     )
                   ),
                   duckdb$expr_function(
@@ -769,49 +413,18 @@ tpch_raw_19 <- function(con, experimental) {
                       duckdb$expr_function(
                         "|",
                         list(
-                          duckdb$expr_function(
-                            "r_base::==",
-                            list(
-                              duckdb$expr_reference("l_shipmode"),
-                              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                duckdb$expr_constant("AIR", experimental = experimental)
-                              } else {
-                                duckdb$expr_constant("AIR")
-                              }
-                            )
-                          ),
-                          duckdb$expr_function(
-                            "r_base::==",
-                            list(
-                              duckdb$expr_reference("l_shipmode"),
-                              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                                duckdb$expr_constant("AIR REG", experimental = experimental)
-                              } else {
-                                duckdb$expr_constant("AIR REG")
-                              }
-                            )
-                          )
+                          duckdb$expr_function("r_base::==", list(duckdb$expr_reference("l_shipmode"), duckdb$expr_constant("AIR"))),
+                          duckdb$expr_function("r_base::==", list(duckdb$expr_reference("l_shipmode"), duckdb$expr_constant("AIR REG")))
                         )
                       ),
-                      if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                        duckdb$expr_constant(FALSE, experimental = experimental)
-                      } else {
-                        duckdb$expr_constant(FALSE)
-                      }
+                      duckdb$expr_constant(FALSE)
                     )
                   )
                 )
               ),
               duckdb$expr_comparison(
                 "==",
-                list(
-                  duckdb$expr_reference("l_shipinstruct"),
-                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                    duckdb$expr_constant("DELIVER IN PERSON", experimental = experimental)
-                  } else {
-                    duckdb$expr_constant("DELIVER IN PERSON")
-                  }
-                )
+                list(duckdb$expr_reference("l_shipinstruct"), duckdb$expr_constant("DELIVER IN PERSON"))
               )
             )
           )
@@ -832,17 +445,7 @@ tpch_raw_19 <- function(con, experimental) {
               "*",
               list(
                 duckdb$expr_reference("l_extendedprice"),
-                duckdb$expr_function(
-                  "-",
-                  list(
-                    if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                      duckdb$expr_constant(1, experimental = experimental)
-                    } else {
-                      duckdb$expr_constant(1)
-                    },
-                    duckdb$expr_reference("l_discount")
-                  )
-                )
+                duckdb$expr_function("-", list(duckdb$expr_constant(1), duckdb$expr_reference("l_discount")))
               )
             )
           )

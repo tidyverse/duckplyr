@@ -3,7 +3,7 @@
 tpch_raw_oo_10 <- function(con, experimental) {
   df1 <- lineitem
   "select"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "select"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -65,17 +65,7 @@ tpch_raw_oo_10 <- function(con, experimental) {
   rel4 <- duckdb$rel_filter(
     rel3,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("l_returnflag"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant("R", experimental = experimental)
-          } else {
-            duckdb$expr_constant("R")
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("l_returnflag"), duckdb$expr_constant("R")))
     )
   )
   "filter"
@@ -129,7 +119,7 @@ tpch_raw_oo_10 <- function(con, experimental) {
   )
   df2 <- orders
   "select"
-  rel8 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel8 <- duckdb$rel_from_df(con, df2)
   "select"
   rel9 <- duckdb$rel_project(
     rel8,
@@ -183,25 +173,11 @@ tpch_raw_oo_10 <- function(con, experimental) {
     list(
       duckdb$expr_comparison(
         ">=",
-        list(
-          duckdb$expr_reference("o_orderdate"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(as.Date("1993-10-01"), experimental = experimental)
-          } else {
-            duckdb$expr_constant(as.Date("1993-10-01"))
-          }
-        )
+        list(duckdb$expr_reference("o_orderdate"), duckdb$expr_constant(as.Date("1993-10-01")))
       ),
       duckdb$expr_comparison(
         "<",
-        list(
-          duckdb$expr_reference("o_orderdate"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(as.Date("1994-01-01"), experimental = experimental)
-          } else {
-            duckdb$expr_constant(as.Date("1994-01-01"))
-          }
-        )
+        list(duckdb$expr_reference("o_orderdate"), duckdb$expr_constant(as.Date("1994-01-01")))
       )
     )
   )
@@ -386,17 +362,7 @@ tpch_raw_oo_10 <- function(con, experimental) {
           "*",
           list(
             duckdb$expr_reference("l_extendedprice"),
-            duckdb$expr_function(
-              "-",
-              list(
-                if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                  duckdb$expr_constant(1, experimental = experimental)
-                } else {
-                  duckdb$expr_constant(1)
-                },
-                duckdb$expr_reference("l_discount")
-              )
-            )
+            duckdb$expr_function("-", list(duckdb$expr_constant(1), duckdb$expr_reference("l_discount")))
           )
         )
         duckdb$expr_set_alias(tmp_expr, "volume")
@@ -441,7 +407,7 @@ tpch_raw_oo_10 <- function(con, experimental) {
     groups = list(duckdb$expr_reference("o_custkey")),
     aggregates = list(
       {
-        tmp_expr <- duckdb$expr_function("min", list(duckdb$expr_reference("___row_number")))
+        tmp_expr <- duckdb$expr_function("___min_na", list(duckdb$expr_reference("___row_number")))
         duckdb$expr_set_alias(tmp_expr, "___row_number")
         tmp_expr
       },
@@ -472,7 +438,7 @@ tpch_raw_oo_10 <- function(con, experimental) {
   )
   df3 <- customer
   "select"
-  rel28 <- duckdb$rel_from_df(con, df3, experimental = experimental)
+  rel28 <- duckdb$rel_from_df(con, df3)
   "select"
   rel29 <- duckdb$rel_project(
     rel28,
@@ -653,7 +619,7 @@ tpch_raw_oo_10 <- function(con, experimental) {
   )
   df4 <- nation
   "select"
-  rel37 <- duckdb$rel_from_df(con, df4, experimental = experimental)
+  rel37 <- duckdb$rel_from_df(con, df4)
   "select"
   rel38 <- duckdb$rel_project(
     rel37,
@@ -962,7 +928,7 @@ tpch_raw_oo_10 <- function(con, experimental) {
       }
     )
   )
-  "head"
+  "slice_head"
   rel50 <- duckdb$rel_limit(rel49, 20)
   rel50
   duckdb$rel_to_altrep(rel50)
