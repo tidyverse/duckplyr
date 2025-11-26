@@ -45,5 +45,7 @@ compute_parquet <- function(x, path, ..., prudence = NULL, options = NULL) {
     path <- file.path(path, "**", "**.parquet")
   }
 
-  read_parquet_duckdb(path, prudence = prudence)
+  # Filter out write-only options before reading
+  read_options <- options[setdiff(names(options), "partition_by")]
+  read_parquet_duckdb(path, prudence = prudence, options = read_options)
 }
