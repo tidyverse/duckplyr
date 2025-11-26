@@ -33,7 +33,6 @@
 #' - [rows_upsert()]
 #' - [rowwise()]
 #' - [setequal()]
-#' - [slice_head()]
 #' - [slice_sample()]
 #' - [slice_tail()]
 #' - [slice()]

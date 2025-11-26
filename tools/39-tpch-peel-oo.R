@@ -1,21 +1,16 @@
+withr::local_envvar(DUCKPLYR_META_ENABLE = TRUE)
 pkgload::load_all()
 
 withr::local_envvar(DUCKPLYR_FORCE = TRUE)
-# Don't care
-# withr::local_envvar(DUCKPLYR_EXPERIMENTAL = FALSE)
 withr::local_envvar(DUCKPLYR_META_GLOBAL = TRUE)
 withr::local_envvar(DUCKPLYR_OUTPUT_ORDER = TRUE)
 
 qloadm("tools/tpch/001.qs")
 
-customer <- as_duckdb_tibble(customer)
-lineitem <- as_duckdb_tibble(lineitem)
-nation <- as_duckdb_tibble(nation)
-orders <- as_duckdb_tibble(orders)
-part <- as_duckdb_tibble(part)
-partsupp <- as_duckdb_tibble(partsupp)
-region <- as_duckdb_tibble(region)
-supplier <- as_duckdb_tibble(supplier)
+methods_overwrite()
+withr::defer(methods_restore())
+
+meta_clear()
 
 invisible(tpch_01())
 meta_replay_to_file("tools/tpch-raw-oo/01.R", 'qloadm("tools/tpch/001.qs")')

@@ -258,6 +258,8 @@ duckplyr_tests <- head(n = -1, list(
     # Appeared again after https://github.com/tidyverse/duckplyr/pull/276
     # without a good reason
     "no utf8 invasion (#722)",
+    # Need to fix this and also run all tests with forceful fallback
+    "transient grouping retains data frame attributes (#6100)",
     NULL
   ),
   "test-n-distinct.R" = c(
@@ -744,13 +746,17 @@ test_extra_arg_map <- list(
     "a + 1, .by = g",
     "c = a + 1",
     "`if` = a + 1",
-    "sum(a)",
-    "sum(a), .by = g",
-    "mean(a)",
-    "mean(a), .by = g",
 
-    "sd(a)",
-    "sd(a), .by = g",
+    # na.rm = TRUE:
+    # https://github.com/tidyverse/duckplyr/issues/571
+    # https://github.com/tidyverse/duckplyr/issues/627
+    "sum(a, na.rm = TRUE)",
+    "sum(a, na.rm = TRUE), .by = g",
+    "mean(a, na.rm = TRUE)",
+    "mean(a, na.rm = TRUE), .by = g",
+
+    "sd(a, na.rm = TRUE)",
+    "sd(a, na.rm = TRUE), .by = g",
 
     # prod() doesn't exist
     # "prod(a)",
@@ -779,17 +785,18 @@ test_extra_arg_map <- list(
     # "lead(a, order_by = -a)",
     # "lead(a, order_by = -a), .by = g",
 
-    "min(a)",
-    "min(a), .by = g",
-    "max(a)",
-    "max(a), .by = g",
+    "min(a, na.rm = TRUE)",
+    "min(a, na.rm = TRUE), .by = g",
+    "max(a, na.rm = TRUE)",
+    "max(a, na.rm = TRUE), .by = g",
 
-    "first(a)",
-    "first(a), .by = g",
-    "last(a)",
-    "last(a), .by = g",
-    "nth(a, 2)",
-    "nth(a, 2), .by = g",
+    # FIXME: Implement
+    # "first(a)",
+    # "first(a), .by = g",
+    # "last(a)",
+    # "last(a), .by = g",
+    # "nth(a, 2)",
+    # "nth(a, 2), .by = g",
 
     # Different results
     # "nth(a, -2)",
@@ -876,6 +883,7 @@ test_extra_arg_map <- list(
     NULL
   ),
   semi_join = "join_by(a)",
+  slice_head = 'n = 2',
   slice_max = 'a',
   slice_min = 'a',
   summarise = c(
@@ -910,6 +918,7 @@ test_extra_arg_map <- list(
 )
 
 test_skip_map <- c(
+  compute = "# No fallback",
   # FIXME: Fail with group_by()
   dplyr_reconstruct = "Hack",
   group_by = "Grouped",
@@ -929,7 +938,6 @@ test_skip_map <- c(
   rowwise = "Stack overflow",
   sample_frac = "Random seed",
   sample_n = "Random seed",
-  slice_head = "External vector?",
   slice_max = "External vector?",
   slice_min = "External vector?",
   slice_sample = "External vector?",

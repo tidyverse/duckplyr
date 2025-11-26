@@ -28,7 +28,7 @@ If \code{.preserve = FALSE} (the default), the grouping structure
 is recalculated based on the resulting data, otherwise the grouping is kept as is.}
 }
 \description{
-This is a method for the \code{\link[dplyr:select]{dplyr::select()}} generic.
+This is a method for the \code{\link[dplyr:filter]{dplyr::filter()}} generic.
 See "Fallbacks" section for differences in implementation.
 The \code{filter()} function is used to subset a data frame,
 retaining all rows that satisfy your conditions.

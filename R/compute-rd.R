@@ -16,7 +16,7 @@
 #'   intermediate results in DuckDB-managed memory to data frames in R memory.
 #'
 #'   - `"lavish"`: regardless of size,
-#'   - `"frugal"`: never,
+#'   - `"stingy"`: never,
 #'   - `"thrifty"`: up to a maximum size of 1 million cells.
 #'
 #' The default is to inherit from the input.

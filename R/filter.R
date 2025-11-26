@@ -17,7 +17,7 @@ filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
     #'
     #' These features fall back to [dplyr::filter()], see `vignette("fallback")` for details.
     "Can't use relational without filter conditions." = (length(dots) == 0),
-    "{.code filter(by = ...)} not implemented, try {.code mutate(by = ...)} followed by a simple {.code filter()}." = (!quo_is_null(by)), # (length(by$names) > 0),
+    "{.code filter(.by = ...)} not implemented, try {.code mutate(.by = ...)} followed by a simple {.code filter()}." = (!quo_is_null(by)), # (length(by$names) > 0),
     {
       rel <- duckdb_rel_from_df(.data)
       exprs <- rel_translate_dots(dots, .data)
