@@ -110,6 +110,11 @@ reference:
 development:
   mode: auto
 
+news:
+  releases:
+  - text: "Version 1.1.0"
+    href: https://tidyverse.org/blog/2025/06/duckplyr-1-1-0/
+
 authors:
   Hannes Mühleisen:
     href: https://hannes.muehleisen.org/
