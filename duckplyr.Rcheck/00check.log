@@ -1,0 +1,284 @@
+* using log directory ‘/home/runner/work/duckplyr/duckplyr/duckplyr.Rcheck’
+* using R version 4.5.2 (2025-10-31)
+* using platform: x86_64-pc-linux-gnu
+* R was compiled by
+    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+* running under: Ubuntu 24.04.3 LTS
+* using session charset: UTF-8
+* using options ‘--no-manual --as-cran’
+* checking for file ‘duckplyr/DESCRIPTION’ ... OK
+* checking extension type ... Package
+* this is package ‘duckplyr’ version ‘1.1.3.9004’
+* package encoding: UTF-8
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: ‘Kirill Müller <kirill@cynkra.com>’
+
+Found the following (possibly) invalid URLs:
+  URL: https://app.codecov.io/gh/tidyverse/duckplyr
+    From: README.md
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: app.codecov.io
+  URL: https://dbplyr.tidyverse.org/
+    From: inst/doc/prudence.html
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: dbplyr.tidyverse.org
+  URL: https://dplyr.tidyverse.org/
+    From: inst/doc/prudence.html
+          README.md
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: dplyr.tidyverse.org
+  URL: https://dtplyr.tidyverse.org/
+    From: inst/doc/prudence.html
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: dtplyr.tidyverse.org
+  URL: https://duckdb.org/
+    From: README.md
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: duckdb.org
+  URL: https://duckdb.org/2024/04/02/duckplyr.html
+    From: inst/doc/prudence.html
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: duckdb.org
+  URL: https://duckdb.org/docs/configuration/overview.html
+    From: man/db_exec.Rd
+          man/duckplyr_execute.Rd
+          inst/doc/large.html
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: duckdb.org
+  URL: https://duckdb.org/docs/data/overview
+    From: man/df_from_file.Rd
+          man/read_file_duckdb.Rd
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: duckdb.org
+  URL: https://duckdb.org/docs/extensions/httpfs/overview.html
+    From: inst/doc/large.html
+          README.md
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: duckdb.org
+  URL: https://duckdb.org/docs/sql/functions/window_functions.html
+    From: inst/doc/limits.html
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: duckdb.org
+  URL: https://duckdb.org/docs/sql/statements/attach.html
+    From: man/db_exec.Rd
+          inst/doc/large.html
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: duckdb.org
+  URL: https://duckdb.org/docs/sql/statements/copy.html#csv-options
+    From: man/compute_csv.Rd
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: duckdb.org
+  URL: https://duckdb.org/docs/sql/statements/copy.html#parquet-options
+    From: man/compute_parquet.Rd
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: duckdb.org
+  URL: https://duckplyr.tidyverse.org
+    From: DESCRIPTION
+          man/duckplyr-package.Rd
+          README.md
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: duckplyr.tidyverse.org
+  URL: https://duckplyr.tidyverse.org/CODE_OF_CONDUCT
+    From: README.md
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: duckplyr.tidyverse.org
+  URL: https://duckplyr.tidyverse.org/CONTRIBUTING.html#new-translations-for-functions
+    From: inst/doc/limits.html
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: duckplyr.tidyverse.org
+  URL: https://duckplyr.tidyverse.org/CONTRIBUTING.html#support-new-verbs
+    From: man/unsupported.Rd
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: duckplyr.tidyverse.org
+  URL: https://duckplyr.tidyverse.org/articles/developers.html
+    From: README.md
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: duckplyr.tidyverse.org
+  URL: https://duckplyr.tidyverse.org/articles/duckdb.html
+    From: README.md
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: duckplyr.tidyverse.org
+  URL: https://duckplyr.tidyverse.org/articles/fallback.html
+    From: README.md
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: duckplyr.tidyverse.org
+  URL: https://duckplyr.tidyverse.org/articles/large.html
+    From: README.md
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: duckplyr.tidyverse.org
+  URL: https://duckplyr.tidyverse.org/articles/limits.html
+    From: README.md
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: duckplyr.tidyverse.org
+  URL: https://duckplyr.tidyverse.org/articles/prudence.html
+    From: README.md
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: duckplyr.tidyverse.org
+  URL: https://duckplyr.tidyverse.org/articles/telemetry.html
+    From: README.md
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: duckplyr.tidyverse.org
+  URL: https://duckplyr.tidyverse.org/reference/index.html
+    From: inst/doc/limits.html
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: duckplyr.tidyverse.org
+  URL: https://forum.posit.co/
+    From: README.md
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: forum.posit.co
+  URL: https://lifecycle.r-lib.org/articles/stages.html#deprecated
+    From: man/as_duckplyr_df.Rd
+          man/count.duckplyr_df.Rd
+          man/df_from_file.Rd
+          man/duckplyr_execute.Rd
+          man/is_duckplyr_df.Rd
+          man/summarise.duckplyr_df.Rd
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: lifecycle.r-lib.org
+  URL: https://lifecycle.r-lib.org/articles/stages.html#experimental
+    From: man/as_tbl.Rd
+          man/duckdb_tibble.Rd
+          man/filter.duckplyr_df.Rd
+          man/mutate.duckplyr_df.Rd
+          man/read_file_duckdb.Rd
+          man/read_sql_duckdb.Rd
+          man/slice_head.duckplyr_df.Rd
+          man/summarise.duckplyr_df.Rd
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: lifecycle.r-lib.org
+  URL: https://lifecycle.r-lib.org/articles/stages.html#stable
+    From: README.md
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: lifecycle.r-lib.org
+  URL: https://orcid.org/0000-0001-8552-0029
+    From: man/duckplyr-package.Rd
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: orcid.org
+  URL: https://orcid.org/0000-0002-1416-3412
+    From: man/duckplyr-package.Rd
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: orcid.org
+  URL: https://r4ds.hadley.nz/data-transform
+    From: README.md
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: r4ds.hadley.nz
+  URL: https://ror.org/03wc8by49
+    From: man/duckplyr-package.Rd
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: ror.org
+  URL: https://tidyverse.r-universe.dev/builds
+    From: README.md
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: tidyverse.r-universe.dev
+  URL: https://usethis.r-lib.org/
+    From: inst/doc/developers.html
+    Status: Error
+    Message: libcurl error code 6:
+      	Could not resolve host: usethis.r-lib.org
+
+Found the following (possibly) invalid ORCID iDs:
+  iD: 0000-0001-8552-0029	(from: DESCRIPTION)
+  iD: 0000-0002-1416-3412	(from: DESCRIPTION)
+
+Found the following (possibly) invalid ROR IDs:
+  ID: 03wc8by49	(from: DESCRIPTION)
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking whether package ‘duckplyr’ can be installed ... OK
+* checking package directory ... OK
+* checking for future file timestamps ... OK
+* checking ‘build’ directory ... OK
+* checking DESCRIPTION meta-information ... OK
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking code files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking whether startup messages can be suppressed ... OK
+* checking use of S3 registration ... OK
+* checking dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... [16s/12s] OK
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd line widths ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking installed files from ‘inst/doc’ ... OK
+* checking files in ‘vignettes’ ... OK
+* checking examples ... OK
+* checking for unstated dependencies in ‘tests’ ... WARNING
+Warning: unable to access index for repository https://CRAN.R-project.org/src/contrib:
+  cannot open URL 'https://CRAN.R-project.org/src/contrib/PACKAGES'
+Warning: unable to access index for repository https://bioconductor.org/packages/3.22/bioc/src/contrib:
+  cannot open URL 'https://bioconductor.org/packages/3.22/bioc/src/contrib/PACKAGES'
+Warning: unable to access index for repository https://bioconductor.org/packages/3.22/data/annotation/src/contrib:
+  cannot open URL 'https://bioconductor.org/packages/3.22/data/annotation/src/contrib/PACKAGES'
+Warning: unable to access index for repository https://bioconductor.org/packages/3.22/data/experiment/src/contrib:
+  cannot open URL 'https://bioconductor.org/packages/3.22/data/experiment/src/contrib/PACKAGES'
+'::' or ':::' imports not declared from:
+  ‘dplyrr’ ‘pkg’ ‘somepkg’
+* checking tests ... [90s/89s] OK
+  Running ‘testthat.R’ [89s/89s]
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes ... OK
+* checking re-building of vignette outputs ... [25s/22s] OK
+* checking for non-standard things in the check directory ... OK
+* checking for detritus in the temp directory ... OK
+* checking for new files in some other directories ... OK
+* DONE
+Status: 1 WARNING, 1 NOTE

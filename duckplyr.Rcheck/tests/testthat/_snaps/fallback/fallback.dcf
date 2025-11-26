@@ -1,0 +1,5 @@
+info: TRUE
+logging: 1
+autoupload: 1
+log_dir: /
+verbose: TRUE

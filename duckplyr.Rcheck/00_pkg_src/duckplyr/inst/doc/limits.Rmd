@@ -1,0 +1,411 @@
+---
+title: "Translations"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{20 Translations}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+clean_output <- function(x, options) {
+  x <- gsub("0x[0-9a-f]+", "0xdeadbeef", x)
+  x <- gsub("dataframe_[0-9]*_[0-9]*", "      dataframe_42_42      ", x)
+  x <- gsub("[0-9]*\\.___row_number ASC", "42.___row_number ASC", x)
+  x <- gsub("─", "-", x)
+  x
+}
+
+local({
+  hook_source <- knitr::knit_hooks$get("document")
+  knitr::knit_hooks$set(document = clean_output)
+})
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  eval = identical(Sys.getenv("IN_PKGDOWN"), "true") || (getRversion() >= "4.1" && rlang::is_installed(c("conflicted", "nycflights13", "lubridate"))),
+  comment = "#>"
+)
+
+Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
+```
+
+This article describes the translations provided by duckplyr for different data types, verbs, and functions within verbs.
+If a translation is not provided, duckplyr falls back to dplyr, see `vignette("fallback")` for details.
+The translation layer can be bypassed, see `vignette("duckdb")` for details.
+
+```{r attach}
+library(conflicted)
+library(dplyr)
+conflict_prefer("filter", "dplyr")
+conflict_prefer("lag", "dplyr")
+```
+
+## Data types
+
+duckplyr supports the following data types:
+
+- `is.logical()`
+- `is.integer()`
+- `is.numeric()`
+- `is.character()`
+- `is.Date()`
+- `is.POSIXct()` (with UTC time zone)
+- `is.difftime()`
+
+```{r}
+duckplyr::duckdb_tibble(
+  logical = TRUE,
+  integer = 1L,
+  numeric = 1.1,
+  character = "a",
+  Date = as.Date("2025-01-11"),
+  POSIXct = as.POSIXct("2025-01-11 19:23:00", tz = "UTC"),
+  difftime = as.difftime(1, units = "secs"),
+) |>
+  compute()
+```
+
+Generally, zero-column tibbles are not supported by duckplyr, neither as input nor as a result.
+
+```{r error = TRUE}
+duckplyr::duckdb_tibble()
+duckplyr::duckdb_tibble(a = 1, .prudence = "stingy") |>
+  select(-a)
+```
+
+Support for more data types, and passthrough of unknown data types, is planned.
+Let's [discuss](https://github.com/tidyverse/duckplyr/discussions/) any additional data types you would like to see supported.
+
+
+## Verbs
+
+Not all dplyr verbs are implemented within duckplyr.
+For unsupported verbs, duckplyr automatically falls back to dplyr.
+See `?unsupported` for a list of verbs for which duckplyr does not provide a method.
+
+See the [reference index](https://duckplyr.tidyverse.org/reference/index.html) for a list of verbs with corresponding duckplyr methods.
+
+Let's [discuss](https://github.com/tidyverse/duckplyr/discussions/) any additional verbs you would like to see supported.
+
+
+## Functions within verbs
+
+For all functions used in dplyr verbs, translations must be provided.
+If an expression contains a function for which no translation is provided, duckplyr falls back to dplyr.
+With some exceptions, only positional matching is implemented.
+
+As of now, here are the translations provided:
+
+### Parentheses
+
+Implemented: `(`.
+
+Reference: `?Paren`.
+
+```{r}
+duckplyr::duckdb_tibble(a = 1, b = 2, c = 3, .prudence = "stingy") |>
+  mutate((a + b) * c)
+```
+
+### Comparison operators
+
+Implemented: `>`, `>=`, `<`, `<=`, `==`, `!=`.
+
+Reference: `?Comparison`.
+
+```{r}
+duckplyr::duckdb_tibble(
+  a = c(1, 2, NA),
+  b = c(2, NA, 3),
+  c = c(NA, 3, 4),
+  .prudence = "stingy"
+) |>
+  mutate(a > b, b != c, c < a, a >= b, b <= c)
+```
+
+### Basic arithmetics
+
+Implemented: `+`, `-`, `*`, `/`.
+
+Reference: `?Arithmetic`.
+
+```{r}
+duckplyr::duckdb_tibble(a = 1, b = 2, c = 3, .prudence = "stingy") |>
+  mutate(a + b, a / b, a - b, a * b)
+```
+
+### Math functions
+
+Implemented: `log()`, `log10()`, `abs()`.
+
+Reference: `?Math`.
+
+```{r}
+duckplyr::duckdb_tibble(a = 1, b = 2, c = -3, .prudence = "stingy") |>
+  mutate(log10(a), log(b), abs(c))
+```
+
+### Logical operators
+
+Implemented: `!`, `&`, `|`.
+
+Reference: `?Logic`.
+
+```{r}
+duckplyr::duckdb_tibble(a = FALSE, b = TRUE, c = NA, .prudence = "stingy") |>
+  mutate(!a, a & b, b | c)
+```
+
+### Branching and conversion
+
+Implemented:
+
+- `is.na()`, `as.integer()`
+- `dplyr::if_else()`, `dplyr::coalesce()`
+- `strftime(x, format)`
+
+```{r}
+duckplyr::duckdb_tibble(a = 1, b = NA, .prudence = "stingy") |>
+  mutate(is.na(b), if_else(is.na(b), 0, 1), as.integer(b))
+
+duckplyr::duckdb_tibble(
+  a = as.POSIXct("2025-01-11 19:23:46", tz = "UTC"),
+  .prudence = "stingy") |>
+  mutate(strftime(a, "%H:%M:%S"))
+```
+
+### String manipulation
+
+Implemented: `grepl()`, `substr()`, `sub()`, `gsub()`.
+
+```{r}
+duckplyr::duckdb_tibble(a = "abbc", .prudence = "stingy") |>
+  mutate(grepl("b", a), substr(a, 2L, 3L), sub("b", "B", a), gsub("b", "B", a))
+```
+
+### Date manipulation
+
+Implemented: `lubridate::hour()`, `lubridate::minute()`, `lubridate::second()`, `lubridate::wday()`.
+
+```{r}
+duckplyr::duckdb_tibble(
+  a = as.POSIXct("2025-01-11 19:23:46", tz = "UTC"),
+  .prudence = "stingy"
+) |>
+  mutate(
+    hour = lubridate::hour(a),
+    minute = lubridate::minute(a),
+    second = lubridate::second(a),
+    wday = lubridate::wday(a)
+  )
+```
+
+### Aggregation
+
+Implemented:
+
+- `sum(x, na.rm)`, `dplyr::n()`, `dplyr::n_distinct()`
+- `mean(x, na.rm)`, `median(x, na.rm)`, `sd(x, na.rm)`
+- `min()`, `max()`, `any()`, `all()`
+
+```{r}
+duckplyr::duckdb_tibble(a = 1:3, b = c(1, 2, 2), .prudence = "stingy") |>
+  summarize(
+    sum(a),
+    n(),
+    n_distinct(b),
+  )
+
+duckplyr::duckdb_tibble(a = 1:3, b = c(1, 2, NA), .prudence = "stingy") |>
+  summarize(
+    mean(b, na.rm = TRUE),
+    median(a),
+    sd(b),
+  )
+
+duckplyr::duckdb_tibble(a = 1:3, .prudence = "stingy") |>
+  summarize(
+    min(a),
+    max(a),
+    any(a > 1),
+    all(a > 1),
+  )
+```
+
+### Shifting
+
+All optional arguments to `dplyr::lag()` and `dplyr::lead()` are supported.
+
+```{r}
+duckplyr::duckdb_tibble(a = 1:3, .prudence = "stingy") |>
+  mutate(lag(a), lead(a))
+duckplyr::duckdb_tibble(a = 1:3, .prudence = "stingy") |>
+  mutate(lag(a, 2), lead(a, n = 2))
+duckplyr::duckdb_tibble(a = 1:3, .prudence = "stingy") |>
+  mutate(lag(a, default = 0), lead(a, default = 4))
+duckplyr::duckdb_tibble(a = 1:3, b = c(2, 3, 1), .prudence = "stingy") |>
+  mutate(lag(a, order_by = b), lead(a, order_by = b))
+```
+
+### Ranking
+
+[Ranking in DuckDB](https://duckdb.org/docs/sql/functions/window_functions.html) is very different from dplyr.
+Most functions in DuckDB rank only by the current row number, whereas in dplyr, ranking is done by a column.
+It will be difficult to provide translations for the following ranking functions.
+
+- `rank()`, `dplyr::min_rank()`, `dplyr::dense_rank()`
+- `dplyr::percent_rank()`, `dplyr::cume_dist()`
+
+Implementing `dplyr::ntile()` is feasible for the `n` argument.
+The only ranking function currently implemented is `dplyr::row_number()`.
+
+```{r}
+duckplyr::duckdb_tibble(a = c(1, 2, 2, 3), .prudence = "stingy") |>
+  mutate(row_number())
+```
+
+### Special cases
+
+`$` (`?Extract`) is implemented if the LHS is `.data` or `.env`:
+
+```{r}
+b <- 4
+duckplyr::duckdb_tibble(a = 1, b = 2, .prudence = "stingy") |>
+  mutate(.data$a + .data$b, .env$b)
+```
+
+`%in%` (`?match`) is implemented if the RHS is a constant with up to 100 values:
+
+```{r}
+duckplyr::duckdb_tibble(a = 1:3, .prudence = "stingy") |>
+  mutate(a %in% c(1, 3)) |>
+  collect()
+duckplyr::last_rel()
+```
+
+`dplyr::desc()` is only implemented in the context of `dplyr::arrange()`:
+
+```{r}
+duckplyr::duckdb_tibble(a = 1:3, .prudence = "stingy") |>
+  arrange(desc(a)) |>
+  explain()
+```
+
+`suppressWarnings()` is a no-op:
+
+```{r}
+duckplyr::duckdb_tibble(a = 1, .prudence = "stingy") |>
+  mutate(suppressWarnings(a + 1))
+```
+
+### Contributing
+
+Refer to [our contributing guide](https://duckplyr.tidyverse.org/CONTRIBUTING.html#new-translations-for-functions) to learn how to contribute new translations to the package.
+Ideally, duckplyr will also support adding custom translations for functions for the duration of the current R session.
+
+## Known incompatibilities
+
+This section tracks known incompatibilities between dplyr and duckplyr.
+Changing these is likely to require substantial effort, and might be best addressed by providing new functions with consistent behavior in both dplyr and DuckDB.
+
+### Output order stability
+
+DuckDB does not guarantee order stability for the output.
+For performance reasons, duckplyr does not enable output order stability by default.
+
+```{r}
+duckplyr::flights_df() |>
+  duckplyr::as_duckdb_tibble() |>
+  distinct(day) |>
+  summarize(paste(day, collapse = " ")) # fallback
+
+duckplyr::flights_df() |>
+  distinct(day) |>
+  summarize(paste(day, collapse = " "))
+```
+
+This can be changed globally with the `DUCKPLYR_OUTPUT_ORDER` environment variable, see `?config` for details.
+With this setting, the output order is stable, but the plans are more complicated, and DuckDB needs to do more work.
+
+```{r}
+duckplyr::flights_df() |>
+  duckplyr::as_duckdb_tibble() |>
+  distinct(day) |>
+  explain()
+
+withr::with_envvar(
+  c(DUCKPLYR_OUTPUT_ORDER = "TRUE"),
+  duckplyr::flights_df() |>
+    duckplyr::as_duckdb_tibble() |>
+    distinct(day) |>
+    explain()
+)
+```
+
+### `sum()`
+
+In duckplyr, this function returns a numeric value also for integers, due to DuckDB's type stability requirement.
+
+```{r}
+duckplyr::duckdb_tibble(a = 1:100) |>
+  summarize(sum(a))
+
+duckplyr::duckdb_tibble(a = 1:1000000) |>
+  summarize(sum(a))
+
+tibble(a = 1:100) |>
+  summarize(sum(a))
+
+tibble(a = 1:1000000) |>
+  summarize(sum(a))
+```
+
+### Empty vectors in aggregate functions
+
+At the time of writing, empty vectors only occur when summarizing an empty table without grouping.
+In all cases, duckplyr returns `NA`, and the behavior of dplyr is different:
+
+- `sum()` for an empty vector returns `0`
+- `any()` and `all()` return `FALSE`
+- `min()` and `max()` return infinity values (with a warning)
+
+```{r}
+duckplyr::duckdb_tibble(a = integer(), b = logical()) |>
+  summarize(sum(a), any(b), all(b), min(a), max(a))
+tibble(a = integer(), b = logical()) |>
+  summarize(sum(a), any(b), all(b), min(a), max(a))
+```
+
+### `min()` and `max()` for logical input
+
+For completeness, duckplyr returns a logical for `min()` and `max()` when the input is logical, while dplyr returns an integer.
+
+```{r}
+duckplyr::duckdb_tibble(a = c(TRUE, FALSE)) |>
+  summarize(min(a), max(a))
+
+tibble(a = c(TRUE, FALSE)) |>
+  summarize(min(a), max(a))
+```
+
+### `n_distinct()` and multiple arguments
+
+This function needs exactly one argument besides the optional `na.rm`. Multiple arguments is not supported.
+
+### `is.na()` and `NaN` values
+
+This function returns `FALSE` for `NaN` values in duckplyr, while it returns `TRUE` in dplyr.
+
+```{r}
+duckplyr::duckdb_tibble(a = c(NA, NaN)) |>
+  mutate(is.na(a))
+
+tibble(a = c(NA, NaN)) |>
+  mutate(is.na(a))
+```
+
+### Other differences
+
+Does the same pipeline give different results with `tibble()` and `duckdb_tibble()`?
+We would love to hear about it, please file an [issue](https://github.com/tidyverse/duckplyr/issues/new).
