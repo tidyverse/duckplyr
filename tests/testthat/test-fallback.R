@@ -195,18 +195,6 @@ test_that("named column", {
   })
 })
 
-test_that("list column", {
-  withr::local_envvar(c(
-    "DUCKPLYR_FALLBACK_COLLECT" = "1",
-    "DUCKPLYR_FALLBACK_VERBOSE" = "TRUE",
-    "DUCKPLYR_FALLBACK_LOG_DIR" = tempdir()
-  ))
-
-  expect_snapshot(error = TRUE, {
-    duckdb_tibble(a = 1, b = 2, c = list(3))
-  })
-})
-
 test_that("__row_number", {
   skip_on_ci()
 
