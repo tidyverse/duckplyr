@@ -50,9 +50,13 @@ read_file_duckdb <- function(
 
   remote <- any(grepl("^[a-zA-Z]+://", path))
 
+  if (length(path) != 1) {
+    path <- list(path)
+  }
+
   duckfun(
     table_function,
-    c(list(list(path)), options),
+    c(list(path), options),
     prudence = prudence,
     remote = remote
   )
