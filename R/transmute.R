@@ -16,9 +16,53 @@ transmute.duckplyr_df <- function(.data, ...) {
     #' These features fall back to [dplyr::transmute()], see `vignette("fallback")` for details.
     "Zero-column result set not supported." = (length(dots) == 0),
     {
-      exprs <- rel_translate_dots(dots, .data)
       rel <- duckdb_rel_from_df(.data)
-      out_rel <- rel_project(rel, exprs)
+      names_dots <- names(dots)
+      names_new <- character()
+      current_data <- rel_to_df(rel, prudence = "stingy")
+
+      # Process expressions sequentially to allow referencing new variables
+      for (i in seq_along(dots)) {
+        dot <- dots[[i]]
+        name_dot <- names_dots[[i]]
+
+        # Try expanding this `dot` if we see it is an `across()` call
+        expanded <- duckplyr_expand_across(names(current_data), dot)
+
+        if (is.null(expanded)) {
+          quos <- set_names(list(dot), name_dot)
+        } else {
+          quos <- expanded
+          quos <- fix_auto_name(quos)
+        }
+
+        names_quos <- names(quos)
+
+        # Set up exprs with all current columns
+        exprs <- imap(set_names(names(current_data)), relexpr_reference, rel = NULL)
+
+        for (j in seq_along(quos)) {
+          quo <- quos[[j]]
+          new <- names_quos[[j]]
+
+          names_new <- c(names_new, new)
+
+          new_pos <- match(new, names(current_data), nomatch = length(current_data) + j)
+          new_expr <- rel_translate(
+            quo,
+            current_data,
+            alias = new
+          )
+          exprs[[new_pos]] <- new_expr
+        }
+
+        rel <- rel_project(rel, unname(exprs))
+        current_data <- rel_to_df(rel, prudence = "stingy")
+      }
+
+      # Select only the new columns (transmute behavior)
+      final_exprs <- imap(set_names(names_new), relexpr_reference, rel = NULL)
+      out_rel <- rel_project(rel, unname(final_exprs))
       out <- duckplyr_reconstruct(out_rel, .data)
       return(out)
     }
