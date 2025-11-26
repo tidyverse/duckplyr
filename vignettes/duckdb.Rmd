@@ -54,8 +54,35 @@ Furthermore, DuckDB has functions with no R equivalent.
 These might be used already by code that interacts with DuckDB through dbplyr, either making use of its passthrough feature (unknown functions are translated to SQL verbatim), or by using the `mutate(x = sql(...))` pattern.
 When working with duckplyr, this functionality is still accessible, albeit through experimental interfaces:
 
+- `as_duckdb_tibble()` converts a dbplyr `tbl` object referencing a DuckDB connection to a duckplyr data frame
 - `as_tbl()` converts a duckplyr table to a duckdb `tbl` object
 - for a duckplyr table, the escape hatch `dd$fun(...)` can be used to call arbitrary DuckDB functions
+
+## From dbplyr to duckplyr
+
+The `as_duckdb_tibble()` function can be used to convert a dbplyr lazy table that refers to a DuckDB connection to a duckplyr data frame.
+This provides a seamless migration path from dbplyr code to duckplyr, enabling the use of dplyr verbs with DuckDB's speed while retaining full dplyr compatibility.
+
+```{r}
+con <- DBI::dbConnect(duckdb::duckdb())
+DBI::dbWriteTable(con, "data", data.frame(a = 1:3))
+dbplyr_tbl <- tbl(con, "data")
+dbplyr_tbl
+```
+
+```{r}
+duckplyr_df <- as_duckdb_tibble(dbplyr_tbl)
+duckplyr_df
+```
+
+This only works for DuckDB connections.
+For other databases, turn the data into an R data frame first.
+
+```{r}
+DBI::dbDisconnect(con)
+```
+
+For data frame interoperability, see `vignette("large")`.
 
 ## From duckplyr to dbplyr
 
