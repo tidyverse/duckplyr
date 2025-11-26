@@ -17,7 +17,7 @@
 The duckplyr package will run all of your existing dplyr code with identical results, using [DuckDB](https://duckdb.org/) where possible to compute the results faster.
 In addition, you can analyze larger-than-memory datasets straight from files on your disk or from the web.
 
-If you are new to dplyr, the best place to start is the [data transformation chapter](https://r4ds.hadley.nz/data-transform) in R for Data Science.
+If you are new to dplyr, the best place to start is the [data transformation chapter](https://r4ds.hadley.nz/data-transform) in _R for Data Science_.
 
 
 ## Installation
@@ -60,7 +60,9 @@ library(duckplyr)
 
 
 ``` r
-conflict_prefer("filter", "dplyr", quiet = TRUE)
+conflict_prefer("filter", "dplyr")
+#> [1m[22m[90m[conflicted][39m Will prefer [1m[34mdplyr[39m[22m::filter
+#> over any other package.
 ```
 
 The following code aggregates the inflight delay by year and month for the first half of the year.
@@ -195,7 +197,7 @@ Unlike with local data frames, the default is to disallow automatic materializat
 
 ``` r
 nrow(flights)
-#> Error: Materialization would result in 9091 rows, which exceeds the limit of 9090. Use collect() or as_tibble() to materialize.
+#> Error: Materialization would result in more than 9090 rows. Use collect() or as_tibble() to materialize.
 ```
 
 For printing, only the first few rows of the result are fetched.
@@ -358,6 +360,8 @@ flights |>
 - `vignette("fallback")`: How the fallback to dplyr works internally
 
 - `vignette("limits")`: Translation of dplyr employed by duckplyr, and current limitations
+
+- `vignette("duckdb")`: Using the full power of DuckDB
 
 - `vignette("developers")`: Using duckplyr for individual data frames and in other packages
 

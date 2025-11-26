@@ -555,8 +555,7 @@ test_that("transient grouping retains bare data.frame class", {
 })
 
 test_that("transient grouping retains data frame attributes (#6100)", {
-  skip("Need to fix this and also run all tests with forceful fallback")
-
+  skip("TODO duckdb")
   # With data.frames or tibbles
   df <- data.frame(g = c(1, 1, 2), x = c(1, 2, 1))
   tbl <- as_tibble(df)

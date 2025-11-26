@@ -1,5 +1,166 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.1.3.9004 (2025-11-17)
+
+## Continuous integration
+
+- Install binaries from r-universe for dev workflow (#813).
+
+
+# duckplyr 1.1.3.9003 (2025-11-12)
+
+## Continuous integration
+
+- Fix reviewdog and add commenting workflow (#810).
+
+
+# duckplyr 1.1.3.9002 (2025-11-11)
+
+## Continuous integration
+
+- Use workflows for fledge (#807).
+
+
+# duckplyr 1.1.3.9001 (2025-11-08)
+
+## Continuous integration
+
+- Sync (#805).
+
+
+# duckplyr 1.1.3.9000 (2025-11-04)
+
+## fledge
+
+- CRAN release v1.1.3 (#803).
+
+
+# duckplyr 1.1.3 (2025-11-04)
+
+## Features
+
+- `read_file_duckdb()` only wraps `path` into a list if the length is not equal to one, to support `read_stat()`.
+
+## Continuous integration
+
+- Avoid example failing in R 4.2 and older.
+
+## Documentation
+
+- Add "Supported by Posit" badge.
+
+
+# duckplyr 1.1.2 (2025-09-17)
+
+## Features
+
+- Fully support `dd::...()` syntax (#795).
+
+- Threshold for `prudence = "thrifty"` is reduced to 1000 cells when the data comes from a remote data source.
+
+- Support named arguments for `dd::...()` functions.
+
+## Performance
+
+- Generate a more balanced expresion when translating `%in%` to avoid performance problems in duckdb v1.4.0.
+
+
+# duckplyr 1.1.1 (2025-07-29)
+
+## Chore
+
+- Fix CRAN failure with `_R_CHECK_THINGS_IN_OTHER_DIRS_=true`.
+
+
+# duckplyr 1.1.0 (2025-05-08)
+
+This release improves compatibility with dbplyr and DuckDB.
+See `vignette("duckdb")` for details.
+
+## Features
+
+- Pass functions prefixed with `dd$` directly to DuckDB, e.g., `dd$ROW()` will be translated as DuckDB's `ROW()` function (#658).
+
+- New `as_tbl()` to convert to a dbplyr tbl object (#634, #685).
+
+- Register Ark methods for Positron's "Variables" pane (@DavisVaughan, #661, #678). DuckDB tibbles are no longer displayed as data frames in the "Variables" pane due to a limitation in Positron. Use `collect()` to convert them to data frames if you rely on the viewer functionality.
+
+- Translate `n_distinct()` as macro with support for `na.rm = TRUE` (@joakimlinde, #572, #655).
+
+- Translate `coalesce()`.
+
+- `compute()` does not have a fallback, failures are reported to the client (#637).
+
+- Implement `slice_head()` (#640).
+
+## Bug fixes
+
+- Set functions like `union()` no longer trigger materialization (#654, #692).
+
+- Joins no longer materialize the input data when the package is used with `methods_overwrite()` or `library(duckplyr)` (#641).
+
+- Correct formatting for controlled fallbacks with `Sys.setenv(DUCKPLYR_FALLBACK_INFO = TRUE)`.
+
+## Chore
+
+- Bump duckdb and pillar dependencies.
+
+- Use roxyglobals from CRAN rather than GitHub (@andreranza, #659).
+
+- Bring tools and patch up to date (@joakimlinde, #647).
+
+- Internal `rel_to_df()` needs `prudence` argument (#644).
+
+- Fix sync scripts and add reproducible code (#639).
+
+- Check loadability of extensions in test (#636).
+
+## Documentation
+
+- Document `slice_head()` as supported.
+
+- Add Posit's ROR ID (#592).
+
+- Add `vignette("duckdb")` (#690).
+
+- Add experimental badge.
+
+- Verbose `conflict_prefer()` (#667, #684).
+
+- Typos + clarification edits to "large" vignette (@mine-cetinkaya-rundel, #665).
+
+## Testing
+
+- Skip tests using `grep()` or `sub()` on CRAN.
+
+
+# duckplyr 1.0.1 (2025-02-21)
+
+## Bug fixes
+
+- Check if extensions can be loaded before running examples and vignettes (#620).
+
+- Show source of error if data frame cannot be converted to duck frame (#614).
+
+- Correct formatting for controlled fallbacks with `Sys.setenv(DUCKPLYR_FALLBACK_INFO = TRUE)`
+
+## Chore
+
+- Require duckdb \>= 1.2.0 (#619).
+
+- Break this version with duckdb 2.0.0 (#623).
+
+## Documentation
+
+- Separate `?compute_parquet` and `?compute_csv` (#610, #622).
+
+- Italicize book title in README (@wibeasley, #607).
+
+- Fix typo in `filter(.by = ...)` error message (@maelle, #611).
+
+- Fix link in documentation (#600, #601).
+
+
 # duckplyr 1.0.0 (2025-02-02)
 
 ## Features

@@ -3,7 +3,7 @@
 tpch_raw_oo_07 <- function(con, experimental) {
   df1 <- supplier
   "select"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "select"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -22,7 +22,7 @@ tpch_raw_oo_07 <- function(con, experimental) {
   )
   df2 <- nation
   "select"
-  rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel3 <- duckdb$rel_from_df(con, df2)
   "select"
   rel4 <- duckdb$rel_project(
     rel3,
@@ -67,28 +67,8 @@ tpch_raw_oo_07 <- function(con, experimental) {
       duckdb$expr_function(
         "|",
         list(
-          duckdb$expr_comparison(
-            "==",
-            list(
-              duckdb$expr_reference("n1_name"),
-              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                duckdb$expr_constant("FRANCE", experimental = experimental)
-              } else {
-                duckdb$expr_constant("FRANCE")
-              }
-            )
-          ),
-          duckdb$expr_comparison(
-            "==",
-            list(
-              duckdb$expr_reference("n1_name"),
-              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                duckdb$expr_constant("GERMANY", experimental = experimental)
-              } else {
-                duckdb$expr_constant("GERMANY")
-              }
-            )
-          )
+          duckdb$expr_comparison("==", list(duckdb$expr_reference("n1_name"), duckdb$expr_constant("FRANCE"))),
+          duckdb$expr_comparison("==", list(duckdb$expr_reference("n1_name"), duckdb$expr_constant("GERMANY")))
         )
       )
     )
@@ -216,7 +196,7 @@ tpch_raw_oo_07 <- function(con, experimental) {
   )
   df3 <- customer
   "select"
-  rel17 <- duckdb$rel_from_df(con, df3, experimental = experimental)
+  rel17 <- duckdb$rel_from_df(con, df3)
   "select"
   rel18 <- duckdb$rel_project(
     rel17,
@@ -234,7 +214,7 @@ tpch_raw_oo_07 <- function(con, experimental) {
     )
   )
   "select"
-  rel19 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel19 <- duckdb$rel_from_df(con, df2)
   "select"
   rel20 <- duckdb$rel_project(
     rel19,
@@ -279,28 +259,8 @@ tpch_raw_oo_07 <- function(con, experimental) {
       duckdb$expr_function(
         "|",
         list(
-          duckdb$expr_comparison(
-            "==",
-            list(
-              duckdb$expr_reference("n2_name"),
-              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                duckdb$expr_constant("FRANCE", experimental = experimental)
-              } else {
-                duckdb$expr_constant("FRANCE")
-              }
-            )
-          ),
-          duckdb$expr_comparison(
-            "==",
-            list(
-              duckdb$expr_reference("n2_name"),
-              if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                duckdb$expr_constant("GERMANY", experimental = experimental)
-              } else {
-                duckdb$expr_constant("GERMANY")
-              }
-            )
-          )
+          duckdb$expr_comparison("==", list(duckdb$expr_reference("n2_name"), duckdb$expr_constant("FRANCE"))),
+          duckdb$expr_comparison("==", list(duckdb$expr_reference("n2_name"), duckdb$expr_constant("GERMANY")))
         )
       )
     )
@@ -428,7 +388,7 @@ tpch_raw_oo_07 <- function(con, experimental) {
   )
   df4 <- orders
   "select"
-  rel33 <- duckdb$rel_from_df(con, df4, experimental = experimental)
+  rel33 <- duckdb$rel_from_df(con, df4)
   "select"
   rel34 <- duckdb$rel_project(
     rel33,
@@ -550,7 +510,7 @@ tpch_raw_oo_07 <- function(con, experimental) {
   )
   df5 <- lineitem
   "select"
-  rel43 <- duckdb$rel_from_df(con, df5, experimental = experimental)
+  rel43 <- duckdb$rel_from_df(con, df5)
   "select"
   rel44 <- duckdb$rel_project(
     rel43,
@@ -624,25 +584,11 @@ tpch_raw_oo_07 <- function(con, experimental) {
     list(
       duckdb$expr_comparison(
         ">=",
-        list(
-          duckdb$expr_reference("l_shipdate"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(as.Date("1995-01-01"), experimental = experimental)
-          } else {
-            duckdb$expr_constant(as.Date("1995-01-01"))
-          }
-        )
+        list(duckdb$expr_reference("l_shipdate"), duckdb$expr_constant(as.Date("1995-01-01")))
       ),
       duckdb$expr_comparison(
         "<=",
-        list(
-          duckdb$expr_reference("l_shipdate"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(as.Date("1996-12-31"), experimental = experimental)
-          } else {
-            duckdb$expr_constant(as.Date("1996-12-31"))
-          }
-        )
+        list(duckdb$expr_reference("l_shipdate"), duckdb$expr_constant(as.Date("1996-12-31")))
       )
     )
   )
@@ -995,55 +941,15 @@ tpch_raw_oo_07 <- function(con, experimental) {
           duckdb$expr_function(
             "&",
             list(
-              duckdb$expr_comparison(
-                "==",
-                list(
-                  duckdb$expr_reference("n1_name"),
-                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                    duckdb$expr_constant("FRANCE", experimental = experimental)
-                  } else {
-                    duckdb$expr_constant("FRANCE")
-                  }
-                )
-              ),
-              duckdb$expr_comparison(
-                "==",
-                list(
-                  duckdb$expr_reference("n2_name"),
-                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                    duckdb$expr_constant("GERMANY", experimental = experimental)
-                  } else {
-                    duckdb$expr_constant("GERMANY")
-                  }
-                )
-              )
+              duckdb$expr_comparison("==", list(duckdb$expr_reference("n1_name"), duckdb$expr_constant("FRANCE"))),
+              duckdb$expr_comparison("==", list(duckdb$expr_reference("n2_name"), duckdb$expr_constant("GERMANY")))
             )
           ),
           duckdb$expr_function(
             "&",
             list(
-              duckdb$expr_comparison(
-                "==",
-                list(
-                  duckdb$expr_reference("n1_name"),
-                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                    duckdb$expr_constant("GERMANY", experimental = experimental)
-                  } else {
-                    duckdb$expr_constant("GERMANY")
-                  }
-                )
-              ),
-              duckdb$expr_comparison(
-                "==",
-                list(
-                  duckdb$expr_reference("n2_name"),
-                  if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                    duckdb$expr_constant("FRANCE", experimental = experimental)
-                  } else {
-                    duckdb$expr_constant("FRANCE")
-                  }
-                )
-              )
+              duckdb$expr_comparison("==", list(duckdb$expr_reference("n1_name"), duckdb$expr_constant("GERMANY"))),
+              duckdb$expr_comparison("==", list(duckdb$expr_reference("n2_name"), duckdb$expr_constant("FRANCE")))
             )
           )
         )
@@ -1223,17 +1129,7 @@ tpch_raw_oo_07 <- function(con, experimental) {
         tmp_expr <- duckdb$expr_function(
           "r_base::as.integer",
           list(
-            duckdb$expr_function(
-              "strftime",
-              list(
-                duckdb$expr_reference("l_shipdate"),
-                if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                  duckdb$expr_constant("%Y", experimental = experimental)
-                } else {
-                  duckdb$expr_constant("%Y")
-                }
-              )
-            )
+            duckdb$expr_function("strftime", list(duckdb$expr_reference("l_shipdate"), duckdb$expr_constant("%Y")))
           )
         )
         duckdb$expr_set_alias(tmp_expr, "l_year")
@@ -1295,17 +1191,7 @@ tpch_raw_oo_07 <- function(con, experimental) {
           "*",
           list(
             duckdb$expr_reference("l_extendedprice"),
-            duckdb$expr_function(
-              "-",
-              list(
-                if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                  duckdb$expr_constant(1, experimental = experimental)
-                } else {
-                  duckdb$expr_constant(1)
-                },
-                duckdb$expr_reference("l_discount")
-              )
-            )
+            duckdb$expr_function("-", list(duckdb$expr_constant(1), duckdb$expr_reference("l_discount")))
           )
         )
         duckdb$expr_set_alias(tmp_expr, "volume")
@@ -1376,7 +1262,7 @@ tpch_raw_oo_07 <- function(con, experimental) {
     groups = list(duckdb$expr_reference("supp_nation"), duckdb$expr_reference("cust_nation"), duckdb$expr_reference("l_year")),
     aggregates = list(
       {
-        tmp_expr <- duckdb$expr_function("min", list(duckdb$expr_reference("___row_number")))
+        tmp_expr <- duckdb$expr_function("___min_na", list(duckdb$expr_reference("___row_number")))
         duckdb$expr_set_alias(tmp_expr, "___row_number")
         tmp_expr
       },

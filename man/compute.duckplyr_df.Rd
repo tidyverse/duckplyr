@@ -22,7 +22,7 @@
 intermediate results in DuckDB-managed memory to data frames in R memory.
 \itemize{
 \item \code{"lavish"}: regardless of size,
-\item \code{"frugal"}: never,
+\item \code{"stingy"}: never,
 \item \code{"thrifty"}: up to a maximum size of 1 million cells.
 }
 

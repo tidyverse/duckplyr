@@ -3,7 +3,7 @@
 tpch_raw_oo_02 <- function(con, experimental) {
   df1 <- partsupp
   "select"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "select"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -27,7 +27,7 @@ tpch_raw_oo_02 <- function(con, experimental) {
   )
   df2 <- part
   "select"
-  rel3 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel3 <- duckdb$rel_from_df(con, df2)
   "select"
   rel4 <- duckdb$rel_project(
     rel3,
@@ -89,28 +89,8 @@ tpch_raw_oo_02 <- function(con, experimental) {
   rel6 <- duckdb$rel_filter(
     rel5,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("p_size"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(15, experimental = experimental)
-          } else {
-            duckdb$expr_constant(15)
-          }
-        )
-      ),
-      duckdb$expr_function(
-        "grepl",
-        list(
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant("BRASS$", experimental = experimental)
-          } else {
-            duckdb$expr_constant("BRASS$")
-          },
-          duckdb$expr_reference("p_type")
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("p_size"), duckdb$expr_constant(15))),
+      duckdb$expr_function("grepl", list(duckdb$expr_constant("BRASS$"), duckdb$expr_reference("p_type")))
     )
   )
   "filter"
@@ -256,7 +236,7 @@ tpch_raw_oo_02 <- function(con, experimental) {
   )
   df3 <- supplier
   "select"
-  rel17 <- duckdb$rel_from_df(con, df3, experimental = experimental)
+  rel17 <- duckdb$rel_from_df(con, df3)
   "select"
   rel18 <- duckdb$rel_project(
     rel17,
@@ -508,7 +488,7 @@ tpch_raw_oo_02 <- function(con, experimental) {
   )
   df4 <- region
   "filter"
-  rel27 <- duckdb$rel_from_df(con, df4, experimental = experimental)
+  rel27 <- duckdb$rel_from_df(con, df4)
   "filter"
   rel28 <- duckdb$rel_project(
     rel27,
@@ -539,17 +519,7 @@ tpch_raw_oo_02 <- function(con, experimental) {
   rel29 <- duckdb$rel_filter(
     rel28,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("r_name"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant("EUROPE", experimental = experimental)
-          } else {
-            duckdb$expr_constant("EUROPE")
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("r_name"), duckdb$expr_constant("EUROPE")))
     )
   )
   "filter"
@@ -577,7 +547,7 @@ tpch_raw_oo_02 <- function(con, experimental) {
   )
   df5 <- nation
   "inner_join"
-  rel32 <- duckdb$rel_from_df(con, df5, experimental = experimental)
+  rel32 <- duckdb$rel_from_df(con, df5)
   "inner_join"
   rel33 <- duckdb$rel_set_alias(rel32, "lhs")
   "inner_join"
@@ -981,12 +951,12 @@ tpch_raw_oo_02 <- function(con, experimental) {
     groups = list(duckdb$expr_reference("p_partkey")),
     aggregates = list(
       {
-        tmp_expr <- duckdb$expr_function("min", list(duckdb$expr_reference("___row_number")))
+        tmp_expr <- duckdb$expr_function("___min_na", list(duckdb$expr_reference("___row_number")))
         duckdb$expr_set_alias(tmp_expr, "___row_number")
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_function("min", list(duckdb$expr_reference("ps_supplycost")))
+        tmp_expr <- duckdb$expr_function("___min_na", list(duckdb$expr_reference("ps_supplycost")))
         duckdb$expr_set_alias(tmp_expr, "min_ps_supplycost")
         tmp_expr
       }
@@ -1384,7 +1354,7 @@ tpch_raw_oo_02 <- function(con, experimental) {
       }
     )
   )
-  "head"
+  "slice_head"
   rel66 <- duckdb$rel_limit(rel65, 100)
   rel66
   duckdb$rel_to_altrep(rel66)

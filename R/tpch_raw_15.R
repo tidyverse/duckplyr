@@ -3,32 +3,18 @@
 tpch_raw_15 <- function(con, experimental) {
   df1 <- lineitem
   "filter"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "filter"
   rel2 <- duckdb$rel_filter(
     rel1,
     list(
       duckdb$expr_comparison(
         ">=",
-        list(
-          duckdb$expr_reference("l_shipdate"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(as.Date("1996-01-01"), experimental = experimental)
-          } else {
-            duckdb$expr_constant(as.Date("1996-01-01"))
-          }
-        )
+        list(duckdb$expr_reference("l_shipdate"), duckdb$expr_constant(as.Date("1996-01-01")))
       ),
       duckdb$expr_comparison(
         "<",
-        list(
-          duckdb$expr_reference("l_shipdate"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(as.Date("1996-04-01"), experimental = experimental)
-          } else {
-            duckdb$expr_constant(as.Date("1996-04-01"))
-          }
-        )
+        list(duckdb$expr_reference("l_shipdate"), duckdb$expr_constant(as.Date("1996-04-01")))
       )
     )
   )
@@ -45,17 +31,7 @@ tpch_raw_15 <- function(con, experimental) {
               "*",
               list(
                 duckdb$expr_reference("l_extendedprice"),
-                duckdb$expr_function(
-                  "-",
-                  list(
-                    if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-                      duckdb$expr_constant(1, experimental = experimental)
-                    } else {
-                      duckdb$expr_constant(1)
-                    },
-                    duckdb$expr_reference("l_discount")
-                  )
-                )
+                duckdb$expr_function("-", list(duckdb$expr_constant(1), duckdb$expr_reference("l_discount")))
               )
             )
           )
@@ -80,11 +56,7 @@ tpch_raw_15 <- function(con, experimental) {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(1L, experimental = experimental)
-        } else {
-          duckdb$expr_constant(1L)
-        }
+        tmp_expr <- duckdb$expr_constant(1L)
         duckdb$expr_set_alias(tmp_expr, "global_agr_key")
         tmp_expr
       }
@@ -96,7 +68,7 @@ tpch_raw_15 <- function(con, experimental) {
     groups = list(duckdb$expr_reference("global_agr_key")),
     aggregates = list(
       {
-        tmp_expr <- duckdb$expr_function("max", list(duckdb$expr_reference("total_revenue")))
+        tmp_expr <- duckdb$expr_function("___max_na", list(duckdb$expr_reference("total_revenue")))
         duckdb$expr_set_alias(tmp_expr, "max_total_revenue")
         tmp_expr
       }
@@ -117,11 +89,7 @@ tpch_raw_15 <- function(con, experimental) {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(1L, experimental = experimental)
-        } else {
-          duckdb$expr_constant(1L)
-        }
+        tmp_expr <- duckdb$expr_constant(1L)
         duckdb$expr_set_alias(tmp_expr, "global_agr_key")
         tmp_expr
       }
@@ -225,11 +193,7 @@ tpch_raw_15 <- function(con, experimental) {
               )
             )
           ),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant(1e-09, experimental = experimental)
-          } else {
-            duckdb$expr_constant(1e-09)
-          }
+          duckdb$expr_constant(1e-09)
         )
       )
     )
@@ -238,7 +202,7 @@ tpch_raw_15 <- function(con, experimental) {
   rel14 <- duckdb$rel_set_alias(rel13, "lhs")
   df2 <- supplier
   "inner_join"
-  rel15 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel15 <- duckdb$rel_from_df(con, df2)
   "inner_join"
   rel16 <- duckdb$rel_set_alias(rel15, "rhs")
   "inner_join"

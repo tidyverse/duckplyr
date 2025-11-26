@@ -32,6 +32,7 @@ Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
 
 This article describes the translations provided by duckplyr for different data types, verbs, and functions within verbs.
 If a translation is not provided, duckplyr falls back to dplyr, see `vignette("fallback")` for details.
+The translation layer can be bypassed, see `vignette("duckdb")` for details.
 
 ```{r attach}
 library(conflicted)
@@ -69,7 +70,7 @@ Generally, zero-column tibbles are not supported by duckplyr, neither as input n
 
 ```{r error = TRUE}
 duckplyr::duckdb_tibble()
-duckplyr::duckdb_tibble(a = 1, .prudence = "frugal") |>
+duckplyr::duckdb_tibble(a = 1, .prudence = "stingy") |>
   select(-a)
 ```
 
@@ -103,7 +104,7 @@ Implemented: `(`.
 Reference: `?Paren`.
 
 ```{r}
-duckplyr::duckdb_tibble(a = 1, b = 2, c = 3, .prudence = "frugal") |>
+duckplyr::duckdb_tibble(a = 1, b = 2, c = 3, .prudence = "stingy") |>
   mutate((a + b) * c)
 ```
 
@@ -118,8 +119,8 @@ duckplyr::duckdb_tibble(
   a = c(1, 2, NA),
   b = c(2, NA, 3),
   c = c(NA, 3, 4),
-  .prudence = "frugal"
-) |> 
+  .prudence = "stingy"
+) |>
   mutate(a > b, b != c, c < a, a >= b, b <= c)
 ```
 
@@ -130,7 +131,7 @@ Implemented: `+`, `-`, `*`, `/`.
 Reference: `?Arithmetic`.
 
 ```{r}
-duckplyr::duckdb_tibble(a = 1, b = 2, c = 3, .prudence = "frugal") |>
+duckplyr::duckdb_tibble(a = 1, b = 2, c = 3, .prudence = "stingy") |>
   mutate(a + b, a / b, a - b, a * b)
 ```
 
@@ -141,7 +142,7 @@ Implemented: `log()`, `log10()`, `abs()`.
 Reference: `?Math`.
 
 ```{r}
-duckplyr::duckdb_tibble(a = 1, b = 2, c = -3, .prudence = "frugal") |>
+duckplyr::duckdb_tibble(a = 1, b = 2, c = -3, .prudence = "stingy") |>
   mutate(log10(a), log(b), abs(c))
 ```
 
@@ -152,7 +153,7 @@ Implemented: `!`, `&`, `|`.
 Reference: `?Logic`.
 
 ```{r}
-duckplyr::duckdb_tibble(a = FALSE, b = TRUE, c = NA, .prudence = "frugal") |>
+duckplyr::duckdb_tibble(a = FALSE, b = TRUE, c = NA, .prudence = "stingy") |>
   mutate(!a, a & b, b | c)
 ```
 
@@ -160,16 +161,17 @@ duckplyr::duckdb_tibble(a = FALSE, b = TRUE, c = NA, .prudence = "frugal") |>
 
 Implemented:
 
-- `is.na()`, `dplyr::if_else()`, `as.integer()`
+- `is.na()`, `as.integer()`
+- `dplyr::if_else()`, `dplyr::coalesce()`
 - `strftime(x, format)`
 
 ```{r}
-duckplyr::duckdb_tibble(a = 1, b = NA, .prudence = "frugal") |>
+duckplyr::duckdb_tibble(a = 1, b = NA, .prudence = "stingy") |>
   mutate(is.na(b), if_else(is.na(b), 0, 1), as.integer(b))
 
 duckplyr::duckdb_tibble(
   a = as.POSIXct("2025-01-11 19:23:46", tz = "UTC"),
-  .prudence = "frugal") |>
+  .prudence = "stingy") |>
   mutate(strftime(a, "%H:%M:%S"))
 ```
 
@@ -178,7 +180,7 @@ duckplyr::duckdb_tibble(
 Implemented: `grepl()`, `substr()`, `sub()`, `gsub()`.
 
 ```{r}
-duckplyr::duckdb_tibble(a = "abbc", .prudence = "frugal") |>
+duckplyr::duckdb_tibble(a = "abbc", .prudence = "stingy") |>
   mutate(grepl("b", a), substr(a, 2L, 3L), sub("b", "B", a), gsub("b", "B", a))
 ```
 
@@ -189,12 +191,12 @@ Implemented: `lubridate::hour()`, `lubridate::minute()`, `lubridate::second()`, 
 ```{r}
 duckplyr::duckdb_tibble(
   a = as.POSIXct("2025-01-11 19:23:46", tz = "UTC"),
-  .prudence = "frugal"
+  .prudence = "stingy"
 ) |>
   mutate(
-    hour = lubridate::hour(a), 
-    minute = lubridate::minute(a), 
-    second = lubridate::second(a), 
+    hour = lubridate::hour(a),
+    minute = lubridate::minute(a),
+    second = lubridate::second(a),
     wday = lubridate::wday(a)
   )
 ```
@@ -208,25 +210,25 @@ Implemented:
 - `min()`, `max()`, `any()`, `all()`
 
 ```{r}
-duckplyr::duckdb_tibble(a = 1:3, b = c(1, 2, 2), .prudence = "frugal") |>
+duckplyr::duckdb_tibble(a = 1:3, b = c(1, 2, 2), .prudence = "stingy") |>
   summarize(
-    sum(a), 
+    sum(a),
     n(),
     n_distinct(b),
   )
 
-duckplyr::duckdb_tibble(a = 1:3, b = c(1, 2, NA), .prudence = "frugal") |>
+duckplyr::duckdb_tibble(a = 1:3, b = c(1, 2, NA), .prudence = "stingy") |>
   summarize(
-    mean(b, na.rm = TRUE), 
+    mean(b, na.rm = TRUE),
     median(a),
     sd(b),
   )
 
-duckplyr::duckdb_tibble(a = 1:3, .prudence = "frugal") |>
+duckplyr::duckdb_tibble(a = 1:3, .prudence = "stingy") |>
   summarize(
     min(a),
     max(a),
-    any(a > 1), 
+    any(a > 1),
     all(a > 1),
   )
 ```
@@ -236,13 +238,13 @@ duckplyr::duckdb_tibble(a = 1:3, .prudence = "frugal") |>
 All optional arguments to `dplyr::lag()` and `dplyr::lead()` are supported.
 
 ```{r}
-duckplyr::duckdb_tibble(a = 1:3, .prudence = "frugal") |>
+duckplyr::duckdb_tibble(a = 1:3, .prudence = "stingy") |>
   mutate(lag(a), lead(a))
-duckplyr::duckdb_tibble(a = 1:3, .prudence = "frugal") |>
+duckplyr::duckdb_tibble(a = 1:3, .prudence = "stingy") |>
   mutate(lag(a, 2), lead(a, n = 2))
-duckplyr::duckdb_tibble(a = 1:3, .prudence = "frugal") |>
+duckplyr::duckdb_tibble(a = 1:3, .prudence = "stingy") |>
   mutate(lag(a, default = 0), lead(a, default = 4))
-duckplyr::duckdb_tibble(a = 1:3, b = c(2, 3, 1), .prudence = "frugal") |>
+duckplyr::duckdb_tibble(a = 1:3, b = c(2, 3, 1), .prudence = "stingy") |>
   mutate(lag(a, order_by = b), lead(a, order_by = b))
 ```
 
@@ -259,7 +261,7 @@ Implementing `dplyr::ntile()` is feasible for the `n` argument.
 The only ranking function currently implemented is `dplyr::row_number()`.
 
 ```{r}
-duckplyr::duckdb_tibble(a = c(1, 2, 2, 3), .prudence = "frugal") |>
+duckplyr::duckdb_tibble(a = c(1, 2, 2, 3), .prudence = "stingy") |>
   mutate(row_number())
 ```
 
@@ -269,15 +271,15 @@ duckplyr::duckdb_tibble(a = c(1, 2, 2, 3), .prudence = "frugal") |>
 
 ```{r}
 b <- 4
-duckplyr::duckdb_tibble(a = 1, b = 2, .prudence = "frugal") |>
+duckplyr::duckdb_tibble(a = 1, b = 2, .prudence = "stingy") |>
   mutate(.data$a + .data$b, .env$b)
 ```
 
 `%in%` (`?match`) is implemented if the RHS is a constant with up to 100 values:
 
 ```{r}
-duckplyr::duckdb_tibble(a = 1:3, .prudence = "frugal") |>
-  mutate(a %in% c(1, 3)) |> 
+duckplyr::duckdb_tibble(a = 1:3, .prudence = "stingy") |>
+  mutate(a %in% c(1, 3)) |>
   collect()
 duckplyr::last_rel()
 ```
@@ -285,15 +287,15 @@ duckplyr::last_rel()
 `dplyr::desc()` is only implemented in the context of `dplyr::arrange()`:
 
 ```{r}
-duckplyr::duckdb_tibble(a = 1:3, .prudence = "frugal") |>
-  arrange(desc(a)) |> 
+duckplyr::duckdb_tibble(a = 1:3, .prudence = "stingy") |>
+  arrange(desc(a)) |>
   explain()
 ```
 
 `suppressWarnings()` is a no-op:
 
 ```{r}
-duckplyr::duckdb_tibble(a = 1, .prudence = "frugal") |> 
+duckplyr::duckdb_tibble(a = 1, .prudence = "stingy") |>
   mutate(suppressWarnings(a + 1))
 ```
 
@@ -387,24 +389,9 @@ tibble(a = c(TRUE, FALSE)) |>
   summarize(min(a), max(a))
 ```
 
-### `n_distinct()` and missing values
+### `n_distinct()` and multiple arguments
 
-Unlike most other aggregation functions, `n_distinct()` ignores missing values and does not support the `na.rm` argument.
-This is tracked in <https://github.com/tidyverse/duckplyr/issues/572>.
-
-```{r error = TRUE}
-duckplyr::duckdb_tibble(a = c(1, 2, NA, 1)) |>
-  summarize(n_distinct(a))
-
-duckplyr::duckdb_tibble(a = c(1, 2, NA, 1), .prudence = "frugal") |>
-  summarize(n_distinct(a, na.rm = TRUE))
-
-tibble(a = c(1, 2, NA, 1)) |>
-  summarize(n_distinct(a))
-
-tibble(a = c(1, 2, NA, 1)) |>
-  summarize(n_distinct(a, na.rm = TRUE))
-```
+This function needs exactly one argument besides the optional `na.rm`. Multiple arguments is not supported.
 
 ### `is.na()` and `NaN` values
 

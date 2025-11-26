@@ -22,8 +22,8 @@ faster. In addition, you can analyze larger-than-memory datasets
 straight from files on your disk or from the web.
 
 If you are new to dplyr, the best place to start is the [data
-transformation chapter](https://r4ds.hadley.nz/data-transform) in R for
-Data Science.
+transformation chapter](https://r4ds.hadley.nz/data-transform) in *R for
+Data Science*.
 
 ## Installation
 
@@ -61,7 +61,9 @@ library(duckplyr)
 ```
 
 ``` r
-conflict_prefer("filter", "dplyr", quiet = TRUE)
+conflict_prefer("filter", "dplyr")
+#> [conflicted] Will prefer dplyr::filter
+#> over any other package.
 ```
 
 The following code aggregates the inflight delay by year and month for
@@ -199,7 +201,7 @@ with a `collect()` call for instance.
 
 ``` r
 nrow(flights)
-#> Error: Materialization would result in 9091 rows, which exceeds the limit of 9090. Use collect() or as_tibble() to materialize.
+#> Error: Materialization would result in more than 9090 rows. Use collect() or as_tibble() to materialize.
 ```
 
 For printing, only the first few rows of the result are fetched.
@@ -364,6 +366,9 @@ flights |>
 
 - [`vignette("limits")`](https://duckplyr.tidyverse.org/articles/limits.html):
   Translation of dplyr employed by duckplyr, and current limitations
+
+- [`vignette("duckdb")`](https://duckplyr.tidyverse.org/articles/duckdb.html):
+  Using the full power of DuckDB
 
 - [`vignette("developers")`](https://duckplyr.tidyverse.org/articles/developers.html):
   Using duckplyr for individual data frames and in other packages

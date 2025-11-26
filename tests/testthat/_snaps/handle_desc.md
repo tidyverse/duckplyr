@@ -1,10 +1,10 @@
 # desc() fails if it points elsewhere
 
     Code
-      duckdb_tibble(a = 1:3, .prudence = "frugal") %>% arrange(desc(a))
+      duckdb_tibble(a = 1:3, .prudence = "stingy") %>% arrange(desc(a))
     Condition
       Error in `arrange()`:
-      ! This operation cannot be carried out by DuckDB, and the input is a frugal duckplyr frame.
+      ! This operation cannot be carried out by DuckDB, and the input is a stingy duckplyr frame.
       i Use `compute(prudence = "lavish")` to materialize to temporary storage and continue with duckplyr.
       i See `vignette("prudence")` for other options.
       Caused by error in `arrange()`:
@@ -13,10 +13,10 @@
 # desc() fails for more than one argument
 
     Code
-      duckdb_tibble(a = 1:3, b = 4:6, .prudence = "frugal") %>% arrange(desc(a, b))
+      duckdb_tibble(a = 1:3, b = 4:6, .prudence = "stingy") %>% arrange(desc(a, b))
     Condition
       Error in `arrange()`:
-      ! This operation cannot be carried out by DuckDB, and the input is a frugal duckplyr frame.
+      ! This operation cannot be carried out by DuckDB, and the input is a stingy duckplyr frame.
       i Use `compute(prudence = "lavish")` to materialize to temporary storage and continue with duckplyr.
       i See `vignette("prudence")` for other options.
       Caused by error in `arrange()`:

@@ -186,7 +186,7 @@ tpch_18 <- function() {
       o_orderdate, o_totalprice, sum
     ) %>%
     arrange(desc(o_totalprice), o_orderdate) %>%
-    head(100)
+    slice_head(n = 100)
 }
 
 #' @autoglobal
@@ -305,7 +305,7 @@ tpch_21 <- function() {
     filter(n_name == "SAUDI ARABIA") %>%
     summarise(numwait = n(), .by = s_name) %>%
     arrange(desc(numwait), s_name) %>%
-    head(100)
+    slice_head(n = 100)
 }
 
 #' @autoglobal

@@ -3,7 +3,7 @@
 tpch_raw_oo_11 <- function(con, experimental) {
   df1 <- nation
   "filter"
-  rel1 <- duckdb$rel_from_df(con, df1, experimental = experimental)
+  rel1 <- duckdb$rel_from_df(con, df1)
   "filter"
   rel2 <- duckdb$rel_project(
     rel1,
@@ -39,17 +39,7 @@ tpch_raw_oo_11 <- function(con, experimental) {
   rel3 <- duckdb$rel_filter(
     rel2,
     list(
-      duckdb$expr_comparison(
-        "==",
-        list(
-          duckdb$expr_reference("n_name"),
-          if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-            duckdb$expr_constant("GERMANY", experimental = experimental)
-          } else {
-            duckdb$expr_constant("GERMANY")
-          }
-        )
-      )
+      duckdb$expr_comparison("==", list(duckdb$expr_reference("n_name"), duckdb$expr_constant("GERMANY")))
     )
   )
   "filter"
@@ -82,12 +72,12 @@ tpch_raw_oo_11 <- function(con, experimental) {
   )
   df2 <- partsupp
   "inner_join"
-  rel6 <- duckdb$rel_from_df(con, df2, experimental = experimental)
+  rel6 <- duckdb$rel_from_df(con, df2)
   "inner_join"
   rel7 <- duckdb$rel_set_alias(rel6, "lhs")
   df3 <- supplier
   "inner_join"
-  rel8 <- duckdb$rel_from_df(con, df3, experimental = experimental)
+  rel8 <- duckdb$rel_from_df(con, df3)
   "inner_join"
   rel9 <- duckdb$rel_set_alias(rel8, "rhs")
   "inner_join"
@@ -468,11 +458,7 @@ tpch_raw_oo_11 <- function(con, experimental) {
                 )
               )
             ),
-            if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-              duckdb$expr_constant(1e-04, experimental = experimental)
-            } else {
-              duckdb$expr_constant(1e-04)
-            }
+            duckdb$expr_constant(1e-04)
           )
         )
         duckdb$expr_set_alias(tmp_expr, "global_value")
@@ -492,11 +478,7 @@ tpch_raw_oo_11 <- function(con, experimental) {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(1L, experimental = experimental)
-        } else {
-          duckdb$expr_constant(1L)
-        }
+        tmp_expr <- duckdb$expr_constant(1L)
         duckdb$expr_set_alias(tmp_expr, "global_agr_key")
         tmp_expr
       }
@@ -589,7 +571,7 @@ tpch_raw_oo_11 <- function(con, experimental) {
     groups = list(duckdb$expr_reference("ps_partkey")),
     aggregates = list(
       {
-        tmp_expr <- duckdb$expr_function("min", list(duckdb$expr_reference("___row_number")))
+        tmp_expr <- duckdb$expr_function("___min_na", list(duckdb$expr_reference("___row_number")))
         duckdb$expr_set_alias(tmp_expr, "___row_number")
         tmp_expr
       },
@@ -641,11 +623,7 @@ tpch_raw_oo_11 <- function(con, experimental) {
         tmp_expr
       },
       {
-        tmp_expr <- if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          duckdb$expr_constant(1L, experimental = experimental)
-        } else {
-          duckdb$expr_constant(1L)
-        }
+        tmp_expr <- duckdb$expr_constant(1L)
         duckdb$expr_set_alias(tmp_expr, "global_agr_key")
         tmp_expr
       }

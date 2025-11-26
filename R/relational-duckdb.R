@@ -20,58 +20,6 @@ reset_default_duckdb_connection <- function(e = NULL) {
   e$con <- NULL
 }
 
-duckplyr_macros <- c(
-  # https://github.com/duckdb/duckdb-r/pull/156
-  "___null" = "() AS CAST(NULL AS BOOLEAN)",
-  #
-  "<" = '(x, y) AS (x < y)',
-  "<=" = '(x, y) AS (x <= y)',
-  ">" = '(x, y) AS (x > y)',
-  ">=" = '(x, y) AS (x >= y)',
-  "==" = '(x, y) AS (x == y)',
-  "!=" = '(x, y) AS (x != y)',
-  #
-  "___divide" = "(x, y) AS CASE WHEN y = 0 THEN CASE WHEN x = 0 THEN CAST('NaN' AS double) WHEN x > 0 THEN CAST('+Infinity' AS double) ELSE CAST('-Infinity' AS double) END ELSE CAST(x AS double) / y END",
-  #
-  "is.na" = "(x) AS (x IS NULL)",
-  "n" = "() AS CAST(COUNT(*) AS int32)",
-  #
-  "___log10" = "(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE log10(x) END",
-  "___log" = "(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE ln(x) END",
-  # TPCH
-
-  # https://github.com/duckdb/duckdb/discussions/8599
-  # "as.Date" = '(x) AS strptime(x, \'%Y-%m-%d\')',
-
-  "sub" = "(pattern, replacement, x) AS (regexp_replace(x, pattern, replacement))",
-  "gsub" = "(pattern, replacement, x) AS (regexp_replace(x, pattern, replacement, 'g'))",
-  "grepl" = "(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)",
-  "if_else" = "(test, yes, no) AS (CASE WHEN test IS NULL THEN NULL ELSE CASE WHEN test THEN yes ELSE no END END)",
-  "|" = "(x, y) AS (x OR y)",
-  "&" = "(x, y) AS (x AND y)",
-  "!" = "(x) AS (NOT x)",
-  "n_distinct" = "(x) AS (COUNT(DISTINCT x))",
-  #
-  "wday" = "(x) AS CAST(weekday(CAST (x AS DATE)) + 1 AS int32)",
-  #
-  "___eq_na_matches_na" = "(x, y) AS (x IS NOT DISTINCT FROM y)",
-  "___coalesce" = "(x, y) AS COALESCE(x, y)",
-  #
-  # FIXME: Need a better way?
-  "suppressWarnings" = "(x) AS (x)",
-  #
-  "___sum_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE SUM(x) END)",
-  "___min_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE MIN(x) END)",
-  "___max_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE MAX(x) END)",
-  "___any_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE bool_or(x) END)",
-  "___all_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE bool_and(x) END)",
-  "___mean_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE AVG(x) END)",
-  "___sd_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE STDDEV(x) END)",
-  "___median_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE percentile_cont(0.5) WITHIN GROUP (ORDER BY x) END)",
-  #
-  NULL
-)
-
 create_default_duckdb_connection <- function() {
   dbroot <- Sys.getenv("DUCKPLYR_TEMP_DIR", file.path(tempdir(), "duckplyr"))
   dbdir <- tempfile("duckplyr", tmpdir = dbroot, fileext = ".duckdb")
@@ -92,7 +40,7 @@ create_default_duckdb_connection <- function() {
   con
 }
 
-duckdb_rel_from_df <- function(df) {
+duckdb_rel_from_df <- function(df, call = caller_env()) {
   # FIXME: make generic
   stopifnot(is.data.frame(df))
 
@@ -114,7 +62,7 @@ duckdb_rel_from_df <- function(df) {
     df <- as_duckplyr_df_impl(df)
   }
 
-  out <- check_df_for_rel(df)
+  out <- check_df_for_rel(df, call)
 
   meta_rel_register_df(out, df)
 
@@ -174,8 +122,7 @@ check_df_for_rel <- function(df, call = caller_env()) {
 
   # FIXME: For some other reason, it seems crucial to assign the result to a
   # variable before returning it
-  experimental <- (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE")
-  out <- duckdb$rel_from_df(con, df, experimental = experimental)
+  out <- duckdb$rel_from_df(con, df)
 
   roundtrip <- duckdb$rapi_rel_to_altrep(out)
   if (Sys.getenv("DUCKPLYR_CHECK_ROUNDTRIP") == "TRUE") {
@@ -209,25 +156,15 @@ vec_ptype_safe <- function(x) {
 }
 
 #' @export
-rel_to_df.duckdb_relation <- function(
-  rel,
-  ...,
-  prudence = NULL,
-  allow_materialization = TRUE,
-  n_rows = Inf,
-  n_cells = Inf
-) {
+rel_to_df.duckdb_relation <- function(rel, ..., prudence = NULL, remote = FALSE) {
   if (is.null(prudence)) {
-    # Legacy
-    return(duckdb$rel_to_altrep(rel, allow_materialization, n_rows, n_cells))
+    cli::cli_abort("Argument {.arg {prudence}} is missing.")
   }
 
   # Same code in new_duckdb_tibble(), to avoid recursion there
-  prudence_parsed <- prudence_parse(prudence)
+  prudence_parsed <- prudence_parse(prudence, remote)
   out <- duckdb$rel_to_altrep(
     rel,
-    # FIXME: Remove allow_materialization with duckdb >= 1.2.0
-    allow_materialization = prudence_parsed$allow_materialization,
     n_rows = prudence_parsed$n_rows,
     n_cells = prudence_parsed$n_cells
   )
@@ -446,7 +383,7 @@ to_duckdb_expr <- function(x) {
     relational_relexpr_comparison = {
       out <- duckdb$expr_comparison(x$cmp_op, to_duckdb_exprs(x$exprs))
       if (!is.null(x$alias)) {
-          duckdb$expr_set_alias(out, x$alias)
+        duckdb$expr_set_alias(out, x$alias)
       }
       out
     },
@@ -475,12 +412,8 @@ to_duckdb_expr <- function(x) {
       # Example: https://github.com/dschafer/activatr/issues/18
       check_df_for_rel(vctrs::new_data_frame(list(constant = x$val)))
 
-      if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-        experimental <- (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE")
-        out <- duckdb$expr_constant(x$val, experimental = experimental)
-      } else {
-        out <- duckdb$expr_constant(x$val)
-      }
+      out <- duckdb$expr_constant(x$val)
+
       if (!is.null(x$alias)) {
         duckdb$expr_set_alias(out, x$alias)
       }
@@ -553,16 +486,7 @@ to_duckdb_expr_meta <- function(x) {
       out
     },
     relational_relexpr_constant = {
-      out <- expr(
-        # FIXME: always pass experimental flag once it's merged
-        if ("experimental" %in% names(formals(duckdb$expr_constant))) {
-          # experimental is set at the top,
-          # the sym() gymnastics are to satisfy R CMD check
-          duckdb$expr_constant(!!x$val, experimental = !!sym("experimental"))
-        } else {
-          duckdb$expr_constant(!!x$val)
-        }
-      )
+      out <- expr(duckdb$expr_constant(!!x$val))
 
       if (!is.null(x$alias)) {
         out <- expr({
