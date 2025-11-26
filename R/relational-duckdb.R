@@ -20,61 +20,6 @@ reset_default_duckdb_connection <- function(e = NULL) {
   e$con <- NULL
 }
 
-duckplyr_macros <- c(
-  # https://github.com/duckdb/duckdb-r/pull/156
-  "___null" = "() AS CAST(NULL AS BOOLEAN)",
-  #
-  "<" = "(x, y) AS (x < y)",
-  "<=" = "(x, y) AS (x <= y)",
-  ">" = "(x, y) AS (x > y)",
-  ">=" = "(x, y) AS (x >= y)",
-  "==" = "(x, y) AS (x == y)",
-  "!=" = "(x, y) AS (x != y)",
-  #
-  "___divide" = "(x, y) AS CASE WHEN y = 0 THEN CASE WHEN x = 0 THEN CAST('NaN' AS double) WHEN x > 0 THEN CAST('+Infinity' AS double) ELSE CAST('-Infinity' AS double) END ELSE CAST(x AS double) / y END",
-  #
-  "is.na" = "(x) AS (x IS NULL)",
-  "n" = "() AS CAST(COUNT(*) AS int32)",
-  #
-  "___log10" = "(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE log10(x) END",
-  "___log" = "(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE ln(x) END",
-  # TPCH
-
-  # https://github.com/duckdb/duckdb/discussions/8599
-  # "as.Date" = '(x) AS strptime(x, \'%Y-%m-%d\')',
-
-  "sub" = "(pattern, replacement, x) AS (regexp_replace(x, pattern, replacement))",
-  "gsub" = "(pattern, replacement, x) AS (regexp_replace(x, pattern, replacement, 'g'))",
-  "grepl" = "(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)",
-  "if_else" = "(test, yes, no) AS (CASE WHEN test IS NULL THEN NULL ELSE CASE WHEN test THEN yes ELSE no END END)",
-  "|" = "(x, y) AS (x OR y)",
-  "&" = "(x, y) AS (x AND y)",
-  "!" = "(x) AS (NOT x)",
-  #
-  "wday" = "(x) AS CAST(weekday(CAST (x AS DATE)) + 1 AS int32)",
-  #
-  "___eq_na_matches_na" = "(x, y) AS (x IS NOT DISTINCT FROM y)",
-  "___coalesce" = "(x, y) AS COALESCE(x, y)",
-  #
-  # FIXME: Need a better way?
-  "suppressWarnings" = "(x) AS (x)",
-  #
-  "___sum_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE SUM(x) END)",
-  "___min_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE MIN(x) END)",
-  "___max_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE MAX(x) END)",
-  "___any_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE bool_or(x) END)",
-  "___all_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE bool_and(x) END)",
-  "___mean_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE AVG(x) END)",
-  "___sd_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE STDDEV(x) END)",
-  "___median_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE percentile_cont(0.5) WITHIN GROUP (ORDER BY x) END)",
-  #
-  # In n_distinct() many NAs count as 1 if not filtered out with na.rm = TRUE
-  "___n_distinct_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN (COUNT(DISTINCT x)+1) ELSE COUNT(DISTINCT x) END)",
-  "___n_distinct" = "(x) AS (COUNT(DISTINCT x))",
-  #
-  NULL
-)
-
 create_default_duckdb_connection <- function() {
   dbroot <- Sys.getenv("DUCKPLYR_TEMP_DIR", file.path(tempdir(), "duckplyr"))
   dbdir <- tempfile("duckplyr", tmpdir = dbroot, fileext = ".duckdb")
