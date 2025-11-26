@@ -59,5 +59,5 @@ compute_parquet.duckplyr_df <- function(x, path, ..., prudence = NULL, options =
 #' @export
 compute_parquet.data.frame <- function(x, path, ..., prudence = NULL, options = NULL) {
   x <- as_duckdb_tibble(x)
-  compute_parquet(x, path, ..., prudence = prudence, options = options)
+  compute_parquet.duckplyr_df(x, path, ..., prudence = prudence, options = options)
 }

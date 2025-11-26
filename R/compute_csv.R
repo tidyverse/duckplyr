@@ -59,5 +59,5 @@ compute_csv.duckplyr_df <- function(x, path, ..., prudence = NULL, options = NUL
 #' @export
 compute_csv.data.frame <- function(x, path, ..., prudence = NULL, options = NULL) {
   x <- as_duckdb_tibble(x)
-  compute_csv(x, path, ..., prudence = prudence, options = options)
+  compute_csv.duckplyr_df(x, path, ..., prudence = prudence, options = options)
 }
