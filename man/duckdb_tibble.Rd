@@ -86,7 +86,7 @@ length(collect(y)$a)
 library(duckdb)
 con <- DBI::dbConnect(duckdb())
 DBI::dbWriteTable(con, "data", data.frame(a = 1:3))
-tbl <- tbl(con, "data")
+tbl <- dplyr::tbl(con, "data")
 tbl
 
 as_duckdb_tibble(tbl)
