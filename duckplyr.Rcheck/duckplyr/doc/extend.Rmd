@@ -1,0 +1,156 @@
+---
+title: "Implementer's interface"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{99 Implementer's interface}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+clean_output <- function(x, options) {
+  x <- gsub("0x[0-9a-f]+", "0xdeadbeef", x)
+  x <- gsub("dataframe_[0-9]*_[0-9]*", "      dataframe_42_42      ", x)
+  x <- gsub("[0-9]*\\.___row_number ASC", "42.___row_number ASC", x)
+  x <- gsub("─", "-", x)
+  x
+}
+
+local({
+  hook_source <- knitr::knit_hooks$get("document")
+  knitr::knit_hooks$set(document = clean_output)
+})
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  eval = identical(Sys.getenv("IN_PKGDOWN"), "true") || (getRversion() >= "4.1" && rlang::is_installed(c("conflicted", "nycflights13"))),
+  comment = "#>"
+)
+
+Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
+```
+
+```{r attach}
+library(conflicted)
+library(dplyr)
+conflict_prefer("filter", "dplyr")
+```
+
+duckplyr also defines a set of generics that provide a low-level implementer's interface for dplyr's high-level user interface.
+Other packages may then implement methods for those generics.
+
+```{r extensibility}
+library(conflicted)
+library(dplyr)
+conflict_prefer("filter", "dplyr")
+library(duckplyr)
+```
+
+
+```{r overwrite, echo = FALSE}
+methods_overwrite()
+```
+
+```{r extensibility2}
+# Create a relational to be used by examples below
+new_dfrel <- function(x) {
+  stopifnot(is.data.frame(x))
+  new_relational(list(x), class = "dfrel")
+}
+mtcars_rel <- new_dfrel(mtcars[1:5, 1:4])
+
+# Example 1: return a data.frame
+rel_to_df.dfrel <- function(rel, ...) {
+  unclass(rel)[[1]]
+}
+rel_to_df(mtcars_rel)
+
+# Example 2: A (random) filter
+rel_filter.dfrel <- function(rel, exprs, ...) {
+  df <- unclass(rel)[[1]]
+
+  # A real implementation would evaluate the predicates defined
+  # by the exprs argument
+  new_dfrel(df[sample.int(nrow(df), 3, replace = TRUE), ])
+}
+
+rel_filter(
+  mtcars_rel,
+  list(
+    relexpr_function(
+      "gt",
+      list(relexpr_reference("cyl"), relexpr_constant("6"))
+    )
+  )
+)
+
+# Example 3: A custom projection
+rel_project.dfrel <- function(rel, exprs, ...) {
+  df <- unclass(rel)[[1]]
+
+  # A real implementation would evaluate the expressions defined
+  # by the exprs argument
+  new_dfrel(df[seq_len(min(3, base::ncol(df)))])
+}
+
+rel_project(
+  mtcars_rel,
+  list(relexpr_reference("cyl"), relexpr_reference("disp"))
+)
+
+# Example 4: A custom ordering (eg, ascending by mpg)
+rel_order.dfrel <- function(rel, exprs, ...) {
+  df <- unclass(rel)[[1]]
+
+  # A real implementation would evaluate the expressions defined
+  # by the exprs argument
+  new_dfrel(df[order(df[[1]]), ])
+}
+
+rel_order(
+  mtcars_rel,
+  list(relexpr_reference("mpg"))
+)
+
+# Example 5: A custom join
+rel_join.dfrel <- function(left, right, conds, join, ...) {
+  left_df <- unclass(left)[[1]]
+  right_df <- unclass(right)[[1]]
+
+  # A real implementation would evaluate the expressions
+  # defined by the conds argument,
+  # use different join types based on the join argument,
+  # and implement the join itself instead of relaying to left_join().
+  new_dfrel(dplyr::left_join(left_df, right_df))
+}
+
+rel_join(new_dfrel(data.frame(mpg = 21)), mtcars_rel)
+
+# Example 6: Limit the maximum rows returned
+rel_limit.dfrel <- function(rel, n, ...) {
+  df <- unclass(rel)[[1]]
+
+  new_dfrel(df[seq_len(n), ])
+}
+
+rel_limit(mtcars_rel, 3)
+
+# Example 7: Suppress duplicate rows
+#  (ignoring row names)
+rel_distinct.dfrel <- function(rel, ...) {
+  df <- unclass(rel)[[1]]
+
+  new_dfrel(df[!duplicated(df), ])
+}
+
+rel_distinct(new_dfrel(mtcars[1:3, 1:4]))
+
+# Example 8: Return column names
+rel_names.dfrel <- function(rel, ...) {
+  df <- unclass(rel)[[1]]
+
+  names(df)
+}
+
+rel_names(mtcars_rel)
+```

@@ -1,0 +1,324 @@
+---
+title: "Memory protection: controlling automatic materialization"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{10 Memory protection: controlling automatic materialization}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+clean_output <- function(x, options) {
+  x <- gsub("0x[0-9a-f]+", "0xdeadbeef", x)
+  x <- gsub("dataframe_[0-9]*_[0-9]*", "      dataframe_42_42      ", x)
+  x <- gsub("[0-9]*\\.___row_number ASC", "42.___row_number ASC", x)
+  x <- gsub("─", "-", x)
+  x
+}
+
+local({
+  hook_source <- knitr::knit_hooks$get("document")
+  knitr::knit_hooks$set(document = clean_output)
+})
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  eval = identical(Sys.getenv("IN_PKGDOWN"), "true") || (getRversion() >= "4.1" && rlang::is_installed(c("conflicted", "nycflights13"))),
+  comment = "#>"
+)
+
+Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
+```
+
+Unlike traditional data frames, duckplyr defers computation until absolutely necessary, allowing DuckDB to optimize execution.
+This article explains how to control the materialization of data to maintain a seamless dplyr-like experience while remaining cautious of memory usage.
+
+
+
+```{r attach}
+library(conflicted)
+library(dplyr)
+conflict_prefer("filter", "dplyr")
+```
+
+## Introduction
+
+From a user's perspective, data frames backed by duckplyr, with class `"duckplyr_df"`, behave as regular data frames in almost all respects.
+In particular, direct column access like `df$x`, or retrieving the number of rows with `nrow()`, works identically.
+Conceptually, duckplyr frames are "eager":
+
+```{r}
+df <-
+  duckplyr::duckdb_tibble(x = 1:3) |>
+  mutate(y = x + 1)
+df
+
+class(df)
+
+df$y
+
+nrow(df)
+```
+
+Under the hood, two key differences provide improved performance and usability:
+
+- **lazy materialization**: Unlike traditional data frames, duckplyr defers computation until absolutely necessary, i.e. lazily, allowing DuckDB to optimize execution.
+- **prudence**: Automatic materialization is controllable, as automatic materialization of large data might otherwise inadvertently lead to memory problems.
+
+The term "prudence" is introduced here to set a clear distinction from the concept of "laziness", and because "control of automatic materialization" is a mouthful.
+
+## Eager and lazy computation
+
+For a duckplyr frame that is the result of a dplyr operation, accessing column data or retrieving the number of rows will trigger a computation that is carried out by DuckDB, not dplyr.
+In this sense, duckplyr frames are also "lazy": the computation is deferred until the last possible moment, allowing DuckDB to optimize the whole pipeline.
+
+### Example
+
+This is explained in the following example that computes the mean arrival delay for flights departing from Newark airport (EWR) by day and month:
+
+```{r}
+flights <- duckplyr::flights_df()
+
+flights_duckdb <-
+  flights |>
+  duckplyr::as_duckdb_tibble()
+
+system.time(
+  mean_arr_delay_ewr <-
+    flights_duckdb |>
+    filter(origin == "EWR", !is.na(arr_delay)) |>
+    summarize(
+      .by = month,
+      mean_arr_delay = mean(arr_delay),
+      min_arr_delay = min(arr_delay),
+      max_arr_delay = max(arr_delay),
+      median_arr_delay = median(arr_delay),
+    )
+)
+```
+
+Setting up the pipeline is fast, the size of the data does not affect the setup costs.
+Because the computation is deferred, DuckDB can optimize the whole pipeline, which can be seen in the output below:
+
+```{r}
+mean_arr_delay_ewr |>
+  explain()
+```
+
+The first step in the pipeline is to prune the unneeded columns, only `origin`, `month`, and `arr_delay` are kept.
+The result becomes available when accessed:
+
+```{r}
+system.time(mean_arr_delay_ewr$mean_arr_delay[[1]])
+```
+
+### Comparison
+
+The functionality is similar to lazy tables in [dbplyr](https://dbplyr.tidyverse.org/) and lazy frames in [dtplyr](https://dtplyr.tidyverse.org/).
+However, the behavior is different: at the time of writing, the internal structure of a lazy table or frame is different from a data frame, and columns cannot be accessed directly.
+
+|             | **Eager** 😃 | **Lazy** 😴 |
+|-------------|:------------:|:-----------:|
+| **dplyr**   |      ✅      |             |
+| **dbplyr**  |              |      ✅     |
+| **dtplyr**  |              |      ✅     |
+| **duckplyr**|      ✅      |      ✅     |
+
+In contrast, with [dplyr](https://dplyr.tidyverse.org/), each intermediate step and also the final result is a proper data frame, and computed right away, forfeiting the opportunity for optimization:
+
+```{r}
+system.time(
+  flights |>
+    filter(origin == "EWR", !is.na(arr_delay)) |>
+    summarize(
+      .by = c(month, day),
+      mean_arr_delay = mean(arr_delay),
+      min_arr_delay = min(arr_delay),
+      max_arr_delay = max(arr_delay),
+      median_arr_delay = median(arr_delay),
+    )
+)
+```
+
+See also the [duckplyr: dplyr Powered by DuckDB](https://duckdb.org/2024/04/02/duckplyr.html) blog post for more information.
+
+## Prudence
+
+Being both "eager" and "lazy" at the same time introduces a challenge:
+it is too easy to accidentally trigger computation,
+which is prohibitive if an intermediate result is too large to fit into memory.
+Prudence is a setting for duckplyr frames that limits the size of the data that is materialized automatically.
+
+### Concept
+
+Three levels of prudence are available:
+
+- _lavish_ (careless about resources): always automatically materialize, as in the first example.
+- _stingy_ (avoid spending at all cost): never automatically materialize, throw an error when attempting to access the data.
+- _thrifty_ (use resources wisely): only automaticaly materialize the data if it is small, otherwise throw an error.
+
+For lavish duckplyr frames, as in the two previous examples, the underlying DuckDB computation is carried out upon the first request.
+Once the results are computed, they are cached and subsequent requests are fast.
+This is a good choice for small to medium-sized data, where DuckDB can provide a nice speedup but materializing the data is affordable at any stage.
+This is the default for `duckdb_tibble()` and `as_duckdb_tibble()`.
+
+For stingy duckplyr frames, accessing a column or requesting the number of rows triggers an error.
+This is a good choice for large data sets where the cost of materializing the data may be prohibitive due to size or computation time, and the user wants to control when the computation is carried out and where the results are stored.
+Results can be materialized explicitly with `collect()` and other functions.
+
+Thrifty duckplyr frames are a compromise between lavish and stingy, discussed further below.
+
+
+### Example
+
+Passing `prudence = "stingy"` to `as_duckdb_tibble()` creates a stingy duckplyr frame.
+
+```{r}
+flights_stingy <-
+  flights |>
+  duckplyr::as_duckdb_tibble(prudence = "stingy")
+```
+
+The data can be displayed, and column names and types can be accessed.
+
+```{r}
+flights_stingy
+
+names(flights_stingy)[1:10]
+
+class(flights_stingy)
+
+class(flights_stingy[[1]])
+```
+
+On the other hand, accessing a column or requesting the number of rows triggers an error:
+
+```{r error = TRUE}
+nrow(flights_stingy)
+
+flights_stingy[[1]]
+```
+
+This means that stingy duckplyr frames can also be used to enforce DuckDB operation for a pipeline.
+
+### Enforcing DuckDB operation
+
+For operations not supported by duckplyr, the original dplyr implementation is used as a fallback.
+As the original dplyr implementation accesses columns directly, the data must be materialized before a fallback can be executed.
+Therefore, stingy frames allow you to check that all operations are supported by DuckDB: for a stingy frame, fallbacks to dplyr are not possible.
+
+```{r error = TRUE}
+flights_stingy |>
+  group_by(origin) |>
+  summarize(n = n()) |>
+  ungroup()
+```
+
+The same pipeline with a lavish frame works, but the computation is carried out by dplyr:
+
+```{r}
+flights_stingy |>
+  duckplyr::as_duckdb_tibble(prudence = "lavish") |>
+  group_by(origin) |>
+  summarize(n = n()) |>
+  ungroup()
+```
+
+By using operations supported by duckplyr and avoiding fallbacks as much as possible, your pipelines will be executed by DuckDB in an optimized way.
+
+
+### From stingy to lavish
+
+A stingy duckplyr frame can be converted to a lavish one with `as_duckdb_tibble(prudence = "lavish")`.
+The `collect.duckplyr_df()` method triggers computation and converts to a plain tibble.
+The difference between the two is the class of the returned object:
+
+```{r}
+flights_stingy |>
+  duckplyr::as_duckdb_tibble(prudence = "lavish") |>
+  class()
+
+flights_stingy |>
+  collect() |>
+  class()
+```
+
+The same behavior is achieved with `as_tibble()` and `as.data.frame()`:
+
+```{r}
+flights_stingy |>
+  as_tibble() |>
+  class()
+
+flights_stingy |>
+  as.data.frame() |>
+  class()
+```
+
+### Comparison
+
+Stingy duckplyr frames behave like lazy tables in dbplyr and lazy frames in dtplyr: the computation only starts when you _explicitly_ request it with `collect.duckplyr_df()` or through other means.
+However, stingy duckplyr frames can be converted to lavish ones at any time, and vice versa.
+In dtplyr and dbplyr, there are no lavish frames: collection always needs to be explicit.
+
+
+## Thrift
+
+Thrifty is a compromise between stingy and lavish.
+Materialization is allowed for data up to a certain size, measured in cells (values) and rows in the resulting data frame.
+
+```{r}
+nrow(flights)
+flights_partial <-
+  flights |>
+  duckplyr::as_duckdb_tibble(prudence = "thrifty")
+```
+
+With this setting, the data is materialized only if the result has fewer than 1,000,000 cells (rows multiplied by columns).
+
+```{r error = TRUE}
+flights_partial |>
+  select(origin, dest, dep_delay, arr_delay) |>
+  nrow()
+```
+
+The original input is too large to be materialized, so the operation fails.
+On the other hand, the result after aggregation is small enough to be materialized:
+
+```{r}
+flights_partial |>
+  count(origin) |>
+  nrow()
+```
+
+Thrifty is a good choice for data sets where the cost of materializing the data is prohibitive only for large results.
+
+### File ingestion and custom limits
+
+Thrifty is the default for the ingestion functions like `read_parquet_duckdb()`.
+Here, the limit is adapted depending on the source of the data:
+
+- For local files, the limit is 1,000,000 cells.
+- For remote files (if the file name starts with a URL protocol specifier), the limit is 1,000 cells.
+
+A custom limit can be set by passing a named vector to `prudence`, with elements `cells` and/or `rows`:
+
+```r
+read_parquet_duckdb(
+  "personas.parquet",
+  prudence = c(cells = 10000, rows = 1000)
+)
+```
+
+
+## Conclusion
+
+The duckplyr package provides
+
+- a drop-in replacement for duckplyr, which necessitates "eager" data frames that automatically materialize like in dplyr,
+- optimization by DuckDB, which means "lazy" evaluation where the data is materialized at the latest possible stage.
+
+Automatic materialization can be dangerous for memory with large data, so duckplyr provides a setting called `prudence` that controls automatic materialization:
+is the data automatically materialized _always_ ("lavish" frames), _never_ ("stingy" frames) or _up to a certain size_ ("thrifty" frames).
+
+See `vignette("large")` for more details on working with large data sets, `vignette("fallback")` for fallbacks to dplyr, `vignette("limits")` for the operations supported by duckplyr, and `vignette("duckdb")` for using DuckDB functions directly.
