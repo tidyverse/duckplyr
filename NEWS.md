@@ -1,5 +1,32 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.1.3.9005 (2025-11-27)
+
+## Bug fixes
+
+- `transmute()` can reference new variables (#796, #819).
+
+## Chore
+
+- Move compatibility checks to duckdb (#721).
+
+## Continuous integration
+
+- Fix compatibility with duckdb 1.4.2.
+
+## Documentation
+
+- Add blog post to pkgdown config (#612, #827).
+
+- Document `row.names` incompatibility (#603, #825).
+
+- Add examples for specifying CSV column types by name (#775, #820).
+
+- Add superseded lifecycle badge to `transmute()` documentation (#364, #824).
+
+- Review contributing guide (#657).
+
+
 # duckplyr 1.1.3.9004 (2025-11-17)
 
 ## Continuous integration
