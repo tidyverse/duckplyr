@@ -59,6 +59,7 @@
     Condition
       Error in `lead()`:
       ! `x` must be a vector, not an environment.
+      i Read our FAQ about scalar types (`?vctrs::faq_error_scalar_type`) to learn more.
 
 ---
 
@@ -67,4 +68,5 @@
     Condition
       Error in `lag()`:
       ! `x` must be a vector, not an environment.
+      i Read our FAQ about scalar types (`?vctrs::faq_error_scalar_type`) to learn more.
 
