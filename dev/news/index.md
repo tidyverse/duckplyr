@@ -1,5 +1,46 @@
 # Changelog
 
+## duckplyr 1.1.3.9005 (2025-11-27)
+
+### Bug fixes
+
+- [`transmute()`](https://dplyr.tidyverse.org/reference/transmute.html)
+  can reference new variables
+  ([\#796](https://github.com/tidyverse/duckplyr/issues/796),
+  [\#819](https://github.com/tidyverse/duckplyr/issues/819)).
+
+### Chore
+
+- Move compatibility checks to duckdb
+  ([\#721](https://github.com/tidyverse/duckplyr/issues/721)).
+
+### Continuous integration
+
+- Fix compatibility with duckdb 1.4.2.
+
+### Documentation
+
+- Add blog post to pkgdown config
+  ([\#612](https://github.com/tidyverse/duckplyr/issues/612),
+  [\#827](https://github.com/tidyverse/duckplyr/issues/827)).
+
+- Document `row.names` incompatibility
+  ([\#603](https://github.com/tidyverse/duckplyr/issues/603),
+  [\#825](https://github.com/tidyverse/duckplyr/issues/825)).
+
+- Add examples for specifying CSV column types by name
+  ([\#775](https://github.com/tidyverse/duckplyr/issues/775),
+  [\#820](https://github.com/tidyverse/duckplyr/issues/820)).
+
+- Add superseded lifecycle badge to
+  [`transmute()`](https://dplyr.tidyverse.org/reference/transmute.html)
+  documentation
+  ([\#364](https://github.com/tidyverse/duckplyr/issues/364),
+  [\#824](https://github.com/tidyverse/duckplyr/issues/824)).
+
+- Review contributing guide
+  ([\#657](https://github.com/tidyverse/duckplyr/issues/657)).
+
 ## duckplyr 1.1.3.9004 (2025-11-17)
 
 ### Continuous integration
