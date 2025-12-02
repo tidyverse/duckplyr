@@ -58,7 +58,7 @@ Suggests:
     withr
 Enhances: 
     qs
-Remotes: duckdb/duckdb-r
+Remotes: duckdb=duckdb/duckdb-r
 Config/Needs/check: anthonynorth/roxyglobals
 Config/Needs/development: 
     devtools,
