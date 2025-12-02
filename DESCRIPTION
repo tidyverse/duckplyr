@@ -23,7 +23,7 @@ Imports:
     cli,
     collections,
     DBI,
-    duckdb (>= 1.2.2),
+    duckdb (>= 1.4.2.9006),
     glue,
     jsonlite,
     lifecycle,
@@ -58,6 +58,7 @@ Suggests:
     withr
 Enhances: 
     qs
+Remotes: duckdb/duckdb-r
 Config/Needs/check: anthonynorth/roxyglobals
 Config/Needs/development: 
     devtools,
