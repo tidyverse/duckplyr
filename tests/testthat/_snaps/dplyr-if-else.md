@@ -28,7 +28,7 @@
       if_else(x < 2, bad, x)
     Condition
       Error in `if_else()`:
-      ! `true` must have size 3, not size 2.
+      ! Can't recycle `true` (size 2) to size 3.
 
 ---
 
@@ -36,7 +36,7 @@
       if_else(x < 2, x, bad)
     Condition
       Error in `if_else()`:
-      ! `false` must have size 3, not size 2.
+      ! Can't recycle `false` (size 2) to size 3.
 
 ---
 
@@ -44,7 +44,7 @@
       if_else(x < 2, x, x, missing = bad)
     Condition
       Error in `if_else()`:
-      ! `missing` must have size 3, not size 2.
+      ! Can't recycle `missing` (size 2) to size 3.
 
 # must have empty dots
 
@@ -65,12 +65,4 @@
       Error in `if_else()`:
       ! Can't convert from `false` <double> to <integer> due to loss of precision.
       * Locations: 1
-
-# `size` overrides the `condition` size
-
-    Code
-      if_else(TRUE, 1, 2, size = 2)
-    Condition
-      Error in `if_else()`:
-      ! `condition` must have size 2, not size 1.
 
