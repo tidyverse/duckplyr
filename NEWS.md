@@ -1,5 +1,16 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.1.3.9006 (2025-12-06)
+
+## Continuous integration
+
+- Revert to CRAN duckdb.
+
+- Fix remote.
+
+- Use dev duckdb.
+
+
 # duckplyr 1.1.3.9005 (2025-11-27)
 
 ## Bug fixes
