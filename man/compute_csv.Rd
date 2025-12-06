@@ -2,16 +2,22 @@
 % Please edit documentation in R/compute_csv.R
 \name{compute_csv}
 \alias{compute_csv}
+\alias{compute_csv.duckplyr_df}
+\alias{compute_csv.data.frame}
 \title{Compute results to a CSV file}
 \usage{
-compute_csv(x, path, ..., prudence = NULL, options = NULL)
+compute_csv(x, path, ...)
+
+\method{compute_csv}{duckplyr_df}(x, path, ..., prudence = NULL, options = NULL)
+
+\method{compute_csv}{data.frame}(x, path, ..., prudence = NULL, options = NULL)
 }
 \arguments{
-\item{x}{A duckplyr frame.}
+\item{x}{A data frame or lazy data frame.}
 
-\item{path}{The path of the Parquet file to create.}
+\item{path}{The path of the CSV file to create.}
 
-\item{...}{These dots are for future extensions and must be empty.}
+\item{...}{Additional arguments passed to methods.}
 
 \item{prudence}{Memory protection, controls if DuckDB may convert
 intermediate results in DuckDB-managed memory to data frames in R memory.
@@ -32,14 +38,13 @@ see \url{https://duckdb.org/docs/sql/statements/copy.html#csv-options}
 for details.}
 }
 \value{
-A duckplyr frame.
+A data frame (the class may vary based on the input).
 }
 \description{
-For a duckplyr frame, this function executes the query
-and stores the results in a CSV file,
-without converting it to an R data frame.
+This is a generic function that executes a query
+and stores the results in a CSV file.
+For a duckplyr frame, the materialization occurs outside of R.
 The result is a duckplyr frame that can be used with subsequent dplyr verbs.
-This function can also be used as a CSV writer for regular data frames.
 }
 \examples{
 library(duckplyr)
