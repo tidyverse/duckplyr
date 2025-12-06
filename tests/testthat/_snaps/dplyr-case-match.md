@@ -29,6 +29,7 @@
     Condition
       Error in `case_match()`:
       ! `..1 (right)` must be a vector, not `NULL`.
+      i Read our FAQ about scalar types (`?vctrs::faq_error_scalar_type`) to learn more.
 
 ---
 
@@ -37,6 +38,7 @@
     Condition
       Error in `case_match()`:
       ! `..1 (left)` must be a vector, not `NULL`.
+      i Read our FAQ about scalar types (`?vctrs::faq_error_scalar_type`) to learn more.
 
 # throws chained errors when formula evaluation fails
 
