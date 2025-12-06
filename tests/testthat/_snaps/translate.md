@@ -619,3 +619,19 @@
       Error:
       ! Function `mean()` does not map to `base::mean()`.
 
+# if_else with named arguments
+
+    Code
+      rel_translate(quo(if_else(a, true = b, false = c, missing = NA)), df)
+    Condition
+      Error:
+      ! `if_else(missing = )` not supported
+
+---
+
+    Code
+      rel_translate(quo(if_else(a, true = b, false = c, ptype = integer())), df)
+    Condition
+      Error:
+      ! `if_else(ptype = )` not supported
+
