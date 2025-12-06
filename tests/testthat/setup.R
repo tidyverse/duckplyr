@@ -4,6 +4,10 @@ withr::local_envvar(DUCKPLYR_FALLBACK_COLLECT = 0, .local_envir = testthat::tear
 
 withr::local_envvar(DUCKPLYR_OUTPUT_ORDER = TRUE, .local_envir = testthat::teardown_env())
 
+# Avoid random lifecycle messages in snapshots
+# https://lifecycle.r-lib.org/reference/verbosity.html
+withr::local_options(lifecycle_verbosity = "warning", .local_envir = testthat::teardown_env())
+
 # withr::local_envvar(DUCKPLYR_TELEMETRY_PREP_TEST = TRUE, .local_envir = testthat::teardown_env())
 
 # withr::local_envvar(DUCKPLYR_FORCE = TRUE, .local_envir = testthat::teardown_env())
