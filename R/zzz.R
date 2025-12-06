@@ -12,28 +12,6 @@ on_load({
   run_on_load()
 }
 
-.onAttach <- function(lib, pkg) {
-  if (!exists(".__DEVTOOLS__", asNamespace("duckplyr"))) {
-    msg <- character()
-    suppressMessages(try_fetch(methods_overwrite(), message = function(cond) {
-      msg <<- c(msg, conditionMessage(cond))
-      zap()
-    }))
-    packageStartupMessage(msg)
-  }
-}
-
-.onDetach <- function(lib) {
-  if (!exists(".__DEVTOOLS__", asNamespace("duckplyr"))) {
-    msg <- character()
-    suppressMessages(try_fetch(methods_restore(), message = function(cond) {
-      msg <<- c(msg, conditionMessage(cond))
-      zap()
-    }))
-    packageStartupMessage(msg)
-  }
-}
-
 # Avoid R CMD check warning
 dummy <- function() {
   memoise::memoise()
