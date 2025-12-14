@@ -77,6 +77,21 @@ relexpr_function <- function(name, args, alias = NULL) {
   new_relexpr(list(name = name, args = args, alias = alias), class = "relational_relexpr_function")
 }
 
+#' relexpr_operator
+#'
+#' `relexpr_operator()` wraps a operator expression.
+#'
+#' @param exprs Expressions to compare, a list of `expr` objects.
+#' @param op Operator, `IN` or `NOT IN`.
+#' @rdname new_relexpr
+#' @return an object of class `"relational_relexpr"`
+#' @export
+relexpr_operator <- function(op, exprs) {
+  stopifnot(is_string(op))
+  stopifnot(is.list(exprs))
+  new_relexpr(list(op = op, exprs = exprs), class = "relational_relexpr_operator")
+}
+
 #' relexpr_comparison
 #'
 #' `relexpr_comparison()` wraps a comparison expression.
