@@ -162,12 +162,15 @@ duckplyr::duckdb_tibble(a = FALSE, b = TRUE, c = NA, .prudence = "stingy") |>
 Implemented:
 
 - `is.na()`, `as.integer()`
-- `dplyr::if_else()`, `dplyr::coalesce()`
+- `dplyr::if_else()`, `dplyr::coalesce()`, `dplyr::case_when()`
 - `strftime(x, format)`
 
 ```{r}
 duckplyr::duckdb_tibble(a = 1, b = NA, .prudence = "stingy") |>
   mutate(is.na(b), if_else(is.na(b), 0, 1), as.integer(b))
+
+duckplyr::duckdb_tibble(a = 23, .prudence = "stingy") |>
+  mutate(b = case_when(a == 1 ~ 3, a == 2 ~ 28, .default = 4))
 
 duckplyr::duckdb_tibble(
   a = as.POSIXct("2025-01-11 19:23:46", tz = "UTC"),
