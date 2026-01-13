@@ -125,7 +125,7 @@ DBI::dbWriteTable(con, "data", data.frame(x = 1:3, y = letters[1:3]))
 dbplyr_data <- tbl(con, "data")
 dbplyr_data
 #> # Source:   table<"data"> [?? x 2]
-#> # Database: DuckDB 1.4.2 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/Rtmp9HbF6I/file3c22382627f2.duckdb]
+#> # Database: DuckDB 1.4.3 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmplSXA0v/file3ee15c5948e0.duckdb]
 #>       x y    
 #>   <int> <chr>
 #> 1     1 a    

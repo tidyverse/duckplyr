@@ -162,7 +162,8 @@ If the input is a plain data frame, duckplyr is not involved.
 flights_df() |>
   mutate(inflight_delay = arr_delay - dep_delay) |>
   explain()
-#> Error in UseMethod("explain"): no applicable method for 'explain' applied to an object of class "c('tbl_df', 'tbl', 'data.frame')"
+#> Error in `UseMethod()`:
+#> ! no applicable method for 'explain' applied to an object of class "c('tbl_df', 'tbl', 'data.frame')"
 ```
 
 ## Own data

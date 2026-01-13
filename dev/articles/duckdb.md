@@ -55,7 +55,7 @@ df
 tbl <- as_tbl(df)
 tbl
 #> # Source:   table<as_tbl_duckplyr_SwlKLUUEdL> [?? x 1]
-#> # Database: DuckDB 1.4.2 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpX7ET94/duckplyr/duckplyr3b4c45502b31.duckdb]
+#> # Database: DuckDB 1.4.3 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpssEgnd/duckplyr/duckplyr3e0b5e40b0cb.duckdb]
 #>       a
 #>   <int>
 #> 1     2
@@ -87,14 +87,15 @@ interpreted as a SQL function.
 
 ``` r
 least_common_multiple(2, 3)
-#> Error in least_common_multiple(2, 3): could not find function "least_common_multiple"
+#> Error in `least_common_multiple()`:
+#> ! could not find function "least_common_multiple"
 ```
 
 ``` r
 tbl %>%
   mutate(b = sql("a + 1"), c = least_common_multiple(a, b))
 #> # Source:   SQL [?? x 3]
-#> # Database: DuckDB 1.4.2 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpX7ET94/duckplyr/duckplyr3b4c45502b31.duckdb]
+#> # Database: DuckDB 1.4.3 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpssEgnd/duckplyr/duckplyr3e0b5e40b0cb.duckdb]
 #>       a     b     c
 #>   <int> <int> <dbl>
 #> 1     2     3     6
