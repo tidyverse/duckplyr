@@ -1,5 +1,14 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.1.3.9007 (2026-01-14)
+
+## Continuous integration
+
+- Tweaks (#838).
+
+- Test all R versions on branches that start with cran- (#837).
+
+
 # duckplyr 1.1.3.9006 (2025-12-06)
 
 ## Continuous integration
