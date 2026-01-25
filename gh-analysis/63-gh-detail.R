@@ -5,7 +5,7 @@ files <-
   file_info |>
   pull(path)
 
-data <- bind_rows(purrr::map(files, qs::qread, .progress = TRUE))
+data <- bind_rows(purrr::map(files, qs2::qs_read, .progress = TRUE))
 
 get_calls <- function(lang, ignore = NULL) {
   if (!is.call(lang)) {
