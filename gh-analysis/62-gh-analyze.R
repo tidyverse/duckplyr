@@ -45,10 +45,10 @@ for (file in files) {
   if (!fs::file_exists(analyzed_file)) {
     message(file)
     try({
-      parsed <- qs::qread(file)
+      parsed <- qs2::qs_read(file)
       exprs <- get_dplyr_calls_exprs(parsed)
       print(nrow(exprs))
-      qs::qsave(exprs, analyzed_file)
+      qs2::qs_save(exprs, analyzed_file)
     })
   }
 }
