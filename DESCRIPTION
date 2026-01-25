@@ -57,11 +57,11 @@ Suggests:
     usethis,
     withr
 Enhances: 
-    qs
+    qs2
 Config/Needs/check: anthonynorth/roxyglobals
 Config/Needs/development: 
     devtools,
-    qs,
+    qs2,
     reprex,
     r-lib/roxygen2,
     roxyglobals,

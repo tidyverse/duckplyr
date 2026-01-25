@@ -10,7 +10,7 @@ branch_install()
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/100.qs")
+    data <- qs2::qs_read("tools/tpch/100.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -29,7 +29,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/100.qs")
+    data <- qs2::qs_read("tools/tpch/100.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -48,7 +48,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/100.qs")
+    data <- qs2::qs_read("tools/tpch/100.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -67,7 +67,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/100.qs")
+    data <- qs2::qs_read("tools/tpch/100.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -86,7 +86,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/100.qs")
+    data <- qs2::qs_read("tools/tpch/100.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -105,7 +105,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/100.qs")
+    data <- qs2::qs_read("tools/tpch/100.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -124,7 +124,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/100.qs")
+    data <- qs2::qs_read("tools/tpch/100.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -143,7 +143,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/100.qs")
+    data <- qs2::qs_read("tools/tpch/100.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -162,7 +162,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/100.qs")
+    data <- qs2::qs_read("tools/tpch/100.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -181,7 +181,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/100.qs")
+    data <- qs2::qs_read("tools/tpch/100.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -200,7 +200,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/100.qs")
+    data <- qs2::qs_read("tools/tpch/100.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -219,7 +219,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/100.qs")
+    data <- qs2::qs_read("tools/tpch/100.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -238,7 +238,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/100.qs")
+    data <- qs2::qs_read("tools/tpch/100.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -257,7 +257,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/100.qs")
+    data <- qs2::qs_read("tools/tpch/100.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -276,7 +276,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/100.qs")
+    data <- qs2::qs_read("tools/tpch/100.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -295,7 +295,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/100.qs")
+    data <- qs2::qs_read("tools/tpch/100.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -314,7 +314,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/100.qs")
+    data <- qs2::qs_read("tools/tpch/100.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -333,7 +333,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/100.qs")
+    data <- qs2::qs_read("tools/tpch/100.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -352,7 +352,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/100.qs")
+    data <- qs2::qs_read("tools/tpch/100.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -371,7 +371,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/100.qs")
+    data <- qs2::qs_read("tools/tpch/100.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -390,7 +390,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/100.qs")
+    data <- qs2::qs_read("tools/tpch/100.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -409,7 +409,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/100.qs")
+    data <- qs2::qs_read("tools/tpch/100.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -428,7 +428,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/010.qs")
+    data <- qs2::qs_read("tools/tpch/010.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -447,7 +447,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/010.qs")
+    data <- qs2::qs_read("tools/tpch/010.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -466,7 +466,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/010.qs")
+    data <- qs2::qs_read("tools/tpch/010.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -485,7 +485,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/010.qs")
+    data <- qs2::qs_read("tools/tpch/010.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -504,7 +504,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/010.qs")
+    data <- qs2::qs_read("tools/tpch/010.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -523,7 +523,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/010.qs")
+    data <- qs2::qs_read("tools/tpch/010.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -542,7 +542,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/010.qs")
+    data <- qs2::qs_read("tools/tpch/010.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -561,7 +561,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/010.qs")
+    data <- qs2::qs_read("tools/tpch/010.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -580,7 +580,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/010.qs")
+    data <- qs2::qs_read("tools/tpch/010.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -599,7 +599,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/010.qs")
+    data <- qs2::qs_read("tools/tpch/010.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -618,7 +618,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/010.qs")
+    data <- qs2::qs_read("tools/tpch/010.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -637,7 +637,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/010.qs")
+    data <- qs2::qs_read("tools/tpch/010.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -656,7 +656,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/010.qs")
+    data <- qs2::qs_read("tools/tpch/010.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -675,7 +675,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/010.qs")
+    data <- qs2::qs_read("tools/tpch/010.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -694,7 +694,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/010.qs")
+    data <- qs2::qs_read("tools/tpch/010.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -713,7 +713,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/010.qs")
+    data <- qs2::qs_read("tools/tpch/010.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -732,7 +732,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/010.qs")
+    data <- qs2::qs_read("tools/tpch/010.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -751,7 +751,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/010.qs")
+    data <- qs2::qs_read("tools/tpch/010.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -770,7 +770,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/010.qs")
+    data <- qs2::qs_read("tools/tpch/010.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -789,7 +789,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/010.qs")
+    data <- qs2::qs_read("tools/tpch/010.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -808,7 +808,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/010.qs")
+    data <- qs2::qs_read("tools/tpch/010.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -827,7 +827,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/010.qs")
+    data <- qs2::qs_read("tools/tpch/010.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -846,7 +846,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/001.qs")
+    data <- qs2::qs_read("tools/tpch/001.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -865,7 +865,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/001.qs")
+    data <- qs2::qs_read("tools/tpch/001.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -884,7 +884,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/001.qs")
+    data <- qs2::qs_read("tools/tpch/001.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -903,7 +903,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/001.qs")
+    data <- qs2::qs_read("tools/tpch/001.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -922,7 +922,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/001.qs")
+    data <- qs2::qs_read("tools/tpch/001.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -941,7 +941,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/001.qs")
+    data <- qs2::qs_read("tools/tpch/001.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -960,7 +960,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/001.qs")
+    data <- qs2::qs_read("tools/tpch/001.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -979,7 +979,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/001.qs")
+    data <- qs2::qs_read("tools/tpch/001.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -998,7 +998,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/001.qs")
+    data <- qs2::qs_read("tools/tpch/001.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -1017,7 +1017,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/001.qs")
+    data <- qs2::qs_read("tools/tpch/001.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -1036,7 +1036,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/001.qs")
+    data <- qs2::qs_read("tools/tpch/001.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -1055,7 +1055,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/001.qs")
+    data <- qs2::qs_read("tools/tpch/001.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -1074,7 +1074,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/001.qs")
+    data <- qs2::qs_read("tools/tpch/001.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -1093,7 +1093,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/001.qs")
+    data <- qs2::qs_read("tools/tpch/001.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -1112,7 +1112,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/001.qs")
+    data <- qs2::qs_read("tools/tpch/001.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -1131,7 +1131,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/001.qs")
+    data <- qs2::qs_read("tools/tpch/001.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -1150,7 +1150,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/001.qs")
+    data <- qs2::qs_read("tools/tpch/001.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -1169,7 +1169,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/001.qs")
+    data <- qs2::qs_read("tools/tpch/001.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -1188,7 +1188,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/001.qs")
+    data <- qs2::qs_read("tools/tpch/001.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -1207,7 +1207,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/001.qs")
+    data <- qs2::qs_read("tools/tpch/001.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -1226,7 +1226,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/001.qs")
+    data <- qs2::qs_read("tools/tpch/001.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
@@ -1245,7 +1245,7 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs::qread("tools/tpch/001.qs")
+    data <- qs2::qs_read("tools/tpch/001.qs")
     .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
 
     customer <- as_duckdb_tibble(customer)
