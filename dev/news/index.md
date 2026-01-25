@@ -1,5 +1,14 @@
 # Changelog
 
+## duckplyr 1.1.3.9007 (2026-01-14)
+
+### Continuous integration
+
+- Tweaks ([\#838](https://github.com/tidyverse/duckplyr/issues/838)).
+
+- Test all R versions on branches that start with cran-
+  ([\#837](https://github.com/tidyverse/duckplyr/issues/837)).
+
 ## duckplyr 1.1.3.9006 (2025-12-06)
 
 ### Continuous integration
