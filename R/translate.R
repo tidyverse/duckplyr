@@ -121,6 +121,7 @@ rel_find_packages <- function(name) {
     # "sqrt" = "base",
     "abs" = "base",
     "if_else" = "dplyr",
+    "case_when" = "dplyr",
     #
     "any" = "base",
     "all" = "base",
@@ -291,8 +292,7 @@ rel_translate_lang <- function(
     }
   }
 
-
-  if (!(name %in% c("wday", "strftime", "lag", "lead", "sum", "min", "max", "any", "all", "mean", "median", "sd", "n_distinct"))) {
+  if (!(name %in% c("wday", "strftime", "lag", "lead", "sum", "min", "max", "any", "all", "mean", "median", "sd", "n_distinct", "case_when"))) {
     if (!is.null(names(expr)) && any(names(expr) != "")) {
       # Fix grepl() and sum()/min()/max() logic below when allowing matching by argument name
       cli::cli_abort("Can't translate named argument {.code {name}({names(expr)[names(expr) != ''][[1]]} = )}.", call = call)
@@ -374,6 +374,39 @@ rel_translate_lang <- function(
       if (length(expr) != 3) {
         cli::cli_abort("Can only translate {.call coalesce(x, y)} with two arguments.", call = call)
       }
+    },
+    "case_when" = {
+      args <- rlang::call_args(expr)
+
+      # .ptype and .size unimplemented
+      allowed_parameters <- c("", ".default")
+      bad <- !(names(args) %in% c("", ".default"))
+
+      if (any(bad)) {
+        cli::cli_abort("{name}({names(args)[which(bad)[[1]]]} = ) not supported", call = call)
+      }
+      formulas <- args[!names(args) %in% ".default"]
+      default <- args[[".default"]]
+      if (is.null(default)) {
+        default <- NA
+      }
+      whens <- lapply(formulas, function(arg) {
+        if (!rlang::is_formula(arg)) {
+          cli::cli_abort("All arguments to case_when() must be formulas. {arg} is not a formula.", call = call)
+        }
+        cond <- do_translate(rlang::f_lhs(arg))
+        val <- do_translate(rlang::f_rhs(arg))
+        list(cond = cond, val = val)
+      })
+      # Build nested if_else, ending with .default
+      case_expr <- do_translate(default)
+      for (when in rev(whens)) {
+        case_expr <- relexpr_function(
+          "if_else",
+          list(when$cond, when$val, case_expr)
+        )
+      }
+      return(case_expr)
     }
   )
 

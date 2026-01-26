@@ -855,6 +855,12 @@ test_extra_arg_map <- list(
     # NA in use
     'd = if_else(a > 1, "ok", NA)',
 
+    # case_when using .default
+    "d = case_when(
+      a == 1 ~ 4
+      a == 2 ~ 5,
+      .default = 6
+    )",
     NULL
   ),
   nest_join = "join_by(a)",
