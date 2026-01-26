@@ -44,7 +44,13 @@ duckdb_rel_from_df <- function(df, call = caller_env()) {
   # FIXME: make generic
   stopifnot(is.data.frame(df))
 
-  rel <- duckdb$rel_from_altrep_df(df, strict = FALSE, allow_materialized = FALSE)
+  rel <- duckdb$rel_from_altrep_df(
+    df,
+    strict = FALSE,
+    allow_materialized = FALSE,
+    wrap = TRUE
+  )
+
   if (!is.null(rel)) {
     # Once we're here, we know it's an ALTREP data frame
     # We don't get here if it's already materialized
