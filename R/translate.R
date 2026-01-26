@@ -344,19 +344,9 @@ rel_translate_lang <- function(
         has_na <- FALSE
       }
 
-      if (length(values) > 100) {
-        cli::cli_abort("Can't translate {.code {name}} with more than 100 values.", call = call)
-      }
-
-      consts <- map(values, do_translate)
-      ops <- map(consts, ~ list(lhs, .x))
-      cmp <- map(ops, relexpr_function, name = "r_base::==")
-      alt <- bisect_reduce(cmp, function(.x, .y) {
-        relexpr_function("|", list(.x, .y))
-      })
-      coalesce <- relexpr_function("___coalesce", list(alt, relexpr_constant(has_na)))
-      meta_ext_register()
-      return(coalesce)
+      exprs <- map(c(expr[[2]],values), do_translate)
+      op_expr <- relexpr_operator("IN", exprs)
+      return(op_expr)
     },
     "$" = {
       if (expr[[2]] == ".data") {
