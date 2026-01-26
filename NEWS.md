@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.1.3.9008 (2026-01-26)
+
+## Chore
+
+- Migrate from deprecated qs to qs2 (#846, #847).
+
+
 # duckplyr 1.1.3.9007 (2026-01-14)
 
 ## Continuous integration
