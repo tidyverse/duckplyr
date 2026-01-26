@@ -35,7 +35,7 @@
       coalesce(NULL, NULL)
     Condition
       Error in `coalesce()`:
-      ! `...` can't be empty.
+      ! `...` must contain at least 1 non-`NULL` value.
 
 # inputs must be vectors
 
