@@ -4,7 +4,7 @@
       case_when(FALSE ~ 1L, .default = 2:5)
     Condition
       Error in `case_when()`:
-      ! `.default` must have size 1, not size 4.
+      ! Can't recycle `.default` (size 4) to size 1.
 
 # `.default` is part of common type computation
 
@@ -12,7 +12,7 @@
       case_when(TRUE ~ 1L, .default = "x")
     Condition
       Error in `case_when()`:
-      ! Can't combine `..1 (right)` <integer> and `.default` <character>.
+      ! Can't combine <integer> and `.default` <character>.
 
 # passes through `.size` correctly
 
@@ -36,8 +36,7 @@
       case_when(1 ~ NULL)
     Condition
       Error in `case_when()`:
-      ! `..1 (right)` must be a vector, not `NULL`.
-      i Read our FAQ about scalar types (`?vctrs::faq_error_scalar_type`) to learn more.
+      ! `..1 (left)` must be a logical vector, not the number 1.
 
 ---
 
@@ -74,7 +73,7 @@
     Output
       <error/vctrs_error_incompatible_size>
       Error in `case_when()`:
-      ! Can't recycle `..1 (left)` (size 2) to match `..1 (right)` (size 3).
+      ! Can't recycle `..1 (right)` (size 3) to match `..2 (right)` (size 2).
     Code
       (expect_error(case_when(c(TRUE, FALSE) ~ 1, c(FALSE, TRUE, FALSE) ~ 2, c(FALSE,
         TRUE, FALSE, NA) ~ 3)))
@@ -84,6 +83,26 @@
       ! Can't recycle `..1 (left)` (size 2) to match `..2 (left)` (size 3).
     Code
       (expect_error(case_when(50 ~ 1:3)))
+    Condition
+      Warning:
+      Calling `case_when()` with size 1 LHS inputs and size >1 RHS inputs was deprecated in dplyr 1.2.0.
+      i This `case_when()` statement can result in subtle silent bugs and is very inefficient.
+      
+        Please use a series of if statements instead:
+      
+        ```
+        # Previously
+        case_when(scalar_lhs1 ~ rhs1, scalar_lhs2 ~ rhs2, .default = default)
+      
+        # Now
+        if (scalar_lhs1) {
+          rhs1
+        } else if (scalar_lhs2) {
+          rhs2
+        } else {
+          default
+        }
+        ```
     Output
       <error/rlang_error>
       Error in `case_when()`:
@@ -105,17 +124,17 @@
     Output
       <error/rlang_error>
       Error in `case_when()`:
-      ! At least one condition must be supplied.
+      ! `...` can't be empty.
     Code
       (expect_error(case_when(NULL)))
     Output
       <error/rlang_error>
       Error in `case_when()`:
-      ! At least one condition must be supplied.
+      ! `...` can't be empty.
     Code
       (expect_error(case_when(~ 1:2)))
     Output
       <error/rlang_error>
       Error in `case_when()`:
-      ! Case 1 (`~1:2`) must be a two-sided formula.
+      ! Case 1 (`~1:2`) must be a two-sided formula, not a one-sided formula.
 
