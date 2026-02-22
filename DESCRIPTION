@@ -18,7 +18,7 @@ URL: https://duckplyr.tidyverse.org, https://github.com/tidyverse/duckplyr
 BugReports: https://github.com/tidyverse/duckplyr/issues
 Depends: 
     R (>= 4.0.0),
-    dplyr (>= 1.1.4)
+    dplyr (>= 1.2.0)
 Imports: 
     cli,
     collections,
