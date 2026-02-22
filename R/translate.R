@@ -434,6 +434,7 @@ rel_translate_lang <- function(
     # Aggregates
     "sum", "min", "max", "any", "all", "mean", "sd", "median",
     "n_distinct",
+    "n",
     #
     NULL
   )
@@ -530,6 +531,10 @@ rel_translate_lang <- function(
     expr <- expr[1:2]
   }
 
+  if (name == "n" && window) {
+    aliased_name <- "count_star"
+  }
+
   args <- map(as.list(expr[-1]), do_translate, in_window = in_window || window)
 
   if (name == "grepl") {
@@ -549,7 +554,7 @@ rel_translate_lang <- function(
       default_expr = default_expr
     )
 
-    if (name == "row_number") {
+    if (name == "row_number" || name == "n") {
       fun <- relexpr_function("r_base::as.integer", list(fun))
       meta_ext_register()
     }

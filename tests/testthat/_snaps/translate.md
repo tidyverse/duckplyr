@@ -516,6 +516,61 @@
       ! `mean(na.rm = FALSE)` not supported in window functions
       i Use `mean(na.rm = TRUE)` after checking for missing values
 
+# n() in window functions
+
+    Code
+      # n() as window function (no partition)
+      rel_translate(expr(n()), df, need_window = TRUE)
+    Output
+      List of 3
+       $ name : chr "r_base::as.integer"
+       $ args :List of 1
+        ..$ :List of 6
+        .. ..$ expr        :List of 3
+        .. .. ..$ name : chr "count_star"
+        .. .. ..$ args : list()
+        .. .. ..$ alias: NULL
+        .. .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
+        .. ..$ partitions  : list()
+        .. ..$ order_bys   : list()
+        .. ..$ offset_expr : NULL
+        .. ..$ default_expr: NULL
+        .. ..$ alias       : NULL
+        .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_window" "relational_relexpr"
+       $ alias: NULL
+       - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
+       - attr(*, "used")= chr(0) 
+
+---
+
+    Code
+      # n() as window function with partition
+      rel_translate(expr(n()), df, need_window = TRUE, partition = "b")
+    Output
+      List of 3
+       $ name : chr "r_base::as.integer"
+       $ args :List of 1
+        ..$ :List of 6
+        .. ..$ expr        :List of 3
+        .. .. ..$ name : chr "count_star"
+        .. .. ..$ args : list()
+        .. .. ..$ alias: NULL
+        .. .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
+        .. ..$ partitions  :List of 1
+        .. .. ..$ :List of 3
+        .. .. .. ..$ name : chr "b"
+        .. .. .. ..$ rel  : NULL
+        .. .. .. ..$ alias: NULL
+        .. .. .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
+        .. ..$ order_bys   : list()
+        .. ..$ offset_expr : NULL
+        .. ..$ default_expr: NULL
+        .. ..$ alias       : NULL
+        .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_window" "relational_relexpr"
+       $ alias: NULL
+       - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
+       - attr(*, "used")= chr(0) 
+
 # rel_find_call() success paths
 
     Code
