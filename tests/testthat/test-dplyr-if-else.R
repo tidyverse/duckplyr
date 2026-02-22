@@ -111,6 +111,7 @@ test_that("`ptype` overrides the common type", {
 })
 
 test_that("`size` overrides the `condition` size", {
+  skip("dplyr 1.2.0")
   expect_identical(if_else(c(TRUE, FALSE), 1, 2, size = 2), c(1, 2))
 
   # Note that `condition` is used as the name in the error message
