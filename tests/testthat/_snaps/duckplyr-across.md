@@ -85,3 +85,53 @@
       tibble(x_mean = base::mean(x), x_median = stats::median(x), y_mean = base::mean(y), 
           y_median = stats::median(y))
 
+# duckplyr_expand_across() with primitive functions
+
+    Code
+      test_duckplyr_expand_across(c("x", "y"), across(x:y, sum))
+    Output
+      tibble(x = base::sum(x), y = base::sum(y))
+
+---
+
+    Code
+      test_duckplyr_expand_across(c("x", "y"), across(x:y, list(mean = mean, sum = sum)))
+    Output
+      tibble(x_mean = base::mean(x), x_sum = base::sum(x), y_mean = base::mean(y), 
+          y_sum = base::sum(y))
+
+---
+
+    Code
+      test_duckplyr_expand_across(c("x", "y"), across(x:y, min))
+    Output
+      tibble(x = base::min(x), y = base::min(y))
+
+---
+
+    Code
+      test_duckplyr_expand_across(c("x", "y"), across(x:y, max))
+    Output
+      tibble(x = base::max(x), y = base::max(y))
+
+# duckplyr_expand_across() with identity
+
+    Code
+      test_duckplyr_expand_across(c("x", "y"), across(x:y, identity))
+    Output
+      tibble(x = base::identity(x), y = base::identity(y))
+
+# duckplyr_expand_across() with where() predicates
+
+    Code
+      test_duckplyr_expand_across(df, across(where(is.numeric), mean))
+    Output
+      tibble(x = base::mean(x), y = base::mean(y))
+
+---
+
+    Code
+      test_duckplyr_expand_across(df, across(where(is.character), identity))
+    Output
+      tibble(z = base::identity(z))
+
