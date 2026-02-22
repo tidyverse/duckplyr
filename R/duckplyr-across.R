@@ -243,15 +243,13 @@ get_ns_exports_lookup <- function(ns) {
 
   hashes <- map_chr(funs, hash)
 
-  # Sort names so that hash collisions are resolved deterministically,
-
-  # preferring shorter/more common names (e.g., "identity" over "force")
+  # Sort names alphabetically so that hash collisions are resolved
+  # deterministically. Later entries with the same hash overwrite
+  # earlier ones (e.g., "identity" overwrites "force").
   ord <- order(names(hashes))
   hashes <- hashes[ord]
 
   # Reverse, return as environment
-  # Later entries with the same hash overwrite earlier ones, so after
-  # sorting alphabetically "identity" will overwrite "force".
   new_environment(set_names(as.list(names(hashes)), hashes))
 }
 
