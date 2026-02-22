@@ -271,9 +271,9 @@ test_that("if_else with named arguments", {
 test_that("aggregation functions with named arguments", {
   df <- data.frame(a = 1:3, b = c(TRUE, FALSE, TRUE))
 
-  # sum with named na.rm
+  # sum with named na.rm reordered
   expect_identical(
-    rel_translate(expr(sum(a, na.rm = TRUE)), df),
+    rel_translate(expr(sum(na.rm = TRUE, a)), df),
     rel_translate(expr(sum(a, na.rm = TRUE)), df)
   )
 
@@ -414,12 +414,11 @@ test_that("strftime with named arguments", {
   )
 })
 
-test_that("coalesce with named arguments works via passthrough", {
+test_that("coalesce with two arguments works", {
   df <- data.frame(a = c(1, NA), b = c(NA, 2))
 
-  # coalesce just uses positional args (via ...)
-  expect_identical(
-    rel_translate(quo(coalesce(a, b)), df),
+  # coalesce uses positional args (via ...) and translates correctly
+  expect_snapshot({
     rel_translate(quo(coalesce(a, b)), df)
-  )
+  })
 })
