@@ -96,13 +96,6 @@ test_that("can't rename while partially `duckplyr_ungroup()`-ing (#6606)", {
   })
 })
 
-test_that(".dots is soft deprecated", {
-  rlang::local_options(lifecycle_verbosity = "warning")
-
-  df <- tibble(x = 1, y = 1)
-  expect_warning(gf <- duckplyr_group_by(df, .dots = "x"), "deprecated")
-})
-
 # Test full range of variable types --------------------------------------------
 
 
