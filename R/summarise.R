@@ -77,9 +77,7 @@ summarise.duckplyr_df <- function(.data, ..., .by = NULL, .groups = NULL) {
   cols <- summarise_cols(.data, dplyr_quosures(...), by, "summarise")
   out <- summarise_build(by, cols)
 
-  if (!cols$all_one) {
-    summarise_deprecate_variable_size()
-  }
+  # summarise_deprecate_variable_size() call removed with dplyr 1.2.0
 
   if (!is_tibble(.data)) {
     # The `by` group data we build from is always a tibble,

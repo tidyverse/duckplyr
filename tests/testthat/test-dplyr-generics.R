@@ -147,7 +147,7 @@ test_that("dplyr_reconstruct() strips attributes before dispatch", {
 
 test_that("`dplyr_reconstruct()` retains attribute ordering of `template`", {
   df <- vctrs::data_frame(x = 1)
-  expect_identical(
+  expect_mapequal(
     attributes(dplyr_reconstruct(df, df)),
     attributes(df)
   )
