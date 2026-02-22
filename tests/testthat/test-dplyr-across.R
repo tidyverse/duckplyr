@@ -565,6 +565,7 @@ test_that("functions defined inline can use columns (#5734)", {
 
 test_that("if_any() and if_all() do not enforce logical", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
+  skip("dplyr 1.2.0")
   # We used to coerce to logical using vctrs. Now we use base
   # semantics because we expand `if_all(x:y)` to `x & y`.
   d <- data.frame(x = 10, y = 10)
@@ -962,6 +963,7 @@ test_that("if_all() on zero-column selection behaves like all() (#7059)", {
 
 test_that("if_any() and if_all() wrapped deal with no inputs or single inputs", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
+  skip("dplyr 1.2.0")
   d <- data.frame(x = 1)
 
   # No inputs
@@ -1136,6 +1138,7 @@ test_that("expand_across() expands lambdas", {
 })
 
 test_that("expand_if_across() expands lambdas", {
+  skip("dplyr 1.2.0")
   quo <- quo(if_any(c(cyl, am), ~ . > 4))
   quo <- new_dplyr_quosure(
     quo,

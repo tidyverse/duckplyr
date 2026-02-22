@@ -2,6 +2,9 @@
 library(tidyverse)
 library(rlang)
 
+# Turn off help links in functions
+options(constructive_pretty = FALSE)
+
 dplyr <- asNamespace("dplyr")
 
 s3_methods <- as_tibble(
