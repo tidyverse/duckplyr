@@ -481,7 +481,7 @@ duckplyr::flights_df() |>
 #> # A duckplyr data frame: 1 variable
 #>   `paste(day, collapse = " ")`                                         
 #>   <chr>                                                                
-#> 1 5 9 11 14 15 16 17 22 26 30 31 3 4 6 12 20 23 24 1 7 8 13 19 21 25 2…
+#> 1 5 9 11 14 15 16 17 22 26 30 31 2 10 18 28 29 3 4 6 12 20 23 24 1 7 8…
 
 duckplyr::flights_df() |>
   distinct(day) |>
