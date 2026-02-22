@@ -1,14 +1,19 @@
 # Compute results to a Parquet file
 
-For a duckplyr frame, this function executes the query and stores the
-results in a Parquet file, without converting it to an R data frame. The
-result is a duckplyr frame that can be used with subsequent dplyr verbs.
-This function can also be used as a Parquet writer for regular data
-frames.
+This is a generic function that executes a query and stores the results
+in a Parquet file. For a duckplyr frame, the materialization occurs
+outside of R. The result is a duckplyr frame that can be used with
+subsequent dplyr verbs.
 
 ## Usage
 
 ``` r
+compute_parquet(x, path, ...)
+
+# S3 method for class 'duckplyr_df'
+compute_parquet(x, path, ..., prudence = NULL, options = NULL)
+
+# S3 method for class 'data.frame'
 compute_parquet(x, path, ..., prudence = NULL, options = NULL)
 ```
 
@@ -16,7 +21,7 @@ compute_parquet(x, path, ..., prudence = NULL, options = NULL)
 
 - x:
 
-  A duckplyr frame.
+  A data frame or lazy data frame.
 
 - path:
 
@@ -24,7 +29,7 @@ compute_parquet(x, path, ..., prudence = NULL, options = NULL)
 
 - ...:
 
-  These dots are for future extensions and must be empty.
+  Additional arguments passed to methods.
 
 - prudence:
 
@@ -53,7 +58,7 @@ compute_parquet(x, path, ..., prudence = NULL, options = NULL)
 
 ## Value
 
-A duckplyr frame.
+A data frame (the class may vary based on the input).
 
 ## See also
 
