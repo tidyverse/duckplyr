@@ -405,6 +405,30 @@ tibble(a = c(NA, NaN)) |>
   mutate(is.na(a))
 ```
 
+### Row names
+
+DuckDB does not support data frames with row names.
+When converting a data frame with row names to a duckplyr data frame, the row names are silently stripped.
+This is relevant when working with data frames that have row names, such as `mtcars`.
+
+```{r}
+# mtcars has character row names
+head(rownames(mtcars))
+# After conversion, the row names are lost
+mtcars |>
+  duckplyr::as_duckdb_tibble() |>
+  head()
+```
+
+To preserve row names, convert them to a column before using duckplyr:
+
+```{r}
+mtcars |>
+  tibble::rownames_to_column("name") |>
+  duckplyr::as_duckdb_tibble() |>
+  head()
+```
+
 ### Other differences
 
 Does the same pipeline give different results with `tibble()` and `duckdb_tibble()`?

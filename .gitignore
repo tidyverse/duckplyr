@@ -3,4 +3,5 @@
 /docs
 inst/doc
 README_cache/
-..Rcheck
+*.tar.gz
+*.Rcheck/
