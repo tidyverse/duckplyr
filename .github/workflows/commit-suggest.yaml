@@ -70,6 +70,8 @@ jobs:
           gh run download ${{ github.event.workflow_run.id }} --repo ${{ github.repository }} --name changes-patch && patch -p1 < changes.patch && rm changes.patch
           ```
 
+          Repo owners can also apply the patch directly by adding a comment with the command `/apply-patch`.
+
           ### Method 2: View the patch
 
           <details>
