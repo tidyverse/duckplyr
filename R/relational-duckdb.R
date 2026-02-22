@@ -62,8 +62,14 @@ duckdb_rel_from_df <- function(df, call = caller_env()) {
     df <- as_duckplyr_df_impl(df)
   }
 
-  out <- check_df_for_rel(df, call)
+  con <- get_default_duckdb_connection()
 
+  # FIXME: For some reason, it seems crucial to assign the result to a
+  # variable before returning it
+  experimental <- (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE")
+  out <- duckdb$rel_from_df(con, df, experimental = experimental)
+
+  check_df_for_rel(out, df, call)
   meta_rel_register_df(out, df)
 
   out
@@ -72,16 +78,9 @@ duckdb_rel_from_df <- function(df, call = caller_env()) {
   # duckdb$rel_from_df(get_default_duckdb_connection(), df)
 }
 
-# FIXME: This should be duckdb's responsibility
-check_df_for_rel <- function(df, call = caller_env()) {
-  rni <- .row_names_info(df, 0L)
-  if (is.character(rni)) {
-    cli::cli_abort("Need data frame without row names to convert to relational, got character row names.", call = call)
-  }
-  if (length(rni) != 0) {
-    if (length(rni) != 2L || !is.na(rni[[1]])) {
-      cli::cli_abort("Need data frame without row names to convert to relational, got numeric row names.", call = call)
-    }
+check_df_for_rel <- function(rel, df, call = caller_env()) {
+  if (Sys.getenv("DUCKPLYR_CHECK_ROUNDTRIP") != "TRUE") {
+    return()
   }
 
   if (length(df) == 0L) {
@@ -400,12 +399,7 @@ to_duckdb_expr <- function(x) {
       out
     },
     relational_relexpr_constant = {
-      # FIXME: Should be duckdb's responsibility
-      # Example: https://github.com/dschafer/activatr/issues/18
-      check_df_for_rel(vctrs::new_data_frame(list(constant = x$val)))
-
       out <- duckdb$expr_constant(x$val)
-
       if (!is.null(x$alias)) {
         duckdb$expr_set_alias(out, x$alias)
       }
