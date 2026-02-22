@@ -1,0 +1,98 @@
+name: apply-patch.yaml
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  apply-patch:
+    name: apply-patch
+    runs-on: ubuntu-latest
+    if: |
+      github.event.issue.pull_request != null &&
+      startsWith(github.event.comment.body, '/apply-patch')
+
+    steps:
+      - name: Check commenter permissions
+        id: check-permissions
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PERMISSION=$(gh api "repos/${{ github.repository }}/collaborators/${{ github.event.comment.user.login }}/permission" \
+            --jq '.permission' 2>/dev/null || echo "none")
+          if [[ "$PERMISSION" == "admin" || "$PERMISSION" == "write" ]]; then
+            echo "authorized=true" >> $GITHUB_OUTPUT
+          else
+            echo "authorized=false" >> $GITHUB_OUTPUT
+            echo "User ${{ github.event.comment.user.login }} does not have write access (permission: $PERMISSION)"
+          fi
+        shell: bash
+
+      - name: Checkout repository
+        if: steps.check-permissions.outputs.authorized == 'true'
+        uses: actions/checkout@v4
+
+      - name: Fetch PR branch
+        if: steps.check-permissions.outputs.authorized == 'true'
+        uses: r-lib/actions/pr-fetch@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract run ID from bot comment
+        if: steps.check-permissions.outputs.authorized == 'true'
+        id: find-run
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER=${{ github.event.issue.number }}
+          # Find the most recent PR comment that contains a "gh run download <run-id>" command
+          RUN_ID=$(gh api "repos/${{ github.repository }}/issues/${PR_NUMBER}/comments" \
+            --jq '[.[] | select(.body | test("gh run download [0-9]+")) | .body] | last | match("gh run download ([0-9]+)") | .captures[0].string')
+          if [ -z "$RUN_ID" ]; then
+            echo "::error::No 'gh run download <run-id>' command found in PR comments"
+            exit 1
+          fi
+          echo "run_id=$RUN_ID" >> $GITHUB_OUTPUT
+          echo "Found run ID: $RUN_ID"
+        shell: bash
+
+      - name: Download patch artifact
+        if: steps.check-permissions.outputs.authorized == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh run download ${{ steps.find-run.outputs.run_id }} \
+            --repo ${{ github.repository }} \
+            --name changes-patch \
+            --dir .
+        shell: bash
+
+      - name: Configure git identity
+        if: steps.check-permissions.outputs.authorized == 'true'
+        run: |
+          git config --local user.name "$GITHUB_ACTOR"
+          git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
+        shell: bash
+
+      - name: Apply patch and commit
+        if: steps.check-permissions.outputs.authorized == 'true'
+        run: |
+          git apply changes.patch
+          rm changes.patch
+          if [ -n "$(git status --porcelain)" ]; then
+            git add -A
+            git commit -m "Apply formatting patch [skip ci]"
+          else
+            echo "No changes after applying patch — already up to date"
+          fi
+        shell: bash
+
+      - name: Push to PR branch
+        if: steps.check-permissions.outputs.authorized == 'true'
+        uses: r-lib/actions/pr-push@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
