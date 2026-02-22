@@ -143,19 +143,7 @@ rel_find_packages <- function(name) {
   # Remember to update limits.Rmd when adding new functions!
 }
 
-# Operators and primitives that don't need call_match() for named argument normalization
-rel_primitives <- c(
-  # Comparison operators
-  "<", "<=", ">", ">=", "==", "!=",
-  # Logical operators
-  "|", "&", "!",
-  # Arithmetic operators
-  "+", "-", "*", "/",
-  # Special functions
-  "(", "$", "%in%",
-  # Aggregation functions with ... signatures (handled specially with custom definitions)
-  "sum", "min", "max", "any", "all", "mean", "sd", "median", "n_distinct"
-)
+
 
 rel_find_call_candidates <- function(fun, call = caller_env()) {
   name <- as.character(fun)
@@ -305,13 +293,16 @@ rel_translate_lang <- function(
     }
   }
 
-  # Apply call_match() to normalize named arguments for non-primitive functions
-  # For primitives/operators, skip call_match and rely on positional argument handling
-  if (!(name %in% rel_primitives)) {
-    # Get function definition from the package namespace
-    fn_def <- get0(name, envir = asNamespace(pkg), mode = "function")
-    if (!is.null(fn_def)) {
-      expr <- call_match(expr, fn_def, dots_env = env)
+  # Apply call_match() unconditionally to normalize named arguments
+  fn_def <- get0(name, envir = asNamespace(pkg), mode = "function")
+  if (!is.null(fn_def)) {
+    # Use args() for primitives whose formals() returns NULL
+    fn_for_match <- fn_def
+    if (is.null(formals(fn_def))) {
+      fn_for_match <- args(fn_def)
+    }
+    if (!is.null(fn_for_match)) {
+      expr <- call_match(expr, fn_for_match, dots_env = env)
     }
   }
 
@@ -473,21 +464,17 @@ rel_translate_lang <- function(
   # Other primitives: prod, range
   # Other aggregates: var(), cum*(), quantile()
   if (name %in% c("sum", "min", "max", "any", "all", "mean", "sd", "median", "n_distinct")) {
-    is_primitive <- (name %in% c("sum", "min", "max", "any", "all"))
+    has_dots_data <- (name %in% c("sum", "min", "max", "any", "all", "n_distinct"))
 
-    if (is_primitive) {
-      def_primitive <- function(..., na.rm = FALSE) {}
-      def <- def_primitive
+    if (has_dots_data) {
       good_names <- c("", "na.rm")
       unnamed_args <- 1
     } else {
-      def_regular <- function(x, ..., na.rm = FALSE) {}
-      def <- def_regular
       good_names <- c("x", "na.rm")
       unnamed_args <- 0
     }
 
-    expr <- call_match(expr, def, dots_env = env)
+    # call_match() already applied above
     args <- as.list(expr[-1])
     bad <- !(names(args) %in% good_names)
     if (sum(names2(args) == "") != unnamed_args) {
@@ -497,9 +484,11 @@ rel_translate_lang <- function(
       cli::cli_abort("{.code {name}({names(args)[which(bad)[[1]]]} = )} not supported", call = call)
     }
 
-    na_rm <- FALSE
-    if (length(args) > 1) {
-      na_rm <- eval(args[[2]], env)
+    na_rm_expr <- expr$na.rm
+    if (!is.null(na_rm_expr)) {
+      na_rm <- eval(na_rm_expr, env)
+    } else {
+      na_rm <- FALSE
     }
 
     if (window) {
@@ -533,7 +522,7 @@ rel_translate_lang <- function(
   args <- map(as.list(expr[-1]), do_translate, in_window = in_window || window)
 
   if (name == "grepl") {
-    if (!inherits(args[[1]], "relational_relexpr_constant")) {
+    if (!inherits(args$pattern, "relational_relexpr_constant")) {
       cli::cli_abort("Only constant patterns are supported in {.fun grepl}", call = call)
     }
   }
