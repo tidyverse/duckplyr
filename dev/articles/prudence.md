@@ -92,7 +92,7 @@ system.time(
     )
 )
 #>    user  system elapsed 
-#>   0.011   0.004   0.016
+#>   0.014   0.002   0.015
 ```
 
 Setting up the pipeline is fast, the size of the data does not affect
@@ -229,7 +229,7 @@ system.time(
     )
 )
 #>    user  system elapsed 
-#>   0.034   0.012   0.046
+#>   0.039   0.007   0.046
 ```
 
 See also the [duckplyr: dplyr Powered by

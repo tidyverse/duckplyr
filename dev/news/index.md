@@ -1,5 +1,13 @@
 # Changelog
 
+## duckplyr 1.1.3.9008 (2026-01-26)
+
+### Chore
+
+- Migrate from deprecated qs to qs2
+  ([\#846](https://github.com/tidyverse/duckplyr/issues/846),
+  [\#847](https://github.com/tidyverse/duckplyr/issues/847)).
+
 ## duckplyr 1.1.3.9007 (2026-01-14)
 
 ### Continuous integration

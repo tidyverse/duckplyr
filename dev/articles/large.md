@@ -125,7 +125,7 @@ DBI::dbWriteTable(con, "data", data.frame(x = 1:3, y = letters[1:3]))
 dbplyr_data <- tbl(con, "data")
 dbplyr_data
 #> # Source:   table<"data"> [?? x 2]
-#> # Database: DuckDB 1.4.3 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpPXjjkQ/file3c0944848c25.duckdb]
+#> # Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpLV6PaT/file3d485718cf4a.duckdb]
 #>       x y    
 #>   <int> <chr>
 #> 1     1 a    
@@ -231,6 +231,17 @@ duckdb_tibble(a = 1) |>
 ``` r
 readr::read_csv("a\n1", show_col_types = FALSE) |>
   as_duckdb_tibble()
+#> Warning: The `file` argument of `read_csv()` should use `I()` for literal data
+#> as of readr 2.2.0.
+#>   
+#>   # Bad (for example):
+#>   read_csv("x,y\n1,2")
+#>   
+#>   # Good:
+#>   read_csv(I("x,y\n1,2"))
+#> This warning is displayed once per session.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning
+#> was generated.
 #> Error in `as_duckdb_tibble()` at duckplyr/R/ducktbl.R:75:3:
 #> ! The input is data read by readr, and duckplyr supports
 #>   reading CSV files directly.
