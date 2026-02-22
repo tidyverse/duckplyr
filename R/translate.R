@@ -1,5 +1,60 @@
 # Documented in `.github/CONTRIBUTING.md`
 
+duckplyr_macros <- c(
+  # https://github.com/duckdb/duckdb-r/pull/156
+  "___null" = "() AS CAST(NULL AS BOOLEAN)",
+  #
+  "<" = "(x, y) AS (x < y)",
+  "<=" = "(x, y) AS (x <= y)",
+  ">" = "(x, y) AS (x > y)",
+  ">=" = "(x, y) AS (x >= y)",
+  "==" = "(x, y) AS (x == y)",
+  "!=" = "(x, y) AS (x != y)",
+  #
+  "___divide" = "(x, y) AS CASE WHEN y = 0 THEN CASE WHEN x = 0 THEN CAST('NaN' AS double) WHEN x > 0 THEN CAST('+Infinity' AS double) ELSE CAST('-Infinity' AS double) END ELSE CAST(x AS double) / y END",
+  #
+  "is.na" = "(x) AS (x IS NULL)",
+  "n" = "() AS CAST(COUNT(*) AS int32)",
+  #
+  "___log10" = "(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE log10(x) END",
+  "___log" = "(x) AS CASE WHEN x < 0 THEN CAST('NaN' AS double) WHEN x = 0 THEN CAST('-Inf' AS double) ELSE ln(x) END",
+  # TPCH
+
+  # https://github.com/duckdb/duckdb/discussions/8599
+  # "as.Date" = '(x) AS strptime(x, \'%Y-%m-%d\')',
+
+  "sub" = "(pattern, replacement, x) AS (regexp_replace(x, pattern, replacement))",
+  "gsub" = "(pattern, replacement, x) AS (regexp_replace(x, pattern, replacement, 'g'))",
+  "grepl" = "(pattern, x) AS (CASE WHEN x IS NULL THEN FALSE ELSE regexp_matches(x, pattern) END)",
+  "if_else" = "(test, yes, no) AS (CASE WHEN test IS NULL THEN NULL ELSE CASE WHEN test THEN yes ELSE no END END)",
+  "|" = "(x, y) AS (x OR y)",
+  "&" = "(x, y) AS (x AND y)",
+  "!" = "(x) AS (NOT x)",
+  #
+  "wday" = "(x) AS CAST(weekday(CAST (x AS DATE)) + 1 AS int32)",
+  #
+  "___eq_na_matches_na" = "(x, y) AS (x IS NOT DISTINCT FROM y)",
+  "___coalesce" = "(x, y) AS COALESCE(x, y)",
+  #
+  # FIXME: Need a better way?
+  "suppressWarnings" = "(x) AS (x)",
+  #
+  "___sum_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE SUM(x) END)",
+  "___min_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE MIN(x) END)",
+  "___max_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE MAX(x) END)",
+  "___any_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE bool_or(x) END)",
+  "___all_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE bool_and(x) END)",
+  "___mean_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE AVG(x) END)",
+  "___sd_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE STDDEV(x) END)",
+  "___median_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE percentile_cont(0.5) WITHIN GROUP (ORDER BY x) END)",
+  #
+  # In n_distinct() many NAs count as 1 if not filtered out with na.rm = TRUE
+  "___n_distinct_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN (COUNT(DISTINCT x)+1) ELSE COUNT(DISTINCT x) END)",
+  "___n_distinct" = "(x) AS (COUNT(DISTINCT x))",
+  #
+  NULL
+)
+
 rel_find_packages <- function(name) {
   # Remember to update limits.Rmd when adding new functions!
   switch(name,
@@ -99,6 +154,20 @@ rel_find_packages <- function(name) {
   # Remember to update limits.Rmd when adding new functions!
 }
 
+# Operators and primitives that don't need call_match() for named argument normalization
+rel_primitives <- c(
+  # Comparison operators
+  "<", "<=", ">", ">=", "==", "!=",
+  # Logical operators
+  "|", "&", "!",
+  # Arithmetic operators
+  "+", "-", "*", "/",
+  # Special functions
+  "(", "$", "%in%",
+  # Aggregation functions with ... signatures (handled specially with custom definitions)
+  "sum", "min", "max", "any", "all", "mean", "sd", "median", "n_distinct"
+)
+
 rel_find_call_candidates <- function(fun, call = caller_env()) {
   name <- as.character(fun)
 
@@ -115,9 +184,8 @@ rel_find_call_candidates <- function(fun, call = caller_env()) {
   } else if (name[[1]] == "::") {
     my_pkg <- name[[2]]
     name <- name[[3]]
-    pkgs <- rel_find_packages(name)
 
-    if (my_pkg %in% pkgs) {
+    if (my_pkg == "dd" || my_pkg %in% rel_find_packages(name)) {
       # Package name provided by the user, shortcut if found in list of packages
       # (requires non-NULL pkgs), no check needed
       return(list(
@@ -217,8 +285,15 @@ rel_translate_lang <- function(
 
   # Special case: passthrough to DuckDB
   if (pkg == "dd") {
+    args_r <- as.list(expr[-1])
+
     # FIXME: How to deal with window functions?
-    args <- map(as.list(expr[-1]), do_translate, in_window = in_window)
+    args <- map(args_r, do_translate, in_window = in_window)
+
+    if (!is.null(names(args_r))) {
+      need_names <- (names(args_r) != "")
+      args[need_names] <- map2(args[need_names], names(args_r)[need_names], relexpr_set_alias)
+    }
     fun <- relexpr_function(name, args)
     return(fun)
   }
@@ -241,11 +316,13 @@ rel_translate_lang <- function(
     }
   }
 
-
-  if (!(name %in% c("wday", "strftime", "lag", "lead", "sum", "min", "max", "any", "all", "mean", "median", "sd", "n_distinct"))) {
-    if (!is.null(names(expr)) && any(names(expr) != "")) {
-      # Fix grepl() and sum()/min()/max() logic below when allowing matching by argument name
-      cli::cli_abort("Can't translate named argument {.code {name}({names(expr)[names(expr) != ''][[1]]} = )}.", call = call)
+  # Apply call_match() to normalize named arguments for non-primitive functions
+  # For primitives/operators, skip call_match and rely on positional argument handling
+  if (!(name %in% rel_primitives)) {
+    # Get function definition from the package namespace
+    fn_def <- get0(name, envir = asNamespace(pkg), mode = "function")
+    if (!is.null(fn_def)) {
+      expr <- call_match(expr, fn_def, dots_env = env)
     }
   }
 
@@ -258,22 +335,30 @@ rel_translate_lang <- function(
       if (!is.null(pkg) && pkg != "lubridate") {
         cli::cli_abort("Don't know how to translate {.code {pkg}::{name}}.", call = call)
       }
-      call <- call_match(expr, lubridate::wday, dots_env = env)
-      args <- as.list(call[-1])
+      # call_match() already applied above
+      args <- as.list(expr[-1])
       bad <- !(names(args) %in% c("x"))
       if (any(bad)) {
-        cli::cli_abort("{name}({names(args)[which(bad)[[1]]]} = ) not supported", call = call)
+        cli::cli_abort("{.code {name}({names(args)[which(bad)[[1]]]} = )} not supported", call = call)
       }
       if (!is.null(getOption("lubridate.week.start"))) {
         cli::cli_abort('{.code wday()} with {.code option("lubridate.week.start")} not supported', call = call)
       }
     },
     "strftime" = {
-      call <- call_match(expr, strftime, dots_env = env)
-      args <- as.list(call[-1])
+      # call_match() already applied above
+      args <- as.list(expr[-1])
       bad <- !(names(args) %in% c("x", "format"))
       if (any(bad)) {
-        cli::cli_abort("{name}({names(args)[which(bad)[[1]]]} = ) not supported", call = call)
+        cli::cli_abort("{.code {name}({names(args)[which(bad)[[1]]]} = )} not supported", call = call)
+      }
+    },
+    "if_else" = {
+      # call_match() already applied above; validate only supported args are used
+      args <- as.list(expr[-1])
+      bad <- !(names(args) %in% c("condition", "true", "false"))
+      if (any(bad)) {
+        cli::cli_abort("{.code {name}({names(args)[which(bad)[[1]]]} = )} not supported", call = call)
       }
     },
     "%in%" = {
@@ -301,7 +386,7 @@ rel_translate_lang <- function(
       consts <- map(values, do_translate)
       ops <- map(consts, ~ list(lhs, .x))
       cmp <- map(ops, relexpr_function, name = "r_base::==")
-      alt <- reduce(cmp, function(.x, .y) {
+      alt <- bisect_reduce(cmp, function(.x, .y) {
         relexpr_function("|", list(.x, .y))
       })
       coalesce <- relexpr_function("___coalesce", list(alt, relexpr_constant(has_na)))
@@ -379,8 +464,8 @@ rel_translate_lang <- function(
   offset_expr <- NULL
   default_expr <- NULL
   if (name %in% c("lag", "lead")) {
+    # call_match() already applied above; extract special arguments
     # x, n = 1L, default = NULL, order_by = NULL
-    expr <- call_match(expr, lag, dots_env = env)
 
     offset_expr <- relexpr_constant(expr$n %||% 1L)
     expr$n <- NULL

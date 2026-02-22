@@ -76,7 +76,7 @@ write_parsed <- function(x) {
     select(id, parsed) |>
     as_tibble()
 
-  qs::qsave(packed, path)
+  qs2::qs_save(packed, path)
 }
 
 fs::dir_create("gh-analysis/data/parsed")

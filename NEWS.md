@@ -1,8 +1,129 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# duckplyr 1.1.0.9000 (2025-05-09)
+# duckplyr 1.1.3.9008 (2026-01-26)
 
-- Switching to development version.
+## Chore
+
+- Migrate from deprecated qs to qs2 (#846, #847).
+
+
+# duckplyr 1.1.3.9007 (2026-01-14)
+
+## Continuous integration
+
+- Tweaks (#838).
+
+- Test all R versions on branches that start with cran- (#837).
+
+
+# duckplyr 1.1.3.9006 (2025-12-06)
+
+## Continuous integration
+
+- Revert to CRAN duckdb.
+
+- Fix remote.
+
+- Use dev duckdb.
+
+
+# duckplyr 1.1.3.9005 (2025-11-27)
+
+## Bug fixes
+
+- `transmute()` can reference new variables (#796, #819).
+
+## Chore
+
+- Move compatibility checks to duckdb (#721).
+
+## Continuous integration
+
+- Fix compatibility with duckdb 1.4.2.
+
+## Documentation
+
+- Add blog post to pkgdown config (#612, #827).
+
+- Document `row.names` incompatibility (#603, #825).
+
+- Add examples for specifying CSV column types by name (#775, #820).
+
+- Add superseded lifecycle badge to `transmute()` documentation (#364, #824).
+
+- Review contributing guide (#657).
+
+
+# duckplyr 1.1.3.9004 (2025-11-17)
+
+## Continuous integration
+
+- Install binaries from r-universe for dev workflow (#813).
+
+
+# duckplyr 1.1.3.9003 (2025-11-12)
+
+## Continuous integration
+
+- Fix reviewdog and add commenting workflow (#810).
+
+
+# duckplyr 1.1.3.9002 (2025-11-11)
+
+## Continuous integration
+
+- Use workflows for fledge (#807).
+
+
+# duckplyr 1.1.3.9001 (2025-11-08)
+
+## Continuous integration
+
+- Sync (#805).
+
+
+# duckplyr 1.1.3.9000 (2025-11-04)
+
+## fledge
+
+- CRAN release v1.1.3 (#803).
+
+
+# duckplyr 1.1.3 (2025-11-04)
+
+## Features
+
+- `read_file_duckdb()` only wraps `path` into a list if the length is not equal to one, to support `read_stat()`.
+
+## Continuous integration
+
+- Avoid example failing in R 4.2 and older.
+
+## Documentation
+
+- Add "Supported by Posit" badge.
+
+
+# duckplyr 1.1.2 (2025-09-17)
+
+## Features
+
+- Fully support `dd::...()` syntax (#795).
+
+- Threshold for `prudence = "thrifty"` is reduced to 1000 cells when the data comes from a remote data source.
+
+- Support named arguments for `dd::...()` functions.
+
+## Performance
+
+- Generate a more balanced expresion when translating `%in%` to avoid performance problems in duckdb v1.4.0.
+
+
+# duckplyr 1.1.1 (2025-07-29)
+
+## Chore
+
+- Fix CRAN failure with `_R_CHECK_THINGS_IN_OTHER_DIRS_=true`.
 
 
 # duckplyr 1.1.0 (2025-05-08)

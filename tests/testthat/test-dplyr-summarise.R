@@ -13,26 +13,6 @@ test_that("can use freshly create variables (#138)", {
   expect_equal(out$z, 6.5)
 })
 
-test_that("inputs are recycled (deprecated in 1.1.0)", {
-  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
-  local_options(lifecycle_verbosity = "quiet")
-
-  expect_equal(
-    tibble() %>% duckplyr_summarise(x = 1, y = 1:3, z = 1),
-    tibble(x = 1, y = 1:3, z = 1)
-  )
-
-  gf <- duckplyr_group_by(tibble(a = 1:2), a)
-  expect_equal(
-    gf %>% duckplyr_summarise(x = 1, y = 1:3, z = 1),
-    tibble(a = rep(1:2, each = 3), x = 1, y = c(1:3, 1:3), z = 1) %>% duckplyr_group_by(a)
-  )
-  expect_equal(
-    gf %>% duckplyr_summarise(x = seq_len(a), y = 1),
-    tibble(a = c(1L, 2L, 2L), x = c(1L, 1L, 2L), y = 1) %>% duckplyr_group_by(a)
-  )
-})
-
 test_that("works with empty data frames", {
   skip("TODO duckdb")
   # 0 rows
@@ -139,41 +119,6 @@ test_that("unnamed data frame results with 0 columns are ignored (#5084)", {
   expect_equal(df1 %>% duckplyr_summarise(empty3, y = mean(x)), df1 %>% duckplyr_summarise(y = mean(x)))
   expect_equal(df1 %>% duckplyr_group_by(x) %>% duckplyr_summarise(empty3), df1)
   expect_equal(df1 %>% duckplyr_group_by(x) %>% duckplyr_summarise(empty3, y = x + 1), duckplyr_mutate(df1, y = x + 1))
-})
-
-test_that("named data frame results with 0 columns participate in recycling (#6509)", {
-  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
-  local_options(lifecycle_verbosity = "quiet")
-
-  df <- tibble(x = 1:3)
-  gdf <- duckplyr_group_by(df, x)
-
-  empty <- tibble()
-  expect_identical(duckplyr_summarise(df, empty = empty), tibble(empty = empty))
-  expect_identical(duckplyr_summarise(df, x = sum(x), empty = empty), tibble(x = integer(), empty = empty))
-  expect_identical(duckplyr_summarise(df, empty = empty, x = sum(x)), tibble(empty = empty, x = integer()))
-
-  empty3 <- new_tibble(list(), nrow = 3L)
-  expect_identical(duckplyr_summarise(df, empty = empty3), tibble(empty = empty3))
-  expect_identical(duckplyr_summarise(df, x = sum(x), empty = empty3), tibble(x = c(6L, 6L, 6L), empty = empty3))
-  expect_identical(duckplyr_summarise(df, empty = empty3, x = sum(x)), tibble(empty = empty3, x = c(6L, 6L, 6L)))
-
-  expect_identical(
-    duckplyr_summarise(gdf, empty = empty, .groups = "drop"),
-    tibble(x = integer(), empty = empty)
-  )
-  expect_identical(
-    duckplyr_summarise(gdf, y = x + 1L, empty = empty, .groups = "drop"),
-    tibble(x = integer(), y = integer(), empty = empty)
-  )
-  expect_identical(
-    duckplyr_summarise(gdf, empty = empty3, .groups = "drop"),
-    tibble(x = vec_rep_each(1:3, 3), empty = vec_rep(empty3, 3))
-  )
-  expect_identical(
-    duckplyr_summarise(gdf, y = x + 1L, empty = empty3, .groups = "drop"),
-    tibble(x = vec_rep_each(1:3, 3), y = vec_rep_each(2:4, 3), empty = vec_rep(empty3, 3))
-  )
 })
 
 test_that("can't overwrite column active bindings (#6666)", {
@@ -556,37 +501,4 @@ test_that("duckplyr_summarise() gives meaningful errors", {
     })
   }))
 
-})
-
-test_that("non-summary results are deprecated in favor of `duckplyr_reframe()` (#6382)", {
-  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
-  local_options(lifecycle_verbosity = "warning")
-
-  df <- tibble(g = c(1, 1, 2), x = 1:3)
-  gdf <- duckplyr_group_by(df, g)
-  rdf <- duckplyr_rowwise(df)
-
-  expect_snapshot({
-    out <- duckplyr_summarise(df, x = which(x < 3))
-  })
-  expect_identical(out$x, 1:2)
-
-  expect_snapshot({
-    out <- duckplyr_summarise(df, x = which(x < 3), .by = g)
-  })
-  expect_identical(out$g, c(1, 1))
-  expect_identical(out$x, 1:2)
-
-  # First group returns size 2 summary
-  expect_snapshot({
-    out <- duckplyr_summarise(gdf, x = which(x < 3))
-  })
-  expect_identical(out$g, c(1, 1))
-  expect_identical(out$x, 1:2)
-
-  # Last row returns size 0 summary
-  expect_snapshot({
-    out <- duckplyr_summarise(rdf, x = which(x < 3))
-  })
-  expect_identical(out$x, c(1L, 1L))
 })
