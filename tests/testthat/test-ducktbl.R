@@ -83,3 +83,21 @@ test_that("is_duckdb_tibble()", {
   expect_false(is_duckdb_tibble(tibble::tibble(a = 1)))
   expect_false(is_duckdb_tibble(data.frame(a = 1)))
 })
+
+test_that("transmute can access new variables", {
+  # https://github.com/tidyverse/duckplyr/issues/647
+  data <- duckdb_tibble(
+    g = c(1, 1, 2),
+    a = 1:3,
+    b = 2:4,
+    c = 3:5,
+    .prudence = "stingy"
+  )
+
+  result <- data |> transmute(g, d = a + b, e = d + c)
+
+  expect_named(result, c("g", "d", "e"))
+  expect_equal(collect(result)$g, c(1, 1, 2))
+  expect_equal(collect(result)$d, c(3L, 5L, 7L))
+  expect_equal(collect(result)$e, c(6L, 9L, 12L))
+})

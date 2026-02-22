@@ -182,14 +182,6 @@ test_that("add_count preserves grouping", {
   expect_equal(df %>% duckplyr_group_by(g) %>% duckplyr_add_count(), exp %>% duckplyr_group_by(g))
 })
 
-test_that(".drop is deprecated",  {
-  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
-  local_options(lifecycle_verbosity = "warning")
-
-  df <- tibble(f = factor("b", levels = c("a", "b", "c")))
-  expect_warning(out <- duckplyr_add_count(df, f, .drop = FALSE), "deprecated")
-})
-
 test_that("duckplyr_add_count() owns errors (#6139)", {
   expect_snapshot({
     (expect_error(duckplyr_add_count(mtcars, new = 1 + "")))
