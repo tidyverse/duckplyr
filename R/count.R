@@ -17,8 +17,10 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
     check_string(name, call = dplyr_error_call())
   }
 
+  wt <- enquo(wt)
+
   # Passing `name` reliably is surprisingly complicated.
-  duckplyr_error <- rel_try(list(name = "count", x = x, args = try_list(dots = enquos(...), wt = enquo(wt), sort = sort, .drop = .drop)),
+  duckplyr_error <- rel_try(list(name = "count", x = x, args = try_list(dots = enquos(...), wt = wt, sort = sort, .drop = .drop)),
     #' @section Fallbacks:
     #' There is no DuckDB translation in `count.duckplyr_df()`
     #' - with complex expressions in `...`,
@@ -39,7 +41,7 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
       if (name %in% by_chr) {
         cli::cli_abort("Name clash in `count()`")
       }
-      n <- tally_n(x, {{ wt }})
+      n <- tally_n(x, wt)
 
       groups <- rel_translate_dots(by, x)
       aggregates <- list(rel_translate(n, x, alias = name))
@@ -62,7 +64,7 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
   check_prudence(x, duckplyr_error)
 
   count <- dplyr$count.data.frame
-  out <- count(x, ..., wt = {{ wt }}, sort = sort, name = name, .drop = .drop)
+  out <- count(x, ..., wt = !!wt, sort = sort, name = name, .drop = .drop)
   return(out)
 
   # dplyr implementation
