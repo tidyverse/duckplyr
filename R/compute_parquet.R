@@ -1,20 +1,16 @@
 #' Compute results to a Parquet file
 #'
-#' For a duckplyr frame, this function executes the query
-#' and stores the results in a Parquet file,
-#' without converting it to an R data frame.
+#' This is a generic function that executes a query
+#' and stores the results in a Parquet file.
+#' For a duckplyr frame, the materialization occurs outside of R.
 #' The result is a duckplyr frame that can be used with subsequent dplyr verbs.
-#' This function can also be used as a Parquet writer for regular data frames.
 #'
 #' @inheritParams rlang::args_dots_empty
-#' @inheritParams compute.duckplyr_df
-#' @param x A duckplyr frame.
+#' @param x A data frame or lazy data frame.
 #' @param path The path of the Parquet file to create.
-#' @param options A list of additional options to pass to create the Parquet file,
-#'   see <https://duckdb.org/docs/sql/statements/copy.html#parquet-options>
-#'   for details.
+#' @param ... Additional arguments passed to methods.
 #'
-#' @return A duckplyr frame.
+#' @return A data frame (the class may vary based on the input).
 #'
 #' @export
 #' @examples
@@ -25,7 +21,18 @@
 #' df <- compute_parquet(df, path)
 #' explain(df)
 #' @seealso [compute_csv()], [compute.duckplyr_df()], [dplyr::collect()]
-compute_parquet <- function(x, path, ..., prudence = NULL, options = NULL) {
+compute_parquet <- function(x, path, ...) {
+  UseMethod("compute_parquet")
+}
+
+#' @inheritParams compute.duckplyr_df
+#' @param options A list of additional options to pass to create the Parquet file,
+#'   see <https://duckdb.org/docs/sql/statements/copy.html#parquet-options>
+#'   for details.
+#'
+#' @rdname compute_parquet
+#' @export
+compute_parquet.duckplyr_df <- function(x, path, ..., prudence = NULL, options = NULL) {
   check_dots_empty()
 
   if (is.null(options)) {
@@ -48,4 +55,11 @@ compute_parquet <- function(x, path, ..., prudence = NULL, options = NULL) {
   # Filter out write-only options before reading
   read_options <- options[setdiff(names(options), "partition_by")]
   read_parquet_duckdb(path, prudence = prudence, options = read_options)
+}
+
+#' @rdname compute_parquet
+#' @export
+compute_parquet.data.frame <- function(x, path, ..., prudence = NULL, options = NULL) {
+  x <- as_duckdb_tibble(x)
+  compute_parquet.duckplyr_df(x, path, ..., prudence = prudence, options = options)
 }

@@ -28,3 +28,19 @@ test_that("compute_parquet() with options passed to read", {
   expect_identical(out, as_duckdb_tibble(df))
   expect_identical(collect(out), as_tibble(df))
 })
+
+test_that("compute_parquet() is a generic function", {
+  expect_true(is.function(compute_parquet))
+  m <- methods("compute_parquet")
+  expect_true(any(grepl("compute_parquet.duckplyr_df", m)))
+  expect_true(any(grepl("compute_parquet.data.frame", m)))
+})
+
+test_that("compute_parquet() with duckplyr_df", {
+  df <- duckdb_tibble(x = c(1, 2))
+  withr::defer(unlink("test_duck.parquet"))
+  out <- compute_parquet(df, path = "test_duck.parquet")
+
+  expect_identical(collect(out), collect(df))
+  expect_true(inherits(out, "duckplyr_df"))
+})
