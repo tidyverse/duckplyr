@@ -52,7 +52,9 @@ compute_csv.duckplyr_df <- function(x, path, ..., prudence = NULL, options = NUL
     path <- file.path(path, "**", "**.csv")
   }
 
-  read_csv_duckdb(path, prudence = prudence)
+  # Filter out write-only options before reading
+  read_options <- options[setdiff(names(options), "partition_by")]
+  read_csv_duckdb(path, prudence = prudence, options = read_options)
 }
 
 #' @rdname compute_csv
