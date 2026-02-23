@@ -846,6 +846,10 @@ test_extra_arg_map <- list(
     "d = row_number()",
     "d = row_number(), .by = g",
 
+    # n() returns integer
+    "d = n()",
+    "d = n(), .by = g",
+
     # .data adverb
     "c = .data$b",
 
