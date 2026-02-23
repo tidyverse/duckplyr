@@ -462,9 +462,17 @@ rel_translate_lang <- function(
     aliased_name <- name
   }
 
+  # In aggregate context (not window), use DuckDB aggregate functions
+  # instead of window function aliases
+  if (!window) {
+    if (name == "first") aliased_name <- "first"
+    else if (name == "last") aliased_name <- "last"
+  }
+
   order_bys <- list()
   offset_expr <- NULL
   default_expr <- NULL
+  nth_n <- NULL
   if (name %in% c("lag", "lead", "first", "last", "nth")) {
     # call_match() already applied above; extract special arguments
     # x, n = 1L, default = NULL, order_by = NULL
@@ -474,13 +482,24 @@ rel_translate_lang <- function(
       expr$n <- NULL
     }
 
+    if (name == "nth" && !window) {
+      # Extract n as integer for aggregate context (array_extract requires BIGINT)
+      nth_n <- relexpr_constant(as.integer(expr$n))
+      expr$n <- NULL
+    }
+
     if (!is.null(expr$default)) {
       default_expr <- do_translate(expr$default, in_window = TRUE)
       expr$default <- NULL
     }
 
     if (!is.null(expr$order_by)) {
-      order_bys <- list(do_translate(expr$order_by, in_window = TRUE))
+      order_by_expr <- expr$order_by
+      if (is_desc(order_by_expr, env, call)) {
+        order_bys <- list(relexpr_function("-", list(do_translate(order_by_expr[[2]], in_window = in_window || window))))
+      } else {
+        order_bys <- list(do_translate(order_by_expr, in_window = in_window || window))
+      }
       expr$order_by <- NULL
     }
   }
@@ -553,7 +572,18 @@ rel_translate_lang <- function(
     }
   }
 
-  fun <- relexpr_function(aliased_name, args)
+  # Special handling for nth() in aggregate context (not window):
+  # translate to array_extract(list(x ORDER BY ...), n)
+  if (name == "nth" && !window) {
+    x_arg <- args[[1]]
+    list_agg <- relexpr_function("list", list(x_arg), order_bys = order_bys)
+    fun <- relexpr_function("array_extract", list(list_agg, nth_n))
+  } else if (!window && name %in% c("first", "last") && length(order_bys) > 0) {
+    # first()/last() in aggregate context: pass order_bys to aggregate function
+    fun <- relexpr_function(aliased_name, args, order_bys = order_bys)
+  } else {
+    fun <- relexpr_function(aliased_name, args)
+  }
   if (window) {
     partitions <- map(partition, relexpr_reference)
     fun <- relexpr_window(
