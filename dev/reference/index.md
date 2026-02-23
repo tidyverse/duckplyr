@@ -14,6 +14,8 @@
   : Read JSON files using DuckDB
 - [`read_file_duckdb()`](https://duckplyr.tidyverse.org/dev/reference/read_file_duckdb.md)
   : Read files using DuckDB
+- [`read_tbl_duckdb()`](https://duckplyr.tidyverse.org/dev/reference/read_tbl_duckdb.md)
+  **\[experimental\]** : Read a table from a DuckDB database file
 - [`read_sql_duckdb()`](https://duckplyr.tidyverse.org/dev/reference/read_sql_duckdb.md)
   **\[experimental\]** : Return SQL query as duckdb_tibble
 

@@ -1,5 +1,44 @@
 # Changelog
 
+## duckplyr 1.1.3.9009 (2026-02-23)
+
+### Features
+
+- Turn
+  [`compute_parquet()`](https://duckplyr.tidyverse.org/dev/reference/compute_parquet.md)
+  and
+  [`compute_csv()`](https://duckplyr.tidyverse.org/dev/reference/compute_csv.md)
+  into generic S3 functions
+  ([\#746](https://github.com/tidyverse/duckplyr/issues/746),
+  [\#818](https://github.com/tidyverse/duckplyr/issues/818)).
+
+- Support functions with named arguments
+  ([\#822](https://github.com/tidyverse/duckplyr/issues/822)).
+
+### Chore
+
+- Bump dplyr dep.
+
+- Fix tests failing after dplyr 1.2.0 update
+  ([\#853](https://github.com/tidyverse/duckplyr/issues/853)).
+
+- Auto-update from GitHub Actions
+  ([\#852](https://github.com/tidyverse/duckplyr/issues/852)).
+
+### Continuous integration
+
+- Fancy button.
+
+- Add apply-patch command.
+
+### Documentation
+
+- Document internal workflows.
+
+### Testing
+
+- Snapshot updates ([@1741643](https://github.com/1741643)+krlmlr).
+
 ## duckplyr 1.1.3.9008 (2026-01-26)
 
 ### Chore
