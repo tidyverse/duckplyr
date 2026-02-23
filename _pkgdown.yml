@@ -33,6 +33,7 @@ reference:
   - read_csv_duckdb
   - read_json_duckdb
   - read_file_duckdb
+  - read_tbl_duckdb
   - read_sql_duckdb
 
 - title: dplyr verbs
