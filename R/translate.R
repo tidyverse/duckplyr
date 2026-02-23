@@ -465,12 +465,14 @@ rel_translate_lang <- function(
   order_bys <- list()
   offset_expr <- NULL
   default_expr <- NULL
-  if (name %in% c("lag", "lead")) {
+  if (name %in% c("lag", "lead", "first", "last", "nth")) {
     # call_match() already applied above; extract special arguments
     # x, n = 1L, default = NULL, order_by = NULL
 
-    offset_expr <- relexpr_constant(expr$n %||% 1L)
-    expr$n <- NULL
+    if (name %in% c("lag", "lead")) {
+      offset_expr <- relexpr_constant(expr$n %||% 1L)
+      expr$n <- NULL
+    }
 
     if (!is.null(expr$default)) {
       default_expr <- do_translate(expr$default, in_window = TRUE)
