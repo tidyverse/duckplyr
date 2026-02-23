@@ -38,7 +38,6 @@ duckplyr_macros <- c(
   #
   # FIXME: Need a better way?
   "suppressWarnings" = "(x) AS (x)",
-  "identity" = "(x) AS (x)",
   #
   "___sum_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE SUM(x) END)",
   "___min_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN NULL ELSE MIN(x) END)",
@@ -126,7 +125,6 @@ rel_find_packages <- function(name) {
     "any" = "base",
     "all" = "base",
     "suppressWarnings" = "base",
-    "identity" = "base",
     "lag" = "dplyr",
     "lead" = "dplyr",
     "log10" = "base",

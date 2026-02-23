@@ -1,7 +1,7 @@
 # A simplified version of functions in dplyr's across.R
 
 duckplyr_expand_across <- function(data, quo) {
-  stopifnot(is.character(data) || is.data.frame(data))
+  stopifnot(is.character(data))
 
   quo_data <- attr(quo, "dplyr:::data")
   if (!quo_is_call(quo, "across", ns = c("", "dplyr")) || quo_data$is_named) {
@@ -127,25 +127,16 @@ duckplyr_across_setup <- function(data,
                                   names,
                                   .caller_env,
                                   error_call = caller_env()) {
-  # If data is a data frame, we can support where() predicates;
-  # otherwise (character vector), create a simple integer vector for selection
-  if (is.data.frame(data)) {
-    select_data <- data
-    allow_predicates <- TRUE
-  } else {
-    select_data <- set_names(seq_along(data), data)
-    allow_predicates <- FALSE
-  }
+  data <- set_names(seq_along(data), data)
 
   vars <- tidyselect::eval_select(
     cols,
-    data = select_data,
-    allow_predicates = allow_predicates,
+    data = data,
+    allow_predicates = FALSE,
     error_call = error_call
   )
-  data_names <- if (is.data.frame(data)) names(data) else data
   names_vars <- names(vars)
-  vars <- data_names[vars]
+  vars <- names(data)[vars]
 
   names_fns <- names(fns)
 
@@ -191,21 +182,6 @@ duckplyr_across_setup <- function(data,
 
 fn_to_expr <- function(fn, env) {
   fn_env <- environment(fn)
-
-  # Primitive functions (like sum, min, max) have NULL environments.
-  # Try to find them in the base namespace by identity comparison.
-  if (is.null(fn_env)) {
-    base_ns <- asNamespace("base")
-    base_exports <- getNamespaceExports(base_ns)
-    for (name in base_exports) {
-      obj <- get0(name, envir = base_ns, mode = "function")
-      if (identical(obj, fn)) {
-        return(call2("::", sym("base"), sym(name)))
-      }
-    }
-    return(fn)
-  }
-
   if (!is_namespace(fn_env)) {
     return(fn)
   }
@@ -242,13 +218,6 @@ get_ns_exports_lookup <- function(ns) {
   funs <- objs[map_lgl(objs, is.function)]
 
   hashes <- map_chr(funs, hash)
-
-  # Sort names alphabetically so that hash collisions are resolved
-  # deterministically. Later entries with the same hash overwrite
-  # earlier ones (e.g., "identity" overwrites "force").
-  ord <- order(names(hashes))
-  hashes <- hashes[ord]
-
   # Reverse, return as environment
   new_environment(set_names(as.list(names(hashes)), hashes))
 }

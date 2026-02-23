@@ -31,7 +31,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
         name_dot <- names_dots[[i]]
 
         # Try expanding this `dot` if we see it is an `across()` call
-        expanded <- duckplyr_expand_across(current_data, dot)
+        expanded <- duckplyr_expand_across(names(current_data), dot)
 
         if (is.null(expanded)) {
           # Nothing we can expand, create a list with just the 1 expression to

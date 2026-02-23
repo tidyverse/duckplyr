@@ -27,7 +27,7 @@ transmute.duckplyr_df <- function(.data, ...) {
         name_dot <- names_dots[[i]]
 
         # Try expanding this `dot` if we see it is an `across()` call
-        expanded <- duckplyr_expand_across(current_data, dot)
+        expanded <- duckplyr_expand_across(names(current_data), dot)
 
         if (is.null(expanded)) {
           quos <- set_names(list(dot), name_dot)
