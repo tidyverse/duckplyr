@@ -405,6 +405,12 @@ rel_translate_lang <- function(
       if (length(expr) != 3) {
         cli::cli_abort("Can only translate {.call coalesce(x, y)} with two arguments.", call = call)
       }
+    },
+    "nth" = {
+      n <- expr$n
+      if (!is.numeric(n) || length(n) != 1L || is.na(n) || n <= 0) {
+        cli::cli_abort("{.fun nth} can only be translated with a positive scalar {.arg n}", call = call)
+      }
     }
   )
 
