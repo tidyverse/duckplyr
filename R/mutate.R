@@ -13,7 +13,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
     {
       rel <- duckdb_rel_from_df(.data)
 
-      if (length(by_names) > 0) {
+      if (length(by_names) > 0 || oo_force()) {
         rel <- oo_prep(rel)
       }
 
@@ -74,7 +74,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
         current_data <- rel_to_df(rel, prudence = "stingy")
       }
 
-      if (length(by_names) > 0) {
+      if (length(by_names) > 0 || oo_force()) {
         rel <- oo_restore(rel)
       }
 
