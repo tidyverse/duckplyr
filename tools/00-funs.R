@@ -795,18 +795,6 @@ test_extra_arg_map <- list(
     "max(a, na.rm = TRUE)",
     "max(a, na.rm = TRUE), .by = g",
 
-    # FIXME: Implement
-    # "first(a)",
-    # "first(a), .by = g",
-    # "last(a)",
-    # "last(a), .by = g",
-    # "nth(a, 2)",
-    # "nth(a, 2), .by = g",
-
-    # Different results
-    # "nth(a, -2)",
-    # "nth(a, -2), .by = g",
-
     "a / b",
     # Division by zero
     "d = 0, e = 1 / d, f = 0 / d, g = -1 / d",
@@ -901,6 +889,26 @@ test_extra_arg_map <- list(
     "n = n(), n = n() + 1L",
     # "sum(a < 3)",
     # "sum(a < 3, .by = g)",
+
+    "first(a)",
+    "first(a), .by = g",
+    "first(a, order_by = a), .by = g",
+    # "first(a, desc(a)), .by = g",
+    "last(a)",
+    "last(a), .by = g",
+    "last(a, order_by = a), .by = g",
+    # "last(a, desc(a)), .by = g",
+    "nth(a, 2)",
+    "nth(a, 2), .by = g",
+    "nth(a, 2, order_by = a), .by = g",
+    # desc() not implemented
+    # "nth(a, 2, desc(a)), .by = g",
+
+    # DuckDB's NTH_VALUE() doesn't support negative n,
+    # and it doesn't return NA when n is out of bounds
+    # "nth(a, -2)",
+    # "nth(a, -2), .by = g",
+
     NULL
   ),
   tally = c(
