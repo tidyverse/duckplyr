@@ -120,3 +120,17 @@
     Output
       tibble(x = base::force(x), y = base::force(y))
 
+# duckplyr_expand_across() with where() predicates
+
+    Code
+      test_duckplyr_expand_across(df, across(where(is.numeric), mean))
+    Output
+      tibble(x = base::mean(x), y = base::mean(y))
+
+---
+
+    Code
+      test_duckplyr_expand_across(df, across(where(is.character), identity))
+    Output
+      tibble(z = base::force(z))
+
