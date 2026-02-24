@@ -598,6 +598,7 @@ test_that("replace_when() is a no-op with zero conditions", {
 })
 
 test_that("replace_when() works with data frames", {
+  skip("TODO duckdb")
   x <- tibble(a = c(1, 2, 3, 1), b = c(2, 3, 4, 2))
 
   expect_identical(

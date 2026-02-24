@@ -40,6 +40,7 @@ quo_eval_fns <- dplyr$quo_eval_fns
 sample_int <- dplyr$sample_int
 some <- dplyr$some
 tally_n <- dplyr$tally_n
+vec_case_match <- dplyr$vec_case_match
 
 # Only for dead legacy code?
 add_count_impl <- dplyr$add_count_impl

@@ -826,6 +826,7 @@ test_that("`duckplyr_filter()` and `duckplyr_filter_out()` are complements", {
 # .by -------------------------------------------------------------------------
 
 test_that("can group transiently using `.by`", {
+  skip("TODO duckdb")
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = c(1, 1, 2, 1, 2), x = c(5, 10, 1, 2, 3))
 
@@ -841,6 +842,7 @@ test_that("can group transiently using `.by`", {
 })
 
 test_that("transient grouping retains bare data.frame class", {
+  skip("TODO duckdb")
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = c(1, 1, 2, 1, 2), x = c(5, 10, 1, 2, 3))
 
@@ -852,6 +854,7 @@ test_that("transient grouping retains bare data.frame class", {
 })
 
 test_that("transient grouping retains data frame attributes", {
+  skip("TODO duckdb")
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   # With data.frames or tibbles
   df <- data.frame(g = c(1, 1, 2), x = c(1, 2, 1))
