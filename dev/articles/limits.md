@@ -54,7 +54,7 @@ input nor as a result.
 
 ``` r
 duckplyr::duckdb_tibble()
-#> Error in `duckdb_rel_from_df()` at duckplyr/R/duckplyr_df.R:20:5:
+#> Error in `duckdb_rel_from_df()` at duckplyr/R/duckplyr_df.R:26:5:
 #> ! rel_from_df: Can't convert empty data frame to relational.
 duckplyr::duckdb_tibble(a = 1, .prudence = "stingy") |>
   select(-a)
