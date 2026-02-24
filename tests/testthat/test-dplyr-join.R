@@ -65,7 +65,7 @@ test_that("keys are coerced to symmetric type", {
 })
 
 test_that("factor keys are coerced to the union factor type", {
-  skip("dplyr test not applicable to duckplyr")
+  skip("TODO duckdb")
   df1 <- tibble(x = 1, y = factor("a"))
   df2 <- tibble(x = 2, y = factor("b"))
   out <- duckplyr_full_join(df1, df2, by = c("x", "y"))

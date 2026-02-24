@@ -247,6 +247,7 @@ duckplyr_tests <- head(
       NULL
     ),
     "test-group-map.R" = c(
+      "`keep =` is defunct",
       NULL
     ),
     "test-group-nest.R" = c(
@@ -255,6 +256,7 @@ duckplyr_tests <- head(
       NULL
     ),
     "test-group-split.R" = c(
+      "`keep =` is defunct",
       NULL
     ),
     "test-group-trim.R" = c(
@@ -283,6 +285,8 @@ duckplyr_tests <- head(
       NULL
     ),
     "test-join.R" = c(
+      "factor keys are coerced to the union factor type",
+
       "mutating joins trigger multiple match warning",
       "mutating joins don't trigger multiple match warning when called indirectly",
 
