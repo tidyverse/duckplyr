@@ -11,6 +11,7 @@ func_decl <- function(name, formals) {
     add_count = c("wt"),
     count = c("wt"),
     filter = c(".by"),
+    filter_out = c(".by"),
     mutate = c(
       ".by",
       ".before",
