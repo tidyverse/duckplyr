@@ -540,14 +540,15 @@
       # n() as window function (no partition)
       rel_translate(expr(n()), df, need_window = TRUE)
     Output
-      List of 3
-       $ name : chr "r_base::as.integer"
-       $ args :List of 1
+      List of 4
+       $ name     : chr "r_base::as.integer"
+       $ args     :List of 1
         ..$ :List of 6
-        .. ..$ expr        :List of 3
-        .. .. ..$ name : chr "count_star"
-        .. .. ..$ args : list()
-        .. .. ..$ alias: NULL
+        .. ..$ expr        :List of 4
+        .. .. ..$ name     : chr "count_star"
+        .. .. ..$ args     : list()
+        .. .. ..$ order_bys: list()
+        .. .. ..$ alias    : NULL
         .. .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
         .. ..$ partitions  : list()
         .. ..$ order_bys   : list()
@@ -555,7 +556,8 @@
         .. ..$ default_expr: NULL
         .. ..$ alias       : NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_window" "relational_relexpr"
-       $ alias: NULL
+       $ order_bys: list()
+       $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr(0) 
 
@@ -565,14 +567,15 @@
       # n() as window function with partition
       rel_translate(expr(n()), df, need_window = TRUE, partition = "b")
     Output
-      List of 3
-       $ name : chr "r_base::as.integer"
-       $ args :List of 1
+      List of 4
+       $ name     : chr "r_base::as.integer"
+       $ args     :List of 1
         ..$ :List of 6
-        .. ..$ expr        :List of 3
-        .. .. ..$ name : chr "count_star"
-        .. .. ..$ args : list()
-        .. .. ..$ alias: NULL
+        .. ..$ expr        :List of 4
+        .. .. ..$ name     : chr "count_star"
+        .. .. ..$ args     : list()
+        .. .. ..$ order_bys: list()
+        .. .. ..$ alias    : NULL
         .. .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
         .. ..$ partitions  :List of 1
         .. .. ..$ :List of 3
@@ -585,7 +588,8 @@
         .. ..$ default_expr: NULL
         .. ..$ alias       : NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_window" "relational_relexpr"
-       $ alias: NULL
+       $ order_bys: list()
+       $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr(0) 
 
