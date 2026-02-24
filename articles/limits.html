@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,7 +52,15 @@
     <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul>
 </li>
-<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-news" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">News</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-news">
+<li><h6 class="dropdown-header" data-toc-skip>Releases</h6></li>
+    <li><a class="external-link dropdown-item" href="https://tidyverse.org/blog/2025/06/duckplyr-1-1-0/">Version 1.1.0</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="../news/index.html">Changelog</a></li>
+  </ul>
+</li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -74,7 +82,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Translations</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/tidyverse/duckplyr/blob/main/vignettes/limits.Rmd" class="external-link"><code>vignettes/limits.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidyverse/duckplyr/blob/cran-1.2.0/vignettes/limits.Rmd" class="external-link"><code>vignettes/limits.Rmd</code></a></small>
       <div class="d-none name"><code>limits.Rmd</code></div>
     </div>
 
@@ -128,8 +136,8 @@ be bypassed, see <code><a href="../articles/duckdb.html">vignette("duckdb")</a><
 as input nor as a result.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `duckplyr::duckdb_tibble()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't convert empty data frame to relational.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `duckdb_rel_from_df()` at duckplyr/R/duckplyr_df.R:26:5:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> rel_from_df: Can't convert empty data frame to relational.</span></span>
 <span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, .prudence <span class="op">=</span> <span class="st">"stingy"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">a</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select()`:</span></span></span>
@@ -393,9 +401,9 @@ positional matching is implemented.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 4 variables</span></span></span>
 <span><span class="co">#&gt;       a     b `lag(a, order_by = b)` `lead(a, order_by = b)`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     3     1                     <span style="color: #BB0000;">NA</span>                       1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     1     2                      3                       2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     2     3                      1                      <span style="color: #BB0000;">NA</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1     2                      3                       2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     2     3                      1                      <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3     1                     <span style="color: #BB0000;">NA</span>                       1</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="ranking">Ranking<a class="anchor" aria-label="anchor" href="#ranking"></a>
@@ -477,7 +485,7 @@ a constant with up to 100 values:</p>
 <span><span class="co">#&gt; │          ORDER_BY         │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │      dataframe_42_42      │</span></span>
-<span><span class="co">#&gt; │      32008990.a DESC      │</span></span>
+<span><span class="co">#&gt; │       4391854.a DESC      │</span></span>
 <span><span class="co">#&gt; └-------------┬-------------┘</span></span>
 <span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │     R_DATAFRAME_SCAN      │</span></span>
@@ -527,7 +535,7 @@ default.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 1 variable</span></span></span>
 <span><span class="co">#&gt;   `paste(day, collapse = " ")`                                         </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                                </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 5 9 11 14 15 16 17 22 26 30 31 2 10 18 28 29 3 4 6 12 20 23 24 1 7 8…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 5 9 11 14 15 16 17 22 26 30 31 2 10 18 28 29 1 7 8 13 19 21 25 27 3 …</span></span>
 <span></span>
 <span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/flights_df.html">flights_df</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -580,7 +588,7 @@ work.</p>
 <span><span class="co">#&gt; │          ORDER_BY         │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │      dataframe_42_42      │</span></span>
-<span><span class="co">#&gt; │ 42.___row_number ASC │</span></span>
+<span><span class="co">#&gt; │ 42.___row_number ASC│</span></span>
 <span><span class="co">#&gt; └-------------┬-------------┘</span></span>
 <span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
 <span><span class="co">#&gt; │         PROJECTION        │</span></span>
@@ -764,6 +772,49 @@ in duckplyr, while it returns <code>TRUE</code> in dplyr.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>   <span style="color: #BB0000;">NaN</span> TRUE</span></span></code></pre></div>
 </div>
 <div class="section level3">
+<h3 id="row-names">Row names<a class="anchor" aria-label="anchor" href="#row-names"></a>
+</h3>
+<p>DuckDB does not support data frames with row names. When converting a
+data frame with row names to a duckplyr data frame, the row names are
+silently stripped. This is relevant when working with data frames that
+have row names, such as <code>mtcars</code>.</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># mtcars has character row names</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Mazda RX4"         "Mazda RX4 Wag"     "Datsun 710"       </span></span>
+<span><span class="co">#&gt; [4] "Hornet 4 Drive"    "Hornet Sportabout" "Valiant"</span></span>
+<span><span class="co"># After conversion, the row names are lost</span></span>
+<span><span class="va">mtcars</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 11 variables</span></span></span>
+<span><span class="co">#&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>  21       6   160   110  3.9   2.62  16.5     0     1     4     4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>  21       6   160   110  3.9   2.88  17.0     0     1     4     4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>  22.8     4   108    93  3.85  2.32  18.6     1     1     4     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>  21.4     6   258   110  3.08  3.22  19.4     1     0     3     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>  18.7     8   360   175  3.15  3.44  17.0     0     0     3     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>  18.1     6   225   105  2.76  3.46  20.2     1     0     3     1</span></span></code></pre></div>
+<p>To preserve row names, convert them to a column before using
+duckplyr:</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames_to_column</a></span><span class="op">(</span><span class="st">"name"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 12 variables</span></span></span>
+<span><span class="co">#&gt;   name        mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Mazda RX4  21       6   160   110  3.9   2.62  16.5     0     1     4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Mazda RX…  21       6   160   110  3.9   2.88  17.0     0     1     4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Datsun 7…  22.8     4   108    93  3.85  2.32  18.6     1     1     4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Hornet 4…  21.4     6   258   110  3.08  3.22  19.4     1     0     3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Hornet S…  18.7     8   360   175  3.15  3.44  17.0     0     0     3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Valiant    18.1     6   225   105  2.76  3.46  20.2     1     0     3</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more variable: carb &lt;dbl&gt;</span></span></span></code></pre></div>
+</div>
+<div class="section level3">
 <h3 id="other-differences">Other differences<a class="anchor" aria-label="anchor" href="#other-differences"></a>
 </h3>
 <p>Does the same pipeline give different results with
@@ -784,7 +835,7 @@ hear about it, please file an <a href="https://github.com/tidyverse/duckplyr/iss
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.9000.</p>
 </div>
 
   </div></footer>

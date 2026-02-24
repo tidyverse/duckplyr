@@ -14,6 +14,9 @@ will be dropped, unlike base subsetting with `[`.
 ``` r
 # S3 method for class 'duckplyr_df'
 filter(.data, ..., .by = NULL, .preserve = FALSE)
+
+# S3 method for class 'duckplyr_df'
+filter_out(.data, ..., .by = NULL, .preserve = FALSE)
 ```
 
 ## Arguments
@@ -27,14 +30,17 @@ filter(.data, ..., .by = NULL, .preserve = FALSE)
 - ...:
 
   \<[`data-masking`](https://rlang.r-lib.org/reference/args_data_masking.html)\>
-  Expressions that return a logical value, and are defined in terms of
-  the variables in `.data`. If multiple expressions are included, they
-  are combined with the `&` operator. Only rows for which all conditions
-  evaluate to `TRUE` are kept.
+  Expressions that return a logical vector, defined in terms of the
+  variables in `.data`. If multiple expressions are included, they are
+  combined with the `&` operator. To combine expressions using `|`
+  instead, wrap them in
+  [`when_any()`](https://dplyr.tidyverse.org/reference/when-any-all.html).
+  Only rows for which all expressions evaluate to `TRUE` are kept (for
+  [`filter()`](https://dplyr.tidyverse.org/reference/filter.html)) or
+  dropped (for
+  [`filter_out()`](https://dplyr.tidyverse.org/reference/filter.html)).
 
 - .by:
-
-  **\[experimental\]**
 
   \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>
   Optionally, a selection of columns to group by for just this
@@ -59,6 +65,18 @@ There is no DuckDB translation in `filter.duckplyr_df()`
 
 These features fall back to
 [`dplyr::filter()`](https://dplyr.tidyverse.org/reference/filter.html),
+see
+[`vignette("fallback")`](https://duckplyr.tidyverse.org/articles/fallback.md)
+for details.
+
+There is no DuckDB translation in `filter_out.duckplyr_df()`
+
+- with no filter conditions,
+
+- nor for a grouped operation (if `.by` is set).
+
+These features fall back to
+[`dplyr::filter_out()`](https://dplyr.tidyverse.org/reference/filter.html),
 see
 [`vignette("fallback")`](https://duckplyr.tidyverse.org/articles/fallback.md)
 for details.

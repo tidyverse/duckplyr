@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,7 +28,13 @@
     <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul></li>
-<li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
+<li class="active nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-news" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">News</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-news"><li><h6 class="dropdown-header" data-toc-skip>Releases</h6></li>
+    <li><a class="external-link dropdown-item" href="https://tidyverse.org/blog/2025/06/duckplyr-1-1-0/">Version 1.1.0</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="../news/index.html">Changelog</a></li>
+  </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/tidyverse/duckplyr/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
@@ -40,11 +46,72 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/tidyverse/duckplyr/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/tidyverse/duckplyr/blob/cran-1.2.0/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.1.3" id="duckplyr-113-2025-11-04">duckplyr 1.1.3 (2025-11-04)<a class="anchor" aria-label="anchor" href="#duckplyr-113-2025-11-04"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.2.0" id="duckplyr-120-2026-02-24">duckplyr 1.2.0 (2026-02-24)<a class="anchor" aria-label="anchor" href="#duckplyr-120-2026-02-24"></a></h2>
+<div class="section level3">
+<h3 id="features-1-2-0">Features<a class="anchor" aria-label="anchor" href="#features-1-2-0"></a></h3>
+<ul><li><p>Add experimental translation for <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter_out()</a></code> (<a href="https://github.com/tidyverse/duckplyr/issues/869" class="external-link">#869</a>, <a href="https://github.com/tidyverse/duckplyr/issues/870" class="external-link">#870</a>).</p></li>
+<li><p>Establish compatibility with dplyr 1.2.0, this is now the minimum required version.</p></li>
+<li>
+<p>New <code><a href="../reference/read_tbl_duckdb.html">read_tbl_duckdb()</a></code> reads a table from a DuckDB database file by attaching it to the default connection (<a href="https://github.com/tidyverse/duckplyr/issues/414" class="external-link">#414</a>, <a href="https://github.com/tidyverse/duckplyr/issues/828" class="external-link">#828</a>).</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">db_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".duckdb"</span><span class="op">)</span></span>
+<span><span class="va">con</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html" class="external-link">dbConnect</a></span><span class="op">(</span><span class="fu">duckdb</span><span class="fu">::</span><span class="fu"><a href="https://r.duckdb.org/reference/duckdb.html" class="external-link">duckdb</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">db_path</span><span class="op">)</span></span>
+<span><span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbWriteTable.html" class="external-link">dbWriteTable</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"my_table"</span>, <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, y <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbDisconnect.html" class="external-link">dbDisconnect</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/read_tbl_duckdb.html">read_tbl_duckdb</a></span><span class="op">(</span><span class="va">db_path</span>, <span class="st">"my_table"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;</span> <span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">db_path</span><span class="op">)</span></span></code></pre></div>
+</li>
+<li>
+<p><code><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">first()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">last()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">nth()</a></code>, and <code><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n()</a></code> inside <code>mutate(.by = ...)</code> are now translated directly to DuckDB (<a href="https://github.com/tidyverse/duckplyr/issues/626" class="external-link">#626</a>, <a href="https://github.com/tidyverse/duckplyr/issues/854" class="external-link">#854</a>).</p>
+<p>data.frame(g = c(“a”, “a”, “b”, “b”, “b”), x = c(10, 20, 30, 40, 50)) |&gt; as_duckdb_tibble() |&gt; summarise(first_x = first(x), last_x = last(x), second_x = nth(x, 2), .by = g)</p>
+<p>data.frame(g = c(“a”, “a”, “b”, “b”), x = 1:4) |&gt; mutate(count = n(), .by = g)</p>
+</li>
+<li>
+<p><code><a href="../reference/compute_parquet.html">compute_parquet()</a></code> and <code><a href="../reference/compute_csv.html">compute_csv()</a></code> now accept an <code>options</code> argument to pass format-specific settings to the underlying DuckDB operation and also applies them when reading back the data (<a href="https://github.com/tidyverse/duckplyr/issues/729" class="external-link">#729</a>, <a href="https://github.com/tidyverse/duckplyr/issues/821" class="external-link">#821</a>).</p>
+<p>df &lt;- as_duckdb_tibble(data.frame(x = 1:3, y = c(“a”, “b”, “c”))) path &lt;- tempfile(fileext = “.parquet”) compute_parquet(df, path, options = list(compression = “zstd”))</p>
+</li>
+<li><p><code><a href="../reference/compute_parquet.html">compute_parquet()</a></code> and <code><a href="../reference/compute_csv.html">compute_csv()</a></code> are now generic S3 functions, making it easier to add methods for custom classes (<a href="https://github.com/tidyverse/duckplyr/issues/746" class="external-link">#746</a>, <a href="https://github.com/tidyverse/duckplyr/issues/818" class="external-link">#818</a>).</p></li>
+<li>
+<p>Functions with named arguments are now translated to DuckDB (<a href="https://github.com/tidyverse/duckplyr/issues/822" class="external-link">#822</a>).</p>
+<p>data.frame(x = c(1.23, 4.56, 7.89)) |&gt; mutate(y = round(x, digits = 1L))</p>
+</li>
+<li>
+<p><code><a href="https://dplyr.tidyverse.org/reference/transmute.html" class="external-link">transmute()</a></code> can now reference new variables created within the same call (<a href="https://github.com/tidyverse/duckplyr/issues/796" class="external-link">#796</a>, <a href="https://github.com/tidyverse/duckplyr/issues/819" class="external-link">#819</a>).</p>
+<p>data.frame(x = 1:3) |&gt; transmute(y = x * 2, z = y + 10)</p>
+</li>
+</ul></div>
+<div class="section level3">
+<h3 id="chore-1-2-0">Chore<a class="anchor" aria-label="anchor" href="#chore-1-2-0"></a></h3>
+<ul><li><p>Align internal tests with dplyr 1.2.0 (<a href="https://github.com/tidyverse/duckplyr/issues/863" class="external-link">#863</a>).</p></li>
+<li><p>Migrate from deprecated qs to qs2 (<a href="https://github.com/tidyverse/duckplyr/issues/846" class="external-link">#846</a>, <a href="https://github.com/tidyverse/duckplyr/issues/847" class="external-link">#847</a>).</p></li>
+<li><p>Format code with air.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="continuous-integration-1-2-0">Continuous integration<a class="anchor" aria-label="anchor" href="#continuous-integration-1-2-0"></a></h3>
+<ul><li>Align tests.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="documentation-1-2-0">Documentation<a class="anchor" aria-label="anchor" href="#documentation-1-2-0"></a></h3>
+<ul><li><p>Document <code>row.names</code> incompatibility (<a href="https://github.com/tidyverse/duckplyr/issues/603" class="external-link">#603</a>, <a href="https://github.com/tidyverse/duckplyr/issues/825" class="external-link">#825</a>).</p></li>
+<li><p>Add examples for specifying CSV column types by name (<a href="https://github.com/tidyverse/duckplyr/issues/775" class="external-link">#775</a>, <a href="https://github.com/tidyverse/duckplyr/issues/820" class="external-link">#820</a>).</p></li>
+<li><p>Add superseded lifecycle badge to <code><a href="https://dplyr.tidyverse.org/reference/transmute.html" class="external-link">transmute()</a></code> documentation (<a href="https://github.com/tidyverse/duckplyr/issues/364" class="external-link">#364</a>, <a href="https://github.com/tidyverse/duckplyr/issues/824" class="external-link">#824</a>).</p></li>
+<li><p>Add blog post to pkgdown config (<a href="https://github.com/tidyverse/duckplyr/issues/612" class="external-link">#612</a>, <a href="https://github.com/tidyverse/duckplyr/issues/827" class="external-link">#827</a>).</p></li>
+<li><p>Review contributing guide (<a href="https://github.com/tidyverse/duckplyr/issues/657" class="external-link">#657</a>).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="testing-1-2-0">Testing<a class="anchor" aria-label="anchor" href="#testing-1-2-0"></a></h3>
+<ul><li>Snapshot updates for rcc-full ({“os”:“macos-latest”,“r”:“4.5”}) (<a href="https://github.com/tidyverse/duckplyr/issues/872" class="external-link">#872</a>).</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.1.3" id="duckplyr-113-2025-11-04">duckplyr 1.1.3 (2025-11-04)<a class="anchor" aria-label="anchor" href="#duckplyr-113-2025-11-04"></a></h2><p class="text-muted">CRAN release: 2025-11-04</p>
 <div class="section level3">
 <h3 id="features-1-1-3">Features<a class="anchor" aria-label="anchor" href="#features-1-1-3"></a></h3>
 <ul><li>
@@ -444,7 +511,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.9000.</p>
 </div>
 
   </div></footer></body></html>

@@ -1,5 +1,7 @@
 # Create, modify, and delete columns
 
+**\[superseded\]**
+
 This is a method for the
 [`dplyr::transmute()`](https://dplyr.tidyverse.org/reference/transmute.html)
 generic. See "Fallbacks" section for differences in implementation.

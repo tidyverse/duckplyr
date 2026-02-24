@@ -21,7 +21,7 @@ switching the summary from n = n() to n = sum(wt).'><meta property="og:image" co
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,7 +42,13 @@ switching the summary from n = n() to n = sum(wt).'><meta property="og:image" co
     <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul></li>
-<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-news" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">News</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-news"><li><h6 class="dropdown-header" data-toc-skip>Releases</h6></li>
+    <li><a class="external-link dropdown-item" href="https://tidyverse.org/blog/2025/06/duckplyr-1-1-0/">Version 1.1.0</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="../news/index.html">Changelog</a></li>
+  </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/tidyverse/duckplyr/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
@@ -54,7 +60,7 @@ switching the summary from n = n() to n = sum(wt).'><meta property="og:image" co
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Count the observations in each group</h1>
-      <small class="dont-index">Source: <a href="https://github.com/tidyverse/duckplyr/blob/main/R/count-rd.R" class="external-link"><code>R/count-rd.R</code></a>, <a href="https://github.com/tidyverse/duckplyr/blob/main/R/count.R" class="external-link"><code>R/count.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidyverse/duckplyr/blob/cran-1.2.0/R/count-rd.R" class="external-link"><code>R/count-rd.R</code></a>, <a href="https://github.com/tidyverse/duckplyr/blob/cran-1.2.0/R/count.R" class="external-link"><code>R/count.R</code></a></small>
       <div class="d-none name"><code>count.duckplyr_df.Rd</code></div>
     </div>
 
@@ -119,7 +125,7 @@ it will use <code>nn</code>. If there's a column called <code>n</code> and <code
 on to <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code>.</p>
 <p>For <code><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count()</a></code>: if <code>FALSE</code> will include counts for empty groups (i.e. for
 levels of factors that don't exist in the data).</p>
-<p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> For <code><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">add_count()</a></code>: deprecated since it
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#defunct" class="external-link"><img src="figures/lifecycle-defunct.svg" alt="[Defunct]"></a> For <code><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">add_count()</a></code>: defunct since it
 can't actually affect the output.</p></dd>
 
 </dl></div>
@@ -157,7 +163,7 @@ can't actually affect the output.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.9000.</p>
 </div>
 
   </div></footer></body></html>

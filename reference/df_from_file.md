@@ -114,7 +114,7 @@ names(df)
 df$a
 #> [1] 1 2 3
 
-# Return as tibble, specify column types:
+# Return as tibble, specify column types positionally:
 df_from_file(
   path,
   "read_csv",
@@ -123,6 +123,20 @@ df_from_file(
 )
 #> Warning: `df_from_file()` was deprecated in duckplyr 1.0.0.
 #> ℹ Please use `read_file_duckdb()` instead.
+#> # A tibble: 3 × 2
+#>       a b    
+#>   <dbl> <chr>
+#> 1     1 d    
+#> 2     2 e    
+#> 3     3 f    
+
+# Specify column types by name:
+df_from_file(
+  path,
+  "read_csv",
+  options = list(delim = ",", types = list(c(a = "DOUBLE", b = "VARCHAR"))),
+  class = class(tibble())
+)
 #> # A tibble: 3 × 2
 #>       a b    
 #>   <dbl> <chr>
@@ -140,12 +154,12 @@ duckplyr_df_from_csv(file.path(tempdir(), "duckplyr_test_*.csv"))
 #> # A duckplyr data frame: 2 variables
 #>       a b    
 #>   <dbl> <chr>
-#> 1     1 d    
-#> 2     2 e    
-#> 3     3 f    
-#> 4     4 g    
-#> 5     5 h    
-#> 6     6 i    
+#> 1     4 g    
+#> 2     5 h    
+#> 3     6 i    
+#> 4     1 d    
+#> 5     2 e    
+#> 6     3 f    
 
 unlink(c(path, path2))
 

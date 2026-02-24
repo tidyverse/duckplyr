@@ -1,6 +1,131 @@
 # Changelog
 
+## duckplyr 1.2.0 (2026-02-24)
+
+### Features
+
+- Add experimental translation for
+  [`filter_out()`](https://dplyr.tidyverse.org/reference/filter.html)
+  ([\#869](https://github.com/tidyverse/duckplyr/issues/869),
+  [\#870](https://github.com/tidyverse/duckplyr/issues/870)).
+
+- Establish compatibility with dplyr 1.2.0, this is now the minimum
+  required version.
+
+- New
+  [`read_tbl_duckdb()`](https://duckplyr.tidyverse.org/reference/read_tbl_duckdb.md)
+  reads a table from a DuckDB database file by attaching it to the
+  default connection
+  ([\#414](https://github.com/tidyverse/duckplyr/issues/414),
+  [\#828](https://github.com/tidyverse/duckplyr/issues/828)).
+
+  ``` r
+  db_path <- tempfile(fileext = ".duckdb")
+  con <- DBI::dbConnect(duckdb::duckdb(), db_path)
+  DBI::dbWriteTable(con, "my_table", data.frame(x = 1:5, y = letters[1:5]))
+  DBI::dbDisconnect(con)
+
+  read_tbl_duckdb(db_path, "my_table") |>
+    filter(x > 2)
+
+  unlink(db_path)
+  ```
+
+- [`first()`](https://dplyr.tidyverse.org/reference/nth.html),
+  [`last()`](https://dplyr.tidyverse.org/reference/nth.html),
+  [`nth()`](https://dplyr.tidyverse.org/reference/nth.html), and
+  [`n()`](https://dplyr.tidyverse.org/reference/context.html) inside
+  `mutate(.by = ...)` are now translated directly to DuckDB
+  ([\#626](https://github.com/tidyverse/duckplyr/issues/626),
+  [\#854](https://github.com/tidyverse/duckplyr/issues/854)).
+
+  data.frame(g = c(“a”, “a”, “b”, “b”, “b”), x = c(10, 20, 30, 40, 50))
+  \|\> as_duckdb_tibble() \|\> summarise(first_x = first(x), last_x =
+  last(x), second_x = nth(x, 2), .by = g)
+
+  data.frame(g = c(“a”, “a”, “b”, “b”), x = 1:4) \|\> mutate(count =
+  n(), .by = g)
+
+- [`compute_parquet()`](https://duckplyr.tidyverse.org/reference/compute_parquet.md)
+  and
+  [`compute_csv()`](https://duckplyr.tidyverse.org/reference/compute_csv.md)
+  now accept an `options` argument to pass format-specific settings to
+  the underlying DuckDB operation and also applies them when reading
+  back the data
+  ([\#729](https://github.com/tidyverse/duckplyr/issues/729),
+  [\#821](https://github.com/tidyverse/duckplyr/issues/821)).
+
+  df \<- as_duckdb_tibble(data.frame(x = 1:3, y = c(“a”, “b”, “c”)))
+  path \<- tempfile(fileext = “.parquet”) compute_parquet(df, path,
+  options = list(compression = “zstd”))
+
+- [`compute_parquet()`](https://duckplyr.tidyverse.org/reference/compute_parquet.md)
+  and
+  [`compute_csv()`](https://duckplyr.tidyverse.org/reference/compute_csv.md)
+  are now generic S3 functions, making it easier to add methods for
+  custom classes
+  ([\#746](https://github.com/tidyverse/duckplyr/issues/746),
+  [\#818](https://github.com/tidyverse/duckplyr/issues/818)).
+
+- Functions with named arguments are now translated to DuckDB
+  ([\#822](https://github.com/tidyverse/duckplyr/issues/822)).
+
+  data.frame(x = c(1.23, 4.56, 7.89)) \|\> mutate(y = round(x, digits =
+  1L))
+
+- [`transmute()`](https://dplyr.tidyverse.org/reference/transmute.html)
+  can now reference new variables created within the same call
+  ([\#796](https://github.com/tidyverse/duckplyr/issues/796),
+  [\#819](https://github.com/tidyverse/duckplyr/issues/819)).
+
+  data.frame(x = 1:3) \|\> transmute(y = x \* 2, z = y + 10)
+
+### Chore
+
+- Align internal tests with dplyr 1.2.0
+  ([\#863](https://github.com/tidyverse/duckplyr/issues/863)).
+
+- Migrate from deprecated qs to qs2
+  ([\#846](https://github.com/tidyverse/duckplyr/issues/846),
+  [\#847](https://github.com/tidyverse/duckplyr/issues/847)).
+
+- Format code with air.
+
+### Continuous integration
+
+- Align tests.
+
+### Documentation
+
+- Document `row.names` incompatibility
+  ([\#603](https://github.com/tidyverse/duckplyr/issues/603),
+  [\#825](https://github.com/tidyverse/duckplyr/issues/825)).
+
+- Add examples for specifying CSV column types by name
+  ([\#775](https://github.com/tidyverse/duckplyr/issues/775),
+  [\#820](https://github.com/tidyverse/duckplyr/issues/820)).
+
+- Add superseded lifecycle badge to
+  [`transmute()`](https://dplyr.tidyverse.org/reference/transmute.html)
+  documentation
+  ([\#364](https://github.com/tidyverse/duckplyr/issues/364),
+  [\#824](https://github.com/tidyverse/duckplyr/issues/824)).
+
+- Add blog post to pkgdown config
+  ([\#612](https://github.com/tidyverse/duckplyr/issues/612),
+  [\#827](https://github.com/tidyverse/duckplyr/issues/827)).
+
+- Review contributing guide
+  ([\#657](https://github.com/tidyverse/duckplyr/issues/657)).
+
+### Testing
+
+- Snapshot updates for rcc-full ({“os”:“macos-latest”,“r”:“4.5”})
+  ([\#872](https://github.com/tidyverse/duckplyr/issues/872)).
+
 ## duckplyr 1.1.3 (2025-11-04)
+
+CRAN release: 2025-11-04
 
 ### Features
 
