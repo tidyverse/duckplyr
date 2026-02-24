@@ -517,7 +517,13 @@ rel_translate_lang <- function(
     if (!is.null(expr$order_by)) {
       order_by_expr <- expr$order_by
       if (is_desc(order_by_expr, env, call)) {
-        order_bys <- list(relexpr_function("-", list(do_translate(order_by_expr[[2]], in_window = in_window || window))))
+        # desc() in order_by is not yet supported for window/aggregate functions.
+        # Native DESC ordering in DuckDB-R expressions is tracked in:
+        # https://github.com/duckdb/duckdb-r/issues/2074
+        cli::cli_abort(
+          "{.fun desc} in {.arg order_by} is not yet supported, see <https://github.com/duckdb/duckdb-r/issues/2074>",
+          call = call
+        )
       } else {
         order_bys <- list(do_translate(order_by_expr, in_window = in_window || window))
       }

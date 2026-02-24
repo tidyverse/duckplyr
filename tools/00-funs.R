@@ -788,10 +788,11 @@ test_extra_arg_map <- list(
     "lag(a, order_by = a), .by = g",
     "lead(a, order_by = a)",
     "lead(a, order_by = a), .by = g",
-    "lag(a, order_by = desc(a))",
-    "lag(a, order_by = desc(a)), .by = g",
-    "lead(a, order_by = desc(a))",
-    "lead(a, order_by = desc(a)), .by = g",
+    # desc() in order_by not yet supported: https://github.com/duckdb/duckdb-r/issues/2074
+    # "lag(a, order_by = desc(a))",
+    # "lag(a, order_by = desc(a)), .by = g",
+    # "lead(a, order_by = desc(a))",
+    # "lead(a, order_by = desc(a)), .by = g",
 
     # Need to fix implementation, wrong output order
     # "lag(a, order_by = -a)",
@@ -906,15 +907,16 @@ test_extra_arg_map <- list(
     "first(a)",
     "first(a), .by = g",
     "first(a, order_by = a), .by = g",
-    "first(a, order_by = desc(a)), .by = g",
+    # desc() in order_by not yet supported: https://github.com/duckdb/duckdb-r/issues/2074
+    # "first(a, order_by = desc(a)), .by = g",
     "last(a)",
     "last(a), .by = g",
     "last(a, order_by = a), .by = g",
-    "last(a, order_by = desc(a)), .by = g",
+    # "last(a, order_by = desc(a)), .by = g",
     "nth(a, 2)",
     "nth(a, 2), .by = g",
     "nth(a, 2, order_by = a), .by = g",
-    "nth(a, 2, order_by = desc(a)), .by = g",
+    # "nth(a, 2, order_by = desc(a)), .by = g",
 
     # DuckDB's NTH_VALUE() doesn't support negative n,
     # and it doesn't return NA when n is out of bounds

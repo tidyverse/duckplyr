@@ -1378,58 +1378,6 @@ test_that("as_duckplyr_df_impl() and mutate(lead(a, order_by = a), .by = g)", {
 })
 
 
-test_that("as_duckplyr_df_impl() and mutate(lag(a, order_by = desc(a)))", {
-  # Data
-  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
-
-  # Run
-  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(lag(a, order_by = desc(a)))
-  post <- test_df %>% mutate(lag(a, order_by = desc(a))) %>% as_duckplyr_df_impl()
-
-  # Compare
-  expect_identical(pre, post)
-})
-
-
-test_that("as_duckplyr_df_impl() and mutate(lag(a, order_by = desc(a)), .by = g)", {
-  # Data
-  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
-
-  # Run
-  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(lag(a, order_by = desc(a)), .by = g)
-  post <- test_df %>% mutate(lag(a, order_by = desc(a)), .by = g) %>% as_duckplyr_df_impl()
-
-  # Compare
-  expect_identical(pre, post)
-})
-
-
-test_that("as_duckplyr_df_impl() and mutate(lead(a, order_by = desc(a)))", {
-  # Data
-  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
-
-  # Run
-  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(lead(a, order_by = desc(a)))
-  post <- test_df %>% mutate(lead(a, order_by = desc(a))) %>% as_duckplyr_df_impl()
-
-  # Compare
-  expect_identical(pre, post)
-})
-
-
-test_that("as_duckplyr_df_impl() and mutate(lead(a, order_by = desc(a)), .by = g)", {
-  # Data
-  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
-
-  # Run
-  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(lead(a, order_by = desc(a)), .by = g)
-  post <- test_df %>% mutate(lead(a, order_by = desc(a)), .by = g) %>% as_duckplyr_df_impl()
-
-  # Compare
-  expect_identical(pre, post)
-})
-
-
 test_that("as_duckplyr_df_impl() and mutate(min(a, na.rm = TRUE))", {
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
@@ -1697,6 +1645,32 @@ test_that("as_duckplyr_df_impl() and mutate(d = row_number(), .by = g)", {
   # Run
   pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(d = row_number(), .by = g)
   post <- test_df %>% mutate(d = row_number(), .by = g) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df_impl() and mutate(d = n())", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(d = n())
+  post <- test_df %>% mutate(d = n()) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df_impl() and mutate(d = n(), .by = g)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(d = n(), .by = g)
+  post <- test_df %>% mutate(d = n(), .by = g) %>% as_duckplyr_df_impl()
 
   # Compare
   expect_identical(pre, post)
@@ -2700,19 +2674,6 @@ test_that("as_duckplyr_df_impl() and summarise(first(a, order_by = a), .by = g)"
 })
 
 
-test_that("as_duckplyr_df_impl() and summarise(first(a, order_by = desc(a)), .by = g)", {
-  # Data
-  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
-
-  # Run
-  pre <- test_df %>% as_duckplyr_df_impl() %>% summarise(first(a, order_by = desc(a)), .by = g)
-  post <- test_df %>% summarise(first(a, order_by = desc(a)), .by = g) %>% as_duckplyr_df_impl()
-
-  # Compare
-  expect_identical(pre, post)
-})
-
-
 test_that("as_duckplyr_df_impl() and summarise(last(a))", {
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
@@ -2752,19 +2713,6 @@ test_that("as_duckplyr_df_impl() and summarise(last(a, order_by = a), .by = g)",
 })
 
 
-test_that("as_duckplyr_df_impl() and summarise(last(a, order_by = desc(a)), .by = g)", {
-  # Data
-  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
-
-  # Run
-  pre <- test_df %>% as_duckplyr_df_impl() %>% summarise(last(a, order_by = desc(a)), .by = g)
-  post <- test_df %>% summarise(last(a, order_by = desc(a)), .by = g) %>% as_duckplyr_df_impl()
-
-  # Compare
-  expect_identical(pre, post)
-})
-
-
 test_that("as_duckplyr_df_impl() and summarise(nth(a, 2))", {
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
@@ -2798,19 +2746,6 @@ test_that("as_duckplyr_df_impl() and summarise(nth(a, 2, order_by = a), .by = g)
   # Run
   pre <- test_df %>% as_duckplyr_df_impl() %>% summarise(nth(a, 2, order_by = a), .by = g)
   post <- test_df %>% summarise(nth(a, 2, order_by = a), .by = g) %>% as_duckplyr_df_impl()
-
-  # Compare
-  expect_identical(pre, post)
-})
-
-
-test_that("as_duckplyr_df_impl() and summarise(nth(a, 2, order_by = desc(a)), .by = g)", {
-  # Data
-  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
-
-  # Run
-  pre <- test_df %>% as_duckplyr_df_impl() %>% summarise(nth(a, 2, order_by = desc(a)), .by = g)
-  post <- test_df %>% summarise(nth(a, 2, order_by = desc(a)), .by = g) %>% as_duckplyr_df_impl()
 
   # Compare
   expect_identical(pre, post)
