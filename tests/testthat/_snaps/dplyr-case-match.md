@@ -1,11 +1,19 @@
+# `case_match()` is soft deprecated
+
+    Code
+      case_match(1, 1 ~ "x")
+    Condition
+      Warning:
+      `case_match()` was deprecated in dplyr 1.2.0.
+      i Please use `recode_values()` instead.
+    Output
+      [1] "x"
+
 # requires at least one condition
 
     Code
       case_match(1)
     Condition
-      Warning:
-      `case_match()` was deprecated in dplyr 1.2.0.
-      i Please use `recode_values()` instead.
       Error in `case_match()`:
       ! `...` can't be empty.
 
@@ -14,9 +22,6 @@
     Code
       case_match(1, NULL)
     Condition
-      Warning:
-      `case_match()` was deprecated in dplyr 1.2.0.
-      i Please use `recode_values()` instead.
       Error in `case_match()`:
       ! `...` can't be empty.
 
@@ -25,9 +30,6 @@
     Code
       case_match(1, 1 ~ 1L, .default = "x")
     Condition
-      Warning:
-      `case_match()` was deprecated in dplyr 1.2.0.
-      i Please use `recode_values()` instead.
       Error in `case_match()`:
       ! Can't combine <integer> and `.default` <character>.
 
@@ -36,9 +38,6 @@
     Code
       case_match(1, 1 ~ NULL)
     Condition
-      Warning:
-      `case_match()` was deprecated in dplyr 1.2.0.
-      i Please use `recode_values()` instead.
       Error in `case_match()`:
       ! `..1 (right)` must be a vector, not `NULL`.
       i Read our FAQ about scalar types (`?vctrs::faq_error_scalar_type`) to learn more.
@@ -48,9 +47,6 @@
     Code
       case_match(1, NULL ~ 1)
     Condition
-      Warning:
-      `case_match()` was deprecated in dplyr 1.2.0.
-      i Please use `recode_values()` instead.
       Error in `case_match()`:
       ! `..1 (left)` must be a vector, not `NULL`.
       i Read our FAQ about scalar types (`?vctrs::faq_error_scalar_type`) to learn more.
@@ -60,9 +56,6 @@
     Code
       case_match(1, 1 ~ 2, 3 ~ stop("oh no!"))
     Condition
-      Warning:
-      `case_match()` was deprecated in dplyr 1.2.0.
-      i Please use `recode_values()` instead.
       Error in `case_match()`:
       ! Failed to evaluate the right-hand side of formula 2.
       Caused by error:
@@ -73,11 +66,160 @@
     Code
       case_match(1, 1 ~ 2, stop("oh no!") ~ 4)
     Condition
-      Warning:
-      `case_match()` was deprecated in dplyr 1.2.0.
-      i Please use `recode_values()` instead.
       Error in `case_match()`:
       ! Failed to evaluate the left-hand side of formula 2.
       Caused by error:
       ! oh no!
+
+# `haystacks` must be castable to `needles`
+
+    Code
+      vec_case_match(1L, haystacks = list(1.5), values = list(2))
+    Condition
+      Error in `vec_case_match()`:
+      ! could not find function "vec_case_match"
+
+# `NULL` values in `haystacks` and `values` are not dropped
+
+    Code
+      vec_case_match(1:2, list(1, NULL, 2), list("a", NULL, "b"))
+    Condition
+      Error in `vec_case_match()`:
+      ! could not find function "vec_case_match"
+
+---
+
+    Code
+      vec_case_match(1:2, list(1, NULL, 2), list("a", "a", "b"))
+    Condition
+      Error in `vec_case_match()`:
+      ! could not find function "vec_case_match"
+
+---
+
+    Code
+      vec_case_match(1:2, list(1, 1, 2), list("a", NULL, "b"))
+    Condition
+      Error in `vec_case_match()`:
+      ! could not find function "vec_case_match"
+
+# size of `needles` is maintained
+
+    Code
+      vec_case_match(1, haystacks = list(1), values = list(1:2))
+    Condition
+      Error in `vec_case_match()`:
+      ! could not find function "vec_case_match"
+
+# input must be a vector
+
+    Code
+      vec_case_match(environment(), haystacks = list(environment()), values = list(1))
+    Condition
+      Error in `vec_case_match()`:
+      ! could not find function "vec_case_match"
+
+# `haystacks` must be a list
+
+    Code
+      vec_case_match(1, haystacks = 1, values = list(2))
+    Condition
+      Error in `vec_case_match()`:
+      ! could not find function "vec_case_match"
+
+# `values` must be a list
+
+    Code
+      vec_case_match(1, haystacks = list(1), values = 2)
+    Condition
+      Error in `vec_case_match()`:
+      ! could not find function "vec_case_match"
+
+# `needles_arg` is respected
+
+    Code
+      vec_case_match(needles = environment(), haystacks = list(environment()),
+      values = list(1), needles_arg = "foo")
+    Condition
+      Error in `vec_case_match()`:
+      ! could not find function "vec_case_match"
+
+---
+
+    Code
+      vec_case_match(needles = environment(), haystacks = list(environment()),
+      values = list(1), needles_arg = "")
+    Condition
+      Error in `vec_case_match()`:
+      ! could not find function "vec_case_match"
+
+# `haystacks_arg` is respected
+
+    Code
+      vec_case_match(needles = 1, haystacks = 1, values = list(1), haystacks_arg = "foo")
+    Condition
+      Error in `vec_case_match()`:
+      ! could not find function "vec_case_match"
+
+---
+
+    Code
+      vec_case_match(needles = 1, haystacks = 1, values = list(1), haystacks_arg = "")
+    Condition
+      Error in `vec_case_match()`:
+      ! could not find function "vec_case_match"
+
+---
+
+    Code
+      vec_case_match(needles = 1, haystacks = list(a = "x"), values = list(1),
+      haystacks_arg = "foo")
+    Condition
+      Error in `vec_case_match()`:
+      ! could not find function "vec_case_match"
+
+---
+
+    Code
+      vec_case_match(needles = 1, haystacks = list("x"), values = list(1),
+      haystacks_arg = "")
+    Condition
+      Error in `vec_case_match()`:
+      ! could not find function "vec_case_match"
+
+# `values_arg` is respected
+
+    Code
+      vec_case_match(needles = 1, haystacks = list(1, 2), values = list("x", b = 1),
+      values_arg = "foo")
+    Condition
+      Error in `vec_case_match()`:
+      ! could not find function "vec_case_match"
+
+---
+
+    Code
+      vec_case_match(needles = 1, haystacks = list(1, 2), values = list("x", b = 1),
+      values_arg = "")
+    Condition
+      Error in `vec_case_match()`:
+      ! could not find function "vec_case_match"
+
+# `default_arg` is respected
+
+    Code
+      vec_case_match(needles = 1, haystacks = list(1), values = list(2L), default = 1.5,
+      default_arg = "foo", ptype = integer())
+    Condition
+      Error in `vec_case_match()`:
+      ! could not find function "vec_case_match"
+
+---
+
+    Code
+      vec_case_match(needles = 1, haystacks = list(1), values = list(2L), default = 1.5,
+      default_arg = "", ptype = integer())
+    Condition
+      Error in `vec_case_match()`:
+      ! could not find function "vec_case_match"
 
