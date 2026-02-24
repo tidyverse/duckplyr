@@ -70,11 +70,12 @@ relexpr_constant <- function(val, alias = NULL) {
 #' @rdname new_relexpr
 #' @return an object of class `"relational_relexpr"`
 #' @export
-relexpr_function <- function(name, args, alias = NULL) {
+relexpr_function <- function(name, args, alias = NULL, order_bys = NULL) {
   stopifnot(is_string(name))
   stopifnot(is.list(args))
+  stopifnot(is.null(order_bys) || is.list(order_bys))
   stopifnot(is.null(alias) || is_string(alias))
-  new_relexpr(list(name = name, args = args, alias = alias), class = "relational_relexpr_function")
+  new_relexpr(list(name = name, args = args, order_bys = order_bys, alias = alias), class = "relational_relexpr_function")
 }
 
 #' relexpr_comparison
