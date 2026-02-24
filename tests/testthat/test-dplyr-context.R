@@ -1,7 +1,9 @@
 # Gezznezzrated by 04-dplyr-tests.R, do not edit by hand
 
 # Workaround for lazytest
-test_that("Dummy", { expect_true(TRUE) })
+test_that("Dummy", {
+  expect_true(TRUE)
+})
 
 skip_if(Sys.getenv("DUCKPLYR_SKIP_DPLYR_TESTS") == "TRUE")
 
@@ -17,7 +19,6 @@ test_that("cur_group() works", {
     gf |> duckplyr_summarise(key = list(cur_group())) |> duckplyr_pull(key),
     list(tibble(g = 1))
   )
-
 })
 
 test_that("cur_group() works with empty grouped data frame (#6304)", {
@@ -69,7 +70,6 @@ test_that("give useful error messages when not applicable", {
     (expect_error(cur_group_id()))
     (expect_error(cur_group_rows()))
   })
-
 })
 
 test_that("group labels are correctly formatted", {

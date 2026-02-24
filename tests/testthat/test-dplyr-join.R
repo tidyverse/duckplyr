@@ -1,7 +1,9 @@
 # Gezznezzrated by 04-dplyr-tests.R, do not edit by hand
 
 # Workaround for lazytest
-test_that("Dummy", { expect_true(TRUE) })
+test_that("Dummy", {
+  expect_true(TRUE)
+})
 
 skip_if(Sys.getenv("DUCKPLYR_SKIP_DPLYR_TESTS") == "TRUE")
 
@@ -148,7 +150,12 @@ test_that("can't use `keep = FALSE` with non-equi conditions (#6499)", {
   df2 <- tibble(yl = c(2, 5, 8), yu = c(6, 8, 9))
 
   expect_snapshot(error = TRUE, {
-    duckplyr_left_join(df1, df2, join_by(overlaps(xl, xu, yl, yu)), keep = FALSE)
+    duckplyr_left_join(
+      df1,
+      df2,
+      join_by(overlaps(xl, xu, yl, yu)),
+      keep = FALSE
+    )
   })
 
   # Would never make sense here.
@@ -157,7 +164,12 @@ test_that("can't use `keep = FALSE` with non-equi conditions (#6499)", {
   # - `yl` into `xu`
   # Which results in `xl` and `xu` columns that don't maintain `xl <= xu`.
   expect_snapshot(error = TRUE, {
-    duckplyr_full_join(df1, df2, join_by(overlaps(xl, xu, yl, yu)), keep = FALSE)
+    duckplyr_full_join(
+      df1,
+      df2,
+      join_by(overlaps(xl, xu, yl, yu)),
+      keep = FALSE
+    )
   })
 })
 
@@ -187,7 +199,10 @@ test_that("joins don't match NA when na_matches = 'never' (#2033)", {
   expect_equal(out, tibble(a = NA_integer_))
 
   out <- duckplyr_nest_join(df1, df2, by = "a", na_matches = "never")
-  expect <- tibble(a = c(1, NA), df2 = list(tibble(b = 1L), tibble(b = integer())))
+  expect <- tibble(
+    a = c(1, NA),
+    df2 = list(tibble(b = 1L), tibble(b = integer()))
+  )
   expect_equal(out, expect)
 
   dat1 <- tibble(
@@ -292,19 +307,35 @@ test_that("joins using `between(bounds =)` work as expected (#6488)", {
   df1 <- tibble(x = 1:5)
   df2 <- tibble(lower = 2, upper = 4)
 
-  out <- duckplyr_full_join(df1, df2, by = join_by(between(x, lower, upper, bounds = "[]")))
+  out <- duckplyr_full_join(
+    df1,
+    df2,
+    by = join_by(between(x, lower, upper, bounds = "[]"))
+  )
   expect_identical(out$lower, c(NA, 2, 2, 2, NA))
   expect_identical(out$upper, c(NA, 4, 4, 4, NA))
 
-  out <- duckplyr_full_join(df1, df2, by = join_by(between(x, lower, upper, bounds = "[)")))
+  out <- duckplyr_full_join(
+    df1,
+    df2,
+    by = join_by(between(x, lower, upper, bounds = "[)"))
+  )
   expect_identical(out$lower, c(NA, 2, 2, NA, NA))
   expect_identical(out$upper, c(NA, 4, 4, NA, NA))
 
-  out <- duckplyr_full_join(df1, df2, by = join_by(between(x, lower, upper, bounds = "(]")))
+  out <- duckplyr_full_join(
+    df1,
+    df2,
+    by = join_by(between(x, lower, upper, bounds = "(]"))
+  )
   expect_identical(out$lower, c(NA, NA, 2, 2, NA))
   expect_identical(out$upper, c(NA, NA, 4, 4, NA))
 
-  out <- duckplyr_full_join(df1, df2, by = join_by(between(x, lower, upper, bounds = "()")))
+  out <- duckplyr_full_join(
+    df1,
+    df2,
+    by = join_by(between(x, lower, upper, bounds = "()"))
+  )
   expect_identical(out$lower, c(NA, NA, 2, NA, NA))
   expect_identical(out$upper, c(NA, NA, 4, NA, NA))
 })
@@ -315,18 +346,34 @@ test_that("joins using `overlaps(bounds =)` work as expected (#6488)", {
 
   expect_closed <- vec_cbind(df1, vec_c(df2, df2, df2, df2))
 
-  out <- duckplyr_full_join(df1, df2, by = join_by(overlaps(x_lower, x_upper, y_lower, y_upper, bounds = "[]")))
+  out <- duckplyr_full_join(
+    df1,
+    df2,
+    by = join_by(overlaps(x_lower, x_upper, y_lower, y_upper, bounds = "[]"))
+  )
   expect_identical(out, expect_closed)
 
   # `[)`, `(]`, and `()` all generate the same binary conditions but are useful
   # for consistency with `between(bounds =)`
   expect_open <- vec_cbind(df1, vec_c(NA, df2, df2, NA))
 
-  out <- duckplyr_full_join(df1, df2, by = join_by(overlaps(x_lower, x_upper, y_lower, y_upper, bounds = "[)")))
+  out <- duckplyr_full_join(
+    df1,
+    df2,
+    by = join_by(overlaps(x_lower, x_upper, y_lower, y_upper, bounds = "[)"))
+  )
   expect_identical(out, expect_open)
-  out <- duckplyr_full_join(df1, df2, by = join_by(overlaps(x_lower, x_upper, y_lower, y_upper, bounds = "(]")))
+  out <- duckplyr_full_join(
+    df1,
+    df2,
+    by = join_by(overlaps(x_lower, x_upper, y_lower, y_upper, bounds = "(]"))
+  )
   expect_identical(out, expect_open)
-  out <- duckplyr_full_join(df1, df2, by = join_by(overlaps(x_lower, x_upper, y_lower, y_upper, bounds = "()")))
+  out <- duckplyr_full_join(
+    df1,
+    df2,
+    by = join_by(overlaps(x_lower, x_upper, y_lower, y_upper, bounds = "()"))
+  )
   expect_identical(out, expect_open)
 })
 
@@ -367,14 +414,20 @@ test_that("mutating joins don't trigger many-to-many warning when called indirec
   }
 
   # Directly calling `duckplyr_left_join()` from a function you control results in a warning
-  expect_warning(fn(df, df), class = "dplyr_warning_join_relationship_many_to_many")
+  expect_warning(
+    fn(df, df),
+    class = "dplyr_warning_join_relationship_many_to_many"
+  )
 
   # Now mimic calling an "rlang function" which you don't control that calls `duckplyr_left_join()`
   fn_env(fn) <- ns_env("rlang")
 
   # Indirectly calling `duckplyr_left_join()` through a function you don't control
   # doesn't warn
-  expect_no_warning(fn(df, df), class = "dplyr_warning_join_relationship_many_to_many")
+  expect_no_warning(
+    fn(df, df),
+    class = "dplyr_warning_join_relationship_many_to_many"
+  )
 })
 
 test_that("mutating joins compute common columns", {
@@ -475,7 +528,7 @@ test_that("error if passed additional arguments", {
 
 # nest_join ---------------------------------------------------------------
 
-test_that("nest_join returns list of tibbles (#3570)",{
+test_that("nest_join returns list of tibbles (#3570)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df1 <- tibble(x = c(1, 2), y = c(2, 3))
   df2 <- tibble(x = c(1, 1), z = c(2, 3))
@@ -486,7 +539,7 @@ test_that("nest_join returns list of tibbles (#3570)",{
   expect_s3_class(out$df2[[1]], "tbl_df")
 })
 
-test_that("nest_join respects types of y (#6295)",{
+test_that("nest_join respects types of y (#6295)", {
   df1 <- tibble(x = c(1, 2), y = c(2, 3))
   df2 <- duckplyr_rowwise(tibble(x = c(1, 1), z = c(2, 3)))
   out <- duckplyr_nest_join(df1, df2, by = "x")
@@ -603,7 +656,6 @@ test_that("validates inputs", {
     duckplyr_nest_join(df1, df2, name = 1)
     duckplyr_nest_join(df1, df2, na_matches = 1)
   })
-
 })
 
 # output type ---------------------------------------------------------------
@@ -612,7 +664,11 @@ test_that("joins x preserve type of x", {
   df1 <- data.frame(x = 1)
   df2 <- tibble(x = 2)
 
-  expect_s3_class(duckplyr_inner_join(df1, df2, by = "x"), "data.frame", exact = TRUE)
+  expect_s3_class(
+    duckplyr_inner_join(df1, df2, by = "x"),
+    "data.frame",
+    exact = TRUE
+  )
   expect_s3_class(duckplyr_inner_join(df2, df1, by = "x"), "tbl_df")
 })
 
@@ -636,29 +692,98 @@ test_that("joins preserve groups", {
 })
 
 test_that("joins respect zero length groups", {
-  df1 <- tibble(f = factor( c(1,1,2,2), levels = 1:3), x = c(1,2,1,4)) |>
+  df1 <- tibble(f = factor(c(1, 1, 2, 2), levels = 1:3), x = c(1, 2, 1, 4)) |>
     duckplyr_group_by(f)
 
-  df2 <- tibble(f = factor( c(2,2,3,3), levels = 1:3), y = c(1,2,3,4)) |>
+  df2 <- tibble(f = factor(c(2, 2, 3, 3), levels = 1:3), y = c(1, 2, 3, 4)) |>
     duckplyr_group_by(f)
 
-  expect_equal(duckplyr_group_size(duckplyr_left_join( df1, df2, by = "f", relationship = "many-to-many")),  c(2,4))
-  expect_equal(duckplyr_group_size(duckplyr_right_join( df1, df2, by = "f", relationship = "many-to-many")),  c(4,2))
-  expect_equal(duckplyr_group_size(duckplyr_full_join( df1, df2, by = "f", relationship = "many-to-many")),  c(2,4,2))
-  expect_equal(duckplyr_group_size(duckplyr_anti_join( df1, df2, by = "f")),  c(2))
-  expect_equal(duckplyr_group_size(duckplyr_inner_join( df1, df2, by = "f", relationship = "many-to-many")),  c(4))
+  expect_equal(
+    duckplyr_group_size(duckplyr_left_join(
+      df1,
+      df2,
+      by = "f",
+      relationship = "many-to-many"
+    )),
+    c(2, 4)
+  )
+  expect_equal(
+    duckplyr_group_size(duckplyr_right_join(
+      df1,
+      df2,
+      by = "f",
+      relationship = "many-to-many"
+    )),
+    c(4, 2)
+  )
+  expect_equal(
+    duckplyr_group_size(duckplyr_full_join(
+      df1,
+      df2,
+      by = "f",
+      relationship = "many-to-many"
+    )),
+    c(2, 4, 2)
+  )
+  expect_equal(
+    duckplyr_group_size(duckplyr_anti_join(df1, df2, by = "f")),
+    c(2)
+  )
+  expect_equal(
+    duckplyr_group_size(duckplyr_inner_join(
+      df1,
+      df2,
+      by = "f",
+      relationship = "many-to-many"
+    )),
+    c(4)
+  )
 
-
-  df1 <- tibble(f = factor( c(1,1,2,2), levels = 1:3), x = c(1,2,1,4)) |>
+  df1 <- tibble(f = factor(c(1, 1, 2, 2), levels = 1:3), x = c(1, 2, 1, 4)) |>
     duckplyr_group_by(f, .drop = FALSE)
-  df2 <- tibble(f = factor( c(2,2,3,3), levels = 1:3), y = c(1,2,3,4)) |>
+  df2 <- tibble(f = factor(c(2, 2, 3, 3), levels = 1:3), y = c(1, 2, 3, 4)) |>
     duckplyr_group_by(f, .drop = FALSE)
 
-  expect_equal(duckplyr_group_size(duckplyr_left_join( df1, df2, by = "f", relationship = "many-to-many")),  c(2,4,0))
-  expect_equal(duckplyr_group_size(duckplyr_right_join( df1, df2, by = "f", relationship = "many-to-many")),  c(0,4,2))
-  expect_equal(duckplyr_group_size(duckplyr_full_join( df1, df2, by = "f", relationship = "many-to-many")),  c(2,4,2))
-  expect_equal(duckplyr_group_size(duckplyr_anti_join( df1, df2, by = "f")),  c(2,0,0))
-  expect_equal(duckplyr_group_size(duckplyr_inner_join( df1, df2, by = "f", relationship = "many-to-many")),  c(0,4,0))
+  expect_equal(
+    duckplyr_group_size(duckplyr_left_join(
+      df1,
+      df2,
+      by = "f",
+      relationship = "many-to-many"
+    )),
+    c(2, 4, 0)
+  )
+  expect_equal(
+    duckplyr_group_size(duckplyr_right_join(
+      df1,
+      df2,
+      by = "f",
+      relationship = "many-to-many"
+    )),
+    c(0, 4, 2)
+  )
+  expect_equal(
+    duckplyr_group_size(duckplyr_full_join(
+      df1,
+      df2,
+      by = "f",
+      relationship = "many-to-many"
+    )),
+    c(2, 4, 2)
+  )
+  expect_equal(
+    duckplyr_group_size(duckplyr_anti_join(df1, df2, by = "f")),
+    c(2, 0, 0)
+  )
+  expect_equal(
+    duckplyr_group_size(duckplyr_inner_join(
+      df1,
+      df2,
+      by = "f",
+      relationship = "many-to-many"
+    )),
+    c(0, 4, 0)
+  )
 })
 
 test_that("group column names reflect renamed duplicate columns (#2330)", {
@@ -761,6 +886,10 @@ test_that("`by = list(x = character(), y = character())` for a cross join is dep
   df2 <- tibble(y = 1:2)
 
   expect_snapshot({
-    out <- duckplyr_left_join(df1, df2, by = list(x = character(), y = character()))
+    out <- duckplyr_left_join(
+      df1,
+      df2,
+      by = list(x = character(), y = character())
+    )
   })
 })

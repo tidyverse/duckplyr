@@ -1,7 +1,9 @@
 # Gezznezzrated by 04-dplyr-tests.R, do not edit by hand
 
 # Workaround for lazytest
-test_that("Dummy", { expect_true(TRUE) })
+test_that("Dummy", {
+  expect_true(TRUE)
+})
 
 skip_if(Sys.getenv("DUCKPLYR_SKIP_DPLYR_TESTS") == "TRUE")
 
@@ -9,7 +11,9 @@ df <- data.frame(x = rep(1:3, each = 10), y = rep(1:6, each = 5))
 
 test_that("duckplyr_group_by() with .add = TRUE adds groups", {
   add_groups1 <- function(tbl) duckplyr_group_by(tbl, x, y, .add = TRUE)
-  add_groups2 <- function(tbl) duckplyr_group_by(duckplyr_group_by(tbl, x, .add = TRUE), y, .add = TRUE)
+  add_groups2 <- function(tbl) {
+    duckplyr_group_by(duckplyr_group_by(tbl, x, .add = TRUE), y, .add = TRUE)
+  }
 
   expect_equal(duckplyr_group_vars(add_groups1(df)), c("x", "y"))
   expect_equal(duckplyr_group_vars(add_groups2(df)), c("x", "y"))
@@ -22,25 +26,50 @@ test_that("duckplyr_group_by(<grouped df>, <computation>) computes the expressio
   )
 
   count <- 0
-  out <- df |> duckplyr_group_by(g) |> duckplyr_group_by(big = { count <<- count + 1; x > mean(x) })
+  out <- df |>
+    duckplyr_group_by(g) |>
+    duckplyr_group_by(big = {
+      count <<- count + 1
+      x > mean(x)
+    })
   expect_equal(out$big, c(FALSE, FALSE, TRUE, TRUE))
   expect_equal(count, 1L)
   expect_equal(duckplyr_group_vars(out), c("big"))
 
   count <- 0
-  out <- df |> duckplyr_group_by(g) |> duckplyr_group_by(big = { count <<- count + 1; x > mean(x) }, .add = TRUE)
+  out <- df |>
+    duckplyr_group_by(g) |>
+    duckplyr_group_by(
+      big = {
+        count <<- count + 1
+        x > mean(x)
+      },
+      .add = TRUE
+    )
   expect_equal(out$big, c(FALSE, FALSE, TRUE, TRUE))
   expect_equal(count, 1L)
   expect_equal(duckplyr_group_vars(out), c("g", "big"))
 
   count <- 0
-  out <- df |> duckplyr_group_by(g) |> duckplyr_mutate(big = { count <<- count + 1; x > mean(x)}) |> duckplyr_group_by(big)
+  out <- df |>
+    duckplyr_group_by(g) |>
+    duckplyr_mutate(big = {
+      count <<- count + 1
+      x > mean(x)
+    }) |>
+    duckplyr_group_by(big)
   expect_equal(out$big, c(FALSE, TRUE, FALSE, TRUE))
   expect_equal(count, 2L)
   expect_equal(duckplyr_group_vars(out), c("big"))
 
   count <- 0
-  out <- df |> duckplyr_group_by(g) |> duckplyr_mutate(big = { count <<- count + 1; x > mean(x)}) |> duckplyr_group_by(big, .add = TRUE)
+  out <- df |>
+    duckplyr_group_by(g) |>
+    duckplyr_mutate(big = {
+      count <<- count + 1
+      x > mean(x)
+    }) |>
+    duckplyr_group_by(big, .add = TRUE)
   expect_equal(out$big, c(FALSE, TRUE, FALSE, TRUE))
   expect_equal(count, 2L)
   expect_equal(duckplyr_group_vars(out), c("g", "big"))
@@ -62,10 +91,32 @@ test_that("joins preserve grouping", {
   df <- data.frame(x = rep(1:2, each = 4), y = rep(1:4, each = 2))
   g <- duckplyr_group_by(df, x)
 
-  expect_equal(duckplyr_group_vars(duckplyr_inner_join(g, g, by = c("x", "y"), relationship = "many-to-many")), "x")
-  expect_equal(duckplyr_group_vars(duckplyr_left_join(g, g, by = c("x", "y"), relationship = "many-to-many")), "x")
-  expect_equal(duckplyr_group_vars(duckplyr_semi_join(g, g, by = c("x", "y"))), "x")
-  expect_equal(duckplyr_group_vars(duckplyr_anti_join(g, g, by = c("x", "y"))), "x")
+  expect_equal(
+    duckplyr_group_vars(duckplyr_inner_join(
+      g,
+      g,
+      by = c("x", "y"),
+      relationship = "many-to-many"
+    )),
+    "x"
+  )
+  expect_equal(
+    duckplyr_group_vars(duckplyr_left_join(
+      g,
+      g,
+      by = c("x", "y"),
+      relationship = "many-to-many"
+    )),
+    "x"
+  )
+  expect_equal(
+    duckplyr_group_vars(duckplyr_semi_join(g, g, by = c("x", "y"))),
+    "x"
+  )
+  expect_equal(
+    duckplyr_group_vars(duckplyr_anti_join(g, g, by = c("x", "y"))),
+    "x"
+  )
 })
 
 test_that("constructors drops groups", {
@@ -98,7 +149,6 @@ test_that("can't rename while partially `duckplyr_ungroup()`-ing (#6606)", {
 
 # Test full range of variable types --------------------------------------------
 
-
 test_that("local group_by preserves variable types", {
   df_var <- tibble(
     l = c(T, F),
@@ -114,7 +164,9 @@ test_that("local group_by preserves variable types", {
   for (var in names(df_var)) {
     expected <- tibble(!!var := sort(unique(df_var[[var]])), n = 1L)
 
-    summarised <- df_var |> duckplyr_group_by(!!sym(var)) |> duckplyr_summarise(n = n())
+    summarised <- df_var |>
+      duckplyr_group_by(!!sym(var)) |>
+      duckplyr_summarise(n = n())
     expect_equal(summarised, expected)
   }
 })
@@ -140,19 +192,28 @@ test_that("group_by uses shallow copy", {
 })
 
 test_that("group_by orders by groups. #242", {
-  df <- data.frame(a = sample(1:10, 3000, replace = TRUE)) |> duckplyr_group_by(a)
+  df <- data.frame(a = sample(1:10, 3000, replace = TRUE)) |>
+    duckplyr_group_by(a)
   expect_equal(group_data(df)$a, 1:10)
 
-  df <- data.frame(a = sample(letters[1:10], 3000, replace = TRUE), stringsAsFactors = FALSE) |> duckplyr_group_by(a)
+  df <- data.frame(
+    a = sample(letters[1:10], 3000, replace = TRUE),
+    stringsAsFactors = FALSE
+  ) |>
+    duckplyr_group_by(a)
   expect_equal(group_data(df)$a, letters[1:10])
 
-  df <- data.frame(a = sample(sqrt(1:10), 3000, replace = TRUE)) |> duckplyr_group_by(a)
+  df <- data.frame(a = sample(sqrt(1:10), 3000, replace = TRUE)) |>
+    duckplyr_group_by(a)
   expect_equal(group_data(df)$a, sqrt(1:10))
 })
 
 test_that("Can duckplyr_group_by() a POSIXlt", {
   skip_if_not_installed("tibble", "2.99.99")
-  df <- tibble(x = 1:5, times = as.POSIXlt(seq.Date(Sys.Date(), length.out = 5, by = "day")))
+  df <- tibble(
+    x = 1:5,
+    times = as.POSIXlt(seq.Date(Sys.Date(), length.out = 5, by = "day"))
+  )
   g <- duckplyr_group_by(df, times)
   expect_equal(nrow(group_data(g)), 5L)
 })
@@ -177,7 +238,9 @@ test_that("group_by only creates one group for NA (#401)", {
   w <- c(20, 30, 40, 1:10, 1:10) * 10
 
   n_distinct(x) # 11 OK
-  res <- data.frame(x = x, w = w) |> duckplyr_group_by(x) |> duckplyr_summarise(n = n())
+  res <- data.frame(x = x, w = w) |>
+    duckplyr_group_by(x) |>
+    duckplyr_summarise(n = n())
   expect_equal(nrow(res), 11L)
 })
 
@@ -229,7 +292,10 @@ test_that("[ on grouped_df preserves grouping if subset includes grouping vars",
 
   # non-syntactic name
   by_ns <- df |> duckplyr_group_by(` `)
-  expect_equal(by_ns |> duckplyr_groups(), by_ns |> `[`(1:2) |> duckplyr_groups())
+  expect_equal(
+    by_ns |> duckplyr_groups(),
+    by_ns |> `[`(1:2) |> duckplyr_groups()
+  )
 })
 
 test_that("[ on grouped_df drops grouping if subset doesn't include grouping vars", {
@@ -282,7 +348,10 @@ test_that("group_by handles encodings for native strings (#1507)", {
 
     res <- duckplyr_group_by(df, !!!special)
     expect_equal(names(res), c(names(df), deparse(special)))
-    expect_equal(duckplyr_groups(res), list(as.name(enc2native(deparse(special)))))
+    expect_equal(
+      duckplyr_groups(res),
+      list(as.name(enc2native(deparse(special))))
+    )
   }
 })
 
@@ -327,24 +396,29 @@ test_that("duckplyr_group_by() does not mutate for nothing when using the .data 
   df <- tibble(x = 1:5)
   attr(df, "y") <- 1
 
-  expect_equal( df |> duckplyr_group_by(.data$x) |> attr("y"), 1 )
-  expect_equal( df |> duckplyr_group_by(.data[["x"]]) |> attr("y"), 1 )
+  expect_equal(df |> duckplyr_group_by(.data$x) |> attr("y"), 1)
+  expect_equal(df |> duckplyr_group_by(.data[["x"]]) |> attr("y"), 1)
 })
 
 test_that("tbl_sum gets the right number of groups", {
-  res <- data.frame(x=c(1,1,2,2)) |> duckplyr_group_by(x) |> pillar::tbl_sum()
+  res <- data.frame(x = c(1, 1, 2, 2)) |>
+    duckplyr_group_by(x) |>
+    pillar::tbl_sum()
   expect_equal(res, c("A tibble" = "4 x 1", "Groups" = "x [2]"))
 })
 
 test_that("group_by ignores empty quosures (3780)", {
   empty <- quo()
-  expect_equal(duckplyr_group_by(mtcars, cyl), duckplyr_group_by(mtcars, cyl, !!empty))
+  expect_equal(
+    duckplyr_group_by(mtcars, cyl),
+    duckplyr_group_by(mtcars, cyl, !!empty)
+  )
 })
 
 # Zero groups ---------------------------------------------------
 
 test_that("mutate handles grouped tibble with 0 groups (#3935)", {
-  df <- tibble(x=integer()) |> duckplyr_group_by(x)
+  df <- tibble(x = integer()) |> duckplyr_group_by(x)
   res <- duckplyr_mutate(df, y = mean(x), z = +mean(x), n = n())
   expect_equal(names(res), c("x", "y", "z", "n"))
   expect_equal(nrow(res), 0L)
@@ -354,7 +428,7 @@ test_that("mutate handles grouped tibble with 0 groups (#3935)", {
 })
 
 test_that("summarise handles grouped tibble with 0 groups (#3935)", {
-  df <- tibble(x=integer()) |> duckplyr_group_by(x)
+  df <- tibble(x = integer()) |> duckplyr_group_by(x)
   res <- duckplyr_summarise(df, y = mean(x), z = +mean(x), n = n())
   expect_equal(names(res), c("x", "y", "z", "n"))
   expect_equal(nrow(res), 0L)
@@ -364,19 +438,19 @@ test_that("summarise handles grouped tibble with 0 groups (#3935)", {
 })
 
 test_that("filter handles grouped tibble with 0 groups (#3935)", {
-  df <- tibble(x=integer()) |> duckplyr_group_by(x)
+  df <- tibble(x = integer()) |> duckplyr_group_by(x)
   res <- duckplyr_filter(df, x > 3L)
   expect_identical(df, res)
 })
 
 test_that("select handles grouped tibble with 0 groups (#3935)", {
-  df <- tibble(x=integer()) |> duckplyr_group_by(x)
+  df <- tibble(x = integer()) |> duckplyr_group_by(x)
   res <- duckplyr_select(df, x)
   expect_identical(df, res)
 })
 
 test_that("arrange handles grouped tibble with 0 groups (#3935)", {
-  df <- tibble(x=integer()) |> duckplyr_group_by(x)
+  df <- tibble(x = integer()) |> duckplyr_group_by(x)
   res <- duckplyr_arrange(df, x)
   expect_identical(df, res)
 })
@@ -401,7 +475,10 @@ test_that("duckplyr_group_by(.drop = TRUE) drops empty groups (4061)", {
   expect_identical(
     group_data(res),
     structure(
-      tibble(Species = factor("setosa", levels = levels(iris$Species)), .rows := list_of(1:50)),
+      tibble(
+        Species = factor("setosa", levels = levels(iris$Species)),
+        .rows := list_of(1:50)
+      ),
       .drop = TRUE
     )
   )
@@ -452,7 +529,7 @@ test_that("summarise maintains the .drop attribute (#4061)", {
   df <- tibble(
     f1 = factor("a", levels = c("a", "b", "c")),
     f2 = factor("d", levels = c("d", "e", "f", "g")),
-    x  = 42
+    x = 42
   )
 
   res <- df |>
@@ -465,23 +542,35 @@ test_that("summarise maintains the .drop attribute (#4061)", {
 })
 
 test_that("joins maintain the .drop attribute (#4061)", {
-  df1 <- duckplyr_group_by(tibble(
-    f1 = factor(c("a", "b"), levels = c("a", "b", "c")),
-    x  = 42:43
-  ), f1, .drop = TRUE)
+  df1 <- duckplyr_group_by(
+    tibble(
+      f1 = factor(c("a", "b"), levels = c("a", "b", "c")),
+      x = 42:43
+    ),
+    f1,
+    .drop = TRUE
+  )
 
-  df2 <- duckplyr_group_by(tibble(
-    f1 = factor(c("a"), levels = c("a", "b", "c")),
-    y = 1
-  ), f1, .drop = TRUE)
+  df2 <- duckplyr_group_by(
+    tibble(
+      f1 = factor(c("a"), levels = c("a", "b", "c")),
+      y = 1
+    ),
+    f1,
+    .drop = TRUE
+  )
 
   res <- duckplyr_left_join(df1, df2, by = "f1")
   expect_equal(duckplyr_n_groups(res), 2L)
 
-  df2 <- duckplyr_group_by(tibble(
-    f1 = factor(c("a", "c"), levels = c("a", "b", "c")),
-    y = 1:2
-  ), f1, .drop = TRUE)
+  df2 <- duckplyr_group_by(
+    tibble(
+      f1 = factor(c("a", "c"), levels = c("a", "b", "c")),
+      y = 1:2
+    ),
+    f1,
+    .drop = TRUE
+  )
   res <- duckplyr_full_join(df1, df2, by = "f1")
   expect_equal(duckplyr_n_groups(res), 3L)
 })
@@ -490,15 +579,19 @@ test_that("duckplyr_group_by(add = TRUE) sets .drop if the origonal data was .dr
   d <- tibble(
     f1 = factor("b", levels = c("a", "b", "c")),
     f2 = factor("g", levels = c("e", "f", "g")),
-    x  = 48
+    x = 48
   )
 
-  res <- duckplyr_group_by(duckplyr_group_by(d, f1, .drop = TRUE), f2, .add = TRUE)
+  res <- duckplyr_group_by(
+    duckplyr_group_by(d, f1, .drop = TRUE),
+    f2,
+    .add = TRUE
+  )
   expect_equal(duckplyr_n_groups(res), 1L)
   expect_true(group_by_drop_default(res))
 })
 
-test_that("group_by_drop_default() is forgiving about corrupt grouped df (#4306)",{
+test_that("group_by_drop_default() is forgiving about corrupt grouped df (#4306)", {
   df <- tibble(x = 1:2, y = 1:2) |>
     structure(class = c("grouped_df", "tbl_df", "tbl", "data.frame"))
 
@@ -533,19 +626,25 @@ test_that("duckplyr_group_by() can handle auto splicing in the duckplyr_mutate()
   )
 
   expect_identical(
-    iris |> duckplyr_mutate(across(starts_with("Sepal"), round)) |> duckplyr_group_by(Sepal.Length, Sepal.Width),
+    iris |>
+      duckplyr_mutate(across(starts_with("Sepal"), round)) |>
+      duckplyr_group_by(Sepal.Length, Sepal.Width),
     iris |> duckplyr_group_by(across(starts_with("Sepal"), round))
   )
 })
 
 test_that("duckplyr_group_by() can combine usual spec and auto-splicing-duckplyr_mutate() step", {
   expect_identical(
-    iris |> duckplyr_mutate(across(starts_with("Sepal"), round)) |> duckplyr_group_by(Sepal.Length, Sepal.Width, Species),
+    iris |>
+      duckplyr_mutate(across(starts_with("Sepal"), round)) |>
+      duckplyr_group_by(Sepal.Length, Sepal.Width, Species),
     iris |> duckplyr_group_by(across(starts_with("Sepal"), round), Species)
   )
 
   expect_identical(
-    iris |> duckplyr_mutate(across(starts_with("Sepal"), round)) |> duckplyr_group_by(Species, Sepal.Length, Sepal.Width),
+    iris |>
+      duckplyr_mutate(across(starts_with("Sepal"), round)) |>
+      duckplyr_group_by(Species, Sepal.Length, Sepal.Width),
     iris |> duckplyr_group_by(Species, across(starts_with("Sepal"), round))
   )
 })
@@ -555,15 +654,17 @@ test_that("duckplyr_group_by() can combine usual spec and auto-splicing-duckplyr
 test_that("duckplyr_group_by() has duckplyr_mutate() semantics (#4984)", {
   expect_equal(
     tibble(a = 1, b = 2) |> duckplyr_group_by(c = a * b, d = c + 1),
-    tibble(a = 1, b = 2) |> duckplyr_mutate(c = a * b, d = c + 1) |> duckplyr_group_by(c, d)
+    tibble(a = 1, b = 2) |>
+      duckplyr_mutate(c = a * b, d = c + 1) |>
+      duckplyr_group_by(c, d)
   )
 })
 
 test_that("implicit duckplyr_mutate() operates on ungrouped data (#5598)", {
   skip("TODO duckdb")
-  vars <- tibble(x = c(1,2), y = c(3,4), z = c(5,6)) |>
+  vars <- tibble(x = c(1, 2), y = c(3, 4), z = c(5, 6)) |>
     dplyr::duckplyr_group_by(y) |>
-    dplyr::duckplyr_group_by(pick(any_of(c('y','z')))) |>
+    dplyr::duckplyr_group_by(pick(any_of(c('y', 'z')))) |>
     dplyr::duckplyr_group_vars()
   expect_equal(vars, c("y", "z"))
 })
@@ -613,5 +714,4 @@ test_that("duckplyr_group_by() and duckplyr_ungroup() give meaningful error mess
 
     (expect_error(df |> duckplyr_group_by(z = a + 1)))
   })
-
 })

@@ -1,7 +1,9 @@
 # Gezznezzrated by 04-dplyr-tests.R, do not edit by hand
 
 # Workaround for lazytest
-test_that("Dummy", { expect_true(TRUE) })
+test_that("Dummy", {
+  expect_true(TRUE)
+})
 
 skip_if(Sys.getenv("DUCKPLYR_SKIP_DPLYR_TESTS") == "TRUE")
 
@@ -11,12 +13,18 @@ test_that("duckplyr_group_nest() works", {
 
   res <- duckplyr_group_nest(starwars, species, homeworld)
   expect_type(duckplyr_pull(res), "list")
-  expect_equal(attr(duckplyr_pull(res), "ptype"), vec_slice(duckplyr_select(starwars, -species, -homeworld), 0L))
+  expect_equal(
+    attr(duckplyr_pull(res), "ptype"),
+    vec_slice(duckplyr_select(starwars, -species, -homeworld), 0L)
+  )
 
   expect_equal(res[1:2], structure(gdata[1:2], .drop = NULL))
 
   nested <- bind_rows(!!!res$data)
-  expect_equal(names(nested), duckplyr_setdiff(names(starwars), c("species", "homeworld")))
+  expect_equal(
+    names(nested),
+    duckplyr_setdiff(names(starwars), c("species", "homeworld"))
+  )
 })
 
 test_that("duckplyr_group_nest() can keep the grouping variables", {
@@ -35,7 +43,10 @@ test_that("duckplyr_group_nest() works on grouped data frames", {
   res <- duckplyr_group_nest(grouped)
   expect_type(duckplyr_pull(res), "list")
   expect_equal(res[1:2], structure(gdata[1:2], .drop = NULL))
-  expect_equal(names(bind_rows(!!!res$data)), duckplyr_setdiff(names(starwars), c("species", "homeworld")))
+  expect_equal(
+    names(bind_rows(!!!res$data)),
+    duckplyr_setdiff(names(starwars), c("species", "homeworld"))
+  )
 
   res <- duckplyr_group_nest(grouped, keep = TRUE)
   expect_type(duckplyr_pull(res), "list")

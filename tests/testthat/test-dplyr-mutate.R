@@ -1,7 +1,9 @@
 # Gezznezzrated by 04-dplyr-tests.R, do not edit by hand
 
 # Workaround for lazytest
-test_that("Dummy", { expect_true(TRUE) })
+test_that("Dummy", {
+  expect_true(TRUE)
+})
 
 skip_if(Sys.getenv("DUCKPLYR_SKIP_DPLYR_TESTS") == "TRUE")
 
@@ -30,7 +32,10 @@ test_that("rownames preserved", {
 
 test_that("mutations applied progressively", {
   df <- tibble(x = 1)
-  expect_equal(df |> duckplyr_mutate(y = x + 1, z = y + 1), tibble(x = 1, y = 2, z = 3))
+  expect_equal(
+    df |> duckplyr_mutate(y = x + 1, z = y + 1),
+    tibble(x = 1, y = 2, z = 3)
+  )
   expect_equal(df |> duckplyr_mutate(x = x + 1, x = x + 1), tibble(x = 3))
   expect_equal(df |> duckplyr_mutate(x = 2, y = x), tibble(x = 2, y = 2))
 
@@ -77,17 +82,30 @@ test_that("duckplyr_mutate() supports unquoted values", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(g = c(1, 1, 2, 2, 2), x = 1:5)
   expect_identical(duckplyr_mutate(df, out = !!1), duckplyr_mutate(df, out = 1))
-  expect_identical(duckplyr_mutate(df, out = !!(1:5)), duckplyr_mutate(df, out = 1:5))
-  expect_identical(duckplyr_mutate(df, out = !!quote(1:5)), duckplyr_mutate(df, out = 1:5))
+  expect_identical(
+    duckplyr_mutate(df, out = !!(1:5)),
+    duckplyr_mutate(df, out = 1:5)
+  )
+  expect_identical(
+    duckplyr_mutate(df, out = !!quote(1:5)),
+    duckplyr_mutate(df, out = 1:5)
+  )
 
   gdf <- duckplyr_group_by(df, g)
-  expect_identical(duckplyr_mutate(gdf, out = !!1), duckplyr_mutate(gdf, out = 1))
+  expect_identical(
+    duckplyr_mutate(gdf, out = !!1),
+    duckplyr_mutate(gdf, out = 1)
+  )
 })
 
 test_that("assignments don't overwrite variables (#315)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1, y = 2)
-  out <- df |> duckplyr_mutate(z = {x <- 10; x})
+  out <- df |>
+    duckplyr_mutate(z = {
+      x <- 10
+      x
+    })
   expect_equal(out, tibble(x = 1, y = 2, z = 10))
 })
 
@@ -113,8 +131,14 @@ test_that("duckplyr_mutate() supports constants (#6056, #6305)", {
   z <- 1:5
 
   expect_identical(df |> duckplyr_mutate(y = !!y) |> duckplyr_pull(y), y)
-  expect_identical(df |> duckplyr_group_by(g) |> duckplyr_mutate(y = !!y) |> duckplyr_pull(y), y)
-  expect_identical(df |> duckplyr_rowwise() |> duckplyr_mutate(y = !!y) |> duckplyr_pull(y), y)
+  expect_identical(
+    df |> duckplyr_group_by(g) |> duckplyr_mutate(y = !!y) |> duckplyr_pull(y),
+    y
+  )
+  expect_identical(
+    df |> duckplyr_rowwise() |> duckplyr_mutate(y = !!y) |> duckplyr_pull(y),
+    y
+  )
 
   expect_snapshot({
     (expect_error(df |> duckplyr_mutate(z = !!z)))
@@ -124,7 +148,13 @@ test_that("duckplyr_mutate() supports constants (#6056, #6305)", {
 
   # `.env$` is used for per group evaluation
   expect_identical(df |> duckplyr_mutate(y = .env$y) |> duckplyr_pull(y), y)
-  expect_identical(df |> duckplyr_group_by(g) |> duckplyr_mutate(z = .env$z) |> duckplyr_pull(z), c(z, z))
+  expect_identical(
+    df |>
+      duckplyr_group_by(g) |>
+      duckplyr_mutate(z = .env$z) |>
+      duckplyr_pull(z),
+    c(z, z)
+  )
 
   expect_snapshot({
     (expect_error(df |> duckplyr_group_by(g) |> duckplyr_mutate(y = .env$y)))
@@ -318,7 +348,9 @@ test_that("mutate preserves grouping", {
 
 test_that("mutate works on zero-row grouped data frame (#596)", {
   dat <- data.frame(a = numeric(0), b = character(0), stringsAsFactors = TRUE)
-  res <- dat |> duckplyr_group_by(b, .drop = FALSE) |> duckplyr_mutate(a2 = a * 2)
+  res <- dat |>
+    duckplyr_group_by(b, .drop = FALSE) |>
+    duckplyr_mutate(a2 = a * 2)
   expect_type(res$a2, "double")
   expect_s3_class(res, "grouped_df")
   expect_equal(res$a2, numeric(0))
@@ -402,7 +434,8 @@ test_that("rowwise mutate un-lists existing size-1 list-columns (#6302)", {
 
 
 test_that("grouped mutate does not drop grouping attributes (#1020)", {
-  d <- data.frame(subject = c("Jack", "Jill"), id = c(2, 1)) |> duckplyr_group_by(subject)
+  d <- data.frame(subject = c("Jack", "Jill"), id = c(2, 1)) |>
+    duckplyr_group_by(subject)
   a1 <- names(attributes(d))
   a2 <- names(attributes(d |> duckplyr_mutate(foo = 1)))
   expect_equal(duckplyr_setdiff(a1, a2), character(0))
@@ -429,7 +462,7 @@ test_that("mutate keeps zero length groups", {
   )
   df <- duckplyr_group_by(df, e, f, g, .drop = FALSE)
 
-  expect_equal( duckplyr_group_size(duckplyr_mutate(df, z = 2)), c(2, 2, 0) )
+  expect_equal(duckplyr_group_size(duckplyr_mutate(df, z = 2)), c(2, 2, 0))
 })
 
 # other -------------------------------------------------------------------
@@ -489,7 +522,9 @@ test_that("duckplyr_mutate() evaluates expression for empty groups", {
   gf <- duckplyr_group_by(df, f, .drop = FALSE)
 
   count <- 0
-  duckplyr_mutate(gf, x = {count <<- count + 1})
+  duckplyr_mutate(gf, x = {
+    count <<- count + 1
+  })
   expect_equal(count, 3L)
 })
 
@@ -514,7 +549,10 @@ test_that("DataMask uses fresh copies of group id / size variables (#6762)", {
     duckplyr_mutate(df, b = a + 1)
   }
 
-  out <- duckplyr_mutate(df, y = {fn(); x})
+  out <- duckplyr_mutate(df, y = {
+    fn()
+    x
+  })
 
   expect_identical(out$x, 1:2)
   expect_identical(out$y, 1:2)
@@ -613,7 +651,11 @@ test_that(".keep = 'used' not affected by across() or pick()", {
   # This must evaluate every column in order to figure out if should
   # be included in the set or not, but that shouldn't be counted for
   # the purposes of "used" variables
-  out <- duckplyr_mutate(df, across(where(is.numeric), identity), .keep = "unused")
+  out <- duckplyr_mutate(
+    df,
+    across(where(is.numeric), identity),
+    .keep = "unused"
+  )
   expect_named(out, names(df))
 
   out <- duckplyr_mutate(df, pick(where(is.numeric)), .keep = "unused")
@@ -669,21 +711,42 @@ test_that(".keep and .before/.after interact correctly", {
   df <- tibble(x = 1, y = 1, z = 1, a = 1, b = 2, c = 3) |>
     duckplyr_group_by(a, b)
 
-  expect_named(duckplyr_mutate(df, d = 1, x = 2, .keep = "none"), c("x", "a", "b", "d"))
-  expect_named(duckplyr_mutate(df, d = 1, x = 2, .keep = "none", .before = "a"), c("x", "d", "a", "b"))
-  expect_named(duckplyr_mutate(df, d = 1, x = 2, .keep = "none", .after = "a"), c("x", "a", "d", "b"))
+  expect_named(
+    duckplyr_mutate(df, d = 1, x = 2, .keep = "none"),
+    c("x", "a", "b", "d")
+  )
+  expect_named(
+    duckplyr_mutate(df, d = 1, x = 2, .keep = "none", .before = "a"),
+    c("x", "d", "a", "b")
+  )
+  expect_named(
+    duckplyr_mutate(df, d = 1, x = 2, .keep = "none", .after = "a"),
+    c("x", "a", "d", "b")
+  )
 })
 
 test_that("dropping column with `NULL` then readding it retains original location", {
   df <- tibble(x = 1, y = 2, z = 3, a = 4)
   df <- duckplyr_group_by(df, z)
 
-  expect_named(duckplyr_mutate(df, y = NULL, y = 3, .keep = "all"), c("x", "y", "z", "a"))
-  expect_named(duckplyr_mutate(df, b = a, y = NULL, y = 3, .keep = "used"), c("y", "z", "a", "b"))
-  expect_named(duckplyr_mutate(df, b = a, y = NULL, y = 3, .keep = "unused"), c("x", "y", "z", "b"))
+  expect_named(
+    duckplyr_mutate(df, y = NULL, y = 3, .keep = "all"),
+    c("x", "y", "z", "a")
+  )
+  expect_named(
+    duckplyr_mutate(df, b = a, y = NULL, y = 3, .keep = "used"),
+    c("y", "z", "a", "b")
+  )
+  expect_named(
+    duckplyr_mutate(df, b = a, y = NULL, y = 3, .keep = "unused"),
+    c("x", "y", "z", "b")
+  )
 
   # It isn't treated as a "new" column
-  expect_named(duckplyr_mutate(df, y = NULL, y = 3, .keep = "all", .before = x), c("x", "y", "z", "a"))
+  expect_named(
+    duckplyr_mutate(df, y = NULL, y = 3, .keep = "all", .before = x),
+    c("x", "y", "z", "a")
+  )
 })
 
 test_that("setting a new column to `NULL` works with `.before` and `.after` (#6563)", {
@@ -692,9 +755,15 @@ test_that("setting a new column to `NULL` works with `.before` and `.after` (#65
 
   expect_named(duckplyr_mutate(df, b = NULL, .before = 1), names(df))
   expect_named(duckplyr_mutate(df, b = 1, b = NULL, .before = 1), names(df))
-  expect_named(duckplyr_mutate(df, b = NULL, b = 1, .before = 1), c("b", "x", "y", "z", "a"))
+  expect_named(
+    duckplyr_mutate(df, b = NULL, b = 1, .before = 1),
+    c("b", "x", "y", "z", "a")
+  )
 
-  expect_named(duckplyr_mutate(df, b = NULL, c = 1, .after = 2), c("x", "y", "c", "z", "a"))
+  expect_named(
+    duckplyr_mutate(df, b = NULL, c = 1, .after = 2),
+    c("x", "y", "c", "z", "a")
+  )
 })
 
 test_that(".keep= always retains grouping variables (#5582)", {
@@ -801,9 +870,10 @@ test_that("duckplyr_mutate() give meaningful errors", {
 
     # setting column to NULL makes it unavailable
     (expect_error(tbl |> duckplyr_mutate(y = NULL, a = sum(y))))
-    (expect_error(tbl |>
-                      duckplyr_group_by(x) |>
-                      duckplyr_mutate(y = NULL, a = sum(y))
+    (expect_error(
+      tbl |>
+        duckplyr_group_by(x) |>
+        duckplyr_mutate(y = NULL, a = sum(y))
     ))
 
     # incompatible column type
@@ -812,70 +882,72 @@ test_that("duckplyr_mutate() give meaningful errors", {
     # Unsupported type"
     df <- tibble(g = c(1, 1, 2, 2, 2), x = 1:5)
     (expect_error(df |> duckplyr_mutate(out = env(a = 1))))
-    (expect_error(df |>
-                      duckplyr_group_by(g) |>
-                      duckplyr_mutate(out = env(a = 1))
+    (expect_error(
+      df |>
+        duckplyr_group_by(g) |>
+        duckplyr_mutate(out = env(a = 1))
     ))
-    (expect_error(df |>
-                      duckplyr_rowwise() |>
-                      duckplyr_mutate(out = rnorm)
+    (expect_error(
+      df |>
+        duckplyr_rowwise() |>
+        duckplyr_mutate(out = rnorm)
     ))
 
     # incompatible types across groups
     (expect_error(
-                    data.frame(x = rep(1:5, each = 3)) |>
-                      duckplyr_group_by(x) |>
-                      duckplyr_mutate(val = ifelse(x < 3, "foo", 2))
+      data.frame(x = rep(1:5, each = 3)) |>
+        duckplyr_group_by(x) |>
+        duckplyr_mutate(val = ifelse(x < 3, "foo", 2))
     ))
 
     # mixed nulls
     (expect_error(
-                    tibble(a = 1:3, b=4:6) |>
-                      duckplyr_group_by(a) |>
-                      duckplyr_mutate(if(a==1) NULL else "foo")
+      tibble(a = 1:3, b = 4:6) |>
+        duckplyr_group_by(a) |>
+        duckplyr_mutate(if (a == 1) NULL else "foo")
     ))
     (expect_error(
-                    tibble(a = 1:3, b=4:6) |>
-                      duckplyr_group_by(a) |>
-                      duckplyr_mutate(if(a==2) NULL else "foo")
+      tibble(a = 1:3, b = 4:6) |>
+        duckplyr_group_by(a) |>
+        duckplyr_mutate(if (a == 2) NULL else "foo")
     ))
 
     # incompatible size
     (expect_error(
-                    data.frame(x = c(2, 2, 3, 3)) |> duckplyr_mutate(int = 1:5)
+      data.frame(x = c(2, 2, 3, 3)) |> duckplyr_mutate(int = 1:5)
     ))
     (expect_error(
-                    data.frame(x = c(2, 2, 3, 3)) |>
-                      duckplyr_group_by(x) |>
-                      duckplyr_mutate(int = 1:5)
+      data.frame(x = c(2, 2, 3, 3)) |>
+        duckplyr_group_by(x) |>
+        duckplyr_mutate(int = 1:5)
     ))
     (expect_error(
-                    data.frame(x = c(2, 3, 3)) |>
-                      duckplyr_group_by(x) |>
-                      duckplyr_mutate(int = 1:5)
+      data.frame(x = c(2, 3, 3)) |>
+        duckplyr_group_by(x) |>
+        duckplyr_mutate(int = 1:5)
     ))
     (expect_error(
-                    data.frame(x = c(2, 2, 3, 3)) |>
-                      duckplyr_rowwise() |>
-                      duckplyr_mutate(int = 1:5)
+      data.frame(x = c(2, 2, 3, 3)) |>
+        duckplyr_rowwise() |>
+        duckplyr_mutate(int = 1:5)
     ))
     (expect_error(
-                    tibble(y = list(1:3, "a")) |>
-                      duckplyr_rowwise() |>
-                      duckplyr_mutate(y2 = y)
+      tibble(y = list(1:3, "a")) |>
+        duckplyr_rowwise() |>
+        duckplyr_mutate(y2 = y)
     ))
     (expect_error(
-                    data.frame(x = 1:10) |> duckplyr_mutate(y = 11:20, y = 1:2)
+      data.frame(x = 1:10) |> duckplyr_mutate(y = 11:20, y = 1:2)
     ))
 
     # .data pronoun
     (expect_error(
-                    tibble(a = 1) |> duckplyr_mutate(c = .data$b)
+      tibble(a = 1) |> duckplyr_mutate(c = .data$b)
     ))
     (expect_error(
-                    tibble(a = 1:3) |>
-                      duckplyr_group_by(a) |>
-                      duckplyr_mutate(c = .data$b)
+      tibble(a = 1:3) |>
+        duckplyr_group_by(a) |>
+        duckplyr_mutate(c = .data$b)
     ))
 
     # obsolete data mask
@@ -886,7 +958,6 @@ test_that("duckplyr_mutate() give meaningful errors", {
     (expect_error(
       eval_tidy(res$z[[1]])
     ))
-
 
     # Error that contains {
     (expect_error(

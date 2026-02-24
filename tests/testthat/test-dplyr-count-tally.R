@@ -1,7 +1,9 @@
 # Gezznezzrated by 04-dplyr-tests.R, do not edit by hand
 
 # Workaround for lazytest
-test_that("Dummy", { expect_true(TRUE) })
+test_that("Dummy", {
+  expect_true(TRUE)
+})
 
 skip_if(Sys.getenv("DUCKPLYR_SKIP_DPLYR_TESTS") == "TRUE")
 
@@ -70,7 +72,10 @@ test_that("count preserves grouping", {
   exp <- tibble(g = c(1, 2), n = c(1, 3))
 
   expect_equal(df |> duckplyr_count(g), exp)
-  expect_equal(df |> duckplyr_group_by(g) |> duckplyr_count(), exp |> duckplyr_group_by(g))
+  expect_equal(
+    df |> duckplyr_group_by(g) |> duckplyr_count(),
+    exp |> duckplyr_group_by(g)
+  )
 })
 
 test_that("output preserves class & attributes where possible", {
@@ -179,7 +184,10 @@ test_that("add_count preserves grouping", {
   exp <- tibble(g = c(1, 2, 2, 2), n = c(1, 3, 3, 3))
 
   expect_equal(df |> duckplyr_add_count(g), exp)
-  expect_equal(df |> duckplyr_group_by(g) |> duckplyr_add_count(), exp |> duckplyr_group_by(g))
+  expect_equal(
+    df |> duckplyr_group_by(g) |> duckplyr_add_count(),
+    exp |> duckplyr_group_by(g)
+  )
 })
 
 test_that("duckplyr_add_count() owns errors (#6139)", {

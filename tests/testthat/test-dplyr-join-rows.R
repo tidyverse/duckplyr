@@ -1,7 +1,9 @@
 # Gezznezzrated by 04-dplyr-tests.R, do not edit by hand
 
 # Workaround for lazytest
-test_that("Dummy", { expect_true(TRUE) })
+test_that("Dummy", {
+  expect_true(TRUE)
+})
 
 skip_if(Sys.getenv("DUCKPLYR_SKIP_DPLYR_TESTS") == "TRUE")
 
@@ -12,7 +14,10 @@ test_that("`relationship` default behavior is correct", {
   expect_equal(out$y, c(1L, 2L, 1L, 2L))
 
   # "none" for rolling joins
-  expect_warning(out <- join_rows(c(1, 2), c(1, 1), condition = ">=", filter = "max"), NA)
+  expect_warning(
+    out <- join_rows(c(1, 2), c(1, 1), condition = ">=", filter = "max"),
+    NA
+  )
   expect_equal(out$x, c(1L, 1L, 2L, 2L))
   expect_equal(out$y, c(1L, 2L, 1L, 2L))
   # If rolling joins warned on many-to-many relationships, it would be a little
@@ -128,7 +133,6 @@ test_that("missing values only match with `==`, `>=`, and `<=` conditions", {
   expect_identical(out$x, integer())
   expect_identical(out$y, integer())
 
-
   x <- tibble(x = c(1, 1), y = c(2, NA))
   y <- tibble(x = c(1, 1), y = c(3, NA))
 
@@ -211,7 +215,8 @@ test_that("join_rows() gives meaningful many-to-many warnings", {
 
 test_that("join_rows() gives meaningful error message on unmatched rows", {
   # Unmatched in the RHS
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     join_rows(
       data.frame(x = c(1, 2)),
       data.frame(x = c(3, 1)),
@@ -219,7 +224,8 @@ test_that("join_rows() gives meaningful error message on unmatched rows", {
       unmatched = "error"
     )
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     join_rows(
       data.frame(x = c(1, 2)),
       data.frame(x = c(3, 1)),
@@ -229,7 +235,8 @@ test_that("join_rows() gives meaningful error message on unmatched rows", {
   )
 
   # Unmatched in the LHS
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     join_rows(
       data.frame(x = c(1, 2)),
       data.frame(x = c(3, 1)),
@@ -239,7 +246,8 @@ test_that("join_rows() gives meaningful error message on unmatched rows", {
   )
 
   # Unmatched in either side
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     join_rows(
       data.frame(x = c(1, 2)),
       data.frame(x = 1),
@@ -247,7 +255,8 @@ test_that("join_rows() gives meaningful error message on unmatched rows", {
       unmatched = "error"
     )
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     join_rows(
       data.frame(x = c(1, 2)),
       data.frame(x = 1),
@@ -255,7 +264,8 @@ test_that("join_rows() gives meaningful error message on unmatched rows", {
       unmatched = c("error", "drop")
     )
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     join_rows(
       data.frame(x = 1),
       data.frame(x = c(1, 2)),
@@ -263,7 +273,8 @@ test_that("join_rows() gives meaningful error message on unmatched rows", {
       unmatched = "error"
     )
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     join_rows(
       data.frame(x = 1),
       data.frame(x = c(1, 2)),
@@ -275,7 +286,8 @@ test_that("join_rows() gives meaningful error message on unmatched rows", {
 
 test_that("join_rows() always errors on unmatched missing values", {
   # Unmatched in the RHS
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     join_rows(
       data.frame(x = 1),
       data.frame(x = NA),
@@ -316,7 +328,8 @@ test_that("join_rows() always errors on unmatched missing values", {
   )
 
   # Unmatched in the LHS
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     join_rows(
       data.frame(x = NA),
       data.frame(x = 1),
@@ -325,7 +338,8 @@ test_that("join_rows() always errors on unmatched missing values", {
       na_matches = "na"
     )
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     join_rows(
       data.frame(x = NA),
       data.frame(x = NA),
@@ -336,7 +350,8 @@ test_that("join_rows() always errors on unmatched missing values", {
   )
 
   # Unmatched in either side
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     join_rows(
       data.frame(x = 1),
       data.frame(x = c(1, NA)),
@@ -345,7 +360,8 @@ test_that("join_rows() always errors on unmatched missing values", {
       na_matches = "na"
     )
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     join_rows(
       data.frame(x = 1),
       data.frame(x = c(1, NA)),
@@ -354,7 +370,8 @@ test_that("join_rows() always errors on unmatched missing values", {
       na_matches = "na"
     )
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     join_rows(
       data.frame(x = c(1, NA)),
       data.frame(x = 1),
@@ -363,7 +380,8 @@ test_that("join_rows() always errors on unmatched missing values", {
       na_matches = "na"
     )
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     join_rows(
       data.frame(x = c(1, NA)),
       data.frame(x = 1),
@@ -372,7 +390,8 @@ test_that("join_rows() always errors on unmatched missing values", {
       na_matches = "na"
     )
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     join_rows(
       data.frame(x = NA),
       data.frame(x = NA),

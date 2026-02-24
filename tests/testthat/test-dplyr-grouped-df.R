@@ -1,14 +1,18 @@
 # Gezznezzrated by 04-dplyr-tests.R, do not edit by hand
 
 # Workaround for lazytest
-test_that("Dummy", { expect_true(TRUE) })
+test_that("Dummy", {
+  expect_true(TRUE)
+})
 
 skip_if(Sys.getenv("DUCKPLYR_SKIP_DPLYR_TESTS") == "TRUE")
 
 test_that("new_grouped_df can create alternative grouping structures (#3837)", {
   tbl <- new_grouped_df(
     tibble(x = rnorm(10)),
-    groups = tibble(".rows" := replicate(5, sample(1:10, replace = TRUE), simplify = FALSE))
+    groups = tibble(
+      ".rows" := replicate(5, sample(1:10, replace = TRUE), simplify = FALSE)
+    )
   )
   res <- duckplyr_summarise(tbl, x = mean(x))
   expect_equal(nrow(res), 5L)
@@ -17,7 +21,9 @@ test_that("new_grouped_df can create alternative grouping structures (#3837)", {
 test_that("new_grouped_df does not have rownames (#4173)", {
   tbl <- new_grouped_df(
     tibble(x = rnorm(10)),
-    groups = tibble(".rows" := replicate(5, sample(1:10, replace = TRUE), simplify = FALSE))
+    groups = tibble(
+      ".rows" := replicate(5, sample(1:10, replace = TRUE), simplify = FALSE)
+    )
   )
   expect_false(tibble::has_rownames(tbl))
 })
@@ -55,7 +61,14 @@ test_that("$<-, [[<-, and [<- update grouping data if needed", {
   expect_equal(group_data(`$<-`(gf, "x", value = 2))$x, 2)
   expect_equal(group_data(`$<-`(gf, "y", value = 2))$x, 1)
 
-  expect_equal(group_data({gf2 <- gf; gf2[[1]] <- 3; gf2})$x, 3)
+  expect_equal(
+    group_data({
+      gf2 <- gf
+      gf2[[1]] <- 3
+      gf2
+    })$x,
+    3
+  )
   expect_equal(group_data(`[<-`(gf, 1, "x", value = 4))$x, 4)
 })
 
@@ -95,7 +108,7 @@ test_that("names<- doesn't modify group data if not necessary", {
 test_that("group order is maintained in grouped-df methods (#5040)", {
   gdf <- duckplyr_group_by(mtcars, cyl, am, vs)
 
-  x <- gdf[0,]
+  x <- gdf[0, ]
   expect_identical(duckplyr_group_vars(x), duckplyr_group_vars(gdf))
 
   x <- gdf
@@ -114,7 +127,10 @@ test_that("group order is maintained in grouped-df methods (#5040)", {
   names <- names(x)
   names[9] <- "am2"
   names(x) <- names
-  expect_identical(duckplyr_group_vars(x), duckplyr_group_vars(duckplyr_group_by(x, cyl, am2, vs)))
+  expect_identical(
+    duckplyr_group_vars(x),
+    duckplyr_group_vars(duckplyr_group_by(x, cyl, am2, vs))
+  )
 })
 
 
@@ -158,7 +174,7 @@ test_that("validate_grouped_df() gives useful errors", {
   attr(df11, "groups") <- NULL
 
   expect_snapshot({
-     # Invalid `groups` attribute
+    # Invalid `groups` attribute
     (expect_error(validate_grouped_df(df1)))
     (expect_error(group_data(df1)))
     (expect_error(validate_grouped_df(df2)))
@@ -178,14 +194,13 @@ test_that("validate_grouped_df() gives useful errors", {
 
     # new_grouped_df()
     (expect_error(
-                    new_grouped_df(
-                      tibble(x = 1:10),
-                      tibble(other = list(1:2))
-                    )
+      new_grouped_df(
+        tibble(x = 1:10),
+        tibble(other = list(1:2))
+      )
     ))
     (expect_error(new_grouped_df(10)))
   })
-
 })
 
 # compute_group ----------------------------------------------------------

@@ -1,7 +1,9 @@
 # Gezznezzrated by 04-dplyr-tests.R, do not edit by hand
 
 # Workaround for lazytest
-test_that("Dummy", { expect_true(TRUE) })
+test_that("Dummy", {
+  expect_true(TRUE)
+})
 
 skip_if(Sys.getenv("DUCKPLYR_SKIP_DPLYR_TESTS") == "TRUE")
 
@@ -48,7 +50,10 @@ test_that("can add, remove, and replace columns", {
   df <- data.frame(x = 1, y = 2)
   expect_equal(dplyr_col_modify(df, list(y = NULL)), data.frame(x = 1))
   expect_equal(dplyr_col_modify(df, list(y = 3)), data.frame(x = 1, y = 3))
-  expect_equal(dplyr_col_modify(df, list(z = 3)), data.frame(x = 1, y = 2, z = 3))
+  expect_equal(
+    dplyr_col_modify(df, list(z = 3)),
+    data.frame(x = 1, y = 2, z = 3)
+  )
 })
 
 test_that("doesn't expand row names", {

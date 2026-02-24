@@ -1,7 +1,9 @@
 # Gezznezzrated by 04-dplyr-tests.R, do not edit by hand
 
 # Workaround for lazytest
-test_that("Dummy", { expect_true(TRUE) })
+test_that("Dummy", {
+  expect_true(TRUE)
+})
 
 skip_if(Sys.getenv("DUCKPLYR_SKIP_DPLYR_TESTS") == "TRUE")
 
@@ -26,8 +28,14 @@ test_that("grouping variables preserved with a message, unless already selected 
 
   df <- tibble(a = 1, b = 2, c = 3) |> duckplyr_group_by(a, b)
   expect_snapshot({
-    expect_equal(df |> duckplyr_select(a = c), tibble(b = 2, a = 3) |> duckplyr_group_by(b))
-    expect_equal(df |> duckplyr_select(b = c), tibble(a = 1, b = 3) |> duckplyr_group_by(a))
+    expect_equal(
+      df |> duckplyr_select(a = c),
+      tibble(b = 2, a = 3) |> duckplyr_group_by(b)
+    )
+    expect_equal(
+      df |> duckplyr_select(b = c),
+      tibble(a = 1, b = 3) |> duckplyr_group_by(a)
+    )
   })
 })
 
@@ -110,48 +118,72 @@ test_that("select succeeds in presence of raw columns (#1803)", {
 test_that("arguments to duckplyr_select() don't match vars_select() arguments", {
   df <- tibble(a = 1)
   expect_identical(duckplyr_select(df, var = a), tibble(var = 1))
-  expect_identical(duckplyr_select(duckplyr_group_by(df, a), var = a), duckplyr_group_by(tibble(var = 1), var))
+  expect_identical(
+    duckplyr_select(duckplyr_group_by(df, a), var = a),
+    duckplyr_group_by(tibble(var = 1), var)
+  )
   expect_identical(duckplyr_select(df, exclude = a), tibble(exclude = 1))
   expect_identical(duckplyr_select(df, include = a), tibble(include = 1))
-  expect_identical(duckplyr_select(duckplyr_group_by(df, a), exclude = a), duckplyr_group_by(tibble(exclude = 1), exclude))
-  expect_identical(duckplyr_select(duckplyr_group_by(df, a), include = a), duckplyr_group_by(tibble(include = 1), include))
+  expect_identical(
+    duckplyr_select(duckplyr_group_by(df, a), exclude = a),
+    duckplyr_group_by(tibble(exclude = 1), exclude)
+  )
+  expect_identical(
+    duckplyr_select(duckplyr_group_by(df, a), include = a),
+    duckplyr_group_by(tibble(include = 1), include)
+  )
 })
 
 test_that("can duckplyr_select() with deprecated `.data` pronoun (#2715)", {
   withr::local_options(lifecycle_verbosity = "quiet")
-  expect_identical(duckplyr_select(mtcars, .data$cyl), duckplyr_select(mtcars, cyl))
+  expect_identical(
+    duckplyr_select(mtcars, .data$cyl),
+    duckplyr_select(mtcars, cyl)
+  )
 })
 
 test_that("can duckplyr_select() with character vectors", {
-  expect_identical(duckplyr_select(mtcars, "cyl", !!"disp", c("cyl", "am", "drat")), mtcars[c("cyl", "disp", "am", "drat")])
+  expect_identical(
+    duckplyr_select(mtcars, "cyl", !!"disp", c("cyl", "am", "drat")),
+    mtcars[c("cyl", "disp", "am", "drat")]
+  )
 })
 
 test_that("duckplyr_select() treats NULL inputs as empty", {
-  expect_identical(duckplyr_select(mtcars, cyl), duckplyr_select(mtcars, NULL, cyl, NULL))
+  expect_identical(
+    duckplyr_select(mtcars, cyl),
+    duckplyr_select(mtcars, NULL, cyl, NULL)
+  )
 })
 
 test_that("can duckplyr_select() with strings and character vectors", {
   vars <- c(foo = "cyl", bar = "am")
 
-  expect_identical(duckplyr_select(mtcars, !!!vars), duckplyr_select(mtcars, foo = cyl, bar = am))
-  expect_identical(duckplyr_select(mtcars, !!vars), duckplyr_select(mtcars, foo = cyl, bar = am))
+  expect_identical(
+    duckplyr_select(mtcars, !!!vars),
+    duckplyr_select(mtcars, foo = cyl, bar = am)
+  )
+  expect_identical(
+    duckplyr_select(mtcars, !!vars),
+    duckplyr_select(mtcars, foo = cyl, bar = am)
+  )
 })
 
 test_that("select works on empty names (#3601)", {
-  df <- data.frame(x=1, y=2, z=3)
-  colnames(df) <- c("x","y","")
+  df <- data.frame(x = 1, y = 2, z = 3)
+  colnames(df) <- c("x", "y", "")
   expect_identical(duckplyr_select(df, x)$x, 1)
 
-  colnames(df) <- c("","y","z")
+  colnames(df) <- c("", "y", "z")
   expect_identical(duckplyr_select(df, y)$y, 2)
 })
 
 test_that("select works on NA names (#3601)", {
-  df <- data.frame(x=1, y=2, z=3)
-  colnames(df) <- c("x","y",NA)
+  df <- data.frame(x = 1, y = 2, z = 3)
+  colnames(df) <- c("x", "y", NA)
   expect_identical(duckplyr_select(df, x)$x, 1)
 
-  colnames(df) <- c(NA,"y","z")
+  colnames(df) <- c(NA, "y", "z")
   expect_identical(duckplyr_select(df, y)$y, 2)
 })
 
@@ -179,7 +211,11 @@ test_that("dplyr_col_select() aborts when `[` implementation is broken", {
       data.frame()
     }
   )
-  df1 <- new_tibble(list(x = 1), nrow = 1L, class = "dplyr_test_broken_operator")
+  df1 <- new_tibble(
+    list(x = 1),
+    nrow = 1L,
+    class = "dplyr_test_broken_operator"
+  )
   expect_snapshot({
     (expect_error(
       duckplyr_select(df1, 1:2)
@@ -188,7 +224,11 @@ test_that("dplyr_col_select() aborts when `[` implementation is broken", {
       duckplyr_select(df1, 0)
     ))
   })
-  df2 <- new_tibble(list(x = 1), nrow = 1L, class = "dplyr_test_operator_wrong_size")
+  df2 <- new_tibble(
+    list(x = 1),
+    nrow = 1L,
+    class = "dplyr_test_operator_wrong_size"
+  )
   expect_error(duckplyr_select(df2, 1:2))
 
   expect_snapshot({
@@ -207,5 +247,4 @@ test_that("dplyr_col_select() aborts when `[` implementation is broken", {
       duckplyr_select(df2, 1)
     ))
   })
-
 })

@@ -1,7 +1,9 @@
 # Gezznezzrated by 04-dplyr-tests.R, do not edit by hand
 
 # Workaround for lazytest
-test_that("Dummy", { expect_true(TRUE) })
+test_that("Dummy", {
+  expect_true(TRUE)
+})
 
 skip_if(Sys.getenv("DUCKPLYR_SKIP_DPLYR_TESTS") == "TRUE")
 
@@ -61,7 +63,10 @@ test_that("group_rows() and duckplyr_group_keys() partition group_data()", {
 
 test_that("no arg duckplyr_group_indices() is deprecated", {
   df <- tibble(x = 1)
-  expect_warning(out <- duckplyr_summarise(df, id = duckplyr_group_indices()), "deprecated")
+  expect_warning(
+    out <- duckplyr_summarise(df, id = duckplyr_group_indices()),
+    "deprecated"
+  )
   expect_equal(out, tibble(id = 1))
 })
 
@@ -83,7 +88,7 @@ test_that("duckplyr_group_indices() returns expected values", {
 test_that("duckplyr_group_indices() handles 0 rows data frames (#5541)", {
   df <- new_grouped_df(
     data.frame(x = integer(), y = integer()),
-    groups = data.frame(x=0, .rows = vctrs::list_of(1:1000))
+    groups = data.frame(x = 0, .rows = vctrs::list_of(1:1000))
   )
   expect_equal(duckplyr_group_indices(df), integer())
 })
@@ -104,7 +109,8 @@ test_that("rowwise data has one group for each group", {
 })
 
 test_that("group_size correct for grouped data", {
-  df <- tibble(x = rep(1:3, each = 10), y = rep(1:6, each = 5)) |> duckplyr_group_by(x)
+  df <- tibble(x = rep(1:3, each = 10), y = rep(1:6, each = 5)) |>
+    duckplyr_group_by(x)
   expect_equal(duckplyr_n_groups(df), 3L)
   expect_equal(duckplyr_group_size(df), rep(10, 3))
 })
@@ -112,6 +118,7 @@ test_that("group_size correct for grouped data", {
 # n_groups ----------------------------------------------------------------
 
 test_that("n_groups respects zero-length groups (#341)", {
-  df <- tibble(x = factor(1:3, levels = 1:4)) |> duckplyr_group_by(x, .drop = FALSE)
+  df <- tibble(x = factor(1:3, levels = 1:4)) |>
+    duckplyr_group_by(x, .drop = FALSE)
   expect_equal(duckplyr_n_groups(df), 4)
 })

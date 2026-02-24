@@ -1,7 +1,9 @@
 # Gezznezzrated by 04-dplyr-tests.R, do not edit by hand
 
 # Workaround for lazytest
-test_that("Dummy", { expect_true(TRUE) })
+test_that("Dummy", {
+  expect_true(TRUE)
+})
 
 skip_if(Sys.getenv("DUCKPLYR_SKIP_DPLYR_TESTS") == "TRUE")
 
@@ -25,7 +27,7 @@ test_that("duckplyr_group_map() respects empty groups", {
 
 test_that("duckplyr_group_map() can return arbitrary objects", {
   expect_equal(
-    duckplyr_group_by(mtcars, cyl) |> duckplyr_group_map(~ 10),
+    duckplyr_group_by(mtcars, cyl) |> duckplyr_group_map(~10),
     rep(list(10), 3)
   )
 })
@@ -102,7 +104,7 @@ test_that("duckplyr_group_modify() works with additional arguments (#4509)", {
 
   srcdata <-
     data.frame(
-      A=rep(1:2, each = 3)
+      A = rep(1:2, each = 3)
     ) |>
     duckplyr_group_by(A)
   targetdata <- srcdata
@@ -126,12 +128,21 @@ test_that("duckplyr_group_map() give meaningful errors", {
 
   expect_snapshot({
     # duckplyr_group_modify()
-    (expect_error(mtcars |> duckplyr_group_by(cyl) |> duckplyr_group_modify(~ data.frame(cyl = 19))))
-    (expect_error(mtcars |> duckplyr_group_by(cyl) |> duckplyr_group_modify(~ 10)))
-    (expect_error(iris |> duckplyr_group_by(Species) |> duckplyr_group_modify(head1)))
+    (expect_error(
+      mtcars |>
+        duckplyr_group_by(cyl) |>
+        duckplyr_group_modify(~ data.frame(cyl = 19))
+    ))
+    (expect_error(
+      mtcars |> duckplyr_group_by(cyl) |> duckplyr_group_modify(~10)
+    ))
+    (expect_error(
+      iris |> duckplyr_group_by(Species) |> duckplyr_group_modify(head1)
+    ))
 
     # duckplyr_group_map()
-    (expect_error(iris |> duckplyr_group_by(Species) |> duckplyr_group_map(head1)))
+    (expect_error(
+      iris |> duckplyr_group_by(Species) |> duckplyr_group_map(head1)
+    ))
   })
-
 })

@@ -1,7 +1,9 @@
 # Gezznezzrated by 04-dplyr-tests.R, do not edit by hand
 
 # Workaround for lazytest
-test_that("Dummy", { expect_true(TRUE) })
+test_that("Dummy", {
+  expect_true(TRUE)
+})
 
 skip_if(Sys.getenv("DUCKPLYR_SKIP_DPLYR_TESTS") == "TRUE")
 
@@ -47,7 +49,10 @@ test_that("unless .keep_all = TRUE", {
   df <- tibble(x = c(1, 1, 1), y = 3:1)
 
   expect_equal(df |> duckplyr_distinct(x), tibble(x = 1))
-  expect_equal(df |> duckplyr_distinct(x, .keep_all = TRUE), tibble(x = 1, y = 3L))
+  expect_equal(
+    df |> duckplyr_distinct(x, .keep_all = TRUE),
+    tibble(x = 1, y = 3L)
+  )
 })
 
 test_that("distinct doesn't duplicate columns", {
@@ -105,19 +110,19 @@ test_that("distinct on a dataframe or tibble with columns of type list throws an
 
 test_that("distinct handles 0 columns edge case (#2954)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
-  d <- duckplyr_select(data.frame(x= c(1, 1)), one_of(character(0)))
+  d <- duckplyr_select(data.frame(x = c(1, 1)), one_of(character(0)))
   res <- duckplyr_distinct(d)
   expect_equal(nrow(res), 1L)
 
   expect_equal(nrow(duckplyr_distinct(tibble())), 0L)
 })
 
-test_that("distinct respects order of the specified variables (#3195, #6156)",{
+test_that("distinct respects order of the specified variables (#3195, #6156)", {
   d <- data.frame(x = 1:2, y = 3:4)
   expect_named(duckplyr_distinct(d, y, x), c("y", "x"))
 })
 
-test_that("distinct adds grouping variables to front if missing",{
+test_that("distinct adds grouping variables to front if missing", {
   d <- data.frame(x = 1:2, y = 3:4)
   expect_named(duckplyr_distinct(duckplyr_group_by(d, y), x), c("y", "x"))
   expect_named(duckplyr_distinct(duckplyr_group_by(d, y), x, y), c("x", "y"))
@@ -125,15 +130,15 @@ test_that("distinct adds grouping variables to front if missing",{
 
 test_that("duckplyr_distinct() understands both NA variants (#4516)", {
   df <- data.frame(col_a = c(1, NA, NA))
-  df$col_a <- df$col_a+0
+  df$col_a <- df$col_a + 0
   df$col_a[2] <- NA_real_
   expect_equal(nrow(duckplyr_distinct(df)), 2L)
 
   df_1 <- data.frame(col_a = c(1, NA))
   df_2 <- data.frame(col_a = c(1, NA))
 
-  df_1$col_a <- df_1$col_a+0
-  df_2$col_a <- df_2$col_a+0
+  df_1$col_a <- df_1$col_a + 0
+  df_2$col_a <- df_2$col_a + 0
 
   df_1$col_a[2] <- NA
   expect_equal(nrow(duckplyr_setdiff(df_1, df_2)), 0L)
@@ -143,7 +148,7 @@ test_that("duckplyr_distinct() handles auto splicing", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_equal(
     iris |> duckplyr_distinct(Species),
-    iris |> duckplyr_distinct(data.frame(Species=Species))
+    iris |> duckplyr_distinct(data.frame(Species = Species))
   )
 
   expect_equal(
@@ -152,7 +157,9 @@ test_that("duckplyr_distinct() handles auto splicing", {
   )
 
   expect_equal(
-    iris |> duckplyr_mutate(across(starts_with("Sepal"), round)) |> duckplyr_distinct(Sepal.Length, Sepal.Width),
+    iris |>
+      duckplyr_mutate(across(starts_with("Sepal"), round)) |>
+      duckplyr_distinct(Sepal.Length, Sepal.Width),
     iris |> duckplyr_distinct(across(starts_with("Sepal"), round))
   )
 })

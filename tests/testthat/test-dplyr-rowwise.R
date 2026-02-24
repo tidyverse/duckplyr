@@ -1,7 +1,9 @@
 # Gezznezzrated by 04-dplyr-tests.R, do not edit by hand
 
 # Workaround for lazytest
-test_that("Dummy", { expect_true(TRUE) })
+test_that("Dummy", {
+  expect_true(TRUE)
+})
 
 skip_if(Sys.getenv("DUCKPLYR_SKIP_DPLYR_TESTS") == "TRUE")
 
@@ -86,7 +88,12 @@ test_that("new_rowwise_df() does not require `group_data=`", {
 })
 
 test_that("new_rowwise_df() can add class and attributes (#5918)", {
-  df <- new_rowwise_df(tibble(x = 1:4), tibble(), class = "custom_rowwise_df", a = "b")
+  df <- new_rowwise_df(
+    tibble(x = 1:4),
+    tibble(),
+    class = "custom_rowwise_df",
+    a = "b"
+  )
   expect_s3_class(df, "custom_rowwise_df")
   expect_equal(attr(df, "a"), "b")
 })

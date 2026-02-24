@@ -1,7 +1,9 @@
 # Gezznezzrated by 04-dplyr-tests.R, do not edit by hand
 
 # Workaround for lazytest
-test_that("Dummy", { expect_true(TRUE) })
+test_that("Dummy", {
+  expect_true(TRUE)
+})
 
 skip_if(Sys.getenv("DUCKPLYR_SKIP_DPLYR_TESTS") == "TRUE")
 
@@ -53,19 +55,28 @@ test_that("arguments to duckplyr_transmute() don't match vars_transmute() argume
 test_that("arguments to duckplyr_rename() don't match vars_rename() arguments (#2861)", {
   df <- tibble(a = 1)
   expect_identical(duckplyr_rename(df, var = a), tibble(var = 1))
-  expect_identical(duckplyr_rename(duckplyr_group_by(df, a), var = a), duckplyr_group_by(tibble(var = 1), var))
+  expect_identical(
+    duckplyr_rename(duckplyr_group_by(df, a), var = a),
+    duckplyr_group_by(tibble(var = 1), var)
+  )
   expect_identical(duckplyr_rename(df, strict = a), tibble(strict = 1))
-  expect_identical(duckplyr_rename(duckplyr_group_by(df, a), strict = a), duckplyr_group_by(tibble(strict = 1), strict))
+  expect_identical(
+    duckplyr_rename(duckplyr_group_by(df, a), strict = a),
+    duckplyr_group_by(tibble(strict = 1), strict)
+  )
 })
 
 test_that("can duckplyr_transmute() with .data pronoun (#2715)", {
-  expect_identical(duckplyr_transmute(mtcars, .data$cyl), duckplyr_transmute(mtcars, cyl))
+  expect_identical(
+    duckplyr_transmute(mtcars, .data$cyl),
+    duckplyr_transmute(mtcars, cyl)
+  )
 })
 
 test_that("duckplyr_transmute() does not warn when a variable is removed with = NULL (#4609)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
-  df <- data.frame(x=1)
-  expect_warning(duckplyr_transmute(df, y =x+1, z=y*2, y = NULL), NA)
+  df <- data.frame(x = 1)
+  expect_warning(duckplyr_transmute(df, y = x + 1, z = y * 2, y = NULL), NA)
 })
 
 test_that("duckplyr_transmute() can handle auto splicing", {

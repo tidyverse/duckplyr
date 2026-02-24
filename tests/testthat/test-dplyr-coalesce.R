@@ -1,7 +1,9 @@
 # Gezznezzrated by 04-dplyr-tests.R, do not edit by hand
 
 # Workaround for lazytest
-test_that("Dummy", { expect_true(TRUE) })
+test_that("Dummy", {
+  expect_true(TRUE)
+})
 
 skip_if(Sys.getenv("DUCKPLYR_SKIP_DPLYR_TESTS") == "TRUE")
 
@@ -44,20 +46,26 @@ test_that("coalesce() supports one-dimensional arrays (#5557)", {
 
 test_that("only updates entirely missing matrix rows", {
   x <- c(
-    1, NA,
-    NA, NA
+    1,
+    NA,
+    NA,
+    NA
   )
   x <- matrix(x, nrow = 2, byrow = TRUE)
 
   y <- c(
-    2, 2,
-    NA, 1
+    2,
+    2,
+    NA,
+    1
   )
   y <- matrix(y, nrow = 2, byrow = TRUE)
 
   expect <- c(
-    1, NA,
-    NA, 1
+    1,
+    NA,
+    NA,
+    1
   )
   expect <- matrix(expect, nrow = 2, byrow = TRUE)
 

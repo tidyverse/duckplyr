@@ -1,7 +1,9 @@
 # Gezznezzrated by 04-dplyr-tests.R, do not edit by hand
 
 # Workaround for lazytest
-test_that("Dummy", { expect_true(TRUE) })
+test_that("Dummy", {
+  expect_true(TRUE)
+})
 
 skip_if(Sys.getenv("DUCKPLYR_SKIP_DPLYR_TESTS") == "TRUE")
 
@@ -9,31 +11,43 @@ test_that("duckplyr_group_split() keeps the grouping variables by default", {
   tbl <- tibble(x = 1:4, g = factor(rep(c("a", "b"), each = 2)))
   res <- duckplyr_group_split(tbl, g)
 
-  expect_equal(res, list_of(tbl[1:2,], tbl[3:4,]))
-  expect_identical(res, list_of(tbl[1:2,], tbl[3:4,]))
+  expect_equal(res, list_of(tbl[1:2, ], tbl[3:4, ]))
+  expect_identical(res, list_of(tbl[1:2, ], tbl[3:4, ]))
   expect_s3_class(res, "vctrs_list_of")
-  expect_identical(attr(res, "ptype"), tibble(x = integer(), g = factor(levels = c("a", "b"))))
+  expect_identical(
+    attr(res, "ptype"),
+    tibble(x = integer(), g = factor(levels = c("a", "b")))
+  )
 })
 
 test_that("duckplyr_group_split() can discard the grouping variables with .keep = FALSE", {
   tbl <- tibble(x = 1:4, g = factor(rep(c("a", "b"), each = 2)))
   res <- duckplyr_group_split(tbl, g, .keep = FALSE)
 
-  expect_identical(res, list_of(tbl[1:2, 1, drop = FALSE], tbl[3:4,1, drop = FALSE]))
+  expect_identical(
+    res,
+    list_of(tbl[1:2, 1, drop = FALSE], tbl[3:4, 1, drop = FALSE])
+  )
   expect_s3_class(res, "vctrs_list_of")
   expect_identical(attr(res, "ptype"), tibble(x = integer()))
 })
 
 test_that("duckplyr_group_split() respects empty groups", {
-  tbl <- tibble(x = 1:4, g = factor(rep(c("a", "b"), each = 2), levels = c("a", "b", "c")))
+  tbl <- tibble(
+    x = 1:4,
+    g = factor(rep(c("a", "b"), each = 2), levels = c("a", "b", "c"))
+  )
   res <- duckplyr_group_split(tbl, g)
 
-  expect_identical(res, list_of(tbl[1:2,], tbl[3:4,]))
+  expect_identical(res, list_of(tbl[1:2, ], tbl[3:4, ]))
   expect_s3_class(res, "vctrs_list_of")
-  expect_identical(attr(res, "ptype"), tibble(x = integer(), g = factor(levels = c("a", "b", "c"))))
+  expect_identical(
+    attr(res, "ptype"),
+    tibble(x = integer(), g = factor(levels = c("a", "b", "c")))
+  )
 
   res <- duckplyr_group_split(tbl, g, .drop = FALSE)
-  expect_identical(res, list_of(tbl[1:2,], tbl[3:4,], tbl[integer(), ]))
+  expect_identical(res, list_of(tbl[1:2, ], tbl[3:4, ], tbl[integer(), ]))
 })
 
 test_that("group_split.grouped_df() warns about ...", {
@@ -70,7 +84,7 @@ test_that("duckplyr_group_split() works if no grouping column", {
 })
 
 test_that("duckplyr_group_split(keep=FALSE) does not try to remove virtual grouping columns (#4045)", {
-  iris3 <- as_tibble(iris[1:3,])
+  iris3 <- as_tibble(iris[1:3, ])
   rows <- list(c(1L, 3L, 2L), c(3L, 2L, 3L))
   df <- new_grouped_df(
     iris3,
@@ -80,7 +94,7 @@ test_that("duckplyr_group_split(keep=FALSE) does not try to remove virtual group
 
   expect_identical(
     res,
-    list_of(iris3[rows[[1L]],], iris3[rows[[2L]],])
+    list_of(iris3[rows[[1L]], ], iris3[rows[[2L]], ])
   )
 })
 

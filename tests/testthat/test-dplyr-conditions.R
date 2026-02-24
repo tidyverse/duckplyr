@@ -1,7 +1,9 @@
 # Gezznezzrated by 04-dplyr-tests.R, do not edit by hand
 
 # Workaround for lazytest
-test_that("Dummy", { expect_true(TRUE) })
+test_that("Dummy", {
+  expect_true(TRUE)
+})
 
 skip_if(Sys.getenv("DUCKPLYR_SKIP_DPLYR_TESTS") == "TRUE")
 
@@ -203,7 +205,7 @@ test_that("can collect warnings in main verbs", {
     )
 
     warnings <- last_dplyr_warnings(Inf)
-    warnings[[1]]  # duckplyr_filter()
+    warnings[[1]] # duckplyr_filter()
     warnings[[33]] # duckplyr_arrange()
     warnings[[65]] # duckplyr_mutate()
     warnings[[97]] # duckplyr_summarise()

@@ -1,7 +1,9 @@
 # Gezznezzrated by 04-dplyr-tests.R, do not edit by hand
 
 # Workaround for lazytest
-test_that("Dummy", { expect_true(TRUE) })
+test_that("Dummy", {
+  expect_true(TRUE)
+})
 
 skip_if(Sys.getenv("DUCKPLYR_SKIP_DPLYR_TESTS") == "TRUE")
 
@@ -13,9 +15,15 @@ test_that("duckplyr_rename() handles deprecated `.data` pronoun", {
 test_that("arguments to duckplyr_rename() don't match vars_rename() arguments (#2861)", {
   df <- tibble(a = 1)
   expect_identical(duckplyr_rename(df, var = a), tibble(var = 1))
-  expect_identical(duckplyr_rename(duckplyr_group_by(df, a), var = a), duckplyr_group_by(tibble(var = 1), var))
+  expect_identical(
+    duckplyr_rename(duckplyr_group_by(df, a), var = a),
+    duckplyr_group_by(tibble(var = 1), var)
+  )
   expect_identical(duckplyr_rename(df, strict = a), tibble(strict = 1))
-  expect_identical(duckplyr_rename(duckplyr_group_by(df, a), strict = a), duckplyr_group_by(tibble(strict = 1), strict))
+  expect_identical(
+    duckplyr_rename(duckplyr_group_by(df, a), strict = a),
+    duckplyr_group_by(tibble(strict = 1), strict)
+  )
 })
 
 test_that("duckplyr_rename() to UTF-8 column names", {
@@ -28,8 +36,14 @@ test_that("duckplyr_rename() to UTF-8 column names", {
 test_that("can duckplyr_rename() with strings and character vectors", {
   vars <- c(foo = "cyl", bar = "am")
 
-  expect_identical(duckplyr_rename(mtcars, !!!vars), duckplyr_rename(mtcars, foo = cyl, bar = am))
-  expect_identical(duckplyr_rename(mtcars, !!vars), duckplyr_rename(mtcars, foo = cyl, bar = am))
+  expect_identical(
+    duckplyr_rename(mtcars, !!!vars),
+    duckplyr_rename(mtcars, foo = cyl, bar = am)
+  )
+  expect_identical(
+    duckplyr_rename(mtcars, !!vars),
+    duckplyr_rename(mtcars, foo = cyl, bar = am)
+  )
 })
 
 test_that("rename preserves grouping", {
@@ -65,13 +79,19 @@ test_that("can select columns", {
 test_that("passes ... along", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1, y = 2)
-  expect_named(df |> duckplyr_rename_with(gsub, 1, pattern = "x", replacement = "X"), c("X", "y"))
+  expect_named(
+    df |> duckplyr_rename_with(gsub, 1, pattern = "x", replacement = "X"),
+    c("X", "y")
+  )
 })
 
 test_that("can't create duplicated names", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1, y = 2)
-  expect_error(df |> duckplyr_rename_with(~ rep_along(.x, "X")), class = "vctrs_error_names")
+  expect_error(
+    df |> duckplyr_rename_with(~ rep_along(.x, "X")),
+    class = "vctrs_error_names"
+  )
 })
 
 test_that("`.fn` result type is checked (#6561)", {
