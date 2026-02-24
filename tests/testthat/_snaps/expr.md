@@ -31,7 +31,7 @@
         .. ..$ val  : num 42
         .. ..$ alias: chr "fortytwo"
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_constant" "relational_relexpr"
-       $ order_bys: list()
+       $ order_bys: NULL
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
 
