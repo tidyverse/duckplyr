@@ -2,14 +2,14 @@
 
     Code
       df <- tibble(g = c(1, 2), x = c(1, 2))
-      (expect_error(df %>% duckplyr_distinct(aa, x)))
+      (expect_error(duckplyr_distinct(df, aa, x)))
     Output
       <error/rlang_error>
       Error in `distinct()`:
       ! Must use existing variables.
       x `aa` not found in `.data`.
     Code
-      (expect_error(df %>% duckplyr_distinct(aa, bb)))
+      (expect_error(duckplyr_distinct(df, aa, bb)))
     Output
       <error/rlang_error>
       Error in `distinct()`:
@@ -17,14 +17,14 @@
       x `aa` not found in `.data`.
       x `bb` not found in `.data`.
     Code
-      (expect_error(df %>% duckplyr_distinct(.data$aa)))
+      (expect_error(duckplyr_distinct(df, .data$aa)))
     Output
       <error/rlang_error>
       Error in `distinct()`:
       ! Must use existing variables.
       x `aa` not found in `.data`.
     Code
-      (expect_error(df %>% duckplyr_distinct(y = a + 1)))
+      (expect_error(duckplyr_distinct(df, y = a + 1)))
     Output
       <error/dplyr:::mutate_error>
       Error in `distinct()`:

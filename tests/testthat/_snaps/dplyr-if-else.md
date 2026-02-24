@@ -22,6 +22,14 @@
       Error in `if_else()`:
       ! `condition` must be a logical vector, not an integer vector.
 
+# `condition` can't be an array (#7723)
+
+    Code
+      if_else(array(TRUE), 1, 2)
+    Condition
+      Error in `if_else()`:
+      ! `condition` must be a logical vector, not a logical 1D array.
+
 # `true`, `false`, and `missing` must recycle to the size of `condition`
 
     Code
@@ -65,4 +73,12 @@
       Error in `if_else()`:
       ! Can't convert from `false` <double> to <integer> due to loss of precision.
       * Locations: 1
+
+# `size` is deprecated
+
+    Code
+      x <- if_else(c(TRUE, FALSE), 1, 2, size = 2)
+    Condition
+      Warning:
+      The `size` argument of `if_else()` is deprecated as of dplyr 1.2.0.
 

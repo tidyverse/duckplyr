@@ -24,8 +24,11 @@ group_modify.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = depre
 
   # dplyr implementation
   if (!missing(keep)) {
-    lifecycle::deprecate_warn("1.0.0", "group_modify(keep = )", "group_modify(.keep = )", always = TRUE)
-    .keep <- keep
+    lifecycle::deprecate_stop(
+      "1.0.0",
+      "group_modify(keep = )",
+      "group_modify(.keep = )"
+    )
   }
   .f <- as_group_map_function(.f)
   .f(.data, group_keys(.data), ...)
