@@ -1,0 +1,14 @@
+{
+  "search.exclude": {
+    ".Rproj.user/**": true,
+    ".sync/cran/**": true,
+    ".sync/dplyr-revdep/revdep/cloud.noindex": true,
+    "gh-analysis/**": true,
+  },
+  "files.exclude": {
+    ".Rproj.user/**": true,
+    ".sync/cran/**": true,
+    ".sync/dplyr-revdep/revdep/cloud.noindex": true,
+    "gh-analysis/**": true,
+  }
+}
