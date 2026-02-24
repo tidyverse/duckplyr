@@ -1,5 +1,14 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.1.3.9010 (2026-02-24)
+
+## Features
+
+- Pass `options` to read functions in `compute_parquet()` and `compute_csv()` (#729, #821).
+
+- New `read_tbl_duckdb()` to read DuckDB tables (#414, #828).
+
+
 # duckplyr 1.1.3.9009 (2026-02-23)
 
 ## Features
