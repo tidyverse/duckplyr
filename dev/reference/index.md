@@ -45,6 +45,7 @@
 - [`distinct(`*`<duckplyr_df>`*`)`](https://duckplyr.tidyverse.org/dev/reference/distinct.duckplyr_df.md)
   : Keep distinct/unique rows
 - [`filter(`*`<duckplyr_df>`*`)`](https://duckplyr.tidyverse.org/dev/reference/filter.duckplyr_df.md)
+  [`filter_out(`*`<duckplyr_df>`*`)`](https://duckplyr.tidyverse.org/dev/reference/filter.duckplyr_df.md)
   : Keep rows that match a condition
 - [`slice_head(`*`<duckplyr_df>`*`)`](https://duckplyr.tidyverse.org/dev/reference/slice_head.duckplyr_df.md)
   : Subset rows using their positions

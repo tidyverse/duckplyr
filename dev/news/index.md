@@ -4,6 +4,9 @@
 
 ### Features
 
+- Establish compatibility with dplyr 1.2.0, this is now the minimum
+  required version.
+
 - New
   [`read_tbl_duckdb()`](https://duckplyr.tidyverse.org/dev/reference/read_tbl_duckdb.md)
   reads a table from a DuckDB database file by attaching it to the
@@ -45,7 +48,8 @@
   and
   [`compute_csv()`](https://duckplyr.tidyverse.org/dev/reference/compute_csv.md)
   now accept an `options` argument to pass format-specific settings to
-  the underlying DuckDB COPY statement
+  the underlying DuckDB operation and also applies them when reading
+  back the data
   ([\#729](https://github.com/tidyverse/duckplyr/issues/729),
   [\#821](https://github.com/tidyverse/duckplyr/issues/821)).
 
@@ -71,11 +75,6 @@
     as_duckdb_tibble() |>
     mutate(y = round(x, digits = 1L))
   ```
-
-- Aligned with dplyr 1.2.0
-  ([\#863](https://github.com/tidyverse/duckplyr/issues/863)).
-
-### Bug fixes
 
 - [`transmute()`](https://dplyr.tidyverse.org/reference/transmute.html)
   can now reference new variables created within the same call
@@ -113,40 +112,14 @@
 
 ### Chore
 
+- Align internal tests with dplyr 1.2.0
+  ([\#863](https://github.com/tidyverse/duckplyr/issues/863)).
+
 - Migrate from deprecated qs to qs2
   ([\#846](https://github.com/tidyverse/duckplyr/issues/846),
   [\#847](https://github.com/tidyverse/duckplyr/issues/847)).
 
-- Clean up argument matching by name
-  ([\#855](https://github.com/tidyverse/duckplyr/issues/855),
-  [\#856](https://github.com/tidyverse/duckplyr/issues/856)).
-
-- Move compatibility checks to duckdb
-  ([\#721](https://github.com/tidyverse/duckplyr/issues/721)).
-
-- Bump duckdb and dplyr dependencies.
-
-- Format with air.
-
-### Continuous integration
-
-- Fix compatibility with duckdb 1.4.2.
-
-- Test all R versions on branches that start with `cran-`
-  ([\#837](https://github.com/tidyverse/duckplyr/issues/837)).
-
-- Install binaries from r-universe for dev workflow
-  ([\#813](https://github.com/tidyverse/duckplyr/issues/813)).
-
-- Fix reviewdog and add commenting workflow
-  ([\#810](https://github.com/tidyverse/duckplyr/issues/810)).
-
-- Use workflows for fledge
-  ([\#807](https://github.com/tidyverse/duckplyr/issues/807)).
-
-### Testing
-
-- Snapshot updates ([@1741643](https://github.com/1741643)+krlmlr).
+- Format code with air.
 
 ## duckplyr 1.1.3 (2025-11-04)
 

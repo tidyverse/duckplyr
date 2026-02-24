@@ -58,7 +58,7 @@ unlike base subsetting with [.'><meta property="og:image" content="https://duckp
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Keep rows that match a condition</h1>
-      <small class="dont-index">Source: <a href="https://github.com/tidyverse/duckplyr/blob/cran-1.1.99.9900/R/filter-rd.R" class="external-link"><code>R/filter-rd.R</code></a>, <a href="https://github.com/tidyverse/duckplyr/blob/cran-1.1.99.9900/R/filter.R" class="external-link"><code>R/filter.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidyverse/duckplyr/blob/main/R/filter-rd.R" class="external-link"><code>R/filter-rd.R</code></a>, <a href="https://github.com/tidyverse/duckplyr/blob/main/R/filter.R" class="external-link"><code>R/filter.R</code></a>, <a href="https://github.com/tidyverse/duckplyr/blob/main/R/filter_out.R" class="external-link"><code>R/filter_out.R</code></a></small>
       <div class="d-none name"><code>filter.duckplyr_df.Rd</code></div>
     </div>
 
@@ -75,7 +75,10 @@ unlike base subsetting with <code>[</code>.</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'duckplyr_df'</span></span>
-<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span>, .by <span class="op">=</span> <span class="cn">NULL</span>, .preserve <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span>, .by <span class="op">=</span> <span class="cn">NULL</span>, .preserve <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'duckplyr_df'</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter_out</a></span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span>, .by <span class="op">=</span> <span class="cn">NULL</span>, .preserve <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -115,6 +118,10 @@ resulting data, otherwise the grouping is kept as is.</p></dd>
 <p>There is no DuckDB translation in <code>filter.duckplyr_df()</code></p><ul><li><p>with no filter conditions,</p></li>
 <li><p>nor for a grouped operation (if <code>.by</code> is set).</p></li>
 </ul><p>These features fall back to <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">dplyr::filter()</a></code>, see <code><a href="../articles/fallback.html">vignette("fallback")</a></code> for details.</p>
+
+<p>There is no DuckDB translation in <code>filter_out.duckplyr_df()</code></p><ul><li><p>with no filter conditions,</p></li>
+<li><p>nor for a grouped operation (if <code>.by</code> is set).</p></li>
+</ul><p>These features fall back to <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">dplyr::filter_out()</a></code>, see <code><a href="../articles/fallback.html">vignette("fallback")</a></code> for details.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

@@ -46,14 +46,15 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/tidyverse/duckplyr/blob/cran-1.1.99.9900/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/tidyverse/duckplyr/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.1.99.9900" id="duckplyr-11999900-2026-02-24">duckplyr 1.1.99.9900 (2026-02-24)<a class="anchor" aria-label="anchor" href="#duckplyr-11999900-2026-02-24"></a></h2>
 <div class="section level3">
 <h3 id="features-1-1-99-9900">Features<a class="anchor" aria-label="anchor" href="#features-1-1-99-9900"></a></h3>
-<ul><li>
+<ul><li><p>Establish compatibility with dplyr 1.2.0, this is now the minimum required version.</p></li>
+<li>
 <p>New <code><a href="../reference/read_tbl_duckdb.html">read_tbl_duckdb()</a></code> reads a table from a DuckDB database file by attaching it to the default connection (<a href="https://github.com/tidyverse/duckplyr/issues/414" class="external-link">#414</a>, <a href="https://github.com/tidyverse/duckplyr/issues/828" class="external-link">#828</a>).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">db_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".duckdb"</span><span class="op">)</span></span>
@@ -78,7 +79,7 @@
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>count <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>, .by <span class="op">=</span> <span class="va">g</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li>
-<p><code><a href="../reference/compute_parquet.html">compute_parquet()</a></code> and <code><a href="../reference/compute_csv.html">compute_csv()</a></code> now accept an <code>options</code> argument to pass format-specific settings to the underlying DuckDB COPY statement (<a href="https://github.com/tidyverse/duckplyr/issues/729" class="external-link">#729</a>, <a href="https://github.com/tidyverse/duckplyr/issues/821" class="external-link">#821</a>).</p>
+<p><code><a href="../reference/compute_parquet.html">compute_parquet()</a></code> and <code><a href="../reference/compute_csv.html">compute_csv()</a></code> now accept an <code>options</code> argument to pass format-specific settings to the underlying DuckDB operation and also applies them when reading back the data (<a href="https://github.com/tidyverse/duckplyr/issues/729" class="external-link">#729</a>, <a href="https://github.com/tidyverse/duckplyr/issues/821" class="external-link">#821</a>).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".parquet"</span><span class="op">)</span></span>
@@ -92,11 +93,7 @@
 <span>  <span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </li>
-<li><p>Aligned with dplyr 1.2.0 (<a href="https://github.com/tidyverse/duckplyr/issues/863" class="external-link">#863</a>).</p></li>
-</ul></div>
-<div class="section level3">
-<h3 id="bug-fixes-1-1-99-9900">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-1-99-9900"></a></h3>
-<ul><li>
+<li>
 <p><code><a href="https://dplyr.tidyverse.org/reference/transmute.html" class="external-link">transmute()</a></code> can now reference new variables created within the same call (<a href="https://github.com/tidyverse/duckplyr/issues/796" class="external-link">#796</a>, <a href="https://github.com/tidyverse/duckplyr/issues/819" class="external-link">#819</a>).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -114,23 +111,9 @@
 </ul></div>
 <div class="section level3">
 <h3 id="chore-1-1-99-9900">Chore<a class="anchor" aria-label="anchor" href="#chore-1-1-99-9900"></a></h3>
-<ul><li><p>Migrate from deprecated qs to qs2 (<a href="https://github.com/tidyverse/duckplyr/issues/846" class="external-link">#846</a>, <a href="https://github.com/tidyverse/duckplyr/issues/847" class="external-link">#847</a>).</p></li>
-<li><p>Clean up argument matching by name (<a href="https://github.com/tidyverse/duckplyr/issues/855" class="external-link">#855</a>, <a href="https://github.com/tidyverse/duckplyr/issues/856" class="external-link">#856</a>).</p></li>
-<li><p>Move compatibility checks to duckdb (<a href="https://github.com/tidyverse/duckplyr/issues/721" class="external-link">#721</a>).</p></li>
-<li><p>Bump duckdb and dplyr dependencies.</p></li>
-<li><p>Format with air.</p></li>
-</ul></div>
-<div class="section level3">
-<h3 id="continuous-integration-1-1-99-9900">Continuous integration<a class="anchor" aria-label="anchor" href="#continuous-integration-1-1-99-9900"></a></h3>
-<ul><li><p>Fix compatibility with duckdb 1.4.2.</p></li>
-<li><p>Test all R versions on branches that start with <code>cran-</code> (<a href="https://github.com/tidyverse/duckplyr/issues/837" class="external-link">#837</a>).</p></li>
-<li><p>Install binaries from r-universe for dev workflow (<a href="https://github.com/tidyverse/duckplyr/issues/813" class="external-link">#813</a>).</p></li>
-<li><p>Fix reviewdog and add commenting workflow (<a href="https://github.com/tidyverse/duckplyr/issues/810" class="external-link">#810</a>).</p></li>
-<li><p>Use workflows for fledge (<a href="https://github.com/tidyverse/duckplyr/issues/807" class="external-link">#807</a>).</p></li>
-</ul></div>
-<div class="section level3">
-<h3 id="testing-1-1-99-9900">Testing<a class="anchor" aria-label="anchor" href="#testing-1-1-99-9900"></a></h3>
-<ul><li>Snapshot updates (<a href="https://github.com/1741643" class="external-link">@1741643</a>+krlmlr).</li>
+<ul><li><p>Align internal tests with dplyr 1.2.0 (<a href="https://github.com/tidyverse/duckplyr/issues/863" class="external-link">#863</a>).</p></li>
+<li><p>Migrate from deprecated qs to qs2 (<a href="https://github.com/tidyverse/duckplyr/issues/846" class="external-link">#846</a>, <a href="https://github.com/tidyverse/duckplyr/issues/847" class="external-link">#847</a>).</p></li>
+<li><p>Format code with air.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
