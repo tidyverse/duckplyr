@@ -14,9 +14,6 @@ will be dropped, unlike base subsetting with `[`.
 ``` r
 # S3 method for class 'duckplyr_df'
 filter(.data, ..., .by = NULL, .preserve = FALSE)
-
-# S3 method for class 'duckplyr_df'
-filter_out(.data, ..., .by = NULL, .preserve = FALSE)
 ```
 
 ## Arguments
@@ -65,18 +62,6 @@ There is no DuckDB translation in `filter.duckplyr_df()`
 
 These features fall back to
 [`dplyr::filter()`](https://dplyr.tidyverse.org/reference/filter.html),
-see
-[`vignette("fallback")`](https://duckplyr.tidyverse.org/dev/articles/fallback.md)
-for details.
-
-There is no DuckDB translation in `filter_out.duckplyr_df()`
-
-- with no filter conditions,
-
-- nor for a grouped operation (if `.by` is set).
-
-These features fall back to
-[`dplyr::filter_out()`](https://dplyr.tidyverse.org/reference/filter.html),
 see
 [`vignette("fallback")`](https://duckplyr.tidyverse.org/dev/articles/fallback.md)
 for details.
