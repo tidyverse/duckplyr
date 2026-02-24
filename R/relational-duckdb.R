@@ -335,7 +335,7 @@ to_duckdb_expr <- function(x) {
       out
     },
     relational_relexpr_function = {
-      out <- duckdb$expr_function(x$name, to_duckdb_exprs(x$args))
+      out <- duckdb$expr_function(x$name, to_duckdb_exprs(x$args), order_bys = to_duckdb_exprs(x$order_bys))
       if (!is.null(x$alias)) {
         duckdb$expr_set_alias(out, x$alias)
       }
@@ -400,7 +400,8 @@ to_duckdb_expr_meta <- function(x) {
     },
     relational_relexpr_function = {
       meta_macro_register(x$name)
-      out <- expr(duckdb$expr_function(!!x$name, list(!!!to_duckdb_exprs_meta(x$args))))
+      order_bys_meta <- to_duckdb_exprs_meta(x$order_bys)
+      out <- expr(duckdb$expr_function(!!x$name, list(!!!to_duckdb_exprs_meta(x$args)), order_bys = list(!!!order_bys_meta)))
       if (!is.null(x$alias)) {
         out <- expr({
           tmp_expr <- !!out

@@ -64,3 +64,15 @@ test_that("prudence after summarise() with success", {
   expect_identical(get_prudence_duckplyr_df(out), c(rows = 5))
   expect_error(nrow(out), NA)
 })
+
+test_that("mutate(n()) works with stingy duckplyr frames", {
+  df <- duckdb_tibble(a = 1:3, b = c(1, 1, 2), .prudence = "stingy")
+
+  out <- df %>% mutate(n = n(), .by = b)
+  expect_s3_class(out, "duckplyr_df")
+  expect_identical(collect(out)$n, c(2L, 2L, 1L))
+
+  out2 <- df %>% mutate(n = n())
+  expect_s3_class(out2, "duckplyr_df")
+  expect_identical(collect(out2)$n, c(3L, 3L, 3L))
+})

@@ -16,7 +16,7 @@ relexpr_reference(name, rel = NULL, alias = NULL)
 
 relexpr_constant(val, alias = NULL)
 
-relexpr_function(name, args, alias = NULL)
+relexpr_function(name, args, order_bys = NULL, alias = NULL)
 
 relexpr_comparison(cmp_op, exprs)
 
@@ -46,6 +46,8 @@ relexpr_set_alias(expr, alias = NULL)
 
 \item{args}{Function arguments, a list of \code{expr} objects.}
 
+\item{order_bys}{which variables to order results by (list).}
+
 \item{cmp_op}{Comparison operator, e.g., \code{"<"} or \code{"=="}.}
 
 \item{exprs}{Expressions to compare, a list of \code{expr} objects.}
@@ -53,8 +55,6 @@ relexpr_set_alias(expr, alias = NULL)
 \item{expr}{An \code{expr} object.}
 
 \item{partitions}{Partitions, a list of \code{expr} objects.}
-
-\item{order_bys}{which variables to order results by (list).}
 
 \item{offset_expr}{offset relational expression.}
 
