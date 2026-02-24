@@ -230,7 +230,6 @@ test_that("hybrid evaluation handles $ correctly (#1134)", {
 })
 
 test_that("filter and filter_out correctly handle empty data frames (#782)", {
-  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_identical(duckplyr_filter(tibble(), TRUE), tibble())
   expect_identical(duckplyr_filter(tibble(), FALSE), tibble())
 

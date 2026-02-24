@@ -156,7 +156,7 @@ test_that("duckplyr_group_split() internally uses dplyr_row_slice()", {
 })
 
 test_that("`keep =` is defunct", {
-  skip("dplyr test not applicable to duckplyr")
+  skip("TODO duckdb")
   df <- tibble(x = 1)
   gdf <- duckplyr_group_by(df, x)
   rdf <- duckplyr_rowwise(df)
