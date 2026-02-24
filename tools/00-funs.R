@@ -139,6 +139,28 @@ duckplyr_tests <- head(
       NULL
     ),
     "test-case-match.R" = c(
+      # vec_case_match() is an internal dplyr function, not exported
+      "works like a vectorized switch",
+      "the first match in `haystacks` is always used",
+      "`haystacks` can contain multiple values",
+      "`values` can be vectorized on the size of `needles`",
+      "unmatched value falls through to `default`",
+      "`default` can be vectorized on the size of `needles`",
+      "unmatched missing values get `default`",
+      "can exactly match on missing values",
+      "`haystacks` must be castable to `needles`",
+      "`ptype` overrides `values` common type",
+      "`default` is considered in the common type computation",
+      "`default` respects `ptype`",
+      "`NULL` values in `haystacks` and `values` are not dropped",
+      "size of `needles` is maintained",
+      "input must be a vector",
+      "`haystacks` must be a list",
+      "`values` must be a list",
+      "`needles_arg` is respected",
+      "`haystacks_arg` is respected",
+      "`values_arg` is respected",
+      "`default_arg` is respected",
       NULL
     ),
     "test-case-when.R" = c(
