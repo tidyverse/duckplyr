@@ -18,13 +18,13 @@ Source:
 [`DESCRIPTION`](https://github.com/tidyverse/duckplyr/blob/main/DESCRIPTION)
 
 Mühleisen H, Müller K (2026). *duckplyr: A 'DuckDB'-Backed Version of
-'dplyr'*. R package version 1.1.99.9900,
+'dplyr'*. R package version 1.1.99.9901,
 <https://duckplyr.tidyverse.org>.
 
     @Manual{,
       title = {duckplyr: A 'DuckDB'-Backed Version of 'dplyr'},
       author = {Hannes Mühleisen and Kirill Müller},
       year = {2026},
-      note = {R package version 1.1.99.9900},
+      note = {R package version 1.1.99.9901},
       url = {https://duckplyr.tidyverse.org},
     }

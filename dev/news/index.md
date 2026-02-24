@@ -1,5 +1,23 @@
 # Changelog
 
+## duckplyr 1.1.99.9901 (2026-02-24)
+
+### Features
+
+- Add experimental translation for
+  [`filter_out()`](https://dplyr.tidyverse.org/reference/filter.html)
+  ([\#869](https://github.com/tidyverse/duckplyr/issues/869),
+  [\#870](https://github.com/tidyverse/duckplyr/issues/870)).
+
+### Continuous integration
+
+- Align tests.
+
+### Testing
+
+- Snapshot updates for rcc-full ({“os”:“macos-latest”,“r”:“4.5”})
+  ([\#872](https://github.com/tidyverse/duckplyr/issues/872)).
+
 ## duckplyr 1.1.99.9900 (2026-02-24)
 
 ### Features
