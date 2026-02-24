@@ -460,10 +460,20 @@ rel_translate_lang <- function(
         expr$digits <- 0L
       } else {
         digits <- expr$digits
-        if (is_expression(digits) && digits[[1]] == "-" && length(digits) == 2 && is.numeric(digits[[2]])) {
+        if (
+          is_expression(digits) &&
+            digits[[1]] == "-" &&
+            length(digits) == 2 &&
+            is.numeric(digits[[2]])
+        ) {
           digits <- -digits[[2]]
         }
-        if (!is.numeric(digits) || length(digits) != 1L || is.na(digits) || !is_integerish(digits)) {
+        if (
+          !is.numeric(digits) ||
+            length(digits) != 1L ||
+            is.na(digits) ||
+            !is_integerish(digits)
+        ) {
           cli::cli_abort(
             "{.fun round} can only be translated with a scalar integerish {.arg digits}",
             call = call
