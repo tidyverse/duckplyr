@@ -1,9 +1,14 @@
 test_that("compute()", {
   set.seed(20241230)
 
+  transform <- function(x) {
+    x <- gsub("0x[0-9a-f]+", "0xdeadbeef", x)
+    x
+  }
+
   df <- duckdb_tibble(x = c(1, 2))
   out <- compute(df)
-  expect_snapshot({
+  expect_snapshot(transform = transform, {
     duckdb_rel_from_df(out)
   })
 
