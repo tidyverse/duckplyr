@@ -1,5 +1,45 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.1.3.9010 (2026-02-24)
+
+## Features
+
+- Pass `options` to read functions in `compute_parquet()` and `compute_csv()` (#729, #821).
+
+- New `read_tbl_duckdb()` to read DuckDB tables (#414, #828).
+
+
+# duckplyr 1.1.3.9009 (2026-02-23)
+
+## Features
+
+- Turn `compute_parquet()` and `compute_csv()` into generic S3 functions (#746, #818).
+
+- Support functions with named arguments (#822).
+
+## Chore
+
+- Bump dplyr dep.
+
+- Fix tests failing after dplyr 1.2.0 update (#853).
+
+- Auto-update from GitHub Actions (#852).
+
+## Continuous integration
+
+- Fancy button.
+
+- Add apply-patch command.
+
+## Documentation
+
+- Document internal workflows.
+
+## Testing
+
+- Snapshot updates (@1741643+krlmlr).
+
+
 # duckplyr 1.1.3.9008 (2026-01-26)
 
 ## Chore

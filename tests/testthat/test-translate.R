@@ -159,6 +159,20 @@ test_that("aggregation primitives with na.rm and window functions", {
   })
 })
 
+test_that("n() in window functions", {
+  df <- data.frame(a = 1L, b = 1L)
+
+  expect_snapshot({
+    "n() as window function (no partition)"
+    rel_translate(expr(n()), df, need_window = TRUE)
+  })
+
+  expect_snapshot({
+    "n() as window function with partition"
+    rel_translate(expr(n()), df, need_window = TRUE, partition = "b")
+  })
+})
+
 test_that("rel_find_call() success paths", {
   env <- baseenv()
 

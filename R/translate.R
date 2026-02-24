@@ -127,6 +127,13 @@ rel_find_packages <- function(name) {
     "suppressWarnings" = "base",
     "lag" = "dplyr",
     "lead" = "dplyr",
+    "first" = "dplyr",
+    "last" = "dplyr",
+    "nth" = "dplyr",
+    # "rank" = "dplyr",
+    # "dense_rank" = "dplyr",
+    # "percent_rank" = "dplyr",
+    # "cume_dist" = "dplyr",
     "log10" = "base",
     "log" = "base",
     "hour" = "lubridate",
@@ -254,7 +261,8 @@ rel_translate_lang <- function(
   partition,
   in_window,
   need_window,
-  call = caller_env()
+  call = caller_env(),
+  record_window = NULL
 ) {
   pkg_name <- rel_find_call(expr[[1]], env, call = call)
   pkg <- pkg_name[[1]]
@@ -389,14 +397,16 @@ rel_translate_lang <- function(
       if (length(expr) != 3) {
         cli::cli_abort("Can only translate {.call coalesce(x, y)} with two arguments.", call = call)
       }
+    },
+    "nth" = {
+      n <- expr$n
+      if (!is.numeric(n) || length(n) != 1L || is.na(n) || n <= 0) {
+        cli::cli_abort("{.fun nth} can only be translated with a positive scalar {.arg n}", call = call)
+      }
     }
   )
 
   aliases <- c(
-    "sd" = "stddev",
-    "first" = "first_value",
-    "last" = "last_value",
-    "nth" = "nth_value",
     "/" = "___divide",
     "log10" = "___log10",
     "log" = "___log",
@@ -412,26 +422,57 @@ rel_translate_lang <- function(
     NULL
   )
 
-  known_window <- c(
-    # Window functions
-    "row_number",
-    # Not yet implemented
-    "ntile",
-    "first", "last", "nth",
-    # Difficult to implement
-    "rank", "dense_rank", "percent_rank", "cume_dist",
-    "lead", "lag",
+  # Named list of c(window_alias, non_window_alias) for functions that can
+  # appear in window context. NA_character_ means "not applicable" for that
+  # context (function can't be used there).
+  known_window <- list(
+    # Window-only functions (no aggregate form)
+    row_number = c("row_number", NA_character_),
+    ntile = c("ntile", NA_character_),             # Not yet implemented
+    rank = c("rank", NA_character_),               # Difficult to implement
+    dense_rank = c("dense_rank", NA_character_),
+    percent_rank = c("percent_rank", NA_character_),
+    cume_dist = c("cume_dist", NA_character_),
 
-    # Aggregates
-    "sum", "min", "max", "any", "all", "mean", "sd", "median",
-    "n_distinct",
-    #
+    # Both window and aggregate, different DuckDB function names
+    first = c("first_value", "first"),
+    last = c("last_value", "last"),
+    nth = c("nth_value", NA_character_),           # aggregate uses array_extract() -- see else branch
+    n = c("count_star", "n"),                      # window uses count_star; non-window uses n() macro
+
+    # Same function name in both window and aggregate contexts
+    lead = rep("lead", 2),
+    lag = rep("lag", 2),
+
+    # Aggregates (same DuckDB name; na.rm handling overrides aliased_name separately)
+    sum = rep("sum", 2),
+    min = rep("min", 2),
+    max = rep("max", 2),
+    any = rep("any", 2),
+    all = rep("all", 2),
+    mean = rep("mean", 2),
+    sd = rep("stddev", 2),
+    median = rep("median", 2),
+    n_distinct = rep("n_distinct", 2),
+
     NULL
   )
 
-  window <- need_window && (name %in% known_window)
+  window <- need_window && (name %in% names(known_window))
 
-  if (name %in% names(aliases)) {
+  if (window && !is.null(record_window)) {
+    record_window()
+  }
+
+  if (name %in% names(known_window)) {
+    idx <- if (window) 1L else 2L
+    aliased_name <- known_window[[name]][[idx]]
+    if (is.na(aliased_name)) {
+      aliased_name <- name
+    } else if (grepl("^r_base::", aliased_name)) {
+      meta_ext_register()
+    }
+  } else if (name %in% names(aliases)) {
     aliased_name <- aliases[[name]]
     if (grepl("^r_base::", aliased_name)) {
       meta_ext_register()
@@ -443,12 +484,21 @@ rel_translate_lang <- function(
   order_bys <- list()
   offset_expr <- NULL
   default_expr <- NULL
-  if (name %in% c("lag", "lead")) {
+  nth_n <- NULL
+  if (name %in% c("lag", "lead", "first", "last", "nth")) {
     # call_match() already applied above; extract special arguments
     # x, n = 1L, default = NULL, order_by = NULL
 
-    offset_expr <- relexpr_constant(expr$n %||% 1L)
-    expr$n <- NULL
+    if (name %in% c("lag", "lead")) {
+      offset_expr <- relexpr_constant(expr$n %||% 1L)
+      expr$n <- NULL
+    }
+
+    if (name == "nth" && !window) {
+      # Extract n as integer for aggregate context (array_extract requires BIGINT)
+      nth_n <- relexpr_constant(as.integer(expr$n))
+      expr$n <- NULL
+    }
 
     if (!is.null(expr$default)) {
       default_expr <- do_translate(expr$default, in_window = TRUE)
@@ -456,14 +506,25 @@ rel_translate_lang <- function(
     }
 
     if (!is.null(expr$order_by)) {
-      order_bys <- list(do_translate(expr$order_by, in_window = TRUE))
+      order_by_expr <- expr$order_by
+      if (is_desc(order_by_expr, env, call)) {
+        # desc() in order_by is not yet supported for window/aggregate functions.
+        # Native DESC ordering in DuckDB-R expressions is tracked in:
+        # https://github.com/duckdb/duckdb-r/issues/2074
+        cli::cli_abort(
+          "{.fun desc} in {.arg order_by} is not yet supported.",
+          call = call
+        )
+      } else {
+        order_bys <- list(do_translate(order_by_expr, in_window = in_window || window))
+      }
       expr$order_by <- NULL
     }
   }
 
   # Other primitives: prod, range
   # Other aggregates: var(), cum*(), quantile()
-  if (name %in% c("sum", "min", "max", "any", "all", "mean", "sd", "median", "n_distinct")) {
+  else if (name %in% c("sum", "min", "max", "any", "all", "mean", "sd", "median", "n_distinct")) {
     has_dots_data <- (name %in% c("sum", "min", "max", "any", "all", "n_distinct"))
 
     if (has_dots_data) {
@@ -527,8 +588,8 @@ rel_translate_lang <- function(
     }
   }
 
-  fun <- relexpr_function(aliased_name, args)
   if (window) {
+    fun <- relexpr_function(aliased_name, args)
     partitions <- map(partition, relexpr_reference)
     fun <- relexpr_window(
       fun,
@@ -538,9 +599,19 @@ rel_translate_lang <- function(
       default_expr = default_expr
     )
 
-    if (name == "row_number") {
+    if (name == "row_number" || name == "n") {
       fun <- relexpr_function("r_base::as.integer", list(fun))
       meta_ext_register()
+    }
+  } else {
+    # Special handling for nth() in aggregate context:
+    # translate to array_extract(list(x ORDER BY ...), n)
+    if (name == "nth") {
+      x_arg <- args[[1]]
+      list_agg <- relexpr_function("list", list(x_arg), order_bys = order_bys)
+      fun <- relexpr_function("array_extract", list(list_agg, nth_n))
+    } else {
+      fun <- relexpr_function(aliased_name, args, order_bys = order_bys)
     }
   }
   fun
@@ -563,6 +634,7 @@ rel_translate <- function(
     env <- quo_get_env(quo)
   }
   used <- character()
+  used_window <- FALSE
 
   do_translate <- function(expr, in_window = FALSE, top_level = FALSE) {
     stopifnot(!is_quosure(expr))
@@ -597,7 +669,8 @@ rel_translate <- function(
         partition,
         in_window,
         need_window,
-        call = call
+        call = call,
+        record_window = function() { used_window <<- TRUE }
       ),
       #
       cli::cli_abort("Internal: Unknown type {.val {typeof(expr)}}", call = call)
@@ -610,5 +683,5 @@ rel_translate <- function(
     out <- relexpr_set_alias(out, alias)
   }
 
-  structure(out, used = used)
+  structure(out, used = used, has_window = used_window)
 }
