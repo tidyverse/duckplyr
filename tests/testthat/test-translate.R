@@ -281,3 +281,158 @@ test_that("if_else with named arguments", {
     rel_translate(quo(if_else(a, true = b, false = c, ptype = integer())), df)
   })
 })
+
+test_that("aggregation functions with named arguments", {
+  df <- data.frame(a = 1:3, b = c(TRUE, FALSE, TRUE))
+
+  # sum with named na.rm reordered
+  expect_identical(
+    rel_translate(expr(sum(na.rm = TRUE, a)), df),
+    rel_translate(expr(sum(a, na.rm = TRUE)), df)
+  )
+
+  # mean with named x
+  expect_identical(
+    rel_translate(expr(mean(x = a)), df),
+    rel_translate(expr(mean(a)), df)
+  )
+
+  # mean with reordered named arguments
+  expect_identical(
+    rel_translate(expr(mean(na.rm = TRUE, x = a)), df),
+    rel_translate(expr(mean(a, na.rm = TRUE)), df)
+  )
+
+  # sd with named arguments
+  expect_identical(
+    rel_translate(quo(sd(x = a, na.rm = TRUE)), df),
+    rel_translate(quo(sd(a, na.rm = TRUE)), df)
+  )
+
+  # sd with reordered named arguments
+  expect_identical(
+    rel_translate(quo(sd(na.rm = TRUE, x = a)), df),
+    rel_translate(quo(sd(a, na.rm = TRUE)), df)
+  )
+
+  # median with named arguments
+  expect_identical(
+    rel_translate(quo(median(x = a, na.rm = TRUE)), df),
+    rel_translate(quo(median(a, na.rm = TRUE)), df)
+  )
+
+  # min/max with named na.rm reordered
+  expect_identical(
+    rel_translate(expr(min(na.rm = TRUE, a)), df),
+    rel_translate(expr(min(a, na.rm = TRUE)), df)
+  )
+
+  expect_identical(
+    rel_translate(expr(max(na.rm = TRUE, a)), df),
+    rel_translate(expr(max(a, na.rm = TRUE)), df)
+  )
+
+  # any/all with named na.rm reordered
+  expect_identical(
+    rel_translate(expr(any(na.rm = TRUE, b)), df),
+    rel_translate(expr(any(b, na.rm = TRUE)), df)
+  )
+
+  expect_identical(
+    rel_translate(expr(all(na.rm = TRUE, b)), df),
+    rel_translate(expr(all(b, na.rm = TRUE)), df)
+  )
+
+  # n_distinct with named na.rm
+  expect_identical(
+    rel_translate(quo(n_distinct(na.rm = TRUE, a)), df),
+    rel_translate(quo(n_distinct(a, na.rm = TRUE)), df)
+  )
+})
+
+test_that("grepl/sub/gsub with named arguments", {
+  df <- data.frame(a = "hello world")
+
+  # grepl with named arguments
+  expect_identical(
+    rel_translate(quo(grepl(pattern = "hello", x = a)), df),
+    rel_translate(quo(grepl("hello", a)), df)
+  )
+
+  # grepl with reordered named arguments
+  expect_identical(
+    rel_translate(quo(grepl(x = a, pattern = "hello")), df),
+    rel_translate(quo(grepl("hello", a)), df)
+  )
+
+  # sub with named arguments
+  expect_identical(
+    rel_translate(quo(sub(pattern = "hello", replacement = "bye", x = a)), df),
+    rel_translate(quo(sub("hello", "bye", a)), df)
+  )
+
+  # sub with reordered named arguments
+  expect_identical(
+    rel_translate(quo(sub(x = a, replacement = "bye", pattern = "hello")), df),
+    rel_translate(quo(sub("hello", "bye", a)), df)
+  )
+
+  # gsub with named arguments
+  expect_identical(
+    rel_translate(quo(gsub(pattern = "l", replacement = "r", x = a)), df),
+    rel_translate(quo(gsub("l", "r", a)), df)
+  )
+
+  # gsub with reordered named arguments
+  expect_identical(
+    rel_translate(quo(gsub(x = a, pattern = "l", replacement = "r")), df),
+    rel_translate(quo(gsub("l", "r", a)), df)
+  )
+})
+
+test_that("lag/lead with named arguments", {
+  df <- data.frame(a = 1:5)
+
+  # lag with named x
+  expect_identical(
+    rel_translate(quo(lag(x = a)), df, need_window = TRUE),
+    rel_translate(quo(lag(a)), df, need_window = TRUE)
+  )
+
+  # lag with named n
+  expect_identical(
+    rel_translate(quo(lag(a, n = 2L)), df, need_window = TRUE),
+    rel_translate(quo(lag(a, 2L)), df, need_window = TRUE)
+  )
+
+  # lead with named x
+  expect_identical(
+    rel_translate(quo(lead(x = a)), df, need_window = TRUE),
+    rel_translate(quo(lead(a)), df, need_window = TRUE)
+  )
+
+  # lead with named n
+  expect_identical(
+    rel_translate(quo(lead(a, n = 3L)), df, need_window = TRUE),
+    rel_translate(quo(lead(a, 3L)), df, need_window = TRUE)
+  )
+})
+
+test_that("strftime with named arguments", {
+  df <- data.frame(a = as.Date("2024-01-01"))
+
+  # strftime with reordered named arguments
+  expect_identical(
+    rel_translate(quo(strftime(format = "%Y", x = a)), df),
+    rel_translate(quo(strftime(a, "%Y")), df)
+  )
+})
+
+test_that("coalesce with two arguments works", {
+  df <- data.frame(a = c(1, NA), b = c(NA, 2))
+
+  # coalesce uses positional args (via ...) and translates correctly
+  expect_snapshot({
+    rel_translate(quo(coalesce(a, b)), df)
+  })
+})
