@@ -31,7 +31,7 @@ relexpr_reference(name, rel = NULL, alias = NULL)
 
 relexpr_constant(val, alias = NULL)
 
-relexpr_function(name, args, order_bys = NULL, alias = NULL)
+relexpr_function(name, args, alias = NULL, order_bys = NULL)
 
 relexpr_comparison(cmp_op, exprs)
 
