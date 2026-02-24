@@ -51,12 +51,14 @@ check_size <- dplyr$check_size
 coalesce <- dplyr$coalesce
 commas <- dplyr$commas
 compact_null <- dplyr$compact_null
+compat_wt <- dplyr$compat_wt
 distinct_prepare <- dplyr$distinct_prepare
 dplyr_col_select <- dplyr$dplyr_col_select
 dplyr_local_slice_by_arg <- dplyr$dplyr_local_slice_by_arg
 dplyr_new_list <- dplyr$dplyr_new_list
 ensure_group_vars <- dplyr$ensure_group_vars
 env_bind_do_pronouns <- dplyr$env_bind_do_pronouns
+filter_impl <- dplyr$filter_impl
 filter_rows <- dplyr$filter_rows
 groups <- dplyr$groups
 group_nest_impl <- dplyr$group_nest_impl
