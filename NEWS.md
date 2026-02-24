@@ -2,79 +2,65 @@
 
 # duckplyr 1.1.99.9900 (2026-02-24)
 
-## fledge
+## Features
 
-- CRAN release v1.1.3 (#803).
+- New `read_tbl_duckdb()` reads a table from a DuckDB database file by attaching it to the default connection (#414, #828).
+
+  ``` r
+  db_path <- tempfile(fileext = ".duckdb")
+  con <- DBI::dbConnect(duckdb::duckdb(), db_path)
+  DBI::dbWriteTable(con, "my_table", data.frame(x = 1:5, y = letters[1:5]))
+  DBI::dbDisconnect(con)
+
+  read_tbl_duckdb(db_path, "my_table") |>
+    filter(x > 2)
+
+  unlink(db_path)
+  ```
+
+- `first()`, `last()`, `nth()`, and `n()` inside `mutate(.by = ...)` are now translated directly to DuckDB (#626, #854).
+
+  ``` r
+  data.frame(g = c("a", "a", "b", "b", "b"), x = c(10, 20, 30, 40, 50)) |>
+    as_duckdb_tibble() |>
+    summarise(first_x = first(x), last_x = last(x), second_x = nth(x, 2), .by = g)
+
+  data.frame(g = c("a", "a", "b", "b"), x = 1:4) |>
+    as_duckdb_tibble() |>
+    mutate(count = n(), .by = g)
+  ```
+
+- `compute_parquet()` and `compute_csv()` now accept an `options` argument to pass format-specific settings to the underlying DuckDB COPY statement (#729, #821).
+
+  ``` r
+  df <- as_duckdb_tibble(data.frame(x = 1:3, y = c("a", "b", "c")))
+  path <- tempfile(fileext = ".parquet")
+  compute_parquet(df, path, options = list(compression = "zstd"))
+  ```
+
+- `compute_parquet()` and `compute_csv()` are now generic S3 functions, making it easier to add methods for custom classes (#746, #818).
+
+- Functions with named arguments are now translated to DuckDB (#822).
+
+  ``` r
+  data.frame(x = c(1.23, 4.56, 7.89)) |>
+    as_duckdb_tibble() |>
+    mutate(y = round(x, digits = 1L))
+  ```
+
+- Aligned with dplyr 1.2.0 (#863).
 
 ## Bug fixes
 
-- `transmute()` can reference new variables (#796, #819).
+- `transmute()` can now reference new variables created within the same call (#796, #819).
 
-## Features
-
-- Align code with dplyr 1.2.0 (#863).
-
-- Enable translation of `first()`, `last()`, `nth()`, and `mutate(n(), .by = ...)` (#626, #854).
-
-- Pass `options` to read functions in `compute_parquet()` and `compute_csv()` (#729, #821).
-
-- New `read_tbl_duckdb()` to read DuckDB tables (#414, #828).
-
-- Turn `compute_parquet()` and `compute_csv()` into generic S3 functions (#746, #818).
-
-- Support functions with named arguments (#822).
-
-## Chore
-
-- Add settings.
-
-- Format with air.
-
-- Bump duckdb dependency.
-
-- Clean up argument matching by name (#855, #856).
-
-- Bump dplyr dep.
-
-- Fix tests failing after dplyr 1.2.0 update (#853).
-
-- Auto-update from GitHub Actions (#852).
-
-- Migrate from deprecated qs to qs2 (#846, #847).
-
-- Move compatibility checks to duckdb (#721).
-
-## Continuous integration
-
-- Fancy button.
-
-- Add apply-patch command.
-
-- Tweaks (#838).
-
-- Test all R versions on branches that start with cran- (#837).
-
-- Revert to CRAN duckdb.
-
-- Fix remote.
-
-- Use dev duckdb.
-
-- Fix compatibility with duckdb 1.4.2.
-
-- Install binaries from r-universe for dev workflow (#813).
-
-- Fix reviewdog and add commenting workflow (#810).
-
-- Use workflows for fledge (#807).
-
-- Sync (#805).
+  ``` r
+  data.frame(x = 1:3) |>
+    as_duckdb_tibble() |>
+    transmute(y = x * 2, z = y + 10)
+  ```
 
 ## Documentation
-
-- Document internal workflows.
-
-- Add blog post to pkgdown config (#612, #827).
 
 - Document `row.names` incompatibility (#603, #825).
 
@@ -82,7 +68,33 @@
 
 - Add superseded lifecycle badge to `transmute()` documentation (#364, #824).
 
+- Add blog post to pkgdown config (#612, #827).
+
 - Review contributing guide (#657).
+
+## Chore
+
+- Migrate from deprecated qs to qs2 (#846, #847).
+
+- Clean up argument matching by name (#855, #856).
+
+- Move compatibility checks to duckdb (#721).
+
+- Bump duckdb and dplyr dependencies.
+
+- Format with air.
+
+## Continuous integration
+
+- Fix compatibility with duckdb 1.4.2.
+
+- Test all R versions on branches that start with `cran-` (#837).
+
+- Install binaries from r-universe for dev workflow (#813).
+
+- Fix reviewdog and add commenting workflow (#810).
+
+- Use workflows for fledge (#807).
 
 ## Testing
 
