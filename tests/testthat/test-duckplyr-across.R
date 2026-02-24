@@ -1,84 +1,84 @@
 test_that("duckplyr_expand_across() successful", {
   expect_snapshot({
     test_duckplyr_expand_across(
-      c("x", "y"),
+      tibble::tibble(x = 0, y = 0),
       across(x:y, mean)
     )
   })
 
   expect_snapshot({
     test_duckplyr_expand_across(
-      c("x", "y"),
+      tibble::tibble(x = 0, y = 0),
       across(x:y, function(x) mean(x))
     )
   })
 
   expect_snapshot({
     test_duckplyr_expand_across(
-      c("x", "y"),
+      tibble::tibble(x = 0, y = 0),
       across(c(x_mean = x, y_mean = y), mean)
     )
   })
 
   expect_snapshot({
     test_duckplyr_expand_across(
-      c("x", "y"),
+      tibble::tibble(x = 0, y = 0),
       across(c(x_mean = x, y_mean = y), mean, .names = "{.col}_{.fn}")
     )
   })
 
   expect_snapshot({
     test_duckplyr_expand_across(
-      c("x", "y"),
+      tibble::tibble(x = 0, y = 0),
       across(x:y, function(x) mean(x, na.rm = TRUE))
     )
   })
 
   expect_snapshot({
     test_duckplyr_expand_across(
-      c("x", "y", "a"),
+      tibble::tibble(x = 0, y = 0, a = 0),
       across(c(a, x), function(x) x + 1)
     )
   })
 
   expect_snapshot({
     test_duckplyr_expand_across(
-      c("x", "y", "a"),
+      tibble::tibble(x = 0, y = 0, a = 0),
       across(c(a, x), function(x) x * 2 + 1)
     )
   })
 
   expect_snapshot({
     test_duckplyr_expand_across(
-      c("x", "y", "a"),
+      tibble::tibble(x = 0, y = 0, a = 0),
       across(-a, function(x) x * x)
     )
   })
 
   expect_snapshot({
     test_duckplyr_expand_across(
-      c("x", "y"),
+      tibble::tibble(x = 0, y = 0),
       across(x:y, base::mean)
     )
   })
 
   expect_snapshot({
     test_duckplyr_expand_across(
-      c("x", "y"),
+      tibble::tibble(x = 0, y = 0),
       across(x:y, list(mean))
     )
   })
 
   expect_snapshot({
     test_duckplyr_expand_across(
-      c("x", "y"),
+      tibble::tibble(x = 0, y = 0),
       across(x:y, list(mean = mean))
     )
   })
 
   expect_snapshot({
     test_duckplyr_expand_across(
-      c("x", "y"),
+      tibble::tibble(x = 0, y = 0),
       across(x:y, list(mean = mean, median = median))
     )
   })
@@ -86,11 +86,11 @@ test_that("duckplyr_expand_across() successful", {
 
 test_that("duckplyr_expand_across() failing", {
   expect_null(test_duckplyr_expand_across(
-    c("x", "y"),
+    tibble::tibble(x = 0, y = 0),
     across(x:y, mean, .unpack = TRUE)
   ))
   expect_null(test_duckplyr_expand_across(
-    c("x", "y"),
+    tibble::tibble(x = 0, y = 0),
     across(x:y, mean, na.rm = TRUE)
   ))
 })
@@ -98,28 +98,28 @@ test_that("duckplyr_expand_across() failing", {
 test_that("duckplyr_expand_across() with primitive functions", {
   expect_snapshot({
     test_duckplyr_expand_across(
-      c("x", "y"),
+      tibble::tibble(x = 0, y = 0),
       across(x:y, sum)
     )
   })
 
   expect_snapshot({
     test_duckplyr_expand_across(
-      c("x", "y"),
+      tibble::tibble(x = 0, y = 0),
       across(x:y, list(mean = mean, sum = sum))
     )
   })
 
   expect_snapshot({
     test_duckplyr_expand_across(
-      c("x", "y"),
+      tibble::tibble(x = 0, y = 0),
       across(x:y, min)
     )
   })
 
   expect_snapshot({
     test_duckplyr_expand_across(
-      c("x", "y"),
+      tibble::tibble(x = 0, y = 0),
       across(x:y, max)
     )
   })
@@ -128,7 +128,7 @@ test_that("duckplyr_expand_across() with primitive functions", {
 test_that("duckplyr_expand_across() with identity", {
   expect_snapshot({
     test_duckplyr_expand_across(
-      c("x", "y"),
+      tibble::tibble(x = 0, y = 0),
       across(x:y, identity)
     )
   })
