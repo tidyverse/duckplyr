@@ -1947,6 +1947,45 @@ test_that("as_duckplyr_df_impl() and mutate(lead(x = a, n = 2))", {
   expect_identical(pre, post)
 })
 
+
+test_that("as_duckplyr_df_impl() and mutate(d = round(a + 0.5))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(d = round(a + 0.5))
+  post <- test_df %>% mutate(d = round(a + 0.5)) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df_impl() and mutate(d = round(a / 10 + 0.04, digits = 1))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(d = round(a / 10 + 0.04, digits = 1))
+  post <- test_df %>% mutate(d = round(a / 10 + 0.04, digits = 1)) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df_impl() and mutate(d = round(a, digits = -1))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(d = round(a, digits = -1))
+  post <- test_df %>% mutate(d = round(a, digits = -1)) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
 test_that("as_duckplyr_df_impl() and n_groups()", {
   withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
 
