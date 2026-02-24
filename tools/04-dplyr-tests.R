@@ -1,34 +1,96 @@
 source("tools/00-funs.R", echo = TRUE)
 
-gert::git_pull(repo = ".sync/dplyr-main")
+gert::git_pull(
+  repo = ".sync/dplyr-main"
+)
 
 copy_dplyr_test <- function(test_name) {
-  source <- fs::path(".sync/dplyr-main/tests/testthat", test_name)
-  target <- fs::path("tests/testthat", gsub("^(test|helper)-", "\\1-dplyr-", test_name))
+  source <- fs::path(
+    ".sync/dplyr-main/tests/testthat",
+    test_name
+  )
+  target <- fs::path(
+    "tests/testthat",
+    gsub(
+      "^(test|helper)-",
+      "\\1-dplyr-",
+      test_name
+    )
+  )
 
   rx <- paste0(
     "((?<![a-z_])(?:",
-    paste(df_methods$name[!df_methods$skip_impl], collapse = "|"),
+    paste(
+      df_methods$name[
+        !df_methods$skip_impl
+      ],
+      collapse = "|"
+    ),
     ")[(])"
   )
 
   text <- brio::read_lines(source)
-  text <- gsub(rx, "duckplyr_\\1", text, perl = TRUE)
-  text <- text[grep('skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")', text, invert = TRUE, fixed = TRUE)]
-  text <- text[grep('skip("TODO duckdb")', text, invert = TRUE, fixed = TRUE)]
+  text <- gsub(
+    rx,
+    "duckplyr_\\1",
+    text,
+    perl = TRUE
+  )
+  text <- text[grep(
+    'skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")',
+    text,
+    invert = TRUE,
+    fixed = TRUE
+  )]
+  text <- text[grep(
+    'skip("TODO duckdb")',
+    text,
+    invert = TRUE,
+    fixed = TRUE
+  )]
 
-  skip_todo <- duckplyr_tests[[test_name]]
+  skip_todo <- duckplyr_tests[[
+    test_name
+  ]]
   if (!is.null(skip_todo)) {
-    skip_todo <- gsub(rx, "duckplyr_\\1", skip_todo, perl = TRUE)
-    skip_todo_lines <- unique(unlist(map(paste0('"', skip_todo, '"'), grep, text, fixed = TRUE)))
-    text[skip_todo_lines] <- paste0(text[skip_todo_lines], '\n  skip("TODO duckdb")')
+    skip_todo <- gsub(
+      rx,
+      "duckplyr_\\1",
+      skip_todo,
+      perl = TRUE
+    )
+    skip_todo_lines <- unique(unlist(map(
+      paste0('"', skip_todo, '"'),
+      grep,
+      text,
+      fixed = TRUE
+    )))
+    text[skip_todo_lines] <- paste0(
+      text[skip_todo_lines],
+      '\n  skip("TODO duckdb")'
+    )
   }
 
-  skip_force <- non_force_only_tests[[test_name]]
+  skip_force <- non_force_only_tests[[
+    test_name
+  ]]
   if (!is.null(skip_force)) {
-    skip_force <- gsub(rx, "duckplyr_\\1", skip_force, perl = TRUE)
-    skip_force_lines <- unique(unlist(map(paste0('"', skip_force, '"'), grep, text, fixed = TRUE)))
-    text[skip_force_lines] <- paste0(text[skip_force_lines], '\n  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")')
+    skip_force <- gsub(
+      rx,
+      "duckplyr_\\1",
+      skip_force,
+      perl = TRUE
+    )
+    skip_force_lines <- unique(unlist(map(
+      paste0('"', skip_force, '"'),
+      grep,
+      text,
+      fixed = TRUE
+    )))
+    text[skip_force_lines] <- paste0(
+      text[skip_force_lines],
+      '\n  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")'
+    )
   }
 
   text <- c(

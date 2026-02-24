@@ -8,7 +8,9 @@ Sys.setenv(DUCKPLYR_FORCE = TRUE)
 qloadm("tools/tpch/001.qs")
 
 # prep_fun <- function(x) as_duckdb_tibble(x)
-prep_fun <- function(x) as_duckdb_tibble(x[0, ])
+prep_fun <- function(x) {
+  as_duckdb_tibble(x[0, ])
+}
 
 customer <- prep_fun(customer)
 lineitem <- prep_fun(lineitem)
@@ -19,7 +21,10 @@ partsupp <- prep_fun(partsupp)
 region <- prep_fun(region)
 supplier <- prep_fun(supplier)
 
-run <- function(x) { force(x); invisible() }
+run <- function(x) {
+  force(x)
+  invisible()
+}
 
 res <- bench::mark(
   run(tpch_01()),
