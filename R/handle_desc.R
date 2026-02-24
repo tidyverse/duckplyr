@@ -37,7 +37,10 @@ is_desc <- function(expr, env, call) {
   }
 
   if (length(expr) > 2) {
-    cli::cli_abort("Function {.fun desc} must be called with exactly one argument.", call = call)
+    cli::cli_abort(
+      "Function {.fun desc} must be called with exactly one argument.",
+      call = call
+    )
   }
 
   TRUE

@@ -71,9 +71,17 @@ tel_fallback_log_dir <- function() {
   telemetry_path
 }
 
-tel_fallback_logs <- function(oldest = NULL, newest = NULL, detail = FALSE, envir = parent.frame()) {
+tel_fallback_logs <- function(
+  oldest = NULL,
+  newest = NULL,
+  detail = FALSE,
+  envir = parent.frame()
+) {
   if (!is.null(oldest) && !is.null(newest)) {
-    cli::cli_abort("Specify either {.arg oldest} or {.arg newest}, not both.", .envir = envir)
+    cli::cli_abort(
+      "Specify either {.arg oldest} or {.arg newest}, not both.",
+      .envir = envir
+    )
   }
 
   # For mocking
@@ -82,7 +90,11 @@ tel_fallback_logs <- function(oldest = NULL, newest = NULL, detail = FALSE, envi
   }
 
   telemetry_path <- tel_fallback_log_dir()
-  fallback_logs <- list.files(telemetry_path, full.names = TRUE, pattern = "[.]ndjson$")
+  fallback_logs <- list.files(
+    telemetry_path,
+    full.names = TRUE,
+    pattern = "[.]ndjson$"
+  )
 
   info <- file.info(fallback_logs)
   info <- info[order(info$mtime), ]
@@ -144,7 +156,11 @@ tel_post_async <- function(content, done = NULL, fail = NULL, pool = NULL) {
 # ---
 
 call_to_json <- function(cnd, call) {
-  name_map <- get_name_map(c(names(call$x), names(call$y), names(call$args$dots)))
+  name_map <- get_name_map(c(
+    names(call$x),
+    names(call$y),
+    names(call$args$dots)
+  ))
   if (!is.null(names(call$args$dots))) {
     names(call$args$dots) <- name_map[names2(call$args$dots)]
   }
@@ -184,7 +200,10 @@ cnd_to_json <- function(cnd, name_map) {
   } else if (is.character(cnd)) {
     msg <- cnd
   } else {
-    msg <- paste0("Unknown message of class ", paste(class(cnd), collapse = "/"))
+    msg <- paste0(
+      "Unknown message of class ",
+      paste(class(cnd), collapse = "/")
+    )
   }
 
   search <- paste0("`", names(name_map), "`")

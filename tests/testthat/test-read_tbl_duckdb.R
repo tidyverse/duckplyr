@@ -2,7 +2,11 @@ test_that("read_tbl_duckdb() reads table from database file", {
   db_path <- withr::local_tempfile(fileext = ".duckdb")
 
   con <- DBI::dbConnect(duckdb::duckdb(), db_path)
-  DBI::dbWriteTable(con, "test_table", data.frame(a = 1:3, b = c("x", "y", "z")))
+  DBI::dbWriteTable(
+    con,
+    "test_table",
+    data.frame(a = 1:3, b = c("x", "y", "z"))
+  )
 
   # Force write
   DBI::dbDisconnect(con)
@@ -29,7 +33,11 @@ test_that("read_tbl_duckdb() works with dplyr operations", {
 
   expect_equal(
     collect(out),
-    tibble::tibble(b = c("f", "g", "h", "i", "j"), a = 6:10L, c = c(12, 14, 16, 18, 20))
+    tibble::tibble(
+      b = c("f", "g", "h", "i", "j"),
+      a = 6:10L,
+      c = c(12, 14, 16, 18, 20)
+    )
   )
 })
 

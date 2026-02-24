@@ -10,16 +10,29 @@
 #' @param ... Additional options used by user defined constructors through the `opts` object
 #' @return An object of class <constructive_options/constructive_options_relational_relexpr_reference>
 #' @noRd
-opts_relational_relexpr_reference <- function(constructor = c("relexpr_reference", "next"), ...) {
-  constructive::.cstr_options("relational_relexpr_reference", constructor = constructor[[1]], ...)
+opts_relational_relexpr_reference <- function(
+  constructor = c("relexpr_reference", "next"),
+  ...
+) {
+  constructive::.cstr_options(
+    "relational_relexpr_reference",
+    constructor = constructor[[1]],
+    ...
+  )
 }
 
 .cstr_construct.relational_relexpr_reference <- function(x, ...) {
-  opts <- list(...)$opts$relational_relexpr_reference %||% opts_relational_relexpr_reference()
-  if (is_corrupted_relational_relexpr_reference(x) || opts$constructor == "next") {
+  opts <- list(...)$opts$relational_relexpr_reference %||%
+    opts_relational_relexpr_reference()
+  if (
+    is_corrupted_relational_relexpr_reference(x) || opts$constructor == "next"
+  ) {
     return(NextMethod())
   }
-  UseMethod(".cstr_construct.relational_relexpr_reference", structure(NA, class = opts$constructor))
+  UseMethod(
+    ".cstr_construct.relational_relexpr_reference",
+    structure(NA, class = opts$constructor)
+  )
 }
 
 is_corrupted_relational_relexpr_reference <- function(x) {
@@ -28,7 +41,10 @@ is_corrupted_relational_relexpr_reference <- function(x) {
 
 #' @export
 #' @method .cstr_construct.relational_relexpr_reference relexpr_reference
-.cstr_construct.relational_relexpr_reference.relexpr_reference <- function(x, ...) {
+.cstr_construct.relational_relexpr_reference.relexpr_reference <- function(
+  x,
+  ...
+) {
   # opts <- list(...)$opts$relational_relexpr_reference %||% opts_relational_relexpr_reference()
   args <- compact(list(
     x$name,
@@ -37,11 +53,16 @@ is_corrupted_relational_relexpr_reference <- function(x) {
   ))
   code <- constructive::.cstr_apply(args, fun = "relexpr_reference", ...)
   constructive::.cstr_repair_attributes(
-    x, code, ...,
+    x,
+    code,
+    ...,
     idiomatic_class = c("relational_relexpr_reference", "relational_relexpr")
   )
 }
 
 on_load({
-  vctrs::s3_register("constructive::.cstr_construct", "relational_relexpr_reference")
+  vctrs::s3_register(
+    "constructive::.cstr_construct",
+    "relational_relexpr_reference"
+  )
 })

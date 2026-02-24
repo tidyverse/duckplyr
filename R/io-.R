@@ -28,11 +28,13 @@
 #'
 #' @export
 #' @keywords internal
-df_from_file <- function(path,
-                         table_function,
-                         ...,
-                         options = list(),
-                         class = NULL) {
+df_from_file <- function(
+  path,
+  table_function,
+  ...,
+  options = list(),
+  class = NULL
+) {
   check_dots_empty()
   lifecycle::deprecate_soft("1.0.0", "df_from_file()", "read_file_duckdb()")
 
@@ -73,13 +75,18 @@ df_from_file <- function(path,
 #' @rdname df_from_file
 #' @export
 duckplyr_df_from_file <- function(
-    path,
-    table_function,
-    ...,
-    options = list(),
-    class = NULL) {
+  path,
+  table_function,
+  ...,
+  options = list(),
+  class = NULL
+) {
   check_dots_empty()
-  lifecycle::deprecate_soft("1.0.0", "duckplyr_df_from_file()", "read_file_duckdb()")
+  lifecycle::deprecate_soft(
+    "1.0.0",
+    "duckplyr_df_from_file()",
+    "read_file_duckdb()"
+  )
 
   out <- df_from_file(path, table_function, options = options, class = class)
   as_duckplyr_df_impl(out)

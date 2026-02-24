@@ -1,6 +1,12 @@
 #' @param prudence Only adds the class, does not recreate the relation object!
 #' @noRd
-new_duckdb_tibble <- function(x, class = NULL, prudence = "lavish", adjust_prudence = FALSE, error_call = caller_env()) {
+new_duckdb_tibble <- function(
+  x,
+  class = NULL,
+  prudence = "lavish",
+  adjust_prudence = FALSE,
+  error_call = caller_env()
+) {
   if (is.null(class)) {
     class <- c("tbl_df", "tbl", "data.frame")
   } else {
@@ -52,32 +58,48 @@ prudence_parse <- function(prudence, remote, call = caller_env()) {
 
   if (is.numeric(prudence)) {
     if (is.null(names(prudence))) {
-      cli::cli_abort("{.arg prudence} must have names if it is a named vector.", call = call)
+      cli::cli_abort(
+        "{.arg prudence} must have names if it is a named vector.",
+        call = call
+      )
     }
     extra_names <- setdiff(names(prudence), c("rows", "cells"))
     if (length(extra_names) > 0) {
-      cli::cli_abort("Unknown name in {.arg prudence}: {extra_names[[1]]}", call = call)
+      cli::cli_abort(
+        "Unknown name in {.arg prudence}: {extra_names[[1]]}",
+        call = call
+      )
     }
 
     if ("rows" %in% names(prudence)) {
       n_rows <- prudence[["rows"]]
       if (is.na(n_rows) || n_rows < 0) {
-        cli::cli_abort("The {.val rows} component of {.arg prudence} must be a non-negative integer", call = call)
+        cli::cli_abort(
+          "The {.val rows} component of {.arg prudence} must be a non-negative integer",
+          call = call
+        )
       }
     }
     if ("cells" %in% names(prudence)) {
       n_cells <- prudence[["cells"]]
       if (is.na(n_cells) || n_cells < 0) {
-        cli::cli_abort("The {.val cells} component of {.arg prudence} must be a non-negative integer", call = call)
+        cli::cli_abort(
+          "The {.val cells} component of {.arg prudence} must be a non-negative integer",
+          call = call
+        )
       }
     }
     allow_materialization <- is.finite(n_rows) || is.finite(n_cells)
     prudence <- "stingy"
   } else if (!is.character(prudence)) {
-    cli::cli_abort("{.arg prudence} must be an unnamed character vector or a named numeric vector", call = call)
+    cli::cli_abort(
+      "{.arg prudence} must be an unnamed character vector or a named numeric vector",
+      call = call
+    )
   } else {
     if (identical(prudence, "frugal")) {
-      lifecycle::deprecate_warn("1.0.0",
+      lifecycle::deprecate_warn(
+        "1.0.0",
         I('Use `prudence = "stingy"` instead, `prudence = "frugal"`'),
         always = TRUE,
         env = call
@@ -85,7 +107,11 @@ prudence_parse <- function(prudence, remote, call = caller_env()) {
       prudence <- "stingy"
     }
     # Can't change second argument to arg_match() here
-    prudence <- arg_match(prudence, c("lavish", "stingy", "thrifty"), error_call = call)
+    prudence <- arg_match(
+      prudence,
+      c("lavish", "stingy", "thrifty"),
+      error_call = call
+    )
 
     allow_materialization <- !identical(prudence, "stingy")
     if (!allow_materialization) {

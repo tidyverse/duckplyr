@@ -18,7 +18,10 @@ test_that("as_tbl()", {
   expect_equal(head(out), duckdb_tibble(a = 1L, b = 2L))
 
   # Test destruction of underlying view
-  expect_equal(DBI::dbGetQuery(get_default_duckdb_connection(), sql), data.frame(a = 1L))
+  expect_equal(
+    DBI::dbGetQuery(get_default_duckdb_connection(), sql),
+    data.frame(a = 1L)
+  )
 
   rm(tbl)
   gc()

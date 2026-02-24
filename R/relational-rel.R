@@ -5,7 +5,10 @@ rel_stats_clean <- function() {
 }
 
 rel_stats_get <- function() {
-  arrange(tibble::enframe(unlist(as.list(rel_stats_env)), "fun", "count"), desc(count))
+  arrange(
+    tibble::enframe(unlist(as.list(rel_stats_env)), "fun", "count"),
+    desc(count)
+  )
 }
 
 #' Relational implementer's interface
@@ -189,12 +192,14 @@ rel_order <- function(rel, orders, ascending, ...) {
 #' }
 #'
 #' rel_join(new_dfrel(data.frame(mpg = 21)), mtcars_rel)
-rel_join <- function(left,
-                     right,
-                     conds,
-                     join = c("inner", "left", "right", "outer", "cross", "semi", "anti"),
-                     join_ref_type = c("regular", "natural", "cross", "positional", "asof"),
-                     ...) {
+rel_join <- function(
+  left,
+  right,
+  conds,
+  join = c("inner", "left", "right", "outer", "cross", "semi", "anti"),
+  join_ref_type = c("regular", "natural", "cross", "positional", "asof"),
+  ...
+) {
   rel_stats_env$rel_join <- (rel_stats_env$rel_join %||% 0L) + 1L
   UseMethod("rel_join")
 }
@@ -250,7 +255,8 @@ rel_distinct <- function(rel, ...) {
 #' @rdname new_relational
 #' @export
 rel_set_intersect <- function(rel_a, rel_b, ...) {
-  rel_stats_env$rel_set_intersect <- (rel_stats_env$rel_set_intersect %||% 0L) + 1L
+  rel_stats_env$rel_set_intersect <- (rel_stats_env$rel_set_intersect %||% 0L) +
+    1L
   UseMethod("rel_set_intersect")
 }
 

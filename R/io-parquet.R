@@ -7,7 +7,11 @@
 #' @export
 df_from_parquet <- function(path, ..., options = list(), class = NULL) {
   check_dots_empty()
-  lifecycle::deprecate_soft("1.0.0", "df_from_parquet()", "read_parquet_duckdb()")
+  lifecycle::deprecate_soft(
+    "1.0.0",
+    "df_from_parquet()",
+    "read_parquet_duckdb()"
+  )
 
   df_from_file(path, "read_parquet", options = options, class = class)
 }
@@ -19,9 +23,18 @@ df_from_parquet <- function(path, ..., options = list(), class = NULL) {
 #'
 #' @rdname df_from_file
 #' @export
-duckplyr_df_from_parquet <- function(path, ..., options = list(), class = NULL) {
+duckplyr_df_from_parquet <- function(
+  path,
+  ...,
+  options = list(),
+  class = NULL
+) {
   check_dots_empty()
-  lifecycle::deprecate_soft("1.0.0", "duckplyr_df_from_parquet()", "read_parquet_duckdb()")
+  lifecycle::deprecate_soft(
+    "1.0.0",
+    "duckplyr_df_from_parquet()",
+    "read_parquet_duckdb()"
+  )
 
   duckplyr_df_from_file(path, "read_parquet", options = options, class = class)
 }

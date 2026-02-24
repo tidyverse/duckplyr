@@ -6,7 +6,11 @@ default_duckdb_connection <- new.env(parent = emptyenv())
 get_default_duckdb_connection <- function() {
   if (is.null(default_duckdb_connection$con)) {
     default_duckdb_connection$con <- create_default_duckdb_connection()
-    reg.finalizer(default_duckdb_connection, onexit = TRUE, reset_default_duckdb_connection)
+    reg.finalizer(
+      default_duckdb_connection,
+      onexit = TRUE,
+      reset_default_duckdb_connection
+    )
   }
   default_duckdb_connection$con
 }
@@ -33,7 +37,12 @@ create_default_duckdb_connection <- function() {
   duckdb$rapi_load_rfuns(drv@database_ref)
 
   for (i in seq_along(duckplyr_macros)) {
-    sql <- paste0('CREATE MACRO "', names(duckplyr_macros)[[i]], '"', duckplyr_macros[[i]])
+    sql <- paste0(
+      'CREATE MACRO "',
+      names(duckplyr_macros)[[i]],
+      '"',
+      duckplyr_macros[[i]]
+    )
     DBI::dbExecute(con, sql)
   }
 
@@ -44,7 +53,11 @@ duckdb_rel_from_df <- function(df, call = caller_env()) {
   # FIXME: make generic
   stopifnot(is.data.frame(df))
 
-  rel <- duckdb$rel_from_altrep_df(df, strict = FALSE, allow_materialized = FALSE)
+  rel <- duckdb$rel_from_altrep_df(
+    df,
+    strict = FALSE,
+    allow_materialized = FALSE
+  )
   if (!is.null(rel)) {
     # Once we're here, we know it's an ALTREP data frame
     # We don't get here if it's already materialized
@@ -87,7 +100,10 @@ check_df_for_rel <- function(rel, df, call = caller_env()) {
   rlang::with_options(duckdb.materialize_callback = NULL, {
     for (i in seq_along(df)) {
       if (!identical(df[[i]], roundtrip[[i]])) {
-        cli::cli_abort("Imperfect roundtrip. Affected column: {.var {names(df)[[i]]}}.", call = call)
+        cli::cli_abort(
+          "Imperfect roundtrip. Affected column: {.var {names(df)[[i]]}}.",
+          call = call
+        )
       }
     }
   })
@@ -103,7 +119,12 @@ vec_ptype_safe <- function(x) {
 }
 
 #' @export
-rel_to_df.duckdb_relation <- function(rel, ..., prudence = NULL, remote = FALSE) {
+rel_to_df.duckdb_relation <- function(
+  rel,
+  ...,
+  prudence = NULL,
+  remote = FALSE
+) {
   if (is.null(prudence)) {
     cli::cli_abort("Argument {.arg {prudence}} is missing.")
   }
@@ -124,10 +145,13 @@ rel_filter.duckdb_relation <- function(rel, exprs, ...) {
   duckdb_exprs <- to_duckdb_exprs(exprs)
   out <- duckdb$rel_filter(rel, duckdb_exprs)
 
-  meta_rel_register(out, expr(duckdb$rel_filter(
-    !!meta_rel_get(rel)$name,
-    list(!!!to_duckdb_exprs_meta(exprs))
-  )))
+  meta_rel_register(
+    out,
+    expr(duckdb$rel_filter(
+      !!meta_rel_get(rel)$name,
+      list(!!!to_duckdb_exprs_meta(exprs))
+    ))
+  )
 
   out
 }
@@ -138,10 +162,13 @@ rel_project.duckdb_relation <- function(rel, exprs, ...) {
 
   out <- duckdb$rel_project(rel, duckdb_exprs)
 
-  meta_rel_register(out, expr(duckdb$rel_project(
-    !!meta_rel_get(rel)$name,
-    list(!!!to_duckdb_exprs_meta(exprs))
-  )))
+  meta_rel_register(
+    out,
+    expr(duckdb$rel_project(
+      !!meta_rel_get(rel)$name,
+      list(!!!to_duckdb_exprs_meta(exprs))
+    ))
+  )
 
   check_duplicate_names(out)
 
@@ -159,11 +186,14 @@ rel_aggregate.duckdb_relation <- function(rel, groups, aggregates, ...) {
     aggregates = duckdb_aggregates
   )
 
-  meta_rel_register(out, expr(duckdb$rel_aggregate(
-    !!meta_rel_get(rel)$name,
-    groups = list(!!!to_duckdb_exprs_meta(groups)),
-    aggregates = list(!!!to_duckdb_exprs_meta(aggregates))
-  )))
+  meta_rel_register(
+    out,
+    expr(duckdb$rel_aggregate(
+      !!meta_rel_get(rel)$name,
+      groups = list(!!!to_duckdb_exprs_meta(groups)),
+      aggregates = list(!!!to_duckdb_exprs_meta(aggregates))
+    ))
+  )
 
   check_duplicate_names(out)
 
@@ -176,16 +206,26 @@ rel_order.duckdb_relation <- function(rel, orders, ascending = NULL, ...) {
 
   out <- duckdb$rel_order(rel, duckdb_orders, ascending)
 
-  meta_rel_register(out, expr(duckdb$rel_order(
-    !!meta_rel_get(rel)$name,
-    list(!!!to_duckdb_exprs_meta(orders))
-  )))
+  meta_rel_register(
+    out,
+    expr(duckdb$rel_order(
+      !!meta_rel_get(rel)$name,
+      list(!!!to_duckdb_exprs_meta(orders))
+    ))
+  )
 
   out
 }
 
 #' @export
-rel_join.duckdb_relation <- function(left, right, conds, join, join_ref_type, ...) {
+rel_join.duckdb_relation <- function(
+  left,
+  right,
+  conds,
+  join,
+  join_ref_type,
+  ...
+) {
   duckdb_conds <- to_duckdb_exprs(conds)
   if (join == "full") {
     join <- "outer"
@@ -195,22 +235,28 @@ rel_join.duckdb_relation <- function(left, right, conds, join, join_ref_type, ..
     # Compatibility with older duckdb versions
     out <- duckdb$rel_join(left, right, duckdb_conds, join)
 
-    meta_rel_register(out, expr(duckdb$rel_join(
-      !!meta_rel_get(left)$name,
-      !!meta_rel_get(right)$name,
-      list(!!!to_duckdb_exprs_meta(conds)),
-      !!join
-    )))
+    meta_rel_register(
+      out,
+      expr(duckdb$rel_join(
+        !!meta_rel_get(left)$name,
+        !!meta_rel_get(right)$name,
+        list(!!!to_duckdb_exprs_meta(conds)),
+        !!join
+      ))
+    )
   } else {
     out <- duckdb$rel_join(left, right, duckdb_conds, join, join_ref_type)
 
-    meta_rel_register(out, expr(duckdb$rel_join(
-      !!meta_rel_get(left)$name,
-      !!meta_rel_get(right)$name,
-      list(!!!to_duckdb_exprs_meta(conds)),
-      !!join,
-      !!join_ref_type
-    )))
+    meta_rel_register(
+      out,
+      expr(duckdb$rel_join(
+        !!meta_rel_get(left)$name,
+        !!meta_rel_get(right)$name,
+        list(!!!to_duckdb_exprs_meta(conds)),
+        !!join,
+        !!join_ref_type
+      ))
+    )
   }
 
   check_duplicate_names(out)
@@ -222,10 +268,13 @@ rel_join.duckdb_relation <- function(left, right, conds, join, join_ref_type, ..
 rel_limit.duckdb_relation <- function(rel, n, ...) {
   out <- duckdb$rel_limit(rel, n)
 
-  meta_rel_register(out, expr(duckdb$rel_limit(
-    !!meta_rel_get(rel)$name,
-    !!n
-  )))
+  meta_rel_register(
+    out,
+    expr(duckdb$rel_limit(
+      !!meta_rel_get(rel)$name,
+      !!n
+    ))
+  )
 
   out
 }
@@ -234,9 +283,12 @@ rel_limit.duckdb_relation <- function(rel, n, ...) {
 rel_distinct.duckdb_relation <- function(rel, ...) {
   out <- duckdb$rel_distinct(rel)
 
-  meta_rel_register(out, expr(duckdb$rel_distinct(
-    !!meta_rel_get(rel)$name
-  )))
+  meta_rel_register(
+    out,
+    expr(duckdb$rel_distinct(
+      !!meta_rel_get(rel)$name
+    ))
+  )
 
   out
 }
@@ -245,10 +297,13 @@ rel_distinct.duckdb_relation <- function(rel, ...) {
 rel_set_intersect.duckdb_relation <- function(rel_a, rel_b, ...) {
   out <- duckdb$rel_set_intersect(rel_a, rel_b)
 
-  meta_rel_register(out, expr(duckdb$rel_set_intersect(
-    !!meta_rel_get(rel_a)$name,
-    !!meta_rel_get(rel_b)$name
-  )))
+  meta_rel_register(
+    out,
+    expr(duckdb$rel_set_intersect(
+      !!meta_rel_get(rel_a)$name,
+      !!meta_rel_get(rel_b)$name
+    ))
+  )
 
   out
 }
@@ -257,10 +312,13 @@ rel_set_intersect.duckdb_relation <- function(rel_a, rel_b, ...) {
 rel_set_diff.duckdb_relation <- function(rel_a, rel_b, ...) {
   out <- duckdb$rel_set_diff(rel_a, rel_b)
 
-  meta_rel_register(out, expr(duckdb$rel_set_diff(
-    !!meta_rel_get(rel_a)$name,
-    !!meta_rel_get(rel_b)$name
-  )))
+  meta_rel_register(
+    out,
+    expr(duckdb$rel_set_diff(
+      !!meta_rel_get(rel_a)$name,
+      !!meta_rel_get(rel_b)$name
+    ))
+  )
 
   out
 }
@@ -269,10 +327,13 @@ rel_set_diff.duckdb_relation <- function(rel_a, rel_b, ...) {
 rel_set_symdiff.duckdb_relation <- function(rel_a, rel_b, ...) {
   out <- duckdb$rel_set_symdiff(rel_a, rel_b)
 
-  meta_rel_register(out, expr(duckdb$rel_set_symdiff(
-    !!meta_rel_get(rel_a)$name,
-    !!meta_rel_get(rel_b)$name
-  )))
+  meta_rel_register(
+    out,
+    expr(duckdb$rel_set_symdiff(
+      !!meta_rel_get(rel_a)$name,
+      !!meta_rel_get(rel_b)$name
+    ))
+  )
 
   out
 }
@@ -281,10 +342,13 @@ rel_set_symdiff.duckdb_relation <- function(rel_a, rel_b, ...) {
 rel_union_all.duckdb_relation <- function(rel_a, rel_b, ...) {
   out <- duckdb$rel_union_all(rel_a, rel_b)
 
-  meta_rel_register(out, expr(duckdb$rel_union_all(
-    !!meta_rel_get(rel_a)$name,
-    !!meta_rel_get(rel_b)$name
-  )))
+  meta_rel_register(
+    out,
+    expr(duckdb$rel_union_all(
+      !!meta_rel_get(rel_a)$name,
+      !!meta_rel_get(rel_b)$name
+    ))
+  )
 
   out
 }
@@ -301,10 +365,13 @@ rel_alias.duckdb_relation <- function(rel, ...) {}
 rel_set_alias.duckdb_relation <- function(rel, alias, ...) {
   out <- duckdb$rel_set_alias(rel, alias)
 
-  meta_rel_register(out, expr(duckdb$rel_set_alias(
-    !!meta_rel_get(rel)$name,
-    !!alias
-  )))
+  meta_rel_register(
+    out,
+    expr(duckdb$rel_set_alias(
+      !!meta_rel_get(rel)$name,
+      !!alias
+    ))
+  )
 
   out
 }
@@ -319,7 +386,8 @@ to_duckdb_exprs <- function(exprs) {
 }
 
 to_duckdb_expr <- function(x) {
-  switch(class(x)[[1]],
+  switch(
+    class(x)[[1]],
     relational_relexpr_reference = {
       out <- duckdb$expr_reference(x$name, if (is.null(x$rel)) "" else x$rel)
       if (!is.null(x$alias)) {
@@ -335,7 +403,11 @@ to_duckdb_expr <- function(x) {
       out
     },
     relational_relexpr_function = {
-      out <- duckdb$expr_function(x$name, to_duckdb_exprs(x$args), order_bys = to_duckdb_exprs(x$order_bys))
+      out <- duckdb$expr_function(
+        x$name,
+        to_duckdb_exprs(x$args),
+        order_bys = to_duckdb_exprs(x$order_bys)
+      )
       if (!is.null(x$alias)) {
         duckdb$expr_set_alias(out, x$alias)
       }
@@ -371,7 +443,8 @@ to_duckdb_exprs_meta <- function(exprs) {
 }
 
 to_duckdb_expr_meta <- function(x) {
-  switch(class(x)[[1]],
+  switch(
+    class(x)[[1]],
     relational_relexpr_reference = {
       args <- list(x$name)
       if (!is.null(x$rel)) {
@@ -388,7 +461,10 @@ to_duckdb_expr_meta <- function(x) {
       out
     },
     relational_relexpr_comparison = {
-      out <- expr(duckdb$expr_comparison(!!x$cmp_op, list(!!!to_duckdb_exprs_meta(x$exprs))))
+      out <- expr(duckdb$expr_comparison(
+        !!x$cmp_op,
+        list(!!!to_duckdb_exprs_meta(x$exprs))
+      ))
       if (!is.null(x$alias)) {
         out <- expr({
           tmp_expr <- !!out
@@ -401,7 +477,11 @@ to_duckdb_expr_meta <- function(x) {
     relational_relexpr_function = {
       meta_macro_register(x$name)
       order_bys_meta <- to_duckdb_exprs_meta(x$order_bys)
-      out <- expr(duckdb$expr_function(!!x$name, list(!!!to_duckdb_exprs_meta(x$args)), order_bys = list(!!!order_bys_meta)))
+      out <- expr(duckdb$expr_function(
+        !!x$name,
+        list(!!!to_duckdb_exprs_meta(x$args)),
+        order_bys = list(!!!order_bys_meta)
+      ))
       if (!is.null(x$alias)) {
         out <- expr({
           tmp_expr <- !!out
@@ -448,6 +528,8 @@ to_duckdb_expr_meta <- function(x) {
 check_duplicate_names <- function(rel) {
   # https://github.com/duckdb/duckdb/discussions/14682
   if (anyDuplicated(tolower(duckdb$rel_names(rel)))) {
-    cli::cli_abort("Column names are case-insensitive in duckdb, fallback required.")
+    cli::cli_abort(
+      "Column names are case-insensitive in duckdb, fallback required."
+    )
   }
 }

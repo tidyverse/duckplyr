@@ -34,11 +34,17 @@ as_duckplyr_df <- function(.data) {
 
 as_duckplyr_df_impl <- function(x, error_call = caller_env()) {
   # FIXME: Move to as_duckdb_tibble()
-  if (!identical(class(x), "data.frame") && !identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
-    cli::cli_abort(call = error_call, c(
-      "Must pass a plain data frame or a tibble, not {.obj_type_friendly {x}}.",
-      i = "Convert it with {.fun as.data.frame} or {.fun tibble::as_tibble}."
-    ))
+  if (
+    !identical(class(x), "data.frame") &&
+      !identical(class(x), c("tbl_df", "tbl", "data.frame"))
+  ) {
+    cli::cli_abort(
+      call = error_call,
+      c(
+        "Must pass a plain data frame or a tibble, not {.obj_type_friendly {x}}.",
+        i = "Convert it with {.fun as.data.frame} or {.fun tibble::as_tibble}."
+      )
+    )
   }
 
   new_duckdb_tibble(x, class = class(x), error_call = error_call)

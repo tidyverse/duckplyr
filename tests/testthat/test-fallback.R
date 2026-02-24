@@ -242,7 +242,13 @@ test_that("fallback_config()", {
 
   expect_identical(fallback_config_read(), list())
 
-  fallback_config(info = TRUE, logging = TRUE, autoupload = TRUE, log_dir = "/", verbose = TRUE)
+  fallback_config(
+    info = TRUE,
+    logging = TRUE,
+    autoupload = TRUE,
+    log_dir = "/",
+    verbose = TRUE
+  )
   expect_snapshot_file(config_path, "fallback.dcf")
 
   expect_snapshot({

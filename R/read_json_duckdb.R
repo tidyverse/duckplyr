@@ -19,7 +19,12 @@
 #' db_exec("INSTALL json")
 #' db_exec("LOAD json")
 #' read_json_duckdb(path)
-read_json_duckdb <- function(path, ..., prudence = c("thrifty", "lavish", "stingy"), options = list()) {
+read_json_duckdb <- function(
+  path,
+  ...,
+  prudence = c("thrifty", "lavish", "stingy"),
+  options = list()
+) {
   check_dots_empty()
 
   read_file_duckdb(path, "read_json", prudence = prudence, options = options)

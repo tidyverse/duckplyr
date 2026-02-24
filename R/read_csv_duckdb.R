@@ -41,8 +41,18 @@
 #'   path,
 #'   options = list(types = list(c(a = "DOUBLE", b = "VARCHAR")))
 #' )
-read_csv_duckdb <- function(path, ..., prudence = c("thrifty", "lavish", "stingy"), options = list()) {
+read_csv_duckdb <- function(
+  path,
+  ...,
+  prudence = c("thrifty", "lavish", "stingy"),
+  options = list()
+) {
   check_dots_empty()
 
-  read_file_duckdb(path, "read_csv_auto", prudence = prudence, options = options)
+  read_file_duckdb(
+    path,
+    "read_csv_auto",
+    prudence = prudence,
+    options = options
+  )
 }

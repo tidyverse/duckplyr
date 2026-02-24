@@ -32,7 +32,13 @@ compute_csv <- function(x, path, ...) {
 #'
 #' @rdname compute_csv
 #' @export
-compute_csv.duckplyr_df <- function(x, path, ..., prudence = NULL, options = NULL) {
+compute_csv.duckplyr_df <- function(
+  x,
+  path,
+  ...,
+  prudence = NULL,
+  options = NULL
+) {
   check_dots_empty()
 
   if (is.null(options)) {
@@ -59,7 +65,13 @@ compute_csv.duckplyr_df <- function(x, path, ..., prudence = NULL, options = NUL
 
 #' @rdname compute_csv
 #' @export
-compute_csv.data.frame <- function(x, path, ..., prudence = NULL, options = NULL) {
+compute_csv.data.frame <- function(
+  x,
+  path,
+  ...,
+  prudence = NULL,
+  options = NULL
+) {
   x <- as_duckdb_tibble(x)
   compute_csv.duckplyr_df(x, path, ..., prudence = prudence, options = options)
 }

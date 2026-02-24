@@ -44,7 +44,10 @@ relexpr_reference <- function(name, rel = NULL, alias = NULL) {
   stopifnot(is_string(name))
   stopifnot(is.null(rel) || inherits(rel, "duckdb_relation"))
   stopifnot(is.null(alias) || is_string(alias))
-  new_relexpr(list(name = name, rel = rel, alias = alias), class = "relational_relexpr_reference")
+  new_relexpr(
+    list(name = name, rel = rel, alias = alias),
+    class = "relational_relexpr_reference"
+  )
 }
 
 #' relexpr_constant
@@ -58,7 +61,10 @@ relexpr_reference <- function(name, rel = NULL, alias = NULL) {
 relexpr_constant <- function(val, alias = NULL) {
   stopifnot(length(val) == 1)
   stopifnot(is.null(alias) || is_string(alias))
-  new_relexpr(list(val = val, alias = alias), class = "relational_relexpr_constant")
+  new_relexpr(
+    list(val = val, alias = alias),
+    class = "relational_relexpr_constant"
+  )
 }
 
 #' relexpr_function
@@ -75,7 +81,10 @@ relexpr_function <- function(name, args, alias = NULL, order_bys = NULL) {
   stopifnot(is.list(args))
   stopifnot(is.null(order_bys) || is.list(order_bys))
   stopifnot(is.null(alias) || is_string(alias))
-  new_relexpr(list(name = name, args = args, order_bys = order_bys, alias = alias), class = "relational_relexpr_function")
+  new_relexpr(
+    list(name = name, args = args, order_bys = order_bys, alias = alias),
+    class = "relational_relexpr_function"
+  )
 }
 
 #' relexpr_comparison
@@ -90,7 +99,10 @@ relexpr_function <- function(name, args, alias = NULL, order_bys = NULL) {
 relexpr_comparison <- function(cmp_op, exprs) {
   stopifnot(is_string(cmp_op))
   stopifnot(is.list(exprs))
-  new_relexpr(list(cmp_op = cmp_op, exprs = exprs), class = "relational_relexpr_comparison")
+  new_relexpr(
+    list(cmp_op = cmp_op, exprs = exprs),
+    class = "relational_relexpr_comparison"
+  )
 }
 
 
@@ -106,17 +118,20 @@ relexpr_comparison <- function(cmp_op, exprs) {
 #' @rdname new_relexpr
 #' @export
 relexpr_window <- function(
-    expr,
-    partitions,
-    order_bys = list(),
-    offset_expr = NULL,
-    default_expr = NULL,
-    alias = NULL) {
+  expr,
+  partitions,
+  order_bys = list(),
+  offset_expr = NULL,
+  default_expr = NULL,
+  alias = NULL
+) {
   stopifnot(inherits(expr, "relational_relexpr"))
   stopifnot(is.list(partitions))
   stopifnot(is.list(order_bys))
   stopifnot(is.null(offset_expr) || inherits(offset_expr, "relational_relexpr"))
-  stopifnot(is.null(default_expr) || inherits(default_expr, "relational_relexpr"))
+  stopifnot(
+    is.null(default_expr) || inherits(default_expr, "relational_relexpr")
+  )
   stopifnot(is.null(alias) || is_string(alias))
   new_relexpr(
     list(

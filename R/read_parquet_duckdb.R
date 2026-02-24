@@ -9,7 +9,12 @@
 #' @seealso [read_csv_duckdb()], [read_json_duckdb()]
 #'
 #' @export
-read_parquet_duckdb <- function(path, ..., prudence = c("thrifty", "lavish", "stingy"), options = list()) {
+read_parquet_duckdb <- function(
+  path,
+  ...,
+  prudence = c("thrifty", "lavish", "stingy"),
+  options = list()
+) {
   check_dots_empty()
 
   read_file_duckdb(path, "read_parquet", prudence = prudence, options = options)

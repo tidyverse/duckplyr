@@ -12,5 +12,9 @@ can_load_extension <- function(name) {
 
 on_load({
   env <- environment()
-  assign("can_load_extension", memoise::memoise(can_load_extension), envir = env)
+  assign(
+    "can_load_extension",
+    memoise::memoise(can_load_extension),
+    envir = env
+  )
 })

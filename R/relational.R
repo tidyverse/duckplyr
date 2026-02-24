@@ -41,10 +41,12 @@ rel_try <- function(call, rel, ...) {
         }
 
         if (Sys.getenv("DUCKPLYR_FALLBACK_INFO") == "TRUE") {
-          inform(message = c(
-            "Cannot process duckplyr query with DuckDB, falling back to dplyr.",
-            i = cli::format_inline(message)
-          ))
+          inform(
+            message = c(
+              "Cannot process duckplyr query with DuckDB, falling back to dplyr.",
+              i = cli::format_inline(message)
+            )
+          )
         }
         if (Sys.getenv("DUCKPLYR_FORCE") == "TRUE") {
           cli::cli_abort(c(
@@ -60,7 +62,10 @@ rel_try <- function(call, rel, ...) {
 
   if (Sys.getenv("DUCKPLYR_FORCE") == "TRUE") {
     force(rel)
-    cli::cli_abort("Must use a {.code return()} in {.code rel_try()}.", .internal = TRUE)
+    cli::cli_abort(
+      "Must use a {.code return()} in {.code rel_try()}.",
+      .internal = TRUE
+    )
   }
 
   out <- rlang::try_fetch(rel, error = identity)
@@ -68,14 +73,20 @@ rel_try <- function(call, rel, ...) {
     tel_collect(out, call)
 
     if (Sys.getenv("DUCKPLYR_FALLBACK_INFO") == "TRUE") {
-      rlang::cnd_signal(rlang::message_cnd(message = "Error processing duckplyr query with DuckDB, falling back to dplyr.", parent = out))
+      rlang::cnd_signal(rlang::message_cnd(
+        message = "Error processing duckplyr query with DuckDB, falling back to dplyr.",
+        parent = out
+      ))
     }
     stats$fallback <- stats$fallback + 1L
     return(out)
   }
 
   # Never reached due to return() in code
-  cli::cli_abort("Must use a {.code return()} in {.code rel_try()}.", .internal = TRUE)
+  cli::cli_abort(
+    "Must use a {.code return()} in {.code rel_try()}.",
+    .internal = TRUE
+  )
 }
 
 rel_translate_dots <- function(dots, data, call = caller_env()) {
@@ -110,13 +121,15 @@ rel_translate_dots_summarise <- function(dots, data, call = caller_env()) {
       ))
     } else {
       new <- names(expanded)
-      translation <- imap(expanded, function(expr, name) rel_translate(
-        expr,
-        alias = name,
-        data,
-        names_forbidden = .x$new,
-        call = call
-      ))
+      translation <- imap(expanded, function(expr, name) {
+        rel_translate(
+          expr,
+          alias = name,
+          data,
+          names_forbidden = .x$new,
+          call = call
+        )
+      })
     }
 
     list(
@@ -129,7 +142,10 @@ rel_translate_dots_summarise <- function(dots, data, call = caller_env()) {
 
 new_failing_mask <- function(names_data) {
   env <- new_environment()
-  walk(names_data, ~ env_bind_lazy(env, !!.x := stop("Can't access data in this context")))
+  walk(
+    names_data,
+    ~ env_bind_lazy(env, !!.x := stop("Can't access data in this context"))
+  )
   new_data_mask(env)
 }
 
@@ -140,11 +156,15 @@ check_prudence <- function(x, duckplyr_error, call = caller_env()) {
   if (is.character(msg)) {
     duckplyr_error_msg <- if (is.character(duckplyr_error)) duckplyr_error
     duckplyr_error_parent <- if (is_condition(duckplyr_error)) duckplyr_error
-    cli::cli_abort(parent = duckplyr_error_parent, call = call, c(
-      "This operation cannot be carried out by DuckDB, and the input is a stingy duckplyr frame.",
-      "*" = duckplyr_error_msg,
-      "i" = 'Use {.code compute(prudence = "lavish")} to materialize to temporary storage and continue with {.pkg duckplyr}.',
-      "i" = 'See {.run vignette("prudence")} for other options.'
-    ))
+    cli::cli_abort(
+      parent = duckplyr_error_parent,
+      call = call,
+      c(
+        "This operation cannot be carried out by DuckDB, and the input is a stingy duckplyr frame.",
+        "*" = duckplyr_error_msg,
+        "i" = 'Use {.code compute(prudence = "lavish")} to materialize to temporary storage and continue with {.pkg duckplyr}.',
+        "i" = 'See {.run vignette("prudence")} for other options.'
+      )
+    )
   }
 }
