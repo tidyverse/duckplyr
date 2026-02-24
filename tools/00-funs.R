@@ -579,7 +579,6 @@ non_force_only_tests <- head(
       "filter handles complex vectors (#436)",
       "row_number does not segfault with example from #781",
       "row_number works on 0 length columns (#3454)",
-      "filter and filter_out correctly handle empty data frames (#782)",
       "filter, slice, and arrange preserves attributes (#1064)",
       "filter handles S4 objects (#1366)",
       "filter handles raw vectors (#1803)",
@@ -791,6 +790,13 @@ test_extra_arg_map <- list(
 
     # "lag(a) == 1, .by = g",
 
+    "a != 2 | g != 2",
+    NULL
+  ),
+  filter_out = c(
+    "a == 1",
+    "a %in% 2:3, g == 2",
+    "a %in% 2:3 & g == 2",
     "a != 2 | g != 2",
     NULL
   ),
