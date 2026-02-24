@@ -54,7 +54,7 @@ input nor as a result.
 
 ``` r
 duckplyr::duckdb_tibble()
-#> Error in `duckdb_rel_from_df()` at duckplyr/R/duckplyr_df.R:20:5:
+#> Error in `duckdb_rel_from_df()` at duckplyr/R/duckplyr_df.R:26:5:
 #> ! rel_from_df: Can't convert empty data frame to relational.
 duckplyr::duckdb_tibble(a = 1, .prudence = "stingy") |>
   select(-a)
@@ -481,7 +481,7 @@ duckplyr::flights_df() |>
 #> # A duckplyr data frame: 1 variable
 #>   `paste(day, collapse = " ")`                                         
 #>   <chr>                                                                
-#> 1 5 9 11 14 15 16 17 22 26 30 31 2 10 18 28 29 1 7 8 13 19 21 25 27 3 …
+#> 1 5 9 11 14 15 16 17 22 26 30 31 2 10 18 28 29 3 4 6 12 20 23 24 1 7 8…
 
 duckplyr::flights_df() |>
   distinct(day) |>

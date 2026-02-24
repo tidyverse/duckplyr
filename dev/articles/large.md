@@ -125,7 +125,7 @@ DBI::dbWriteTable(con, "data", data.frame(x = 1:3, y = letters[1:3]))
 dbplyr_data <- tbl(con, "data")
 dbplyr_data
 #> # Source:   table<"data"> [?? x 2]
-#> # Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmpjeHILf/file406a3a922092.duckdb]
+#> # Database: DuckDB 1.4.4 [unknown@Linux 6.11.0-1018-azure:R 4.5.2//tmp/RtmprKZJJB/file2cf2544e31a3.duckdb]
 #>       x y    
 #>   <int> <chr>
 #> 1     1 a    
@@ -206,7 +206,7 @@ function fails with a helpful error message:
 duckdb_tibble(a = 1) |>
   group_by(a) |>
   as_duckdb_tibble()
-#> Error in `as_duckdb_tibble()` at duckplyr/R/ducktbl.R:75:3:
+#> Error in `as_duckdb_tibble()` at duckplyr/R/ducktbl.R:84:3:
 #> ! duckplyr does not support `group_by()`.
 #> ℹ Use `.by` instead.
 #> ℹ To proceed with dplyr, use `as_tibble()` or `as.data.frame()`.
@@ -219,7 +219,7 @@ duckdb_tibble(a = 1) |>
 duckdb_tibble(a = 1) |>
   rowwise() |>
   as_duckdb_tibble()
-#> Error in `as_duckdb_tibble()` at duckplyr/R/ducktbl.R:75:3:
+#> Error in `as_duckdb_tibble()` at duckplyr/R/ducktbl.R:84:3:
 #> ! duckplyr does not support `rowwise()`.
 #> ℹ To proceed with dplyr, use `as_tibble()` or `as.data.frame()`.
 ```
@@ -242,7 +242,7 @@ readr::read_csv("a\n1", show_col_types = FALSE) |>
 #> This warning is displayed once per session.
 #> Call `lifecycle::last_lifecycle_warnings()` to see where this warning
 #> was generated.
-#> Error in `as_duckdb_tibble()` at duckplyr/R/ducktbl.R:75:3:
+#> Error in `as_duckdb_tibble()` at duckplyr/R/ducktbl.R:84:3:
 #> ! The input is data read by readr, and duckplyr supports
 #>   reading CSV files directly.
 #> ℹ Use `read_csv_duckdb()` to read with the built-in reader.
