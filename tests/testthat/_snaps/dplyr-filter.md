@@ -13,16 +13,6 @@
       out <- duckplyr_filter_out(df, matrix(c(TRUE, FALSE), nrow = 2))
     Condition
       Warning:
-      Using an external vector in selections was deprecated in tidyselect 1.1.0.
-      i Please use `all_of()` or `any_of()` instead.
-        # Was:
-        data %>% select(.by)
-      
-        # Now:
-        data %>% select(all_of(.by))
-      
-      See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
-      Warning:
       Using one column matrices in `filter()` or `filter_out()` was deprecated in dplyr 1.1.0.
       i Please use one dimensional logical vectors instead.
 
@@ -41,16 +31,6 @@
     Code
       duckplyr_filter_out(df, matrix(TRUE, nrow = 3, ncol = 2))
     Condition
-      Warning:
-      Using an external vector in selections was deprecated in tidyselect 1.1.0.
-      i Please use `all_of()` or `any_of()` instead.
-        # Was:
-        data %>% select(.by)
-      
-        # Now:
-        data %>% select(all_of(.by))
-      
-      See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
       Error in `filter_out()`:
       i In argument: `matrix(TRUE, nrow = 3, ncol = 2)`.
       Caused by error:
@@ -71,16 +51,6 @@
     Code
       duckplyr_filter_out(df, array(TRUE, dim = c(3, 1, 1)))
     Condition
-      Warning:
-      Using an external vector in selections was deprecated in tidyselect 1.1.0.
-      i Please use `all_of()` or `any_of()` instead.
-        # Was:
-        data %>% select(.by)
-      
-        # Now:
-        data %>% select(all_of(.by))
-      
-      See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
       Error in `filter_out()`:
       i In argument: `array(TRUE, dim = c(3, 1, 1))`.
       Caused by error:

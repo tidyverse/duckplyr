@@ -17,7 +17,7 @@ test_that("no homonyms", {
     # internal or deprecated functions
     "all_exprs", "any_exprs", "compute_groups", "dplyr_legacy_locale",
     "err_locs", "expand_pick", "group_labels_details", "is_sel_vars",
-    "list_flatten", "quo_is_variable_reference", "shift", "vec_case_match",
+    "list_flatten", "quo_is_variable_reference", "shift",
     "vec_case_when", "add_rownames", "arrange_", "arrange_at", "arrange_if",
     "arrange_all", "combine", "compat_lazy_dots", "count_", "cur_data",
     "cur_data_all", "distinct_", "distinct_at", "distinct_if", "distinct_all",
