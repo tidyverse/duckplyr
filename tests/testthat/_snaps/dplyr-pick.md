@@ -114,16 +114,6 @@
     Code
       duckplyr_filter_out(df, pick(x, a))
     Condition
-      Warning:
-      Using an external vector in selections was deprecated in tidyselect 1.1.0.
-      i Please use `all_of()` or `any_of()` instead.
-        # Was:
-        data %>% select(.by)
-      
-        # Now:
-        data %>% select(all_of(.by))
-      
-      See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
       Error in `filter_out()`:
       i In argument: `pick(x, a)`.
       Caused by error in `pick()`:
@@ -135,16 +125,6 @@
     Code
       duckplyr_filter_out(df, pick_wrapper(x, a))
     Condition
-      Warning:
-      Using an external vector in selections was deprecated in tidyselect 1.1.0.
-      i Please use `all_of()` or `any_of()` instead.
-        # Was:
-        data %>% select(.by)
-      
-        # Now:
-        data %>% select(all_of(.by))
-      
-      See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
       Error in `filter_out()`:
       i In argument: `pick_wrapper(x, a)`.
       Caused by error in `pick()`:
@@ -176,16 +156,6 @@
     Code
       duckplyr_filter_out(df, pick(x, y)$x)
     Condition
-      Warning:
-      Using an external vector in selections was deprecated in tidyselect 1.1.0.
-      i Please use `all_of()` or `any_of()` instead.
-        # Was:
-        data %>% select(.by)
-      
-        # Now:
-        data %>% select(all_of(.by))
-      
-      See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
       Error in `filter_out()`:
       i In argument: `pick(x, y)$x`.
       Caused by error:
@@ -196,16 +166,6 @@
     Code
       duckplyr_filter_out(df, pick_wrapper(x, y)$x)
     Condition
-      Warning:
-      Using an external vector in selections was deprecated in tidyselect 1.1.0.
-      i Please use `all_of()` or `any_of()` instead.
-        # Was:
-        data %>% select(.by)
-      
-        # Now:
-        data %>% select(all_of(.by))
-      
-      See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
       Error in `filter_out()`:
       i In argument: `pick_wrapper(x, y)$x`.
       Caused by error:

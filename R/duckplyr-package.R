@@ -80,6 +80,7 @@
 #' @importFrom vctrs vec_count
 #' @importFrom vctrs vec_data
 #' @importFrom vctrs vec_detect_complete
+#' @importFrom vctrs vec_equal
 #' @importFrom vctrs vec_in
 #' @importFrom vctrs vec_init
 #' @importFrom vctrs vec_match
@@ -143,6 +144,7 @@ magrittr::"%>%"
 #' @importFrom dplyr distinct
 #' @importFrom dplyr explain
 #' @importFrom dplyr filter
+#' @importFrom dplyr filter_out
 #' @importFrom dplyr first
 #' @importFrom dplyr full_join
 #' @importFrom dplyr if_any

@@ -13,7 +13,7 @@ filter_out.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
   check_prudence(.data, duckplyr_error)
 
   filter_out <- dplyr$filter_out.data.frame
-  out <- filter_out(.data, ..., .by = .by, .preserve = .preserve)
+  out <- filter_out(.data, ..., .by = {{ .by }}, .preserve = .preserve)
   return(out)
 
   # dplyr implementation
