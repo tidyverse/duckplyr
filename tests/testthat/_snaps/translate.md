@@ -101,15 +101,16 @@
     Code
       rel_translate(expr(sum(a)), df)
     Output
-      List of 3
-       $ name : chr "___sum_na"
-       $ args :List of 1
+      List of 4
+       $ name     : chr "___sum_na"
+       $ args     :List of 1
         ..$ :List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ alias: NULL
+       $ order_bys: list()
+       $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
 
@@ -126,15 +127,16 @@
     Code
       rel_translate(expr(sum(a, na.rm = TRUE)), df)
     Output
-      List of 3
-       $ name : chr "sum"
-       $ args :List of 1
+      List of 4
+       $ name     : chr "sum"
+       $ args     :List of 1
         ..$ :List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ alias: NULL
+       $ order_bys: list()
+       $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
 
@@ -143,15 +145,16 @@
     Code
       rel_translate(expr(sum(a, na.rm = FALSE)), df)
     Output
-      List of 3
-       $ name : chr "___sum_na"
-       $ args :List of 1
+      List of 4
+       $ name     : chr "___sum_na"
+       $ args     :List of 1
         ..$ :List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ alias: NULL
+       $ order_bys: list()
+       $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
 
@@ -185,15 +188,16 @@
     Code
       rel_translate(expr(min(a)), df)
     Output
-      List of 3
-       $ name : chr "___min_na"
-       $ args :List of 1
+      List of 4
+       $ name     : chr "___min_na"
+       $ args     :List of 1
         ..$ :List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ alias: NULL
+       $ order_bys: list()
+       $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
 
@@ -202,15 +206,16 @@
     Code
       rel_translate(expr(min(a, na.rm = TRUE)), df)
     Output
-      List of 3
-       $ name : chr "min"
-       $ args :List of 1
+      List of 4
+       $ name     : chr "min"
+       $ args     :List of 1
         ..$ :List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ alias: NULL
+       $ order_bys: list()
+       $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
 
@@ -219,15 +224,16 @@
     Code
       rel_translate(expr(max(a)), df)
     Output
-      List of 3
-       $ name : chr "___max_na"
-       $ args :List of 1
+      List of 4
+       $ name     : chr "___max_na"
+       $ args     :List of 1
         ..$ :List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ alias: NULL
+       $ order_bys: list()
+       $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
 
@@ -236,15 +242,16 @@
     Code
       rel_translate(expr(max(a, na.rm = TRUE)), df)
     Output
-      List of 3
-       $ name : chr "max"
-       $ args :List of 1
+      List of 4
+       $ name     : chr "max"
+       $ args     :List of 1
         ..$ :List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ alias: NULL
+       $ order_bys: list()
+       $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
 
@@ -253,15 +260,16 @@
     Code
       rel_translate(expr(any(a)), df)
     Output
-      List of 3
-       $ name : chr "___any_na"
-       $ args :List of 1
+      List of 4
+       $ name     : chr "___any_na"
+       $ args     :List of 1
         ..$ :List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ alias: NULL
+       $ order_bys: list()
+       $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
 
@@ -270,15 +278,16 @@
     Code
       rel_translate(expr(any(a, na.rm = TRUE)), df)
     Output
-      List of 3
-       $ name : chr "any"
-       $ args :List of 1
+      List of 4
+       $ name     : chr "any"
+       $ args     :List of 1
         ..$ :List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ alias: NULL
+       $ order_bys: list()
+       $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
 
@@ -287,15 +296,16 @@
     Code
       rel_translate(expr(all(a)), df)
     Output
-      List of 3
-       $ name : chr "___all_na"
-       $ args :List of 1
+      List of 4
+       $ name     : chr "___all_na"
+       $ args     :List of 1
         ..$ :List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ alias: NULL
+       $ order_bys: list()
+       $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
 
@@ -304,15 +314,16 @@
     Code
       rel_translate(expr(all(a, na.rm = TRUE)), df)
     Output
-      List of 3
-       $ name : chr "all"
-       $ args :List of 1
+      List of 4
+       $ name     : chr "all"
+       $ args     :List of 1
         ..$ :List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ alias: NULL
+       $ order_bys: list()
+       $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
 
@@ -321,15 +332,16 @@
     Code
       rel_translate(expr(mean(a)), df)
     Output
-      List of 3
-       $ name : chr "___mean_na"
-       $ args :List of 1
+      List of 4
+       $ name     : chr "___mean_na"
+       $ args     :List of 1
         ..$ x:List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ alias: NULL
+       $ order_bys: list()
+       $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
 
@@ -346,15 +358,16 @@
     Code
       rel_translate(expr(mean(a, na.rm = TRUE)), df)
     Output
-      List of 3
-       $ name : chr "mean"
-       $ args :List of 1
+      List of 4
+       $ name     : chr "mean"
+       $ args     :List of 1
         ..$ x:List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ alias: NULL
+       $ order_bys: list()
+       $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
 
@@ -363,15 +376,16 @@
     Code
       rel_translate(expr(mean(a, na.rm = FALSE)), df)
     Output
-      List of 3
-       $ name : chr "___mean_na"
-       $ args :List of 1
+      List of 4
+       $ name     : chr "___mean_na"
+       $ args     :List of 1
         ..$ x:List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ alias: NULL
+       $ order_bys: list()
+       $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
 
@@ -407,15 +421,16 @@
       rel_translate(expr(sum(a, na.rm = TRUE)), df, need_window = TRUE)
     Output
       List of 6
-       $ expr        :List of 3
-        ..$ name : chr "sum"
-        ..$ args :List of 1
+       $ expr        :List of 4
+        ..$ name     : chr "sum"
+        ..$ args     :List of 1
         .. ..$ :List of 3
         .. .. ..$ name : chr "a"
         .. .. ..$ rel  : NULL
         .. .. ..$ alias: NULL
         .. .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-        ..$ alias: NULL
+        ..$ order_bys: list()
+        ..$ alias    : NULL
         ..- attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        $ partitions  : list()
        $ order_bys   : list()
@@ -431,15 +446,16 @@
       rel_translate(expr(min(a, na.rm = TRUE)), df, need_window = TRUE)
     Output
       List of 6
-       $ expr        :List of 3
-        ..$ name : chr "min"
-        ..$ args :List of 1
+       $ expr        :List of 4
+        ..$ name     : chr "min"
+        ..$ args     :List of 1
         .. ..$ :List of 3
         .. .. ..$ name : chr "a"
         .. .. ..$ rel  : NULL
         .. .. ..$ alias: NULL
         .. .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-        ..$ alias: NULL
+        ..$ order_bys: list()
+        ..$ alias    : NULL
         ..- attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        $ partitions  : list()
        $ order_bys   : list()
@@ -455,15 +471,16 @@
       rel_translate(expr(max(a, na.rm = TRUE)), df, need_window = TRUE)
     Output
       List of 6
-       $ expr        :List of 3
-        ..$ name : chr "max"
-        ..$ args :List of 1
+       $ expr        :List of 4
+        ..$ name     : chr "max"
+        ..$ args     :List of 1
         .. ..$ :List of 3
         .. .. ..$ name : chr "a"
         .. .. ..$ rel  : NULL
         .. .. ..$ alias: NULL
         .. .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-        ..$ alias: NULL
+        ..$ order_bys: list()
+        ..$ alias    : NULL
         ..- attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        $ partitions  : list()
        $ order_bys   : list()
@@ -479,15 +496,16 @@
       rel_translate(expr(mean(a, na.rm = TRUE)), df, need_window = TRUE)
     Output
       List of 6
-       $ expr        :List of 3
-        ..$ name : chr "mean"
-        ..$ args :List of 1
+       $ expr        :List of 4
+        ..$ name     : chr "mean"
+        ..$ args     :List of 1
         .. ..$ x:List of 3
         .. .. ..$ name : chr "a"
         .. .. ..$ rel  : NULL
         .. .. ..$ alias: NULL
         .. .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-        ..$ alias: NULL
+        ..$ order_bys: list()
+        ..$ alias    : NULL
         ..- attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        $ partitions  : list()
        $ order_bys   : list()

@@ -19,9 +19,9 @@
       relexpr_function("+", list(relexpr_reference("column"), relexpr_constant(42,
         alias = "fortytwo")))
     Output
-      List of 3
-       $ name : chr "+"
-       $ args :List of 2
+      List of 4
+       $ name     : chr "+"
+       $ args     :List of 2
         ..$ :List of 3
         .. ..$ name : chr "column"
         .. ..$ rel  : NULL
@@ -31,6 +31,7 @@
         .. ..$ val  : num 42
         .. ..$ alias: chr "fortytwo"
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_constant" "relational_relexpr"
-       $ alias: NULL
+       $ order_bys: list()
+       $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
 
