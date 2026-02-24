@@ -636,30 +636,15 @@ test_that("as_duckplyr_df_impl() and filter(a != 2 | g != 2)", {
   expect_identical(pre, post)
 })
 
-test_that("as_duckplyr_df_impl() and filter_out()", {
+test_that("as_duckplyr_df_impl() and filter_out(a == 1)", {
   withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
 
   # Data
   test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
 
   # Run
-  pre <- test_df %>% as_duckplyr_df_impl() %>% filter_out()
-  post <- test_df %>% filter_out() %>% as_duckplyr_df_impl()
-
-  # Compare
-  expect_identical(pre, post)
-})
-
-
-test_that("as_duckplyr_df_impl() and filter_out()", {
-  withr::local_envvar(DUCKPLYR_FORCE = "FALSE")
-
-  # Data
-  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
-
-  # Run
-  pre <- test_df %>% as_duckplyr_df_impl() %>% filter_out()
-  post <- test_df %>% filter_out() %>% as_duckplyr_df_impl()
+  pre <- test_df %>% as_duckplyr_df_impl() %>% filter_out(a == 1)
+  post <- test_df %>% filter_out(a == 1) %>% as_duckplyr_df_impl()
 
   # Compare
   expect_identical(pre, post)
@@ -1801,6 +1786,162 @@ test_that("as_duckplyr_df_impl() and mutate(d = if_else(a > 1, \"ok\", NA))", {
   # Run
   pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(d = if_else(a > 1, "ok", NA))
   post <- test_df %>% mutate(d = if_else(a > 1, "ok", NA)) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df_impl() and mutate(mean(x = a, na.rm = TRUE))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(mean(x = a, na.rm = TRUE))
+  post <- test_df %>% mutate(mean(x = a, na.rm = TRUE)) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df_impl() and mutate(mean(na.rm = TRUE, x = a))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(mean(na.rm = TRUE, x = a))
+  post <- test_df %>% mutate(mean(na.rm = TRUE, x = a)) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df_impl() and mutate(sum(na.rm = TRUE, a))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(sum(na.rm = TRUE, a))
+  post <- test_df %>% mutate(sum(na.rm = TRUE, a)) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df_impl() and mutate(min(na.rm = TRUE, a))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(min(na.rm = TRUE, a))
+  post <- test_df %>% mutate(min(na.rm = TRUE, a)) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df_impl() and mutate(max(na.rm = TRUE, a))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(max(na.rm = TRUE, a))
+  post <- test_df %>% mutate(max(na.rm = TRUE, a)) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df_impl() and mutate(sd(na.rm = TRUE, x = a))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(sd(na.rm = TRUE, x = a))
+  post <- test_df %>% mutate(sd(na.rm = TRUE, x = a)) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df_impl() and mutate(c = 'abbc', d = grepl(pattern = 'b', x = c))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(c = 'abbc', d = grepl(pattern = 'b', x = c))
+  post <- test_df %>% mutate(c = 'abbc', d = grepl(pattern = 'b', x = c)) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df_impl() and mutate(c = 'abbc', d = sub(pattern = 'b', replacement = 'z', x = c))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(c = 'abbc', d = sub(pattern = 'b', replacement = 'z', x = c))
+  post <- test_df %>% mutate(c = 'abbc', d = sub(pattern = 'b', replacement = 'z', x = c)) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df_impl() and mutate(c = 'abbc', d = gsub(pattern = 'b', replacement = 'z', x = c))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(c = 'abbc', d = gsub(pattern = 'b', replacement = 'z', x = c))
+  post <- test_df %>% mutate(c = 'abbc', d = gsub(pattern = 'b', replacement = 'z', x = c)) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df_impl() and mutate(d = if_else(condition = a > 1, true = \"ok\", false = \"no\"))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(d = if_else(condition = a > 1, true = "ok", false = "no"))
+  post <- test_df %>% mutate(d = if_else(condition = a > 1, true = "ok", false = "no")) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df_impl() and mutate(lag(x = a, n = 2))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(lag(x = a, n = 2))
+  post <- test_df %>% mutate(lag(x = a, n = 2)) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df_impl() and mutate(lead(x = a, n = 2))", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% mutate(lead(x = a, n = 2))
+  post <- test_df %>% mutate(lead(x = a, n = 2)) %>% as_duckplyr_df_impl()
 
   # Compare
   expect_identical(pre, post)
