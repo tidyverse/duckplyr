@@ -665,6 +665,58 @@ test_that("as_duckplyr_df_impl() and filter_out()", {
   expect_identical(pre, post)
 })
 
+
+test_that("as_duckplyr_df_impl() and filter_out(a == 1)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% filter_out(a == 1)
+  post <- test_df %>% filter_out(a == 1) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df_impl() and filter_out(a %in% 2:3, g == 2)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% filter_out(a %in% 2:3, g == 2)
+  post <- test_df %>% filter_out(a %in% 2:3, g == 2) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df_impl() and filter_out(a %in% 2:3 & g == 2)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% filter_out(a %in% 2:3 & g == 2)
+  post <- test_df %>% filter_out(a %in% 2:3 & g == 2) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
+
+test_that("as_duckplyr_df_impl() and filter_out(a != 2 | g != 2)", {
+  # Data
+  test_df <- data.frame(a = 1:6 + 0, b = 2, g = rep(1:3, 1:3))
+
+  # Run
+  pre <- test_df %>% as_duckplyr_df_impl() %>% filter_out(a != 2 | g != 2)
+  post <- test_df %>% filter_out(a != 2 | g != 2) %>% as_duckplyr_df_impl()
+
+  # Compare
+  expect_identical(pre, post)
+})
+
 test_that("as_duckplyr_df_impl() and full_join(join_by(a))", {
   withr::local_envvar(DUCKPLYR_FALLBACK_FORCE = "TRUE")
 
