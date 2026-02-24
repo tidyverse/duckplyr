@@ -1,5 +1,20 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.1.99.9901 (2026-02-24)
+
+## Features
+
+- Add experimental translation for `filter_out()` (#869, #870).
+
+## Continuous integration
+
+- Align tests.
+
+## Testing
+
+- Snapshot updates for rcc-full ({"os":"macos-latest","r":"4.5"}) (#872).
+
+
 # duckplyr 1.1.99.9900 (2026-02-24)
 
 ## Features
