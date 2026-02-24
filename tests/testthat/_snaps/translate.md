@@ -109,7 +109,7 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: list()
+       $ order_bys: NULL
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
@@ -135,7 +135,7 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: list()
+       $ order_bys: NULL
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
@@ -153,7 +153,7 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: list()
+       $ order_bys: NULL
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
@@ -196,7 +196,7 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: list()
+       $ order_bys: NULL
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
@@ -214,7 +214,7 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: list()
+       $ order_bys: NULL
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
@@ -232,7 +232,7 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: list()
+       $ order_bys: NULL
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
@@ -250,7 +250,7 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: list()
+       $ order_bys: NULL
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
@@ -268,7 +268,7 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: list()
+       $ order_bys: NULL
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
@@ -286,7 +286,7 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: list()
+       $ order_bys: NULL
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
@@ -304,7 +304,7 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: list()
+       $ order_bys: NULL
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
@@ -322,7 +322,7 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: list()
+       $ order_bys: NULL
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
@@ -340,7 +340,7 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: list()
+       $ order_bys: NULL
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
@@ -366,7 +366,7 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: list()
+       $ order_bys: NULL
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
@@ -384,7 +384,7 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: list()
+       $ order_bys: NULL
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
@@ -429,7 +429,7 @@
         .. .. ..$ rel  : NULL
         .. .. ..$ alias: NULL
         .. .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-        ..$ order_bys: list()
+        ..$ order_bys: NULL
         ..$ alias    : NULL
         ..- attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        $ partitions  : list()
@@ -454,7 +454,7 @@
         .. .. ..$ rel  : NULL
         .. .. ..$ alias: NULL
         .. .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-        ..$ order_bys: list()
+        ..$ order_bys: NULL
         ..$ alias    : NULL
         ..- attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        $ partitions  : list()
@@ -479,7 +479,7 @@
         .. .. ..$ rel  : NULL
         .. .. ..$ alias: NULL
         .. .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-        ..$ order_bys: list()
+        ..$ order_bys: NULL
         ..$ alias    : NULL
         ..- attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        $ partitions  : list()
@@ -504,7 +504,7 @@
         .. .. ..$ rel  : NULL
         .. .. ..$ alias: NULL
         .. .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-        ..$ order_bys: list()
+        ..$ order_bys: NULL
         ..$ alias    : NULL
         ..- attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        $ partitions  : list()
@@ -547,7 +547,7 @@
         .. ..$ expr        :List of 4
         .. .. ..$ name     : chr "count_star"
         .. .. ..$ args     : list()
-        .. .. ..$ order_bys: list()
+        .. .. ..$ order_bys: NULL
         .. .. ..$ alias    : NULL
         .. .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
         .. ..$ partitions  : list()
@@ -556,7 +556,7 @@
         .. ..$ default_expr: NULL
         .. ..$ alias       : NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_window" "relational_relexpr"
-       $ order_bys: list()
+       $ order_bys: NULL
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr(0) 
@@ -574,7 +574,7 @@
         .. ..$ expr        :List of 4
         .. .. ..$ name     : chr "count_star"
         .. .. ..$ args     : list()
-        .. .. ..$ order_bys: list()
+        .. .. ..$ order_bys: NULL
         .. .. ..$ alias    : NULL
         .. .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
         .. ..$ partitions  :List of 1
@@ -588,7 +588,7 @@
         .. ..$ default_expr: NULL
         .. ..$ alias       : NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_window" "relational_relexpr"
-       $ order_bys: list()
+       $ order_bys: NULL
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr(0) 

@@ -415,10 +415,6 @@ rel_translate_lang <- function(
   )
 
   aliases <- c(
-    "sd" = "stddev",
-    "first" = "first_value",
-    "last" = "last_value",
-    "nth" = "nth_value",
     "/" = "___divide",
     "log10" = "___log10",
     "log" = "___log",
@@ -434,40 +430,59 @@ rel_translate_lang <- function(
     NULL
   )
 
-  known_window <- c(
-    # Window functions
-    "row_number",
-    # Not yet implemented
-    "ntile",
-    "first", "last", "nth",
-    # Difficult to implement
-    "rank", "dense_rank", "percent_rank", "cume_dist",
-    "lead", "lag",
+  # Named list of c(window_alias, non_window_alias) for functions that can
+  # appear in window context. NA_character_ means "not applicable" for that
+  # context (function can't be used there).
+  known_window <- list(
+    # Window-only functions (no aggregate form)
+    row_number = c("row_number", NA_character_),
+    ntile = c("ntile", NA_character_),             # Not yet implemented
+    rank = c("rank", NA_character_),               # Difficult to implement
+    dense_rank = c("dense_rank", NA_character_),
+    percent_rank = c("percent_rank", NA_character_),
+    cume_dist = c("cume_dist", NA_character_),
 
-    # Aggregates
-    "sum", "min", "max", "any", "all", "mean", "sd", "median",
-    "n_distinct",
-    "n",
-    #
+    # Both window and aggregate, different DuckDB function names
+    first = c("first_value", "first"),
+    last = c("last_value", "last"),
+    nth = c("nth_value", NA_character_),           # aggregate handled separately via array_extract
+    n = c("count_star", "n"),                      # window uses count_star; non-window uses n() macro
+
+    # Same function name in both window and aggregate contexts
+    lead = rep("lead", 2),
+    lag = rep("lag", 2),
+
+    # Aggregates (same DuckDB name; na.rm handling overrides aliased_name separately)
+    sum = rep("sum", 2),
+    min = rep("min", 2),
+    max = rep("max", 2),
+    any = rep("any", 2),
+    all = rep("all", 2),
+    mean = rep("mean", 2),
+    sd = rep("stddev", 2),
+    median = rep("median", 2),
+    n_distinct = rep("n_distinct", 2),
+
     NULL
   )
 
-  window <- need_window && (name %in% known_window)
+  window <- need_window && (name %in% names(known_window))
 
-  if (name %in% names(aliases)) {
+  if (name %in% names(known_window)) {
+    idx <- if (window) 1L else 2L
+    aliased_name <- known_window[[name]][[idx]]
+    if (is.na(aliased_name)) {
+      aliased_name <- name
+    } else if (grepl("^r_base::", aliased_name)) {
+      meta_ext_register()
+    }
+  } else if (name %in% names(aliases)) {
     aliased_name <- aliases[[name]]
     if (grepl("^r_base::", aliased_name)) {
       meta_ext_register()
     }
   } else {
     aliased_name <- name
-  }
-
-  # In aggregate context (not window), use DuckDB aggregate functions
-  # instead of window function aliases
-  if (!window) {
-    if (name == "first") aliased_name <- "first"
-    else if (name == "last") aliased_name <- "last"
   }
 
   order_bys <- list()
@@ -507,7 +522,7 @@ rel_translate_lang <- function(
 
   # Other primitives: prod, range
   # Other aggregates: var(), cum*(), quantile()
-  if (name %in% c("sum", "min", "max", "any", "all", "mean", "sd", "median", "n_distinct")) {
+  else if (name %in% c("sum", "min", "max", "any", "all", "mean", "sd", "median", "n_distinct")) {
     is_primitive <- (name %in% c("sum", "min", "max", "any", "all"))
 
     if (is_primitive) {
@@ -565,10 +580,6 @@ rel_translate_lang <- function(
     expr <- expr[1:2]
   }
 
-  if (name == "n" && window) {
-    aliased_name <- "count_star"
-  }
-
   args <- map(as.list(expr[-1]), do_translate, in_window = in_window || window)
 
   if (name == "grepl") {
@@ -577,19 +588,8 @@ rel_translate_lang <- function(
     }
   }
 
-  # Special handling for nth() in aggregate context (not window):
-  # translate to array_extract(list(x ORDER BY ...), n)
-  if (name == "nth" && !window) {
-    x_arg <- args[[1]]
-    list_agg <- relexpr_function("list", list(x_arg), order_bys = order_bys)
-    fun <- relexpr_function("array_extract", list(list_agg, nth_n))
-  } else if (!window && name %in% c("first", "last") && length(order_bys) > 0) {
-    # first()/last() in aggregate context: pass order_bys to aggregate function
-    fun <- relexpr_function(aliased_name, args, order_bys = order_bys)
-  } else {
-    fun <- relexpr_function(aliased_name, args)
-  }
   if (window) {
+    fun <- relexpr_function(aliased_name, args)
     partitions <- map(partition, relexpr_reference)
     fun <- relexpr_window(
       fun,
@@ -602,6 +602,19 @@ rel_translate_lang <- function(
     if (name == "row_number" || name == "n") {
       fun <- relexpr_function("r_base::as.integer", list(fun))
       meta_ext_register()
+    }
+  } else {
+    # Special handling for nth() in aggregate context:
+    # translate to array_extract(list(x ORDER BY ...), n)
+    if (name == "nth") {
+      x_arg <- args[[1]]
+      list_agg <- relexpr_function("list", list(x_arg), order_bys = order_bys)
+      fun <- relexpr_function("array_extract", list(list_agg, nth_n))
+    } else if (name %in% c("first", "last") && length(order_bys) > 0) {
+      # first()/last() in aggregate context: pass order_bys to aggregate function
+      fun <- relexpr_function(aliased_name, args, order_bys = order_bys)
+    } else {
+      fun <- relexpr_function(aliased_name, args)
     }
   }
   fun

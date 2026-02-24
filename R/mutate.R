@@ -13,11 +13,6 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
     {
       rel <- duckdb_rel_from_df(.data)
 
-      # Needed also for lead() and lag() with order_by, for example
-      if (length(by_names) > 0 || oo_force()) {
-        rel <- oo_prep(rel)
-      }
-
       dots <- dplyr_quosures(...)
       dots <- fix_auto_name(dots)
       names_dots <- names(dots)
@@ -71,13 +66,25 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
           names_used <- c(names_used, setdiff(new_names_used, names_used))
         }
 
-        rel <- rel_project(rel, unname(exprs))
-        current_data <- rel_to_df(rel, prudence = "stingy")
-      }
+        # Use oo_prep/oo_restore only if any expression uses window functions
+        # (needed for lead()/lag()/sum() with .by, etc.) or if output order
+        # preservation is globally forced.
+        uses_window <- any(vapply(exprs, contains_window_expr, logical(1)))
+        oo <- uses_window || oo_force()
 
-      # Needed also for lead() and lag() with order_by, for example
-      if (length(by_names) > 0 || oo_force()) {
-        rel <- oo_restore(rel)
+        if (oo) {
+          rel <- oo_prep(rel, force = TRUE)
+          # Include ___row_number in exprs so it's preserved through the projection
+          exprs[["___row_number"]] <- relexpr_reference("___row_number")
+        }
+
+        rel <- rel_project(rel, unname(exprs))
+
+        if (oo) {
+          rel <- oo_restore(rel, force = TRUE)
+        }
+
+        current_data <- rel_to_df(rel, prudence = "stingy")
       }
 
       out <- duckplyr_reconstruct(rel, .data)
@@ -156,4 +163,21 @@ duckplyr_mutate <- function(.data, ...) {
   out <- mutate(.data, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
+}
+
+# Check recursively if an expression tree contains any window expressions.
+# Used in mutate() to decide whether oo_prep/oo_restore are needed.
+contains_window_expr <- function(expr) {
+  if (is.null(expr)) return(FALSE)
+  if (inherits(expr, "relational_relexpr_window")) return(TRUE)
+  if (inherits(expr, "relational_relexpr_function")) {
+    return(
+      any(vapply(expr$args, contains_window_expr, logical(1))) ||
+        any(vapply(expr$order_bys %||% list(), contains_window_expr, logical(1)))
+    )
+  }
+  if (inherits(expr, "relational_relexpr_comparison")) {
+    return(any(vapply(expr$exprs, contains_window_expr, logical(1))))
+  }
+  FALSE
 }
