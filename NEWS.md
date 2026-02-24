@@ -1,23 +1,10 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# duckplyr 1.1.99.9901 (2026-02-24)
+# duckplyr 1.2.0 (2026-02-24)
 
 ## Features
 
 - Add experimental translation for `filter_out()` (#869, #870).
-
-## Continuous integration
-
-- Align tests.
-
-## Testing
-
-- Snapshot updates for rcc-full ({"os":"macos-latest","r":"4.5"}) (#872).
-
-
-# duckplyr 1.1.99.9900 (2026-02-24)
-
-## Features
 
 - Establish compatibility with dplyr 1.2.0, this is now the minimum required version.
 
@@ -37,41 +24,39 @@
 
 - `first()`, `last()`, `nth()`, and `n()` inside `mutate(.by = ...)` are now translated directly to DuckDB (#626, #854).
 
-  ``` r
   data.frame(g = c("a", "a", "b", "b", "b"), x = c(10, 20, 30, 40, 50)) |>
     as_duckdb_tibble() |>
     summarise(first_x = first(x), last_x = last(x), second_x = nth(x, 2), .by = g)
 
   data.frame(g = c("a", "a", "b", "b"), x = 1:4) |>
-    as_duckdb_tibble() |>
     mutate(count = n(), .by = g)
-  ```
-
 - `compute_parquet()` and `compute_csv()` now accept an `options` argument to pass format-specific settings to the underlying DuckDB operation and also applies them when reading back the data (#729, #821).
 
-  ``` r
   df <- as_duckdb_tibble(data.frame(x = 1:3, y = c("a", "b", "c")))
   path <- tempfile(fileext = ".parquet")
   compute_parquet(df, path, options = list(compression = "zstd"))
-  ```
-
 - `compute_parquet()` and `compute_csv()` are now generic S3 functions, making it easier to add methods for custom classes (#746, #818).
 
 - Functions with named arguments are now translated to DuckDB (#822).
 
-  ``` r
   data.frame(x = c(1.23, 4.56, 7.89)) |>
-    as_duckdb_tibble() |>
     mutate(y = round(x, digits = 1L))
-  ```
-
 - `transmute()` can now reference new variables created within the same call (#796, #819).
 
-  ``` r
   data.frame(x = 1:3) |>
-    as_duckdb_tibble() |>
     transmute(y = x * 2, z = y + 10)
-  ```
+
+## Chore
+
+- Align internal tests with dplyr 1.2.0 (#863).
+
+- Migrate from deprecated qs to qs2 (#846, #847).
+
+- Format code with air.
+
+## Continuous integration
+
+- Align tests.
 
 ## Documentation
 
@@ -85,13 +70,9 @@
 
 - Review contributing guide (#657).
 
-## Chore
+## Testing
 
-- Align internal tests with dplyr 1.2.0 (#863).
-
-- Migrate from deprecated qs to qs2 (#846, #847).
-
-- Format code with air.
+- Snapshot updates for rcc-full ({"os":"macos-latest","r":"4.5"}) (#872).
 
 
 # duckplyr 1.1.3 (2025-11-04)
