@@ -33,6 +33,7 @@
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_constant" "relational_relexpr"
        - attr(*, "class")= chr [1:2] "relational_relexpr_comparison" "relational_relexpr"
        - attr(*, "used")= chr "a"
+       - attr(*, "has_window")= logi FALSE
 
 ---
 
@@ -53,6 +54,7 @@
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_constant" "relational_relexpr"
        - attr(*, "class")= chr [1:2] "relational_relexpr_comparison" "relational_relexpr"
        - attr(*, "used")= chr "a"
+       - attr(*, "has_window")= logi FALSE
 
 ---
 
@@ -74,6 +76,7 @@
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
        - attr(*, "class")= chr [1:2] "relational_relexpr_comparison" "relational_relexpr"
        - attr(*, "used")= chr [1:2] "a" "b"
+       - attr(*, "has_window")= logi FALSE
 
 ---
 
@@ -95,6 +98,7 @@
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
        - attr(*, "class")= chr [1:2] "relational_relexpr_comparison" "relational_relexpr"
        - attr(*, "used")= chr [1:2] "a" "c"
+       - attr(*, "has_window")= logi FALSE
 
 # aggregation primitives
 
@@ -109,10 +113,11 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: NULL
+       $ order_bys: list()
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
+       - attr(*, "has_window")= logi FALSE
 
 ---
 
@@ -135,10 +140,11 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: NULL
+       $ order_bys: list()
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
+       - attr(*, "has_window")= logi FALSE
 
 ---
 
@@ -153,10 +159,11 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: NULL
+       $ order_bys: list()
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
+       - attr(*, "has_window")= logi FALSE
 
 ---
 
@@ -196,10 +203,11 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: NULL
+       $ order_bys: list()
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
+       - attr(*, "has_window")= logi FALSE
 
 ---
 
@@ -214,10 +222,11 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: NULL
+       $ order_bys: list()
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
+       - attr(*, "has_window")= logi FALSE
 
 ---
 
@@ -232,10 +241,11 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: NULL
+       $ order_bys: list()
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
+       - attr(*, "has_window")= logi FALSE
 
 ---
 
@@ -250,10 +260,11 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: NULL
+       $ order_bys: list()
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
+       - attr(*, "has_window")= logi FALSE
 
 ---
 
@@ -268,10 +279,11 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: NULL
+       $ order_bys: list()
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
+       - attr(*, "has_window")= logi FALSE
 
 ---
 
@@ -286,10 +298,11 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: NULL
+       $ order_bys: list()
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
+       - attr(*, "has_window")= logi FALSE
 
 ---
 
@@ -304,10 +317,11 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: NULL
+       $ order_bys: list()
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
+       - attr(*, "has_window")= logi FALSE
 
 ---
 
@@ -322,10 +336,11 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: NULL
+       $ order_bys: list()
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
+       - attr(*, "has_window")= logi FALSE
 
 ---
 
@@ -340,10 +355,11 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: NULL
+       $ order_bys: list()
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
+       - attr(*, "has_window")= logi FALSE
 
 ---
 
@@ -366,10 +382,11 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: NULL
+       $ order_bys: list()
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
+       - attr(*, "has_window")= logi FALSE
 
 ---
 
@@ -384,10 +401,11 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ order_bys: NULL
+       $ order_bys: list()
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr "a"
+       - attr(*, "has_window")= logi FALSE
 
 ---
 
@@ -439,6 +457,7 @@
        $ alias       : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_window" "relational_relexpr"
        - attr(*, "used")= chr "a"
+       - attr(*, "has_window")= logi TRUE
 
 ---
 
@@ -464,6 +483,7 @@
        $ alias       : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_window" "relational_relexpr"
        - attr(*, "used")= chr "a"
+       - attr(*, "has_window")= logi TRUE
 
 ---
 
@@ -489,6 +509,7 @@
        $ alias       : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_window" "relational_relexpr"
        - attr(*, "used")= chr "a"
+       - attr(*, "has_window")= logi TRUE
 
 ---
 
@@ -514,6 +535,7 @@
        $ alias       : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_window" "relational_relexpr"
        - attr(*, "used")= chr "a"
+       - attr(*, "has_window")= logi TRUE
 
 ---
 
@@ -560,6 +582,7 @@
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr(0) 
+       - attr(*, "has_window")= logi TRUE
 
 ---
 
@@ -592,6 +615,7 @@
        $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr(0) 
+       - attr(*, "has_window")= logi TRUE
 
 # rel_find_call() success paths
 
