@@ -521,7 +521,7 @@ rel_translate_lang <- function(
         # Native DESC ordering in DuckDB-R expressions is tracked in:
         # https://github.com/duckdb/duckdb-r/issues/2074
         cli::cli_abort(
-          "{.fun desc} in {.arg order_by} is not yet supported, see <https://github.com/duckdb/duckdb-r/issues/2074>",
+          "{.fun desc} in {.arg order_by} is not yet supported.",
           call = call
         )
       } else {
