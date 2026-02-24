@@ -1,5 +1,22 @@
 # Changelog
 
+## duckplyr 1.1.3.9010 (2026-02-24)
+
+### Features
+
+- Pass `options` to read functions in
+  [`compute_parquet()`](https://duckplyr.tidyverse.org/dev/reference/compute_parquet.md)
+  and
+  [`compute_csv()`](https://duckplyr.tidyverse.org/dev/reference/compute_csv.md)
+  ([\#729](https://github.com/tidyverse/duckplyr/issues/729),
+  [\#821](https://github.com/tidyverse/duckplyr/issues/821)).
+
+- New
+  [`read_tbl_duckdb()`](https://duckplyr.tidyverse.org/dev/reference/read_tbl_duckdb.md)
+  to read DuckDB tables
+  ([\#414](https://github.com/tidyverse/duckplyr/issues/414),
+  [\#828](https://github.com/tidyverse/duckplyr/issues/828)).
+
 ## duckplyr 1.1.3.9009 (2026-02-23)
 
 ### Features

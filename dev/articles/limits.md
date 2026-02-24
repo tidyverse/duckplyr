@@ -336,9 +336,9 @@ duckplyr::duckdb_tibble(a = 1:3, b = c(2, 3, 1), .prudence = "stingy") |>
 #> # A duckplyr data frame: 4 variables
 #>       a     b `lag(a, order_by = b)` `lead(a, order_by = b)`
 #>   <int> <dbl>                  <int>                   <int>
-#> 1     3     1                     NA                       1
-#> 2     1     2                      3                       2
-#> 3     2     3                      1                      NA
+#> 1     1     2                      3                       2
+#> 2     2     3                      1                      NA
+#> 3     3     1                     NA                       1
 ```
 
 ### Ranking
@@ -481,7 +481,7 @@ duckplyr::flights_df() |>
 #> # A duckplyr data frame: 1 variable
 #>   `paste(day, collapse = " ")`                                         
 #>   <chr>                                                                
-#> 1 5 9 11 14 15 16 17 22 26 30 31 2 10 18 28 29 3 4 6 12 20 23 24 1 7 8…
+#> 1 5 9 11 14 15 16 17 22 26 30 31 2 10 18 28 29 1 7 8 13 19 21 25 27 3 …
 
 duckplyr::flights_df() |>
   distinct(day) |>

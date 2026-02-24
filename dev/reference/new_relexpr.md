@@ -31,7 +31,7 @@ relexpr_reference(name, rel = NULL, alias = NULL)
 
 relexpr_constant(val, alias = NULL)
 
-relexpr_function(name, args, alias = NULL)
+relexpr_function(name, args, order_bys = NULL, alias = NULL)
 
 relexpr_comparison(cmp_op, exprs)
 
@@ -77,6 +77,10 @@ relexpr_set_alias(expr, alias = NULL)
 
   Function arguments, a list of `expr` objects.
 
+- order_bys:
+
+  which variables to order results by (list).
+
 - cmp_op:
 
   Comparison operator, e.g., `"<"` or `"=="`.
@@ -92,10 +96,6 @@ relexpr_set_alias(expr, alias = NULL)
 - partitions:
 
   Partitions, a list of `expr` objects.
-
-- order_bys:
-
-  which variables to order results by (list).
 
 - offset_expr:
 
@@ -132,9 +132,9 @@ relexpr_set_alias(
     )
   )
 )
-#> List of 3
-#>  $ name : chr "<"
-#>  $ args :List of 2
+#> List of 4
+#>  $ name     : chr "<"
+#>  $ args     :List of 2
 #>   ..$ :List of 3
 #>   .. ..$ name : chr "my_number"
 #>   .. ..$ rel  : NULL
@@ -144,6 +144,7 @@ relexpr_set_alias(
 #>   .. ..$ val  : num 42
 #>   .. ..$ alias: NULL
 #>   .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_constant" "relational_relexpr"
-#>  $ alias: chr "my_predicate"
+#>  $ order_bys: NULL
+#>  $ alias    : chr "my_predicate"
 #>  - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
 ```
