@@ -42,8 +42,14 @@ rows_delete.duckplyr_df <- function(x, y, by = NULL, ..., unmatched = c("error",
 
   extra <- setdiff(names(y), names(y_key))
   if (!is_empty(extra)) {
-    message <- glue("Ignoring extra `y` columns: ", commas(tick_if_needed(extra)))
-    inform(message, class = c("dplyr_message_delete_extra_cols", "dplyr_message"))
+    message <- glue(
+      "Ignoring extra `y` columns: ",
+      commas(tick_if_needed(extra))
+    )
+    inform(
+      message,
+      class = c("dplyr_message_delete_extra_cols", "dplyr_message")
+    )
   }
 
   loc <- vec_match(x_key, y_key)

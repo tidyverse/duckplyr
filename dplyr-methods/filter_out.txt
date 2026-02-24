@@ -1,0 +1,9 @@
+filter_out.data.frame <- function(.data, ..., .by = NULL, .preserve = FALSE) {
+  filter_impl(
+    .data = .data,
+    ...,
+    .by = {{ .by }},
+    .preserve = .preserve,
+    .verb = "filter_out"
+  )
+}

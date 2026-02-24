@@ -19,10 +19,10 @@ group_indices.duckplyr_df <- function(.data, ...) {
 
   # dplyr implementation
   if (dots_n(...) > 0) {
-    lifecycle::deprecate_warn(
-      "1.0.0", "group_indices(... = )",
-      details = "Please `group_by()` first",
-      always = TRUE
+    lifecycle::deprecate_stop(
+      "1.0.0",
+      "group_indices(... = )",
+      details = "Please `group_by()` first"
     )
     .data <- group_by(.data, ...)
   }

@@ -1,4 +1,3 @@
-
 source('tools/30-tpch-export.R')
 source('tools/31-tpch-load.R')
 source('tools/32-tpch-run.R')

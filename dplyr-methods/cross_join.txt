@@ -1,8 +1,10 @@
-cross_join.data.frame <- function(x,
-                                  y,
-                                  ...,
-                                  copy = FALSE,
-                                  suffix = c(".x", ".y")) {
+cross_join.data.frame <- function(
+  x,
+  y,
+  ...,
+  copy = FALSE,
+  suffix = c(".x", ".y")
+) {
   check_dots_empty0(...)
 
   y <- auto_copy(x, y, copy = copy)
