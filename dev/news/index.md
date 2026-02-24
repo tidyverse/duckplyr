@@ -1,31 +1,8 @@
 # Changelog
 
-## duckplyr 1.1.99.9900 (2026-02-24)
-
-### fledge
-
-- CRAN release v1.1.3
-  ([\#803](https://github.com/tidyverse/duckplyr/issues/803)).
-
-### Bug fixes
-
-- [`transmute()`](https://dplyr.tidyverse.org/reference/transmute.html)
-  can reference new variables
-  ([\#796](https://github.com/tidyverse/duckplyr/issues/796),
-  [\#819](https://github.com/tidyverse/duckplyr/issues/819)).
+## duckplyr 1.1.3.9010 (2026-02-24)
 
 ### Features
-
-- Align code with dplyr 1.2.0
-  ([\#863](https://github.com/tidyverse/duckplyr/issues/863)).
-
-- Enable translation of
-  [`first()`](https://dplyr.tidyverse.org/reference/nth.html),
-  [`last()`](https://dplyr.tidyverse.org/reference/nth.html),
-  [`nth()`](https://dplyr.tidyverse.org/reference/nth.html), and
-  `mutate(n(), .by = ...)`
-  ([\#626](https://github.com/tidyverse/duckplyr/issues/626),
-  [\#854](https://github.com/tidyverse/duckplyr/issues/854)).
 
 - Pass `options` to read functions in
   [`compute_parquet()`](https://duckplyr.tidyverse.org/dev/reference/compute_parquet.md)
@@ -40,6 +17,10 @@
   ([\#414](https://github.com/tidyverse/duckplyr/issues/414),
   [\#828](https://github.com/tidyverse/duckplyr/issues/828)).
 
+## duckplyr 1.1.3.9009 (2026-02-23)
+
+### Features
+
 - Turn
   [`compute_parquet()`](https://duckplyr.tidyverse.org/dev/reference/compute_parquet.md)
   and
@@ -53,16 +34,6 @@
 
 ### Chore
 
-- Add settings.
-
-- Format with air.
-
-- Bump duckdb dependency.
-
-- Clean up argument matching by name
-  ([\#855](https://github.com/tidyverse/duckplyr/issues/855),
-  [\#856](https://github.com/tidyverse/duckplyr/issues/856)).
-
 - Bump dplyr dep.
 
 - Fix tests failing after dplyr 1.2.0 update
@@ -71,23 +42,40 @@
 - Auto-update from GitHub Actions
   ([\#852](https://github.com/tidyverse/duckplyr/issues/852)).
 
-- Migrate from deprecated qs to qs2
-  ([\#846](https://github.com/tidyverse/duckplyr/issues/846),
-  [\#847](https://github.com/tidyverse/duckplyr/issues/847)).
-
-- Move compatibility checks to duckdb
-  ([\#721](https://github.com/tidyverse/duckplyr/issues/721)).
-
 ### Continuous integration
 
 - Fancy button.
 
 - Add apply-patch command.
 
+### Documentation
+
+- Document internal workflows.
+
+### Testing
+
+- Snapshot updates ([@1741643](https://github.com/1741643)+krlmlr).
+
+## duckplyr 1.1.3.9008 (2026-01-26)
+
+### Chore
+
+- Migrate from deprecated qs to qs2
+  ([\#846](https://github.com/tidyverse/duckplyr/issues/846),
+  [\#847](https://github.com/tidyverse/duckplyr/issues/847)).
+
+## duckplyr 1.1.3.9007 (2026-01-14)
+
+### Continuous integration
+
 - Tweaks ([\#838](https://github.com/tidyverse/duckplyr/issues/838)).
 
 - Test all R versions on branches that start with cran-
   ([\#837](https://github.com/tidyverse/duckplyr/issues/837)).
+
+## duckplyr 1.1.3.9006 (2025-12-06)
+
+### Continuous integration
 
 - Revert to CRAN duckdb.
 
@@ -95,22 +83,25 @@
 
 - Use dev duckdb.
 
+## duckplyr 1.1.3.9005 (2025-11-27)
+
+### Bug fixes
+
+- [`transmute()`](https://dplyr.tidyverse.org/reference/transmute.html)
+  can reference new variables
+  ([\#796](https://github.com/tidyverse/duckplyr/issues/796),
+  [\#819](https://github.com/tidyverse/duckplyr/issues/819)).
+
+### Chore
+
+- Move compatibility checks to duckdb
+  ([\#721](https://github.com/tidyverse/duckplyr/issues/721)).
+
+### Continuous integration
+
 - Fix compatibility with duckdb 1.4.2.
 
-- Install binaries from r-universe for dev workflow
-  ([\#813](https://github.com/tidyverse/duckplyr/issues/813)).
-
-- Fix reviewdog and add commenting workflow
-  ([\#810](https://github.com/tidyverse/duckplyr/issues/810)).
-
-- Use workflows for fledge
-  ([\#807](https://github.com/tidyverse/duckplyr/issues/807)).
-
-- Sync ([\#805](https://github.com/tidyverse/duckplyr/issues/805)).
-
 ### Documentation
-
-- Document internal workflows.
 
 - Add blog post to pkgdown config
   ([\#612](https://github.com/tidyverse/duckplyr/issues/612),
@@ -133,9 +124,39 @@
 - Review contributing guide
   ([\#657](https://github.com/tidyverse/duckplyr/issues/657)).
 
-### Testing
+## duckplyr 1.1.3.9004 (2025-11-17)
 
-- Snapshot updates ([@1741643](https://github.com/1741643)+krlmlr).
+### Continuous integration
+
+- Install binaries from r-universe for dev workflow
+  ([\#813](https://github.com/tidyverse/duckplyr/issues/813)).
+
+## duckplyr 1.1.3.9003 (2025-11-12)
+
+### Continuous integration
+
+- Fix reviewdog and add commenting workflow
+  ([\#810](https://github.com/tidyverse/duckplyr/issues/810)).
+
+## duckplyr 1.1.3.9002 (2025-11-11)
+
+### Continuous integration
+
+- Use workflows for fledge
+  ([\#807](https://github.com/tidyverse/duckplyr/issues/807)).
+
+## duckplyr 1.1.3.9001 (2025-11-08)
+
+### Continuous integration
+
+- Sync ([\#805](https://github.com/tidyverse/duckplyr/issues/805)).
+
+## duckplyr 1.1.3.9000 (2025-11-04)
+
+### fledge
+
+- CRAN release v1.1.3
+  ([\#803](https://github.com/tidyverse/duckplyr/issues/803)).
 
 ## duckplyr 1.1.3 (2025-11-04)
 
