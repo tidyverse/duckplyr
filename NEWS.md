@@ -1,12 +1,28 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# duckplyr 1.1.3.9011 (2026-02-24)
+# duckplyr 1.1.99.9900 (2026-02-24)
+
+## fledge
+
+- CRAN release v1.1.3 (#803).
+
+## Bug fixes
+
+- `transmute()` can reference new variables (#796, #819).
 
 ## Features
 
 - Align code with dplyr 1.2.0 (#863).
 
 - Enable translation of `first()`, `last()`, `nth()`, and `mutate(n(), .by = ...)` (#626, #854).
+
+- Pass `options` to read functions in `compute_parquet()` and `compute_csv()` (#729, #821).
+
+- New `read_tbl_duckdb()` to read DuckDB tables (#414, #828).
+
+- Turn `compute_parquet()` and `compute_csv()` into generic S3 functions (#746, #818).
+
+- Support functions with named arguments (#822).
 
 ## Chore
 
@@ -18,31 +34,15 @@
 
 - Clean up argument matching by name (#855, #856).
 
-
-# duckplyr 1.1.3.9010 (2026-02-24)
-
-## Features
-
-- Pass `options` to read functions in `compute_parquet()` and `compute_csv()` (#729, #821).
-
-- New `read_tbl_duckdb()` to read DuckDB tables (#414, #828).
-
-
-# duckplyr 1.1.3.9009 (2026-02-23)
-
-## Features
-
-- Turn `compute_parquet()` and `compute_csv()` into generic S3 functions (#746, #818).
-
-- Support functions with named arguments (#822).
-
-## Chore
-
 - Bump dplyr dep.
 
 - Fix tests failing after dplyr 1.2.0 update (#853).
 
 - Auto-update from GitHub Actions (#852).
+
+- Migrate from deprecated qs to qs2 (#846, #847).
+
+- Move compatibility checks to duckdb (#721).
 
 ## Continuous integration
 
@@ -50,34 +50,9 @@
 
 - Add apply-patch command.
 
-## Documentation
-
-- Document internal workflows.
-
-## Testing
-
-- Snapshot updates (@1741643+krlmlr).
-
-
-# duckplyr 1.1.3.9008 (2026-01-26)
-
-## Chore
-
-- Migrate from deprecated qs to qs2 (#846, #847).
-
-
-# duckplyr 1.1.3.9007 (2026-01-14)
-
-## Continuous integration
-
 - Tweaks (#838).
 
 - Test all R versions on branches that start with cran- (#837).
-
-
-# duckplyr 1.1.3.9006 (2025-12-06)
-
-## Continuous integration
 
 - Revert to CRAN duckdb.
 
@@ -85,22 +60,19 @@
 
 - Use dev duckdb.
 
-
-# duckplyr 1.1.3.9005 (2025-11-27)
-
-## Bug fixes
-
-- `transmute()` can reference new variables (#796, #819).
-
-## Chore
-
-- Move compatibility checks to duckdb (#721).
-
-## Continuous integration
-
 - Fix compatibility with duckdb 1.4.2.
 
+- Install binaries from r-universe for dev workflow (#813).
+
+- Fix reviewdog and add commenting workflow (#810).
+
+- Use workflows for fledge (#807).
+
+- Sync (#805).
+
 ## Documentation
+
+- Document internal workflows.
 
 - Add blog post to pkgdown config (#612, #827).
 
@@ -112,40 +84,9 @@
 
 - Review contributing guide (#657).
 
+## Testing
 
-# duckplyr 1.1.3.9004 (2025-11-17)
-
-## Continuous integration
-
-- Install binaries from r-universe for dev workflow (#813).
-
-
-# duckplyr 1.1.3.9003 (2025-11-12)
-
-## Continuous integration
-
-- Fix reviewdog and add commenting workflow (#810).
-
-
-# duckplyr 1.1.3.9002 (2025-11-11)
-
-## Continuous integration
-
-- Use workflows for fledge (#807).
-
-
-# duckplyr 1.1.3.9001 (2025-11-08)
-
-## Continuous integration
-
-- Sync (#805).
-
-
-# duckplyr 1.1.3.9000 (2025-11-04)
-
-## fledge
-
-- CRAN release v1.1.3 (#803).
+- Snapshot updates (@1741643+krlmlr).
 
 
 # duckplyr 1.1.3 (2025-11-04)
