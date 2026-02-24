@@ -860,6 +860,26 @@ test_extra_arg_map <- list(
     # NA in use
     'd = if_else(a > 1, "ok", NA)',
 
+    # Named arguments for aggregation functions
+    "mean(x = a, na.rm = TRUE)",
+    "mean(na.rm = TRUE, x = a)",
+    "sum(na.rm = TRUE, a)",
+    "min(na.rm = TRUE, a)",
+    "max(na.rm = TRUE, a)",
+    "sd(na.rm = TRUE, x = a)",
+
+    # Named arguments for grepl/sub/gsub
+    "c = 'abbc', d = grepl(pattern = 'b', x = c)",
+    "c = 'abbc', d = sub(pattern = 'b', replacement = 'z', x = c)",
+    "c = 'abbc', d = gsub(pattern = 'b', replacement = 'z', x = c)",
+
+    # Named arguments for if_else
+    'd = if_else(condition = a > 1, true = "ok", false = "no")',
+
+    # Named arguments for lag/lead
+    "lag(x = a, n = 2)",
+    "lead(x = a, n = 2)",
+
     NULL
   ),
   nest_join = "join_by(a)",
