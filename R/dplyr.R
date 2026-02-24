@@ -48,7 +48,6 @@ add_count_impl <- dplyr$add_count_impl
 arrange_rows <- dplyr$arrange_rows
 check_frac <- dplyr$check_frac
 check_size <- dplyr$check_size
-coalesce <- dplyr$coalesce
 commas <- dplyr$commas
 compact_null <- dplyr$compact_null
 compat_wt <- dplyr$compat_wt

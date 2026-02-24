@@ -946,6 +946,12 @@ test_extra_arg_map <- list(
     "lag(x = a, n = 2)",
     "lead(x = a, n = 2)",
 
+    # round()
+    "d = round(a + 0.5)",
+    # Can't do + 0.05, minor differences in rounding behavior
+    "d = round(a / 10 + 0.04, digits = 1)",
+    "d = round(a, digits = -1)",
+
     NULL
   ),
   nest_join = "join_by(a)",
