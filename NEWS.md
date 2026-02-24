@@ -4,6 +4,8 @@
 
 ## Features
 
+- Establish compatibility with dplyr 1.2.0, this is now the minimum required version.
+
 - New `read_tbl_duckdb()` reads a table from a DuckDB database file by attaching it to the default connection (#414, #828).
 
   ``` r
@@ -30,7 +32,7 @@
     mutate(count = n(), .by = g)
   ```
 
-- `compute_parquet()` and `compute_csv()` now accept an `options` argument to pass format-specific settings to the underlying DuckDB COPY statement (#729, #821).
+- `compute_parquet()` and `compute_csv()` now accept an `options` argument to pass format-specific settings to the underlying DuckDB operation and also applies them when reading back the data (#729, #821).
 
   ``` r
   df <- as_duckdb_tibble(data.frame(x = 1:3, y = c("a", "b", "c")))
@@ -47,10 +49,6 @@
     as_duckdb_tibble() |>
     mutate(y = round(x, digits = 1L))
   ```
-
-- Aligned with dplyr 1.2.0 (#863).
-
-## Bug fixes
 
 - `transmute()` can now reference new variables created within the same call (#796, #819).
 
@@ -74,31 +72,11 @@
 
 ## Chore
 
+- Align internal tests with dplyr 1.2.0 (#863).
+
 - Migrate from deprecated qs to qs2 (#846, #847).
 
-- Clean up argument matching by name (#855, #856).
-
-- Move compatibility checks to duckdb (#721).
-
-- Bump duckdb and dplyr dependencies.
-
-- Format with air.
-
-## Continuous integration
-
-- Fix compatibility with duckdb 1.4.2.
-
-- Test all R versions on branches that start with `cran-` (#837).
-
-- Install binaries from r-universe for dev workflow (#813).
-
-- Fix reviewdog and add commenting workflow (#810).
-
-- Use workflows for fledge (#807).
-
-## Testing
-
-- Snapshot updates (@1741643+krlmlr).
+- Format code with air.
 
 
 # duckplyr 1.1.3 (2025-11-04)
