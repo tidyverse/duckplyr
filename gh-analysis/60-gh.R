@@ -34,7 +34,9 @@ rowwise_map <- function(.data, .f, .progress = FALSE) {
       message(".", appendLF = FALSE)
     }
     chunk <- dbFetch(res, n = 1)
-    if (nrow(chunk) == 0) break
+    if (nrow(chunk) == 0) {
+      break
+    }
     out <- c(out, list(.f(as_tibble(chunk))))
   }
 
@@ -56,7 +58,9 @@ rowwise_walk <- function(.data, .f, .progress = FALSE) {
 }
 
 blob_decode <- function(content) {
-  if (is.null(content)) return("")
+  if (is.null(content)) {
+    return("")
+  }
   stopifnot(is.raw(content))
   # Substitute embedded NUL with newlines
   content[content == 0] <- as.raw(10)

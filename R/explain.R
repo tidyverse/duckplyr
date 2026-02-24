@@ -1,7 +1,8 @@
 #' @rdname explain.duckplyr_df
 #' @export
 explain.duckplyr_df <- function(x, ...) {
-  duckplyr_error <- rel_try(list(name = "explain", x = x),
+  duckplyr_error <- rel_try(
+    list(name = "explain", x = x),
     "No restrictions" = FALSE,
     {
       rel <- duckdb_rel_from_df(x)
@@ -10,7 +11,9 @@ explain.duckplyr_df <- function(x, ...) {
     }
   )
 
-  writeLines("Can't convert to relational, fallback implementation will be used.")
+  writeLines(
+    "Can't convert to relational, fallback implementation will be used."
+  )
   invisible(x)
 }
 

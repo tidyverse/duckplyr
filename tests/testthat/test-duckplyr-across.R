@@ -161,7 +161,10 @@ test_that("across() translation works end-to-end in mutate", {
 
   # lambda
   out <- mutate(df, across(c(x, y), function(x) x * 2))
-  expect_equal(as.data.frame(out), data.frame(x = c(2L, 4L, 6L), y = c(8L, 10L, 12L)))
+  expect_equal(
+    as.data.frame(out),
+    data.frame(x = c(2L, 4L, 6L), y = c(8L, 10L, 12L))
+  )
 
   # tilde lambda
   out <- mutate(df, across(c(x, y), ~ .x + 1L))
@@ -184,7 +187,11 @@ test_that("across() translation works end-to-end in summarise", {
 })
 
 test_that("across() with where() works end-to-end", {
-  df <- as_duckdb_tibble(tibble::tibble(x = c(1, 2, 3), y = c(4, 5, 6), z = c("a", "b", "c")))
+  df <- as_duckdb_tibble(tibble::tibble(
+    x = c(1, 2, 3),
+    y = c(4, 5, 6),
+    z = c("a", "b", "c")
+  ))
 
   out <- summarise(df, across(where(is.numeric), mean))
   expect_equal(as.data.frame(out), data.frame(x = 2, y = 5))

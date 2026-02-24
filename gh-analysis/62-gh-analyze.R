@@ -20,8 +20,13 @@ get_dplyr_calls <- function(lang) {
       }
     }
   }
-  if ((is.name(lang[[1]]) && as.character(lang[[1]]) %in% funs) ||
-      (is.call(lang[[1]]) && lang[[1]][[1]] == "::" && lang[[1]][[2]] == "dplyr" && as.character(lang[[1]][[3]]) %in% funs)) {
+  if (
+    (is.name(lang[[1]]) && as.character(lang[[1]]) %in% funs) ||
+      (is.call(lang[[1]]) &&
+        lang[[1]][[1]] == "::" &&
+        lang[[1]][[2]] == "dplyr" &&
+        as.character(lang[[1]][[3]]) %in% funs)
+  ) {
     out <- c(out, list(lang))
   }
   out
@@ -41,7 +46,10 @@ get_dplyr_calls_exprs <- function(parsed) {
 fs::dir_create("gh-analysis/data/analyzed")
 
 for (file in files) {
-  analyzed_file <- fs::path("gh-analysis/data/analyzed", fs::path_ext_set(fs::path_file(file), ".qs"))
+  analyzed_file <- fs::path(
+    "gh-analysis/data/analyzed",
+    fs::path_ext_set(fs::path_file(file), ".qs")
+  )
   if (!fs::file_exists(analyzed_file)) {
     message(file)
     try({

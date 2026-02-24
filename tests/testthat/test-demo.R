@@ -9,7 +9,11 @@ test_that("demo queries work", {
   expect_snapshot({
     tips_by_day_hour <- taxi_data_2019 %>%
       filter(total_amount > 0) %>%
-      mutate(tip_pct = 100 * tip_amount / total_amount, dn = wday(pickup_datetime), hr = hour(pickup_datetime)) %>%
+      mutate(
+        tip_pct = 100 * tip_amount / total_amount,
+        dn = wday(pickup_datetime),
+        hr = hour(pickup_datetime)
+      ) %>%
       summarise(
         avg_tip_pct = mean(tip_pct),
         n = n(),
@@ -66,16 +70,31 @@ test_that("demo queries work", {
       filter(total_amount > 0, tip_amount == 0) %>%
       inner_join(zone_map, by = join_by(pickup_location_id == LocationID)) %>%
       inner_join(zone_map, by = join_by(dropoff_location_id == LocationID)) %>%
-      mutate(pickup_borough = Borough.x, dropoff_borough = Borough.y, tip_amount) %>%
+      mutate(
+        pickup_borough = Borough.x,
+        dropoff_borough = Borough.y,
+        tip_amount
+      ) %>%
       summarise(
         num_zero_tip_trips = n(),
         .by = c(pickup_borough, dropoff_borough)
       )
 
     num_zero_percent_trips <- num_trips_per_borough %>%
-      inner_join(num_trips_per_borough_no_tip, by = join_by(pickup_borough, dropoff_borough)) %>%
-      mutate(num_trips = num_trips, percent_zero_tips_trips = 100 * num_zero_tip_trips / num_trips) %>%
-      select(pickup_borough, dropoff_borough, num_trips, percent_zero_tips_trips) %>%
+      inner_join(
+        num_trips_per_borough_no_tip,
+        by = join_by(pickup_borough, dropoff_borough)
+      ) %>%
+      mutate(
+        num_trips = num_trips,
+        percent_zero_tips_trips = 100 * num_zero_tip_trips / num_trips
+      ) %>%
+      select(
+        pickup_borough,
+        dropoff_borough,
+        num_trips,
+        percent_zero_tips_trips
+      ) %>%
       arrange(desc(percent_zero_tips_trips))
 
     num_zero_percent_trips

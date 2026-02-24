@@ -8,7 +8,11 @@
 #' @rdname as_duckplyr_df
 #' @export
 as_duckplyr_tibble <- function(.data) {
-  lifecycle::deprecate_soft("1.0.0", "as_duckplyr_tibble()", "as_duckdb_tibble()")
+  lifecycle::deprecate_soft(
+    "1.0.0",
+    "as_duckplyr_tibble()",
+    "as_duckdb_tibble()"
+  )
 
   if (inherits(.data, "tbl_duckdb_connection")) {
     con <- dbplyr::remote_con(.data)

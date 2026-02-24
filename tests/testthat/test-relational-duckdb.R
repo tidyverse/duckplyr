@@ -7,7 +7,11 @@ test_that("duckdb_rel_from_df()", {
     # FACTOR = factor("five"), # https://github.com/duckdb/duckdb/issues/8561
     DATE = as.Date("2023-08-05"),
     DATE_INTEGER = structure(19574L, class = "Date"),
-    TIMESTAMP = structure(1691210978.25436, class = c("POSIXct", "POSIXt"), tzone = "UTC"),
+    TIMESTAMP = structure(
+      1691210978.25436,
+      class = c("POSIXct", "POSIXt"),
+      tzone = "UTC"
+    ),
     TIME_SECONDS = structure(6, class = "difftime", units = "secs"),
     # TIME_MINUTES etc.: Loss ok
     TIME_SECONDS_INTEGER = structure(11L, class = "difftime", units = "secs"),
@@ -67,9 +71,13 @@ test_that("rel_aggregate()", {
   skip_if_not_installed("palmerpenguins")
 
   expr_species <- relexpr_reference("species")
-  expr_aggregate <- relexpr_function(alias = "mean_bill_length_mm", "avg", list(
-    relexpr_reference("bill_length_mm")
-  ))
+  expr_aggregate <- relexpr_function(
+    alias = "mean_bill_length_mm",
+    "avg",
+    list(
+      relexpr_reference("bill_length_mm")
+    )
+  )
 
   grouped <-
     palmerpenguins::penguins %>%

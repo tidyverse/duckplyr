@@ -35,11 +35,12 @@
 #' # Clean up
 #' unlink(db_path)
 read_tbl_duckdb <- function(
-    path,
-    table_name,
-    ...,
-    schema = "main",
-    prudence = c("thrifty", "lavish", "stingy")) {
+  path,
+  table_name,
+  ...,
+  schema = "main",
+  prudence = c("thrifty", "lavish", "stingy")
+) {
   check_dots_empty()
 
   if (!is_string(path)) {
@@ -62,11 +63,20 @@ read_tbl_duckdb <- function(
   db_alias <- paste0("duckplyr_db_", path_hash)
 
   # Check if database is already attached, attach if not
-  attached_dbs <- DBI::dbGetQuery(con, "SELECT database_name FROM duckdb_databases()")
+  attached_dbs <- DBI::dbGetQuery(
+    con,
+    "SELECT database_name FROM duckdb_databases()"
+  )
   if (!(db_alias %in% attached_dbs$database_name)) {
     # Escape path for SQL (replace single quotes with escaped quotes)
     escaped_path <- gsub("'", "''", path)
-    attach_sql <- paste0("ATTACH '", escaped_path, "' AS \"", db_alias, "\" (READ_ONLY)")
+    attach_sql <- paste0(
+      "ATTACH '",
+      escaped_path,
+      "' AS \"",
+      db_alias,
+      "\" (READ_ONLY)"
+    )
     DBI::dbExecute(con, attach_sql)
   }
 
@@ -74,7 +84,15 @@ read_tbl_duckdb <- function(
   # Escape identifiers by doubling any double quotes
   escaped_schema <- gsub('"', '""', schema)
   escaped_table <- gsub('"', '""', table_name)
-  sql <- paste0("SELECT * FROM \"", db_alias, "\".\"", escaped_schema, "\".\"", escaped_table, "\"")
+  sql <- paste0(
+    "SELECT * FROM \"",
+    db_alias,
+    "\".\"",
+    escaped_schema,
+    "\".\"",
+    escaped_table,
+    "\""
+  )
 
   rel <- duckdb$rel_from_sql(con, sql)
 

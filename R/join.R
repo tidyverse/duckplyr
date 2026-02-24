@@ -57,12 +57,18 @@ rel_join_impl <- function(
     if (length(intersect(x_names, y_names)) != 0) {
       x_names_remap <- paste0(x_names, "_x")
       x_by <- paste0(x_by, "_x")
-      x_exprs <- exprs_from_loc(x, set_names(seq_along(x_names_remap), x_names_remap))
+      x_exprs <- exprs_from_loc(
+        x,
+        set_names(seq_along(x_names_remap), x_names_remap)
+      )
       x_rel <- rel_project(x_rel, x_exprs)
 
       y_names_remap <- paste0(y_names, "_y")
       y_by <- paste0(y_by, "_y")
-      y_exprs <- exprs_from_loc(y, set_names(seq_along(y_names_remap), y_names_remap))
+      y_exprs <- exprs_from_loc(
+        y,
+        set_names(seq_along(y_names_remap), y_names_remap)
+      )
       y_rel <- rel_project(y_rel, y_exprs)
     } else {
       x_names_remap <- x_names
@@ -116,7 +122,11 @@ rel_join_impl <- function(
       eq_idx <- (by$condition == "==")
 
       if (join == "right") {
-        exprs[by_pos[eq_idx]] <- map2(y_by[eq_idx], names(vars$x$key)[eq_idx], relexpr_set_alias)
+        exprs[by_pos[eq_idx]] <- map2(
+          y_by[eq_idx],
+          names(vars$x$key)[eq_idx],
+          relexpr_set_alias
+        )
       } else {
         exprs[by_pos[eq_idx]] <- pmap(
           list(x_by[eq_idx], y_by[eq_idx], names(vars$x$key)[eq_idx]),

@@ -55,7 +55,12 @@
 duckdb_tibble <- function(..., .prudence = c("lavish", "thrifty", "stingy")) {
   out <- tibble::tibble(...)
 
-  new_duckdb_tibble(out, class(out), prudence = .prudence, adjust_prudence = TRUE)
+  new_duckdb_tibble(
+    out,
+    class(out),
+    prudence = .prudence,
+    adjust_prudence = TRUE
+  )
 }
 
 #' as_duckdb_tibble
@@ -66,14 +71,23 @@ duckdb_tibble <- function(..., .prudence = c("lavish", "thrifty", "stingy")) {
 #' @param x The object to convert or to test.
 #' @rdname duckdb_tibble
 #' @export
-as_duckdb_tibble <- function(x, ..., prudence = c("lavish", "thrifty", "stingy")) {
+as_duckdb_tibble <- function(
+  x,
+  ...,
+  prudence = c("lavish", "thrifty", "stingy")
+) {
   # Handle the prudence arg in the generic, only the other args will be dispatched
   as_duckdb_tibble <- function(x, ...) {
     UseMethod("as_duckdb_tibble")
   }
 
   out <- as_duckdb_tibble(x, ...)
-  new_duckdb_tibble(out, class(out), prudence = prudence, adjust_prudence = TRUE)
+  new_duckdb_tibble(
+    out,
+    class(out),
+    prudence = prudence,
+    adjust_prudence = TRUE
+  )
 }
 
 #' @export
@@ -98,7 +112,13 @@ as_duckdb_tibble.data.frame <- function(x, ...) {
   check_dots_empty()
 
   # Only if not materialized yet
-  if (is.null(duckdb$rel_from_altrep_df(x, strict = FALSE, allow_materialized = FALSE))) {
+  if (
+    is.null(duckdb$rel_from_altrep_df(
+      x,
+      strict = FALSE,
+      allow_materialized = FALSE
+    ))
+  ) {
     x <- as_tibble(x)
   }
 

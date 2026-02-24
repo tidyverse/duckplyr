@@ -61,7 +61,9 @@ get_calls <- function(lang, ignore = NULL) {
 data_expr_funs <-
   data |>
   mutate(expr_funs = map(call, get_calls, .progress = TRUE)) |>
-  mutate(expr_funs_sorted = map_chr(expr_funs, ~ paste(sort(.x), collapse = " ")))
+  mutate(
+    expr_funs_sorted = map_chr(expr_funs, ~ paste(sort(.x), collapse = " "))
+  )
 
 # Check variability of expression functions
 data_expr_funs |>
@@ -73,7 +75,19 @@ result_base <-
   data_expr_funs |>
   select(id, call, expr_funs) |>
   unnest(expr_funs) |>
-  filter(!(expr_funs %in% c("mutate", "filter", "summarise", "summarize", "dplyr::mutate", "dplyr::filter", "dplyr::summarise", "dplyr::summarize")))
+  filter(
+    !(expr_funs %in%
+      c(
+        "mutate",
+        "filter",
+        "summarise",
+        "summarize",
+        "dplyr::mutate",
+        "dplyr::filter",
+        "dplyr::summarise",
+        "dplyr::summarize"
+      ))
+  )
 
 result <-
   result_base |>
@@ -90,7 +104,19 @@ expr_unnested <-
 
 expr_result <-
   expr_unnested |>
-  filter(!(funs %in% c("mutate", "filter", "summarise", "summarize", "dplyr::mutate", "dplyr::filter", "dplyr::summarise", "dplyr::summarize"))) |>
+  filter(
+    !(funs %in%
+      c(
+        "mutate",
+        "filter",
+        "summarise",
+        "summarize",
+        "dplyr::mutate",
+        "dplyr::filter",
+        "dplyr::summarise",
+        "dplyr::summarize"
+      ))
+  ) |>
   mutate(n = n(), .by = funs) |>
   arrange(desc(n)) |>
   mutate(funs = forcats::fct_inorder(funs)) |>
@@ -104,7 +130,19 @@ expr_result |>
 
 expr_result_without_bad <-
   expr_unnested |>
-  filter(!(funs %in% c("mutate", "filter", "summarise", "summarize", "dplyr::mutate", "dplyr::filter", "dplyr::summarise", "dplyr::summarize"))) |>
+  filter(
+    !(funs %in%
+      c(
+        "mutate",
+        "filter",
+        "summarise",
+        "summarize",
+        "dplyr::mutate",
+        "dplyr::filter",
+        "dplyr::summarise",
+        "dplyr::summarize"
+      ))
+  ) |>
   mutate(n = n(), .by = funs) |>
   arrange(
     funs %in% c("<other>$", "[", "[[", ":", "~"),
@@ -214,7 +252,6 @@ result_base |>
 # factor
 # as.numeric
 # as.character
-
 
 # Often `1:n()`, sometimes `1:nrow(...)`
 

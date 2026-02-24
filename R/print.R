@@ -24,6 +24,9 @@ tbl_format_setup.duckplyr_df <- function(
   max_footer_lines,
   focus
 ) {
-  local_options(duckdb.materialize_callback = NULL, duckdb.materialize_message = NULL)
+  local_options(
+    duckdb.materialize_callback = NULL,
+    duckdb.materialize_message = NULL
+  )
   NextMethod()
 }

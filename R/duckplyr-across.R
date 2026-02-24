@@ -86,7 +86,7 @@ duckplyr_expand_across <- function(data, quo) {
   n_fns <- length(fns)
 
   seq_vars <- seq_len(n_vars)
-  seq_fns  <- seq_len(n_fns)
+  seq_fns <- seq_len(n_fns)
 
   exprs <- new_list(n_vars * n_fns, names = names)
 
@@ -121,12 +121,14 @@ duckplyr_expand_across <- function(data, quo) {
   exprs
 }
 
-duckplyr_across_setup <- function(data,
-                                  cols,
-                                  fns,
-                                  names,
-                                  .caller_env,
-                                  error_call = caller_env()) {
+duckplyr_across_setup <- function(
+  data,
+  cols,
+  fns,
+  names,
+  .caller_env,
+  error_call = caller_env()
+) {
   vars <- tidyselect::eval_select(
     cols,
     data = data,
@@ -161,9 +163,10 @@ duckplyr_across_setup <- function(data,
     }
   }
 
-  glue_mask <- across_glue_mask(.caller_env,
+  glue_mask <- across_glue_mask(
+    .caller_env,
     .col = rep(names_vars, each = length(fns)),
-    .fn  = rep(names_fns , length(vars))
+    .fn = rep(names_fns, length(vars))
   )
   names <- vec_as_names(
     glue(names, .envir = glue_mask),
@@ -207,7 +210,11 @@ fn_to_expr <- function(fn, env) {
 # every function in every namespace every time
 on_load({
   env <- environment()
-  assign("get_ns_exports_lookup", memoise::memoise(get_ns_exports_lookup), envir = env)
+  assign(
+    "get_ns_exports_lookup",
+    memoise::memoise(get_ns_exports_lookup),
+    envir = env
+  )
 })
 
 get_ns_exports_lookup <- function(ns) {

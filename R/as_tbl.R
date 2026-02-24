@@ -35,7 +35,8 @@ as_tbl <- function(.data) {
   reg.finalizer(
     scope_guard,
     function(e) {
-      tryCatch(DBI::dbExecute(con, paste0("DROP VIEW ", name)),
+      tryCatch(
+        DBI::dbExecute(con, paste0("DROP VIEW ", name)),
         # Ignore errors
         error = function(e) {
           message(conditionMessage(e))

@@ -1,4 +1,8 @@
-stats <- new_environment(list(attempts = 0L, fallback = 0L, calls = character()))
+stats <- new_environment(list(
+  attempts = 0L,
+  fallback = 0L,
+  calls = character()
+))
 
 #' Show stats
 #'

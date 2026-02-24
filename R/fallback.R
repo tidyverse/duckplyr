@@ -89,7 +89,9 @@ fallback_sitrep <- function() {
       c(
         "v" = "Fallback logging is enabled.",
         if (is.null(attr(fallback_logging, "val"))) {
-          c("i" = "Fallback logging is not controlled, see {.help duckplyr::fallback}.")
+          c(
+            "i" = "Fallback logging is not controlled, see {.help duckplyr::fallback}."
+          )
         },
         "i" = "Logs are written to {.file {fallback_log_dir}}."
       )
@@ -117,7 +119,9 @@ fallback_txt_header <- function() {
 
 fallback_txt_autoupload <- function(fallback_autoupload) {
   if (is.na(fallback_autoupload)) {
-    c("i" = "Automatic fallback uploading is not controlled and therefore disabled, see {.help duckplyr::fallback}.")
+    c(
+      "i" = "Automatic fallback uploading is not controlled and therefore disabled, see {.help duckplyr::fallback}."
+    )
   } else if (fallback_autoupload) {
     c("v" = "Automatic fallback uploading is enabled.")
   } else {
@@ -214,7 +218,9 @@ fallback_config <- function(
   fallback_config_apply(config)
 
   if (isTRUE(reset_all)) {
-    cli::cli_alert_info("Restart the R session to reset all values to their defaults.")
+    cli::cli_alert_info(
+      "Restart the R session to reset all values to their defaults."
+    )
   }
 }
 
@@ -230,7 +236,10 @@ fallback_config_read <- function() {
       as.list(read.dcf(config_file, all = TRUE))
     },
     error = function(e) {
-      rlang::cnd_signal(rlang::message_cnd(message = "Error reading duckplyr, fallback configuration, deleting file.", parent = e))
+      rlang::cnd_signal(rlang::message_cnd(
+        message = "Error reading duckplyr, fallback configuration, deleting file.",
+        parent = e
+      ))
       unlink(config_file)
       list()
     }
@@ -281,10 +290,26 @@ fallback_config_load <- function() {
   orig_config <- config
 
   config <- fallback_config_reset(config, "info", "DUCKPLYR_FALLBACK_INFO")
-  config <- fallback_config_reset(config, "logging", "DUCKPLYR_FALLBACK_LOGGING")
-  config <- fallback_config_reset(config, "autoupload", "DUCKPLYR_FALLBACK_AUTOUPLOAD")
-  config <- fallback_config_reset(config, "log_dir", "DUCKPLYR_FALLBACK_LOG_DIR")
-  config <- fallback_config_reset(config, "verbose", "DUCKPLYR_FALLBACK_VERBOSE")
+  config <- fallback_config_reset(
+    config,
+    "logging",
+    "DUCKPLYR_FALLBACK_LOGGING"
+  )
+  config <- fallback_config_reset(
+    config,
+    "autoupload",
+    "DUCKPLYR_FALLBACK_AUTOUPLOAD"
+  )
+  config <- fallback_config_reset(
+    config,
+    "log_dir",
+    "DUCKPLYR_FALLBACK_LOG_DIR"
+  )
+  config <- fallback_config_reset(
+    config,
+    "verbose",
+    "DUCKPLYR_FALLBACK_VERBOSE"
+  )
 
   msg <- setdiff(names(orig_config), names(config))
   if (length(msg) > 0) {
@@ -366,7 +391,9 @@ fallback_upload <- function(oldest = NULL, newest = NULL, strict = TRUE) {
       reason = "to upload duckplyr fallback reports."
     )
   } else if (!is_installed("curl")) {
-    cli::cli_inform("Skipping upload of duckplyr fallback reports because the {.pkg curl} package is not installed.")
+    cli::cli_inform(
+      "Skipping upload of duckplyr fallback reports because the {.pkg curl} package is not installed."
+    )
     return(invisible())
   }
 
@@ -376,25 +403,30 @@ fallback_upload <- function(oldest = NULL, newest = NULL, strict = TRUE) {
     return(invisible())
   }
 
-  cli::cli_inform("Uploading {.strong {length(fallback_logs)}} {.pkg duckplyr} fallback report{?s}.")
+  cli::cli_inform(
+    "Uploading {.strong {length(fallback_logs)}} {.pkg duckplyr} fallback report{?s}."
+  )
 
   failures <- character()
 
   pool <- curl::new_pool()
-  imap(fallback_logs, ~ {
-    contents <- .x
-    file <- .y
+  imap(
+    fallback_logs,
+    ~ {
+      contents <- .x
+      file <- .y
 
-    done <- function(request) {
-      unlink(file)
+      done <- function(request) {
+        unlink(file)
+      }
+
+      fail <- function(message) {
+        failures <<- c(failures, message)
+      }
+
+      tel_post_async(contents, done, fail, pool)
     }
-
-    fail <- function(message) {
-      failures <<- c(failures, message)
-    }
-
-    tel_post_async(contents, done, fail, pool)
-  })
+  )
 
   curl::multi_run(pool = pool)
 
@@ -411,7 +443,9 @@ fallback_upload <- function(oldest = NULL, newest = NULL, strict = TRUE) {
       cli::cli_inform(msg)
     }
   } else {
-    cli::cli_inform("All {.pkg duckplyr} fallback reports uploaded successfully.")
+    cli::cli_inform(
+      "All {.pkg duckplyr} fallback reports uploaded successfully."
+    )
   }
 
   invisible()
@@ -441,7 +475,9 @@ fallback_autoupload <- function() {
         fallback_txt_header(),
         fallback_txt_autoupload(autoupload),
         fallback_txt_sitrep_logs(fallback_logs),
-        "i" = cli::col_silver("Configure automatic uploading with {.code duckplyr::fallback_config()}.")
+        "i" = cli::col_silver(
+          "Configure automatic uploading with {.code duckplyr::fallback_config()}."
+        )
       )
       packageStartupMessage(cli::format_message(msg))
     }
@@ -462,6 +498,8 @@ fallback_purge <- function(oldest = NULL, newest = NULL) {
   }
 
   unlink(names(fallback_logs))
-  cli::cli_inform("Deleted {.strong {length(fallback_logs)}} {.pkg duckplyr} fallback report{?s}.")
+  cli::cli_inform(
+    "Deleted {.strong {length(fallback_logs)}} {.pkg duckplyr} fallback report{?s}."
+  )
   invisible()
 }
