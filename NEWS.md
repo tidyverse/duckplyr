@@ -20,22 +20,20 @@
   unlink(db_path)
   ```
 
-- `first()`, `last()`, `nth()`, and `n()` inside `mutate(.by = ...)` are now translated directly to DuckDB (#626, #854).
+- `first()`, `last()`, `nth()`, `round()`, and `n()` inside `mutate(.by = ...)` are now translated directly to DuckDB (#626, #854).
 
   ``` r
-  data.frame(g = c("a", "a", "b", "b", "b"), x = c(10, 20, 30, 40, 50)) |>
-    as_duckdb_tibble() |>
-    summarise(first_x = first(x), last_x = last(x), second_x = nth(x, 2), .by = g)
+  duckdb_tibble(g = c("a", "a", "b", "b", "b"), x = c(10, 20, 30, 40, 50), .prudence = "stingy") |>
+    summarise(.by = g, first_x = first(x), last_x = last(x), second_x = nth(x, 2))
 
-  data.frame(g = c("a", "a", "b", "b"), x = 1:4) |>
-    as_duckdb_tibble() |>
+  duckdb_tibble(g = c("a", "a", "b", "b"), x = 1:4, .prudence = "stingy") |>
     mutate(count = n(), .by = g)
   ```
 
 - `compute_parquet()` and `compute_csv()` now accept an `options` argument to pass format-specific settings to the underlying DuckDB operation and also applies them when reading back the data (#729, #821).
 
   ``` r
-  df <- as_duckdb_tibble(data.frame(x = 1:3, y = c("a", "b", "c")))
+  df <- duckdb_tibble(x = 1:3, y = c("a", "b", "c"), .prudence = "stingy")
   path <- tempfile(fileext = ".parquet")
   compute_parquet(df, path, options = list(compression = "zstd"))
   ```
@@ -52,14 +50,16 @@
 - `transmute()` can now reference new variables created within the same call (#796, #819).
 
   ``` r
-  data.frame(x = 1:3) |>
-    as_duckdb_tibble() |>
+  duckdb_tibble(x = 1:3, .prudence = "stingy") |>
     transmute(y = x * 2, z = y + 10)
   ```
 
 - Add experimental translation for `filter_out()` (#869, #870).
 
   ``` r
+  duckdb_tibble(x = 1:3, .prudence = "stingy") |>
+    filter_out(x > 2)
+  ```
 
 
 ## Documentation
@@ -243,7 +243,7 @@ See `vignette("duckdb")` for details.
 
 ### Translations
 
-- Partial support for `across()` in `mutate()` and `summarise()` (#296, #306, #318, @lionel-, @DavisVaughan).
+- , @lionel-,, Partial support for `across()` in `mutate()` and `summarise()` (#296, #306, #3 @DavisVaughan).
 
 - Implement `na.rm` handling for `sum()`, `min()`, `max()`, `any()` and `all()`, with fallback for window functions (#205, #566).
 
@@ -352,7 +352,7 @@ See `vignette("duckdb")` for details.
 - Require fallback if the result contains duplicate column names when ignoring case.
 - `row_number()` returns integer.
 - `is.na(NaN)` is `TRUE`.
-- `summarise(count = n(), count = n())` creates only one column named `count`.
+- `named `count`, summarise(count = n(), count = n())` creates only one colum.
 - Correct wording in instructions for enabling fallback logging (@TimTaylor, #141).
 
 ## Chore
@@ -388,8 +388,8 @@ See `vignette("duckdb")` for details.
 
 ## Bug fixes
 
-- Forbid reuse of new columns created in `summarise()` (#72, #106).
-- `summarise()` no longer restores subclass.
+- , #106), Forbid reuse of new columns created in `summarise()` (#.
+- `no longer restores subclass, summarise().
 - Disambiguate computation of `log10()` and `log()`.
 - Fix division by zero for positive and negative numbers.
 
@@ -469,7 +469,7 @@ See `vignette("duckdb")` for details.
 
 ## Bug fixes
 
-- `summarise()` keeps `"duckplyr_df"` class (#63, #64).
+- `, #64), summarise()` keeps `"duckplyr_df"` class (#.
 
 - Fix compatibility with duckdb \>= 0.9.1.
 
