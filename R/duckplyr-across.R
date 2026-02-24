@@ -1,7 +1,7 @@
 # A simplified version of functions in dplyr's across.R
 
 duckplyr_expand_across <- function(data, quo) {
-  stopifnot(is.character(data))
+  stopifnot(is.data.frame(data))
 
   quo_data <- attr(quo, "dplyr:::data")
   if (!quo_is_call(quo, "across", ns = c("", "dplyr")) || quo_data$is_named) {
@@ -127,12 +127,10 @@ duckplyr_across_setup <- function(data,
                                   names,
                                   .caller_env,
                                   error_call = caller_env()) {
-  data <- set_names(seq_along(data), data)
-
   vars <- tidyselect::eval_select(
     cols,
     data = data,
-    allow_predicates = FALSE,
+    allow_predicates = TRUE,
     error_call = error_call
   )
   names_vars <- names(vars)

@@ -97,7 +97,7 @@ rel_translate_dots_summarise <- function(dots, data, call = caller_env()) {
     current_names <- c(names(data), .x$new)
 
     dot <- dots[[.y]]
-    expanded <- duckplyr_expand_across(current_names, dot)
+    expanded <- duckplyr_expand_across(data, dot)
 
     if (is.null(expanded)) {
       new <- names(dots)[[.y]]
