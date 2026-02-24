@@ -11,19 +11,19 @@ test_that("across() works on one column data.frame", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- data.frame(x = 1)
 
-  out <- df %>% duckplyr_mutate(across(everything(), identity))
+  out <- df |> duckplyr_mutate(across(everything(), identity))
   expect_equal(out, df)
 })
 
 test_that("across() does not select grouping variables", {
   df <- data.frame(g = 1, x = 1)
 
-  out <- df %>% duckplyr_group_by(g) %>% duckplyr_summarise(x = across(everything(), identity)) %>% duckplyr_pull()
+  out <- df |> duckplyr_group_by(g) |> duckplyr_summarise(x = across(everything(), identity)) |> duckplyr_pull()
   expect_equal(out, tibble(x = 1))
 })
 
 test_that("across() correctly names output columns", {
-  gf <- tibble(x = 1, y = 2, z = 3, s = "") %>% duckplyr_group_by(x)
+  gf <- tibble(x = 1, y = 2, z = 3, s = "") |> duckplyr_group_by(x)
 
   expect_named(
     duckplyr_summarise(gf, across(everything(), identity)),
@@ -133,7 +133,7 @@ test_that("across(.unpack =) uses the result of `.names` as `{outer}`", {
 
   df <- tibble(x = 1, y = 2)
 
-  out <- df %>% duckplyr_mutate(
+  out <- df |> duckplyr_mutate(
     across(x:y, list(f = fn), .names = "{.col}.{.fn}", .unpack = "{inner}.{outer}")
   )
 
@@ -229,33 +229,33 @@ test_that("across() gives meaningful messages", {
   expect_snapshot({
     # expanding
     (expect_error(
-      tibble(x = 1) %>%
+      tibble(x = 1) |>
         duckplyr_summarise(across(where(is.numeric), 42))
     ))
     (expect_error(
-      tibble(x = 1) %>%
+      tibble(x = 1) |>
         duckplyr_summarise(across(y, mean))
     ))
 
     # computing
     (expect_error(
-      tibble(x = 1) %>%
+      tibble(x = 1) |>
         duckplyr_summarise(res = across(where(is.numeric), 42))
     ))
     (expect_error(
-      tibble(x = 1) %>%
+      tibble(x = 1) |>
         duckplyr_summarise(z  = across(y, mean))
     ))
     (expect_error(
-      tibble(x = 1) %>%
+      tibble(x = 1) |>
         duckplyr_summarise(res = sum(if_any(where(is.numeric), 42)))
     ))
     (expect_error(
-      tibble(x = 1) %>%
+      tibble(x = 1) |>
         duckplyr_summarise(res = sum(if_all(~mean(.x))))
     ))
     (expect_error(
-      tibble(x = 1) %>%
+      tibble(x = 1) |>
         duckplyr_summarise(res = sum(if_any(~mean(.x))))
     ))
 
@@ -271,26 +271,26 @@ test_that("across() gives meaningful messages", {
       }
     }
     (expect_error( # expanding
-      tibble(x = 1:10, y = 11:20) %>%
+      tibble(x = 1:10, y = 11:20) |>
         duckplyr_summarise(across(everything(), error_fn))
     ))
     (expect_error( # expanding
-      tibble(x = 1:10, y = 11:20) %>%
+      tibble(x = 1:10, y = 11:20) |>
         duckplyr_mutate(across(everything(), error_fn))
     ))
 
     (expect_error( # evaluating
-      tibble(x = 1:10, y = 11:20) %>%
+      tibble(x = 1:10, y = 11:20) |>
         duckplyr_summarise(force(across(everything(), error_fn)))
     ))
     (expect_error( # evaluating
-      tibble(x = 1:10, y = 11:20) %>%
+      tibble(x = 1:10, y = 11:20) |>
         duckplyr_mutate(force(across(everything(), error_fn)))
     ))
 
     # name issue
     (expect_error(
-      tibble(x = 1) %>%
+      tibble(x = 1) |>
         duckplyr_summarise(across(everything(), list(f = mean, f = mean)))
     ))
 
@@ -345,19 +345,19 @@ test_that("monitoring cache - across() internal cache key depends on all inputs"
 
 test_that("across() rejects non vectors", {
   expect_error(
-    data.frame(x = 1) %>% duckplyr_summarise(across(everything(), ~sym("foo")))
+    data.frame(x = 1) |> duckplyr_summarise(across(everything(), ~sym("foo")))
   )
 })
 
 test_that("across() uses tidy recycling rules", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_equal(
-    data.frame(x = 1, y = 2) %>% duckplyr_reframe(across(everything(), ~rep(42, .))),
+    data.frame(x = 1, y = 2) |> duckplyr_reframe(across(everything(), ~rep(42, .))),
     data.frame(x = rep(42, 2), y = rep(42, 2))
   )
 
   expect_error(
-    data.frame(x = 2, y = 3) %>% duckplyr_reframe(across(everything(), ~rep(42, .)))
+    data.frame(x = 2, y = 3) |> duckplyr_reframe(across(everything(), ~rep(42, .)))
   )
 })
 
@@ -383,7 +383,7 @@ test_that("across(.names=) can use local variables in addition to {col} and {fn}
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   res <- local({
     prefix <- "MEAN"
-    data.frame(x = 42) %>%
+    data.frame(x = 42) |>
       duckplyr_summarise(across(everything(), mean, .names = "{prefix}_{.col}"))
   })
   expect_identical(res, data.frame(MEAN_x = 42))
@@ -397,7 +397,7 @@ test_that("across(.unpack=) can use local variables in addition to {outer} and {
 
   res <- local({
     prefix <- "FN"
-    data.frame(col1 = 42, col2 = 24) %>%
+    data.frame(col1 = 42, col2 = 24) |>
       duckplyr_summarise(across(everything(), fn, .unpack = "{prefix}_{outer}_{inner}"))
   })
 
@@ -416,16 +416,16 @@ test_that("across() uses environment from the current quosure (#5460)", {
   # error since it is fractional
   df <- data.frame(x = 1, y = 2.4)
   y <- "x"
-  expect_equal(df %>% duckplyr_summarise(across(all_of(y), mean)), data.frame(x = 1))
-  expect_equal(df %>% duckplyr_mutate(across(all_of(y), mean)), df)
-  expect_equal(df %>% duckplyr_filter(if_all(all_of(y), ~ .x < 2)), df)
+  expect_equal(df |> duckplyr_summarise(across(all_of(y), mean)), data.frame(x = 1))
+  expect_equal(df |> duckplyr_mutate(across(all_of(y), mean)), df)
+  expect_equal(df |> duckplyr_filter(if_all(all_of(y), ~ .x < 2)), df)
 
   # Inherited case
-  expect_error(df %>% duckplyr_summarise(local(across(all_of(y), mean))))
+  expect_error(df |> duckplyr_summarise(local(across(all_of(y), mean))))
 
   expect_equal(
-    df %>% duckplyr_summarise(duckplyr_summarise(pick(everything()), across(all_of(y), mean))),
-    df %>% duckplyr_summarise(across(all_of(y), mean))
+    df |> duckplyr_summarise(duckplyr_summarise(pick(everything()), across(all_of(y), mean))),
+    df |> duckplyr_summarise(across(all_of(y), mean))
   )
 })
 
@@ -437,8 +437,8 @@ test_that("across() sees columns in the recursive case (#5498)", {
     data = list(data.frame(foo = 1, bar = 2))
   )
 
-  out <- df %>% duckplyr_mutate(data = purrr::map2(data, vars, ~ {
-    .x %>% duckplyr_mutate(across(all_of(.y), ~ NA))
+  out <- df |> duckplyr_mutate(data = purrr::map2(data, vars, ~ {
+    .x |> duckplyr_mutate(across(all_of(.y), ~ NA))
   }))
   exp <- tibble(
     vars = list("foo"),
@@ -446,10 +446,10 @@ test_that("across() sees columns in the recursive case (#5498)", {
   )
   expect_identical(out, exp)
 
-  out <- df %>% duckplyr_mutate(data = purrr::map2(data, vars, ~ {
+  out <- df |> duckplyr_mutate(data = purrr::map2(data, vars, ~ {
     local({
       .y <- "bar"
-      .x %>% duckplyr_mutate(across(all_of(.y), ~ NA))
+      .x |> duckplyr_mutate(across(all_of(.y), ~ NA))
     })
   }))
   exp <- tibble(
@@ -471,21 +471,21 @@ test_that("lambdas in duckplyr_mutate() + across() can use columns", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 2, y = 4, z = 8)
   expect_identical(
-    df %>% duckplyr_mutate(data.frame(x = x / y, y = y / y, z = z / y)),
-    df %>% duckplyr_mutate(across(everything(), ~ .x / y))
+    df |> duckplyr_mutate(data.frame(x = x / y, y = y / y, z = z / y)),
+    df |> duckplyr_mutate(across(everything(), ~ .x / y))
   )
   expect_identical(
-    df %>% duckplyr_mutate(data.frame(x = x / y, y = y / y, z = z / y)),
-    df %>% duckplyr_mutate(+across(everything(), ~ .x / y))
+    df |> duckplyr_mutate(data.frame(x = x / y, y = y / y, z = z / y)),
+    df |> duckplyr_mutate(+across(everything(), ~ .x / y))
   )
 
   expect_identical(
-    df %>% duckplyr_mutate(data.frame(x = x / y, y = y / y, z = z / y)),
-    df %>% duckplyr_mutate(across(everything(), ~ .x / .data$y))
+    df |> duckplyr_mutate(data.frame(x = x / y, y = y / y, z = z / y)),
+    df |> duckplyr_mutate(across(everything(), ~ .x / .data$y))
   )
   expect_identical(
-    df %>% duckplyr_mutate(data.frame(x = x / y, y = y / y, z = z / y)),
-    df %>% duckplyr_mutate(+across(everything(), ~ .x / .data$y))
+    df |> duckplyr_mutate(data.frame(x = x / y, y = y / y, z = z / y)),
+    df |> duckplyr_mutate(+across(everything(), ~ .x / .data$y))
   )
 })
 
@@ -493,21 +493,21 @@ test_that("lambdas in duckplyr_summarise() + across() can use columns", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 2, y = 4, z = 8)
   expect_identical(
-    df %>% duckplyr_summarise(data.frame(x = x / y, y = y / y, z = z / y)),
-    df %>% duckplyr_summarise(across(everything(), ~ .x / y))
+    df |> duckplyr_summarise(data.frame(x = x / y, y = y / y, z = z / y)),
+    df |> duckplyr_summarise(across(everything(), ~ .x / y))
   )
   expect_identical(
-    df %>% duckplyr_summarise(data.frame(x = x / y, y = y / y, z = z / y)),
-    df %>% duckplyr_summarise(+across(everything(), ~ .x / y))
+    df |> duckplyr_summarise(data.frame(x = x / y, y = y / y, z = z / y)),
+    df |> duckplyr_summarise(+across(everything(), ~ .x / y))
   )
 
   expect_identical(
-    df %>% duckplyr_summarise(data.frame(x = x / y, y = y / y, z = z / y)),
-    df %>% duckplyr_summarise(across(everything(), ~ .x / .data$y))
+    df |> duckplyr_summarise(data.frame(x = x / y, y = y / y, z = z / y)),
+    df |> duckplyr_summarise(across(everything(), ~ .x / .data$y))
   )
   expect_identical(
-    df %>% duckplyr_summarise(data.frame(x = x / y, y = y / y, z = z / y)),
-    df %>% duckplyr_summarise(+across(everything(), ~ .x / .data$y))
+    df |> duckplyr_summarise(data.frame(x = x / y, y = y / y, z = z / y)),
+    df |> duckplyr_summarise(+across(everything(), ~ .x / .data$y))
   )
 })
 
@@ -515,21 +515,21 @@ test_that("lambdas in duckplyr_mutate() + across() can use columns in follow up 
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 2, y = 4, z = 8)
   expect_identical(
-    df %>% duckplyr_mutate(a = 2, data.frame(x = x / y, y = y / y, z = z / y)),
-    df %>% duckplyr_mutate(a = 2, across(c(x, y, z), ~ .x / y))
+    df |> duckplyr_mutate(a = 2, data.frame(x = x / y, y = y / y, z = z / y)),
+    df |> duckplyr_mutate(a = 2, across(c(x, y, z), ~ .x / y))
   )
   expect_identical(
-    df %>% duckplyr_mutate(a = 2, data.frame(x = x / y, y = y / y, z = z / y)),
-    df %>% duckplyr_mutate(a = 2, +across(c(x, y, z), ~ .x / y))
+    df |> duckplyr_mutate(a = 2, data.frame(x = x / y, y = y / y, z = z / y)),
+    df |> duckplyr_mutate(a = 2, +across(c(x, y, z), ~ .x / y))
   )
 
   expect_identical(
-    df %>% duckplyr_mutate(a = 2, data.frame(x = x / y, y = y / y, z = z / y)),
-    df %>% duckplyr_mutate(a = 2, across(c(x, y, z), ~ .x / .data$y))
+    df |> duckplyr_mutate(a = 2, data.frame(x = x / y, y = y / y, z = z / y)),
+    df |> duckplyr_mutate(a = 2, across(c(x, y, z), ~ .x / .data$y))
   )
   expect_identical(
-    df %>% duckplyr_mutate(a = 2, data.frame(x = x / y, y = y / y, z = z / y)),
-    df %>% duckplyr_mutate(a = 2, +across(c(x, y, z), ~ .x / .data$y))
+    df |> duckplyr_mutate(a = 2, data.frame(x = x / y, y = y / y, z = z / y)),
+    df |> duckplyr_mutate(a = 2, +across(c(x, y, z), ~ .x / .data$y))
   )
 })
 
@@ -537,28 +537,28 @@ test_that("lambdas in duckplyr_summarise() + across() can use columns in follow 
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 2, y = 4, z = 8)
   expect_identical(
-    df %>% duckplyr_summarise(a = 2, data.frame(x = x / y, y = y / y, z = z / y)),
-    df %>% duckplyr_summarise(a = 2, across(c(x, y, z), ~ .x / y))
+    df |> duckplyr_summarise(a = 2, data.frame(x = x / y, y = y / y, z = z / y)),
+    df |> duckplyr_summarise(a = 2, across(c(x, y, z), ~ .x / y))
   )
   expect_identical(
-    df %>% duckplyr_summarise(a = 2, data.frame(x = x / y, y = y / y, z = z / y)),
-    df %>% duckplyr_summarise(a = 2, +across(c(x, y, z), ~ .x / y))
+    df |> duckplyr_summarise(a = 2, data.frame(x = x / y, y = y / y, z = z / y)),
+    df |> duckplyr_summarise(a = 2, +across(c(x, y, z), ~ .x / y))
   )
 
   expect_identical(
-    df %>% duckplyr_summarise(a = 2, data.frame(x = x / y, y = y / y, z = z / y)),
-    df %>% duckplyr_summarise(a = 2, across(c(x, y, z), ~ .x / .data$y))
+    df |> duckplyr_summarise(a = 2, data.frame(x = x / y, y = y / y, z = z / y)),
+    df |> duckplyr_summarise(a = 2, across(c(x, y, z), ~ .x / .data$y))
   )
   expect_identical(
-    df %>% duckplyr_summarise(a = 2, data.frame(x = x / y, y = y / y, z = z / y)),
-    df %>% duckplyr_summarise(a = 2, +across(c(x, y, z), ~ .x / .data$y))
+    df |> duckplyr_summarise(a = 2, data.frame(x = x / y, y = y / y, z = z / y)),
+    df |> duckplyr_summarise(a = 2, +across(c(x, y, z), ~ .x / .data$y))
   )
 })
 
 test_that("functions defined inline can use columns (#5734)", {
   df <- data.frame(x = 1, y = 2)
   expect_equal(
-    df %>% duckplyr_mutate(across('x', function(.x) .x / y)) %>% duckplyr_pull(x),
+    df |> duckplyr_mutate(across('x', function(.x) .x / y)) |> duckplyr_pull(x),
     0.5
   )
 })
@@ -585,7 +585,7 @@ test_that("if_any() and if_all() do not enforce logical", {
 test_that("if_any() and if_all() can be used in duckplyr_mutate() (#5709)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   d <- data.frame(x = c(1, 5, 10, 10), y = c(0, 0, 0, 10), z = c(10, 5, 1, 10))
-  res <- d %>%
+  res <- d |>
     duckplyr_mutate(
       any = if_any(x:z, ~ . > 8),
       all = if_all(x:z, ~ . > 8)
@@ -596,7 +596,7 @@ test_that("if_any() and if_all() can be used in duckplyr_mutate() (#5709)", {
 
 test_that("across() caching not confused when used from if_any() and if_all() (#5782)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
-  res <- data.frame(x = 1:3) %>%
+  res <- data.frame(x = 1:3) |>
     duckplyr_mutate(
       any = if_any(x, ~ . >= 2) + if_any(x, ~ . >= 3),
       all = if_all(x, ~ . >= 2) + if_all(x, ~ . >= 3)
@@ -636,7 +636,7 @@ test_that("if_any() and if_all() aborts when predicate mistakingly used in .cols
 test_that("across() correctly reset column", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_error(cur_column())
-  res <- data.frame(x = 1) %>%
+  res <- data.frame(x = 1) |>
     duckplyr_summarise(
       a = { expect_error(cur_column()); 2},
       across(x, ~{ expect_equal(cur_column(), "x"); 3}, .names = "b"),        # top_across()
@@ -647,7 +647,7 @@ test_that("across() correctly reset column", {
   expect_equal(res, data.frame(a = 2, b = 3, c = 4, d = 5, e = 6))
   expect_error(cur_column())
 
-  res <- data.frame(x = 1) %>%
+  res <- data.frame(x = 1) |>
     duckplyr_mutate(
       a = { expect_error(cur_column()); 2},
       across(x, ~{ expect_equal(cur_column(), "x"); 3}, .names = "b"),        # top_across()
@@ -682,28 +682,28 @@ test_that("across() can omit dots", {
 
 test_that("group variables are in scope (#5832)", {
   f <- function(x, z) x + z
-  gdf <- data.frame(x = 1:2, y = 3:4, g = 1:2) %>% duckplyr_group_by(g)
-  exp <- gdf %>% duckplyr_summarise(x = f(x, z = y))
+  gdf <- data.frame(x = 1:2, y = 3:4, g = 1:2) |> duckplyr_group_by(g)
+  exp <- gdf |> duckplyr_summarise(x = f(x, z = y))
 
   expect_equal(
-    gdf %>% duckplyr_summarise(across(x, ~ f(.x, z = y))),
+    gdf |> duckplyr_summarise(across(x, ~ f(.x, z = y))),
     exp
   )
 
   expect_equal(
-    gdf %>% duckplyr_summarise(across(x, ~ f(.x, z = y))),
+    gdf |> duckplyr_summarise(across(x, ~ f(.x, z = y))),
     exp
   )
 })
 
 test_that("can pass quosure through `across()`", {
   summarise_mean <- function(data, vars) {
-    data %>% duckplyr_summarise(across({{ vars }}, mean))
+    data |> duckplyr_summarise(across({{ vars }}, mean))
   }
-  gdf <- data.frame(g = c(1, 1, 2), x = 1:3) %>% duckplyr_group_by(g)
+  gdf <- data.frame(g = c(1, 1, 2), x = 1:3) |> duckplyr_group_by(g)
 
   expect_equal(
-    gdf %>% summarise_mean(where(is.numeric)),
+    gdf |> summarise_mean(where(is.numeric)),
     duckplyr_summarise(gdf, x = mean(x))
   )
 })
@@ -761,20 +761,20 @@ test_that("inlined and non inlined lambdas work", {
   df <- data.frame(foo = 1:2, bar = 100:101)
   exp <- data.frame(foo = c(101.5, 102.5), bar = c(200.5, 201.5))
 
-  expect_equal(df %>% duckplyr_mutate(across(1:2, function(x) x + mean(bar))), exp)
-  expect_equal(df %>% duckplyr_mutate((across(1:2, function(x) x + mean(bar)))), exp)
+  expect_equal(df |> duckplyr_mutate(across(1:2, function(x) x + mean(bar))), exp)
+  expect_equal(df |> duckplyr_mutate((across(1:2, function(x) x + mean(bar)))), exp)
 
-  expect_equal(df %>% duckplyr_mutate(across(1:2, ~ .x + mean(bar))), exp)
-  expect_equal(df %>% duckplyr_mutate((across(1:2, ~ .x + mean(bar)))), exp)
+  expect_equal(df |> duckplyr_mutate(across(1:2, ~ .x + mean(bar))), exp)
+  expect_equal(df |> duckplyr_mutate((across(1:2, ~ .x + mean(bar)))), exp)
 
-  expect_equal(df %>% duckplyr_mutate(across(1:2, ~ ..1 + mean(bar))), exp)
-  expect_equal(df %>% duckplyr_mutate((across(1:2, ~ ..1 + mean(bar)))), exp)
+  expect_equal(df |> duckplyr_mutate(across(1:2, ~ ..1 + mean(bar))), exp)
+  expect_equal(df |> duckplyr_mutate((across(1:2, ~ ..1 + mean(bar)))), exp)
 
   # Message generated by base R changed
   skip_if_not_installed("base", "3.6.0")
   expect_snapshot({
-    (expect_error(df %>% duckplyr_mutate(across(1:2, ~ .y + mean(bar)))))
-    (expect_error(df %>% duckplyr_mutate((across(1:2, ~ .y + mean(bar))))))
+    (expect_error(df |> duckplyr_mutate(across(1:2, ~ .y + mean(bar)))))
+    (expect_error(df |> duckplyr_mutate((across(1:2, ~ .y + mean(bar))))))
   })
 })
 
@@ -786,11 +786,11 @@ test_that("list of lambdas work", {
     data.frame(foo_1 = c(101.5, 102.5), bar_1 = c(200.5, 201.5))
   )
 
-  expect_equal(df %>% duckplyr_mutate(across(1:2, list(function(x) x + mean(bar)))), exp)
-  expect_equal(df %>% duckplyr_mutate((across(1:2, list(function(x) x + mean(bar))))), exp)
+  expect_equal(df |> duckplyr_mutate(across(1:2, list(function(x) x + mean(bar)))), exp)
+  expect_equal(df |> duckplyr_mutate((across(1:2, list(function(x) x + mean(bar))))), exp)
 
-  expect_equal(df %>% duckplyr_mutate(across(1:2, list(~ .x + mean(bar)))), exp)
-  expect_equal(df %>% duckplyr_mutate((across(1:2, list(~ .x + mean(bar))))), exp)
+  expect_equal(df |> duckplyr_mutate(across(1:2, list(~ .x + mean(bar)))), exp)
+  expect_equal(df |> duckplyr_mutate((across(1:2, list(~ .x + mean(bar))))), exp)
 })
 
 test_that("anonymous function `.fns` can access the `.data` pronoun even when not inlined", {
@@ -849,12 +849,12 @@ test_that("across() uses local formula environment (#5881)", {
   })
 
   expect_equal(
-    data.frame(x = 1) %>% duckplyr_mutate(across(1, list(f = local(~ . + 1)))),
+    data.frame(x = 1) |> duckplyr_mutate(across(1, list(f = local(~ . + 1)))),
     data.frame(x = 1, x_f = 2)
   )
 
   expect_equal(
-    data.frame(x = 1) %>% duckplyr_mutate(across(1, local({
+    data.frame(x = 1) |> duckplyr_mutate(across(1, local({
       `_local_var` <- 1
       ~ . + `_local_var`
     }))),
@@ -872,7 +872,7 @@ test_that("unevaluated formulas (currently) fail", {
 test_that("across() can access lexical scope (#5862)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   f_across <- function(data, cols, fn) {
-    data %>%
+    data |>
       duckplyr_summarise(
         across({{ cols }}, fn)
       )
@@ -1003,61 +1003,61 @@ test_that("across() can use named selections", {
 
   # no fns
   expect_equal(
-    df %>% duckplyr_summarise(across(c(a = x, b = y))),
+    df |> duckplyr_summarise(across(c(a = x, b = y))),
     data.frame(a = 1, b = 2)
   )
   expect_equal(
-    df %>% duckplyr_summarise(across(all_of(c(a = "x", b = "y")))),
+    df |> duckplyr_summarise(across(all_of(c(a = "x", b = "y")))),
     data.frame(a = 1, b = 2)
   )
 
   # no fns, non expanded
   expect_equal(
-    df %>% duckplyr_summarise((across(c(a = x, b = y)))),
+    df |> duckplyr_summarise((across(c(a = x, b = y)))),
     data.frame(a = 1, b = 2)
   )
   expect_equal(
-    df %>% duckplyr_summarise((across(all_of(c(a = "x", b = "y"))))),
+    df |> duckplyr_summarise((across(all_of(c(a = "x", b = "y"))))),
     data.frame(a = 1, b = 2)
   )
 
   # one fn
   expect_equal(
-    df %>% duckplyr_summarise(across(c(a = x, b = y), mean)),
+    df |> duckplyr_summarise(across(c(a = x, b = y), mean)),
     data.frame(a = 1, b = 2)
   )
   expect_equal(
-    df %>% duckplyr_summarise(across(all_of(c(a = "x", b = "y")), mean)),
+    df |> duckplyr_summarise(across(all_of(c(a = "x", b = "y")), mean)),
     data.frame(a = 1, b = 2)
   )
 
   # one fn - non expanded
   expect_equal(
-    df %>% duckplyr_summarise((across(c(a = x, b = y), mean))),
+    df |> duckplyr_summarise((across(c(a = x, b = y), mean))),
     data.frame(a = 1, b = 2)
   )
   expect_equal(
-    df %>% duckplyr_summarise((across(all_of(c(a = "x", b = "y")), mean))),
+    df |> duckplyr_summarise((across(all_of(c(a = "x", b = "y")), mean))),
     data.frame(a = 1, b = 2)
   )
 
   # multiple fns
   expect_equal(
-    df %>% duckplyr_summarise(across(c(a = x, b = y), list(mean = mean, sum = sum))),
+    df |> duckplyr_summarise(across(c(a = x, b = y), list(mean = mean, sum = sum))),
     data.frame(a_mean = 1, a_sum = 1, b_mean = 2, b_sum = 2)
   )
   expect_equal(
-    df %>% duckplyr_summarise(across(all_of(c(a = "x", b = "y")), list(mean = mean, sum = sum))),
+    df |> duckplyr_summarise(across(all_of(c(a = "x", b = "y")), list(mean = mean, sum = sum))),
     data.frame(a_mean = 1, a_sum = 1, b_mean = 2, b_sum = 2)
   )
 
   # multiple fns - non expanded
   expect_equal(
-    df %>% duckplyr_summarise((across(c(a = x, b = y), list(mean = mean, sum = sum)))),
+    df |> duckplyr_summarise((across(c(a = x, b = y), list(mean = mean, sum = sum)))),
     data.frame(a_mean = 1, a_sum = 1, b_mean = 2, b_sum = 2)
   )
   expect_equal(
-    df %>% duckplyr_summarise((across(all_of(c(a = "x", b = "y")), list(mean = mean, sum = sum)))),
+    df |> duckplyr_summarise((across(all_of(c(a = "x", b = "y")), list(mean = mean, sum = sum)))),
     data.frame(a_mean = 1, a_sum = 1, b_mean = 2, b_sum = 2)
   )
 })
@@ -1092,7 +1092,7 @@ test_that("across() predicates operate on whole data", {
     g = c(1, 1, 2)
   )
 
-  out <- df %>%
+  out <- df |>
     duckplyr_mutate(across(where(~ n_distinct(.x) > 1), ~ .x + 10))
 
   exp <- tibble(
@@ -1103,14 +1103,14 @@ test_that("across() predicates operate on whole data", {
   expect_equal(out, exp)
 
 
-  out <- df %>%
-    duckplyr_group_by(g) %>%
+  out <- df |>
+    duckplyr_group_by(g) |>
     duckplyr_mutate(across(where(~ n_distinct(.x) > 1), ~ .x + 10))
 
   exp <- tibble(
     x = c(11, 11, 12),
     g = c(1, 1, 2)
-  ) %>%
+  ) |>
     duckplyr_group_by(g)
 
   expect_equal(out, exp)
@@ -1179,7 +1179,7 @@ test_that("duckplyr_rowwise() preserves list-cols iff no `.fns` (#5951, #6264)",
 test_that("selects and combines columns", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- data.frame(x = 1:2, y = 3:4)
-  out <- df %>% duckplyr_summarise(z = list(c_across(x:y)))
+  out <- df |> duckplyr_summarise(z = list(c_across(x:y)))
   expect_equal(out$z, list(1:4))
 })
 
@@ -1412,9 +1412,9 @@ test_that("arguments in dots are evaluated once per group", {
   options(lifecycle_verbosity = "quiet")
 
   set.seed(0)
-  out <- data.frame(g = 1:3, var = NA) %>%
-    duckplyr_group_by(g) %>%
-    duckplyr_mutate(across(var, function(x, y) y, rnorm(1))) %>%
+  out <- data.frame(g = 1:3, var = NA) |>
+    duckplyr_group_by(g) |>
+    duckplyr_mutate(across(var, function(x, y) y, rnorm(1))) |>
     duckplyr_pull(var)
 
   set.seed(0)
@@ -1425,16 +1425,16 @@ test_that("group variables are in scope when passed in dots (#5832)", {
   options(lifecycle_verbosity = "quiet")
 
   f <- function(x, z) x + z
-  gdf <- data.frame(x = 1:2, y = 3:4, g = 1:2) %>% duckplyr_group_by(g)
-  exp <- gdf %>% duckplyr_summarise(x = f(x, z = y))
+  gdf <- data.frame(x = 1:2, y = 3:4, g = 1:2) |> duckplyr_group_by(g)
+  exp <- gdf |> duckplyr_summarise(x = f(x, z = y))
 
   expect_equal(
-    gdf %>% duckplyr_summarise(across(x, f, z = y)),
+    gdf |> duckplyr_summarise(across(x, f, z = y)),
     exp
   )
 
   expect_equal(
-    gdf %>% duckplyr_summarise((across(x, f, z = y))),
+    gdf |> duckplyr_summarise((across(x, f, z = y))),
     exp
   )
 })

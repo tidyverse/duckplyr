@@ -617,8 +617,8 @@ test_that("joins x preserve type of x", {
 })
 
 test_that("joins preserve groups", {
-  gf1 <- tibble(a = 1:3) %>% duckplyr_group_by(a)
-  gf2 <- tibble(a = rep(1:4, 2), b = 1) %>% duckplyr_group_by(b)
+  gf1 <- tibble(a = 1:3) |> duckplyr_group_by(a)
+  gf2 <- tibble(a = rep(1:4, 2), b = 1) |> duckplyr_group_by(b)
 
   i <- count_regroups(out <- duckplyr_inner_join(gf1, gf2, by = "a"))
   expect_equal(i, 1L)
@@ -636,10 +636,10 @@ test_that("joins preserve groups", {
 })
 
 test_that("joins respect zero length groups", {
-  df1 <- tibble(f = factor( c(1,1,2,2), levels = 1:3), x = c(1,2,1,4)) %>%
+  df1 <- tibble(f = factor( c(1,1,2,2), levels = 1:3), x = c(1,2,1,4)) |>
     duckplyr_group_by(f)
 
-  df2 <- tibble(f = factor( c(2,2,3,3), levels = 1:3), y = c(1,2,3,4)) %>%
+  df2 <- tibble(f = factor( c(2,2,3,3), levels = 1:3), y = c(1,2,3,4)) |>
     duckplyr_group_by(f)
 
   expect_equal(duckplyr_group_size(duckplyr_left_join( df1, df2, by = "f", relationship = "many-to-many")),  c(2,4))
@@ -649,9 +649,9 @@ test_that("joins respect zero length groups", {
   expect_equal(duckplyr_group_size(duckplyr_inner_join( df1, df2, by = "f", relationship = "many-to-many")),  c(4))
 
 
-  df1 <- tibble(f = factor( c(1,1,2,2), levels = 1:3), x = c(1,2,1,4)) %>%
+  df1 <- tibble(f = factor( c(1,1,2,2), levels = 1:3), x = c(1,2,1,4)) |>
     duckplyr_group_by(f, .drop = FALSE)
-  df2 <- tibble(f = factor( c(2,2,3,3), levels = 1:3), y = c(1,2,3,4)) %>%
+  df2 <- tibble(f = factor( c(2,2,3,3), levels = 1:3), y = c(1,2,3,4)) |>
     duckplyr_group_by(f, .drop = FALSE)
 
   expect_equal(duckplyr_group_size(duckplyr_left_join( df1, df2, by = "f", relationship = "many-to-many")),  c(2,4,0))
@@ -662,7 +662,7 @@ test_that("joins respect zero length groups", {
 })
 
 test_that("group column names reflect renamed duplicate columns (#2330)", {
-  df1 <- tibble(x = 1:5, y = 1:5) %>% duckplyr_group_by(x, y)
+  df1 <- tibble(x = 1:5, y = 1:5) |> duckplyr_group_by(x, y)
   df2 <- tibble(x = 1:5, y = 1:5)
 
   out <- duckplyr_inner_join(df1, df2, by = "x")

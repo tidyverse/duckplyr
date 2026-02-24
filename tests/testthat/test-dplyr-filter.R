@@ -65,7 +65,7 @@ test_that("filter propagates attributes", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   date.start <- ISOdate(2010, 01, 01, 0)
   test <- data.frame(Date = ISOdate(2010, 01, 01, 1:10))
-  test2 <- test %>% duckplyr_filter(Date < ISOdate(2010, 01, 01, 5))
+  test2 <- test |> duckplyr_filter(Date < ISOdate(2010, 01, 01, 5))
   expect_equal(test$Date[1:4], test2$Date)
 })
 
@@ -84,9 +84,9 @@ test_that("date class remains on filter (#273)", {
     date = seq.Date(as.Date("2013-01-01"), by = "1 days", length.out = 2),
     var = c(5, 8)
   )
-  x1.filter <- x1 %>% duckplyr_filter(as.Date(date) > as.Date("2013-01-01"))
+  x1.filter <- x1 |> duckplyr_filter(as.Date(date) > as.Date("2013-01-01"))
   x2$date <- x2$date + 1
-  x2.filter <- x2 %>% duckplyr_filter(as.Date(date) > as.Date("2013-01-01"))
+  x2.filter <- x2 |> duckplyr_filter(as.Date(date) > as.Date("2013-01-01"))
 
   expect_equal(class(x1.filter$date), "Date")
   expect_equal(class(x2.filter$date), "Date")
@@ -99,8 +99,8 @@ test_that("filter handles $ correctly (#278)", {
   )
   d2 <- data.frame(num1 = as.character(1:3), stringsAsFactors = FALSE)
 
-  res1 <- d1 %>% duckplyr_filter(num1 %in% c("1", "2", "3"))
-  res2 <- d1 %>% duckplyr_filter(num1 %in% d2$num1)
+  res1 <- d1 |> duckplyr_filter(num1 %in% c("1", "2", "3"))
+  res2 <- d1 |> duckplyr_filter(num1 %in% d2$num1)
   expect_equal(res1, res2)
 })
 
@@ -115,14 +115,14 @@ test_that("$ does not end call traversing. #502", {
   analysis_opts <- list(min_outcome = 0.25)
 
   # Generate some dummy data
-  d <- expand.grid(Subject = 1:3, TrialNo = 1:2, Time = 1:3) %>%
-    as_tibble() %>%
-    duckplyr_arrange(Subject, TrialNo, Time) %>%
+  d <- expand.grid(Subject = 1:3, TrialNo = 1:2, Time = 1:3) |>
+    as_tibble() |>
+    duckplyr_arrange(Subject, TrialNo, Time) |>
     duckplyr_mutate(Outcome = (1:18 %% c(5, 7, 11)) / 10)
 
   # Do some aggregation
-  trial_outcomes <- d %>%
-    duckplyr_group_by(Subject, TrialNo) %>%
+  trial_outcomes <- d |>
+    duckplyr_group_by(Subject, TrialNo) |>
     duckplyr_summarise(MeanOutcome = mean(Outcome), .groups = "drop")
 
   left <- duckplyr_filter(trial_outcomes, MeanOutcome < analysis_opts$min_outcome)
@@ -158,10 +158,10 @@ test_that("filter handles complex vectors (#436)", {
 test_that("%in% works as expected (#126)", {
   df <- tibble(a = c("a", "b", "ab"), g = c(1, 1, 2))
 
-  res <- df %>% duckplyr_filter(a %in% letters)
+  res <- df |> duckplyr_filter(a %in% letters)
   expect_equal(nrow(res), 2L)
 
-  res <- df %>% duckplyr_group_by(g) %>% duckplyr_filter(a %in% letters)
+  res <- df |> duckplyr_group_by(g) |> duckplyr_filter(a %in% letters)
   expect_equal(nrow(res), 2L)
 })
 
@@ -169,7 +169,7 @@ test_that("row_number does not segfault with example from #781", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   z <- data.frame(a = c(1, 2, 3))
   b <- "a"
-  res <- z %>% duckplyr_filter(row_number(b) == 2)
+  res <- z |> duckplyr_filter(row_number(b) == 2)
   expect_equal(nrow(res), 0L)
 })
 
@@ -188,13 +188,13 @@ test_that("filter does not alter expression (#971)", {
 
 test_that("hybrid evaluation handles $ correctly (#1134)", {
   df <- tibble(x = 1:10, g = rep(1:5, 2))
-  res <- df %>% duckplyr_group_by(g) %>% duckplyr_filter(x > min(df$x))
+  res <- df |> duckplyr_group_by(g) |> duckplyr_filter(x > min(df$x))
   expect_equal(nrow(res), 9L)
 })
 
 test_that("filter correctly handles empty data frames (#782)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
-  res <- tibble() %>% duckplyr_filter(F)
+  res <- tibble() |> duckplyr_filter(F)
   expect_equal(nrow(res), 0L)
   expect_equal(length(names(res)), 0L)
 })
@@ -211,28 +211,28 @@ test_that("filter, slice and arrange preserves attributes (#1064)", {
     data.frame(x = 1:10, g1 = rep(1:2, each = 5), g2 = rep(1:5, 2)),
     meta = "this is important"
   )
-  res <- duckplyr_filter(df, x < 5) %>% attr("meta")
+  res <- duckplyr_filter(df, x < 5) |> attr("meta")
   expect_equal(res, "this is important")
 
-  res <- duckplyr_filter(df, x < 5, x > 4) %>% attr("meta")
+  res <- duckplyr_filter(df, x < 5, x > 4) |> attr("meta")
   expect_equal(res, "this is important")
 
-  res <- df %>% duckplyr_slice(1:50) %>% attr("meta")
+  res <- df |> duckplyr_slice(1:50) |> attr("meta")
   expect_equal(res, "this is important")
 
-  res <- df %>% duckplyr_arrange(x) %>% attr("meta")
+  res <- df |> duckplyr_arrange(x) |> attr("meta")
   expect_equal(res, "this is important")
 })
 
 test_that("filter works with rowwise data (#1099)", {
   df <- tibble(First = c("string1", "string2"), Second = c("Sentence with string1", "something"))
-  res <- df %>% duckplyr_rowwise() %>% duckplyr_filter(grepl(First, Second, fixed = TRUE))
+  res <- df |> duckplyr_rowwise() |> duckplyr_filter(grepl(First, Second, fixed = TRUE))
   expect_equal(nrow(res), 1L)
   expect_equal(df[1, ], duckplyr_ungroup(res))
 })
 
 test_that("grouped filter handles indices (#880)", {
-  res <- iris %>% duckplyr_group_by(Species) %>% duckplyr_filter(Sepal.Length > 5)
+  res <- iris |> duckplyr_group_by(Species) |> duckplyr_filter(Sepal.Length > 5)
   res2 <- duckplyr_mutate(res, Petal = Petal.Width * Petal.Length)
   expect_equal(nrow(res), nrow(res2))
   expect_equal(group_rows(res), group_rows(res2))
@@ -240,15 +240,15 @@ test_that("grouped filter handles indices (#880)", {
 })
 
 test_that("duckplyr_filter(FALSE) handles indices", {
-  out <- mtcars %>%
-    duckplyr_group_by(cyl) %>%
-    duckplyr_filter(FALSE, .preserve = TRUE) %>%
+  out <- mtcars |>
+    duckplyr_group_by(cyl) |>
+    duckplyr_filter(FALSE, .preserve = TRUE) |>
     group_rows()
   expect_identical(out, list_of(integer(), integer(), integer(), .ptype = integer()))
 
-  out <- mtcars %>%
-    duckplyr_group_by(cyl) %>%
-    duckplyr_filter(FALSE, .preserve = FALSE) %>%
+  out <- mtcars |>
+    duckplyr_group_by(cyl) |>
+    duckplyr_filter(FALSE, .preserve = FALSE) |>
     group_rows()
   expect_identical(out, list_of(.ptype = integer()))
 })
@@ -272,15 +272,15 @@ test_that("filter handles S4 objects (#1366)", {
 })
 
 test_that("hybrid lag and default value for string columns work (#1403)", {
-  res <- mtcars %>%
-    duckplyr_mutate(xx = LETTERS[gear]) %>%
+  res <- mtcars |>
+    duckplyr_mutate(xx = LETTERS[gear]) |>
     duckplyr_filter(xx == lag(xx, default = "foo"))
   xx <- LETTERS[mtcars$gear]
   ok <- xx == lag(xx, default = "foo")
   expect_equal(xx[ok], res$xx)
 
-  res <- mtcars %>%
-    duckplyr_mutate(xx = LETTERS[gear]) %>%
+  res <- mtcars |>
+    duckplyr_mutate(xx = LETTERS[gear]) |>
     duckplyr_filter(xx == lead(xx, default = "foo"))
   xx <- LETTERS[mtcars$gear]
   ok <- xx == lead(xx, default = "foo")
@@ -297,44 +297,44 @@ test_that("filter handles raw vectors (#1803)", {
 })
 
 test_that("`vars` attribute is not added if empty (#2772)", {
-  expect_identical(tibble(x = 1:2) %>% duckplyr_filter(x == 1), tibble(x = 1L))
+  expect_identical(tibble(x = 1:2) |> duckplyr_filter(x == 1), tibble(x = 1L))
 })
 
 test_that("filter handles list columns", {
-  res <- tibble(a=1:2, x = list(1:10, 1:5)) %>%
-    duckplyr_filter(a == 1) %>%
+  res <- tibble(a=1:2, x = list(1:10, 1:5)) |>
+    duckplyr_filter(a == 1) |>
     duckplyr_pull(x)
   expect_equal(res, list(1:10))
 
-  res <- tibble(a=1:2, x = list(1:10, 1:5)) %>%
-    duckplyr_group_by(a) %>%
-    duckplyr_filter(a == 1) %>%
+  res <- tibble(a=1:2, x = list(1:10, 1:5)) |>
+    duckplyr_group_by(a) |>
+    duckplyr_filter(a == 1) |>
     duckplyr_pull(x)
   expect_equal(res, list(1:10))
 })
 
 test_that("hybrid function row_number does not trigger warning in filter (#3750)", {
   out <- tryCatch({
-    mtcars %>% duckplyr_filter(row_number() > 1, row_number() < 5); TRUE
+    mtcars |> duckplyr_filter(row_number() > 1, row_number() < 5); TRUE
   }, warning = function(w) FALSE )
   expect_true(out)
 })
 
 test_that("duckplyr_filter() preserve order across groups (#3989)", {
   df <- tibble(g = c(1, 2, 1, 2, 1), time = 5:1, x = 5:1)
-  res1 <- df %>%
-    duckplyr_group_by(g) %>%
-    duckplyr_filter(x <= 4) %>%
+  res1 <- df |>
+    duckplyr_group_by(g) |>
+    duckplyr_filter(x <= 4) |>
     duckplyr_arrange(time)
 
-  res2 <- df %>%
-    duckplyr_group_by(g) %>%
-    duckplyr_arrange(time) %>%
+  res2 <- df |>
+    duckplyr_group_by(g) |>
+    duckplyr_arrange(time) |>
     duckplyr_filter(x <= 4)
 
-  res3 <- df %>%
-    duckplyr_filter(x <= 4) %>%
-    duckplyr_arrange(time) %>%
+  res3 <- df |>
+    duckplyr_filter(x <= 4) |>
+    duckplyr_arrange(time) |>
     duckplyr_group_by(g)
 
   expect_equal(res1, res2)
@@ -347,8 +347,8 @@ test_that("duckplyr_filter() preserve order across groups (#3989)", {
 test_that("duckplyr_filter() with two conditions does not freeze (#4049)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_identical(
-    iris %>% duckplyr_filter(Sepal.Length > 7, Petal.Length < 6),
-    iris %>% duckplyr_filter(Sepal.Length > 7 & Petal.Length < 6)
+    iris |> duckplyr_filter(Sepal.Length > 7, Petal.Length < 6),
+    iris |> duckplyr_filter(Sepal.Length > 7 & Petal.Length < 6)
   )
 })
 
@@ -386,15 +386,15 @@ test_that("duckplyr_filter() handles named logical (#4638)", {
 })
 
 test_that("duckplyr_filter() allows named constants that resolve to logical vectors (#4612)", {
-  filters <- mtcars %>%
+  filters <- mtcars |>
     duckplyr_transmute(
       cyl %in% 6:8,
       hp / drat > 50
     )
 
   expect_identical(
-    mtcars %>% duckplyr_filter(!!!filters),
-    mtcars %>% duckplyr_filter(!!!unname(filters))
+    mtcars |> duckplyr_filter(!!!filters),
+    mtcars |> duckplyr_filter(!!!unname(filters))
   )
 })
 
@@ -443,12 +443,12 @@ test_that("duckplyr_filter() gives useful error messages", {
   expect_snapshot({
     # wrong type
     (expect_error(
-      iris %>%
-        duckplyr_group_by(Species) %>%
+      iris |>
+        duckplyr_group_by(Species) |>
         duckplyr_filter(1:n())
     ))
     (expect_error(
-      iris %>%
+      iris |>
         duckplyr_filter(1:n())
     ))
 
@@ -459,58 +459,58 @@ test_that("duckplyr_filter() gives useful error messages", {
 
     # wrong size
     (expect_error(
-      iris %>%
-        duckplyr_group_by(Species) %>%
+      iris |>
+        duckplyr_group_by(Species) |>
         duckplyr_filter(c(TRUE, FALSE))
     ))
     (expect_error(
-                    iris %>%
-                      duckplyr_rowwise(Species) %>%
+                    iris |>
+                      duckplyr_rowwise(Species) |>
                       duckplyr_filter(c(TRUE, FALSE))
     ))
     (expect_error(
-                    iris %>%
+                    iris |>
                       duckplyr_filter(c(TRUE, FALSE))
     ))
 
     # wrong size in column
     (expect_error(
-                    iris %>%
-                      duckplyr_group_by(Species) %>%
+                    iris |>
+                      duckplyr_group_by(Species) |>
                       duckplyr_filter(data.frame(c(TRUE, FALSE)))
     ))
     (expect_error(
-                    iris %>%
-                      duckplyr_rowwise() %>%
+                    iris |>
+                      duckplyr_rowwise() |>
                       duckplyr_filter(data.frame(c(TRUE, FALSE)))
     ))
     (expect_error(
-                    iris %>%
+                    iris |>
                       duckplyr_filter(data.frame(c(TRUE, FALSE)))
     ))
     (expect_error(
-                    tibble(x = 1) %>%
+                    tibble(x = 1) |>
                       duckplyr_filter(c(TRUE, TRUE))
     ))
 
     # wrong type in column
     (expect_error(
-                    iris %>%
-                      duckplyr_group_by(Species) %>%
+                    iris |>
+                      duckplyr_group_by(Species) |>
                       duckplyr_filter(data.frame(Sepal.Length > 3, 1:n()))
     ))
     (expect_error(
-                    iris %>%
+                    iris |>
                       duckplyr_filter(data.frame(Sepal.Length > 3, 1:n()))
     ))
 
     # evaluation error
     (expect_error(
-      mtcars %>% duckplyr_filter(`_x`)
+      mtcars |> duckplyr_filter(`_x`)
     ))
     (expect_error(
-                    mtcars %>%
-                      duckplyr_group_by(cyl) %>%
+                    mtcars |>
+                      duckplyr_group_by(cyl) |>
                       duckplyr_filter(`_x`)
     ))
 
@@ -532,14 +532,14 @@ test_that("duckplyr_filter() gives useful error messages", {
 
     # Error that contains {
     (expect_error(
-      tibble() %>% duckplyr_filter(stop("{"))
+      tibble() |> duckplyr_filter(stop("{"))
     ))
 
     # across() in duckplyr_filter() does not warn yet
-    data.frame(x = 1, y = 1) %>%
+    data.frame(x = 1, y = 1) |>
       duckplyr_filter(across(everything(), ~ .x > 0))
 
-    data.frame(x = 1, y = 1) %>%
+    data.frame(x = 1, y = 1) |>
       duckplyr_filter(data.frame(x > 0, y > 0))
   })
 })

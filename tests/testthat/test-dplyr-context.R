@@ -10,11 +10,11 @@ test_that("cur_group() works", {
   gf <- duckplyr_group_by(df, g)
 
   expect_equal(
-    df %>% duckplyr_summarise(key = list(cur_group())) %>% duckplyr_pull(key),
+    df |> duckplyr_summarise(key = list(cur_group())) |> duckplyr_pull(key),
     list(tibble(.rows = 1L))
   )
   expect_equal(
-    gf %>% duckplyr_summarise(key = list(cur_group())) %>% duckplyr_pull(key),
+    gf |> duckplyr_summarise(key = list(cur_group())) |> duckplyr_pull(key),
     list(tibble(g = 1))
   )
 
@@ -50,12 +50,12 @@ test_that("cur_group_rows() retrieves row position in original data", {
   gf <- duckplyr_group_by(df, x)
 
   expect_equal(
-    df %>% duckplyr_summarise(x = list(cur_group_rows())) %>% duckplyr_pull(),
+    df |> duckplyr_summarise(x = list(cur_group_rows())) |> duckplyr_pull(),
     list(1:3)
   )
 
   expect_equal(
-    gf %>% duckplyr_summarise(x = list(cur_group_rows())) %>% duckplyr_pull(),
+    gf |> duckplyr_summarise(x = list(cur_group_rows())) |> duckplyr_pull(),
     list(2L, c(1L, 3L))
   )
 })

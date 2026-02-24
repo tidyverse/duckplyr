@@ -6,7 +6,7 @@ test_that("Dummy", { expect_true(TRUE) })
 skip_if(Sys.getenv("DUCKPLYR_SKIP_DPLYR_TESTS") == "TRUE")
 
 test_that("non-syntactic grouping variable is preserved (#1138)", {
-  df <- tibble(`a b` = 1L) %>% duckplyr_group_by(`a b`) %>% duckplyr_transmute()
+  df <- tibble(`a b` = 1L) |> duckplyr_group_by(`a b`) |> duckplyr_transmute()
   expect_named(df, "a b")
 })
 
@@ -30,8 +30,8 @@ test_that("transmute with no args returns grouping vars", {
   df <- tibble(x = 1, y = 2)
   gf <- duckplyr_group_by(df, x)
 
-  expect_equal(df %>% duckplyr_transmute(), df[integer()])
-  expect_equal(gf %>% duckplyr_transmute(), gf[1L])
+  expect_equal(df |> duckplyr_transmute(), df[integer()])
+  expect_equal(gf |> duckplyr_transmute(), gf[1L])
 })
 
 # transmute variables -----------------------------------------------
@@ -71,8 +71,8 @@ test_that("duckplyr_transmute() does not warn when a variable is removed with = 
 test_that("duckplyr_transmute() can handle auto splicing", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_equal(
-    iris %>% duckplyr_transmute(tibble(Sepal.Length, Sepal.Width)),
-    iris %>% duckplyr_select(Sepal.Length, Sepal.Width)
+    iris |> duckplyr_transmute(tibble(Sepal.Length, Sepal.Width)),
+    iris |> duckplyr_select(Sepal.Length, Sepal.Width)
   )
 })
 

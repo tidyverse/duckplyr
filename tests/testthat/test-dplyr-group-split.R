@@ -48,19 +48,19 @@ test_that("group_split.grouped_df() works", {
   iris <- as_tibble(iris)
 
   expect_identical(
-    iris %>% duckplyr_group_by(Species) %>% duckplyr_group_split(),
-    iris %>% duckplyr_group_split(Species)
+    iris |> duckplyr_group_by(Species) |> duckplyr_group_split(),
+    iris |> duckplyr_group_split(Species)
   )
 })
 
 test_that("group_split / bind_rows round trip", {
-  setosa <- iris %>% duckplyr_filter(Species == "setosa") %>% as_tibble()
+  setosa <- iris |> duckplyr_filter(Species == "setosa") |> as_tibble()
 
-  chunks <- setosa %>% duckplyr_group_split(Species)
+  chunks <- setosa |> duckplyr_group_split(Species)
   expect_identical(length(chunks), 1L)
   expect_identical(bind_rows(chunks), setosa)
 
-  chunks <- setosa %>% duckplyr_group_split(Species, .drop = FALSE)
+  chunks <- setosa |> duckplyr_group_split(Species, .drop = FALSE)
   expect_identical(length(chunks), 3L)
   expect_identical(bind_rows(chunks), setosa)
 })
@@ -85,7 +85,7 @@ test_that("duckplyr_group_split(keep=FALSE) does not try to remove virtual group
 })
 
 test_that("duckplyr_group_split() respects .drop", {
-  chunks <- tibble(f = factor("b", levels = c("a", "b", "c"))) %>%
+  chunks <- tibble(f = factor("b", levels = c("a", "b", "c"))) |>
     duckplyr_group_split(f, .drop = TRUE)
   expect_identical(length(chunks), 1L)
 })

@@ -28,7 +28,7 @@ test_that("distinct for single column works as expected (#1937)", {
 
 test_that("distinct works for 0-sized columns (#1437)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
-  df <- tibble(x = 1:10) %>% duckplyr_select(-x)
+  df <- tibble(x = 1:10) |> duckplyr_select(-x)
   ddf <- duckplyr_distinct(df)
   expect_equal(df_n_col(ddf), 0L)
 })
@@ -40,35 +40,35 @@ test_that("if no variables specified, uses all", {
 
 test_that("distinct keeps only specified cols", {
   df <- tibble(x = c(1, 1, 1), y = c(1, 1, 1))
-  expect_equal(df %>% duckplyr_distinct(x), tibble(x = 1))
+  expect_equal(df |> duckplyr_distinct(x), tibble(x = 1))
 })
 
 test_that("unless .keep_all = TRUE", {
   df <- tibble(x = c(1, 1, 1), y = 3:1)
 
-  expect_equal(df %>% duckplyr_distinct(x), tibble(x = 1))
-  expect_equal(df %>% duckplyr_distinct(x, .keep_all = TRUE), tibble(x = 1, y = 3L))
+  expect_equal(df |> duckplyr_distinct(x), tibble(x = 1))
+  expect_equal(df |> duckplyr_distinct(x, .keep_all = TRUE), tibble(x = 1, y = 3L))
 })
 
 test_that("distinct doesn't duplicate columns", {
   df <- tibble(a = 1:3, b = 4:6)
 
-  expect_named(df %>% duckplyr_distinct(a, a), "a")
-  expect_named(df %>% duckplyr_group_by(a) %>% duckplyr_distinct(a), "a")
+  expect_named(df |> duckplyr_distinct(a, a), "a")
+  expect_named(df |> duckplyr_group_by(a) |> duckplyr_distinct(a), "a")
 })
 
 test_that("grouped distinct always includes group cols", {
   df <- tibble(g = c(1, 2), x = c(1, 2))
 
-  out <- df %>% duckplyr_group_by(g) %>% duckplyr_distinct(x)
+  out <- df |> duckplyr_group_by(g) |> duckplyr_distinct(x)
   expect_named(out, c("g", "x"))
 })
 
 test_that("empty grouped distinct equivalent to empty ungrouped", {
   df <- tibble(g = c(1, 2), x = c(1, 2))
 
-  df1 <- df %>% duckplyr_distinct() %>% duckplyr_group_by(g)
-  df2 <- df %>% duckplyr_group_by(g) %>% duckplyr_distinct()
+  df1 <- df |> duckplyr_distinct() |> duckplyr_group_by(g)
+  df2 <- df |> duckplyr_group_by(g) |> duckplyr_distinct()
 
   expect_equal(df1, df2)
 })
@@ -76,8 +76,8 @@ test_that("empty grouped distinct equivalent to empty ungrouped", {
 test_that("distinct on a new, mutated variable is equivalent to mutate followed by distinct", {
   df <- tibble(g = c(1, 2), x = c(1, 2))
 
-  df1 <- df %>% duckplyr_distinct(aa = g * 2)
-  df2 <- df %>% duckplyr_mutate(aa = g * 2) %>% duckplyr_distinct(aa)
+  df1 <- df |> duckplyr_distinct(aa = g * 2)
+  df2 <- df |> duckplyr_mutate(aa = g * 2) |> duckplyr_distinct(aa)
 
   expect_equal(df1, df2)
 })
@@ -85,8 +85,8 @@ test_that("distinct on a new, mutated variable is equivalent to mutate followed 
 test_that("distinct on a new, copied variable is equivalent to mutate followed by distinct (#3234)", {
   df <- tibble(g = c(1, 2), x = c(1, 2))
 
-  df1 <- df %>% duckplyr_distinct(aa = g)
-  df2 <- df %>% duckplyr_mutate(aa = g) %>% duckplyr_distinct(aa)
+  df1 <- df |> duckplyr_distinct(aa = g)
+  df2 <- df |> duckplyr_mutate(aa = g) |> duckplyr_distinct(aa)
 
   expect_equal(df1, df2)
 })
@@ -99,8 +99,8 @@ test_that("distinct on a dataframe or tibble with columns of type list throws an
   )
   df2 <- data.frame(x = 1:5, y = I(list(1:3, 2:4, 3:5, 4:6, 5:7)))
 
-  expect_identical(df2 %>% duckplyr_distinct(), df2)
-  expect_identical(df %>% duckplyr_distinct(), df %>% duckplyr_slice(c(1, 3, 5)))
+  expect_identical(df2 |> duckplyr_distinct(), df2)
+  expect_identical(df |> duckplyr_distinct(), df |> duckplyr_slice(c(1, 3, 5)))
 })
 
 test_that("distinct handles 0 columns edge case (#2954)", {
@@ -142,18 +142,18 @@ test_that("duckplyr_distinct() understands both NA variants (#4516)", {
 test_that("duckplyr_distinct() handles auto splicing", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   expect_equal(
-    iris %>% duckplyr_distinct(Species),
-    iris %>% duckplyr_distinct(data.frame(Species=Species))
+    iris |> duckplyr_distinct(Species),
+    iris |> duckplyr_distinct(data.frame(Species=Species))
   )
 
   expect_equal(
-    iris %>% duckplyr_distinct(Species),
-    iris %>% duckplyr_distinct(pick(Species))
+    iris |> duckplyr_distinct(Species),
+    iris |> duckplyr_distinct(pick(Species))
   )
 
   expect_equal(
-    iris %>% duckplyr_mutate(across(starts_with("Sepal"), round)) %>% duckplyr_distinct(Sepal.Length, Sepal.Width),
-    iris %>% duckplyr_distinct(across(starts_with("Sepal"), round))
+    iris |> duckplyr_mutate(across(starts_with("Sepal"), round)) |> duckplyr_distinct(Sepal.Length, Sepal.Width),
+    iris |> duckplyr_distinct(across(starts_with("Sepal"), round))
   )
 })
 
@@ -187,10 +187,10 @@ test_that("distinct errors when selecting an unknown column (#3140)", {
   expect_snapshot({
     df <- tibble(g = c(1, 2), x = c(1, 2))
 
-    (expect_error(df %>% duckplyr_distinct(aa, x)))
-    (expect_error(df %>% duckplyr_distinct(aa, bb)))
-    (expect_error(df %>% duckplyr_distinct(.data$aa)))
+    (expect_error(df |> duckplyr_distinct(aa, x)))
+    (expect_error(df |> duckplyr_distinct(aa, bb)))
+    (expect_error(df |> duckplyr_distinct(.data$aa)))
 
-    (expect_error(df %>% duckplyr_distinct(y = a + 1)))
+    (expect_error(df |> duckplyr_distinct(y = a + 1)))
   })
 })

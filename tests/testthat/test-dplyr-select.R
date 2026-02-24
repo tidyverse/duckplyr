@@ -14,26 +14,26 @@ test_that("select preserves grouping", {
 })
 
 test_that("grouping variables preserved with a message, unless already selected (#1511, #5841)", {
-  df <- tibble(g = 1:3, x = 3:1) %>% duckplyr_group_by(g)
+  df <- tibble(g = 1:3, x = 3:1) |> duckplyr_group_by(g)
 
   expect_snapshot({
     res <- duckplyr_select(df, x)
   })
   expect_named(res, c("g", "x"))
 
-  df <- tibble(a = 1, b = 2, c = 3) %>% duckplyr_group_by(a)
-  expect_equal(df %>% duckplyr_select(a = b), tibble(a = 2))
+  df <- tibble(a = 1, b = 2, c = 3) |> duckplyr_group_by(a)
+  expect_equal(df |> duckplyr_select(a = b), tibble(a = 2))
 
-  df <- tibble(a = 1, b = 2, c = 3) %>% duckplyr_group_by(a, b)
+  df <- tibble(a = 1, b = 2, c = 3) |> duckplyr_group_by(a, b)
   expect_snapshot({
-    expect_equal(df %>% duckplyr_select(a = c), tibble(b = 2, a = 3) %>% duckplyr_group_by(b))
-    expect_equal(df %>% duckplyr_select(b = c), tibble(a = 1, b = 3) %>% duckplyr_group_by(a))
+    expect_equal(df |> duckplyr_select(a = c), tibble(b = 2, a = 3) |> duckplyr_group_by(b))
+    expect_equal(df |> duckplyr_select(b = c), tibble(a = 1, b = 3) |> duckplyr_group_by(a))
   })
 })
 
 test_that("non-syntactic grouping variable is preserved (#1138)", {
   expect_snapshot(
-    df <- tibble(`a b` = 1L) %>% duckplyr_group_by(`a b`) %>% duckplyr_select()
+    df <- tibble(`a b` = 1L) |> duckplyr_group_by(`a b`) |> duckplyr_select()
   )
   expect_named(df, "a b")
 })
@@ -77,10 +77,10 @@ test_that("can select with duplicate columns", {
   df <- tibble(x = 1, x = 2, y = 1, .name_repair = "minimal")
 
   # can extract duplicate cols by position
-  expect_named(df %>% duckplyr_select(1, 3), c("x", "y"))
+  expect_named(df |> duckplyr_select(1, 3), c("x", "y"))
 
   # can select out non-duplicated columns
-  expect_named(df %>% duckplyr_select(y), "y")
+  expect_named(df |> duckplyr_select(y), "y")
 })
 
 # Select variables -----------------------------------------------
@@ -91,9 +91,9 @@ test_that("select can be before group_by (#309)", {
     year = c(2013, 2013, 2012, 2013, 2013, 2013, 2012, 2012, 2013, 2013),
     var1 = rnorm(10)
   )
-  dfagg <- df %>%
-    duckplyr_group_by(id, year) %>%
-    duckplyr_select(id, year, var1) %>%
+  dfagg <- df |>
+    duckplyr_group_by(id, year) |>
+    duckplyr_select(id, year, var1) |>
     duckplyr_summarise(var1 = mean(var1))
   expect_equal(names(dfagg), c("id", "year", "var1"))
 })

@@ -27,8 +27,8 @@ test_that("can sort empty data frame", {
 test_that("local arrange sorts missing values to end", {
   df <- data.frame(x = c(2, 1, NA))
 
-  expect_equal(df %>% duckplyr_arrange(x) %>% duckplyr_pull(), c(1, 2, NA))
-  expect_equal(df %>% duckplyr_arrange(desc(x)) %>% duckplyr_pull(), c(2, 1, NA))
+  expect_equal(df |> duckplyr_arrange(x) |> duckplyr_pull(), c(1, 2, NA))
+  expect_equal(df |> duckplyr_arrange(desc(x)) |> duckplyr_pull(), c(2, 1, NA))
 })
 
 test_that("duckplyr_arrange() gives meaningful errors", {
@@ -36,15 +36,15 @@ test_that("duckplyr_arrange() gives meaningful errors", {
   expect_snapshot({
     # duplicated column name
     (expect_error(
-      tibble(x = 1, x = 1, .name_repair = "minimal") %>% duckplyr_arrange(x)
+      tibble(x = 1, x = 1, .name_repair = "minimal") |> duckplyr_arrange(x)
     ))
 
     # error in duckplyr_mutate() step
     (expect_error(
-      tibble(x = 1) %>% duckplyr_arrange(y)
+      tibble(x = 1) |> duckplyr_arrange(y)
     ))
     (expect_error(
-      tibble(x = 1) %>% duckplyr_arrange(rep(x, 2))
+      tibble(x = 1) |> duckplyr_arrange(rep(x, 2))
     ))
   })
 
@@ -207,7 +207,7 @@ test_that("arrange validates that `.locale` must be one from stringi", {
 test_that("arrange preserves input class", {
   df1 <- data.frame(x = 1:3, y = 3:1)
   df2 <- tibble(x = 1:3, y = 3:1)
-  df3 <- df1 %>% duckplyr_group_by(x)
+  df3 <- df1 |> duckplyr_group_by(x)
 
   expect_s3_class(duckplyr_arrange(df1, x), "data.frame", exact = TRUE)
   expect_s3_class(duckplyr_arrange(df2, x), "tbl_df")
@@ -224,7 +224,7 @@ test_that("grouped arrange ignores group, unless requested with .by_group", {
 
 test_that("arrange updates the grouping structure (#605)", {
   df <- tibble(g = c(2, 2, 1, 1), x = c(1, 3, 2, 4))
-  res <- df %>% duckplyr_group_by(g) %>% duckplyr_arrange(x)
+  res <- df |> duckplyr_group_by(g) |> duckplyr_arrange(x)
   expect_s3_class(res, "grouped_df")
   expect_equal(group_rows(res), list_of(c(2L, 4L), c(1L, 3L)))
 })
@@ -234,20 +234,20 @@ test_that("duckplyr_arrange() supports across() and pick() (#4679)", {
   df <- tibble(x = c(1, 3, 2, 1), y = c(4, 3, 2, 1))
 
   expect_identical(
-    df %>% duckplyr_arrange(pick(everything())),
-    df %>% duckplyr_arrange(x, y)
+    df |> duckplyr_arrange(pick(everything())),
+    df |> duckplyr_arrange(x, y)
   )
   expect_identical(
-    df %>% duckplyr_arrange(across(everything(), .fns = desc)),
-    df %>% duckplyr_arrange(desc(x), desc(y))
+    df |> duckplyr_arrange(across(everything(), .fns = desc)),
+    df |> duckplyr_arrange(desc(x), desc(y))
   )
   expect_identical(
-    df %>% duckplyr_arrange(pick(x)),
-    df %>% duckplyr_arrange(x)
+    df |> duckplyr_arrange(pick(x)),
+    df |> duckplyr_arrange(x)
   )
   expect_identical(
-    df %>% duckplyr_arrange(across(y, .fns = identity)),
-    df %>% duckplyr_arrange(y)
+    df |> duckplyr_arrange(across(y, .fns = identity)),
+    df |> duckplyr_arrange(y)
   )
 })
 
@@ -405,8 +405,8 @@ test_that("legacy - local arrange sorts missing values to end", {
 
   df <- data.frame(x = c(2, 1, NA))
 
-  expect_equal(df %>% duckplyr_arrange(x) %>% duckplyr_pull(), c(1, 2, NA))
-  expect_equal(df %>% duckplyr_arrange(desc(x)) %>% duckplyr_pull(), c(2, 1, NA))
+  expect_equal(df |> duckplyr_arrange(x) |> duckplyr_pull(), c(1, 2, NA))
+  expect_equal(df |> duckplyr_arrange(desc(x)) |> duckplyr_pull(), c(2, 1, NA))
 })
 
 test_that("legacy - arrange handles list columns (#282)", {
@@ -499,20 +499,20 @@ test_that("legacy - duckplyr_arrange() supports across() and pick() (#4679)", {
   df <- tibble(x = c(1, 3, 2, 1), y = c(4, 3, 2, 1))
 
   expect_identical(
-    df %>% duckplyr_arrange(pick(everything())),
-    df %>% duckplyr_arrange(x, y)
+    df |> duckplyr_arrange(pick(everything())),
+    df |> duckplyr_arrange(x, y)
   )
   expect_identical(
-    df %>% duckplyr_arrange(across(everything(), .fns = desc)),
-    df %>% duckplyr_arrange(desc(x), desc(y))
+    df |> duckplyr_arrange(across(everything(), .fns = desc)),
+    df |> duckplyr_arrange(desc(x), desc(y))
   )
   expect_identical(
-    df %>% duckplyr_arrange(pick(x)),
-    df %>% duckplyr_arrange(x)
+    df |> duckplyr_arrange(pick(x)),
+    df |> duckplyr_arrange(x)
   )
   expect_identical(
-    df %>% duckplyr_arrange(across(y, .fns = identity)),
-    df %>% duckplyr_arrange(y)
+    df |> duckplyr_arrange(across(y, .fns = identity)),
+    df |> duckplyr_arrange(y)
   )
 })
 

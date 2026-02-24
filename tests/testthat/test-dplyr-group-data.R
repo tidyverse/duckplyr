@@ -69,7 +69,7 @@ test_that("duckplyr_group_indices(...) is deprecated", {
   rlang::local_options(lifecycle_verbosity = "error")
 
   df <- tibble(x = 1, y = 2)
-  expect_error(df %>% duckplyr_group_indices(x), "deprecated")
+  expect_error(df |> duckplyr_group_indices(x), "deprecated")
 })
 
 test_that("duckplyr_group_indices() returns expected values", {
@@ -104,7 +104,7 @@ test_that("rowwise data has one group for each group", {
 })
 
 test_that("group_size correct for grouped data", {
-  df <- tibble(x = rep(1:3, each = 10), y = rep(1:6, each = 5)) %>% duckplyr_group_by(x)
+  df <- tibble(x = rep(1:3, each = 10), y = rep(1:6, each = 5)) |> duckplyr_group_by(x)
   expect_equal(duckplyr_n_groups(df), 3L)
   expect_equal(duckplyr_group_size(df), rep(10, 3))
 })
@@ -112,6 +112,6 @@ test_that("group_size correct for grouped data", {
 # n_groups ----------------------------------------------------------------
 
 test_that("n_groups respects zero-length groups (#341)", {
-  df <- tibble(x = factor(1:3, levels = 1:4)) %>% duckplyr_group_by(x, .drop = FALSE)
+  df <- tibble(x = factor(1:3, levels = 1:4)) |> duckplyr_group_by(x, .drop = FALSE)
   expect_equal(duckplyr_n_groups(df), 4)
 })

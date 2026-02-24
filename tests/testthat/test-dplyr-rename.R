@@ -21,7 +21,7 @@ test_that("arguments to duckplyr_rename() don't match vars_rename() arguments (#
 test_that("duckplyr_rename() to UTF-8 column names", {
   skip_if_not(l10n_info()$"UTF-8")
 
-  df <- tibble(a = 1) %>% duckplyr_rename("\u5e78" := a)
+  df <- tibble(a = 1) |> duckplyr_rename("\u5e78" := a)
   expect_equal(colnames(df), "\u5e78")
 })
 
@@ -43,7 +43,7 @@ test_that("rename preserves grouping", {
 test_that("can rename with duplicate columns", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1, x = 2, y = 1, .name_repair = "minimal")
-  expect_named(df %>% duckplyr_rename(x2 = 2), c("x", "x2", "y"))
+  expect_named(df |> duckplyr_rename(x2 = 2), c("x", "x2", "y"))
 })
 
 test_that("duckplyr_rename() ignores duplicates", {
@@ -56,22 +56,22 @@ test_that("duckplyr_rename() ignores duplicates", {
 test_that("can select columns", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1, y = 2)
-  expect_named(df %>% duckplyr_rename_with(toupper, 1), c("X", "y"))
+  expect_named(df |> duckplyr_rename_with(toupper, 1), c("X", "y"))
 
   df <- tibble(x = 1, y = 2)
-  expect_named(df %>% duckplyr_rename_with(toupper, x), c("X", "y"))
+  expect_named(df |> duckplyr_rename_with(toupper, x), c("X", "y"))
 })
 
 test_that("passes ... along", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1, y = 2)
-  expect_named(df %>% duckplyr_rename_with(gsub, 1, pattern = "x", replacement = "X"), c("X", "y"))
+  expect_named(df |> duckplyr_rename_with(gsub, 1, pattern = "x", replacement = "X"), c("X", "y"))
 })
 
 test_that("can't create duplicated names", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- tibble(x = 1, y = 2)
-  expect_error(df %>% duckplyr_rename_with(~ rep_along(.x, "X")), class = "vctrs_error_names")
+  expect_error(df |> duckplyr_rename_with(~ rep_along(.x, "X")), class = "vctrs_error_names")
 })
 
 test_that("`.fn` result type is checked (#6561)", {

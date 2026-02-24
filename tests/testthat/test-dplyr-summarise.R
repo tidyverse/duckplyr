@@ -30,11 +30,11 @@ test_that("works with grouped empty data frames", {
   df <- tibble(x = integer())
 
   expect_equal(
-    df %>% duckplyr_group_by(x) %>% duckplyr_summarise(y = 1L),
+    df |> duckplyr_group_by(x) |> duckplyr_summarise(y = 1L),
     tibble(x = integer(), y = integer())
   )
   expect_equal(
-    df %>% duckplyr_rowwise(x) %>% duckplyr_summarise(y = 1L),
+    df |> duckplyr_rowwise(x) |> duckplyr_summarise(y = 1L),
     duckplyr_group_by(tibble(x = integer(), y = integer()), x)
   )
 })
@@ -57,10 +57,10 @@ test_that("doesn't preserve attributes", {
     meta = "this is important"
   )
 
-  out <- df %>% duckplyr_summarise(n = n())
+  out <- df |> duckplyr_summarise(n = n())
   expect_null(attr(out, "res"))
 
-  out <- df %>% duckplyr_group_by(g1) %>% duckplyr_summarise(n = n())
+  out <- df |> duckplyr_group_by(g1) |> duckplyr_summarise(n = n())
   expect_null(attr(out, "res"))
 })
 
@@ -69,23 +69,23 @@ test_that("strips off subclass", {
   # "fundamentally a new data frame"
 
   df <- new_data_frame(list(a = 1), class = "myclass")
-  out <- df %>% duckplyr_summarise(n = n())
+  out <- df |> duckplyr_summarise(n = n())
   expect_s3_class(out, "data.frame", exact = TRUE)
-  out <- df %>% duckplyr_summarise(.by = a, n = n())
+  out <- df |> duckplyr_summarise(.by = a, n = n())
   expect_s3_class(out, "data.frame", exact = TRUE)
 
   df <- new_tibble(list(a = 1), class = "myclass")
-  out <- df %>% duckplyr_summarise(n = n())
+  out <- df |> duckplyr_summarise(n = n())
   expect_s3_class(out, class(tibble()), exact = TRUE)
-  out <- df %>% duckplyr_summarise(.by = a, n = n())
+  out <- df |> duckplyr_summarise(.by = a, n = n())
   expect_s3_class(out, class(tibble()), exact = TRUE)
 
   gdf <- duckplyr_group_by(tibble(a = 1), a)
   df <- gdf
   class(df) <- c("myclass", class(gdf))
-  out <- df %>% duckplyr_summarise(n = n(), .groups = "drop")
+  out <- df |> duckplyr_summarise(n = n(), .groups = "drop")
   expect_s3_class(out, class(tibble()), exact = TRUE)
-  out <- df %>% duckplyr_summarise(n = n(), .groups = "keep")
+  out <- df |> duckplyr_summarise(n = n(), .groups = "keep")
   expect_s3_class(out, class(gdf), exact = TRUE)
 })
 
@@ -96,29 +96,29 @@ test_that("works with unquoted values", {
 })
 
 test_that("formulas are evaluated in the right environment (#3019)", {
-  out <- mtcars %>% duckplyr_summarise(fn = list(rlang::as_function(~ list(~foo, environment()))))
+  out <- mtcars |> duckplyr_summarise(fn = list(rlang::as_function(~ list(~foo, environment()))))
   out <- out$fn[[1]]()
   expect_identical(environment(out[[1]]), out[[2]])
 })
 
 test_that("unnamed data frame results with 0 columns are ignored (#5084)", {
   df1 <- tibble(x = 1:2)
-  expect_equal(df1 %>% duckplyr_group_by(x) %>% duckplyr_summarise(data.frame()), df1)
-  expect_equal(df1 %>% duckplyr_group_by(x) %>% duckplyr_summarise(data.frame(), y = 65), duckplyr_mutate(df1, y = 65))
-  expect_equal(df1 %>% duckplyr_group_by(x) %>% duckplyr_summarise(y = 65, data.frame()), duckplyr_mutate(df1, y = 65))
+  expect_equal(df1 |> duckplyr_group_by(x) |> duckplyr_summarise(data.frame()), df1)
+  expect_equal(df1 |> duckplyr_group_by(x) |> duckplyr_summarise(data.frame(), y = 65), duckplyr_mutate(df1, y = 65))
+  expect_equal(df1 |> duckplyr_group_by(x) |> duckplyr_summarise(y = 65, data.frame()), duckplyr_mutate(df1, y = 65))
 
   df2 <- tibble(x = 1:2, y = 3:4)
-  expect_equal(df2 %>% duckplyr_group_by(x) %>% duckplyr_summarise(data.frame()), df1)
-  expect_equal(df2 %>% duckplyr_group_by(x) %>% duckplyr_summarise(data.frame(), z = 98), duckplyr_mutate(df1, z = 98))
-  expect_equal(df2 %>% duckplyr_group_by(x) %>% duckplyr_summarise(z = 98, data.frame()), duckplyr_mutate(df1, z = 98))
+  expect_equal(df2 |> duckplyr_group_by(x) |> duckplyr_summarise(data.frame()), df1)
+  expect_equal(df2 |> duckplyr_group_by(x) |> duckplyr_summarise(data.frame(), z = 98), duckplyr_mutate(df1, z = 98))
+  expect_equal(df2 |> duckplyr_group_by(x) |> duckplyr_summarise(z = 98, data.frame()), duckplyr_mutate(df1, z = 98))
 
   # This includes unnamed data frames that have 0 columns but >0 rows.
   # Noted when working on (#6509).
   empty3 <- new_tibble(list(), nrow = 3L)
-  expect_equal(df1 %>% duckplyr_summarise(empty3), new_tibble(list(), nrow = 1L))
-  expect_equal(df1 %>% duckplyr_summarise(empty3, y = mean(x)), df1 %>% duckplyr_summarise(y = mean(x)))
-  expect_equal(df1 %>% duckplyr_group_by(x) %>% duckplyr_summarise(empty3), df1)
-  expect_equal(df1 %>% duckplyr_group_by(x) %>% duckplyr_summarise(empty3, y = x + 1), duckplyr_mutate(df1, y = x + 1))
+  expect_equal(df1 |> duckplyr_summarise(empty3), new_tibble(list(), nrow = 1L))
+  expect_equal(df1 |> duckplyr_summarise(empty3, y = mean(x)), df1 |> duckplyr_summarise(y = mean(x)))
+  expect_equal(df1 |> duckplyr_group_by(x) |> duckplyr_summarise(empty3), df1)
+  expect_equal(df1 |> duckplyr_group_by(x) |> duckplyr_summarise(empty3, y = x + 1), duckplyr_mutate(df1, y = x + 1))
 })
 
 test_that("can't overwrite column active bindings (#6666)", {
@@ -177,14 +177,14 @@ test_that("duckplyr_summarise() correctly auto-names expressions (#6741)", {
 
 test_that("peels off a single layer of grouping", {
   df <- tibble(x = rep(1:4, each = 4), y = rep(1:2, each = 8), z = runif(16))
-  gf <- df %>% duckplyr_group_by(x, y)
+  gf <- df |> duckplyr_group_by(x, y)
   expect_equal(duckplyr_group_vars(duckplyr_summarise(gf)), "x")
   expect_equal(duckplyr_group_vars(duckplyr_summarise(duckplyr_summarise(gf))), character())
 })
 
 test_that("correctly reconstructs groups", {
-  d <- tibble(x = 1:4, g1 = rep(1:2, 2), g2 = 1:4) %>%
-    duckplyr_group_by(g1, g2) %>%
+  d <- tibble(x = 1:4, g1 = rep(1:2, 2), g2 = 1:4) |>
+    duckplyr_group_by(g1, g2) |>
     duckplyr_summarise(x = x + 1)
   expect_equal(group_rows(d), list_of(1:2, 3:4))
 })
@@ -213,8 +213,8 @@ test_that("summarise returns a row for zero length groups", {
 test_that("summarise respects zero-length groups (#341)", {
   df <- tibble(x = factor(rep(1:3, each = 10), levels = 1:4))
 
-  out <- df %>%
-    duckplyr_group_by(x, .drop = FALSE) %>%
+  out <- df |>
+    duckplyr_group_by(x, .drop = FALSE) |>
     duckplyr_summarise(n = n())
 
   expect_equal(out$n, c(10L, 10L, 10L, 0L))
@@ -224,17 +224,17 @@ test_that("summarise respects zero-length groups (#341)", {
 
 test_that("summarise allows names (#2675)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
-  data <- tibble(a = 1:3) %>% duckplyr_summarise(b = c("1" = a[[1]]))
+  data <- tibble(a = 1:3) |> duckplyr_summarise(b = c("1" = a[[1]]))
   expect_equal(names(data$b), "1")
 
-  data <- tibble(a = 1:3) %>% duckplyr_rowwise() %>% duckplyr_summarise(b = setNames(nm = a))
+  data <- tibble(a = 1:3) |> duckplyr_rowwise() |> duckplyr_summarise(b = setNames(nm = a))
   expect_equal(names(data$b), c("1", "2", "3"))
 
-  data <- tibble(a = c(1, 1, 2)) %>% duckplyr_group_by(a) %>% duckplyr_summarise(b = setNames(nm = a[[1]]))
+  data <- tibble(a = c(1, 1, 2)) |> duckplyr_group_by(a) |> duckplyr_summarise(b = setNames(nm = a[[1]]))
   expect_equal(names(data$b), c("1", "2"))
 
-  res <- data.frame(x = c(1:3), y = letters[1:3]) %>%
-    duckplyr_group_by(y) %>%
+  res <- data.frame(x = c(1:3), y = letters[1:3]) |>
+    duckplyr_group_by(y) |>
     duckplyr_summarise(
       a = length(x),
       b = quantile(x, 0.5)
@@ -244,12 +244,12 @@ test_that("summarise allows names (#2675)", {
 
 test_that("summarise handles list output columns (#832)", {
   df <- tibble(x = 1:10, g = rep(1:2, each = 5))
-  res <- df %>% duckplyr_group_by(g) %>% duckplyr_summarise(y = list(x))
+  res <- df |> duckplyr_group_by(g) |> duckplyr_summarise(y = list(x))
   expect_equal(res$y[[1]], 1:5)
 
   # preserving names
   d <- tibble(x = rep(1:3, 1:3), y = 1:6, names = letters[1:6])
-  res <- d %>% duckplyr_group_by(x) %>% duckplyr_summarise(y = list(setNames(y, names)))
+  res <- d |> duckplyr_group_by(x) |> duckplyr_summarise(y = list(setNames(y, names)))
   expect_equal(names(res$y[[1]]), letters[[1]])
 })
 
@@ -281,11 +281,11 @@ test_that("named tibbles are packed (#2326)", {
 test_that("duckplyr_summarise(.groups=) in global environment", {
   skip("TODO duckdb")
   expect_message(eval_bare(
-    expr(data.frame(x = 1, y = 2) %>% duckplyr_group_by(x, y) %>% duckplyr_summarise()),
+    expr(data.frame(x = 1, y = 2) |> duckplyr_group_by(x, y) |> duckplyr_summarise()),
     env(global_env())
   ))
   expect_message(eval_bare(
-    expr(data.frame(x = 1, y = 2) %>% duckplyr_rowwise(x, y) %>% duckplyr_summarise()),
+    expr(data.frame(x = 1, y = 2) |> duckplyr_rowwise(x, y) |> duckplyr_summarise()),
     env(global_env())
   ))
 })
@@ -293,29 +293,29 @@ test_that("duckplyr_summarise(.groups=) in global environment", {
 test_that("duckplyr_summarise(.groups=)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- data.frame(x = 1, y = 2)
-  expect_equal(df %>% duckplyr_summarise(z = 3, .groups= "rowwise"), duckplyr_rowwise(data.frame(z = 3)))
+  expect_equal(df |> duckplyr_summarise(z = 3, .groups= "rowwise"), duckplyr_rowwise(data.frame(z = 3)))
 
-  gf <- df %>% duckplyr_group_by(x, y)
-  expect_equal(gf %>% duckplyr_summarise() %>% duckplyr_group_vars(), "x")
-  expect_equal(gf %>% duckplyr_summarise(.groups = "drop_last") %>% duckplyr_group_vars(), "x")
-  expect_equal(gf %>% duckplyr_summarise(.groups = "drop") %>% duckplyr_group_vars(), character())
-  expect_equal(gf %>% duckplyr_summarise(.groups = "keep") %>% duckplyr_group_vars(), c("x", "y"))
+  gf <- df |> duckplyr_group_by(x, y)
+  expect_equal(gf |> duckplyr_summarise() |> duckplyr_group_vars(), "x")
+  expect_equal(gf |> duckplyr_summarise(.groups = "drop_last") |> duckplyr_group_vars(), "x")
+  expect_equal(gf |> duckplyr_summarise(.groups = "drop") |> duckplyr_group_vars(), character())
+  expect_equal(gf |> duckplyr_summarise(.groups = "keep") |> duckplyr_group_vars(), c("x", "y"))
 
-  rf <- df %>% duckplyr_rowwise(x, y)
-  expect_equal(rf %>% duckplyr_summarise(.groups = "drop") %>% duckplyr_group_vars(), character())
-  expect_equal(rf %>% duckplyr_summarise(.groups = "keep") %>% duckplyr_group_vars(), c("x", "y"))
+  rf <- df |> duckplyr_rowwise(x, y)
+  expect_equal(rf |> duckplyr_summarise(.groups = "drop") |> duckplyr_group_vars(), character())
+  expect_equal(rf |> duckplyr_summarise(.groups = "keep") |> duckplyr_group_vars(), c("x", "y"))
 })
 
 test_that("duckplyr_summarise() casts data frame results to common type (#5646)", {
-  df <- data.frame(x = 1:2, g = 1:2) %>% duckplyr_group_by(g)
+  df <- data.frame(x = 1:2, g = 1:2) |> duckplyr_group_by(g)
 
-  res <- df %>%
+  res <- df |>
     duckplyr_summarise(if (g == 1) data.frame(y = 1) else data.frame(y = 1, z = 2), .groups = "drop")
   expect_equal(res$z, c(NA, 2))
 })
 
 test_that("duckplyr_summarise() silently skips when all results are NULL (#5708)", {
-  df <- data.frame(x = 1:2, g = 1:2) %>% duckplyr_group_by(g)
+  df <- data.frame(x = 1:2, g = 1:2) |> duckplyr_group_by(g)
 
   expect_equal(duckplyr_summarise(df, x = NULL), duckplyr_summarise(df))
   expect_error(duckplyr_summarise(df, x = if(g == 1) 42))
@@ -424,9 +424,9 @@ test_that("duckplyr_summarise() gives meaningful errors", {
   eval(envir = global_env(), expr({
     expect_snapshot({
       # Messages about .groups=
-      tibble(x = 1, y = 2) %>% duckplyr_group_by(x, y) %>% duckplyr_summarise()
-      tibble(x = 1, y = 2) %>% duckplyr_rowwise(x, y) %>% duckplyr_summarise()
-      tibble(x = 1, y = 2) %>% duckplyr_rowwise() %>% duckplyr_summarise()
+      tibble(x = 1, y = 2) |> duckplyr_group_by(x, y) |> duckplyr_summarise()
+      tibble(x = 1, y = 2) |> duckplyr_rowwise(x, y) |> duckplyr_summarise()
+      tibble(x = 1, y = 2) |> duckplyr_rowwise() |> duckplyr_summarise()
     })
   }))
 
@@ -434,54 +434,54 @@ test_that("duckplyr_summarise() gives meaningful errors", {
     expect_snapshot({
       # unsupported type
       (expect_error(
-                      tibble(x = 1, y = c(1, 2, 2), z = runif(3)) %>%
+                      tibble(x = 1, y = c(1, 2, 2), z = runif(3)) |>
                         duckplyr_summarise(a = rlang::env(a = 1))
       ))
       (expect_error(
-                      tibble(x = 1, y = c(1, 2, 2), z = runif(3)) %>%
-                        duckplyr_group_by(x, y) %>%
+                      tibble(x = 1, y = c(1, 2, 2), z = runif(3)) |>
+                        duckplyr_group_by(x, y) |>
                         duckplyr_summarise(a = rlang::env(a = 1))
       ))
       (expect_error(
-                      tibble(x = 1, y = c(1, 2, 2), z = runif(3)) %>%
-                        duckplyr_rowwise() %>%
+                      tibble(x = 1, y = c(1, 2, 2), z = runif(3)) |>
+                        duckplyr_rowwise() |>
                         duckplyr_summarise(a = lm(y ~ x))
       ))
 
       # mixed types
       (expect_error(
-                      tibble(id = 1:2, a = list(1, "2")) %>%
-                        duckplyr_group_by(id) %>%
+                      tibble(id = 1:2, a = list(1, "2")) |>
+                        duckplyr_group_by(id) |>
                         duckplyr_summarise(a = a[[1]])
       ))
       (expect_error(
-                      tibble(id = 1:2, a = list(1, "2")) %>%
-                        duckplyr_rowwise() %>%
+                      tibble(id = 1:2, a = list(1, "2")) |>
+                        duckplyr_rowwise() |>
                         duckplyr_summarise(a = a[[1]])
       ))
 
       # incompatible size
       (expect_error(
-                      tibble(z = 1) %>%
+                      tibble(z = 1) |>
                         duckplyr_summarise(x = 1:3, y = 1:2)
       ))
       (expect_error(
-                      tibble(z = 1:2) %>%
-                        duckplyr_group_by(z) %>%
+                      tibble(z = 1:2) |>
+                        duckplyr_group_by(z) |>
                         duckplyr_summarise(x = 1:3, y = 1:2)
       ))
       (expect_error(
-                      tibble(z = c(1, 3)) %>%
-                        duckplyr_group_by(z) %>%
+                      tibble(z = c(1, 3)) |>
+                        duckplyr_group_by(z) |>
                         duckplyr_summarise(x = seq_len(z), y = 1:2)
       ))
 
       # mixed nulls
       (expect_error(
-                      data.frame(x = 1:2, g = 1:2) %>% duckplyr_group_by(g) %>% duckplyr_summarise(x = if(g == 1) 42)
+                      data.frame(x = 1:2, g = 1:2) |> duckplyr_group_by(g) |> duckplyr_summarise(x = if(g == 1) 42)
       ))
       (expect_error(
-                      data.frame(x = 1:2, g = 1:2) %>% duckplyr_group_by(g) %>% duckplyr_summarise(x = if(g == 2) 42)
+                      data.frame(x = 1:2, g = 1:2) |> duckplyr_group_by(g) |> duckplyr_summarise(x = if(g == 2) 42)
       ))
 
       # .data pronoun
@@ -490,13 +490,13 @@ test_that("duckplyr_summarise() gives meaningful errors", {
 
       # Duplicate column names
       (expect_error(
-                      tibble(x = 1, x = 1, .name_repair = "minimal") %>% duckplyr_summarise(x)
+                      tibble(x = 1, x = 1, .name_repair = "minimal") |> duckplyr_summarise(x)
       ))
 
       # Not glue()ing
-      (expect_error(tibble() %>% duckplyr_summarise(stop("{"))))
+      (expect_error(tibble() |> duckplyr_summarise(stop("{"))))
       (expect_error(
-                      tibble(a = 1, b="{value:1, unit:a}") %>% duckplyr_group_by(b) %>% duckplyr_summarise(a = stop("!"))
+                      tibble(a = 1, b="{value:1, unit:a}") |> duckplyr_group_by(b) |> duckplyr_summarise(a = stop("!"))
       ))
     })
   }))

@@ -380,7 +380,7 @@ test_that("slice_helpers do call duckplyr_slice() and benefit from dispatch (#60
     }
   )
 
-  nf <- tibble(x = 1:10, g = rep(1:2, each = 5)) %>% duckplyr_group_by(g)
+  nf <- tibble(x = 1:10, g = rep(1:2, each = 5)) |> duckplyr_group_by(g)
   class(nf) <- c("noisy", class(nf))
 
   expect_warning(duckplyr_slice(nf, 1:2), "noisy")
