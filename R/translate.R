@@ -273,7 +273,8 @@ rel_translate_lang <- function(
   partition,
   in_window,
   need_window,
-  call = caller_env()
+  call = caller_env(),
+  record_window = NULL
 ) {
   pkg_name <- rel_find_call(expr[[1]], env, call = call)
   pkg <- pkg_name[[1]]
@@ -445,7 +446,7 @@ rel_translate_lang <- function(
     # Both window and aggregate, different DuckDB function names
     first = c("first_value", "first"),
     last = c("last_value", "last"),
-    nth = c("nth_value", NA_character_),           # aggregate handled separately via array_extract
+    nth = c("nth_value", NA_character_),           # aggregate uses array_extract() -- see else branch
     n = c("count_star", "n"),                      # window uses count_star; non-window uses n() macro
 
     # Same function name in both window and aggregate contexts
@@ -467,6 +468,10 @@ rel_translate_lang <- function(
   )
 
   window <- need_window && (name %in% names(known_window))
+
+  if (window && !is.null(record_window)) {
+    record_window()
+  }
 
   if (name %in% names(known_window)) {
     idx <- if (window) 1L else 2L
@@ -610,11 +615,8 @@ rel_translate_lang <- function(
       x_arg <- args[[1]]
       list_agg <- relexpr_function("list", list(x_arg), order_bys = order_bys)
       fun <- relexpr_function("array_extract", list(list_agg, nth_n))
-    } else if (name %in% c("first", "last") && length(order_bys) > 0) {
-      # first()/last() in aggregate context: pass order_bys to aggregate function
-      fun <- relexpr_function(aliased_name, args, order_bys = order_bys)
     } else {
-      fun <- relexpr_function(aliased_name, args)
+      fun <- relexpr_function(aliased_name, args, order_bys = order_bys)
     }
   }
   fun
@@ -637,6 +639,7 @@ rel_translate <- function(
     env <- quo_get_env(quo)
   }
   used <- character()
+  used_window <- FALSE
 
   do_translate <- function(expr, in_window = FALSE, top_level = FALSE) {
     stopifnot(!is_quosure(expr))
@@ -671,7 +674,8 @@ rel_translate <- function(
         partition,
         in_window,
         need_window,
-        call = call
+        call = call,
+        record_window = function() { used_window <<- TRUE }
       ),
       #
       cli::cli_abort("Internal: Unknown type {.val {typeof(expr)}}", call = call)
@@ -684,5 +688,5 @@ rel_translate <- function(
     out <- relexpr_set_alias(out, alias)
   }
 
-  structure(out, used = used)
+  structure(out, used = used, has_window = used_window)
 }

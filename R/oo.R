@@ -45,9 +45,9 @@ oo_prep <- function(
   rel_project(rel, unname(proj_exprs))
 }
 
-oo_restore <- function(rel, colname = "___row_number", column_rels = list(NULL), force = oo_force()) {
-  rel <- oo_restore_order(rel, colname, column_rels, force = force)
-  oo_restore_cols(rel, colname, force = force)
+oo_restore <- function(rel, colname = "___row_number", column_rels = list(NULL)) {
+  rel <- oo_restore_order(rel, colname, column_rels)
+  oo_restore_cols(rel, colname)
 }
 
 oo_restore_order <- function(rel, colname = "___row_number", column_rels = list(NULL), force = oo_force()) {

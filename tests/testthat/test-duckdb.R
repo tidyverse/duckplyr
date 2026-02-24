@@ -5,25 +5,20 @@ test_that("case-insensitive duplicates", {
   expect_identical(out$a, out$b)
 })
 
-test_that("contains_window_expr() works", {
-  # A plain column reference: no window
-  ref <- relexpr_reference("a")
-  expect_false(duckplyr:::contains_window_expr(ref))
+test_that("rel_translate() records window function usage in has_window attribute", {
+  df <- data.frame(a = 1:3, b = c(1, 1, 2))
 
-  # A plain function: no window
-  fn <- relexpr_function("sum", list(relexpr_reference("a")))
-  expect_false(duckplyr:::contains_window_expr(fn))
+  # A plain expression: no window
+  expr_plain <- rel_translate(quote(a + 1L), df)
+  expect_false(isTRUE(attr(expr_plain, "has_window")))
 
-  # A window expression: yes
-  win <- relexpr_window(relexpr_function("sum", list(relexpr_reference("a"))), list(), list())
-  expect_true(duckplyr:::contains_window_expr(win))
+  # A window expression (via need_window = TRUE and .by context)
+  expr_win <- rel_translate(quote(n()), df, partition = "b", need_window = TRUE)
+  expect_true(isTRUE(attr(expr_win, "has_window")))
 
-  # A function wrapping a window expression: yes
-  wrapped <- relexpr_function("r_base::as.integer", list(win))
-  expect_true(duckplyr:::contains_window_expr(wrapped))
-
-  # NULL: no
-  expect_false(duckplyr:::contains_window_expr(NULL))
+  # A non-window aggregate (need_window = FALSE)
+  expr_agg <- rel_translate(quote(n()), df, need_window = FALSE)
+  expect_false(isTRUE(attr(expr_agg, "has_window")))
 })
 
 test_that("mutate() uses oo_prep only when window functions are present", {

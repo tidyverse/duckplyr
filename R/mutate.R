@@ -42,8 +42,9 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
 
         names_quos <- names(quos)
 
-        # Set up `exprs` outside the loop. All expressions expanded from an
-        # `across()` are evaluated together using the same projection.
+        # Translate all expressions first, recording window function usage
+        # via the `has_window` attribute set by rel_translate
+        uses_window <- FALSE
         exprs <- imap(set_names(names(current_data)), relexpr_reference, rel = NULL)
 
         for (j in seq_along(quos)) {
@@ -61,6 +62,7 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
             need_window = TRUE
           )
           exprs[[new_pos]] <- new_expr
+          uses_window <- uses_window || isTRUE(attr(new_expr, "has_window"))
 
           new_names_used <- intersect(attr(new_expr, "used"), names(.data))
           names_used <- c(names_used, setdiff(new_names_used, names_used))
@@ -69,19 +71,21 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
         # Use oo_prep/oo_restore only if any expression uses window functions
         # (needed for lead()/lag()/sum() with .by, etc.) or if output order
         # preservation is globally forced.
-        uses_window <- any(vapply(exprs, contains_window_expr, logical(1)))
         oo <- uses_window || oo_force()
 
         if (oo) {
           rel <- oo_prep(rel, force = TRUE)
-          # Include ___row_number in exprs so it's preserved through the projection
+          # oo_prep appends ___row_number after the current columns; include it
+          # in exprs so it passes through the projection and is available for
+          # oo_restore_order to sort by.
           exprs[["___row_number"]] <- relexpr_reference("___row_number")
         }
 
         rel <- rel_project(rel, unname(exprs))
 
         if (oo) {
-          rel <- oo_restore(rel, force = TRUE)
+          rel <- oo_restore_order(rel, force = TRUE)
+          rel <- oo_restore_cols(rel, force = TRUE)
         }
 
         current_data <- rel_to_df(rel, prudence = "stingy")
@@ -163,21 +167,4 @@ duckplyr_mutate <- function(.data, ...) {
   out <- mutate(.data, ...)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
-}
-
-# Check recursively if an expression tree contains any window expressions.
-# Used in mutate() to decide whether oo_prep/oo_restore are needed.
-contains_window_expr <- function(expr) {
-  if (is.null(expr)) return(FALSE)
-  if (inherits(expr, "relational_relexpr_window")) return(TRUE)
-  if (inherits(expr, "relational_relexpr_function")) {
-    return(
-      any(vapply(expr$args, contains_window_expr, logical(1))) ||
-        any(vapply(expr$order_bys %||% list(), contains_window_expr, logical(1)))
-    )
-  }
-  if (inherits(expr, "relational_relexpr_comparison")) {
-    return(any(vapply(expr$exprs, contains_window_expr, logical(1))))
-  }
-  FALSE
 }
