@@ -27,3 +27,5 @@
 ^index\.md$
 ^touchstone$
 ^README_cache$
+^air\.toml$
+^\.vscode$
