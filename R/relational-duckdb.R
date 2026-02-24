@@ -83,14 +83,58 @@ check_df_for_rel <- function(rel, df, call = caller_env()) {
     return()
   }
 
-  roundtrip <- duckdb$rapi_rel_to_altrep(rel)
-  rlang::with_options(duckdb.materialize_callback = NULL, {
-    for (i in seq_along(df)) {
-      if (!identical(df[[i]], roundtrip[[i]])) {
-        cli::cli_abort("Imperfect roundtrip. Affected column: {.var {names(df)[[i]]}}.", call = call)
-      }
+  if (length(df) == 0L) {
+    cli::cli_abort("Can't convert empty data frame to relational.", call = call)
+  }
+
+  for (i in seq_along(df)) {
+    col <- .subset2(df, i)
+    if (!is.null(names(col))) {
+      cli::cli_abort("Can't convert named vectors to relational. Affected column: {.var {names(df)[[i]]}}.", call = call)
     }
-  })
+    if (!is.null(dim(col))) {
+      cli::cli_abort("Can't convert arrays or matrices to relational. Affected column: {.var {names(df)[[i]]}}.", call = call)
+    }
+    if (isS4(col)) {
+      cli::cli_abort("Can't convert S4 columns to relational. Affected column: {.var {names(df)[[i]]}}.", call = call)
+    }
+
+    # Factors: https://github.com/duckdb/duckdb/issues/8561
+
+    # When adding new classes, make sure to adapt the first test in test-relational-duckdb.R
+
+    col_class <- class(col)
+    if (length(col_class) == 1) {
+      valid <- col_class %in% c("logical", "integer", "numeric", "character", "Date", "difftime")
+    } else if (length(col_class) == 2) {
+      valid <- identical(col_class, c("POSIXct", "POSIXt")) || identical(col_class, c("hms", "difftime"))
+    } else {
+      valid <- FALSE
+    }
+    if (!valid) {
+      cli::cli_abort("Can't convert columns of class {.cls {col_class}} to relational. Affected column: {.var {names(df)[[i]]}}.", call = call)
+    }
+  }
+
+  # FIXME: For some reason, it's important to create an alias here
+  con <- get_default_duckdb_connection()
+
+  # FIXME: For some other reason, it seems crucial to assign the result to a
+  # variable before returning it
+  out <- duckdb$rel_from_df(con, df, strict = TRUE)
+
+  roundtrip <- duckdb$rapi_rel_to_altrep(out)
+  if (Sys.getenv("DUCKPLYR_CHECK_ROUNDTRIP") == "TRUE") {
+    rlang::with_options(duckdb.materialize_callback = NULL, {
+      for (i in seq_along(df)) {
+        if (!identical(df[[i]], roundtrip[[i]])) {
+          cli::cli_abort("Imperfect roundtrip. Affected column: {.var {names(df)[[i]]}}.", call = call)
+        }
+      }
+    })
+  }
+
+  out
 }
 
 # https://github.com/r-lib/vctrs/issues/1956
