@@ -741,9 +741,9 @@
     Code
       rel_translate(quo(coalesce(a, b)), df)
     Output
-      List of 3
-       $ name : chr "___coalesce"
-       $ args :List of 2
+      List of 4
+       $ name     : chr "___coalesce"
+       $ args     :List of 2
         ..$ :List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
@@ -754,7 +754,9 @@
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-       $ alias: NULL
+       $ order_bys: list()
+       $ alias    : NULL
        - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
        - attr(*, "used")= chr [1:2] "a" "b"
+       - attr(*, "has_window")= logi FALSE
 
