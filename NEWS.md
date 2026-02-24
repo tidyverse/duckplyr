@@ -1,5 +1,24 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.1.3.9011 (2026-02-24)
+
+## Features
+
+- Align code with dplyr 1.2.0 (#863).
+
+- Enable translation of `first()`, `last()`, `nth()`, and `mutate(n(), .by = ...)` (#626, #854).
+
+## Chore
+
+- Add settings.
+
+- Format with air.
+
+- Bump duckdb dependency.
+
+- Clean up argument matching by name (#855, #856).
+
+
 # duckplyr 1.1.3.9010 (2026-02-24)
 
 ## Features
