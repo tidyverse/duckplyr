@@ -23,3 +23,9 @@ test_that("group_cols() finds groups in scoped helpers", {
   out <- select_at(gf, vars(group_cols()))
   expect_named(out, "x")
 })
+
+test_that("group_cols(vars =) is defunct", {
+  expect_snapshot(error = TRUE, {
+    group_cols("a")
+  })
+})

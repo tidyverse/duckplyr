@@ -56,7 +56,6 @@ test_that("select doesn't fail if some names missing", {
   # expect_equal(duckplyr_select(df3, x), data.frame(x = 1:10))
 })
 
-
 # Special cases -------------------------------------------------
 
 test_that("select with no args returns nothing", {
@@ -105,7 +104,6 @@ test_that("select can be before group_by (#309)", {
     duckplyr_summarise(var1 = mean(var1))
   expect_equal(names(dfagg), c("id", "year", "var1"))
 })
-
 
 test_that("select succeeds in presence of raw columns (#1803)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
@@ -198,7 +196,6 @@ test_that("duckplyr_select() provides informative errors", {
     (expect_error(duckplyr_select(mtcars, 1 + "")))
   })
 })
-
 
 # dplyr_col_select() ------------------------------------------------------
 

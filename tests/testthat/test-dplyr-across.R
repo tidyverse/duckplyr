@@ -161,14 +161,12 @@ test_that("across(.unpack =) uses the result of `.names` as `{outer}`", {
   df <- tibble(x = 1, y = 2)
 
   out <- df |>
-    duckplyr_mutate(
-      across(
-        x:y,
-        list(f = fn),
-        .names = "{.col}.{.fn}",
-        .unpack = "{inner}.{outer}"
-      )
-    )
+    duckplyr_mutate(across(
+      x:y,
+      list(f = fn),
+      .names = "{.col}.{.fn}",
+      .unpack = "{inner}.{outer}"
+    ))
 
   expect_named(out, c("x", "y", "a.x.f", "b.x.f", "a.y.f", "b.y.f"))
 })
@@ -218,7 +216,6 @@ test_that("across() result locations are aligned with column names (#4967)", {
 
   expect_identical(x, expect)
 })
-
 
 test_that("across() works sequentially (#4907)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
@@ -526,13 +523,9 @@ test_that("across() sees columns in the recursive case (#5498)", {
 
   out <- df |>
     duckplyr_mutate(
-      data = purrr::map2(
-        data,
-        vars,
-        ~ {
-          .x |> duckplyr_mutate(across(all_of(.y), ~NA))
-        }
-      )
+      data = purrr::map2(data, vars, function(.x, .y) {
+        .x |> duckplyr_mutate(across(all_of(.y), ~NA))
+      })
     )
   exp <- tibble(
     vars = list("foo"),
@@ -542,16 +535,12 @@ test_that("across() sees columns in the recursive case (#5498)", {
 
   out <- df |>
     duckplyr_mutate(
-      data = purrr::map2(
-        data,
-        vars,
-        ~ {
-          local({
-            .y <- "bar"
-            .x |> duckplyr_mutate(across(all_of(.y), ~NA))
-          })
-        }
-      )
+      data = purrr::map2(data, vars, function(.x, .y) {
+        local({
+          .y <- "bar"
+          .x |> duckplyr_mutate(across(all_of(.y), ~NA))
+        })
+      })
     )
   exp <- tibble(
     vars = list("foo"),
@@ -668,25 +657,6 @@ test_that("functions defined inline can use columns (#5734)", {
   )
 })
 
-test_that("if_any() and if_all() do not enforce logical", {
-  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
-  skip("dplyr 1.2.0")
-  # We used to coerce to logical using vctrs. Now we use base
-  # semantics because we expand `if_all(x:y)` to `x & y`.
-  d <- data.frame(x = 10, y = 10)
-  expect_equal(duckplyr_filter(d, if_all(x:y, identity)), d)
-  expect_equal(duckplyr_filter(d, if_any(x:y, identity)), d)
-
-  expect_equal(
-    duckplyr_mutate(d, ok = if_any(x:y, identity)),
-    duckplyr_mutate(d, ok = TRUE)
-  )
-  expect_equal(
-    duckplyr_mutate(d, ok = if_all(x:y, identity)),
-    duckplyr_mutate(d, ok = TRUE)
-  )
-})
-
 test_that("if_any() and if_all() can be used in duckplyr_mutate() (#5709)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   d <- data.frame(x = c(1, 5, 10, 10), y = c(0, 0, 0, 10), z = c(10, 5, 1, 10))
@@ -782,6 +752,7 @@ test_that("across() correctly reset column", {
         expect_error(cur_column())
         2
       },
+      # top_across()
       across(
         x,
         ~ {
@@ -789,11 +760,12 @@ test_that("across() correctly reset column", {
           3
         },
         .names = "b"
-      ), # top_across()
+      ),
       c = {
         expect_error(cur_column())
         4
       },
+      # across()
       force(across(
         x,
         ~ {
@@ -801,7 +773,7 @@ test_that("across() correctly reset column", {
           5
         },
         .names = "d"
-      )), # across()
+      )),
       e = {
         expect_error(cur_column())
         6
@@ -1120,8 +1092,7 @@ test_that("if_any() and if_all() expansions deal with no inputs or single inputs
   )
 })
 
-test_that("if_any() on zero-column selection behaves like any() (#7059)", {
-  skip("TODO duckdb")
+test_that("if_any() on zero-column selection behaves like any() (#7059, #7077)", {
   tbl <- tibble(
     x1 = 1:5,
     x2 = c(-1, 4, 5, 4, 1),
@@ -1129,12 +1100,25 @@ test_that("if_any() on zero-column selection behaves like any() (#7059)", {
   )
 
   expect_equal(
-    duckplyr_filter(tbl, if_any(c(), ~ is.na(.x))),
-    tbl[0, ]
+    duckplyr_filter(tbl, if_any(c(), ~FALSE)),
+    duckplyr_filter(tbl, FALSE)
+  )
+  expect_equal(
+    duckplyr_filter(tbl, if_any(c(), ~TRUE)),
+    duckplyr_filter(tbl, FALSE)
+  )
+
+  expect_equal(
+    duckplyr_pull(duckplyr_mutate(tbl, z = if_any(c(), ~FALSE)), z),
+    rep(FALSE, nrow(tbl))
+  )
+  expect_equal(
+    duckplyr_pull(duckplyr_mutate(tbl, z = if_any(c(), ~TRUE)), z),
+    rep(FALSE, nrow(tbl))
   )
 })
 
-test_that("if_all() on zero-column selection behaves like all() (#7059)", {
+test_that("if_all() on zero-column selection behaves like all() (#7059, #7077)", {
   tbl <- tibble(
     x1 = 1:5,
     x2 = c(-1, 4, 5, 4, 1),
@@ -1142,24 +1126,36 @@ test_that("if_all() on zero-column selection behaves like all() (#7059)", {
   )
 
   expect_equal(
-    duckplyr_filter(tbl, if_all(c(), ~ is.na(.x))),
-    tbl
+    duckplyr_filter(tbl, if_all(c(), ~FALSE)),
+    duckplyr_filter(tbl, TRUE)
+  )
+  expect_equal(
+    duckplyr_filter(tbl, if_all(c(), ~TRUE)),
+    duckplyr_filter(tbl, TRUE)
+  )
+
+  expect_equal(
+    duckplyr_pull(duckplyr_mutate(tbl, z = if_all(c(), ~FALSE)), z),
+    rep(TRUE, nrow(tbl))
+  )
+  expect_equal(
+    duckplyr_pull(duckplyr_mutate(tbl, z = if_all(c(), ~TRUE)), z),
+    rep(TRUE, nrow(tbl))
   )
 })
 
 test_that("if_any() and if_all() wrapped deal with no inputs or single inputs", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
-  skip("dplyr 1.2.0")
   d <- data.frame(x = 1)
 
   # No inputs
   expect_equal(
     duckplyr_filter(d, (if_any(starts_with("c"), ~FALSE))),
-    duckplyr_filter(d)
+    duckplyr_filter(d, FALSE)
   )
   expect_equal(
     duckplyr_filter(d, (if_all(starts_with("c"), ~FALSE))),
-    duckplyr_filter(d)
+    duckplyr_filter(d, TRUE)
   )
 
   # Single inputs
@@ -1170,6 +1166,14 @@ test_that("if_any() and if_all() wrapped deal with no inputs or single inputs", 
   expect_equal(
     duckplyr_filter(d, (if_all(x, ~FALSE))),
     duckplyr_filter(d, FALSE)
+  )
+  expect_equal(
+    duckplyr_filter(d, (if_any(x, ~TRUE))),
+    duckplyr_filter(d, TRUE)
+  )
+  expect_equal(
+    duckplyr_filter(d, (if_all(x, ~TRUE))),
+    duckplyr_filter(d, TRUE)
   )
 })
 
@@ -1342,7 +1346,6 @@ test_that("expand_across() expands lambdas", {
 })
 
 test_that("expand_if_across() expands lambdas", {
-  skip("dplyr 1.2.0")
   quo <- quo(if_any(c(cyl, am), ~ . > 4))
   quo <- new_dplyr_quosure(
     quo,
@@ -1354,9 +1357,16 @@ test_that("expand_if_across() expands lambdas", {
   by <- compute_by(by = NULL, data = mtcars, error_call = call("caller"))
   DataMask$new(mtcars, by, "mutate", call("caller"))
 
-  expect_equal(
-    map(expand_if_across(quo), quo_squash),
-    alist(`|`(cyl > 4, am > 4))
+  quo <- expand_if_across(quo)
+
+  # We just need to look for something we know we insert into the expression.
+  # `expect_snapshot()` doesn't seem to play nicely with covr on CI here, the
+  # expression captured seems to contain `covr:::duckplyr_count()` calls.
+  expect_true(
+    grepl(
+      "asNamespace",
+      paste0(expr_deparse(quo_squash(quo)), collapse = " ")
+    )
   )
 })
 
@@ -1379,6 +1389,443 @@ test_that("duckplyr_rowwise() preserves list-cols iff no `.fns` (#5951, #6264)",
       tibble(x = list(3:5))
     )
   )
+})
+
+test_that("`across()` recycle `.fns` results to common size", {
+  df <- tibble(
+    x = c(TRUE, FALSE, TRUE),
+    y = c(1L, 2L, 3L)
+  )
+
+  # The `.fns` results are recycled within just the `across()` inputs first, not
+  # immediately to the whole group size. The returned data frame from `across()`
+  # is what is then recycled to the whole group size.
+
+  fn <- function(x) {
+    if (is.logical(x)) {
+      x
+    } else {
+      TRUE
+    }
+  }
+
+  expect_identical(
+    duckplyr_mutate(df, across(c(x, y), fn)),
+    tibble(x = df$x, y = rep(TRUE, times = nrow(df)))
+  )
+  expect_identical(
+    duckplyr_mutate(df, (across(c(x, y), fn))),
+    tibble(x = df$x, y = rep(TRUE, times = nrow(df)))
+  )
+
+  # Not forcing the result of `.fns` to immediately recycle to the group size is
+  # useful for niche cases where you want to compute something with `across()`
+  # but it isn't actually what you return
+
+  fn <- function(x) {
+    c(mean(x), median(x))
+  }
+
+  expect_identical(
+    duckplyr_mutate(df, {
+      # Maybe your `across()` call returns something of length 2
+      values <- across(c(x, y), fn)
+      # But then you manipulate it to return something compatible with the group size
+      new_tibble(map(values, max))
+    }),
+    tibble(x = c(1, 1, 1), y = c(2, 2, 2))
+  )
+
+  # Unrecyclable
+  expect_snapshot(error = TRUE, {
+    # TODO: This error is bad
+    duckplyr_mutate(df, across(c(x, y), fn))
+  })
+  expect_snapshot(error = TRUE, {
+    duckplyr_mutate(df, (across(c(x, y), fn)))
+  })
+})
+
+test_that("`if_any()` and `if_all()` have consistent behavior across `duckplyr_filter()` and `duckplyr_mutate()`", {
+  # Tests a full suite comparing:
+  # - `duckplyr_filter()` vs `duckplyr_mutate()`
+  # - `duckplyr_filter()`'s evaluation vs expansion models
+  # - With and without `.fns`
+
+  # `w` and `x` cover all combinations of `|` and `&`
+  df <- data.frame(
+    w = c(TRUE, FALSE, NA, TRUE, FALSE, TRUE, FALSE, NA, NA),
+    x = c(TRUE, FALSE, NA, FALSE, TRUE, NA, NA, TRUE, FALSE),
+    y = 1:9,
+    z = 10:18,
+    g = c("a", "b", "a", "b", "b", "a", "c", "a", "a")
+  )
+
+  # Zero inputs
+
+  expect_identical(
+    duckplyr_filter(df, if_any(c())),
+    duckplyr_filter(df, FALSE)
+  )
+  expect_identical(
+    duckplyr_filter(df, (if_any(c()))),
+    duckplyr_filter(df, FALSE)
+  )
+  expect_identical(
+    duckplyr_mutate(df, a = if_any(c())),
+    duckplyr_mutate(df, a = FALSE)
+  )
+
+  expect_identical(
+    duckplyr_filter(df, if_any(c(), identity)),
+    duckplyr_filter(df, FALSE)
+  )
+  expect_identical(
+    duckplyr_filter(df, (if_any(c(), identity))),
+    duckplyr_filter(df, FALSE)
+  )
+  expect_identical(
+    duckplyr_mutate(df, a = if_any(c(), identity)),
+    duckplyr_mutate(df, a = FALSE)
+  )
+
+  expect_identical(
+    duckplyr_filter(df, if_all(c())),
+    duckplyr_filter(df, TRUE)
+  )
+  expect_identical(
+    duckplyr_filter(df, (if_all(c()))),
+    duckplyr_filter(df, TRUE)
+  )
+  expect_identical(
+    duckplyr_mutate(df, a = if_all(c())),
+    duckplyr_mutate(df, a = TRUE)
+  )
+
+  expect_identical(
+    duckplyr_filter(df, if_all(c(), identity)),
+    duckplyr_filter(df, TRUE)
+  )
+  expect_identical(
+    duckplyr_filter(df, (if_all(c(), identity))),
+    duckplyr_filter(df, TRUE)
+  )
+  expect_identical(
+    duckplyr_mutate(df, a = if_all(c(), identity)),
+    duckplyr_mutate(df, a = TRUE)
+  )
+
+  # One input
+
+  expect_identical(
+    duckplyr_filter(df, if_any(w)),
+    duckplyr_filter(df, w)
+  )
+  expect_identical(
+    duckplyr_filter(df, (if_any(w))),
+    duckplyr_filter(df, w)
+  )
+  expect_identical(
+    duckplyr_mutate(df, a = if_any(w)),
+    duckplyr_mutate(df, a = w)
+  )
+
+  expect_identical(
+    duckplyr_filter(df, if_any(w, identity)),
+    duckplyr_filter(df, w)
+  )
+  expect_identical(
+    duckplyr_filter(df, (if_any(w, identity))),
+    duckplyr_filter(df, w)
+  )
+  expect_identical(
+    duckplyr_mutate(df, a = if_any(w, identity)),
+    duckplyr_mutate(df, a = w)
+  )
+
+  expect_identical(
+    duckplyr_filter(df, if_all(w)),
+    duckplyr_filter(df, w)
+  )
+  expect_identical(
+    duckplyr_filter(df, (if_all(w))),
+    duckplyr_filter(df, w)
+  )
+  expect_identical(
+    duckplyr_mutate(df, a = if_all(w)),
+    duckplyr_mutate(df, a = w)
+  )
+
+  expect_identical(
+    duckplyr_filter(df, if_all(w, identity)),
+    duckplyr_filter(df, w)
+  )
+  expect_identical(
+    duckplyr_filter(df, (if_all(w, identity))),
+    duckplyr_filter(df, w)
+  )
+  expect_identical(
+    duckplyr_mutate(df, a = if_all(w, identity)),
+    duckplyr_mutate(df, a = w)
+  )
+
+  # Two inputs
+
+  expect_identical(
+    duckplyr_filter(df, if_any(c(w, x))),
+    duckplyr_filter(df, w | x)
+  )
+  expect_identical(
+    duckplyr_filter(df, (if_any(c(w, x)))),
+    duckplyr_filter(df, w | x)
+  )
+  expect_identical(
+    duckplyr_mutate(df, a = if_any(c(w, x))),
+    duckplyr_mutate(df, a = w | x)
+  )
+
+  expect_identical(
+    duckplyr_filter(df, if_any(c(w, x), identity)),
+    duckplyr_filter(df, w | x)
+  )
+  expect_identical(
+    duckplyr_filter(df, (if_any(c(w, x), identity))),
+    duckplyr_filter(df, w | x)
+  )
+  expect_identical(
+    duckplyr_mutate(df, a = if_any(c(w, x), identity)),
+    duckplyr_mutate(df, a = w | x)
+  )
+
+  expect_identical(
+    duckplyr_filter(df, if_all(c(w, x))),
+    duckplyr_filter(df, w & x)
+  )
+  expect_identical(
+    duckplyr_filter(df, (if_all(c(w, x)))),
+    duckplyr_filter(df, w & x)
+  )
+  expect_identical(
+    duckplyr_mutate(df, a = if_all(c(w, x))),
+    duckplyr_mutate(df, a = w & x)
+  )
+
+  expect_identical(
+    duckplyr_filter(df, if_all(c(w, x), identity)),
+    duckplyr_filter(df, w & x)
+  )
+  expect_identical(
+    duckplyr_filter(df, (if_all(c(w, x), identity))),
+    duckplyr_filter(df, w & x)
+  )
+  expect_identical(
+    duckplyr_mutate(df, a = if_all(c(w, x), identity)),
+    duckplyr_mutate(df, a = w & x)
+  )
+
+  # Two inputs (grouped)
+
+  expect_identical(
+    duckplyr_filter(df, if_any(c(w, x)), .by = g),
+    duckplyr_filter(df, w | x, .by = g)
+  )
+  expect_identical(
+    duckplyr_filter(df, (if_any(c(w, x))), .by = g),
+    duckplyr_filter(df, w | x, .by = g)
+  )
+  expect_identical(
+    duckplyr_mutate(df, a = if_any(c(w, x)), .by = g),
+    duckplyr_mutate(df, a = w | x, .by = g)
+  )
+
+  expect_identical(
+    duckplyr_filter(df, if_any(c(w, x), identity), .by = g),
+    duckplyr_filter(df, w | x, .by = g)
+  )
+  expect_identical(
+    duckplyr_filter(df, (if_any(c(w, x), identity)), .by = g),
+    duckplyr_filter(df, w | x, .by = g)
+  )
+  expect_identical(
+    duckplyr_mutate(df, a = if_any(c(w, x), identity), .by = g),
+    duckplyr_mutate(df, a = w | x, .by = g)
+  )
+
+  expect_identical(
+    duckplyr_filter(df, if_all(c(w, x)), .by = g),
+    duckplyr_filter(df, w & x, .by = g)
+  )
+  expect_identical(
+    duckplyr_filter(df, (if_all(c(w, x))), .by = g),
+    duckplyr_filter(df, w & x, .by = g)
+  )
+  expect_identical(
+    duckplyr_mutate(df, a = if_all(c(w, x)), .by = g),
+    duckplyr_mutate(df, a = w & x, .by = g)
+  )
+
+  expect_identical(
+    duckplyr_filter(df, if_all(c(w, x), identity), .by = g),
+    duckplyr_filter(df, w & x, .by = g)
+  )
+  expect_identical(
+    duckplyr_filter(df, (if_all(c(w, x), identity)), .by = g),
+    duckplyr_filter(df, w & x, .by = g)
+  )
+  expect_identical(
+    duckplyr_mutate(df, a = if_all(c(w, x), identity), .by = g),
+    duckplyr_mutate(df, a = w & x, .by = g)
+  )
+
+  # One non-logical input (all error)
+
+  expect_snapshot(error = TRUE, duckplyr_filter(df, if_any(y)))
+  expect_snapshot(error = TRUE, duckplyr_filter(df, (if_any(y))))
+  expect_snapshot(error = TRUE, duckplyr_mutate(df, a = if_any(y)))
+
+  expect_snapshot(error = TRUE, duckplyr_filter(df, if_any(y, identity)))
+  expect_snapshot(error = TRUE, duckplyr_filter(df, (if_any(y, identity))))
+  expect_snapshot(error = TRUE, duckplyr_mutate(df, a = if_any(y, identity)))
+
+  expect_snapshot(error = TRUE, duckplyr_filter(df, if_all(y)))
+  expect_snapshot(error = TRUE, duckplyr_filter(df, (if_all(y))))
+  expect_snapshot(error = TRUE, duckplyr_mutate(df, a = if_all(y)))
+
+  expect_snapshot(error = TRUE, duckplyr_filter(df, if_all(y, identity)))
+  expect_snapshot(error = TRUE, duckplyr_filter(df, (if_all(y, identity))))
+  expect_snapshot(error = TRUE, duckplyr_mutate(df, a = if_all(y, identity)))
+
+  # Two non-logical inputs (all error)
+
+  expect_snapshot(error = TRUE, duckplyr_filter(df, if_any(c(y, z))))
+  expect_snapshot(error = TRUE, duckplyr_filter(df, (if_any(c(y, z)))))
+  expect_snapshot(error = TRUE, duckplyr_mutate(df, a = if_any(c(y, z))))
+
+  expect_snapshot(error = TRUE, duckplyr_filter(df, if_any(c(y, z), identity)))
+  expect_snapshot(
+    error = TRUE,
+    duckplyr_filter(df, (if_any(c(y, z), identity)))
+  )
+  expect_snapshot(
+    error = TRUE,
+    duckplyr_mutate(df, a = if_any(c(y, z), identity))
+  )
+
+  expect_snapshot(error = TRUE, duckplyr_filter(df, if_all(c(y, z))))
+  expect_snapshot(error = TRUE, duckplyr_filter(df, (if_all(c(y, z)))))
+  expect_snapshot(error = TRUE, duckplyr_mutate(df, a = if_all(c(y, z))))
+
+  expect_snapshot(error = TRUE, duckplyr_filter(df, if_all(c(y, z), identity)))
+  expect_snapshot(
+    error = TRUE,
+    duckplyr_filter(df, (if_all(c(y, z), identity)))
+  )
+  expect_snapshot(
+    error = TRUE,
+    duckplyr_mutate(df, a = if_all(c(y, z), identity))
+  )
+
+  # Two non-logical inputs (grouped) (all error)
+
+  expect_snapshot(error = TRUE, {
+    duckplyr_filter(df, if_any(c(y, z)), .by = g)
+  })
+  expect_snapshot(error = TRUE, {
+    duckplyr_filter(df, (if_any(c(y, z))), .by = g)
+  })
+  expect_snapshot(error = TRUE, {
+    duckplyr_mutate(df, a = if_any(c(y, z)), .by = g)
+  })
+
+  expect_snapshot(error = TRUE, {
+    duckplyr_filter(df, if_any(c(y, z), identity), .by = g)
+  })
+  expect_snapshot(error = TRUE, {
+    duckplyr_filter(df, (if_any(c(y, z), identity)), .by = g)
+  })
+  expect_snapshot(error = TRUE, {
+    duckplyr_mutate(df, a = if_any(c(y, z), identity), .by = g)
+  })
+
+  expect_snapshot(error = TRUE, {
+    duckplyr_filter(df, if_all(c(y, z)), .by = g)
+  })
+  expect_snapshot(error = TRUE, {
+    duckplyr_filter(df, (if_all(c(y, z))), .by = g)
+  })
+  expect_snapshot(error = TRUE, {
+    duckplyr_mutate(df, a = if_all(c(y, z)), .by = g)
+  })
+
+  expect_snapshot(error = TRUE, {
+    duckplyr_filter(df, if_all(c(y, z), identity), .by = g)
+  })
+  expect_snapshot(error = TRUE, {
+    duckplyr_filter(df, (if_all(c(y, z), identity)), .by = g)
+  })
+  expect_snapshot(error = TRUE, {
+    duckplyr_mutate(df, a = if_all(c(y, z), identity), .by = g)
+  })
+})
+
+test_that("`if_any()` and `if_all()` recycle `.fns` results to common size", {
+  df <- data.frame(
+    x = c(TRUE, FALSE, NA),
+    y = c(1L, 2L, 3L)
+  )
+
+  # `.fns` results recycle. Both `across()` and `if_any()`/`if_all()` recycle to
+  # a common size amongst their inputs (here, size 1), then that data frame is
+  # recycled to the group size.
+
+  fn <- function(x) {
+    if (is.logical(x)) {
+      c(TRUE, FALSE, TRUE)
+    } else {
+      TRUE
+    }
+  }
+
+  expect_identical(
+    duckplyr_filter(df, if_any(c(x, y), fn)),
+    duckplyr_filter(df, TRUE)
+  )
+  expect_identical(
+    duckplyr_filter(df, (if_any(c(x, y), fn))),
+    duckplyr_filter(df, TRUE)
+  )
+  expect_identical(
+    duckplyr_mutate(df, a = if_any(c(x, y), fn)),
+    duckplyr_mutate(df, a = TRUE)
+  )
+
+  expect_identical(
+    duckplyr_filter(df, if_all(c(x, y), fn)),
+    duckplyr_filter(df, c(TRUE, FALSE, TRUE))
+  )
+  expect_identical(
+    duckplyr_filter(df, (if_all(c(x, y), fn))),
+    duckplyr_filter(df, c(TRUE, FALSE, TRUE))
+  )
+  expect_identical(
+    duckplyr_mutate(df, a = if_all(c(x, y), fn)),
+    duckplyr_mutate(df, a = c(TRUE, FALSE, TRUE))
+  )
+
+  # Unrecyclable (all error, can't recycle to group size)
+  # It is correct that these show `..1` in the error for `duckplyr_filter()`. The error
+  # is about recycling of the result of `if_any()`, i.e. the data frame in the
+  # 1st argument slot.
+
+  fn <- function(x) c(TRUE, FALSE)
+
+  expect_snapshot(error = TRUE, duckplyr_filter(df, if_any(c(x, y), fn)))
+  expect_snapshot(error = TRUE, duckplyr_filter(df, (if_any(c(x, y), fn))))
+  expect_snapshot(error = TRUE, duckplyr_mutate(df, a = if_any(c(x, y), fn)))
+
+  expect_snapshot(error = TRUE, duckplyr_filter(df, if_all(c(x, y), fn)))
+  expect_snapshot(error = TRUE, duckplyr_filter(df, (if_all(c(x, y), fn))))
+  expect_snapshot(error = TRUE, duckplyr_mutate(df, a = if_all(c(x, y), fn)))
 })
 
 # c_across ----------------------------------------------------------------
@@ -1542,7 +1989,6 @@ test_that("across errors with non-empty dots and no `.fns` supplied (#6638)", {
 
 test_that("across(...) is deprecated", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
-
   df <- tibble(x = c(1, NA))
   expect_snapshot(duckplyr_summarise(
     df,
@@ -1583,7 +2029,6 @@ test_that("across() avoids simple argument name collisions with ... (#4965)", {
   expect_equal(summarize(df, across(x, tail, n = 1)), tibble(x = 2))
 })
 
-
 test_that("across() evaluates ... with promise semantics (#5813)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   options(lifecycle_verbosity = "quiet")
@@ -1592,11 +2037,7 @@ test_that("across() evaluates ... with promise semantics (#5813)", {
 
   res <- duckplyr_mutate(
     df,
-    across(
-      everything(),
-      mutate,
-      foo = foo + 1
-    )
+    across(everything(), mutate, foo = foo + 1)
   )
   expect_equal(res$x$foo, 2)
   expect_equal(res$y$foo, 3)
@@ -1615,16 +2056,11 @@ test_that("across() evaluates ... with promise semantics (#5813)", {
   }
   res <- duckplyr_mutate(
     df,
-    across(
-      everything(),
-      list_second,
-      counter()
-    )
+    across(everything(), list_second, counter())
   )
   expect_equal(res$x[[1]], 1)
   expect_equal(res$y[[1]], 1)
 })
-
 
 test_that("arguments in dots are evaluated once per group", {
   options(lifecycle_verbosity = "quiet")

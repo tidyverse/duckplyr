@@ -18,6 +18,10 @@ test_that("rowwise status preserved by major verbs", {
   expect_s3_class(out, "rowwise_df")
   expect_equal(duckplyr_group_vars(out), "x")
 
+  out <- duckplyr_filter_out(rf, x < 3)
+  expect_s3_class(out, "rowwise_df")
+  expect_equal(duckplyr_group_vars(out), "x")
+
   out <- duckplyr_mutate(rf, x = x + 1)
   expect_s3_class(out, "rowwise_df")
   expect_equal(duckplyr_group_vars(out), "x")
@@ -96,6 +100,33 @@ test_that("new_rowwise_df() can add class and attributes (#5918)", {
   )
   expect_s3_class(df, "custom_rowwise_df")
   expect_equal(attr(df, "a"), "b")
+})
+
+test_that("rbind() works with rowwise data frames by calling bind_rows() (r-lib/vctrs#1935)", {
+  x <- duckplyr_rowwise(tibble(a = 1:2))
+
+  y <- duckplyr_rowwise(tibble(a = 3:4))
+  out <- rbind(x, y)
+  expect_identical(out, duckplyr_rowwise(tibble(a = c(1:2, 3:4))))
+
+  # Important that `.rows` is recreated, not copied over from `x` (r-lib/vctrs#1935)
+  expect_identical(
+    group_data(out),
+    new_tibble(list(.rows = list_of(1L, 2L, 3L, 4L)))
+  )
+
+  # `bind_rows()` returns an object with the class of the first input,
+  # which is roughly how `rbind()` also works
+
+  # With bare tibble
+  y <- tibble(a = 5:6)
+  out <- rbind(x, y)
+  expect_identical(out, duckplyr_rowwise(tibble(a = c(1:2, 5:6))))
+
+  # With grouped_df
+  y <- duckplyr_group_by(tibble(a = 5:6), a)
+  out <- rbind(x, y)
+  expect_identical(out, duckplyr_rowwise(tibble(a = c(1:2, 5:6))))
 })
 
 test_that("validate_rowwise_df() gives useful errors", {

@@ -105,6 +105,110 @@ test_that("`duckplyr_reframe()` throws intelligent recycling errors", {
   })
 })
 
+test_that("`duckplyr_reframe()` and `duckplyr_summarise()` are consistent with zero expressions", {
+  df <- tibble(x = c("a", "a", "b"), y = 1:3)
+  gdf <- duckplyr_group_by(df, x)
+
+  expect_identical(duckplyr_reframe(df), tibble(.rows = 1L))
+  expect_identical(duckplyr_reframe(df), duckplyr_summarise(df))
+
+  expect_identical(duckplyr_reframe(df, .by = x), tibble(x = c("a", "b")))
+  expect_identical(
+    duckplyr_reframe(df, .by = x),
+    duckplyr_summarise(df, .by = x)
+  )
+
+  expect_identical(duckplyr_reframe(gdf), tibble(x = c("a", "b")))
+  expect_identical(duckplyr_reframe(gdf), duckplyr_summarise(gdf))
+})
+
+test_that("`duckplyr_reframe()` and `duckplyr_summarise()` are consistent with zero expressions and zero rows", {
+  # The grouped cases here are special. There are "zero groups" to evaluate on,
+  # but we still always evaluate 1 time, and then effectively recycle the
+  # results to size 0.
+  df <- tibble(x = character(), y = integer())
+  gdf <- duckplyr_group_by(df, x)
+
+  expect_identical(duckplyr_reframe(df), tibble(.rows = 1L))
+  expect_identical(duckplyr_reframe(df), duckplyr_summarise(df))
+
+  expect_identical(duckplyr_reframe(df, .by = x), tibble(x = character()))
+  expect_identical(
+    duckplyr_reframe(df, .by = x),
+    duckplyr_summarise(df, .by = x)
+  )
+
+  expect_identical(duckplyr_reframe(gdf), tibble(x = character()))
+  expect_identical(duckplyr_reframe(gdf), duckplyr_summarise(gdf))
+})
+
+test_that("`duckplyr_reframe()` and `duckplyr_summarise()` are consistent with data frame that flattens into zero expressions", {
+  df <- tibble(x = c("a", "a", "b"), y = 1:3)
+  gdf <- duckplyr_group_by(df, x)
+
+  expect_identical(
+    duckplyr_reframe(df, tibble(.rows = 1L)),
+    tibble(.rows = 1L)
+  )
+  expect_identical(
+    duckplyr_reframe(df, tibble(.rows = 1L)),
+    duckplyr_summarise(df, tibble(.rows = 1L))
+  )
+
+  expect_identical(
+    duckplyr_reframe(df, tibble(.rows = 1L), .by = x),
+    tibble(x = c("a", "b"))
+  )
+  expect_identical(
+    duckplyr_reframe(df, tibble(.rows = 1L), .by = x),
+    duckplyr_summarise(df, tibble(.rows = 1L), .by = x)
+  )
+
+  expect_identical(
+    duckplyr_reframe(gdf, tibble(.rows = 1L)),
+    tibble(x = c("a", "b"))
+  )
+  expect_identical(
+    duckplyr_reframe(gdf, tibble(.rows = 1L)),
+    duckplyr_summarise(gdf, tibble(.rows = 1L))
+  )
+})
+
+test_that("`duckplyr_reframe()` and `duckplyr_summarise()` are consistent with data frame that flattens into zero expressions and zero rows", {
+  # The grouped cases here are special. There are "zero groups" to evaluate on,
+  # but we still always evaluate 1 time, and then effectively recycle the
+  # results to size 0.
+  df <- tibble(x = character(), y = integer())
+  gdf <- duckplyr_group_by(df, x)
+
+  expect_identical(
+    duckplyr_reframe(df, tibble(.rows = 1L)),
+    tibble(.rows = 1L)
+  )
+  expect_identical(
+    duckplyr_reframe(df, tibble(.rows = 1L)),
+    duckplyr_summarise(df, tibble(.rows = 1L))
+  )
+
+  expect_identical(
+    duckplyr_reframe(df, tibble(.rows = 1L), .by = x),
+    tibble(x = character())
+  )
+  expect_identical(
+    duckplyr_reframe(df, tibble(.rows = 1L), .by = x),
+    duckplyr_summarise(df, tibble(.rows = 1L), .by = x)
+  )
+
+  expect_identical(
+    duckplyr_reframe(gdf, tibble(.rows = 1L)),
+    tibble(x = character())
+  )
+  expect_identical(
+    duckplyr_reframe(gdf, tibble(.rows = 1L)),
+    duckplyr_summarise(gdf, tibble(.rows = 1L))
+  )
+})
+
 test_that("`duckplyr_reframe()` can return more rows than the original data frame", {
   df <- tibble(x = 1:2)
 
@@ -268,6 +372,33 @@ test_that("`duckplyr_reframe()` with `duckplyr_rowwise()` always returns an ungr
   rdf <- duckplyr_rowwise(df, g)
 
   expect_s3_class(duckplyr_reframe(rdf, x), class(df), exact = TRUE)
+})
+
+test_that("named data frame results with 0 columns participate in recycling (#6509)", {
+  df <- tibble(x = 1:3)
+  gdf <- duckplyr_group_by(df, x)
+
+  empty <- tibble()
+  expect_identical(duckplyr_reframe(df, empty = empty), tibble(empty = empty))
+  expect_identical(
+    duckplyr_reframe(df, x = sum(x), empty = empty),
+    tibble(x = integer(), empty = empty)
+  )
+  expect_identical(
+    duckplyr_reframe(df, empty = empty, x = sum(x)),
+    tibble(empty = empty, x = integer())
+  )
+
+  empty3 <- new_tibble(list(), nrow = 3L)
+  expect_identical(duckplyr_reframe(df, empty = empty3), tibble(empty = empty3))
+  expect_identical(
+    duckplyr_reframe(df, x = sum(x), empty = empty3),
+    tibble(x = c(6L, 6L, 6L), empty = empty3)
+  )
+  expect_identical(
+    duckplyr_reframe(df, empty = empty3, x = sum(x)),
+    tibble(empty = empty3, x = c(6L, 6L, 6L))
+  )
 })
 
 # .by ----------------------------------------------------------------------

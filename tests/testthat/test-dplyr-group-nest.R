@@ -56,8 +56,10 @@ test_that("duckplyr_group_nest() works on grouped data frames", {
   expect_equal(names(bind_rows(!!!res$data)), names(starwars))
 })
 
-test_that("group_nest.grouped_df() warns about ...", {
-  expect_warning(duckplyr_group_nest(duckplyr_group_by(mtcars, cyl), cyl))
+test_that("group_nest.grouped_df() warns about `...`", {
+  expect_snapshot({
+    duckplyr_group_nest(duckplyr_group_by(mtcars, cyl), cyl)
+  })
 })
 
 test_that("duckplyr_group_nest() works if no grouping column", {

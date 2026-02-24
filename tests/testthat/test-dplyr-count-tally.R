@@ -138,15 +138,18 @@ test_that("can only explicitly chain together multiple tallies", {
   })
 })
 
-test_that("wt = n() is deprecated", {
-  df <- data.frame(x = 1:3)
-  expect_warning(duckplyr_count(df, wt = n()), "`wt = n()`", fixed = TRUE)
-})
-
 test_that("duckplyr_count() owns errors (#6139)", {
   expect_snapshot({
     (expect_error(duckplyr_count(mtcars, new = 1 + "")))
     (expect_error(duckplyr_count(mtcars, wt = 1 + "")))
+  })
+})
+
+test_that("duckplyr_count() `wt = n()` is deprecated", {
+  df <- tibble(a = 1:5)
+
+  expect_snapshot({
+    duckplyr_count(df, a, wt = n())
   })
 })
 
@@ -177,6 +180,14 @@ test_that("tally() owns errors (#6139)", {
   })
 })
 
+test_that("tally() `wt = n()` is deprecated", {
+  df <- tibble(a = 1:5)
+
+  expect_snapshot({
+    tally(df, wt = n())
+  })
+})
+
 # add_count ---------------------------------------------------------------
 
 test_that("add_count preserves grouping", {
@@ -188,6 +199,22 @@ test_that("add_count preserves grouping", {
     df |> duckplyr_group_by(g) |> duckplyr_add_count(),
     exp |> duckplyr_group_by(g)
   )
+})
+
+test_that("`.drop` is defunct", {
+  df <- tibble(f = factor("b", levels = c("a", "b", "c")))
+
+  expect_snapshot(error = TRUE, {
+    duckplyr_add_count(df, f, .drop = FALSE)
+  })
+})
+
+test_that("duckplyr_add_count() `wt = n()` is deprecated", {
+  df <- tibble(a = 1:5)
+
+  expect_snapshot({
+    duckplyr_add_count(df, a, wt = n())
+  })
 })
 
 test_that("duckplyr_add_count() owns errors (#6139)", {
@@ -225,5 +252,13 @@ test_that("can override output column", {
 test_that("add_tally() owns errors (#6139)", {
   expect_snapshot({
     (expect_error(add_tally(mtcars, wt = 1 + "")))
+  })
+})
+
+test_that("add_tally() `wt = n()` is deprecated", {
+  df <- tibble(a = 1:5)
+
+  expect_snapshot({
+    add_tally(df, wt = n())
   })
 })

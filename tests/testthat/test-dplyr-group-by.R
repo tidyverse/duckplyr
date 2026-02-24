@@ -75,18 +75,6 @@ test_that("duckplyr_group_by(<grouped df>, <computation>) computes the expressio
   expect_equal(duckplyr_group_vars(out), c("g", "big"))
 })
 
-test_that("add = TRUE is deprecated", {
-  rlang::local_options(lifecycle_verbosity = "warning")
-
-  df <- tibble(x = 1, y = 2)
-
-  expect_warning(
-    out <- df |> duckplyr_group_by(x) |> duckplyr_group_by(y, add = TRUE),
-    "deprecated"
-  )
-  expect_equal(duckplyr_group_vars(out), c("x", "y"))
-})
-
 test_that("joins preserve grouping", {
   df <- data.frame(x = rep(1:2, each = 4), y = rep(1:4, each = 2))
   g <- duckplyr_group_by(df, x)
@@ -288,19 +276,22 @@ test_that("group_by works with zero-row data frames (#486)", {
 test_that("[ on grouped_df preserves grouping if subset includes grouping vars", {
   df <- tibble(x = 1:5, ` ` = 6:10)
   by_x <- df |> duckplyr_group_by(x)
-  expect_equal(by_x |> duckplyr_groups(), by_x |> `[`(1:2) |> duckplyr_groups())
+  expect_equal(
+    by_x |> duckplyr_groups(),
+    by_x |> (\(.) .[1:2])() |> duckplyr_groups()
+  )
 
   # non-syntactic name
   by_ns <- df |> duckplyr_group_by(` `)
   expect_equal(
     by_ns |> duckplyr_groups(),
-    by_ns |> `[`(1:2) |> duckplyr_groups()
+    by_ns |> (\(.) .[1:2])() |> duckplyr_groups()
   )
 })
 
 test_that("[ on grouped_df drops grouping if subset doesn't include grouping vars", {
   by_cyl <- mtcars |> duckplyr_group_by(cyl)
-  no_cyl <- by_cyl |> `[`(c(1, 3))
+  no_cyl <- by_cyl |> (\(.) .[c(1, 3)])()
 
   expect_equal(duckplyr_group_vars(no_cyl), character())
   expect_s3_class(no_cyl, "tbl_df")
@@ -701,7 +692,6 @@ test_that("duckplyr_group_by() works with quosures (tidyverse/lubridate#959)", {
   expect_equal(g(), tibble(x = 1, g = NA) |> duckplyr_group_by(g))
 })
 
-
 # Errors ------------------------------------------------------------------
 
 test_that("duckplyr_group_by() and duckplyr_ungroup() give meaningful error messages", {
@@ -713,5 +703,47 @@ test_that("duckplyr_group_by() and duckplyr_ungroup() give meaningful error mess
     (expect_error(df |> duckplyr_group_by(x, y) |> duckplyr_ungroup(z)))
 
     (expect_error(df |> duckplyr_group_by(z = a + 1)))
+  })
+})
+
+# Deprecation -------------------------------------------------------------
+
+test_that("duckplyr_group_by(add =) is defunct", {
+  # While it was being deprecated, it was getting passed through the `...`
+  # down to `group_by_prepare()`.
+  df <- tibble(x = 1, y = 2)
+
+  expect_snapshot(error = TRUE, {
+    duckplyr_group_by(df, x, add = TRUE)
+  })
+})
+
+test_that("group_by_prepare(add =) is defunct", {
+  df <- tibble(x = 1, y = 2)
+
+  # We let this say `duckplyr_group_by()` in the error because it is more likely that
+  # that is where it came from
+  expect_snapshot(error = TRUE, {
+    group_by_prepare(df, x, add = TRUE)
+  })
+})
+
+test_that("duckplyr_group_by(.dots =) is defunct", {
+  # While it was being deprecated, it was getting passed through the `...`
+  # down to `group_by_prepare()`.
+  df <- tibble(x = 1, y = 1)
+
+  expect_snapshot(error = TRUE, {
+    duckplyr_group_by(df, .dots = "x")
+  })
+})
+
+test_that("group_by_prepare(.dots =) is defunct", {
+  df <- tibble(x = 1, y = 1)
+
+  # We let this say `duckplyr_group_by()` in the error because it is more likely that
+  # that is where it came from
+  expect_snapshot(error = TRUE, {
+    group_by_prepare(df, .dots = "x")
   })
 })

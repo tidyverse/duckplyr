@@ -380,6 +380,14 @@ test_that("mutate preserves class of zero-row rowwise (#4224, #6303)", {
   out <- duckplyr_mutate(rf, x2 = identity(x), x3 = x)
   expect_equal(out$x2, logical())
   expect_equal(out$x3, logical())
+
+  # with the empty list case, `x` is `logical()`, not a random logical of length
+  # 1 that happens to get recycled to length 0 (#7710)
+  rf <- duckplyr_rowwise(tibble(x = list()))
+  out <- duckplyr_mutate(rf, x2 = {
+    expect_identical(x, logical())
+    x
+  })
 })
 
 test_that("mutate works on empty data frames (#1142)", {
@@ -431,7 +439,6 @@ test_that("rowwise mutate un-lists existing size-1 list-columns (#6302)", {
   df <- duckplyr_rowwise(tibble(x = list(1, 2:3)))
   expect_snapshot(duckplyr_mutate(df, y = x), error = TRUE)
 })
-
 
 test_that("grouped mutate does not drop grouping attributes (#1020)", {
   d <- data.frame(subject = c("Jack", "Jill"), id = c(2, 1)) |>

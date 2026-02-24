@@ -490,19 +490,25 @@ test_that("`pick()` errors in `duckplyr_arrange()` are useful", {
 })
 
 # ------------------------------------------------------------------------------
-# pick() + duckplyr_filter()
+# pick() + duckplyr_filter() / duckplyr_filter_out()
 
-test_that("can `pick()` inside `duckplyr_filter()`", {
+test_that("can `pick()` inside `duckplyr_filter()` / `duckplyr_filter_out()`", {
   df <- tibble(x = c(1, 2, NA, 3), y = c(2, NA, 5, 3))
 
+  expect <- df[c(1, 4), ]
   out <- duckplyr_filter(df, vec_detect_complete(pick(x, y)))
-  expect_identical(out, df[c(1, 4), ])
-
+  expect_identical(out, expect)
   out <- duckplyr_filter(df, vec_detect_complete(pick_wrapper(x, y)))
-  expect_identical(out, df[c(1, 4), ])
+  expect_identical(out, expect)
+
+  expect <- df[c(2, 3), ]
+  out <- duckplyr_filter_out(df, vec_detect_complete(pick(x, y)))
+  expect_identical(out, expect)
+  out <- duckplyr_filter_out(df, vec_detect_complete(pick_wrapper(x, y)))
+  expect_identical(out, expect)
 })
 
-test_that("`duckplyr_filter()` with `pick()` that uses invalid tidy-selection errors", {
+test_that("`duckplyr_filter()` / `duckplyr_filter_out()` with `pick()` that uses invalid tidy-selection errors", {
   df <- tibble(x = c(1, 2, NA, 3), y = c(2, NA, 5, 3))
 
   expect_snapshot(error = TRUE, {
@@ -511,17 +517,30 @@ test_that("`duckplyr_filter()` with `pick()` that uses invalid tidy-selection er
   expect_snapshot(error = TRUE, {
     duckplyr_filter(df, pick_wrapper(x, a))
   })
+
+  expect_snapshot(error = TRUE, {
+    duckplyr_filter_out(df, pick(x, a))
+  })
+  expect_snapshot(error = TRUE, {
+    duckplyr_filter_out(df, pick_wrapper(x, a))
+  })
 })
 
-test_that("`duckplyr_filter()` that doesn't use `pick()` result correctly errors", {
+test_that("`duckplyr_filter()` / `duckplyr_filter_out()` that doesn't use `pick()` result correctly errors", {
   df <- tibble(x = c(1, 2, NA, 3), y = c(2, NA, 5, 3))
 
-  # TODO: Can we improve on the `In argument:` expression in the expansion case?
   expect_snapshot(error = TRUE, {
     duckplyr_filter(df, pick(x, y)$x)
   })
   expect_snapshot(error = TRUE, {
     duckplyr_filter(df, pick_wrapper(x, y)$x)
+  })
+
+  expect_snapshot(error = TRUE, {
+    duckplyr_filter_out(df, pick(x, y)$x)
+  })
+  expect_snapshot(error = TRUE, {
+    duckplyr_filter_out(df, pick_wrapper(x, y)$x)
   })
 })
 

@@ -7,7 +7,6 @@ test_that("Dummy", {
 
 skip_if(Sys.getenv("DUCKPLYR_SKIP_DPLYR_TESTS") == "TRUE")
 
-
 # group_data --------------------------------------------------------------
 
 test_that("group_data(<data.frame>) returns a data frame", {
@@ -59,22 +58,32 @@ test_that("group_rows() and duckplyr_group_keys() partition group_data()", {
   expect_equal(group_rows(gf), gd[[3]])
 })
 
+test_that("duckplyr_group_keys(...) is defunct", {
+  df <- tibble(x = 1, y = 2)
+
+  expect_snapshot(error = TRUE, {
+    duckplyr_group_keys(df, x)
+  })
+})
+
 # duckplyr_group_indices() ---------------------------------------------------------
 
 test_that("no arg duckplyr_group_indices() is deprecated", {
   df <- tibble(x = 1)
-  expect_warning(
-    out <- duckplyr_summarise(df, id = duckplyr_group_indices()),
-    "deprecated"
-  )
+
+  expect_snapshot({
+    out <- duckplyr_summarise(df, id = duckplyr_group_indices())
+  })
+
   expect_equal(out, tibble(id = 1))
 })
 
 test_that("duckplyr_group_indices(...) is deprecated", {
-  rlang::local_options(lifecycle_verbosity = "error")
-
   df <- tibble(x = 1, y = 2)
-  expect_error(df |> duckplyr_group_indices(x), "deprecated")
+
+  expect_snapshot(error = TRUE, {
+    duckplyr_group_indices(df, x)
+  })
 })
 
 test_that("duckplyr_group_indices() returns expected values", {

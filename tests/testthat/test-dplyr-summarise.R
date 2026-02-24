@@ -487,20 +487,55 @@ test_that("`duckplyr_summarise()` doesn't allow data frames with missing or empt
   })
 })
 
+test_that("duckplyr_summarise() messages about implicit `.groups` default", {
+  # Otherwise it only informs when called from the global env
+  local_options(dplyr.summarise.inform = TRUE)
+
+  df <- tibble(x = 1, y = 2)
+
+  # Nothing
+  expect_snapshot({
+    df |> duckplyr_group_by(x) |> duckplyr_summarise()
+  })
+  expect_snapshot({
+    df |> duckplyr_rowwise() |> duckplyr_summarise()
+  })
+
+  # Implicit `"drop_last"`
+  expect_snapshot({
+    df |> duckplyr_group_by(x, y) |> duckplyr_summarise()
+  })
+
+  # Implicit `"keep"`
+  expect_snapshot({
+    df |> duckplyr_rowwise(x, y) |> duckplyr_summarise()
+  })
+})
+
+test_that("duckplyr_summarise() respects `dplyr.summarise.inform = FALSE`", {
+  local_options(dplyr.summarise.inform = FALSE)
+
+  # Force evaluation in the global env so we can be very sure we are
+  # silencing the message. It only ever triggers in the global env.
+  eval_global <- function(expr) eval(expr, envir = globalenv())
+
+  # Implicit `"drop_last"`
+  expect_snapshot({
+    eval_global(
+      tibble(x = 1, y = 2) |> duckplyr_group_by(x, y) |> duckplyr_summarise()
+    )
+  })
+
+  # Implicit `"keep"`
+  expect_snapshot({
+    eval_global(
+      tibble(x = 1, y = 2) |> duckplyr_rowwise(x, y) |> duckplyr_summarise()
+    )
+  })
+})
+
 test_that("duckplyr_summarise() gives meaningful errors", {
   skip("TODO duckdb")
-  eval(
-    envir = global_env(),
-    expr({
-      expect_snapshot({
-        # Messages about .groups=
-        tibble(x = 1, y = 2) |> duckplyr_group_by(x, y) |> duckplyr_summarise()
-        tibble(x = 1, y = 2) |> duckplyr_rowwise(x, y) |> duckplyr_summarise()
-        tibble(x = 1, y = 2) |> duckplyr_rowwise() |> duckplyr_summarise()
-      })
-    })
-  )
-
   eval(
     envir = global_env(),
     expr({
@@ -513,6 +548,11 @@ test_that("duckplyr_summarise() gives meaningful errors", {
         (expect_error(
           tibble(x = 1, y = c(1, 2, 2), z = runif(3)) |>
             duckplyr_group_by(x, y) |>
+            duckplyr_summarise(a = rlang::env(a = 1))
+        ))
+        (expect_error(
+          tibble(x = 1, y = c(1, 2, 2), y2 = c(1, 2, 2), z = runif(3)) |>
+            duckplyr_group_by(x, y, y2) |>
             duckplyr_summarise(a = rlang::env(a = 1))
         ))
         (expect_error(
@@ -531,22 +571,6 @@ test_that("duckplyr_summarise() gives meaningful errors", {
           tibble(id = 1:2, a = list(1, "2")) |>
             duckplyr_rowwise() |>
             duckplyr_summarise(a = a[[1]])
-        ))
-
-        # incompatible size
-        (expect_error(
-          tibble(z = 1) |>
-            duckplyr_summarise(x = 1:3, y = 1:2)
-        ))
-        (expect_error(
-          tibble(z = 1:2) |>
-            duckplyr_group_by(z) |>
-            duckplyr_summarise(x = 1:3, y = 1:2)
-        ))
-        (expect_error(
-          tibble(z = c(1, 3)) |>
-            duckplyr_group_by(z) |>
-            duckplyr_summarise(x = seq_len(z), y = 1:2)
         ))
 
         # mixed nulls
@@ -584,4 +608,40 @@ test_that("duckplyr_summarise() gives meaningful errors", {
       })
     })
   )
+})
+
+test_that("non-summary results are defunct in favor of `duckplyr_reframe()` (#6382, #7761)", {
+  df <- tibble(g = c(1, 1, 2), x = 1:3)
+  gdf <- duckplyr_group_by(df, g)
+  rdf <- duckplyr_rowwise(df)
+
+  expect_snapshot(error = TRUE, {
+    out <- duckplyr_summarise(df, x = which(x < 3))
+  })
+  expect_snapshot(error = TRUE, {
+    out <- duckplyr_summarise(df, x = which(x < 3), .by = g)
+  })
+
+  # First group returns size 2 summary
+  expect_snapshot(error = TRUE, {
+    out <- duckplyr_summarise(gdf, x = which(x < 3))
+  })
+
+  # Last row returns size 0 summary
+  expect_snapshot(error = TRUE, {
+    out <- duckplyr_summarise(rdf, x = which(x < 3))
+  })
+
+  # A few additional tests from when we used to allow this, which are now errors
+  expect_snapshot(error = TRUE, {
+    tibble() |> duckplyr_summarise(x = 1, y = 1:3, z = 1)
+  })
+  expect_snapshot(error = TRUE, {
+    gf <- duckplyr_group_by(tibble(a = 1:2), a)
+    gf |> duckplyr_summarise(x = 1, y = 1:3, z = 1)
+  })
+  expect_snapshot(error = TRUE, {
+    gf <- duckplyr_group_by(tibble(a = 1:2), a)
+    gf |> duckplyr_summarise(x = seq_len(a), y = 1)
+  })
 })

@@ -118,7 +118,11 @@ test_that("duckplyr_group_modify() works with additional arguments (#4509)", {
 
 test_that("duckplyr_group_map() does not warn about .keep= for rowwise_df", {
   expect_warning(
-    data.frame(x = 1) |> duckplyr_rowwise() |> group_walk(~ {}),
+    data.frame(x = 1) |>
+      duckplyr_rowwise() |>
+      group_walk(
+        ~ {}
+      ),
     NA
   )
 })
@@ -144,5 +148,24 @@ test_that("duckplyr_group_map() give meaningful errors", {
     (expect_error(
       iris |> duckplyr_group_by(Species) |> duckplyr_group_map(head1)
     ))
+  })
+})
+
+test_that("`keep =` is defunct", {
+  df <- tibble(x = 1)
+  gdf <- duckplyr_group_by(df, x)
+
+  expect_snapshot(error = TRUE, {
+    duckplyr_group_map(df, keep = TRUE)
+  })
+  expect_snapshot(error = TRUE, {
+    duckplyr_group_map(gdf, keep = TRUE)
+  })
+
+  expect_snapshot(error = TRUE, {
+    duckplyr_group_modify(df, keep = TRUE)
+  })
+  expect_snapshot(error = TRUE, {
+    duckplyr_group_modify(gdf, keep = TRUE)
   })
 })

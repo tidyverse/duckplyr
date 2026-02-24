@@ -50,12 +50,16 @@ test_that("duckplyr_group_split() respects empty groups", {
   expect_identical(res, list_of(tbl[1:2, ], tbl[3:4, ], tbl[integer(), ]))
 })
 
-test_that("group_split.grouped_df() warns about ...", {
-  expect_warning(duckplyr_group_split(duckplyr_group_by(mtcars, cyl), cyl))
+test_that("group_split.grouped_df() warns about `...`", {
+  expect_snapshot({
+    out <- duckplyr_group_split(duckplyr_group_by(mtcars, cyl), cyl)
+  })
 })
 
-test_that("group_split.rowwise_df() warns about ...", {
-  expect_warning(duckplyr_group_split(duckplyr_rowwise(mtcars), cyl))
+test_that("group_split.rowwise_df() warns about `...`", {
+  expect_snapshot({
+    out <- duckplyr_group_split(duckplyr_rowwise(mtcars), cyl)
+  })
 })
 
 test_that("group_split.grouped_df() works", {
@@ -83,7 +87,7 @@ test_that("duckplyr_group_split() works if no grouping column", {
   expect_identical(duckplyr_group_split(iris), list_of(as_tibble(iris)))
 })
 
-test_that("duckplyr_group_split(keep=FALSE) does not try to remove virtual grouping columns (#4045)", {
+test_that("duckplyr_group_split(.keep=FALSE) does not try to remove virtual grouping columns (#4045)", {
   iris3 <- as_tibble(iris[1:3, ])
   rows <- list(c(1L, 3L, 2L), c(3L, 2L, 3L))
   df <- new_grouped_df(
@@ -149,4 +153,20 @@ test_that("duckplyr_group_split() internally uses dplyr_row_slice()", {
   )
 
   expect_error(duckplyr_group_split(df, x), class = "dplyr_row_slice_called")
+})
+
+test_that("`keep =` is defunct", {
+  df <- tibble(x = 1)
+  gdf <- duckplyr_group_by(df, x)
+  rdf <- duckplyr_rowwise(df)
+
+  expect_snapshot(error = TRUE, {
+    duckplyr_group_split(df, keep = TRUE)
+  })
+  expect_snapshot(error = TRUE, {
+    duckplyr_group_split(gdf, keep = TRUE)
+  })
+  expect_snapshot(error = TRUE, {
+    duckplyr_group_split(rdf, keep = TRUE)
+  })
 })
