@@ -24,9 +24,13 @@ group_map.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = deprecat
 
   # dplyr implementation
   if (!missing(keep)) {
-    lifecycle::deprecate_warn("1.0.0", "group_map(keep = )", "group_map(.keep = )", always = TRUE)
-    .keep <- keep
+    lifecycle::deprecate_stop(
+      "1.0.0",
+      "group_map(keep = )",
+      "group_map(.keep = )"
+    )
   }
+
   .f <- as_group_map_function(.f)
 
   # call the function on each group
@@ -42,7 +46,10 @@ group_map.duckplyr_df <- function(.data, .f, ..., .keep = FALSE, keep = deprecat
     map2(chunks, group_keys, .f, ...)
   } else {
     # calling .f with .x and .y set to prototypes
-    structure(list(), ptype = .f(attr(chunks, "ptype"), keys[integer(0L), ], ...))
+    structure(
+      list(),
+      ptype = .f(attr(chunks, "ptype"), keys[integer(0L), ], ...)
+    )
   }
 }
 

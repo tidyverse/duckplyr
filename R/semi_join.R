@@ -28,7 +28,14 @@ semi_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches
   # dplyr implementation
   check_dots_empty0(...)
   y <- auto_copy(x, y, copy = copy)
-  join_filter(x, y, by = by, type = "semi", na_matches = na_matches, user_env = caller_env())
+  join_filter(
+    x,
+    y,
+    by = by,
+    type = "semi",
+    na_matches = na_matches,
+    user_env = caller_env()
+  )
 }
 
 duckplyr_semi_join <- function(x, y, ...) {

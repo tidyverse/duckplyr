@@ -43,18 +43,13 @@ filter.duckplyr_df <- function(.data, ..., .by = NULL, .preserve = FALSE) {
   return(out)
 
   # dplyr implementation
-  dots <- dplyr_quosures(...)
-  check_filter(dots)
-
-  by <- compute_by(
-    by = {{ .by }},
-    data = .data,
-    by_arg = ".by",
-    data_arg = ".data"
+  filter_impl(
+    .data = .data,
+    ...,
+    .by = {{ .by }},
+    .preserve = .preserve,
+    .verb = "filter"
   )
-
-  loc <- filter_rows(.data, dots, by)
-  dplyr_row_slice(.data, loc, preserve = .preserve)
 }
 
 duckplyr_filter <- function(.data, ...) {
