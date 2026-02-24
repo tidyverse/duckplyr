@@ -13,10 +13,6 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
     {
       rel <- duckdb_rel_from_df(.data)
 
-      if (length(by_names) > 0) {
-        rel <- oo_prep(rel)
-      }
-
       dots <- dplyr_quosures(...)
       dots <- fix_auto_name(dots)
       names_dots <- names(dots)
@@ -46,8 +42,9 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
 
         names_quos <- names(quos)
 
-        # Set up `exprs` outside the loop. All expressions expanded from an
-        # `across()` are evaluated together using the same projection.
+        # Translate all expressions first, recording window function usage
+        # via the `has_window` attribute set by rel_translate
+        uses_window <- FALSE
         exprs <- imap(set_names(names(current_data)), relexpr_reference, rel = NULL)
 
         for (j in seq_along(quos)) {
@@ -65,17 +62,33 @@ mutate.duckplyr_df <- function(.data, ..., .by = NULL, .keep = c("all", "used", 
             need_window = TRUE
           )
           exprs[[new_pos]] <- new_expr
+          uses_window <- uses_window || isTRUE(attr(new_expr, "has_window"))
 
           new_names_used <- intersect(attr(new_expr, "used"), names(.data))
           names_used <- c(names_used, setdiff(new_names_used, names_used))
         }
 
-        rel <- rel_project(rel, unname(exprs))
-        current_data <- rel_to_df(rel, prudence = "stingy")
-      }
+        # Use oo_prep/oo_restore only if any expression uses window functions
+        # (needed for lead()/lag()/sum() with .by, etc.) or if output order
+        # preservation is globally forced.
+        oo <- uses_window || oo_force()
 
-      if (length(by_names) > 0) {
-        rel <- oo_restore(rel)
+        if (oo) {
+          rel <- oo_prep(rel, force = TRUE)
+          # oo_prep appends ___row_number after the current columns; include it
+          # in exprs so it passes through the projection and is available for
+          # oo_restore_order to sort by.
+          exprs[["___row_number"]] <- relexpr_reference("___row_number")
+        }
+
+        rel <- rel_project(rel, unname(exprs))
+
+        if (oo) {
+          rel <- oo_restore_order(rel, force = TRUE)
+          rel <- oo_restore_cols(rel, force = TRUE)
+        }
+
+        current_data <- rel_to_df(rel, prudence = "stingy")
       }
 
       out <- duckplyr_reconstruct(rel, .data)
