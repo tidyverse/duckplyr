@@ -327,6 +327,13 @@ to_duckdb_expr <- function(x) {
       }
       out
     },
+    relational_relexpr_operator = {
+      out <- duckdb$expr_operator(x$op, to_duckdb_exprs(x$exprs))
+      if (!is.null(x$alias)) {
+        duckdb$expr_set_alias(out, x$alias)
+      }
+      out
+    },
     relational_relexpr_comparison = {
       out <- duckdb$expr_comparison(x$cmp_op, to_duckdb_exprs(x$exprs))
       if (!is.null(x$alias)) {
