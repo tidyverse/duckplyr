@@ -797,7 +797,6 @@ test_extra_arg_map <- list(
     "a == 1",
     "a %in% 2:3, g == 2",
     "a %in% 2:3 & g == 2",
-
     "a != 2 | g != 2",
     NULL
   ),
