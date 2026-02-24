@@ -858,6 +858,19 @@ test_extra_arg_map <- list(
     # NA in use
     'd = if_else(a > 1, "ok", NA)',
 
+    # lubridate
+    "d = day(a)",
+    "d = month(a)",
+    "d = year(a)",
+    "d = ymd(a)",
+    "d = ydm(a)",
+    "d = mdy(a)",
+    "d = myd(a)",
+    "d = dmy(a)",
+    "d = dym(a)",
+    "d = quarter(a)",
+    "d = date(a)",
+
     NULL
   ),
   nest_join = "join_by(a)",
