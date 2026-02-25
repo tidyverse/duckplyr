@@ -70,7 +70,14 @@ compute_parquet.duckplyr_df <- function(
     "use_tmp_file",
     "write_partition_columns",
     "overwrite_or_ignore",
-    "append"
+    "append",
+    "overwrite",
+    "filename_pattern",
+    "file_extension",
+    "file_size_bytes",
+    "preserve_order",
+    "return_files",
+    "return_stats"
   )
   read_options <- options[setdiff(names(options), write_only_options)]
   read_parquet_duckdb(path, prudence = prudence, options = read_options)
