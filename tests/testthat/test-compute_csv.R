@@ -28,6 +28,18 @@ test_that("compute_csv() with options passed to read", {
   expect_identical(collect(out), as_tibble(df))
 })
 
+test_that("compute_csv() with write-only options", {
+  df <- data.frame(x = c(1, 2))
+  path <- tempfile(fileext = ".csv")
+  withr::defer(unlink(path))
+
+  # force_quote is write-only and should be filtered before reading
+  out <- compute_csv(df, path = path, options = list(force_quote = c("x")))
+
+  expect_identical(out, as_duckdb_tibble(df))
+  expect_identical(collect(out), as_tibble(df))
+})
+
 test_that("compute_csv() is a generic function", {
   expect_true(is.function(compute_csv))
   m <- methods("compute_csv")
