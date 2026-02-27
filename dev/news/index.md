@@ -1,24 +1,15 @@
 # Changelog
 
-## duckplyr 1.1.99.9901 (2026-02-24)
+## duckplyr 1.2.0.9000 (2026-02-25)
 
-### Features
+### fledge
 
-- Add experimental translation for
-  [`filter_out()`](https://dplyr.tidyverse.org/reference/filter.html)
-  ([\#869](https://github.com/tidyverse/duckplyr/issues/869),
-  [\#870](https://github.com/tidyverse/duckplyr/issues/870)).
+- CRAN release v1.2.0
+  ([\#884](https://github.com/tidyverse/duckplyr/issues/884)).
 
-### Continuous integration
+## duckplyr 1.2.0 (2026-02-24)
 
-- Align tests.
-
-### Testing
-
-- Snapshot updates for rcc-full ({“os”:“macos-latest”,“r”:“4.5”})
-  ([\#872](https://github.com/tidyverse/duckplyr/issues/872)).
-
-## duckplyr 1.1.99.9900 (2026-02-24)
+CRAN release: 2026-02-25
 
 ### Features
 
@@ -46,19 +37,18 @@
 
 - [`first()`](https://dplyr.tidyverse.org/reference/nth.html),
   [`last()`](https://dplyr.tidyverse.org/reference/nth.html),
-  [`nth()`](https://dplyr.tidyverse.org/reference/nth.html), and
+  [`nth()`](https://dplyr.tidyverse.org/reference/nth.html),
+  [`round()`](https://rdrr.io/r/base/Round.html), and
   [`n()`](https://dplyr.tidyverse.org/reference/context.html) inside
   `mutate(.by = ...)` are now translated directly to DuckDB
   ([\#626](https://github.com/tidyverse/duckplyr/issues/626),
   [\#854](https://github.com/tidyverse/duckplyr/issues/854)).
 
   ``` r
-  data.frame(g = c("a", "a", "b", "b", "b"), x = c(10, 20, 30, 40, 50)) |>
-    as_duckdb_tibble() |>
-    summarise(first_x = first(x), last_x = last(x), second_x = nth(x, 2), .by = g)
+  duckdb_tibble(g = c("a", "a", "b", "b", "b"), x = c(10, 20, 30, 40, 50), .prudence = "stingy") |>
+    summarise(.by = g, first_x = first(x), last_x = last(x), second_x = nth(x, 2))
 
-  data.frame(g = c("a", "a", "b", "b"), x = 1:4) |>
-    as_duckdb_tibble() |>
+  duckdb_tibble(g = c("a", "a", "b", "b"), x = 1:4, .prudence = "stingy") |>
     mutate(count = n(), .by = g)
   ```
 
@@ -72,7 +62,7 @@
   [\#821](https://github.com/tidyverse/duckplyr/issues/821)).
 
   ``` r
-  df <- as_duckdb_tibble(data.frame(x = 1:3, y = c("a", "b", "c")))
+  df <- duckdb_tibble(x = 1:3, y = c("a", "b", "c"), .prudence = "stingy")
   path <- tempfile(fileext = ".parquet")
   compute_parquet(df, path, options = list(compression = "zstd"))
   ```
@@ -89,8 +79,7 @@
   ([\#822](https://github.com/tidyverse/duckplyr/issues/822)).
 
   ``` r
-  data.frame(x = c(1.23, 4.56, 7.89)) |>
-    as_duckdb_tibble() |>
+  duckdb_tibble(x = c(1.23, 4.56, 7.89), .prudence = "stingy") |>
     mutate(y = round(x, digits = 1L))
   ```
 
@@ -100,9 +89,18 @@
   [\#819](https://github.com/tidyverse/duckplyr/issues/819)).
 
   ``` r
-  data.frame(x = 1:3) |>
-    as_duckdb_tibble() |>
+  duckdb_tibble(x = 1:3, .prudence = "stingy") |>
     transmute(y = x * 2, z = y + 10)
+  ```
+
+- Add experimental translation for
+  [`filter_out()`](https://dplyr.tidyverse.org/reference/filter.html)
+  ([\#869](https://github.com/tidyverse/duckplyr/issues/869),
+  [\#870](https://github.com/tidyverse/duckplyr/issues/870)).
+
+  ``` r
+  duckdb_tibble(x = 1:3, .prudence = "stingy") |>
+    filter_out(x > 2)
   ```
 
 ### Documentation
@@ -444,14 +442,13 @@ CRAN release: 2025-02-07
 
 #### Translations
 
-- Partial support for
+- , [@lionel-](https://github.com/lionel-),, Partial support for
   [`across()`](https://dplyr.tidyverse.org/reference/across.html) in
   [`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html) and
   [`summarise()`](https://dplyr.tidyverse.org/reference/summarise.html)
   ([\#296](https://github.com/tidyverse/duckplyr/issues/296),
   [\#306](https://github.com/tidyverse/duckplyr/issues/306),
-  [\#318](https://github.com/tidyverse/duckplyr/issues/318),
-  [@lionel-](https://github.com/lionel-),
+  [\#3](https://github.com/tidyverse/duckplyr/issues/3)
   [@DavisVaughan](https://github.com/DavisVaughan)).
 
 - Implement `na.rm` handling for
@@ -695,8 +692,8 @@ CRAN release: 2024-05-21
 - [`row_number()`](https://dplyr.tidyverse.org/reference/row_number.html)
   returns integer.
 - `is.na(NaN)` is `TRUE`.
-- `summarise(count = n(), count = n())` creates only one column named
-  `count`.
+- `named`count`, summarise(count = n(), count = n())` creates only one
+  colum.
 - Correct wording in instructions for enabling fallback logging
   ([@TimTaylor](https://github.com/TimTaylor),
   [\#141](https://github.com/tidyverse/duckplyr/issues/141)).
@@ -757,12 +754,11 @@ CRAN release: 2024-03-10
 
 ### Bug fixes
 
-- Forbid reuse of new columns created in
+- , [\#106](https://github.com/tidyverse/duckplyr/issues/106)), Forbid
+  reuse of new columns created in
   [`summarise()`](https://dplyr.tidyverse.org/reference/summarise.html)
-  ([\#72](https://github.com/tidyverse/duckplyr/issues/72),
-  [\#106](https://github.com/tidyverse/duckplyr/issues/106)).
-- [`summarise()`](https://dplyr.tidyverse.org/reference/summarise.html)
-  no longer restores subclass.
+  (#.
+- \`no longer restores subclass, summarise().
 - Disambiguate computation of
   [`log10()`](https://rdrr.io/r/base/Log.html) and
   [`log()`](https://rdrr.io/r/base/Log.html).
@@ -905,10 +901,8 @@ CRAN release: 2023-10-16
 
 ### Bug fixes
 
-- [`summarise()`](https://dplyr.tidyverse.org/reference/summarise.html)
-  keeps `"duckplyr_df"` class
-  ([\#63](https://github.com/tidyverse/duckplyr/issues/63),
-  [\#64](https://github.com/tidyverse/duckplyr/issues/64)).
+- `, `[`#64`](https://github.com/tidyverse/duckplyr/issues/64)`), summarise()`
+  keeps `"duckplyr_df"` class (#.
 
 - Fix compatibility with duckdb \>= 0.9.1.
 
