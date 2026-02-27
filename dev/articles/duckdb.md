@@ -55,7 +55,7 @@ df
 tbl <- as_tbl(df)
 tbl
 #> # Source:   table<as_tbl_duckplyr_SwlKLUUEdL> [?? x 1]
-#> # Database: DuckDB 1.4.4 [unknown@Linux 6.14.0-1017-azure:R 4.5.2//tmp/RtmpKw7MhR/duckplyr/duckplyr3d297fd07572.duckdb]
+#> # Database: DuckDB 1.4.4 [unknown@Linux 6.14.0-1017-azure:R 4.5.2//tmp/RtmpTaNDH1/duckplyr/duckplyr3a3d8cf6824.duckdb]
 #>       a
 #>   <int>
 #> 1     2
@@ -95,7 +95,7 @@ least_common_multiple(2, 3)
 tbl %>%
   mutate(b = sql("a + 1"), c = least_common_multiple(a, b))
 #> # Source:   SQL [?? x 3]
-#> # Database: DuckDB 1.4.4 [unknown@Linux 6.14.0-1017-azure:R 4.5.2//tmp/RtmpKw7MhR/duckplyr/duckplyr3d297fd07572.duckdb]
+#> # Database: DuckDB 1.4.4 [unknown@Linux 6.14.0-1017-azure:R 4.5.2//tmp/RtmpTaNDH1/duckplyr/duckplyr3a3d8cf6824.duckdb]
 #>       a     b     c
 #>   <int> <int> <dbl>
 #> 1     2     3     6
