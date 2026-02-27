@@ -35,7 +35,11 @@ test_that("compute_parquet() with write-only options", {
   withr::defer(unlink(path))
 
   # compression_level is write-only and should be filtered before reading
-  out <- compute_parquet(df, path = path, options = list(compression = "zstd", compression_level = 9))
+  out <- compute_parquet(
+    df,
+    path = path,
+    options = list(compression = "zstd", compression_level = 9)
+  )
 
   expect_identical(out, as_duckdb_tibble(df))
   expect_identical(collect(out), as_tibble(df))
