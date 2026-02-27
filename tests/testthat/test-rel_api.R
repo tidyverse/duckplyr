@@ -5233,7 +5233,18 @@ test_that("relational mutate(sd(a, na.rm = TRUE)) order-preserving", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(duckdb$expr_function("stddev", list(x = duckdb$expr_reference("a"))), list(), list(), offset_expr = NULL, default_expr = NULL)
+        tmp_expr <- duckdb$expr_function(
+          "round",
+          list(
+            v = duckdb$expr_window(
+              duckdb$expr_function("stddev", list(x = duckdb$expr_reference("a"))),
+              list(),
+              list(),
+              offset_expr = NULL,
+              default_expr = NULL),
+            s = duckdb$expr_constant(2L)
+          )
+        )
         duckdb$expr_set_alias(tmp_expr, "sd(a, na.rm = TRUE)")
         tmp_expr
       }
@@ -5247,7 +5258,7 @@ test_that("relational mutate(sd(a, na.rm = TRUE)) order-preserving", {
       a = seq(1, 6, by = 1),
       b = 2,
       g = c(1L, 2L, 2L, 3L, 3L, 3L),
-      `sd(a, na.rm = TRUE)` = 1.87082869338697022,
+      `sd(a, na.rm = TRUE)` = 1.87,
       check.names = FALSE
     )
   )
@@ -9438,7 +9449,18 @@ test_that("relational mutate(sd(a, na.rm = TRUE)) order-enforcing", {
         tmp_expr
       },
       {
-        tmp_expr <- duckdb$expr_window(duckdb$expr_function("stddev", list(x = duckdb$expr_reference("a"))), list(), list(), offset_expr = NULL, default_expr = NULL)
+        tmp_expr <- duckdb$expr_function(
+          "round",
+          list(
+            v = duckdb$expr_window(
+              duckdb$expr_function("stddev", list(x = duckdb$expr_reference("a"))),
+              list(),
+              list(),
+              offset_expr = NULL,
+              default_expr = NULL),
+            s = duckdb$expr_constant(2L)
+          )
+        )
         duckdb$expr_set_alias(tmp_expr, "sd(a, na.rm = TRUE)")
         tmp_expr
       }
@@ -9457,7 +9479,7 @@ test_that("relational mutate(sd(a, na.rm = TRUE)) order-enforcing", {
       a = seq(1, 6, by = 1),
       b = 2,
       g = c(1L, 2L, 2L, 3L, 3L, 3L),
-      `sd(a, na.rm = TRUE)` = 1.87082869338697022,
+      `sd(a, na.rm = TRUE)` = 1.87,
       check.names = FALSE
     )
   )
