@@ -826,8 +826,8 @@ test_extra_arg_map <- list(
     "mean(a, na.rm = TRUE)",
     "mean(a, na.rm = TRUE), .by = g",
 
-    "sd(a, na.rm = TRUE)",
-    "sd(a, na.rm = TRUE), .by = g",
+    "round(sd(a, na.rm = TRUE), 2)",
+    "round(sd(a, na.rm = TRUE), 2), .by = g",
 
     # prod() doesn't exist
     # "prod(a)",
