@@ -436,3 +436,12 @@ test_that("coalesce with two arguments works", {
     rel_translate(quo(coalesce(a, b)), df)
   })
 })
+
+test_that("as.Date with named arguments", {
+  df <- data.frame(date_str = "2024-01-01")
+
+  expect_identical(
+    rel_translate(quo(as.Date(x = date_str)), df),
+    rel_translate(quo(as.Date(date_str)), df)
+  )
+})

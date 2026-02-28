@@ -21,7 +21,7 @@ duckplyr_macros <- c(
   # TPCH
 
   # https://github.com/duckdb/duckdb/discussions/8599
-  # "as.Date" = '(x) AS strptime(x, \'%Y-%m-%d\')',
+  "as.Date" = "(x) AS CAST(x AS DATE)",
 
   "sub" = "(pattern, replacement, x) AS (regexp_replace(x, pattern, replacement))",
   "gsub" = "(pattern, replacement, x) AS (regexp_replace(x, pattern, replacement, 'g'))",
@@ -112,6 +112,7 @@ rel_find_packages <- function(name) {
     # ".$" = "dplyr",
     # "%>%" = "magrittr", # with the help of magrittr?
     # "as.Date" = "base",
+    "as.Date" = "base",
     "as.integer" = "base",
     # "nrow" = "base",
     # "as.factor" = "base",
@@ -481,7 +482,7 @@ rel_translate_lang <- function(
         }
         expr$digits <- as.integer(digits)
       }
-    },
+    }
   )
 
   aliases <- c(
