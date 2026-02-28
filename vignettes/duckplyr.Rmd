@@ -1,0 +1,116 @@
+---
+title: "duckplyr"
+output: rmarkdown::html_vignette
+author: Maëlle Salmon
+vignette: >
+  %\VignetteIndexEntry{00 Get started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+options(conflicts.policy = list(warn = FALSE))
+```
+
+```{r setup}
+library(duckplyr)
+```
+
+## What is duckplyr
+
+DIAGRAM, described with words.
+
+The duckplyr package is a drop-in replacement for dplyr that uses DuckDB for speed.
+Data is inputted using either conversion (from data in memory) or ingestion (from data in files) functions.
+The data manipulation pipeline uses the exact same syntax as a dplyr pipeline.
+The duckplyr package performs the computation using DuckDB, or, if a specific operation is not supported, fallbacks to dplyr.
+The result can be materialized to memory, or computed temporarily, or computed to a file.
+
+### Design principles: lazy and eager
+
+The duckplyr package uses **DuckDB under the hood** but is also a **drop-in replacement for dplyr**.
+These two facts create a tension:
+
+-   When using dplyr, we are not used to explicitly collect results: the data.frames are eager by default.
+    Adding a `collect()` step by default would confuse users and make "drop-in replacement" an exaggeration.
+    Therefore, _duckplyr needs eagerness_!
+
+-   The whole advantage of using DuckDB under the hood is letting DuckDB optimize computations, like dtplyr does with data.table.
+    _Therefore, duckplyr needs laziness_!
+
+As a consequence, duckplyr is lazy on the inside for all DuckDB operations but eager on the outside, thanks to [ALTREP](https://duckdb.org/2024/04/02/duckplyr.html#eager-vs-lazy-materialization), a powerful R feature that among other things supports **deferred evaluation**.
+
+> "ALTREP allows R objects to have different in-memory representations, and for custom code to be executed whenever those objects are accessed." Hannes Mühleisen.
+
+If the duckplyr data.frame is accessed by...
+
+-   duckplyr, then the operations continue to be lazy (until a call to `collect.duckplyr_df()` for instance).
+-   not duckplyr (say, ggplot2), then a special callback is executed, allowing materialization of the data frame.
+
+Therefore, duckplyr can be **both lazy** (within itself) **and not lazy** (for the outside world).
+
+### Memory protection
+
+Now, the default materialization can be problematic if dealing with large data: what if the materialization eats up all memory?
+Therefore, the duckplyr package has a **safeguard called prudence** with three levels.
+
+- `"lavish"`: automatically materialize _regardless of size_,
+- `"frugal"`: _never_ automatically materialize,
+- `"thrifty"`: automatically materialize _up to a maximum size of 1 million cells_.
+
+By default, duckplyr frames are _lavish_, but duckplyr frames created from Parquet data (presumedly large) are _thrifty_.
+
+## How to use duckplyr
+
+### For normal sized data (instead of dplyr)
+
+To replace dplyr with duckplyr, you can either
+
+- load duckplyr and then keep your pipeline as is.
+
+```r
+library(conflicted)
+library(duckplyr)
+conflict_prefer("filter", "dplyr", quiet = TRUE)
+```
+
+- convert individual data.frames to duck frames which allows you to control their automatic materialization parameters. To do that, you use conversion functions like `duckdb_tibble()` or `as_duckdb_tibble()`, or ingestion functions like `read_csv_duckdb()`.
+
+In both cases, if an operation cannot be performed by duckplyr (see `vignette("limits")`), it will be outsourced to dplyr.
+
+You can choose to be informed about fallbacks to dplyr, see `?fallback_config`.
+You can disable fallbacks by turning off automatic materialization.
+In that case, if an operation cannot be performed by duckplyr, your code will error.
+See `vignette("fallback")`.
+
+### For large data (instead of dbplyr)
+
+With large datasets, you want:
+
+- input data in an efficient format, like Parquet files. Therefore you might input data using `read_parquet_duckdb()`.
+- efficient computation, which duckplyr provides via DuckDB's holistic optimization, without your having to use another syntax than dplyr.
+- the output to not clutter all the memory. Therefore you can make use of these features:
+    - prudence (see `vignette("funnel")`) to disable automatic materialization completely or to disable automatic materialization up to a certain output size.
+    - computation to files using  `compute_parquet()` or `compute_csv()`.
+
+A drawback of analyzing large data with duckplyr is that the limitations of duckplyr (unsupported verbs or data types, see `vignette("limits")`) won't be compensated by fallbacks since fallbacks to dplyr necessitate putting data into memory.
+
+## How to improve duckplyr
+
+You can help us make duckplyr better!
+
+### Automatically report fallbacks to inform development
+
+If you allow duckplyr to log and upload fallback reports, the duckplyr development team will have better data to decide on what feature to work next.
+See `vignette("telemetry")`.
+
+### Contribute
+
+Please report any issue especially regarding unknown incompabilities. See `vignette("limits")`.
+
+You can also contribute further functionality to duckplyr, refer to our [contributing guide](https://duckplyr.tidyverse.org/CONTRIBUTING.html) for details.
