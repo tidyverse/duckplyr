@@ -40,10 +40,9 @@ conflict_prefer("filter", "dplyr")
 
 ## Introduction
 
-The default behavior of duckplyr is to enable itself for all data frames in the session.
-This happens when the package is attached with `library(duckplyr)`, or by calling `methods_overwrite()`.
-To enable duckplyr for individual data frames instead of session-wide, it is sufficient to prefix all calls to duckplyr functions with `duckplyr::` and not attach the package.
-Alternatively, `methods_restore()` can be called to undo the session-wide overwrite after `library(duckplyr)`.
+As of duckplyr 1.2.0, duckplyr will no longer automatically override dplyr methods for all data frames in the session when the package is attached with `library(duckplyr)`.
+This change makes it easier to use duckplyr alongside dplyr and other packages that depend on dplyr.
+You can still enable duckplyr for all data frames in the session by calling `methods_overwrite()` after attaching the package, and undo the session-wide overwrite using `methods_restore()`.
 
 ## External data with explicit qualification
 
