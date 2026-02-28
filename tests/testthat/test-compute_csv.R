@@ -22,7 +22,11 @@ test_that("compute_csv() with write-only options passed to write but removed for
   withr::defer(unlink(path))
 
   expect_silent(
-    out <- compute_csv(df, path = path, options = list(force_quote = "*"))
+    out <- compute_csv(
+      df,
+      path = path,
+      options = list(force_quote = "*")
+    )
   )
 
   expect_identical(out, as_duckdb_tibble(df))

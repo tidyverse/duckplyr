@@ -23,7 +23,11 @@ test_that("compute_parquet() with write-only options passed to write but removed
   withr::defer(unlink(path))
 
   expect_silent(
-    out <- compute_parquet(df, path = path, options = list(compression = "zstd", compression_level = 9))
+    out <- compute_parquet(
+      df,
+      path = path,
+      options = list(compression = "zstd", compression_level = 9)
+    )
   )
 
   expect_identical(out, as_duckdb_tibble(df))
