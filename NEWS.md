@@ -1,5 +1,16 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.2.0.9001 (2026-02-28)
+
+## Chore
+
+- Synchronize test generation with generated test (#889, #890).
+
+## Continuous integration
+
+- Fix failing test on macos (@joakimlinde, #888).
+
+
 # duckplyr 1.2.0.9000 (2026-02-25)
 
 ## fledge
