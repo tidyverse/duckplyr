@@ -17,6 +17,18 @@ test_that("compute_parquet() with options", {
   expect_false(is_prudent_duckplyr_df(out))
 })
 
+test_that("compute_parquet() with write-only options passed to write but removed for read", {
+  df <- data.frame(x = c(1, 2))
+  path <- tempfile(fileext = ".parquet")
+  withr::defer(unlink(path))
+
+  expect_silent(
+    out <- compute_parquet(df, path = path, options = list(compression = "zstd", compression_level = 9))
+  )
+
+  expect_identical(out, as_duckdb_tibble(df))
+})
+
 test_that("compute_parquet() with options passed to read", {
   # Test with compression option which is valid for both read and write
   df <- data.frame(x = c(1, 2))

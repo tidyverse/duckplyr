@@ -59,7 +59,13 @@ compute_csv.duckplyr_df <- function(
   }
 
   # Filter out write-only options before reading
-  read_options <- options[setdiff(names(options), "partition_by")]
+  write_only_options <- c(
+    "partition_by",
+    "force_quote",
+    "overwrite_or_ignore",
+    "append"
+  )
+  read_options <- options[setdiff(names(options), write_only_options)]
   read_csv_duckdb(path, prudence = prudence, options = read_options)
 }
 

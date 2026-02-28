@@ -59,7 +59,19 @@ compute_parquet.duckplyr_df <- function(
   }
 
   # Filter out write-only options before reading
-  read_options <- options[setdiff(names(options), "partition_by")]
+  write_only_options <- c(
+    "partition_by",
+    "compression_level",
+    "row_group_size",
+    "field_ids",
+    "kv_metadata",
+    "use_tmp_file",
+    "per_thread_output",
+    "overwrite_or_ignore",
+    "append",
+    "file_size_bytes"
+  )
+  read_options <- options[setdiff(names(options), write_only_options)]
   read_parquet_duckdb(path, prudence = prudence, options = read_options)
 }
 

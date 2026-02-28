@@ -16,6 +16,18 @@ test_that("compute_csv() prudence", {
   expect_identical(collect(out), as_tibble(df))
 })
 
+test_that("compute_csv() with write-only options passed to write but removed for read", {
+  df <- data.frame(x = c(1, 2))
+  path <- tempfile(fileext = ".csv")
+  withr::defer(unlink(path))
+
+  expect_silent(
+    out <- compute_csv(df, path = path, options = list(force_quote = "*"))
+  )
+
+  expect_identical(out, as_duckdb_tibble(df))
+})
+
 test_that("compute_csv() with options passed to read", {
   # Test with delimiter option which is valid for both read and write
   df <- data.frame(x = c(1, 2))
