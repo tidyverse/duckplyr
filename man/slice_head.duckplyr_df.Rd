@@ -47,7 +47,7 @@ There is no DuckDB translation in \code{slice_head.duckplyr_df()}
 \item with a negative \code{n}.
 }
 
-These features fall back to \code{\link[dplyr:slice]{dplyr::slice_head()}}, see \code{vignette("fallback")} for details.
+These features fall back to \code{\link[dplyr:slice]{slice_head()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{
