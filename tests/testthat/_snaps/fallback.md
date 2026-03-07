@@ -102,7 +102,7 @@
         tz = "CET"))
     Message
       i dplyr fallback recorded
-        {"version":"0.3.1","message":"strftime(tz = ) not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"strftime(...1, format = \"<character>\", tz = \"<character>\")"},".by":"NULL",".keep":["all","used","unused","none"]}}
+        {"version":"0.3.1","message":"`strftime(tz = )` not supported","name":"mutate","x":{"...1":"Date"},"args":{"dots":{"...2":"strftime(...1, format = \"<character>\", tz = \"<character>\")"},".by":"NULL",".keep":["all","used","unused","none"]}}
     Output
       # A duckplyr data frame: 2 variables
         a          b         
