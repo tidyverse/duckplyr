@@ -17,6 +17,14 @@ details.}
 This is a method for the \code{\link[dplyr:compute]{dplyr::collect()}} generic.
 \code{collect()} converts the input to a tibble, materializing any lazy operations.
 }
+\details{
+Due to the way duckplyr uses ALTREP (Alternative Representation for R),
+string columns are not fully materialized in R memory immediately upon calling \code{collect()}.
+Instead, memory allocation for strings is deferred until the values are explicitly accessed
+(for instance, when printing to the console or calling \code{str()}).
+This makes \code{collect()} fast, but doing operations that access all string values
+directly after \code{collect()} will suffer a one-time performance hit as the strings are materialized.
+}
 \examples{
 library(duckplyr)
 df <- duckdb_tibble(x = c(1, 2), .lazy = TRUE)
