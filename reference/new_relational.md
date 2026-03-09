@@ -48,11 +48,10 @@ and
 [`dplyr::distinct()`](https://dplyr.tidyverse.org/reference/distinct.html).
 
 `rel_set_intersect()` returns rows present in both tables, to be used by
-[`generics::intersect()`](https://generics.r-lib.org/reference/setops.html).
+[`intersect()`](https://generics.r-lib.org/reference/setops.html).
 
 `rel_set_diff()` returns rows present in any of both tables, to be used
-by
-[`generics::setdiff()`](https://generics.r-lib.org/reference/setops.html).
+by [`setdiff()`](https://generics.r-lib.org/reference/setops.html).
 
 `rel_set_symdiff()` returns rows present in any of both tables, to be
 used by

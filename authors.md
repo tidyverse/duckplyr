@@ -15,15 +15,15 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/tidyverse/duckplyr/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/tidyverse/duckplyr/blob/cran-1.2.1/DESCRIPTION)
 
 Mühleisen H, Müller K (2026). *duckplyr: A 'DuckDB'-Backed Version of
-'dplyr'*. R package version 1.2.0, <https://duckplyr.tidyverse.org>.
+'dplyr'*. R package version 1.2.1, <https://duckplyr.tidyverse.org>.
 
     @Manual{,
       title = {duckplyr: A 'DuckDB'-Backed Version of 'dplyr'},
       author = {Hannes Mühleisen and Kirill Müller},
       year = {2026},
-      note = {R package version 1.2.0},
+      note = {R package version 1.2.1},
       url = {https://duckplyr.tidyverse.org},
     }

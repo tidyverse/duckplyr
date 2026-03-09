@@ -3,14 +3,13 @@
 Data frames backed by duckplyr have a special class, `"duckplyr_df"`, in
 addition to the default classes. This ensures that dplyr methods are
 dispatched correctly. For such objects, dplyr verbs such as
-[`dplyr::mutate()`](https://dplyr.tidyverse.org/reference/mutate.html),
-[`dplyr::select()`](https://dplyr.tidyverse.org/reference/select.html)
-or
-[`dplyr::filter()`](https://dplyr.tidyverse.org/reference/filter.html)
-will use DuckDB.
+[`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html),
+[`select()`](https://dplyr.tidyverse.org/reference/select.html) or
+[`filter()`](https://dplyr.tidyverse.org/reference/filter.html) will use
+DuckDB.
 
 `duckdb_tibble()` works like
-[`tibble::tibble()`](https://tibble.tidyverse.org/reference/tibble.html).
+[`tibble()`](https://tibble.tidyverse.org/reference/tibble.html).
 
 `as_duckdb_tibble()` converts a data frame or a dplyr lazy table to a
 duckplyr data frame. This is a generic function that can be overridden
@@ -33,8 +32,8 @@ is_duckdb_tibble(x)
 - ...:
 
   For `duckdb_tibble()`, passed on to
-  [`tibble::tibble()`](https://tibble.tidyverse.org/reference/tibble.html).
-  For `as_duckdb_tibble()`, passed on to methods.
+  [`tibble()`](https://tibble.tidyverse.org/reference/tibble.html). For
+  `as_duckdb_tibble()`, passed on to methods.
 
 - x:
 
@@ -66,7 +65,7 @@ following classes:
 - `"duckplyr_df"`
 
 - Classes of a
-  [tibble::tibble](https://tibble.tidyverse.org/reference/tibble.html)
+  [tibble](https://tibble.tidyverse.org/reference/tibble.html)
 
 For `is_duckdb_tibble()`, a scalar logical.
 

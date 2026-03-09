@@ -100,7 +100,7 @@ explain(df)
 #> │         SEQ_SCAN          │
 #> │    ────────────────────   │
 #> │           Table:          │
-#> │    duckplyr_QeuR8HfdVH    │
+#> │    duckplyr_ieexomb92Q    │
 #> │                           │
 #> │   Type: Sequential Scan   │
 #> │                           │

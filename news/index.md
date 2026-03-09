@@ -1,6 +1,39 @@
 # Changelog
 
+## duckplyr 1.2.1 (2026-03-09)
+
+### fledge
+
+- CRAN release v1.2.0
+  ([\#884](https://github.com/tidyverse/duckplyr/issues/884)).
+
+### Bug fixes
+
+- Filter write-only options before passing to read functions in
+  [`compute_parquet()`](https://duckplyr.tidyverse.org/reference/compute_parquet.md)
+  and
+  [`compute_csv()`](https://duckplyr.tidyverse.org/reference/compute_csv.md)
+  ([\#886](https://github.com/tidyverse/duckplyr/issues/886),
+  [\#887](https://github.com/tidyverse/duckplyr/issues/887)).
+
+### Chore
+
+- Auto-update from GitHub Actions
+  ([\#896](https://github.com/tidyverse/duckplyr/issues/896)).
+
+- Synchronize test generation with generated test
+  ([\#889](https://github.com/tidyverse/duckplyr/issues/889),
+  [\#890](https://github.com/tidyverse/duckplyr/issues/890)).
+
+### Continuous integration
+
+- Fix failing test on macos
+  ([@joakimlinde](https://github.com/joakimlinde),
+  [\#888](https://github.com/tidyverse/duckplyr/issues/888)).
+
 ## duckplyr 1.2.0 (2026-02-24)
+
+CRAN release: 2026-02-25
 
 ### Features
 
