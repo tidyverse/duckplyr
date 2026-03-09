@@ -36,7 +36,9 @@ get_duckdb_read_opts <- function(fn_name) {
     con,
     paste0(
       "SELECT parameters FROM duckdb_functions() ",
-      "WHERE function_type = 'table' AND function_name = '", fn_name, "'"
+      "WHERE function_type = 'table' AND function_name = '",
+      fn_name,
+      "'"
     )
   )
   params <- res$parameters[[1]]
