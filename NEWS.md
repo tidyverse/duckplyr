@@ -1,35 +1,14 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# duckplyr 1.2.0.9003 (2026-03-09)
+# duckplyr 1.2.1 (2026-03-09)
 
 ## Bug fixes
 
 - Filter write-only options before passing to read functions in `compute_parquet()` and `compute_csv()` (#886, #887).
 
-
-# duckplyr 1.2.0.9002 (2026-03-08)
-
-## Chore
-
-- Auto-update from GitHub Actions (#896).
-
-
-# duckplyr 1.2.0.9001 (2026-02-28)
-
-## Chore
-
-- Synchronize test generation with generated test (#889, #890).
-
 ## Continuous integration
 
 - Fix failing test on macos (@joakimlinde, #888).
-
-
-# duckplyr 1.2.0.9000 (2026-02-25)
-
-## fledge
-
-- CRAN release v1.2.0 (#884).
 
 
 # duckplyr 1.2.0 (2026-02-24)
