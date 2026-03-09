@@ -13,7 +13,7 @@ as_duckdb_tibble(x, ..., prudence = c("lavish", "thrifty", "stingy"))
 is_duckdb_tibble(x)
 }
 \arguments{
-\item{...}{For \code{duckdb_tibble()}, passed on to \code{\link[tibble:tibble]{tibble::tibble()}}.
+\item{...}{For \code{duckdb_tibble()}, passed on to \code{\link[tibble:tibble]{tibble()}}.
 For \code{as_duckdb_tibble()}, passed on to methods.}
 
 \item{x}{The object to convert or to test.}
@@ -35,7 +35,7 @@ For \code{duckdb_tibble()} and \code{as_duckdb_tibble()}, an object with the fol
 \itemize{
 \item \code{"prudent_duckplyr_df"} if \code{prudence} is not \code{"lavish"}
 \item \code{"duckplyr_df"}
-\item Classes of a \link[tibble:tibble]{tibble::tibble}
+\item Classes of a \link[tibble:tibble]{tibble}
 }
 
 For \code{is_duckdb_tibble()}, a scalar logical.
@@ -45,9 +45,9 @@ Data frames backed by duckplyr have a special class, \code{"duckplyr_df"},
 in addition to the default classes.
 This ensures that dplyr methods are dispatched correctly.
 For such objects,
-dplyr verbs such as \code{\link[dplyr:mutate]{dplyr::mutate()}}, \code{\link[dplyr:select]{dplyr::select()}} or \code{\link[dplyr:filter]{dplyr::filter()}}  will use DuckDB.
+dplyr verbs such as \code{\link[dplyr:mutate]{mutate()}}, \code{\link[dplyr:select]{select()}} or \code{\link[=filter]{filter()}}  will use DuckDB.
 
-\code{duckdb_tibble()} works like \code{\link[tibble:tibble]{tibble::tibble()}}.
+\code{duckdb_tibble()} works like \code{\link[tibble:tibble]{tibble()}}.
 
 \code{as_duckdb_tibble()} converts a data frame or a dplyr lazy table to a duckplyr data frame.
 This is a generic function that can be overridden for custom classes.
