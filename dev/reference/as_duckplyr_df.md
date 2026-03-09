@@ -4,11 +4,10 @@
 
 These functions convert a data-frame-like input to an object of class
 `"duckpylr_df"`. For such objects, dplyr verbs such as
-[`dplyr::mutate()`](https://dplyr.tidyverse.org/reference/mutate.html),
-[`dplyr::select()`](https://dplyr.tidyverse.org/reference/select.html)
-or
-[`dplyr::filter()`](https://dplyr.tidyverse.org/reference/filter.html)
-will attempt to use DuckDB. If this is not possible, the original dplyr
+[`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html),
+[`select()`](https://dplyr.tidyverse.org/reference/select.html) or
+[`filter()`](https://dplyr.tidyverse.org/reference/filter.html) will
+attempt to use DuckDB. If this is not possible, the original dplyr
 implementation is used.
 
 `as_duckplyr_df()` requires the input to be a plain data frame or a

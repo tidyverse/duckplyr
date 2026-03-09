@@ -48,5 +48,5 @@ df <- duckdb_tibble(
 nrow(df)
 #> [1] 100
 nrow(distinct(df))
-#> [1] 63
+#> [1] 64
 ```
