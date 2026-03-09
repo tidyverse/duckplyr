@@ -181,10 +181,6 @@ Generates `touchstone/script.R` for the [touchstone](https://lorenzwalthert.gith
 
 Scans `R/*.R` for verbs that have no relational implementation (contain the "No relational implementation" message) and generates `R/not-supported.R` with an `@rdname unsupported` documentation page listing them. Then runs `devtools::document()`.
 
-#### `81-gen-duckdb-io-opts`
-
-Generates R/duckdb-io-opts.R with package-local character vectors of read options and write-only options for DuckDB parquet and CSV formats.
-
 #### `85-spelling.R`
 
 Updates `.aspell/duckplyr.rds` with custom dictionary words for spell-checking.
