@@ -2,19 +2,9 @@
 
 # duckplyr 1.2.1 (2026-03-09)
 
-## fledge
-
-- CRAN release v1.2.0 (#884).
-
 ## Bug fixes
 
 - Filter write-only options before passing to read functions in `compute_parquet()` and `compute_csv()` (#886, #887).
-
-## Chore
-
-- Auto-update from GitHub Actions (#896).
-
-- Synchronize test generation with generated test (#889, #890).
 
 ## Continuous integration
 
