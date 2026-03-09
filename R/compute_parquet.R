@@ -59,7 +59,7 @@ compute_parquet.duckplyr_df <- function(
   }
 
   # Filter out write-only options before reading
-  read_options <- options[setdiff(names(options), parquet_write_only_opts)]
+  read_options <- options[intersect(names(options), parquet_read_opts)]
   read_parquet_duckdb(path, prudence = prudence, options = read_options)
 }
 

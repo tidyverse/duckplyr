@@ -19,31 +19,6 @@ parquet_read_opts <- c(
   "union_by_name"
 )
 
-# Options accepted by COPY ... TO (FORMAT PARQUET) but not by read_parquet()
-parquet_write_only_opts <- c(
-  "append",
-  "codec",
-  "compression_level",
-  "dictionary_size_limit",
-  "field_ids",
-  "file_extension",
-  "file_size_bytes",
-  "filename_pattern",
-  "hive_file_pattern",
-  "kv_metadata",
-  "overwrite",
-  "overwrite_or_ignore",
-  "partition_by",
-  "per_thread_output",
-  "preserve_order",
-  "return_files",
-  "return_stats",
-  "row_group_size",
-  "row_group_size_bytes",
-  "use_tmp_file",
-  "write_partition_columns"
-)
-
 # Options accepted by read_csv_auto()
 csv_read_opts <- c(
   "all_varchar",
@@ -91,26 +66,5 @@ csv_read_opts <- c(
   "timestampformat",
   "types",
   "union_by_name"
-)
-
-# Options accepted by COPY ... TO (FORMAT CSV) but not by read_csv_auto()
-csv_write_only_opts <- c(
-  "append",
-  "file_extension",
-  "file_size_bytes",
-  "filename_pattern",
-  "force_quote",
-  "hive_file_pattern",
-  "overwrite",
-  "overwrite_or_ignore",
-  "partition_by",
-  "per_thread_output",
-  "prefix",
-  "preserve_order",
-  "return_files",
-  "return_stats",
-  "suffix",
-  "use_tmp_file",
-  "write_partition_columns"
 )
 
