@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.2.1.9000 (2026-03-10)
+
+## fledge
+
+- CRAN release v1.2.1 (#898).
+
+
 # duckplyr 1.2.1 (2026-03-09)
 
 ## Bug fixes
