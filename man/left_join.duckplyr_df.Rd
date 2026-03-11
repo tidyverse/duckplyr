@@ -147,7 +147,7 @@ exists.
 see \code{unmatched}.}
 }
 \description{
-This is a method for the \code{\link[dplyr:mutate-joins]{dplyr::left_join()}} generic.
+This is a method for the \code{\link[dplyr:left_join]{dplyr::left_join()}} generic.
 See "Fallbacks" section for differences in implementation.
 A \code{left_join()} keeps all observations in \code{x}.
 }
@@ -160,7 +160,7 @@ There is no DuckDB translation in \code{left_join.duckplyr_df()}
 \item for a value of the \code{unmatched} argument that isn't the default \code{"drop"}.
 }
 
-These features fall back to \code{\link[dplyr:mutate-joins]{dplyr::left_join()}}, see \code{vignette("fallback")} for details.
+These features fall back to \code{\link[dplyr:left_join]{dplyr::left_join()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{
@@ -168,5 +168,5 @@ library(duckplyr)
 left_join(band_members, band_instruments)
 }
 \seealso{
-\code{\link[dplyr:mutate-joins]{dplyr::left_join()}}
+\code{\link[dplyr:left_join]{dplyr::left_join()}}
 }

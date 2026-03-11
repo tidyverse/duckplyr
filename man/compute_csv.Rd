@@ -55,5 +55,5 @@ df <- compute_csv(df, path)
 readLines(path)
 }
 \seealso{
-\code{\link[=compute_parquet]{compute_parquet()}}, \code{\link[=compute.duckplyr_df]{compute.duckplyr_df()}}, \code{\link[dplyr:compute]{dplyr::collect()}}
+\code{\link[=compute_parquet]{compute_parquet()}}, \code{\link[=compute.duckplyr_df]{compute.duckplyr_df()}}, \code{\link[dplyr:collect]{dplyr::collect()}}
 }

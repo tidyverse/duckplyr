@@ -105,7 +105,7 @@ If the value is 0, logging is disabled.
 Future versions of \pkg{duckplyr} may start logging additional data
 and thus require a higher value to enable logging.
 Set to 99 to enable logging for all future versions.
-Use \code{\link[usethis:edit]{usethis::edit_r_environ()}} to edit the environment file.
+Use \code{\link[usethis:edit_r_environ]{usethis::edit_r_environ()}} to edit the environment file.
 \item \code{DUCKPLYR_FALLBACK_AUTOUPLOAD} controls uploading, set it
 to 1 or greater to enable uploading.
 If the value is 0, uploading is disabled.
@@ -113,7 +113,7 @@ Currently, uploading is active if the value is 1 or greater.
 Future versions of \pkg{duckplyr} may start logging additional data
 and thus require a higher value to enable uploading.
 Set to 99 to enable uploading for all future versions.
-Use \code{\link[usethis:edit]{usethis::edit_r_environ()}} to edit the environment file.
+Use \code{\link[usethis:edit_r_environ]{usethis::edit_r_environ()}} to edit the environment file.
 \item \code{DUCKPLYR_FALLBACK_LOG_DIR} controls the location of the logs.
 It must point to a directory (existing or not) where the logs will be written.
 By default, logs are written to a directory in the user's cache directory

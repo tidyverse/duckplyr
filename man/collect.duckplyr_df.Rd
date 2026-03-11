@@ -14,7 +14,7 @@ details.}
 \item{...}{Arguments passed on to methods}
 }
 \description{
-This is a method for the \code{\link[dplyr:compute]{dplyr::collect()}} generic.
+This is a method for the \code{\link[dplyr:collect]{dplyr::collect()}} generic.
 \code{collect()} converts the input to a tibble, materializing any lazy operations.
 }
 \examples{
@@ -26,5 +26,5 @@ df <- collect(df)
 df
 }
 \seealso{
-\code{\link[dplyr:compute]{dplyr::collect()}}
+\code{\link[dplyr:collect]{dplyr::collect()}}
 }

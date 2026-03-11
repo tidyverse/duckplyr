@@ -128,7 +128,7 @@ exists.
 see \code{unmatched}.}
 }
 \description{
-This is a method for the \code{\link[dplyr:mutate-joins]{dplyr::full_join()}} generic.
+This is a method for the \code{\link[dplyr:full_join]{dplyr::full_join()}} generic.
 See "Fallbacks" section for differences in implementation.
 A \code{full_join()} keeps all observations in \code{x} and \code{y}.
 }
@@ -140,7 +140,7 @@ There is no DuckDB translation in \code{full_join.duckplyr_df()}
 \item for a value of the \code{multiple} argument that isn't the default \code{"all"}.
 }
 
-These features fall back to \code{\link[dplyr:mutate-joins]{dplyr::full_join()}}, see \code{vignette("fallback")} for details.
+These features fall back to \code{\link[dplyr:full_join]{dplyr::full_join()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{
@@ -148,5 +148,5 @@ library(duckplyr)
 full_join(band_members, band_instruments)
 }
 \seealso{
-\code{\link[dplyr:mutate-joins]{dplyr::full_join()}}
+\code{\link[dplyr:full_join]{dplyr::full_join()}}
 }

@@ -147,7 +147,7 @@ exists.
 see \code{unmatched}.}
 }
 \description{
-This is a method for the \code{\link[dplyr:mutate-joins]{dplyr::inner_join()}} generic.
+This is a method for the \code{\link[dplyr:inner_join]{dplyr::inner_join()}} generic.
 See "Fallbacks" section for differences in implementation.
 An \code{inner_join()} only keeps observations from \code{x}
 that have a matching key in \code{y}.
@@ -161,7 +161,7 @@ There is no DuckDB translation in \code{inner_join.duckplyr_df()}
 \item for a value of the \code{unmatched} argument that isn't the default \code{"drop"}.
 }
 
-These features fall back to \code{\link[dplyr:mutate-joins]{dplyr::inner_join()}}, see \code{vignette("fallback")} for details.
+These features fall back to \code{\link[dplyr:inner_join]{dplyr::inner_join()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{
@@ -169,5 +169,5 @@ library(duckplyr)
 inner_join(band_members, band_instruments)
 }
 \seealso{
-\code{\link[dplyr:mutate-joins]{dplyr::inner_join()}}
+\code{\link[dplyr:inner_join]{dplyr::inner_join()}}
 }

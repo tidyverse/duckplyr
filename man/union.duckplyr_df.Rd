@@ -14,7 +14,7 @@ orders) and compatible types.}
 \item{...}{These dots are for future extensions and must be empty.}
 }
 \description{
-This is a method for the \code{\link[dplyr:setops]{dplyr::union()}} generic.
+This is a method for the \code{\link[dplyr:union]{dplyr::union()}} generic.
 \code{union(x, y)} finds all rows in either x or y, excluding duplicates.
 The implementation forwards to \code{distinct(union_all(x, y))}.
 }
@@ -24,5 +24,5 @@ df2 <- duckdb_tibble(x = 3:5)
 union(df1, df2)
 }
 \seealso{
-\code{\link[dplyr:setops]{dplyr::union()}}
+\code{\link[dplyr:union]{dplyr::union()}}
 }

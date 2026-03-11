@@ -14,7 +14,7 @@ orders) and compatible types.}
 \item{...}{These dots are for future extensions and must be empty.}
 }
 \description{
-This is a method for the \code{\link[dplyr:setops]{dplyr::setdiff()}} generic.
+This is a method for the \code{\link[dplyr:setdiff]{dplyr::setdiff()}} generic.
 See "Fallbacks" section for differences in implementation.
 \code{setdiff(x, y)} finds all rows in \code{x} that aren't in \code{y}.
 }
@@ -26,7 +26,7 @@ There is no DuckDB translation in \code{setdiff.duckplyr_df()}
 \item if column names are different in both tables.
 }
 
-These features fall back to \code{\link[dplyr:setops]{dplyr::setdiff()}}, see \code{vignette("fallback")} for details.
+These features fall back to \code{\link[dplyr:setdiff]{dplyr::setdiff()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{
@@ -36,5 +36,5 @@ setdiff(df1, df2)
 setdiff(df2, df1)
 }
 \seealso{
-\code{\link[dplyr:setops]{dplyr::setdiff()}}
+\code{\link[dplyr:setdiff]{dplyr::setdiff()}}
 }

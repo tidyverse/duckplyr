@@ -14,7 +14,7 @@ orders) and compatible types.}
 \item{...}{These dots are for future extensions and must be empty.}
 }
 \description{
-This is a method for the \code{\link[dplyr:setops]{dplyr::intersect()}} generic.
+This is a method for the \code{\link[dplyr:intersect]{dplyr::intersect()}} generic.
 See "Fallbacks" section for differences in implementation.
 \code{intersect(x, y)} finds all rows in both \code{x} and \code{y}.
 }
@@ -26,7 +26,7 @@ There is no DuckDB translation in \code{intersect.duckplyr_df()}
 \item if column names are different in both tables.
 }
 
-These features fall back to \code{\link[dplyr:setops]{dplyr::intersect()}}, see \code{vignette("fallback")} for details.
+These features fall back to \code{\link[dplyr:intersect]{dplyr::intersect()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{
@@ -35,5 +35,5 @@ df2 <- duckdb_tibble(x = 3:5)
 intersect(df1, df2)
 }
 \seealso{
-\code{\link[dplyr:setops]{dplyr::intersect()}}
+\code{\link[dplyr:intersect]{dplyr::intersect()}}
 }

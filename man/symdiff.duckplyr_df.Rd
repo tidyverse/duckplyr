@@ -14,7 +14,7 @@ orders) and compatible types.}
 \item{...}{These dots are for future extensions and must be empty.}
 }
 \description{
-This is a method for the \code{\link[dplyr:setops]{dplyr::symdiff()}} generic.
+This is a method for the \code{\link[dplyr:symdiff]{dplyr::symdiff()}} generic.
 See "Fallbacks" section for differences in implementation.
 \code{symdiff(x, y)}  computes the symmetric difference,
 i.e. all rows in \code{x} that aren't in \code{y} and all rows in \code{y} that aren't in \code{x}.
@@ -27,7 +27,7 @@ There is no DuckDB translation in \code{symdiff.duckplyr_df()}
 \item if column names are different in both tables.
 }
 
-These features fall back to \code{\link[dplyr:setops]{dplyr::symdiff()}}, see \code{vignette("fallback")} for details.
+These features fall back to \code{\link[dplyr:symdiff]{dplyr::symdiff()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{
@@ -36,5 +36,5 @@ df2 <- duckdb_tibble(x = 3:5)
 symdiff(df1, df2)
 }
 \seealso{
-\code{\link[dplyr:setops]{dplyr::symdiff()}}
+\code{\link[dplyr:symdiff]{dplyr::symdiff()}}
 }
