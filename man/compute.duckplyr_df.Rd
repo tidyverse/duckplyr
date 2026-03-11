@@ -57,5 +57,5 @@ df <- compute(df)
 explain(df)
 }
 \seealso{
-\code{\link[dplyr:compute]{dplyr::collect()}}
+\code{\link[dplyr:collect]{dplyr::collect()}}
 }

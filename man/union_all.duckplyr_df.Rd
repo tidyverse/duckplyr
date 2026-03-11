@@ -14,7 +14,7 @@ orders) and compatible types.}
 \item{...}{These dots are for future extensions and must be empty.}
 }
 \description{
-This is a method for the \code{\link[dplyr:setops]{dplyr::union_all()}} generic.
+This is a method for the \code{\link[dplyr:union_all]{dplyr::union_all()}} generic.
 See "Fallbacks" section for differences in implementation.
 \code{union_all(x, y)} finds all rows in either x or y, including duplicates.
 }
@@ -26,7 +26,7 @@ There is no DuckDB translation in \code{union_all.duckplyr_df()}
 \item if column names are different in both tables.
 }
 
-These features fall back to \code{\link[dplyr:setops]{dplyr::union_all()}}, see \code{vignette("fallback")} for details.
+These features fall back to \code{\link[dplyr:union_all]{dplyr::union_all()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{
@@ -35,5 +35,5 @@ df2 <- duckdb_tibble(x = 3:5)
 union_all(df1, df2)
 }
 \seealso{
-\code{\link[dplyr:setops]{dplyr::union_all()}}
+\code{\link[dplyr:union_all]{dplyr::union_all()}}
 }

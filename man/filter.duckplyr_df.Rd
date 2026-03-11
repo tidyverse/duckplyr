@@ -54,7 +54,7 @@ There is no DuckDB translation in \code{filter_out.duckplyr_df()}
 \item nor for a grouped operation (if \code{.by} is set).
 }
 
-These features fall back to \code{\link[dplyr:filter]{dplyr::filter_out()}}, see \code{vignette("fallback")} for details.
+These features fall back to \code{\link[dplyr:filter_out]{dplyr::filter_out()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{

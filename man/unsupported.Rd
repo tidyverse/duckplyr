@@ -12,36 +12,36 @@ please refer to our contributing guide \url{https://duckplyr.tidyverse.org/CONTR
 
 For these verbs, duckplyr will fall back to dplyr.
 \itemize{
-\item \code{\link[dplyr:count]{add_count()}}
+\item \code{\link[dplyr:add_count]{add_count()}}
 \item \code{\link[dplyr:cross_join]{cross_join()}}
 \item \code{\link[dplyr:do]{do()}}
 \item \code{\link[dplyr:group_by]{group_by()}}
-\item \code{\link[dplyr:group_data]{group_indices()}}
-\item \code{\link[dplyr:group_data]{group_keys()}}
+\item \code{\link[dplyr:group_indices]{group_indices()}}
+\item \code{\link[dplyr:group_keys]{group_keys()}}
 \item \code{\link[dplyr:group_map]{group_map()}}
-\item \code{\link[dplyr:group_map]{group_modify()}}
+\item \code{\link[dplyr:group_modify]{group_modify()}}
 \item \code{\link[dplyr:group_nest]{group_nest()}}
-\item \code{\link[dplyr:group_data]{group_size()}}
+\item \code{\link[dplyr:group_size]{group_size()}}
 \item \code{\link[dplyr:group_split]{group_split()}}
 \item \code{\link[dplyr:group_trim]{group_trim()}}
-\item \code{\link[dplyr:group_data]{groups()}}
-\item \code{\link[dplyr:group_data]{n_groups()}}
+\item \code{\link[dplyr:groups]{groups()}}
+\item \code{\link[dplyr:n_groups]{n_groups()}}
 \item \code{\link[dplyr:nest_by]{nest_by()}}
 \item \code{\link[dplyr:nest_join]{nest_join()}}
 \item \code{\link[dplyr:reframe]{reframe()}}
-\item \code{\link[dplyr:rename]{rename_with()}}
-\item \code{\link[dplyr:rows]{rows_append()}}
-\item \code{\link[dplyr:rows]{rows_delete()}}
-\item \code{\link[dplyr:rows]{rows_insert()}}
-\item \code{\link[dplyr:rows]{rows_patch()}}
-\item \code{\link[dplyr:rows]{rows_update()}}
-\item \code{\link[dplyr:rows]{rows_upsert()}}
+\item \code{\link[dplyr:rename_with]{rename_with()}}
+\item \code{\link[dplyr:rows_append]{rows_append()}}
+\item \code{\link[dplyr:rows_delete]{rows_delete()}}
+\item \code{\link[dplyr:rows_insert]{rows_insert()}}
+\item \code{\link[dplyr:rows_patch]{rows_patch()}}
+\item \code{\link[dplyr:rows_update]{rows_update()}}
+\item \code{\link[dplyr:rows_upsert]{rows_upsert()}}
 \item \code{\link[dplyr:rowwise]{rowwise()}}
 \item \code{\link[=setequal]{setequal()}}
-\item \code{\link[dplyr:slice]{slice_sample()}}
-\item \code{\link[dplyr:slice]{slice_tail()}}
+\item \code{\link[dplyr:slice_sample]{slice_sample()}}
+\item \code{\link[dplyr:slice_tail]{slice_tail()}}
 \item \code{\link[dplyr:slice]{slice()}}
-\item \code{\link[dplyr:group_by]{ungroup()}}
+\item \code{\link[dplyr:ungroup]{ungroup()}}
 }
 }
 

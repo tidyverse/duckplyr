@@ -36,7 +36,7 @@ group by for just this operation, functioning as an alternative to \code{\link[d
 details and examples, see \link[dplyr:dplyr_by]{?dplyr_by}.}
 }
 \description{
-This is a method for the \code{\link[dplyr:slice]{dplyr::slice_head()}} generic.
+This is a method for the \code{\link[dplyr:slice_head]{dplyr::slice_head()}} generic.
 \code{slice_head()} selects the first rows.
 }
 \section{Fallbacks}{
@@ -47,7 +47,7 @@ There is no DuckDB translation in \code{slice_head.duckplyr_df()}
 \item with a negative \code{n}.
 }
 
-These features fall back to \code{\link[dplyr:slice]{slice_head()}}, see \code{vignette("fallback")} for details.
+These features fall back to \code{\link[dplyr:slice_head]{slice_head()}}, see \code{vignette("fallback")} for details.
 }
 
 \examples{
@@ -57,5 +57,5 @@ df <- slice_head(df, n = 2)
 df
 }
 \seealso{
-\code{\link[dplyr:slice]{dplyr::slice_head()}}
+\code{\link[dplyr:slice_head]{dplyr::slice_head()}}
 }
