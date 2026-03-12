@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.2.1.9001 (2026-03-12)
+
+## Chore
+
+- Auto-update from GitHub Actions (#900).
+
+
 # duckplyr 1.2.1.9000 (2026-03-10)
 
 ## fledge
