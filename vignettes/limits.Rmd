@@ -207,7 +207,7 @@ Implemented:
 
 - `sum(x, na.rm)`, `dplyr::n()`, `dplyr::n_distinct()`
 - `mean(x, na.rm)`, `median(x, na.rm)`, `sd(x, na.rm)`
-- `min()`, `max()`, `any()`, `all()`
+- `min()`, `max()`, `any()`, `all()`, `anyNA()`
 
 ```{r}
 duckplyr::duckdb_tibble(a = 1:3, b = c(1, 2, 2), .prudence = "stingy") |>
