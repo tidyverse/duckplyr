@@ -97,7 +97,7 @@
     Code
       test_duckplyr_expand_across(tibble::tibble(x = 0, y = 0), across(x:y, sum))
     Output
-      NULL
+      tibble(x = base::sum(x), y = base::sum(y))
 
 ---
 
@@ -105,21 +105,22 @@
       test_duckplyr_expand_across(tibble::tibble(x = 0, y = 0), across(x:y, list(
         mean = mean, sum = sum)))
     Output
-      NULL
+      tibble(x_mean = base::mean(x), x_sum = base::sum(x), y_mean = base::mean(y), 
+          y_sum = base::sum(y))
 
 ---
 
     Code
       test_duckplyr_expand_across(tibble::tibble(x = 0, y = 0), across(x:y, min))
     Output
-      NULL
+      tibble(x = base::min(x), y = base::min(y))
 
 ---
 
     Code
       test_duckplyr_expand_across(tibble::tibble(x = 0, y = 0), across(x:y, max))
     Output
-      NULL
+      tibble(x = base::max(x), y = base::max(y))
 
 # duckplyr_expand_across() with identity
 
