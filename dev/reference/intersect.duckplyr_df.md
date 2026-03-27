@@ -1,7 +1,7 @@
 # Intersect
 
 This is a method for the
-[`dplyr::intersect()`](https://dplyr.tidyverse.org/reference/setops.html)
+[`dplyr::intersect()`](https://generics.r-lib.org/reference/setops.html)
 generic. See "Fallbacks" section for differences in implementation.
 `intersect(x, y)` finds all rows in both `x` and `y`.
 
@@ -33,14 +33,14 @@ There is no DuckDB translation in `intersect.duckplyr_df()`
 - if column names are different in both tables.
 
 These features fall back to
-[`dplyr::intersect()`](https://dplyr.tidyverse.org/reference/setops.html),
+[`dplyr::intersect()`](https://generics.r-lib.org/reference/setops.html),
 see
 [`vignette("fallback")`](https://duckplyr.tidyverse.org/dev/articles/fallback.md)
 for details.
 
 ## See also
 
-[`dplyr::intersect()`](https://dplyr.tidyverse.org/reference/setops.html)
+[`dplyr::intersect()`](https://generics.r-lib.org/reference/setops.html)
 
 ## Examples
 

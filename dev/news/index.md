@@ -1,32 +1,44 @@
 # Changelog
 
-## duckplyr 1.2.0.9002 (2026-03-08)
+## duckplyr 1.2.1.9002 (2026-03-13)
 
 ### Chore
 
 - Auto-update from GitHub Actions
-  ([\#896](https://github.com/tidyverse/duckplyr/issues/896)).
+  ([\#902](https://github.com/tidyverse/duckplyr/issues/902)).
 
-## duckplyr 1.2.0.9001 (2026-02-28)
+## duckplyr 1.2.1.9001 (2026-03-12)
 
 ### Chore
 
-- Synchronize test generation with generated test
-  ([\#889](https://github.com/tidyverse/duckplyr/issues/889),
-  [\#890](https://github.com/tidyverse/duckplyr/issues/890)).
+- Auto-update from GitHub Actions
+  ([\#900](https://github.com/tidyverse/duckplyr/issues/900)).
+
+## duckplyr 1.2.1.9000 (2026-03-10)
+
+### fledge
+
+- CRAN release v1.2.1
+  ([\#898](https://github.com/tidyverse/duckplyr/issues/898)).
+
+## duckplyr 1.2.1 (2026-03-09)
+
+CRAN release: 2026-03-10
+
+### Bug fixes
+
+- Filter write-only options before passing to read functions in
+  [`compute_parquet()`](https://duckplyr.tidyverse.org/dev/reference/compute_parquet.md)
+  and
+  [`compute_csv()`](https://duckplyr.tidyverse.org/dev/reference/compute_csv.md)
+  ([\#886](https://github.com/tidyverse/duckplyr/issues/886),
+  [\#887](https://github.com/tidyverse/duckplyr/issues/887)).
 
 ### Continuous integration
 
 - Fix failing test on macos
   ([@joakimlinde](https://github.com/joakimlinde),
   [\#888](https://github.com/tidyverse/duckplyr/issues/888)).
-
-## duckplyr 1.2.0.9000 (2026-02-25)
-
-### fledge
-
-- CRAN release v1.2.0
-  ([\#884](https://github.com/tidyverse/duckplyr/issues/884)).
 
 ## duckplyr 1.2.0 (2026-02-24)
 

@@ -87,7 +87,7 @@ explain(df)
 #> │          ~2 rows          │
 #> └─────────────┬─────────────┘
 #> ┌─────────────┴─────────────┐
-#> │     R_DATAFRAME_SCAN      │
+#> │      R_DATAFRAME_SCAN     │
 #> │    ────────────────────   │
 #> │      Text: data.frame     │
 #> │       Projections: x      │
@@ -97,10 +97,11 @@ explain(df)
 df <- compute(df)
 explain(df)
 #> ┌───────────────────────────┐
-#> │         SEQ_SCAN          │
+#> │          SEQ_SCAN         │
 #> │    ────────────────────   │
 #> │           Table:          │
-#> │    duckplyr_ieexomb92Q    │
+#> │        "temp".main        │
+#> │    .duckplyr_ieexomb92Q   │
 #> │                           │
 #> │   Type: Sequential Scan   │
 #> │                           │

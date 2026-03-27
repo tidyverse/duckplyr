@@ -1,7 +1,7 @@
 # Set difference
 
 This is a method for the
-[`dplyr::setdiff()`](https://dplyr.tidyverse.org/reference/setops.html)
+[`dplyr::setdiff()`](https://generics.r-lib.org/reference/setops.html)
 generic. See "Fallbacks" section for differences in implementation.
 `setdiff(x, y)` finds all rows in `x` that aren't in `y`.
 
@@ -33,14 +33,14 @@ There is no DuckDB translation in `setdiff.duckplyr_df()`
 - if column names are different in both tables.
 
 These features fall back to
-[`dplyr::setdiff()`](https://dplyr.tidyverse.org/reference/setops.html),
+[`dplyr::setdiff()`](https://generics.r-lib.org/reference/setops.html),
 see
 [`vignette("fallback")`](https://duckplyr.tidyverse.org/dev/articles/fallback.md)
 for details.
 
 ## See also
 
-[`dplyr::setdiff()`](https://dplyr.tidyverse.org/reference/setops.html)
+[`dplyr::setdiff()`](https://generics.r-lib.org/reference/setops.html)
 
 ## Examples
 
@@ -57,6 +57,6 @@ setdiff(df2, df1)
 #> # A duckplyr data frame: 1 variable
 #>       x
 #>   <int>
-#> 1     5
-#> 2     4
+#> 1     4
+#> 2     5
 ```

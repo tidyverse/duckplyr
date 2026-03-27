@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.2.0.9002</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.2.1.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -141,7 +141,7 @@ hood:</p>
 <span><span class="co">#&gt; │       3409599.a DESC      │</span></span>
 <span><span class="co">#&gt; └-------------┬-------------┘</span></span>
 <span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
-<span><span class="co">#&gt; │     R_DATAFRAME_SCAN      │</span></span>
+<span><span class="co">#&gt; │      R_DATAFRAME_SCAN     │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │      Text: data.frame     │</span></span>
 <span><span class="co">#&gt; │       Projections: a      │</span></span>
@@ -177,7 +177,7 @@ Converting the object to a data frame triggers the computation:</p>
 <code class="sourceCode R"><span><span class="va">duckdb</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 1</span></span></span>
 <span><span class="co">#&gt;       b</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     4</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     3</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     2</span></span>
@@ -242,7 +242,7 @@ least a part of the operation is handled by dplyr:</p>
 <code class="sourceCode R"><span><span class="va">fallback</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ┌---------------------------┐</span></span>
-<span><span class="co">#&gt; │     R_DATAFRAME_SCAN      │</span></span>
+<span><span class="co">#&gt; │      R_DATAFRAME_SCAN     │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │      Text: data.frame     │</span></span>
 <span><span class="co">#&gt; │       Projections: b      │</span></span>
@@ -258,7 +258,7 @@ computation:</p>
 <code class="sourceCode R"><span><span class="va">fallback</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 1</span></span></span>
 <span><span class="co">#&gt;       b</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     4</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     3</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     2</span></span>

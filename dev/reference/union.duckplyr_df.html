@@ -11,7 +11,7 @@ The implementation forwards to distinct(union_all(x, y))."><meta property="og:im
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.2.0.9002</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.2.1.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,7 +55,7 @@ The implementation forwards to distinct(union_all(x, y))."><meta property="og:im
     </div>
 
     <div class="ref-description section level2">
-    <p>This is a method for the <code><a href="https://dplyr.tidyverse.org/reference/setops.html" class="external-link">dplyr::union()</a></code> generic.
+    <p>This is a method for the <code><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">dplyr::union()</a></code> generic.
 <code>union(x, y)</code> finds all rows in either x or y, excluding duplicates.
 The implementation forwards to <code>distinct(union_all(x, y))</code>.</p>
     </div>
@@ -82,7 +82,7 @@ orders) and compatible types.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="https://dplyr.tidyverse.org/reference/setops.html" class="external-link">dplyr::union()</a></code></p></div>
+    <div class="dont-index"><p><code><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">dplyr::union()</a></code></p></div>
     </div>
 
     <div class="section level2">
@@ -93,11 +93,11 @@ orders) and compatible types.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A duckplyr data frame: 1 variable</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>     5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>     3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>     4</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

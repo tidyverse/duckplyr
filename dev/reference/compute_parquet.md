@@ -76,7 +76,7 @@ path <- tempfile(fileext = ".parquet")
 df <- compute_parquet(df, path)
 explain(df)
 #> ┌───────────────────────────┐
-#> │       READ_PARQUET        │
+#> │        READ_PARQUET       │
 #> │    ────────────────────   │
 #> │         Function:         │
 #> │        READ_PARQUET       │

@@ -95,6 +95,6 @@ band_members %>% anti_join(band_instruments)
 #> Joining with `by = join_by(name)`
 #> # A tibble: 1 × 2
 #>   name  band  
-#>   <chr> <chr> 
+#> * <chr> <chr> 
 #> 1 Mick  Stones
 ```

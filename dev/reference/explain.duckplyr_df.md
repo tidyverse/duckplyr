@@ -48,7 +48,7 @@ explain(df)
 #> │          ~2 rows          │
 #> └─────────────┬─────────────┘
 #> ┌─────────────┴─────────────┐
-#> │     R_DATAFRAME_SCAN      │
+#> │      R_DATAFRAME_SCAN     │
 #> │    ────────────────────   │
 #> │      Text: data.frame     │
 #> │       Projections: x      │

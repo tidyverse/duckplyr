@@ -92,7 +92,7 @@ system.time(
     )
 )
 #>    user  system elapsed 
-#>   0.010   0.006   0.016
+#>   0.012   0.002   0.014
 ```
 
 Setting up the pipeline is fast, the size of the data does not affect
@@ -173,7 +173,7 @@ mean_arr_delay_ewr |>
 #> │        ~67,355 rows       │
 #> └-------------┬-------------┘
 #> ┌-------------┴-------------┐
-#> │     R_DATAFRAME_SCAN      │
+#> │      R_DATAFRAME_SCAN     │
 #> │    --------------------   │
 #> │      Text: data.frame     │
 #> │                           │
@@ -193,7 +193,7 @@ available when accessed:
 ``` r
 system.time(mean_arr_delay_ewr$mean_arr_delay[[1]])
 #>    user  system elapsed 
-#>   0.026   0.003   0.021
+#>   0.025   0.000   0.019
 ```
 
 ### Comparison
@@ -229,7 +229,7 @@ system.time(
     )
 )
 #>    user  system elapsed 
-#>   0.042   0.007   0.049
+#>   0.038   0.007   0.044
 ```
 
 See also the [duckplyr: dplyr Powered by

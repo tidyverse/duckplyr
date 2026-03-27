@@ -192,7 +192,7 @@ full_join(band_members, band_instruments)
 #> Joining with `by = join_by(name)`
 #> # A tibble: 4 × 3
 #>   name  band    plays 
-#>   <chr> <chr>   <chr> 
+#> * <chr> <chr>   <chr> 
 #> 1 John  Beatles guitar
 #> 2 Paul  Beatles bass  
 #> 3 Mick  Stones  NA    

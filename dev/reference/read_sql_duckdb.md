@@ -67,9 +67,9 @@ read_sql_duckdb("FROM duckdb_settings()")
 #>  4 allocator_flush_threshold 128.… Peak alloc… VARCHAR    GLOB… <chr>  
 #>  5 allow_community_extensio… true  Allow to l… BOOLEAN    GLOB… <chr>  
 #>  6 allow_extensions_metadat… false Allow to l… BOOLEAN    GLOB… <chr>  
-#>  7 allow_persistent_secrets  true  Allow the … BOOLEAN    GLOB… <chr>  
-#>  8 allow_unredacted_secrets  false Allow prin… BOOLEAN    GLOB… <chr>  
-#>  9 allow_unsigned_extensions false Allow to l… BOOLEAN    GLOB… <chr>  
-#> 10 allowed_directories       []    List of di… VARCHAR[]  GLOB… <chr>  
+#>  7 allow_parser_override_ex… DEFA… Allow exte… VARCHAR    GLOB… <chr>  
+#>  8 allow_persistent_secrets  true  Allow the … BOOLEAN    GLOB… <chr>  
+#>  9 allow_unredacted_secrets  false Allow prin… BOOLEAN    GLOB… <chr>  
+#> 10 allow_unsigned_extensions false Allow to l… BOOLEAN    GLOB… <chr>  
 #> # ℹ more rows
 ```

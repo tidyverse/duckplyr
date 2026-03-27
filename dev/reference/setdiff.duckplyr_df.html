@@ -11,7 +11,7 @@ setdiff(x, y) finds all rows in x that aren't in y."><meta property="og:image" c
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.2.0.9002</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.2.1.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,7 +55,7 @@ setdiff(x, y) finds all rows in x that aren't in y."><meta property="og:image" c
     </div>
 
     <div class="ref-description section level2">
-    <p>This is a method for the <code><a href="https://dplyr.tidyverse.org/reference/setops.html" class="external-link">dplyr::setdiff()</a></code> generic.
+    <p>This is a method for the <code><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">dplyr::setdiff()</a></code> generic.
 See "Fallbacks" section for differences in implementation.
 <code>setdiff(x, y)</code> finds all rows in <code>x</code> that aren't in <code>y</code>.</p>
     </div>
@@ -86,11 +86,11 @@ orders) and compatible types.</p></dd>
 
 <p>There is no DuckDB translation in <code>setdiff.duckplyr_df()</code></p><ul><li><p>if column names are duplicated in one of the tables,</p></li>
 <li><p>if column names are different in both tables.</p></li>
-</ul><p>These features fall back to <code><a href="https://dplyr.tidyverse.org/reference/setops.html" class="external-link">dplyr::setdiff()</a></code>, see <code><a href="../articles/fallback.html">vignette("fallback")</a></code> for details.</p>
+</ul><p>These features fall back to <code><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">dplyr::setdiff()</a></code>, see <code><a href="../articles/fallback.html">vignette("fallback")</a></code> for details.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="https://dplyr.tidyverse.org/reference/setops.html" class="external-link">dplyr::setdiff()</a></code></p></div>
+    <div class="dont-index"><p><code><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">dplyr::setdiff()</a></code></p></div>
     </div>
 
     <div class="section level2">
@@ -107,8 +107,8 @@ orders) and compatible types.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A duckplyr data frame: 1 variable</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     5</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
