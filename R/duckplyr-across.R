@@ -183,9 +183,11 @@ duckplyr_across_setup <- function(
 
 fn_to_expr <- function(fn, env) {
   if (is.primitive(fn)) {
-    return(getNamespace("base"))
+    fn_env <- getNamespace("base")
+  } else {
+    fn_env <- environment(fn)
   }
-  fn_env <- environment(fn)
+
   if (!is_namespace(fn_env)) {
     return(fn)
   }
