@@ -1,4 +1,6 @@
 test_that("TPCH queries can be parsed and run", {
+  skip_if_not_installed("duckdb", "1.5.1")
+
   customer <- duckdb_tibble(
     c_custkey = integer(0),
     c_name = character(0),
