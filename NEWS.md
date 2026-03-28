@@ -1,5 +1,16 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.2.1.9003 (2026-03-28)
+
+## Features
+
+- Enable `across()` translation for primitive functions such as `sum()` (#906, #907).
+
+## Continuous integration
+
+- Ignore failing test with duckdb 1.5.0.
+
+
 # duckplyr 1.2.1.9002 (2026-03-13)
 
 ## Chore
