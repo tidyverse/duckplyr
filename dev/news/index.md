@@ -1,5 +1,19 @@
 # Changelog
 
+## duckplyr 1.2.1.9003 (2026-03-28)
+
+### Features
+
+- Enable [`across()`](https://dplyr.tidyverse.org/reference/across.html)
+  translation for primitive functions such as
+  [`sum()`](https://rdrr.io/r/base/sum.html)
+  ([\#906](https://github.com/tidyverse/duckplyr/issues/906),
+  [\#907](https://github.com/tidyverse/duckplyr/issues/907)).
+
+### Continuous integration
+
+- Ignore failing test with duckdb 1.5.0.
+
 ## duckplyr 1.2.1.9002 (2026-03-13)
 
 ### Chore
