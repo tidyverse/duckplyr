@@ -46,7 +46,7 @@ df <- collect(df)
 df
 #> # A tibble: 2 × 2
 #>       x .lazy
-#>   <dbl> <lgl>
+#> * <dbl> <lgl>
 #> 1     1 TRUE 
 #> 2     2 TRUE 
 ```

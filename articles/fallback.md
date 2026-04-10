@@ -56,7 +56,7 @@ duckdb |>
 #> │       3409599.a DESC      │
 #> └-------------┬-------------┘
 #> ┌-------------┴-------------┐
-#> │     R_DATAFRAME_SCAN      │
+#> │      R_DATAFRAME_SCAN     │
 #> │    --------------------   │
 #> │      Text: data.frame     │
 #> │       Projections: a      │
@@ -96,7 +96,7 @@ object to a data frame triggers the computation:
 duckdb |> collect()
 #> # A tibble: 3 × 1
 #>       b
-#>   <dbl>
+#> * <dbl>
 #> 1     4
 #> 2     3
 #> 3     2
@@ -176,7 +176,7 @@ is handled by dplyr:
 fallback |>
   explain()
 #> ┌---------------------------┐
-#> │     R_DATAFRAME_SCAN      │
+#> │      R_DATAFRAME_SCAN     │
 #> │    --------------------   │
 #> │      Text: data.frame     │
 #> │       Projections: b      │
@@ -197,7 +197,7 @@ computation:
 fallback |> collect()
 #> # A tibble: 3 × 1
 #>       b
-#>   <dbl>
+#> * <dbl>
 #> 1     4
 #> 2     3
 #> 3     2

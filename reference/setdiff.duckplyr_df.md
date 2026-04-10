@@ -51,8 +51,8 @@ setdiff(df1, df2)
 #> # A duckplyr data frame: 1 variable
 #>       x
 #>   <int>
-#> 1     1
-#> 2     2
+#> 1     2
+#> 2     1
 setdiff(df2, df1)
 #> # A duckplyr data frame: 1 variable
 #>       x

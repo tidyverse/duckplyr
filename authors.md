@@ -15,7 +15,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/tidyverse/duckplyr/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/tidyverse/duckplyr/blob/docs/DESCRIPTION)
 
 Mühleisen H, Müller K (2026). *duckplyr: A 'DuckDB'-Backed Version of
 'dplyr'*. R package version 1.2.1, <https://duckplyr.tidyverse.org>.

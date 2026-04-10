@@ -2,6 +2,8 @@
 
 ## duckplyr 1.2.1 (2026-03-09)
 
+CRAN release: 2026-03-10
+
 ### Bug fixes
 
 - Filter write-only options before passing to read functions in

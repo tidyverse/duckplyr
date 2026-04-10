@@ -125,7 +125,7 @@ DBI::dbWriteTable(con, "data", data.frame(x = 1:3, y = letters[1:3]))
 dbplyr_data <- tbl(con, "data")
 dbplyr_data
 #> # Source:   table<"data"> [?? x 2]
-#> # Database: DuckDB 1.4.4 [unknown@Linux 6.14.0-1017-azure:R 4.5.2//tmp/RtmpDM0Qok/file3e0f430a580f.duckdb]
+#> # Database: DuckDB 1.5.1 [unknown@Linux 6.17.0-1010-azure:R 4.5.3//tmp/RtmpFG6Oqm/file2cc44bdb09d8.duckdb]
 #>       x y    
 #>   <int> <chr>
 #> 1     1 a    
@@ -141,9 +141,12 @@ dbplyr_data |>
 #> <PLAN>
 #> physical_plan
 #> ┌---------------------------┐
-#> │         SEQ_SCAN          │
+#> │          SEQ_SCAN         │
 #> │    --------------------   │
-#> │        Table: data        │
+#> │           Table:          │
+#> │   file2cc44bdb09d8.main.  │
+#> │           "data"          │
+#> │                           │
 #> │   Type: Sequential Scan   │
 #> │                           │
 #> │        Projections:       │
@@ -174,9 +177,12 @@ dbplyr_data |>
   as_duckdb_tibble() |>
   explain()
 #> ┌---------------------------┐
-#> │         SEQ_SCAN          │
+#> │          SEQ_SCAN         │
 #> │    --------------------   │
-#> │        Table: data        │
+#> │           Table:          │
+#> │   file2cc44bdb09d8.main.  │
+#> │           "data"          │
+#> │                           │
 #> │   Type: Sequential Scan   │
 #> │                           │
 #> │        Projections:       │
@@ -406,7 +412,7 @@ simple_data |>
 #> │           ~1 row          │
 #> └-------------┬-------------┘
 #> ┌-------------┴-------------┐
-#> │     R_DATAFRAME_SCAN      │
+#> │      R_DATAFRAME_SCAN     │
 #> │    --------------------   │
 #> │      Text: data.frame     │
 #> │       Projections: a      │
@@ -430,10 +436,11 @@ table, so the data is not persisted after the session ends:
 simple_data_computed |>
   explain()
 #> ┌---------------------------┐
-#> │         SEQ_SCAN          │
+#> │          SEQ_SCAN         │
 #> │    --------------------   │
 #> │           Table:          │
-#> │    duckplyr_eexomb92Q9    │
+#> │        "temp".main        │
+#> │    .duckplyr_eexomb92Q9   │
 #> │                           │
 #> │   Type: Sequential Scan   │
 #> │                           │
@@ -454,7 +461,7 @@ duckdb_tibble(a = 1) |>
   collect()
 #> # A tibble: 1 × 2
 #>       a     b
-#>   <dbl> <dbl>
+#> * <dbl> <dbl>
 #> 1     1     2
 ```
 
@@ -494,7 +501,7 @@ duckdb_tibble(a = 1) |>
   compute_parquet(path_parquet_out) |>
   explain()
 #> ┌---------------------------┐
-#> │       READ_PARQUET        │
+#> │        READ_PARQUET       │
 #> │    --------------------   │
 #> │         Function:         │
 #> │        READ_PARQUET       │

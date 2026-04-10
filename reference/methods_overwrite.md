@@ -25,7 +25,7 @@ tibble(a = 1:3) %>%
   mutate(b = a + 1)
 #> # A tibble: 3 × 2
 #>       a     b
-#>   <int> <dbl>
+#> * <int> <dbl>
 #> 1     1     2
 #> 2     2     3
 #> 3     3     4
@@ -38,7 +38,7 @@ tibble(a = 1:3) %>%
   mutate(b = a + 1)
 #> # A tibble: 3 × 2
 #>       a     b
-#>   <int> <dbl>
+#> * <int> <dbl>
 #> 1     1     2
 #> 2     2     3
 #> 3     3     4

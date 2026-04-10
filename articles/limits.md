@@ -398,7 +398,7 @@ duckplyr::duckdb_tibble(a = 1:3, .prudence = "stingy") |>
   collect()
 #> # A tibble: 3 × 2
 #>       a `a %in% c(1, 3)`
-#>   <int> <lgl>           
+#> * <int> <lgl>           
 #> 1     1 TRUE            
 #> 2     2 FALSE           
 #> 3     3 TRUE
@@ -432,7 +432,7 @@ duckplyr::duckdb_tibble(a = 1:3, .prudence = "stingy") |>
 #> │       4391854.a DESC      │
 #> └-------------┬-------------┘
 #> ┌-------------┴-------------┐
-#> │     R_DATAFRAME_SCAN      │
+#> │      R_DATAFRAME_SCAN     │
 #> │    --------------------   │
 #> │      Text: data.frame     │
 #> │       Projections: a      │
@@ -481,7 +481,7 @@ duckplyr::flights_df() |>
 #> # A duckplyr data frame: 1 variable
 #>   `paste(day, collapse = " ")`                                         
 #>   <chr>                                                                
-#> 1 5 9 11 14 15 16 17 22 26 30 31 2 10 18 28 29 3 4 6 12 20 23 24 1 7 8…
+#> 1 5 9 11 14 15 16 17 22 26 30 31 2 10 18 28 29 1 7 8 13 19 21 25 27 3 …
 
 duckplyr::flights_df() |>
   distinct(day) |>
@@ -518,7 +518,7 @@ duckplyr::flights_df() |>
 #> │       ~336,776 rows       │
 #> └-------------┬-------------┘
 #> ┌-------------┴-------------┐
-#> │     R_DATAFRAME_SCAN      │
+#> │      R_DATAFRAME_SCAN     │
 #> │    --------------------   │
 #> │      Text: data.frame     │
 #> │      Projections: day     │
@@ -540,37 +540,20 @@ withr::with_envvar(
 #> │ 42.___row_number ASC│
 #> └-------------┬-------------┘
 #> ┌-------------┴-------------┐
-#> │         PROJECTION        │
+#> │       HASH_GROUP_BY       │
 #> │    --------------------   │
-#> │             #0            │
-#> │             #1            │
+#> │         Groups: #0        │
+#> │    Aggregates: min(#1)    │
 #> │                           │
-#> │        ~67,355 rows       │
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │           FILTER          │
-#> │    --------------------   │
-#> │   (___row_number_by = 1)  │
-#> │                           │
-#> │        ~67,355 rows       │
+#> │          ~0 rows          │
 #> └-------------┬-------------┘
 #> ┌-------------┴-------------┐
 #> │         PROJECTION        │
 #> │    --------------------   │
-#> │             #0            │
-#> │             #1            │
-#> │             #2            │
+#> │            day            │
+#> │       ___row_number       │
 #> │                           │
 #> │       ~336,776 rows       │
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │           WINDOW          │
-#> │    --------------------   │
-#> │        Projections:       │
-#> │     ROW_NUMBER() OVER     │
-#> │ (PARTITION BY day ORDER BY│
-#> │   ___row_number ASC NULLS │
-#> │            LAST)          │
 #> └-------------┬-------------┘
 #> ┌-------------┴-------------┐
 #> │         PROJECTION        │
@@ -587,7 +570,7 @@ withr::with_envvar(
 #> │    ROW_NUMBER() OVER ()   │
 #> └-------------┬-------------┘
 #> ┌-------------┴-------------┐
-#> │     R_DATAFRAME_SCAN      │
+#> │      R_DATAFRAME_SCAN     │
 #> │    --------------------   │
 #> │      Text: data.frame     │
 #> │      Projections: day     │

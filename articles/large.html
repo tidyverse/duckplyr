@@ -18,7 +18,10 @@
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Large data">
-<script src="https://cdn.jsdelivr.net/gh/posit-dev/supported-by-posit/js/badge.min.js" data-max-height="43" data-light-bg="#666f76" data-light-fg="#f9f9f9"></script><script defer data-domain="duckplyr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/posit-dev/supported-by-posit/js/badge.min.js" data-max-height="43" data-light-bg="#666f76" data-light-fg="#f9f9f9"></script><!-- Privacy-friendly analytics by Plausible --><script async src="https://plausible.io/js/pa-FkMRH0i0gPvavEz4OV93E.js"></script><script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
 </head>
 <body>
     <a href="#container" class="visually-hidden-focusable">Skip to content</a>
@@ -82,7 +85,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Large data</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/tidyverse/duckplyr/blob/main/vignettes/large.Rmd" class="external-link"><code>vignettes/large.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidyverse/duckplyr/blob/docs/vignettes/large.Rmd" class="external-link"><code>vignettes/large.Rmd</code></a></small>
       <div class="d-none name"><code>large.Rmd</code></div>
     </div>
 
@@ -196,7 +199,7 @@ to a table:</p>
 <span><span class="va">dbplyr_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"data"</span><span class="op">)</span></span>
 <span><span class="va">dbplyr_data</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># Source:   table&lt;"data"&gt; [?? x 2]</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.4.4 [unknown@Linux 6.14.0-1017-azure:R 4.5.2//tmp/RtmpDM0Qok/file3e0f430a580f.duckdb]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.5.1 [unknown@Linux 6.17.0-1010-azure:R 4.5.3//tmp/RtmpFG6Oqm/file2cc44bdb09d8.duckdb]</span></span></span>
 <span><span class="co">#&gt;       x y    </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1 a    </span></span>
@@ -212,9 +215,12 @@ to a table:</p>
 <span><span class="co">#&gt; &lt;PLAN&gt;</span></span>
 <span><span class="co">#&gt; physical_plan</span></span>
 <span><span class="co">#&gt; ┌---------------------------┐</span></span>
-<span><span class="co">#&gt; │         SEQ_SCAN          │</span></span>
+<span><span class="co">#&gt; │          SEQ_SCAN         │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │        Table: data        │</span></span>
+<span><span class="co">#&gt; │           Table:          │</span></span>
+<span><span class="co">#&gt; │   file2cc44bdb09d8.main.  │</span></span>
+<span><span class="co">#&gt; │           "data"          │</span></span>
+<span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │   Type: Sequential Scan   │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │        Projections:       │</span></span>
@@ -240,9 +246,12 @@ can then be used to seamlessly convert the data to a duckplyr frame:</p>
 <span>  <span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ┌---------------------------┐</span></span>
-<span><span class="co">#&gt; │         SEQ_SCAN          │</span></span>
+<span><span class="co">#&gt; │          SEQ_SCAN         │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │        Table: data        │</span></span>
+<span><span class="co">#&gt; │           Table:          │</span></span>
+<span><span class="co">#&gt; │   file2cc44bdb09d8.main.  │</span></span>
+<span><span class="co">#&gt; │           "data"          │</span></span>
+<span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │   Type: Sequential Scan   │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │        Projections:       │</span></span>
@@ -430,7 +439,7 @@ in duckplyr:</p>
 <span><span class="co">#&gt; │           ~1 row          │</span></span>
 <span><span class="co">#&gt; └-------------┬-------------┘</span></span>
 <span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
-<span><span class="co">#&gt; │     R_DATAFRAME_SCAN      │</span></span>
+<span><span class="co">#&gt; │      R_DATAFRAME_SCAN     │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │      Text: data.frame     │</span></span>
 <span><span class="co">#&gt; │       Projections: a      │</span></span>
@@ -450,10 +459,11 @@ persisted after the session ends:</p>
 <code class="sourceCode R"><span><span class="va">simple_data_computed</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ┌---------------------------┐</span></span>
-<span><span class="co">#&gt; │         SEQ_SCAN          │</span></span>
+<span><span class="co">#&gt; │          SEQ_SCAN         │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │           Table:          │</span></span>
-<span><span class="co">#&gt; │    duckplyr_eexomb92Q9    │</span></span>
+<span><span class="co">#&gt; │        "temp".main        │</span></span>
+<span><span class="co">#&gt; │    .duckplyr_eexomb92Q9   │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │   Type: Sequential Scan   │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
@@ -471,7 +481,7 @@ returns a plain tibble:</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 2</span></span></span>
 <span><span class="co">#&gt;       a     b</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1     2</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -503,7 +513,7 @@ Parquet file:</p>
 <span>  <span class="fu"><a href="../reference/compute_parquet.html">compute_parquet</a></span><span class="op">(</span><span class="va">path_parquet_out</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ┌---------------------------┐</span></span>
-<span><span class="co">#&gt; │       READ_PARQUET        │</span></span>
+<span><span class="co">#&gt; │        READ_PARQUET       │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │         Function:         │</span></span>
 <span><span class="co">#&gt; │        READ_PARQUET       │</span></span>
