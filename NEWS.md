@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.2.1.9004 (2026-04-11)
+
+## Documentation
+
+- Update Plausible analytics snippet (@jeroenjanssens, #910).
+
+
 # duckplyr 1.2.1.9003 (2026-03-28)
 
 ## Features
