@@ -105,6 +105,7 @@ two places:
 3.  Test your implementation in the console with code of the form:
 
     ``` r
+
     rel_translate(quo(lubridate::month(a)), data.frame(a = Sys.Date())) |>
       constructive::construct()
     ```
@@ -112,6 +113,7 @@ two places:
 4.  Ensure that your implementation computes what you want it to:
 
     ``` r
+
     duckdb_tibble(a = Sys.Date(), .prudence = "stingy") |>
       mutate(lubridate::month(a))
     ```

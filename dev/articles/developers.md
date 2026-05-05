@@ -4,6 +4,7 @@ This vignette demonstrates how to use duckplyr selectively, for
 individual data frames or for other packages.
 
 ``` r
+
 library(conflicted)
 library(dplyr)
 conflict_prefer("filter", "dplyr")
@@ -32,6 +33,7 @@ to convert a data frame to a duckplyr frame and to enable duckplyr
 operation.
 
 ``` r
+
 lazy <-
   duckplyr::flights_df() |>
   duckplyr::as_duckdb_tibble() |>
@@ -47,6 +49,7 @@ lazy <-
 The result is a tibble, with its own class.
 
 ``` r
+
 class(lazy)
 #> [1] "duckplyr_df" "tbl_df"      "tbl"         "data.frame"
 
@@ -60,6 +63,7 @@ Despite the filter coming very late in the pipeline, it is applied to
 the raw data.
 
 ``` r
+
 lazy |>
   explain()
 #> ┌---------------------------┐
@@ -121,6 +125,7 @@ All data frame operations are supported. Computation happens upon the
 first request.
 
 ``` r
+
 lazy$mean_inflight_delay
 #> [1] -5.147220 -3.855519 -9.370201 -7.356713 -2.673124 -4.244284
 ```
@@ -129,6 +134,7 @@ After the computation has been carried out, the results are preserved
 and available immediately:
 
 ``` r
+
 lazy
 #> # A duckplyr data frame: 4 variables
 #>    year month mean_inflight_delay median_inflight_delay
@@ -148,6 +154,7 @@ The same can be achieved by calling
 after [`library(duckplyr)`](https://duckplyr.tidyverse.org).
 
 ``` r
+
 library(duckplyr)
 #> ✔ Overwriting dplyr methods with duckplyr methods.
 #> ℹ Turn off with `duckplyr::methods_restore()`.
@@ -159,6 +166,7 @@ methods_restore()
 If the input is a plain data frame, duckplyr is not involved.
 
 ``` r
+
 flights_df() |>
   mutate(inflight_delay = arr_delay - dep_delay) |>
   explain()
@@ -172,6 +180,7 @@ Construct duckplyr frames directly with
 [`duckdb_tibble()`](https://duckplyr.tidyverse.org/dev/reference/duckdb_tibble.md):
 
 ``` r
+
 data <- duckdb_tibble(
   x = 1:3,
   y = 5,

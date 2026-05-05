@@ -1,6 +1,7 @@
 # Implementer's interface
 
 ``` r
+
 library(conflicted)
 library(dplyr)
 conflict_prefer("filter", "dplyr")
@@ -13,6 +14,7 @@ implementer’s interface for dplyr’s high-level user interface. Other
 packages may then implement methods for those generics.
 
 ``` r
+
 library(conflicted)
 library(dplyr)
 conflict_prefer("filter", "dplyr")
@@ -27,6 +29,7 @@ library(duckplyr)
     #> ℹ Turn off with `duckplyr::methods_restore()`.
 
 ``` r
+
 # Create a relational to be used by examples below
 new_dfrel <- function(x) {
   stopifnot(is.data.frame(x))

@@ -7,6 +7,7 @@ a seamless dplyr-like experience while remaining cautious of memory
 usage.
 
 ``` r
+
 library(conflicted)
 library(dplyr)
 conflict_prefer("filter", "dplyr")
@@ -23,6 +24,7 @@ number of rows with [`nrow()`](https://rdrr.io/r/base/nrow.html), works
 identically. Conceptually, duckplyr frames are “eager”:
 
 ``` r
+
 df <-
   duckplyr::duckdb_tibble(x = 1:3) |>
   mutate(y = x + 1)
@@ -73,6 +75,7 @@ arrival delay for flights departing from Newark airport (EWR) by day and
 month:
 
 ``` r
+
 flights <- duckplyr::flights_df()
 
 flights_duckdb <-
@@ -92,7 +95,7 @@ system.time(
     )
 )
 #>    user  system elapsed 
-#>   0.011   0.004   0.015
+#>   0.012   0.004   0.016
 ```
 
 Setting up the pipeline is fast, the size of the data does not affect
@@ -100,6 +103,7 @@ the setup costs. Because the computation is deferred, DuckDB can
 optimize the whole pipeline, which can be seen in the output below:
 
 ``` r
+
 mean_arr_delay_ewr |>
   explain()
 #> ┌---------------------------┐
@@ -191,9 +195,10 @@ The first step in the pipeline is to prune the unneeded columns, only
 available when accessed:
 
 ``` r
+
 system.time(mean_arr_delay_ewr$mean_arr_delay[[1]])
 #>    user  system elapsed 
-#>   0.047   0.005   0.026
+#>   0.051   0.003   0.026
 ```
 
 ### Comparison
@@ -217,6 +222,7 @@ intermediate step and also the final result is a proper data frame, and
 computed right away, forfeiting the opportunity for optimization:
 
 ``` r
+
 system.time(
   flights |>
     filter(origin == "EWR", !is.na(arr_delay)) |>
@@ -229,7 +235,7 @@ system.time(
     )
 )
 #>    user  system elapsed 
-#>   0.037   0.010   0.046
+#>   0.040   0.011   0.051
 ```
 
 See also the [duckplyr: dplyr Powered by
@@ -284,6 +290,7 @@ Passing `prudence = "stingy"` to
 creates a stingy duckplyr frame.
 
 ``` r
+
 flights_stingy <-
   flights |>
   duckplyr::as_duckdb_tibble(prudence = "stingy")
@@ -292,6 +299,7 @@ flights_stingy <-
 The data can be displayed, and column names and types can be accessed.
 
 ``` r
+
 flights_stingy
 #> # A duckplyr data frame: 19 variables
 #>     year month   day dep_time sched_dep_time dep_delay arr_time
@@ -330,6 +338,7 @@ On the other hand, accessing a column or requesting the number of rows
 triggers an error:
 
 ``` r
+
 nrow(flights_stingy)
 #> Error:
 #> ! Materialization is disabled, use `collect()` or `as_tibble()` to materialize.
@@ -354,6 +363,7 @@ check that all operations are supported by DuckDB: for a stingy frame,
 fallbacks to dplyr are not possible.
 
 ``` r
+
 flights_stingy |>
   group_by(origin) |>
   summarize(n = n()) |>
@@ -372,6 +382,7 @@ The same pipeline with a lavish frame works, but the computation is
 carried out by dplyr:
 
 ``` r
+
 flights_stingy |>
   duckplyr::as_duckdb_tibble(prudence = "lavish") |>
   group_by(origin) |>
@@ -398,6 +409,7 @@ method triggers computation and converts to a plain tibble. The
 difference between the two is the class of the returned object:
 
 ``` r
+
 flights_stingy |>
   duckplyr::as_duckdb_tibble(prudence = "lavish") |>
   class()
@@ -414,6 +426,7 @@ The same behavior is achieved with
 and [`as.data.frame()`](https://rdrr.io/r/base/as.data.frame.html):
 
 ``` r
+
 flights_stingy |>
   as_tibble() |>
   class()
@@ -442,6 +455,7 @@ allowed for data up to a certain size, measured in cells (values) and
 rows in the resulting data frame.
 
 ``` r
+
 nrow(flights)
 #> [1] 336776
 flights_partial <-
@@ -453,6 +467,7 @@ With this setting, the data is materialized only if the result has fewer
 than 1,000,000 cells (rows multiplied by columns).
 
 ``` r
+
 flights_partial |>
   select(origin, dest, dep_delay, arr_delay) |>
   nrow()
@@ -466,6 +481,7 @@ fails. On the other hand, the result after aggregation is small enough
 to be materialized:
 
 ``` r
+
 flights_partial |>
   count(origin) |>
   nrow()
@@ -489,6 +505,7 @@ A custom limit can be set by passing a named vector to `prudence`, with
 elements `cells` and/or `rows`:
 
 ``` r
+
 read_parquet_duckdb(
   "personas.parquet",
   prudence = c(cells = 10000, rows = 1000)

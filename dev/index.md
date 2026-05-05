@@ -18,6 +18,7 @@ Data Science*.
 Install duckplyr from CRAN with:
 
 ``` r
+
 install.packages("duckplyr")
 ```
 
@@ -25,12 +26,14 @@ You can also install the development version of duckplyr from
 [R-universe](https://tidyverse.r-universe.dev/builds):
 
 ``` r
+
 install.packages("duckplyr", repos = c("https://tidyverse.r-universe.dev", "https://cloud.r-project.org"))
 ```
 
 Or from [GitHub](https://github.com/) with:
 
 ``` r
+
 # install.packages("pak")
 pak::pak("tidyverse/duckplyr")
 ```
@@ -41,6 +44,7 @@ Calling [`library(duckplyr)`](https://duckplyr.tidyverse.org) overwrites
 dplyr methods, enabling duckplyr for the entire session.
 
 ``` r
+
 library(conflicted)
 library(duckplyr)
 #> Loading required package: dplyr
@@ -49,6 +53,7 @@ library(duckplyr)
 ```
 
 ``` r
+
 conflict_prefer("filter", "dplyr")
 #> [conflicted] Will prefer dplyr::filter
 #> over any other package.
@@ -62,6 +67,7 @@ limitation of duckplyr, see
 [`vignette("limits")`](https://duckplyr.tidyverse.org/dev/articles/limits.md).
 
 ``` r
+
 flights_df()
 #> # A tibble: 336,776 × 19
 #>     year month   day dep_time sched_d…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵
@@ -98,6 +104,7 @@ out <-
 The result is a plain tibble:
 
 ``` r
+
 class(out)
 #> [1] "tbl_df"     "tbl"        "data.frame"
 ```
@@ -106,6 +113,7 @@ Nothing has been computed yet. Querying the number of rows, or a column,
 starts the computation:
 
 ``` r
+
 out$month
 #> [1] 1 2 3 4 5 6
 ```
@@ -115,6 +123,7 @@ Note that, unlike dplyr, the results are not ordered, see
 details. However, once materialized, the results are stable:
 
 ``` r
+
 out
 #> # A tibble: 6 × 4
 #>    year month mean_inflight_delay median_inflight_delay
@@ -131,6 +140,7 @@ If a computation is not supported by DuckDB, duckplyr will automatically
 fall back to dplyr.
 
 ``` r
+
 flights_df() |>
   summarize(
     .by = origin,
@@ -149,6 +159,7 @@ Restart R, or call
 to revert to the default dplyr implementation.
 
 ``` r
+
 duckplyr::methods_restore()
 #> ℹ Restoring dplyr methods.
 ```
@@ -160,6 +171,7 @@ An extended variant of the
 dataset is also available for download as Parquet files.
 
 ``` r
+
 year <- 2022:2024
 base_url <- "https://blobs.duckdb.org/flight-data-partitioned/"
 files <- paste0("Year=", year, "/data_0.parquet")
@@ -179,6 +191,7 @@ can query these files directly from R, without even downloading them
 first.
 
 ``` r
+
 db_exec("INSTALL httpfs")
 db_exec("LOAD httpfs")
 
@@ -193,6 +206,7 @@ with a [`collect()`](https://dplyr.tidyverse.org/reference/compute.html)
 call for instance.
 
 ``` r
+
 nrow(flights)
 #> Error: Materialization would result in more than 9090 rows. Use collect() or as_tibble() to materialize.
 ```
@@ -200,6 +214,7 @@ nrow(flights)
 For printing, only the first few rows of the result are fetched.
 
 ``` r
+
 flights
 #> # A duckplyr data frame: 110 variables
 #>     Year Quarter Month DayofMonth DayOfWeek FlightDate Report…¹ DOT_I…²
@@ -229,6 +244,7 @@ flights
 ```
 
 ``` r
+
 flights |>
   count(Year)
 #> # A duckplyr data frame: 2 variables
@@ -244,6 +260,7 @@ relevant columns are fetched and the 2024 data isn’t even touched, as
 it’s not needed for the result.
 
 ``` r
+
 out <-
   flights |>
   mutate(InFlightDelay = ArrDelay - DepDelay) |>
@@ -338,6 +355,7 @@ For full compatibility, `na.rm = FALSE` by default in the aggregation
 functions:
 
 ``` r
+
 flights |>
   summarize(mean(ArrDelay - DepDelay))
 #> # A duckplyr data frame: 1 variable

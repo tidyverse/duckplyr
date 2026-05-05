@@ -1,6 +1,7 @@
 # Telemetry
 
 ``` r
+
 library(conflicted)
 library(duckplyr)
 #> Loading required package: dplyr
@@ -35,6 +36,7 @@ The data collected contains:
 Fallback is silent by default, but can be made verbose.
 
 ``` r
+
 Sys.setenv(DUCKPLYR_FALLBACK_INFO = TRUE)
 out <-
   flights_df() |>

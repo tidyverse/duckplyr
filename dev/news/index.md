@@ -1,5 +1,20 @@
 # Changelog
 
+## duckplyr 1.2.1.9005 (2026-05-04)
+
+### Chore
+
+- Auto-update from GitHub Actions
+  ([\#913](https://github.com/tidyverse/duckplyr/issues/913)).
+
+## duckplyr 1.2.1.9004 (2026-04-11)
+
+### Documentation
+
+- Update Plausible analytics snippet
+  ([@jeroenjanssens](https://github.com/jeroenjanssens),
+  [\#910](https://github.com/tidyverse/duckplyr/issues/910)).
+
 ## duckplyr 1.2.1.9003 (2026-03-28)
 
 ### Features
@@ -71,6 +86,7 @@ CRAN release: 2026-02-25
   [\#828](https://github.com/tidyverse/duckplyr/issues/828)).
 
   ``` r
+
   db_path <- tempfile(fileext = ".duckdb")
   con <- DBI::dbConnect(duckdb::duckdb(), db_path)
   DBI::dbWriteTable(con, "my_table", data.frame(x = 1:5, y = letters[1:5]))
@@ -92,6 +108,7 @@ CRAN release: 2026-02-25
   [\#854](https://github.com/tidyverse/duckplyr/issues/854)).
 
   ``` r
+
   duckdb_tibble(g = c("a", "a", "b", "b", "b"), x = c(10, 20, 30, 40, 50), .prudence = "stingy") |>
     summarise(.by = g, first_x = first(x), last_x = last(x), second_x = nth(x, 2))
 
@@ -109,6 +126,7 @@ CRAN release: 2026-02-25
   [\#821](https://github.com/tidyverse/duckplyr/issues/821)).
 
   ``` r
+
   df <- duckdb_tibble(x = 1:3, y = c("a", "b", "c"), .prudence = "stingy")
   path <- tempfile(fileext = ".parquet")
   compute_parquet(df, path, options = list(compression = "zstd"))
@@ -126,6 +144,7 @@ CRAN release: 2026-02-25
   ([\#822](https://github.com/tidyverse/duckplyr/issues/822)).
 
   ``` r
+
   duckdb_tibble(x = c(1.23, 4.56, 7.89), .prudence = "stingy") |>
     mutate(y = round(x, digits = 1L))
   ```
@@ -136,6 +155,7 @@ CRAN release: 2026-02-25
   [\#819](https://github.com/tidyverse/duckplyr/issues/819)).
 
   ``` r
+
   duckdb_tibble(x = 1:3, .prudence = "stingy") |>
     transmute(y = x * 2, z = y + 10)
   ```
@@ -146,6 +166,7 @@ CRAN release: 2026-02-25
   [\#870](https://github.com/tidyverse/duckplyr/issues/870)).
 
   ``` r
+
   duckdb_tibble(x = 1:3, .prudence = "stingy") |>
     filter_out(x > 2)
   ```

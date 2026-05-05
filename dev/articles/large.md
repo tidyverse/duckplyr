@@ -9,6 +9,7 @@ ingestion, materialization of intermediate and final results, and good
 practice.
 
 ``` r
+
 library(conflicted)
 library(duckplyr)
 #> Loading required package: dplyr
@@ -69,6 +70,7 @@ The
 function creates a duckplyr data frame from vectors:
 
 ``` r
+
 df <- duckdb_tibble(x = 1:3, y = letters[1:3])
 df
 #> # A duckplyr data frame: 2 variables
@@ -91,6 +93,7 @@ can be used to convert a data frame or another object to a duckplyr data
 frame:
 
 ``` r
+
 flights_df() |>
   as_duckdb_tibble()
 #> # A duckplyr data frame: 19 variables
@@ -118,6 +121,7 @@ following code creates a DuckDB connection and writes a data frame to a
 table:
 
 ``` r
+
 path_duckdb <- tempfile(fileext = ".duckdb")
 con <- DBI::dbConnect(duckdb::duckdb(path_duckdb))
 DBI::dbWriteTable(con, "data", data.frame(x = 1:3, y = letters[1:3]))
@@ -125,7 +129,7 @@ DBI::dbWriteTable(con, "data", data.frame(x = 1:3, y = letters[1:3]))
 dbplyr_data <- tbl(con, "data")
 dbplyr_data
 #> # Source:   table<"data"> [?? x 2]
-#> # Database: DuckDB 1.5.1 [unknown@Linux 6.17.0-1010-azure:R 4.5.3//tmp/RtmpOP3pEh/file3e2d4dfcae4c.duckdb]
+#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.6.0//tmp/RtmpuIiFmu/file3b754f3fd97a.duckdb]
 #>       x y    
 #>   <int> <chr>
 #> 1     1 a    
@@ -144,7 +148,7 @@ dbplyr_data |>
 #> │          SEQ_SCAN         │
 #> │    --------------------   │
 #> │           Table:          │
-#> │   file3e2d4dfcae4c.main.  │
+#> │   file3b754f3fd97a.main.  │
 #> │           "data"          │
 #> │                           │
 #> │   Type: Sequential Scan   │
@@ -164,6 +168,7 @@ function can then be used to seamlessly convert the data to a duckplyr
 frame:
 
 ``` r
+
 dbplyr_data |>
   as_duckdb_tibble()
 #> # A duckplyr data frame: 2 variables
@@ -180,7 +185,7 @@ dbplyr_data |>
 #> │          SEQ_SCAN         │
 #> │    --------------------   │
 #> │           Table:          │
-#> │   file3e2d4dfcae4c.main.  │
+#> │   file3b754f3fd97a.main.  │
 #> │           "data"          │
 #> │                           │
 #> │   Type: Sequential Scan   │
@@ -198,6 +203,7 @@ data into an R data frame or export it to a file before using
 [`as_duckdb_tibble()`](https://duckplyr.tidyverse.org/dev/reference/duckdb_tibble.md).
 
 ``` r
+
 DBI::dbDisconnect(con)
 ```
 
@@ -209,6 +215,7 @@ function fails with a helpful error message:
   [`group_by()`](https://dplyr.tidyverse.org/reference/group_by.html):
 
 ``` r
+
 duckdb_tibble(a = 1) |>
   group_by(a) |>
   as_duckdb_tibble()
@@ -222,6 +229,7 @@ duckdb_tibble(a = 1) |>
   [`rowwise()`](https://dplyr.tidyverse.org/reference/rowwise.html):
 
 ``` r
+
 duckdb_tibble(a = 1) |>
   rowwise() |>
   as_duckdb_tibble()
@@ -235,6 +243,7 @@ duckdb_tibble(a = 1) |>
   to read with the built-in reader:
 
 ``` r
+
 readr::read_csv("a\n1", show_col_types = FALSE) |>
   as_duckdb_tibble()
 #> Warning: The `file` argument of `read_csv()` should use `I()` for literal data
@@ -267,6 +276,7 @@ DuckDB supports data ingestion from CSV, Parquet, and JSON files. The
 function accepts a file path and returns a duckplyr frame.
 
 ``` r
+
 path_csv_1 <- tempfile(fileext = ".csv")
 writeLines("x,y\n1,a\n2,b\n3,c", path_csv_1)
 read_csv_duckdb(path_csv_1)
@@ -281,6 +291,7 @@ read_csv_duckdb(path_csv_1)
 Reading multiple files is also supported:
 
 ``` r
+
 path_csv_2 <- tempfile(fileext = ".csv")
 writeLines("x,y\n4,d\n5,e\n6,f", path_csv_2)
 read_csv_duckdb(c(path_csv_1, path_csv_2))
@@ -308,6 +319,7 @@ extension](https://duckdb.org/docs/extensions/httpfs/overview.html) must
 be installed and loaded in each session.
 
 ``` r
+
 db_exec("INSTALL httpfs")
 db_exec("LOAD httpfs")
 ```
@@ -321,6 +333,7 @@ and
 functions can be used with URLs:
 
 ``` r
+
 url <- "https://blobs.duckdb.org/flight-data-partitioned/Year=2024/data_0.parquet"
 flights_parquet <- read_parquet_duckdb(url)
 flights_parquet
@@ -365,6 +378,7 @@ to a duckplyr frame. For this,
 DuckDB database first:
 
 ``` r
+
 sql_attach <- paste0(
   "ATTACH DATABASE '",
   path_duckdb,
@@ -378,6 +392,7 @@ Then, use
 to execute a query and return a duckplyr frame:
 
 ``` r
+
 read_sql_duckdb("SELECT * FROM external.data")
 #> # A duckplyr data frame: 2 variables
 #>       x y    
@@ -397,6 +412,7 @@ used to bring the data into R memory. This interface works exactly the
 same in duckplyr:
 
 ``` r
+
 simple_data <-
   duckdb_tibble(a = 1) |>
   mutate(b = 2)
@@ -433,6 +449,7 @@ used in further computations. The materialization is done in a temporary
 table, so the data is not persisted after the session ends:
 
 ``` r
+
 simple_data_computed |>
   explain()
 #> ┌---------------------------┐
@@ -456,6 +473,7 @@ The [`collect()`](https://dplyr.tidyverse.org/reference/compute.html)
 function brings the data into R memory and returns a plain tibble:
 
 ``` r
+
 duckdb_tibble(a = 1) |>
   mutate(b = 2) |>
   collect()
@@ -476,6 +494,7 @@ functions can be used. The
 function writes the data to a CSV file:
 
 ``` r
+
 path_csv_out <- tempfile(fileext = ".csv")
 duckdb_tibble(a = 1) |>
   mutate(b = 2) |>
@@ -495,6 +514,7 @@ The
 function writes the data to a Parquet file:
 
 ``` r
+
 path_parquet_out <- tempfile(fileext = ".parquet")
 duckdb_tibble(a = 1) |>
   mutate(b = 2) |>
@@ -533,6 +553,7 @@ with
 [`db_exec()`](https://duckplyr.tidyverse.org/dev/reference/db_exec.md):
 
 ``` r
+
 read_sql_duckdb("SELECT current_setting('memory_limit') AS memlimit")
 #> # A duckplyr data frame: 1 variable
 #>   memlimit
@@ -589,6 +610,7 @@ pipeline starts with an ingestion function, the data will only be read
 into memory if it has less than 1 million cells or values in the table:
 
 ``` r
+
 flights_parquet |>
   group_by(Month)
 #> Error in `group_by()`:
@@ -609,6 +631,7 @@ operation is executed. Once the data is small enough to fit into memory,
 this works transparently.
 
 ``` r
+
 flights_parquet |>
   count(Month, DayofMonth) |>
   group_by(Month)
