@@ -81,8 +81,8 @@ relexpr_function <- function(name, args, alias = NULL) {
 #'
 #' `relexpr_operator()` wraps a operator expression.
 #'
-#' @param exprs Expressions to compare, a list of `expr` objects.
 #' @param op Operator, `IN` or `NOT IN`.
+#' @param exprs Expressions to compare, a list of `expr` objects.
 #' @rdname new_relexpr
 #' @return an object of class `"relational_relexpr"`
 #' @export
