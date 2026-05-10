@@ -1,5 +1,19 @@
 # Changelog
 
+## duckplyr 1.2.1.9006 (2026-05-06)
+
+### Continuous integration
+
+- Cosmetics.
+
+- Bump action versions.
+
+- Install clang-format-21.
+
+- Align fledge workflow.
+
+- Harmonize.
+
 ## duckplyr 1.2.1.9005 (2026-05-04)
 
 ### Chore
