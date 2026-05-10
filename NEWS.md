@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.2.1.9008 (2026-05-10)
+
+## Continuous integration
+
+- Only run fledge on pushes to main.
+
+
 # duckplyr 1.2.1.9007 (2026-05-10)
 
 ## Continuous integration
