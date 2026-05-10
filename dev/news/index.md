@@ -1,5 +1,11 @@
 # Changelog
 
+## duckplyr 1.2.1.9007 (2026-05-10)
+
+### Continuous integration
+
+- Tweak fledge workflow and ccache action.
+
 ## duckplyr 1.2.1.9006 (2026-05-06)
 
 ### Continuous integration
