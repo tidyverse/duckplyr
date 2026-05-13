@@ -50,6 +50,6 @@ as_tbl <- function(.data) {
   duckdb$rel_to_view(rel, "", name, temporary = TRUE)
 
   out <- dplyr::tbl(con, name)
-  attr(out, "duckplyr_scope_guard") <- scope_guard
+  attr(out$lazy_query, "duckplyr_scope_guard") <- scope_guard
   out
 }
