@@ -1,5 +1,18 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.2.1.9009 (2026-05-13)
+
+## Chore
+
+- Add ccache to `.gitignore` and `.Rbuildignore`.
+
+## Continuous integration
+
+- Create snapshot update PR against correct branch.
+
+- Clarify rationale for not deploying on schedule.
+
+
 # duckplyr 1.2.1.9008 (2026-05-10)
 
 ## Continuous integration
