@@ -29,3 +29,4 @@
 ^README_cache$
 ^air\.toml$
 ^\.vscode$
+^\.ccache$

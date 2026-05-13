@@ -1,5 +1,72 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.2.1.9009 (2026-05-13)
+
+## Chore
+
+- Add ccache to `.gitignore` and `.Rbuildignore`.
+
+## Continuous integration
+
+- Create snapshot update PR against correct branch.
+
+- Clarify rationale for not deploying on schedule.
+
+
+# duckplyr 1.2.1.9008 (2026-05-10)
+
+## Continuous integration
+
+- Only run fledge on pushes to main.
+
+
+# duckplyr 1.2.1.9007 (2026-05-10)
+
+## Continuous integration
+
+- Tweak fledge workflow and ccache action.
+
+
+# duckplyr 1.2.1.9006 (2026-05-06)
+
+## Continuous integration
+
+- Cosmetics.
+
+- Bump action versions.
+
+- Install clang-format-21.
+
+- Align fledge workflow.
+
+- Harmonize.
+
+
+# duckplyr 1.2.1.9005 (2026-05-04)
+
+## Chore
+
+- Auto-update from GitHub Actions (#913).
+
+
+# duckplyr 1.2.1.9004 (2026-04-11)
+
+## Documentation
+
+- Update Plausible analytics snippet (@jeroenjanssens, #910).
+
+
+# duckplyr 1.2.1.9003 (2026-03-28)
+
+## Features
+
+- Enable `across()` translation for primitive functions such as `sum()` (#906, #907).
+
+## Continuous integration
+
+- Ignore failing test with duckdb 1.5.0.
+
+
 # duckplyr 1.2.1.9002 (2026-03-13)
 
 ## Chore
