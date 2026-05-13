@@ -53,9 +53,9 @@ relexpr_set_alias(expr, alias = NULL)
 
 \item{op}{Operator, \code{"IN"} or \code{"NOT IN"}.}
 
-\item{cmp_op}{Comparison operator, e.g., \code{"<"} or \code{"=="}.}
-
 \item{exprs}{Expressions to compare, a list of \code{expr} objects.}
+
+\item{cmp_op}{Comparison operator, e.g., \code{"<"} or \code{"=="}.}
 
 \item{expr}{An \code{expr} object.}
 
