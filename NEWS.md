@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.2.1.9010 (2026-05-14)
+
+## compat
+
+- `as_tbl()` attach finalizer to `lazy_query`, not `tbl`, for compatibility with dbplyr 2.6.0 (#919).
+
+
 # duckplyr 1.2.1.9009 (2026-05-13)
 
 ## Chore
