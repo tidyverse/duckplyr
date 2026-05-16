@@ -1,5 +1,26 @@
 # Changelog
 
+## duckplyr 1.2.1.9010 (2026-05-14)
+
+### compat
+
+- [`as_tbl()`](https://duckplyr.tidyverse.org/dev/reference/as_tbl.md)
+  attach finalizer to `lazy_query`, not `tbl`, for compatibility with
+  dbplyr 2.6.0
+  ([\#919](https://github.com/tidyverse/duckplyr/issues/919)).
+
+## duckplyr 1.2.1.9009 (2026-05-13)
+
+### Chore
+
+- Add ccache to `.gitignore` and `.Rbuildignore`.
+
+### Continuous integration
+
+- Create snapshot update PR against correct branch.
+
+- Clarify rationale for not deploying on schedule.
+
 ## duckplyr 1.2.1.9008 (2026-05-10)
 
 ### Continuous integration
