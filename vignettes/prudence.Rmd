@@ -230,7 +230,9 @@ By using operations supported by duckplyr and avoiding fallbacks as much as poss
 ### From stingy to lavish
 
 A stingy duckplyr frame can be converted to a lavish one with `as_duckdb_tibble(prudence = "lavish")`.
-The `collect.duckplyr_df()` method triggers computation and converts to a plain tibble.
+The `collect.duckplyr_df()` method triggers computation and converts to a plain tibble. 
+Note that because duckplyr relies heavily on ALTREP, string columns will still be deferred in memory even after `collect()` is called, making `collect()` extremely fast but pushing the internal materialization cost to the first time the data is accessed (for example, when calling `str()`).
+
 The difference between the two is the class of the returned object:
 
 ```{r}
