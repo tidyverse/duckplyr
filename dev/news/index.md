@@ -1,5 +1,10 @@
 # Changelog
 
+## duckplyr 1.2.1.9011 (2026-05-16)
+
+- Ci: Unify fledge.yaml across cynkratemplate and fledge
+  ([\#86](https://github.com/tidyverse/duckplyr/issues/86)).
+
 ## duckplyr 1.2.1.9010 (2026-05-14)
 
 ### compat
