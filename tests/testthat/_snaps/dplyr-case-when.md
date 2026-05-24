@@ -379,7 +379,7 @@
       replace_when(x, x == "a" ~ "d")
     Condition
       Error in `replace_when()`:
-      ! Can't convert from `..1 (right)` <character> to <factor<af15a>> due to loss of generality.
+      ! Can't convert from `..1 (right)` <character> to <factor<d0fd1>> due to loss of generality.
       * Locations: 1
 
 ---
@@ -388,7 +388,7 @@
       replace_when(x, x == "a" ~ "b", NULL, x == "b" ~ "d")
     Condition
       Error in `replace_when()`:
-      ! Can't convert from `..3 (right)` <character> to <factor<af15a>> due to loss of generality.
+      ! Can't convert from `..3 (right)` <character> to <factor<d0fd1>> due to loss of generality.
       * Locations: 1
 
 # replace_when() does not allow named `...`

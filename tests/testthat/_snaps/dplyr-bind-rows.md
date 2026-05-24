@@ -40,7 +40,7 @@
     Output
       <error/vctrs_error_ptype2>
       Error in `bind_rows()`:
-      ! Can't combine `..1$a` <factor<4d52a>> and `..2$a` <integer>.
+      ! Can't combine `..1$a` <factor<345dd>> and `..2$a` <integer>.
     Code
       # unnamed vectors
       (expect_error(bind_rows(1:2)))
