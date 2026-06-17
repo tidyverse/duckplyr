@@ -198,7 +198,7 @@ available when accessed:
 
 system.time(mean_arr_delay_ewr$mean_arr_delay[[1]])
 #>    user  system elapsed 
-#>   0.025   0.004   0.022
+#>   0.025   0.003   0.021
 ```
 
 ### Comparison
@@ -235,7 +235,7 @@ system.time(
     )
 )
 #>    user  system elapsed 
-#>   0.039   0.010   0.049
+#>   0.042   0.006   0.047
 ```
 
 See also the [duckplyr: dplyr Powered by
