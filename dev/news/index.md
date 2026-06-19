@@ -1,6 +1,81 @@
 # Changelog
 
-## duckplyr 1.2.1.9900 (2026-06-17)
+## duckplyr 1.2.1.9012 (2026-05-24)
+
+### Continuous integration
+
+- Update ccache-action reference.
+
+- Bump action version.
+
+## duckplyr 1.2.1.9011 (2026-05-16)
+
+- Ci: Unify fledge.yaml across cynkratemplate and fledge
+  ([\#86](https://github.com/tidyverse/duckplyr/issues/86)).
+
+## duckplyr 1.2.1.9010 (2026-05-14)
+
+### compat
+
+- [`as_tbl()`](https://duckplyr.tidyverse.org/dev/reference/as_tbl.md)
+  attach finalizer to `lazy_query`, not `tbl`, for compatibility with
+  dbplyr 2.6.0
+  ([\#919](https://github.com/tidyverse/duckplyr/issues/919)).
+
+## duckplyr 1.2.1.9009 (2026-05-13)
+
+### Chore
+
+- Add ccache to `.gitignore` and `.Rbuildignore`.
+
+### Continuous integration
+
+- Create snapshot update PR against correct branch.
+
+- Clarify rationale for not deploying on schedule.
+
+## duckplyr 1.2.1.9008 (2026-05-10)
+
+### Continuous integration
+
+- Only run fledge on pushes to main.
+
+## duckplyr 1.2.1.9007 (2026-05-10)
+
+### Continuous integration
+
+- Tweak fledge workflow and ccache action.
+
+## duckplyr 1.2.1.9006 (2026-05-06)
+
+### Continuous integration
+
+- Cosmetics.
+
+- Bump action versions.
+
+- Install clang-format-21.
+
+- Align fledge workflow.
+
+- Harmonize.
+
+## duckplyr 1.2.1.9005 (2026-05-04)
+
+### Chore
+
+- Auto-update from GitHub Actions
+  ([\#913](https://github.com/tidyverse/duckplyr/issues/913)).
+
+## duckplyr 1.2.1.9004 (2026-04-11)
+
+### Documentation
+
+- Update Plausible analytics snippet
+  ([@jeroenjanssens](https://github.com/jeroenjanssens),
+  [\#910](https://github.com/tidyverse/duckplyr/issues/910)).
+
+## duckplyr 1.2.1.9003 (2026-03-28)
 
 ### Features
 
@@ -10,18 +85,30 @@
   ([\#906](https://github.com/tidyverse/duckplyr/issues/906),
   [\#907](https://github.com/tidyverse/duckplyr/issues/907)).
 
-### Compatibility
+### Continuous integration
 
-- [`as_tbl()`](https://duckplyr.tidyverse.org/dev/reference/as_tbl.md)
-  attaches finalizer to `lazy_query`, not `tbl`, for compatibility with
-  dbplyr 2.6.0
-  ([\#919](https://github.com/tidyverse/duckplyr/issues/919)).
+- Ignore failing test with duckdb 1.5.0.
 
-### Documentation
+## duckplyr 1.2.1.9002 (2026-03-13)
 
-- Update Plausible analytics snippet
-  ([@jeroenjanssens](https://github.com/jeroenjanssens),
-  [\#910](https://github.com/tidyverse/duckplyr/issues/910)).
+### Chore
+
+- Auto-update from GitHub Actions
+  ([\#902](https://github.com/tidyverse/duckplyr/issues/902)).
+
+## duckplyr 1.2.1.9001 (2026-03-12)
+
+### Chore
+
+- Auto-update from GitHub Actions
+  ([\#900](https://github.com/tidyverse/duckplyr/issues/900)).
+
+## duckplyr 1.2.1.9000 (2026-03-10)
+
+### fledge
+
+- CRAN release v1.2.1
+  ([\#898](https://github.com/tidyverse/duckplyr/issues/898)).
 
 ## duckplyr 1.2.1 (2026-03-09)
 

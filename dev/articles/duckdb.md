@@ -56,8 +56,8 @@ df
 
 tbl <- as_tbl(df)
 tbl
-#> # Source:   table<as_tbl_duckplyr_SwlKLUUEdL> [?? x 1]
-#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1018-azure:R 4.6.0//tmp/RtmpeMRVpH/duckplyr/duckplyr3d737a18b5c6.duckdb]
+#> # A query:  ?? x 1
+#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1018-azure:R 4.6.0//tmp/RtmpPZkqLk/duckplyr/duckplyr3cb02d275af5.duckdb]
 #>       a
 #>   <int>
 #> 1     2
@@ -78,11 +78,11 @@ tbl %>%
   mutate(b = sql("a + 1"), c = least_common_multiple(a, b)) %>%
   show_query()
 #> <SQL>
-#> SELECT q01.*, least_common_multiple(a, b) AS c
+#> SELECT *, least_common_multiple(a, b) AS c
 #> FROM (
-#>   SELECT as_tbl_duckplyr_SwlKLUUEdL.*, a + 1 AS b
+#>   SELECT *, a + 1 AS b
 #>   FROM as_tbl_duckplyr_SwlKLUUEdL
-#> ) q01
+#> ) AS q01
 ```
 
 There is no R function called `least_common_multiple()`, it is
@@ -99,8 +99,8 @@ least_common_multiple(2, 3)
 
 tbl %>%
   mutate(b = sql("a + 1"), c = least_common_multiple(a, b))
-#> # Source:   SQL [?? x 3]
-#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1018-azure:R 4.6.0//tmp/RtmpeMRVpH/duckplyr/duckplyr3d737a18b5c6.duckdb]
+#> # A query:  ?? x 3
+#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1018-azure:R 4.6.0//tmp/RtmpPZkqLk/duckplyr/duckplyr3cb02d275af5.duckdb]
 #>       a     b     c
 #>   <int> <int> <dbl>
 #> 1     2     3     6

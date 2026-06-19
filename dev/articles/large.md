@@ -128,8 +128,8 @@ DBI::dbWriteTable(con, "data", data.frame(x = 1:3, y = letters[1:3]))
 
 dbplyr_data <- tbl(con, "data")
 dbplyr_data
-#> # Source:   table<"data"> [?? x 2]
-#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1018-azure:R 4.6.0//tmp/RtmpoAnBEG/file3e4840192632.duckdb]
+#> # A query:  ?? x 2
+#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1018-azure:R 4.6.0//tmp/Rtmp9OK0j2/file3d872e6b8e1d.duckdb]
 #>       x y    
 #>   <int> <chr>
 #> 1     1 a    
@@ -148,7 +148,7 @@ dbplyr_data |>
 #> │          SEQ_SCAN         │
 #> │    --------------------   │
 #> │           Table:          │
-#> │   file3e4840192632.main.  │
+#> │   file3d872e6b8e1d.main.  │
 #> │           "data"          │
 #> │                           │
 #> │   Type: Sequential Scan   │
@@ -185,7 +185,7 @@ dbplyr_data |>
 #> │          SEQ_SCAN         │
 #> │    --------------------   │
 #> │           Table:          │
-#> │   file3e4840192632.main.  │
+#> │   file3d872e6b8e1d.main.  │
 #> │           "data"          │
 #> │                           │
 #> │   Type: Sequential Scan   │
