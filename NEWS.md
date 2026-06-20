@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.2.1.9013 (2026-06-20)
+
+## Testing
+
+- Scrub volatile factor hashes from snapshots for dev rlang (@krlmlr, #929).
+
+
 # duckplyr 1.2.1.9012 (2026-05-24)
 
 ## Continuous integration
