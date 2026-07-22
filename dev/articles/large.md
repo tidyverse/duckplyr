@@ -72,6 +72,10 @@ function creates a duckplyr data frame from vectors:
 ``` r
 
 df <- duckdb_tibble(x = 1:3, y = letters[1:3])
+#> duckdb is keeping downloaded extensions in a temporary directory:
+#> ℹ /tmp/RtmpZvMRGI/duckdb/extensions
+#> This is removed when the R session ends, so extensions are re-downloaded each session.
+#> ℹ To keep them, point `options(duckdb.extension_directory =)` or the `DUCKDB_EXTENSION_DIRECTORY` environment variable at a permanent path.
 df
 #> # A duckplyr data frame: 2 variables
 #>       x y    
@@ -129,7 +133,7 @@ DBI::dbWriteTable(con, "data", data.frame(x = 1:3, y = letters[1:3]))
 dbplyr_data <- tbl(con, "data")
 dbplyr_data
 #> # A query:  ?? x 2
-#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1018-azure:R 4.6.0//tmp/Rtmpz1v5lR/file3aa827a00c3.duckdb]
+#> # Database: DuckDB 1.5.4 [unknown@Linux 7.0.0-1009-azure:R 4.6.1//tmp/RtmpZvMRGI/file3dac6c72b17.duckdb]
 #>       x y    
 #>   <int> <chr>
 #> 1     1 a    
@@ -148,7 +152,7 @@ dbplyr_data |>
 #> │          SEQ_SCAN         │
 #> │    --------------------   │
 #> │           Table:          │
-#> │file3aa827a00c3.main."data"│
+#> │file3dac6c72b17.main."data"│
 #> │                           │
 #> │   Type: Sequential Scan   │
 #> │                           │
@@ -184,7 +188,7 @@ dbplyr_data |>
 #> │          SEQ_SCAN         │
 #> │    --------------------   │
 #> │           Table:          │
-#> │file3aa827a00c3.main."data"│
+#> │file3dac6c72b17.main."data"│
 #> │                           │
 #> │   Type: Sequential Scan   │
 #> │                           │

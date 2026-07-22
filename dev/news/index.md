@@ -1,5 +1,19 @@
 # Changelog
 
+## duckplyr 1.2.1.9902 (2026-07-02)
+
+### Chore
+
+- Auto-update from GitHub Actions
+  ([\#932](https://github.com/tidyverse/duckplyr/issues/932)).
+
+## duckplyr 1.2.1.9901 (2026-06-21)
+
+### fledge
+
+- CRAN pre-release v1.2.1.9900
+  ([\#928](https://github.com/tidyverse/duckplyr/issues/928)).
+
 ## duckplyr 1.2.1.9900 (2026-06-17)
 
 ### Features

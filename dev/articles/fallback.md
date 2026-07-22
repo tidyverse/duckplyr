@@ -36,6 +36,10 @@ duckdb <-
   arrange(desc(a)) |>
   mutate(b = a + 1) |>
   select(-a)
+#> duckdb is keeping downloaded extensions in a temporary directory:
+#> ℹ /tmp/RtmptrIIxm/duckdb/extensions
+#> This is removed when the R session ends, so extensions are re-downloaded each session.
+#> ℹ To keep them, point `options(duckdb.extension_directory =)` or the `DUCKDB_EXTENSION_DIRECTORY` environment variable at a permanent path.
 ```
 
 The [`explain()`](https://dplyr.tidyverse.org/reference/explain.html)
@@ -56,7 +60,7 @@ duckdb |>
 #> │          ORDER_BY         │
 #> │    --------------------   │
 #> │      dataframe_42_42      │
-#> │       3409599.a DESC      │
+#> │      73409599.a DESC      │
 #> └-------------┬-------------┘
 #> ┌-------------┴-------------┐
 #> │      R_DATAFRAME_SCAN     │
