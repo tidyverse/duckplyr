@@ -1,5 +1,13 @@
 # Changelog
 
+## duckplyr 1.2.1.9903 (2026-07-22)
+
+### Continuous integration
+
+- Run on Ubuntu 26.04.
+
+- Align workflows with template.
+
 ## duckplyr 1.2.1.9902 (2026-07-02)
 
 ### Chore
