@@ -1,5 +1,18 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.2.1.9904 (2026-07-24)
+
+## Bug fixes
+
+### ci
+
+- Emit empty package matrix when there are no (rev)deps.
+
+## Chore
+
+- New `ext_install()`, use rfuns extension to implement equality (#83, #93).
+
+
 # duckplyr 1.2.1.9903 (2026-07-22)
 
 ## Continuous integration
