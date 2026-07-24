@@ -94,7 +94,7 @@ library(duckplyr)
 band_members %>% anti_join(band_instruments)
 #> Joining with `by = join_by(name)`
 #> duckdb is keeping downloaded extensions in a temporary directory:
-#> ℹ /tmp/RtmpkH4lDj/duckdb/extensions
+#> ℹ /tmp/Rtmp9yF7m0/duckdb/extensions
 #> This is removed when the R session ends, so extensions are re-downloaded each session.
 #> ℹ To keep them, point `options(duckdb.extension_directory =)` or the `DUCKDB_EXTENSION_DIRECTORY` environment variable at a permanent path.
 #> # A tibble: 1 × 2

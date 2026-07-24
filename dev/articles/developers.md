@@ -45,7 +45,7 @@ lazy <-
   ) |>
   filter(month <= 6)
 #> duckdb is keeping downloaded extensions in a temporary directory:
-#> ℹ /tmp/Rtmp2Uokz0/duckdb/extensions
+#> ℹ /tmp/RtmpA5BxIE/duckdb/extensions
 #> This is removed when the R session ends, so extensions are re-downloaded each session.
 #> ℹ To keep them, point `options(duckdb.extension_directory =)` or the `DUCKDB_EXTENSION_DIRECTORY` environment variable at a permanent path.
 ```
@@ -131,7 +131,7 @@ first request.
 ``` r
 
 lazy$mean_inflight_delay
-#> [1] -3.855519 -5.147220 -9.370201 -7.356713 -2.673124 -4.244284
+#> [1] -5.147220 -3.855519 -9.370201 -7.356713 -2.673124 -4.244284
 ```
 
 After the computation has been carried out, the results are preserved
@@ -143,8 +143,8 @@ lazy
 #> # A duckplyr data frame: 4 variables
 #>    year month mean_inflight_delay median_inflight_delay
 #>   <int> <int>               <dbl>                 <dbl>
-#> 1  2013     1               -3.86                    -5
-#> 2  2013     2               -5.15                    -6
+#> 1  2013     2               -5.15                    -6
+#> 2  2013     1               -3.86                    -5
 #> 3  2013     5               -9.37                   -10
 #> 4  2013     3               -7.36                    -9
 #> 5  2013     4               -2.67                    -5

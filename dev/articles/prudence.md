@@ -29,7 +29,7 @@ df <-
   duckplyr::duckdb_tibble(x = 1:3) |>
   mutate(y = x + 1)
 #> duckdb is keeping downloaded extensions in a temporary directory:
-#> ℹ /tmp/RtmpWae4EY/duckdb/extensions
+#> ℹ /tmp/Rtmpxf4XhS/duckdb/extensions
 #> This is removed when the R session ends, so extensions are re-downloaded each session.
 #> ℹ To keep them, point `options(duckdb.extension_directory =)` or the `DUCKDB_EXTENSION_DIRECTORY` environment variable at a permanent path.
 df
@@ -202,7 +202,7 @@ available when accessed:
 
 system.time(mean_arr_delay_ewr$mean_arr_delay[[1]])
 #>    user  system elapsed 
-#>   0.026   0.001   0.021
+#>   0.027   0.002   0.021
 ```
 
 ### Comparison
@@ -239,7 +239,7 @@ system.time(
     )
 )
 #>    user  system elapsed 
-#>   0.038   0.009   0.047
+#>   0.039   0.011   0.051
 ```
 
 See also the [duckplyr: dplyr Powered by

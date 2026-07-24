@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.2.1.9903</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.2.1.9904</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -137,7 +137,7 @@ duckplyr 1.1.0, transparently converts a duckplyr frame to a dbplyr
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span></span>
 <span><span class="co">#&gt; duckdb is keeping downloaded extensions in a temporary directory:</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> /tmp/Rtmp4yl3yk/duckdb/extensions</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> /tmp/RtmpzOCeiM/duckdb/extensions</span></span>
 <span><span class="co">#&gt; This is removed when the R session ends, so extensions are re-downloaded each session.</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> To keep them, point `options(duckdb.extension_directory =)` or the `DUCKDB_EXTENSION_DIRECTORY` environment variable at a permanent path.</span></span>
 <span><span class="va">df</span></span>
@@ -149,7 +149,7 @@ duckplyr 1.1.0, transparently converts a duckplyr frame to a dbplyr
 <span><span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_tbl.html">as_tbl</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
 <span><span class="va">tbl</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A query:  ?? x 1</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.5.4 [unknown@Linux 7.0.0-1009-azure:R 4.6.1//tmp/Rtmp4yl3yk/duckplyr/duckplyr3a5b71e22aff.duckdb]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.5.4 [unknown@Linux 7.0.0-1009-azure:R 4.6.1//tmp/RtmpzOCeiM/duckplyr/duckplyr3c261651c760.duckdb]</span></span></span>
 <span><span class="co">#&gt;       a</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     2</span></span></code></pre></div>
@@ -180,7 +180,7 @@ it is interpreted as a SQL function.</p>
 <code class="sourceCode R"><span><span class="va">tbl</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sql.html" class="external-link">sql</a></span><span class="op">(</span><span class="st">"a + 1"</span><span class="op">)</span>, c <span class="op">=</span> <span class="fu">least_common_multiple</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A query:  ?? x 3</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.5.4 [unknown@Linux 7.0.0-1009-azure:R 4.6.1//tmp/Rtmp4yl3yk/duckplyr/duckplyr3a5b71e22aff.duckdb]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.5.4 [unknown@Linux 7.0.0-1009-azure:R 4.6.1//tmp/RtmpzOCeiM/duckplyr/duckplyr3c261651c760.duckdb]</span></span></span>
 <span><span class="co">#&gt;       a     b     c</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     2     3     6</span></span></code></pre></div>

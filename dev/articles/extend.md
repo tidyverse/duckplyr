@@ -139,7 +139,7 @@ rel_join.dfrel <- function(left, right, conds, join, ...) {
 rel_join(new_dfrel(data.frame(mpg = 21)), mtcars_rel)
 #> Joining with `by = join_by(mpg)`
 #> duckdb is keeping downloaded extensions in a temporary directory: ℹ
-#> /tmp/RtmpRm8b8D/duckdb/extensions This is removed when the R session
+#> /tmp/RtmpBvroki/duckdb/extensions This is removed when the R session
 #> ends, so extensions are re-downloaded each session. ℹ To keep them,
 #> point `options(duckdb.extension_directory =)` or the
 #> `DUCKDB_EXTENSION_DIRECTORY` environment variable at a permanent path.
