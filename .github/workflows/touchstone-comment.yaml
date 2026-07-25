@@ -10,6 +10,13 @@ on:
     types:
       - completed
 
+permissions:
+  # `comment` posts the benchmark results as a PR comment and sets a commit
+  # status; the default read-only GITHUB_TOKEN cannot do either.
+  contents: read
+  pull-requests: write
+  statuses: write
+
 jobs:
   upload:
     runs-on: ubuntu-24.04

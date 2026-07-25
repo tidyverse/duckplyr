@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.2.1.9905 (2026-07-25)
+
+## Continuous integration
+
+- Lock down `format-suggest` egress (audit → block).
+
+
 # duckplyr 1.2.1.9904 (2026-07-24)
 
 ## Bug fixes
