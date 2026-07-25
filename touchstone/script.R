@@ -10,17 +10,24 @@ branch_install()
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/100.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/100", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `100_tpch_01` = collect(duckplyr:::tpch_01()),
   n = 3
@@ -29,17 +36,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/100.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/100", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `100_tpch_02` = collect(duckplyr:::tpch_02()),
   n = 3
@@ -48,17 +62,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/100.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/100", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `100_tpch_03` = collect(duckplyr:::tpch_03()),
   n = 3
@@ -67,17 +88,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/100.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/100", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `100_tpch_04` = collect(duckplyr:::tpch_04()),
   n = 3
@@ -86,17 +114,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/100.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/100", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `100_tpch_05` = collect(duckplyr:::tpch_05()),
   n = 3
@@ -105,17 +140,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/100.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/100", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `100_tpch_06` = collect(duckplyr:::tpch_06()),
   n = 3
@@ -124,17 +166,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/100.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/100", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `100_tpch_07` = collect(duckplyr:::tpch_07()),
   n = 3
@@ -143,17 +192,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/100.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/100", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `100_tpch_08` = collect(duckplyr:::tpch_08()),
   n = 3
@@ -162,17 +218,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/100.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/100", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `100_tpch_09` = collect(duckplyr:::tpch_09()),
   n = 3
@@ -181,17 +244,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/100.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/100", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `100_tpch_10` = collect(duckplyr:::tpch_10()),
   n = 3
@@ -200,17 +270,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/100.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/100", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `100_tpch_11` = collect(duckplyr:::tpch_11()),
   n = 3
@@ -219,17 +296,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/100.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/100", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `100_tpch_12` = collect(duckplyr:::tpch_12()),
   n = 3
@@ -238,17 +322,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/100.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/100", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `100_tpch_13` = collect(duckplyr:::tpch_13()),
   n = 3
@@ -257,17 +348,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/100.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/100", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `100_tpch_14` = collect(duckplyr:::tpch_14()),
   n = 3
@@ -276,17 +374,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/100.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/100", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `100_tpch_15` = collect(duckplyr:::tpch_15()),
   n = 3
@@ -295,17 +400,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/100.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/100", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `100_tpch_16` = collect(duckplyr:::tpch_16()),
   n = 3
@@ -314,17 +426,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/100.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/100", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `100_tpch_17` = collect(duckplyr:::tpch_17()),
   n = 3
@@ -333,17 +452,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/100.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/100", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `100_tpch_18` = collect(duckplyr:::tpch_18()),
   n = 3
@@ -352,17 +478,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/100.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/100", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `100_tpch_19` = collect(duckplyr:::tpch_19()),
   n = 3
@@ -371,17 +504,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/100.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/100", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `100_tpch_20` = collect(duckplyr:::tpch_20()),
   n = 3
@@ -390,17 +530,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/100.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/100", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `100_tpch_21` = collect(duckplyr:::tpch_21()),
   n = 3
@@ -409,17 +556,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/100.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/100", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `100_tpch_22` = collect(duckplyr:::tpch_22()),
   n = 3
@@ -428,17 +582,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/010.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/010", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `010_tpch_01` = collect(duckplyr:::tpch_01()),
   n = 10
@@ -447,17 +608,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/010.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/010", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `010_tpch_02` = collect(duckplyr:::tpch_02()),
   n = 10
@@ -466,17 +634,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/010.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/010", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `010_tpch_03` = collect(duckplyr:::tpch_03()),
   n = 10
@@ -485,17 +660,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/010.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/010", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `010_tpch_04` = collect(duckplyr:::tpch_04()),
   n = 10
@@ -504,17 +686,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/010.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/010", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `010_tpch_05` = collect(duckplyr:::tpch_05()),
   n = 10
@@ -523,17 +712,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/010.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/010", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `010_tpch_06` = collect(duckplyr:::tpch_06()),
   n = 10
@@ -542,17 +738,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/010.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/010", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `010_tpch_07` = collect(duckplyr:::tpch_07()),
   n = 10
@@ -561,17 +764,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/010.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/010", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `010_tpch_08` = collect(duckplyr:::tpch_08()),
   n = 10
@@ -580,17 +790,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/010.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/010", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `010_tpch_09` = collect(duckplyr:::tpch_09()),
   n = 10
@@ -599,17 +816,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/010.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/010", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `010_tpch_10` = collect(duckplyr:::tpch_10()),
   n = 10
@@ -618,17 +842,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/010.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/010", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `010_tpch_11` = collect(duckplyr:::tpch_11()),
   n = 10
@@ -637,17 +868,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/010.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/010", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `010_tpch_12` = collect(duckplyr:::tpch_12()),
   n = 10
@@ -656,17 +894,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/010.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/010", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `010_tpch_13` = collect(duckplyr:::tpch_13()),
   n = 10
@@ -675,17 +920,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/010.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/010", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `010_tpch_14` = collect(duckplyr:::tpch_14()),
   n = 10
@@ -694,17 +946,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/010.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/010", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `010_tpch_15` = collect(duckplyr:::tpch_15()),
   n = 10
@@ -713,17 +972,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/010.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/010", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `010_tpch_16` = collect(duckplyr:::tpch_16()),
   n = 10
@@ -732,17 +998,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/010.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/010", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `010_tpch_17` = collect(duckplyr:::tpch_17()),
   n = 10
@@ -751,17 +1024,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/010.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/010", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `010_tpch_18` = collect(duckplyr:::tpch_18()),
   n = 10
@@ -770,17 +1050,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/010.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/010", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `010_tpch_19` = collect(duckplyr:::tpch_19()),
   n = 10
@@ -789,17 +1076,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/010.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/010", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `010_tpch_20` = collect(duckplyr:::tpch_20()),
   n = 10
@@ -808,17 +1102,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/010.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/010", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `010_tpch_21` = collect(duckplyr:::tpch_21()),
   n = 10
@@ -827,17 +1128,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/010.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/010", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `010_tpch_22` = collect(duckplyr:::tpch_22()),
   n = 10
@@ -846,17 +1154,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/001.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/001", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `001_tpch_01` = collect(duckplyr:::tpch_01()),
   n = 30
@@ -865,17 +1180,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/001.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/001", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `001_tpch_02` = collect(duckplyr:::tpch_02()),
   n = 30
@@ -884,17 +1206,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/001.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/001", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `001_tpch_03` = collect(duckplyr:::tpch_03()),
   n = 30
@@ -903,17 +1232,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/001.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/001", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `001_tpch_04` = collect(duckplyr:::tpch_04()),
   n = 30
@@ -922,17 +1258,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/001.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/001", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `001_tpch_05` = collect(duckplyr:::tpch_05()),
   n = 30
@@ -941,17 +1284,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/001.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/001", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `001_tpch_06` = collect(duckplyr:::tpch_06()),
   n = 30
@@ -960,17 +1310,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/001.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/001", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `001_tpch_07` = collect(duckplyr:::tpch_07()),
   n = 30
@@ -979,17 +1336,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/001.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/001", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `001_tpch_08` = collect(duckplyr:::tpch_08()),
   n = 30
@@ -998,17 +1362,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/001.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/001", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `001_tpch_09` = collect(duckplyr:::tpch_09()),
   n = 30
@@ -1017,17 +1388,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/001.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/001", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `001_tpch_10` = collect(duckplyr:::tpch_10()),
   n = 30
@@ -1036,17 +1414,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/001.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/001", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `001_tpch_11` = collect(duckplyr:::tpch_11()),
   n = 30
@@ -1055,17 +1440,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/001.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/001", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `001_tpch_12` = collect(duckplyr:::tpch_12()),
   n = 30
@@ -1074,17 +1466,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/001.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/001", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `001_tpch_13` = collect(duckplyr:::tpch_13()),
   n = 30
@@ -1093,17 +1492,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/001.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/001", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `001_tpch_14` = collect(duckplyr:::tpch_14()),
   n = 30
@@ -1112,17 +1518,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/001.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/001", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `001_tpch_15` = collect(duckplyr:::tpch_15()),
   n = 30
@@ -1131,17 +1544,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/001.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/001", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `001_tpch_16` = collect(duckplyr:::tpch_16()),
   n = 30
@@ -1150,17 +1570,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/001.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/001", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `001_tpch_17` = collect(duckplyr:::tpch_17()),
   n = 30
@@ -1169,17 +1596,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/001.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/001", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `001_tpch_18` = collect(duckplyr:::tpch_18()),
   n = 30
@@ -1188,17 +1622,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/001.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/001", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `001_tpch_19` = collect(duckplyr:::tpch_19()),
   n = 30
@@ -1207,17 +1648,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/001.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/001", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `001_tpch_20` = collect(duckplyr:::tpch_20()),
   n = 30
@@ -1226,17 +1674,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/001.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/001", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `001_tpch_21` = collect(duckplyr:::tpch_21()),
   n = 30
@@ -1245,17 +1700,24 @@ benchmark_run(
 benchmark_run(
   expr_before_benchmark = {
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/001.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/001", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }
   },
   `001_tpch_22` = collect(duckplyr:::tpch_22()),
   n = 30

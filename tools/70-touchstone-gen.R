@@ -19,17 +19,24 @@ body <- function(sf, test, n) {
     'benchmark_run(
   expr_before_benchmark = {{
     library(duckplyr)
-    data <- qs2::qs_read("tools/tpch/{sf}.qs")
-    .mapply(assign, list(names(data), data), list(pos = .GlobalEnv))
-
-    customer <- as_duckdb_tibble(customer)
-    lineitem <- as_duckdb_tibble(lineitem)
-    nation <- as_duckdb_tibble(nation)
-    orders <- as_duckdb_tibble(orders)
-    part <- as_duckdb_tibble(part)
-    partsupp <- as_duckdb_tibble(partsupp)
-    region <- as_duckdb_tibble(region)
-    supplier <- as_duckdb_tibble(supplier)
+    for (table in c(
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    )) {{
+      assign(
+        table,
+        as_duckdb_tibble(
+          qs2::qs_read(file.path("tools/tpch/{sf}", paste0(table, ".qs")))
+        ),
+        envir = .GlobalEnv
+      )
+    }}
   }},
   `{sf}_tpch_{test}` = collect(duckplyr:::tpch_{test}()),
   n = {n}

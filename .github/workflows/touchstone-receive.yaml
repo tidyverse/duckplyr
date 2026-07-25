@@ -26,3 +26,14 @@ jobs:
       - uses: lorenzwalthert/touchstone/actions/receive@main
         with:
           cache-version: 1
+          # Packages needed by the benchmark harness that aren't installed via
+          # the package's own dependencies:
+          # - qs2 is declared under Enhances (not installed by default) and is
+          #   used to cache the TPC-H tables (touchstone/script.R,
+          #   tools/31-tpch-load-qs.R).
+          # - pkgload and fs are undeclared but used by the data-generation
+          #   scripts (tools/30-tpch-export.R, tools/31-tpch-load-qs.R).
+          extra-packages: |
+            any::qs2
+            any::pkgload
+            any::fs
