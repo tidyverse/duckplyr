@@ -42,7 +42,7 @@ out <-
   flights_df() |>
   summarize(.by = origin, paste(dest, collapse = " "))
 #> duckdb is keeping downloaded extensions in a temporary directory:
-#> ℹ /tmp/Rtmpk7YDrH/duckdb/extensions
+#> ℹ /tmp/Rtmprmox90/duckdb/extensions
 #> This is removed when the R session ends, so extensions are re-downloaded each session.
 #> ℹ To keep them, point `options(duckdb.extension_directory =)` or the `DUCKDB_EXTENSION_DIRECTORY` environment variable at a permanent path.
 #> Error processing duckplyr query with DuckDB, falling back to dplyr.

@@ -45,7 +45,7 @@ duckplyr::duckdb_tibble(
 ) |>
   compute()
 #> duckdb is keeping downloaded extensions in a temporary directory:
-#> ℹ /tmp/RtmpD3aDkQ/duckdb/extensions
+#> ℹ /tmp/Rtmp9bNPU6/duckdb/extensions
 #> This is removed when the R session ends, so extensions are re-downloaded each session.
 #> ℹ To keep them, point `options(duckdb.extension_directory =)` or the `DUCKDB_EXTENSION_DIRECTORY` environment variable at a permanent path.
 #> # A duckplyr data frame: 7 variables
@@ -504,7 +504,7 @@ duckplyr::flights_df() |>
 #> # A duckplyr data frame: 1 variable
 #>   `paste(day, collapse = " ")`                                         
 #>   <chr>                                                                
-#> 1 2 10 18 28 29 5 9 11 14 15 16 17 22 26 30 31 3 4 6 12 20 23 24 1 7 8…
+#> 1 5 9 11 14 15 16 17 22 26 30 31 2 10 18 28 29 3 4 6 12 20 23 24 1 7 8…
 
 duckplyr::flights_df() |>
   distinct(day) |>
