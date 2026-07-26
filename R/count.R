@@ -53,7 +53,7 @@ count.duckplyr_df <- function(x, ..., wt = NULL, sort = FALSE, name = NULL, .dro
       }
 
       out_rel <- rel_aggregate(rel, groups, unname(aggregates))
-      if (sort) {
+      if (isTRUE(sort)) {
         sort_cols <- c(nexprs(name), nexprs(names(groups)))
         ascending <- c(FALSE, rep(TRUE, length(groups)))
         out_rel <- rel_order(out_rel, sort_cols, ascending)
@@ -103,8 +103,7 @@ duckplyr_count <- function(x, ...) {
     }
   )
   out <- count(x, ...)
-  # Materialize lazy columns so test comparisons against eager tibbles succeed
-  out[] <- map(out, function(col) col[])
+  out <- collect(out)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }
