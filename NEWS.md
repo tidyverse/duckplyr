@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.2.1.9906 (2026-07-27)
+
+## Continuous integration
+
+- Fix continuous benchmark (touchstone) workflow (@krlmlr, #938).
+
+
 # duckplyr 1.2.1.9905 (2026-07-25)
 
 ## Continuous integration
