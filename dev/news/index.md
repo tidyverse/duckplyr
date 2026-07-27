@@ -1,5 +1,13 @@
 # Changelog
 
+## duckplyr 1.2.1.9906 (2026-07-27)
+
+### Continuous integration
+
+- Fix continuous benchmark (touchstone) workflow
+  ([@krlmlr](https://github.com/krlmlr),
+  [\#938](https://github.com/tidyverse/duckplyr/issues/938)).
+
 ## duckplyr 1.2.1.9905 (2026-07-25)
 
 ### Continuous integration

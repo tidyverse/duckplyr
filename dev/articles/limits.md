@@ -44,10 +44,14 @@ duckplyr::duckdb_tibble(
   difftime = as.difftime(1, units = "secs"),
 ) |>
   compute()
-#> duckdb is keeping downloaded extensions in a temporary directory:
-#> ℹ /tmp/Rtmp9bNPU6/duckdb/extensions
-#> This is removed when the R session ends, so extensions are re-downloaded each session.
-#> ℹ To keep them, point `options(duckdb.extension_directory =)` or the `DUCKDB_EXTENSION_DIRECTORY` environment variable at a permanent path.
+#> duckdb keeps downloaded extensions and secrets in a temporary directory:
+#> ℹ /tmp/RtmpPGD0Od/duckdb
+#> This is removed when the R session ends.
+#> • Extensions are re-downloaded each session.
+#> • Secrets are lost.
+#> ℹ Run duckdb(shared_home = TRUE) (or create ~/.duckdb) to keep them (suitable for most users).
+#> ℹ Run duckdb(shared_home = FALSE) to accept the temporary directory (and silence this message).
+#> ℹ See ?duckdb_storage for details and alternatives.
 #> # A duckplyr data frame: 7 variables
 #>   logical integer numeric character Date       POSIXct            
 #>   <lgl>     <int>   <dbl> <chr>     <date>     <dttm>             
@@ -450,7 +454,7 @@ duckplyr::duckdb_tibble(a = 1:3, .prudence = "stingy") |>
 #> │          ORDER_BY         │
 #> │    --------------------   │
 #> │      dataframe_42_42      │
-#> │      84391854.a DESC      │
+#> │       4391854.a DESC      │
 #> └-------------┬-------------┘
 #> ┌-------------┴-------------┐
 #> │      R_DATAFRAME_SCAN     │
@@ -504,7 +508,7 @@ duckplyr::flights_df() |>
 #> # A duckplyr data frame: 1 variable
 #>   `paste(day, collapse = " ")`                                         
 #>   <chr>                                                                
-#> 1 5 9 11 14 15 16 17 22 26 30 31 2 10 18 28 29 3 4 6 12 20 23 24 1 7 8…
+#> 1 5 9 11 14 15 16 17 22 26 30 31 2 10 18 28 29 1 7 8 13 19 21 25 27 3 …
 
 duckplyr::flights_df() |>
   distinct(day) |>
@@ -561,7 +565,7 @@ withr::with_envvar(
 #> │          ORDER_BY         │
 #> │    --------------------   │
 #> │      dataframe_42_42      │
-#> │42.___row_number ASC│
+#> │ 42.___row_number ASC│
 #> └-------------┬-------------┘
 #> ┌-------------┴-------------┐
 #> │       HASH_GROUP_BY       │

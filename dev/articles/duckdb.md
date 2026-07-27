@@ -48,10 +48,14 @@ duckplyr frame to a dbplyr `tbl` object:
 ``` r
 
 df <- duckdb_tibble(a = 2L)
-#> duckdb is keeping downloaded extensions in a temporary directory:
-#> ℹ /tmp/Rtmppy9IO9/duckdb/extensions
-#> This is removed when the R session ends, so extensions are re-downloaded each session.
-#> ℹ To keep them, point `options(duckdb.extension_directory =)` or the `DUCKDB_EXTENSION_DIRECTORY` environment variable at a permanent path.
+#> duckdb keeps downloaded extensions and secrets in a temporary directory:
+#> ℹ /tmp/RtmprdMckD/duckdb
+#> This is removed when the R session ends.
+#> • Extensions are re-downloaded each session.
+#> • Secrets are lost.
+#> ℹ Run duckdb(shared_home = TRUE) (or create ~/.duckdb) to keep them (suitable for most users).
+#> ℹ Run duckdb(shared_home = FALSE) to accept the temporary directory (and silence this message).
+#> ℹ See ?duckdb_storage for details and alternatives.
 df
 #> # A duckplyr data frame: 1 variable
 #>       a
@@ -61,7 +65,7 @@ df
 tbl <- as_tbl(df)
 tbl
 #> # A query:  ?? x 1
-#> # Database: DuckDB 1.5.4 [unknown@Linux 7.0.0-1009-azure:R 4.6.1//tmp/Rtmppy9IO9/duckplyr/duckplyr3c8870aecf01.duckdb]
+#> # Database: DuckDB 1.5.5 [unknown@Linux 7.0.0-1009-azure:R 4.6.1//tmp/RtmprdMckD/duckplyr/duckplyr3c9647353600.duckdb]
 #>       a
 #>   <int>
 #> 1     2
@@ -104,7 +108,7 @@ least_common_multiple(2, 3)
 tbl %>%
   mutate(b = sql("a + 1"), c = least_common_multiple(a, b))
 #> # A query:  ?? x 3
-#> # Database: DuckDB 1.5.4 [unknown@Linux 7.0.0-1009-azure:R 4.6.1//tmp/Rtmppy9IO9/duckplyr/duckplyr3c8870aecf01.duckdb]
+#> # Database: DuckDB 1.5.5 [unknown@Linux 7.0.0-1009-azure:R 4.6.1//tmp/RtmprdMckD/duckplyr/duckplyr3c9647353600.duckdb]
 #>       a     b     c
 #>   <int> <int> <dbl>
 #> 1     2     3     6

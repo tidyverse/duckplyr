@@ -28,10 +28,14 @@ identically. Conceptually, duckplyr frames are “eager”:
 df <-
   duckplyr::duckdb_tibble(x = 1:3) |>
   mutate(y = x + 1)
-#> duckdb is keeping downloaded extensions in a temporary directory:
-#> ℹ /tmp/RtmpuSn0Db/duckdb/extensions
-#> This is removed when the R session ends, so extensions are re-downloaded each session.
-#> ℹ To keep them, point `options(duckdb.extension_directory =)` or the `DUCKDB_EXTENSION_DIRECTORY` environment variable at a permanent path.
+#> duckdb keeps downloaded extensions and secrets in a temporary directory:
+#> ℹ /tmp/RtmpNsw3rc/duckdb
+#> This is removed when the R session ends.
+#> • Extensions are re-downloaded each session.
+#> • Secrets are lost.
+#> ℹ Run duckdb(shared_home = TRUE) (or create ~/.duckdb) to keep them (suitable for most users).
+#> ℹ Run duckdb(shared_home = FALSE) to accept the temporary directory (and silence this message).
+#> ℹ See ?duckdb_storage for details and alternatives.
 df
 #> # A duckplyr data frame: 2 variables
 #>       x     y
@@ -99,7 +103,7 @@ system.time(
     )
 )
 #>    user  system elapsed 
-#>   0.010   0.001   0.011
+#>   0.011   0.001   0.011
 ```
 
 Setting up the pipeline is fast, the size of the data does not affect
@@ -202,7 +206,7 @@ available when accessed:
 
 system.time(mean_arr_delay_ewr$mean_arr_delay[[1]])
 #>    user  system elapsed 
-#>   0.026   0.002   0.023
+#>   0.044   0.002   0.022
 ```
 
 ### Comparison
@@ -239,7 +243,7 @@ system.time(
     )
 )
 #>    user  system elapsed 
-#>   0.037   0.009   0.046
+#>   0.036   0.012   0.048
 ```
 
 See also the [duckplyr: dplyr Powered by

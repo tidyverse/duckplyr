@@ -72,10 +72,14 @@ function creates a duckplyr data frame from vectors:
 ``` r
 
 df <- duckdb_tibble(x = 1:3, y = letters[1:3])
-#> duckdb is keeping downloaded extensions in a temporary directory:
-#> ℹ /tmp/RtmpLEaMX7/duckdb/extensions
-#> This is removed when the R session ends, so extensions are re-downloaded each session.
-#> ℹ To keep them, point `options(duckdb.extension_directory =)` or the `DUCKDB_EXTENSION_DIRECTORY` environment variable at a permanent path.
+#> duckdb keeps downloaded extensions and secrets in a temporary directory:
+#> ℹ /tmp/Rtmp0xNQdP/duckdb
+#> This is removed when the R session ends.
+#> • Extensions are re-downloaded each session.
+#> • Secrets are lost.
+#> ℹ Run duckdb(shared_home = TRUE) (or create ~/.duckdb) to keep them (suitable for most users).
+#> ℹ Run duckdb(shared_home = FALSE) to accept the temporary directory (and silence this message).
+#> ℹ See ?duckdb_storage for details and alternatives.
 df
 #> # A duckplyr data frame: 2 variables
 #>       x y    
@@ -128,12 +132,20 @@ table:
 
 path_duckdb <- tempfile(fileext = ".duckdb")
 con <- DBI::dbConnect(duckdb::duckdb(path_duckdb))
+#> duckdb keeps downloaded extensions and secrets in a temporary directory:
+#> ℹ /tmp/Rtmp0xNQdP/duckdb
+#> This is removed when the R session ends.
+#> • Extensions are re-downloaded each session.
+#> • Secrets are lost.
+#> ℹ Run duckdb(shared_home = TRUE) (or create ~/.duckdb) to keep them (suitable for most users).
+#> ℹ Run duckdb(shared_home = FALSE) to accept the temporary directory (and silence this message).
+#> ℹ See ?duckdb_storage for details and alternatives.
 DBI::dbWriteTable(con, "data", data.frame(x = 1:3, y = letters[1:3]))
 
 dbplyr_data <- tbl(con, "data")
 dbplyr_data
 #> # A query:  ?? x 2
-#> # Database: DuckDB 1.5.4 [unknown@Linux 7.0.0-1009-azure:R 4.6.1//tmp/RtmpLEaMX7/file3d5e79ed9003.duckdb]
+#> # Database: DuckDB 1.5.5 [unknown@Linux 7.0.0-1009-azure:R 4.6.1//tmp/Rtmp0xNQdP/file3d6d2624e78f.duckdb]
 #>       x y    
 #>   <int> <chr>
 #> 1     1 a    
@@ -152,7 +164,7 @@ dbplyr_data |>
 #> │          SEQ_SCAN         │
 #> │    --------------------   │
 #> │           Table:          │
-#> │   file3d5e79ed9003.main.  │
+#> │   file3d6d2624e78f.main.  │
 #> │           "data"          │
 #> │                           │
 #> │   Type: Sequential Scan   │
@@ -189,7 +201,7 @@ dbplyr_data |>
 #> │          SEQ_SCAN         │
 #> │    --------------------   │
 #> │           Table:          │
-#> │   file3d5e79ed9003.main.  │
+#> │   file3d6d2624e78f.main.  │
 #> │           "data"          │
 #> │                           │
 #> │   Type: Sequential Scan   │
