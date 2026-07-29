@@ -95,6 +95,9 @@ For all functions used in dplyr verbs, translations must be provided.
 If an expression contains a function for which no translation is provided, duckplyr falls back to dplyr.
 With some exceptions, only positional matching is implemented.
 
+If a function is not translated but the corresponding DuckDB function is known, the translation layer can be bypassed with the `dd$` escape hatch, e.g. `summarise(v = dd$var_samp(x))` to reach DuckDB's `var_samp()` (which dplyr's `var()` does not map to).
+See `vignette("duckdb")` for details.
+
 As of now, here are the translations provided:
 
 ### Parentheses
