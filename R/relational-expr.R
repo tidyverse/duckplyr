@@ -87,6 +87,23 @@ relexpr_function <- function(name, args, alias = NULL, order_bys = NULL) {
   )
 }
 
+#' relexpr_operator
+#'
+#' `relexpr_operator()` wraps an operator expression.
+#'
+#' @param op Operator, `"IN"` or `"NOT IN"`.
+#' @rdname new_relexpr
+#' @return an object of class `"relational_relexpr"`
+#' @export
+relexpr_operator <- function(op, exprs) {
+  stopifnot(is_string(op))
+  stopifnot(is.list(exprs))
+  new_relexpr(
+    list(op = op, exprs = exprs),
+    class = "relational_relexpr_operator"
+  )
+}
+
 #' relexpr_comparison
 #'
 #' `relexpr_comparison()` wraps a comparison expression.
