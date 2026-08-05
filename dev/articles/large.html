@@ -157,7 +157,7 @@ frame from vectors:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, y <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; duckdb keeps downloaded extensions and secrets in a temporary directory:</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> /tmp/RtmpNvC1lZ/duckdb</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> /tmp/RtmpfbHlJo/duckdb</span></span>
 <span><span class="co">#&gt; This is removed when the R session ends.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Extensions are re-downloaded each session.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Secrets are lost.</span></span>
@@ -203,7 +203,7 @@ to a table:</p>
 <code class="sourceCode R"><span><span class="va">path_duckdb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".duckdb"</span><span class="op">)</span></span>
 <span><span class="va">con</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html" class="external-link">dbConnect</a></span><span class="op">(</span><span class="fu">duckdb</span><span class="fu">::</span><span class="fu"><a href="https://r.duckdb.org/reference/duckdb.html" class="external-link">duckdb</a></span><span class="op">(</span><span class="va">path_duckdb</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; duckdb keeps downloaded extensions and secrets in a temporary directory:</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> /tmp/RtmpNvC1lZ/duckdb</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> /tmp/RtmpfbHlJo/duckdb</span></span>
 <span><span class="co">#&gt; This is removed when the R session ends.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Extensions are re-downloaded each session.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Secrets are lost.</span></span>
@@ -215,7 +215,7 @@ to a table:</p>
 <span><span class="va">dbplyr_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"data"</span><span class="op">)</span></span>
 <span><span class="va">dbplyr_data</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A query:  ?? x 2</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.5.5 [unknown@Linux 7.0.0-1009-azure:R 4.6.1//tmp/RtmpNvC1lZ/file3adf1edfdf29.duckdb]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Database: DuckDB 1.5.5 [unknown@Linux 7.0.0-1009-azure:R 4.6.1//tmp/RtmpfbHlJo/file3afc4262a8c4.duckdb]</span></span></span>
 <span><span class="co">#&gt;       x y    </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1 a    </span></span>
@@ -234,7 +234,7 @@ to a table:</p>
 <span><span class="co">#&gt; │          SEQ_SCAN         │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │           Table:          │</span></span>
-<span><span class="co">#&gt; │   file3adf1edfdf29.main.  │</span></span>
+<span><span class="co">#&gt; │   file3afc4262a8c4.main.  │</span></span>
 <span><span class="co">#&gt; │           "data"          │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │   Type: Sequential Scan   │</span></span>
@@ -265,7 +265,7 @@ can then be used to seamlessly convert the data to a duckplyr frame:</p>
 <span><span class="co">#&gt; │          SEQ_SCAN         │</span></span>
 <span><span class="co">#&gt; │    --------------------   │</span></span>
 <span><span class="co">#&gt; │           Table:          │</span></span>
-<span><span class="co">#&gt; │   file3adf1edfdf29.main.  │</span></span>
+<span><span class="co">#&gt; │   file3afc4262a8c4.main.  │</span></span>
 <span><span class="co">#&gt; │           "data"          │</span></span>
 <span><span class="co">#&gt; │                           │</span></span>
 <span><span class="co">#&gt; │   Type: Sequential Scan   │</span></span>
