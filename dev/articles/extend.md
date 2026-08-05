@@ -139,7 +139,7 @@ rel_join.dfrel <- function(left, right, conds, join, ...) {
 rel_join(new_dfrel(data.frame(mpg = 21)), mtcars_rel)
 #> Joining with `by = join_by(mpg)`
 #> duckdb keeps downloaded extensions and secrets in a temporary
-#> directory: ℹ /tmp/RtmpN6wqeR/duckdb This is removed when the R session
+#> directory: ℹ /tmp/RtmpaeMBrS/duckdb This is removed when the R session
 #> ends. • Extensions are re-downloaded each session. • Secrets are lost.
 #> ℹ Run duckdb(shared_home = TRUE) (or create ~/.duckdb) to keep them
 #> (suitable for most users). ℹ Run duckdb(shared_home = FALSE) to accept
