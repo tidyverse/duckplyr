@@ -1,5 +1,21 @@
 # Changelog
 
+## duckplyr 1.2.1.9908 (2026-08-05)
+
+### Chore
+
+- Auto-update from GitHub Actions
+  ([\#943](https://github.com/tidyverse/duckplyr/issues/943)).
+
+### Continuous integration
+
+- Remove unused pr-commands workflow.
+
+### Uncategorized
+
+- Ci: Pass workflow context through the environment, not into script
+  text ([\#102](https://github.com/tidyverse/duckplyr/issues/102)).
+
 ## duckplyr 1.2.1.9907 (2026-07-28)
 
 - Ci: Run all smoke-test checks even when one fails
