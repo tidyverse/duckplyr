@@ -37,7 +37,7 @@ duckdb <-
   mutate(b = a + 1) |>
   select(-a)
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/RtmpiCkxtN/duckdb
+#> ℹ /tmp/Rtmpef6OnF/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
@@ -64,7 +64,7 @@ duckdb |>
 #> │          ORDER_BY         │
 #> │    --------------------   │
 #> │      dataframe_42_42      │
-#> │      73409599.a DESC      │
+#> │       3409599.a DESC      │
 #> └-------------┬-------------┘
 #> ┌-------------┴-------------┐
 #> │      R_DATAFRAME_SCAN     │

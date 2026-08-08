@@ -1,5 +1,23 @@
 # Changelog
 
+## duckplyr 1.2.1.9909 (2026-08-06)
+
+### Bug fixes
+
+- Forbid reuse of new columns created in
+  [`summarize()`](https://dplyr.tidyverse.org/reference/summarise.html)
+  ([\#72](https://github.com/tidyverse/duckplyr/issues/72),
+  [\#106](https://github.com/tidyverse/duckplyr/issues/106)).
+
+### Chore
+
+- Implement almost all dplyr methods
+  ([\#105](https://github.com/tidyverse/duckplyr/issues/105)).
+
+### Continuous integration
+
+- Add sharded `revdep2` workflow.
+
 ## duckplyr 1.2.1.9908 (2026-08-05)
 
 ### Chore

@@ -45,7 +45,7 @@ duckplyr::duckdb_tibble(
 ) |>
   compute()
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/RtmphOAK8X/duckdb
+#> ℹ /tmp/RtmpKj8lRK/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
@@ -454,7 +454,7 @@ duckplyr::duckdb_tibble(a = 1:3, .prudence = "stingy") |>
 #> │          ORDER_BY         │
 #> │    --------------------   │
 #> │      dataframe_42_42      │
-#> │       4391854.a DESC      │
+#> │      84391854.a DESC      │
 #> └-------------┬-------------┘
 #> ┌-------------┴-------------┐
 #> │      R_DATAFRAME_SCAN     │
@@ -508,7 +508,7 @@ duckplyr::flights_df() |>
 #> # A duckplyr data frame: 1 variable
 #>   `paste(day, collapse = " ")`                                         
 #>   <chr>                                                                
-#> 1 5 9 11 14 15 16 17 22 26 30 31 2 10 18 28 29 3 4 6 12 20 23 24 1 7 8…
+#> 1 5 9 11 14 15 16 17 22 26 30 31 2 10 18 28 29 1 7 8 13 19 21 25 27 3 …
 
 duckplyr::flights_df() |>
   distinct(day) |>
@@ -565,7 +565,7 @@ withr::with_envvar(
 #> │          ORDER_BY         │
 #> │    --------------------   │
 #> │      dataframe_42_42      │
-#> │ 42.___row_number ASC│
+#> │42.___row_number ASC│
 #> └-------------┬-------------┘
 #> ┌-------------┴-------------┐
 #> │       HASH_GROUP_BY       │
