@@ -103,7 +103,6 @@ duckplyr_count <- function(x, ...) {
     }
   )
   out <- count(x, ...)
-  out <- collect(out)
   class(out) <- setdiff(class(out), "duckplyr_df")
   out
 }

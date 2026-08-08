@@ -86,11 +86,3 @@ diff --git b/R/count.R a/R/count.R
    return(out)
 
    # dplyr implementation
-@@ -42,6 +103,7 @@
-     }
-   )
-   out <- count(x, ...)
-+  out <- collect(out)
-   class(out) <- setdiff(class(out), "duckplyr_df")
-   out
- }

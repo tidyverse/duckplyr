@@ -99,6 +99,9 @@ test_that("count(sort = TRUE) supports empty inputs", {
 })
 
 test_that("count(sort = TRUE) matches dplyr for grouped data", {
+  # `group_by()` has no relational implementation and must fall back
+  skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
+
   df <- tibble(
     g = c("A", "A", "B", "B", "B"),
     x = c("a", "b", "a", "a", "b")
