@@ -59,8 +59,7 @@ switching the summary from \code{n = n()} to \code{n = sum(wt)}.
 There is no DuckDB translation in \code{count.duckplyr_df()}
 \itemize{
 \item with complex expressions in \code{...},
-\item with \code{.drop = FALSE},
-\item with \code{sort = TRUE}.
+\item with \code{.drop = FALSE}.
 }
 
 These features fall back to \code{\link[dplyr:count]{dplyr::count()}}, see \code{vignette("fallback")} for details.
