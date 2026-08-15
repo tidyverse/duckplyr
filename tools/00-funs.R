@@ -480,7 +480,7 @@ non_force_only_tests <- head(
       "if_any() and if_all() do not enforce logical",
       "if_any() and if_all() can be used in mutate() (#5709)",
       "across() caching not confused when used from if_any() and if_all() (#5782)",
-      "if_any() and if_all() aborts when predicate mistakingly used in .cols= (#5732)",
+      "if_any() and if_all() aborts when predicate mistakenly used in .cols= (#5732)",
       "across() correctly reset column",
       "across() can omit dots",
       "inlined and non inlined lambdas work",

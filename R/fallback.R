@@ -349,7 +349,7 @@ fallback_config_path <- function() {
 #' `fallback_review()` prints the available reports for review to the console.
 #'
 #' @param oldest,newest The number of oldest or newest reports to review.
-#'   If not specified, all reports are dispayed.
+#'   If not specified, all reports are displayed.
 #' @param detail Print the full content of the reports.
 #'   Set to `FALSE` to only print the file names.
 #' @rdname fallback

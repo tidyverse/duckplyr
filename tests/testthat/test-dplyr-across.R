@@ -695,7 +695,7 @@ test_that("if_any() and if_all() respect duckplyr_filter()-like NA handling", {
   )
 })
 
-test_that("if_any() and if_all() aborts when predicate mistakingly used in .cols= (#5732)", {
+test_that("if_any() and if_all() aborts when predicate mistakenly used in .cols= (#5732)", {
   skip_if(Sys.getenv("DUCKPLYR_FORCE") == "TRUE")
   df <- data.frame(x = 1:10, y = 1:10)
   expect_snapshot({

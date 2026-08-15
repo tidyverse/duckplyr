@@ -47,7 +47,7 @@ The directory will be created if it does not exist.}
 \item{verbose}{Set to \code{TRUE} to enable verbose logging.}
 
 \item{oldest, newest}{The number of oldest or newest reports to review.
-If not specified, all reports are dispayed.}
+If not specified, all reports are displayed.}
 
 \item{detail}{Print the full content of the reports.
 Set to \code{FALSE} to only print the file names.}
