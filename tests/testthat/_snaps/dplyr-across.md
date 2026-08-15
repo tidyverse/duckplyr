@@ -204,7 +204,7 @@
       x These names are duplicated:
         * "x_f" at locations 1 and 2.
 
-# if_any() and if_all() aborts when predicate mistakingly used in .cols= (#5732)
+# if_any() and if_all() aborts when predicate mistakenly used in .cols= (#5732)
 
     Code
       (expect_error(duckplyr_filter(df, if_any(~ .x > 5))))
