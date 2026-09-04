@@ -20,7 +20,7 @@
 #' This is slow, and mostly useful for debugging.
 #' The default is to check roundtrip of attributes.
 #'
-#' `DUCKPLYR_METHODS_OVERWRITE`: If `TRUE`, call `methods_overwrite()`
+#' `DUCKPLYR_METHODS_OVERWRITE`: If `FALSE`, does not call `methods_overwrite()`
 #' when the package is loaded.
 #'
 #' See [fallback] for more options related to printing, logging, and uploading
