@@ -1,5 +1,22 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.2.1.9911 (2026-09-05)
+
+## Bug fixes
+
+### ci
+
+- Backport kit fixes from `rigraph`, `duckdb-r` and `dm`.
+
+## Continuous integration
+
+- Fix Windows ARM build.
+
+## Uncategorized
+
+- Chore: Drop the last traces of `allow_materialization` from `prudence_parse()`.
+
+
 # duckplyr 1.2.1.9910 (2026-08-08)
 
 ## Continuous integration
