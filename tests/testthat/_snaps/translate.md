@@ -5,6 +5,7 @@
     Condition
       Error:
       ! Can't translate function `c()`.
+      i Call a DuckDB function directly with the `dd$` escape hatch, e.g. `dd$fun(...)`; see `vignette("duckdb")`.
 
 # a %in% b
 
@@ -674,6 +675,7 @@
     Condition
       Error:
       ! Can't translate function `pkg::""()`.
+      i Call a DuckDB function directly with the `dd$` escape hatch, e.g. `dd$fun(...)`; see `vignette("duckdb")`.
 
 ---
 
@@ -683,6 +685,7 @@
     Condition
       Error:
       ! Can't translate function `"pkg"::123()`.
+      i Call a DuckDB function directly with the `dd$` escape hatch, e.g. `dd$fun(...)`; see `vignette("duckdb")`.
 
 ---
 
@@ -692,6 +695,7 @@
     Condition
       Error:
       ! Can't translate function `unknown_function()`.
+      i Call a DuckDB function directly with the `dd$` escape hatch, e.g. `dd$fun(...)`; see `vignette("duckdb")`.
 
 ---
 
@@ -701,6 +705,7 @@
     Condition
       Error:
       ! Can't translate function `somepkg::unknown_function()`.
+      i Call a DuckDB function directly with the `dd$` escape hatch, e.g. `dd$fun(...)`; see `vignette("duckdb")`.
 
 ---
 

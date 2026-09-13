@@ -194,7 +194,10 @@ rel_find_call_candidates <- function(fun, call = caller_env()) {
   }
 
   cli::cli_abort(
-    "Can't translate function {.code {expr_deparse(fun)}()}.",
+    c(
+      "Can't translate function {.code {expr_deparse(fun)}()}.",
+      i = 'Call a DuckDB function directly with the {.code dd$} escape hatch, e.g. {.code dd$fun(...)}; see {.code vignette("duckdb")}.'
+    ),
     call = call
   )
 }

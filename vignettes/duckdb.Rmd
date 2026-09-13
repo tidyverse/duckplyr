@@ -109,6 +109,11 @@ duckdb_tibble(a = 2L, b = 3L) %>%
   mutate(c = dd$least_common_multiple(a, b))
 ```
 
+`dd` here is not a real object and does not need to be defined, imported, or attached: `dd$fun(...)` is recognized syntactically by duckplyr's translator, which passes `fun` to DuckDB verbatim (DuckDB validates the name).
+No extra package is required to use the escape hatch.
+Introspection therefore does not reveal it: `?dd`, `duckplyr::dd`, and `ls("package:duckplyr")` all come up empty even though `dd$fun(...)` works.
+The optional [dd package](https://github.com/cynkra/dd) described below is what provides a real `dd` object, `?dd`, and autocomplete.
+
 The `dd` prefix has been picked for the following reasons:
 
 - it is an abbreviation of "DuckDB"
