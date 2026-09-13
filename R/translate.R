@@ -52,6 +52,8 @@ duckplyr_macros <- c(
   "___n_distinct_na" = "(x) AS (CASE WHEN SUM(CASE WHEN x IS NULL THEN 1 ELSE 0 END) > 0 THEN (COUNT(DISTINCT x)+1) ELSE COUNT(DISTINCT x) END)",
   "___n_distinct" = "(x) AS (COUNT(DISTINCT x))",
   #
+  "anyNA" = "(x) AS (bool_or(x IS NULL))",
+  #
   NULL
 )
 
@@ -125,6 +127,7 @@ rel_find_packages <- function(name) {
     #
     "any" = "base",
     "all" = "base",
+    "anyNA" = "base",
     "suppressWarnings" = "base",
     "lag" = "dplyr",
     "lead" = "dplyr",
@@ -481,6 +484,34 @@ rel_translate_lang <- function(
         }
         expr$digits <- as.integer(digits)
       }
+    },
+    "anyNA" = {
+      # anyNA(x) is equivalent to any(is.na(x))
+      # call_match() already applied above
+      args <- as.list(expr[-1])
+      bad <- !(names(args) %in% c("x", "recursive"))
+      if (any(bad)) {
+        cli::cli_abort(
+          "{.code {name}({names(args)[which(bad)[[1]]]} = )} not supported",
+          call = call
+        )
+      }
+      recursive <- args[["recursive"]]
+      if (!is.null(recursive) && !isFALSE(eval(recursive, env))) {
+        cli::cli_abort(
+          "{.code anyNA(recursive = TRUE)} not supported",
+          call = call
+        )
+      }
+      if (need_window) {
+        cli::cli_abort(
+          "{.fun anyNA} is not supported in window functions",
+          call = call
+        )
+      }
+      x <- args[["x"]] %||% args[[1]]
+      x_translated <- do_translate(x, in_window = in_window)
+      return(relexpr_function("anyNA", list(x_translated)))
     },
   )
 
