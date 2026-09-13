@@ -1,5 +1,18 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.2.1.9912 (2026-09-13)
+
+## Features
+
+### ci
+
+- Align the `revdep2`, `revdep4` and `revdepx` subsystems with `rigraph`.
+
+## Documentation
+
+- New `fallback_sitrep()` and related functionality for collecting telemetry data (#102, #111).
+
+
 # duckplyr 1.2.1.9911 (2026-09-05)
 
 ## Bug fixes
