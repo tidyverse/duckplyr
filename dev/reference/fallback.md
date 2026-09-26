@@ -159,6 +159,7 @@ fallback_sitrep()
 #> will be collected but no data will be uploaded.
 #> ✖ Fallback printing is disabled.
 #> ✖ Fallback logging is disabled.
-#> ✖ Automatic fallback uploading is disabled.
+#> ℹ Automatic fallback uploading is not controlled and therefore
+#>   disabled, see `?duckplyr::fallback()`.
 #> ℹ See `?duckplyr::fallback_config()` for details.
 ```
