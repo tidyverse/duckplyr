@@ -73,7 +73,7 @@ function creates a duckplyr data frame from vectors:
 
 df <- duckdb_tibble(x = 1:3, y = letters[1:3])
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/RtmpxbWdWl/duckdb
+#> ℹ /tmp/Rtmp3V53yz/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
@@ -133,7 +133,7 @@ table:
 path_duckdb <- tempfile(fileext = ".duckdb")
 con <- DBI::dbConnect(duckdb::duckdb(path_duckdb))
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/RtmpxbWdWl/duckdb
+#> ℹ /tmp/Rtmp3V53yz/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
@@ -145,7 +145,7 @@ DBI::dbWriteTable(con, "data", data.frame(x = 1:3, y = letters[1:3]))
 dbplyr_data <- tbl(con, "data")
 dbplyr_data
 #> # A query:  ?? x 2
-#> # Database: DuckDB 1.5.5 [unknown@Linux 7.0.0-1012-azure:R 4.6.1//tmp/RtmpxbWdWl/file3d5c2831522f.duckdb]
+#> # Database: DuckDB 1.5.5 [unknown@Linux 7.0.0-1012-azure:R 4.6.1//tmp/Rtmp3V53yz/file3ce15769d101.duckdb]
 #>       x y    
 #>   <int> <chr>
 #> 1     1 a    
@@ -164,7 +164,7 @@ dbplyr_data |>
 #> │          SEQ_SCAN         │
 #> │    --------------------   │
 #> │           Table:          │
-#> │   file3d5c2831522f.main.  │
+#> │   file3ce15769d101.main.  │
 #> │           "data"          │
 #> │                           │
 #> │   Type: Sequential Scan   │
@@ -201,7 +201,7 @@ dbplyr_data |>
 #> │          SEQ_SCAN         │
 #> │    --------------------   │
 #> │           Table:          │
-#> │   file3d5c2831522f.main.  │
+#> │   file3ce15769d101.main.  │
 #> │           "data"          │
 #> │                           │
 #> │   Type: Sequential Scan   │
@@ -235,7 +235,7 @@ function fails with a helpful error message:
 duckdb_tibble(a = 1) |>
   group_by(a) |>
   as_duckdb_tibble()
-#> Error in `as_duckdb_tibble()` at duckplyr/R/ducktbl.R:84:3:
+#> Error in `as_duckdb_tibble()` at duckplyr/R/ducktbl.R:82:3:
 #> ! duckplyr does not support `group_by()`.
 #> ℹ Use `.by` instead.
 #> ℹ To proceed with dplyr, use `as_tibble()` or `as.data.frame()`.
@@ -249,7 +249,7 @@ duckdb_tibble(a = 1) |>
 duckdb_tibble(a = 1) |>
   rowwise() |>
   as_duckdb_tibble()
-#> Error in `as_duckdb_tibble()` at duckplyr/R/ducktbl.R:84:3:
+#> Error in `as_duckdb_tibble()` at duckplyr/R/ducktbl.R:82:3:
 #> ! duckplyr does not support `rowwise()`.
 #> ℹ To proceed with dplyr, use `as_tibble()` or `as.data.frame()`.
 ```
@@ -273,7 +273,7 @@ readr::read_csv("a\n1", show_col_types = FALSE) |>
 #> This warning is displayed once per session.
 #> Call `lifecycle::last_lifecycle_warnings()` to see where this warning
 #> was generated.
-#> Error in `as_duckdb_tibble()` at duckplyr/R/ducktbl.R:84:3:
+#> Error in `as_duckdb_tibble()` at duckplyr/R/ducktbl.R:82:3:
 #> ! The input is data read by readr, and duckplyr supports
 #>   reading CSV files directly.
 #> ℹ Use `read_csv_duckdb()` to read with the built-in reader.

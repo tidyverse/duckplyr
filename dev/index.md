@@ -13,6 +13,33 @@ If you are new to dplyr, the best place to start is the [data
 transformation chapter](https://r4ds.hadley.nz/data-transform) in *R for
 Data Science*.
 
+## Goals and non-goals
+
+duckplyr aims to:
+
+- Run all existing dplyr code with identical results, using exactly the
+  same syntax and semantics.
+- Compute those results with DuckDB wherever it can, for speed.
+- Fall back to dplyr whenever DuckDB cannot handle an operation,
+  function or data type, so that a pipeline never breaks.
+- Analyze larger-than-memory data straight from Parquet, CSV and JSON
+  files on disk or on the web.
+- Keep automatic materialization under control, so that a large
+  intermediate result does not silently fill memory.
+
+It is explicitly not trying to:
+
+- Generate SQL, or target database engines other than DuckDB: DuckDB’s
+  relational interface is used directly.
+- Preserve dplyr’s row order by default: DuckDB does not guarantee order
+  stability, so ordering is opt-in via `DUCKPLYR_OUTPUT_ORDER`.
+- Cover DuckDB functions with no R equivalent in the translation layer:
+  the experimental
+  [`as_tbl()`](https://duckplyr.tidyverse.org/dev/reference/as_tbl.md)
+  and `dd$fun()` escape hatches do that.
+- Upload anything by itself: fallback reports are collected locally by
+  default, and uploading is opt-in.
+
 ## Installation
 
 Install duckplyr from CRAN with:
@@ -190,6 +217,12 @@ extension](https://duckdb.org/docs/extensions/httpfs/overview.html), we
 can query these files directly from R, without even downloading them
 first.
 
+The output of the remaining chunks in this section is a recording,
+replayed from `README-fixtures/`. They query a remote dataset that we do
+not control, so a live render would need network access and would still
+differ from one render to the next. The setup chunk of `README.Rmd` says
+how to refresh the recording.
+
 ``` r
 
 db_exec("INSTALL httpfs")
@@ -325,10 +358,13 @@ out |>
 #> │                           │
 #> │       ~13458250 Rows      │
 #> └---------------------------┘
+```
 
-out |>
-  print() |>
-  system.time()
+Printing the result runs the query:
+
+``` r
+
+out
 #> # A duckplyr data frame: 4 variables
 #>     Year Month MeanInFlightDelay MedianInFlightDelay
 #>    <dbl> <dbl>             <dbl>               <dbl>
@@ -343,13 +379,11 @@ out |>
 #>  9  2022     2             -6.52                  -8
 #> 10  2023     5             -6.17                  -7
 #> # ℹ more rows
-#>    user  system elapsed 
-#>   1.145   0.455   9.402
 ```
 
-Over 10M rows analyzed in about 10 seconds over the internet, that’s not
-bad. Of course, working with Parquet, CSV, or JSON files downloaded
-locally is possible as well.
+Over 13M rows analyzed over the internet, reading only the four columns
+the query needs, and only two of the three files. Of course, working
+with Parquet, CSV, or JSON files downloaded locally is possible as well.
 
 For full compatibility, `na.rm = FALSE` by default in the aggregation
 functions:

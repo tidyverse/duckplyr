@@ -1,5 +1,30 @@
 # Changelog
 
+## duckplyr 1.2.1.9913 (2026-09-13)
+
+### Bug fixes
+
+- Improve and test fallback telemetry
+  ([\#115](https://github.com/tidyverse/duckplyr/issues/115)).
+
+### Features
+
+- Prefer
+  [`cli::cli_abort()`](https://cli.r-lib.org/reference/cli_abort.html)
+  over [`stop()`](https://rdrr.io/r/base/stop.html) or
+  [`rlang::abort()`](https://rlang.r-lib.org/reference/abort.html)
+  ([\#114](https://github.com/tidyverse/duckplyr/issues/114)).
+
+### Chore
+
+- Remove Copilot setup steps.
+
+### Continuous integration
+
+- Survive an archived CRAN package, cache revdep compiles
+  ([@krlmlr](https://github.com/krlmlr),
+  [\#952](https://github.com/tidyverse/duckplyr/issues/952)).
+
 ## duckplyr 1.2.1.9912 (2026-09-13)
 
 ### Features
