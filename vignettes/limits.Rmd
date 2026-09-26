@@ -301,13 +301,15 @@ duckplyr::duckdb_tibble(a = 1, .prudence = "stingy") |>
 
 ### Contributing
 
-Refer to [our contributing guide](https://duckplyr.tidyverse.org/CONTRIBUTING.html#new-translations-for-functions) to learn how to contribute new translations to the package.
+Refer to [our contributing guide](https://duckplyr.tidyverse.org/CONTRIBUTING.html#new-translations-for-functions)
+to learn how to contribute new translations to the package.
 Ideally, duckplyr will also support adding custom translations for functions for the duration of the current R session.
 
 ## Known incompatibilities
 
 This section tracks known incompatibilities between dplyr and duckplyr.
-Changing these is likely to require substantial effort, and might be best addressed by providing new functions with consistent behavior in both dplyr and DuckDB.
+Changing these is likely to require substantial effort,
+and might be best addressed by providing new functions with consistent behavior in both dplyr and DuckDB.
 
 ### Output order stability
 

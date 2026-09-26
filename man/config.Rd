@@ -4,8 +4,7 @@
 \alias{config}
 \title{Configuration options}
 \description{
-The behavior of duckplyr can be fine-tuned with several environment variables,
-and one option.
+The behavior of duckplyr can be fine-tuned with several environment variables, and one option.
 }
 \section{Environment variables}{
 
@@ -15,8 +14,7 @@ By default, \code{\link[=tempdir]{tempdir()}} is used.
 
 \code{DUCKPLYR_OUTPUT_ORDER}: If \code{TRUE}, row output order is preserved.
 The default may change the row order where dplyr would keep it stable.
-Preserving the order leads to more complicated execution plans
-with less potential for optimization, and thus may be slower.
+Preserving the order leads to more complicated execution plans with less potential for optimization, and thus may be slower.
 
 \code{DUCKPLYR_FORCE}: If \code{TRUE}, fail if duckdb cannot handle a request.
 
@@ -28,8 +26,7 @@ The default is to check roundtrip of attributes.
 \code{DUCKPLYR_METHODS_OVERWRITE}: If \code{TRUE}, call \code{methods_overwrite()}
 when the package is loaded.
 
-See \link{fallback} for more options related to printing, logging, and uploading
-of fallback events.
+See \link{fallback} for more options related to printing, logging, and uploading of fallback events.
 }
 
 \examples{

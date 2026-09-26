@@ -48,10 +48,13 @@ conflict_prefer("filter", "dplyr")
 The duckplyr package is a drop-in replacement for dplyr, designed to work with DuckDB as the backend.
 There is a translation layer that converts R function calls to DuckDB functions or macros, aiming at full compatibility with R.
 Many functions are translated already, and many more are not.
-For functions that cannot be translated, duckplyr falls back to the original R implementation, disrupting the DuckDB pipeline and materializing intermediate results.
+For functions that cannot be translated, duckplyr falls back to the original R implementation,
+disrupting the DuckDB pipeline and materializing intermediate results.
 
 Furthermore, DuckDB has functions with no R equivalent.
-These might be used already by code that interacts with DuckDB through dbplyr, either making use of its passthrough feature (unknown functions are translated to SQL verbatim), or by using the `mutate(x = sql(...))` pattern.
+These might be used already by code that interacts with DuckDB through dbplyr,
+either making use of its passthrough feature (unknown functions are translated to SQL verbatim),
+or by using the `mutate(x = sql(...))` pattern.
 When working with duckplyr, this functionality is still accessible, albeit through experimental interfaces:
 
 - `as_tbl()` converts a duckplyr table to a duckdb `tbl` object
@@ -69,7 +72,8 @@ tbl <- as_tbl(df)
 tbl
 ```
 
-It achieves this by creating a temporary view that points to the relational object created internally by duckplyr, in the same DBI connection as the duckplyr object.
+It achieves this by creating a temporary view that points to the relational object created internally by duckplyr,
+in the same DBI connection as the duckplyr object.
 No data is copied in this operation.
 The view is discarded when the `tbl` object goes out of scope.
 
@@ -102,7 +106,8 @@ tbl %>%
 
 ## Call arbitrary functions in duckplyr
 
-The escape hatch, also introduced in duckplyr 1.1.0, allows calling arbitrary DuckDB functions directly from duckplyr, without going through SQL:
+The escape hatch, also introduced in duckplyr 1.1.0,
+allows calling arbitrary DuckDB functions directly from duckplyr, without going through SQL:
 
 ```{r}
 duckdb_tibble(a = 2L, b = 3L) %>%
@@ -136,4 +141,6 @@ duckdb_tibble(a = "dbplyr", b = "duckplyr") %>%
 
 While duckplyr is designed to be a drop-in replacement for dplyr, it still allows to harness most if not all of the power of DuckDB.
 
-See `vignette("limits")` for limitations in the translation employed by duckplyr, `vignette("fallback")` for more information on fallback, and `vignette("telemetry")` for existing attempts to prioritize work on the translation layer.
+See `vignette("limits")` for limitations in the translation employed by duckplyr,
+`vignette("fallback")` for more information on fallback,
+and `vignette("telemetry")` for existing attempts to prioritize work on the translation layer.

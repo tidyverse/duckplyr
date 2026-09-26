@@ -19,10 +19,11 @@ read_tbl_duckdb(
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{schema}{The schema name where the table is located. Defaults to \code{"main"}.}
+\item{schema}{The schema name where the table is located.
+Defaults to \code{"main"}.}
 
-\item{prudence}{Memory protection, controls if DuckDB may convert
-intermediate results in DuckDB-managed memory to data frames in R memory.
+\item{prudence}{Memory protection,
+controls if DuckDB may convert intermediate results in DuckDB-managed memory to data frames in R memory.
 \itemize{
 \item \code{"thrifty"}: up to a maximum size of 1 million cells,
 \item \code{"lavish"}: regardless of size,
@@ -39,8 +40,7 @@ A duckplyr frame, see \code{\link[=as_duckdb_tibble]{as_duckdb_tibble()}} for de
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-\code{read_tbl_duckdb()} reads a table from a DuckDB database file
-by attaching the database file and reading the specified table.
+\code{read_tbl_duckdb()} reads a table from a DuckDB database file by attaching the database file and reading the specified table.
 
 The database file is attached to the default duckplyr connection
 and remains attached for the duration of the R session

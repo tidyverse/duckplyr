@@ -16,8 +16,8 @@ The input, invisibly.
 }
 \description{
 This is a method for the \code{\link[dplyr:explain]{dplyr::explain()}} generic.
-This is a generic function which gives more details about an object
-than \code{print()}, and is more focused on human readable output than \code{str()}.
+This is a generic function which gives more details about an object than \code{print()},
+and is more focused on human readable output than \code{str()}.
 }
 \examples{
 library(duckplyr)

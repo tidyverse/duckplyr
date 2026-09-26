@@ -27,8 +27,7 @@ compute_parquet <- function(x, path, ...) {
 
 #' @inheritParams compute.duckplyr_df
 #' @param options A list of additional options to pass to create the Parquet file,
-#'   see <https://duckdb.org/docs/sql/statements/copy.html#parquet-options>
-#'   for details.
+#'   see <https://duckdb.org/docs/sql/statements/copy.html#parquet-options> for details.
 #'
 #' @rdname compute_parquet
 #' @export

@@ -33,33 +33,28 @@ df_to_parquet(data, path)
 \arguments{
 \item{path}{Path to files, glob patterns \code{*} and \verb{?} are supported.}
 
-\item{table_function}{The name of a table-valued
-DuckDB function such as \code{"read_parquet"},
-\code{"read_csv"}, \code{"read_csv_auto"} or \code{"read_json"}.}
+\item{table_function}{The name of a table-valued DuckDB function
+such as \code{"read_parquet"}, \code{"read_csv"}, \code{"read_csv_auto"} or \code{"read_json"}.}
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{options}{Arguments to the DuckDB function
-indicated by \code{table_function}.}
+\item{options}{Arguments to the DuckDB function indicated by \code{table_function}.}
 
 \item{class}{The class of the output.
 By default, a tibble is created.
 The returned object will always be a data frame.
-Use \code{class = "data.frame"} or \code{class = character()}
-to create a plain data frame.}
+Use \code{class = "data.frame"} or \code{class = character()} to create a plain data frame.}
 
 \item{data}{A data frame to be written to disk.}
 }
 \value{
-A data frame for \code{df_from_file()}, or a \code{duckplyr_df} for
-\code{duckplyr_df_from_file()}, extended by the provided \code{class}.
+A data frame for \code{df_from_file()}, or a \code{duckplyr_df} for \code{duckplyr_df_from_file()}, extended by the provided \code{class}.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
 \code{df_from_file()} uses arbitrary table functions to read data.
-See \url{https://duckdb.org/docs/data/overview} for a documentation
-of the available functions and their options.
+See \url{https://duckdb.org/docs/data/overview} for a documentation of the available functions and their options.
 To read multiple files with the same schema,
 pass a wildcard or a character vector to the \code{path} argument,
 
@@ -67,8 +62,8 @@ pass a wildcard or a character vector to the \code{path} argument,
 that calls \code{as_duckplyr_df()} on the output.
 
 These functions ingest data from a file using a table function.
-The results are transparently converted to a data frame, but the data is only read when
-the resulting data frame is actually accessed.
+The results are transparently converted to a data frame,
+but the data is only read when the resulting data frame is actually accessed.
 
 \code{df_from_csv()} reads a CSV file using the \code{read_csv_auto()} table function.
 

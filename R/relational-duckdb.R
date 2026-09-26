@@ -77,8 +77,7 @@ duckdb_rel_from_df <- function(df, call = caller_env()) {
 
   con <- get_default_duckdb_connection()
 
-  # FIXME: For some reason, it seems crucial to assign the result to a
-  # variable before returning it
+  # FIXME: For some reason, it seems crucial to assign the result to a variable before returning it
   experimental <- (Sys.getenv("DUCKPLYR_EXPERIMENTAL") == "TRUE")
   out <- duckdb$rel_from_df(con, df, experimental = experimental)
 

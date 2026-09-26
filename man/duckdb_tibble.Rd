@@ -18,8 +18,8 @@ For \code{as_duckdb_tibble()}, passed on to methods.}
 
 \item{x}{The object to convert or to test.}
 
-\item{prudence, .prudence}{Memory protection, controls if DuckDB may convert
-intermediate results in DuckDB-managed memory to data frames in R memory.
+\item{prudence, .prudence}{Memory protection,
+controls if DuckDB may convert intermediate results in DuckDB-managed memory to data frames in R memory.
 \itemize{
 \item \code{"lavish"}: regardless of size,
 \item \code{"stingy"}: never,
@@ -58,10 +58,8 @@ This is a generic function that can be overridden for custom classes.
 
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-The \code{prudence} argument can also be a named numeric vector
-with at least one of \code{cells} or \code{rows}
-to limit the cells (values) and rows in the resulting data frame
-after automatic materialization.
+The \code{prudence} argument can also be a named numeric vector with at least one of \code{cells} or \code{rows}
+to limit the cells (values) and rows in the resulting data frame after automatic materialization.
 If both limits are specified, both are enforced.
 The equivalent of \code{"thrifty"} is \code{c(cells = 1e6)}.
 }

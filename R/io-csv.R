@@ -2,8 +2,8 @@
 #'
 #' @description
 #' These functions ingest data from a file using a table function.
-#' The results are transparently converted to a data frame, but the data is only read when
-#' the resulting data frame is actually accessed.
+#' The results are transparently converted to a data frame,
+#' but the data is only read when the resulting data frame is actually accessed.
 #'
 #' `df_from_csv()` reads a CSV file using the `read_csv_auto()` table function.
 #'

@@ -34,8 +34,8 @@ This behavior is likely to change, do not rely on it.
 \code{as_duckplyr_tibble()} converts the input to a tibble and then to a duckplyr data frame.
 }
 \details{
-Set the \code{DUCKPLYR_FALLBACK_INFO} and \code{DUCKPLYR_FORCE} environment variables
-for more control over the behavior, see \link{config} for more details.
+Set the \code{DUCKPLYR_FALLBACK_INFO} and \code{DUCKPLYR_FORCE} environment variables for more control over the behavior,
+see \link{config} for more details.
 }
 \examples{
 tibble(a = 1:3) \%>\%

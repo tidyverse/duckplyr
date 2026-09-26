@@ -17,32 +17,28 @@ duckplyr_expand_across <- function(data, quo) {
     envir = env
   )
 
-  # Abort expansion if there are any expression supplied because dots
-  # must be evaluated once per group in the data mask. Expanding the
-  # `across()` call would lead to either `n_group * n_col` evaluations
-  # if dots are delayed or only 1 evaluation if they are eagerly
-  # evaluated.
+  # Abort expansion if there are any expression supplied because dots must be evaluated once per group in the data mask.
+  # Expanding the `across()` call would lead to either `n_group * n_col` evaluations
+  # if dots are delayed or only 1 evaluation if they are eagerly evaluated.
   if (!is_null(expr$...)) {
     return(NULL)
   }
 
   if (".unpack" %in% names(expr)) {
-    # In dplyr this evaluates in the mask to reproduce the `mutate()` or
-    # `summarise()` context. We don't have a mask here but it's probably fine in
-    # almost all cases.
+    # In dplyr this evaluates in the mask to reproduce the `mutate()` or `summarise()` context.
+    # We don't have a mask here but it's probably fine in almost all cases.
     unpack <- eval_tidy(expr$.unpack, env = env)
   } else {
     unpack <- FALSE
   }
 
-  # Abort expansion if unpacking as expansion makes named expressions and we
-  # need the expressions to remain unnamed
+  # Abort expansion if unpacking as expansion makes named expressions
+  # and we need the expressions to remain unnamed
   if (!is_false(unpack)) {
     return(NULL)
   }
 
-  # Differentiate between missing and null (`match.call()` doesn't
-  # expand default argument)
+  # Differentiate between missing and null (`match.call()` doesn't expand default argument)
   if (!(".cols" %in% names(expr))) {
     # This is deprecated, let dplyr warn
     return(NULL)
@@ -58,9 +54,8 @@ duckplyr_expand_across <- function(data, quo) {
   fns <- as_quosure(expr$.fns, env)
   fns <- quo_eval_fns(fns, mask = env, error_call = error_call)
 
-  # In dplyr this evaluates in the mask to reproduce the `mutate()` or
-  # `summarise()` context. We don't have a mask here but it's probably fine in
-  # almost all cases.
+  # In dplyr this evaluates in the mask to reproduce the `mutate()` or `summarise()` context.
+  # We don't have a mask here but it's probably fine in almost all cases.
   names <- eval_tidy(expr$.names, env = env)
 
   setup <- duckplyr_across_setup(
@@ -211,8 +206,7 @@ fn_to_expr <- function(fn, env) {
   out
 }
 
-# Memoize get_ns_exports_lookup() to avoid recomputing the hash of
-# every function in every namespace every time
+# Memoize get_ns_exports_lookup() to avoid recomputing the hash of every function in every namespace every time
 on_load({
   env <- environment()
   assign(

@@ -101,8 +101,7 @@ rel_filter <- function(rel, exprs, ...) {
 #' rel_project
 #'
 #' `rel_project()` selects columns or creates new columns,
-#' to be used by [dplyr::select()], [dplyr::rename()],
-#' [dplyr::mutate()], [dplyr::relocate()], and others.
+#' to be used by [dplyr::select()], [dplyr::rename()], [dplyr::mutate()], [dplyr::relocate()], and others.
 #'
 #' @rdname new_relational
 #' @export

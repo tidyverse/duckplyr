@@ -14,8 +14,7 @@ opts_relational_relexpr_function <- function(
   constructor = c("relexpr_function", "next"),
   ...
 ) {
-  # What's forwarded through `...`will be accessible through the `opts`
-  # object in the methods.
+  # What's forwarded through `...`will be accessible through the `opts` object in the methods.
   # You might add arguments to the function, to document those options,
   # don't forget to forward them below as well
   constructive::.cstr_options(
@@ -34,8 +33,7 @@ opts_relational_relexpr_function <- function(
   ) {
     return(NextMethod())
   }
-  # This odd looking code dispatches to a method based on the name of
-  # the constructor rather than the class
+  # This odd looking code dispatches to a method based on the name of the constructor rather than the class
   UseMethod(
     ".cstr_construct.relational_relexpr_function",
     structure(NA, class = opts$constructor)
@@ -67,14 +65,12 @@ is_corrupted_relational_relexpr_function <- function(x) {
     )
   )
 
-  # This creates a call relexpr_function(...) where ... is the constructed code
-  # of the arguments stored in `args`
-  # Sometimes we want to construct the code of the args separately, i.e. store
-  # code rather than objects in `args`, and use `recurse = FALSE` below
+  # This creates a call relexpr_function(...) where ... is the constructed code of the arguments stored in `args`
+  # Sometimes we want to construct the code of the args separately,
+  # i.e. store code rather than objects in `args`, and use `recurse = FALSE` below
   code <- constructive::.cstr_apply(args, fun = "relexpr_function", ...)
 
-  # constructive::.cstr_repair_attributes() makes sure that attributes that are not built
-  # by the idiomatic constructor are generated
+  # constructive::.cstr_repair_attributes() makes sure that attributes that are not built by the idiomatic constructor are generated
   constructive::.cstr_repair_attributes(
     x,
     code,

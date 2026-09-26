@@ -56,24 +56,20 @@ Set to \code{FALSE} to only print the file names.}
 With \code{FALSE}, only a message is printed.}
 }
 \description{
-The \pkg{duckplyr} package aims at providing
-a fully compatible drop-in replacement for \pkg{dplyr}.
-To achieve this, only a carefully selected subset of \pkg{dplyr}'s operations,
-R functions, and R data types are implemented.
+The \pkg{duckplyr} package aims at providing a fully compatible drop-in replacement for \pkg{dplyr}.
+To achieve this, only a carefully selected subset of \pkg{dplyr}'s operations, R functions, and R data types are implemented.
 Whenever a request cannot be handled by DuckDB,
 \pkg{duckplyr} falls back to \pkg{dplyr}.
 See \verb{vignette("fallback"})` for details.
 
-To assist future development, the fallback situations can be logged
-to the console or to a local file and uploaded for analysis.
+To assist future development, the fallback situations can be logged to the console or to a local file and uploaded for analysis.
 By default, \pkg{duckplyr} will not log or upload anything.
 The functions and environment variables on this page control the process.
 
-\code{fallback_sitrep()} prints the current settings for fallback printing, logging,
-and uploading, the number of reports ready for upload, and the location of the logs.
+\code{fallback_sitrep()} prints the current settings for fallback printing, logging, and uploading,
+the number of reports ready for upload, and the location of the logs.
 
-\code{fallback_config()} configures the current settings for fallback printing,
-logging, and uploading.
+\code{fallback_config()} configures the current settings for fallback printing, logging, and uploading.
 Only settings that do not affect computation results can be configured,
 this is by design.
 The configuration is stored in a file under \code{tools::R_user_dir("duckplyr", "config")} .
@@ -94,20 +90,17 @@ Uploading is opt-in.
 
 The following environment variables control the logging and uploading:
 \itemize{
-\item \code{DUCKPLYR_FALLBACK_INFO} controls human-friendly alerts
-for fallback events.
+\item \code{DUCKPLYR_FALLBACK_INFO} controls human-friendly alerts for fallback events.
 If \code{TRUE}, a message is printed when a fallback to dplyr occurs
 because DuckDB cannot handle a request.
 These messages are never logged.
-\item \code{DUCKPLYR_FALLBACK_COLLECT} controls logging, set it
-to 1 or greater to enable logging.
+\item \code{DUCKPLYR_FALLBACK_COLLECT} controls logging, set it to 1 or greater to enable logging.
 If the value is 0, logging is disabled.
 Future versions of \pkg{duckplyr} may start logging additional data
 and thus require a higher value to enable logging.
 Set to 99 to enable logging for all future versions.
 Use \code{\link[usethis:edit_r_environ]{usethis::edit_r_environ()}} to edit the environment file.
-\item \code{DUCKPLYR_FALLBACK_AUTOUPLOAD} controls uploading, set it
-to 1 or greater to enable uploading.
+\item \code{DUCKPLYR_FALLBACK_AUTOUPLOAD} controls uploading, set it to 1 or greater to enable uploading.
 If the value is 0, uploading is disabled.
 Currently, uploading is active if the value is 1 or greater.
 Future versions of \pkg{duckplyr} may start logging additional data
@@ -118,17 +111,13 @@ Use \code{\link[usethis:edit_r_environ]{usethis::edit_r_environ()}} to edit the 
 It must point to a directory (existing or not) where the logs will be written.
 By default, logs are written to a directory in the user's cache directory
 as returned by \code{tools::R_user_dir("duckplyr", "cache")}.
-\item \code{DUCKPLYR_FALLBACK_VERBOSE} controls printing of log data, set it
-to \code{TRUE} or \code{FALSE} to enable or disable printing.
-If the value is \code{TRUE}, a message is printed to the console
-for each fallback situation.
+\item \code{DUCKPLYR_FALLBACK_VERBOSE} controls printing of log data, set it to \code{TRUE} or \code{FALSE} to enable or disable printing.
+If the value is \code{TRUE}, a message is printed to the console for each fallback situation.
 This setting is only relevant if logging is enabled,
 and mostly useful for \pkg{duckplyr}'s internal tests.
 }
 
-All code related to fallback logging and uploading is in the
-\href{https://github.com/tidyverse/duckplyr/blob/main/R/fallback.R}{\code{fallback.R}} and
-\href{https://github.com/tidyverse/duckplyr/blob/main/R/telemetry.R}{\code{telemetry.R}} files.
+All code related to fallback logging and uploading is in the \href{https://github.com/tidyverse/duckplyr/blob/main/R/fallback.R}{\code{fallback.R}} and \href{https://github.com/tidyverse/duckplyr/blob/main/R/telemetry.R}{\code{telemetry.R}} files.
 }
 \examples{
 fallback_sitrep()

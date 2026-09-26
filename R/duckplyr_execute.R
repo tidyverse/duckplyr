@@ -3,13 +3,10 @@
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
-#' The \pkg{duckplyr} package relies on a DBI connection
-#' to an in-memory database.
-#' The `duckplyr_execute()` function allows running SQL statements
-#' with this connection to, e.g., set up credentials
-#' or attach other databases.
-#' See <https://duckdb.org/docs/configuration/overview.html>
-#' for more information on the configuration options.
+#' The \pkg{duckplyr} package relies on a DBI connection to an in-memory database.
+#' The `duckplyr_execute()` function allows running SQL statements with this connection
+#' to, e.g., set up credentials or attach other databases.
+#' See <https://duckdb.org/docs/configuration/overview.html> for more information on the configuration options.
 #'
 #' @param sql The statement to run.
 #' @return The return value of the [DBI::dbExecute()] call, invisibly.

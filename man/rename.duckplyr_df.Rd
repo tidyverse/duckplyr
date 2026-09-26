@@ -19,8 +19,7 @@ For \code{rename_with()}: additional arguments passed onto \code{.fn}.}
 \description{
 This is a method for the \code{\link[dplyr:rename]{dplyr::rename()}} generic.
 See "Fallbacks" section for differences in implementation.
-\code{rename()} changes the names of individual variables
-using \code{new_name = old_name} syntax.
+\code{rename()} changes the names of individual variables using \code{new_name = old_name} syntax.
 }
 \section{Fallbacks}{
 

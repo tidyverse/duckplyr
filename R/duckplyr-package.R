@@ -5,8 +5,7 @@
 # an alternative for importing nearly everything from vctrs
 # https://github.com/tidyverse/dplyr/blob/16b472fb2afc50a87502c2b4ed803e2f5f82b9d6/R/dplyr.R#L7
 #
-# Can't use blanket cli import, imports must align with dplyr's imports
-# (except we can import all of dplyr)
+# Can't use blanket cli import, imports must align with dplyr's imports (except we can import all of dplyr)
 #
 #' @import rlang
 ## usethis namespace: start

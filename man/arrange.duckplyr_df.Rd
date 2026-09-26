@@ -39,13 +39,11 @@ help page under the \verb{Default locale} section.}
 \description{
 This is a method for the \code{\link[dplyr:arrange]{dplyr::arrange()}} generic.
 See "Fallbacks" section for differences in implementation.
-\code{arrange()} orders the rows of a data frame by the values of selected
-columns.
+\code{arrange()} orders the rows of a data frame by the values of selected columns.
 
-Unlike other dplyr verbs, \code{arrange()} largely ignores grouping; you
-need to explicitly mention grouping variables (or use  \code{.by_group = TRUE})
-in order to group by them, and functions of variables are evaluated
-once per data frame, not once per group.
+Unlike other dplyr verbs, \code{arrange()} largely ignores grouping;
+you need to explicitly mention grouping variables (or use  \code{.by_group = TRUE}) in order to group by them,
+and functions of variables are evaluated once per data frame, not once per group.
 }
 \section{Fallbacks}{
 

@@ -3,8 +3,7 @@
 #' @description
 #' `r lifecycle::badge("experimental")`
 #'
-#' `read_tbl_duckdb()` reads a table from a DuckDB database file
-#' by attaching the database file and reading the specified table.
+#' `read_tbl_duckdb()` reads a table from a DuckDB database file by attaching the database file and reading the specified table.
 #'
 #' The database file is attached to the default duckplyr connection
 #' and remains attached for the duration of the R session
@@ -14,7 +13,8 @@
 #' @inheritParams rlang::args_dots_empty
 #' @param path Path to the DuckDB database file.
 #' @param table_name The name of the table to read.
-#' @param schema The schema name where the table is located. Defaults to `"main"`.
+#' @param schema The schema name where the table is located.
+#'   Defaults to `"main"`.
 #'
 #' @seealso [read_sql_duckdb()], [db_exec()]
 #'

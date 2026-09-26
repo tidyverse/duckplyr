@@ -18,8 +18,8 @@
 
 \item{...}{Arguments passed on to methods}
 
-\item{prudence}{Memory protection, controls if DuckDB may convert
-intermediate results in DuckDB-managed memory to data frames in R memory.
+\item{prudence}{Memory protection,
+controls if DuckDB may convert intermediate results in DuckDB-managed memory to data frames in R memory.
 \itemize{
 \item \code{"lavish"}: regardless of size,
 \item \code{"stingy"}: never,
@@ -28,8 +28,7 @@ intermediate results in DuckDB-managed memory to data frames in R memory.
 
 The default is to inherit from the input.
 This argument is provided here only for convenience.
-The same effect can be achieved by forwarding the output to \code{\link[=as_duckdb_tibble]{as_duckdb_tibble()}}
-with the desired prudence.
+The same effect can be achieved by forwarding the output to \code{\link[=as_duckdb_tibble]{as_duckdb_tibble()}} with the desired prudence.
 See \code{vignette("prudence")} for more information.}
 
 \item{name}{The name of the table to store the result in.}

@@ -4,27 +4,22 @@
 #' `r lifecycle::badge("deprecated")`
 #'
 #' `df_from_file()` uses arbitrary table functions to read data.
-#' See <https://duckdb.org/docs/data/overview> for a documentation
-#' of the available functions and their options.
+#' See <https://duckdb.org/docs/data/overview> for a documentation of the available functions and their options.
 #' To read multiple files with the same schema,
 #' pass a wildcard or a character vector to the `path` argument,
 #'
 #' @inheritParams rlang::args_dots_empty
 #'
 #' @param path Path to files, glob patterns `*` and `?` are supported.
-#' @param table_function The name of a table-valued
-#'   DuckDB function such as `"read_parquet"`,
-#'   `"read_csv"`, `"read_csv_auto"` or `"read_json"`.
-#' @param options Arguments to the DuckDB function
-#'   indicated by `table_function`.
+#' @param table_function The name of a table-valued DuckDB function
+#'   such as `"read_parquet"`, `"read_csv"`, `"read_csv_auto"` or `"read_json"`.
+#' @param options Arguments to the DuckDB function indicated by `table_function`.
 #' @param class The class of the output.
 #'   By default, a tibble is created.
 #'   The returned object will always be a data frame.
-#'   Use `class = "data.frame"` or `class = character()`
-#'   to create a plain data frame.
+#'   Use `class = "data.frame"` or `class = character()` to create a plain data frame.
 #'
-#' @return A data frame for `df_from_file()`, or a `duckplyr_df` for
-#'   `duckplyr_df_from_file()`, extended by the provided `class`.
+#' @return A data frame for `df_from_file()`, or a `duckplyr_df` for `duckplyr_df_from_file()`, extended by the provided `class`.
 #'
 #' @export
 #' @keywords internal

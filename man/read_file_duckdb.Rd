@@ -15,14 +15,13 @@ read_file_duckdb(
 \arguments{
 \item{path}{Path to files, glob patterns \code{*} and \verb{?} are supported.}
 
-\item{table_function}{The name of a table-valued
-DuckDB function such as \code{"read_parquet"},
-\code{"read_csv"}, \code{"read_csv_auto"} or \code{"read_json"}.}
+\item{table_function}{The name of a table-valued DuckDB function
+such as \code{"read_parquet"}, \code{"read_csv"}, \code{"read_csv_auto"} or \code{"read_json"}.}
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{prudence}{Memory protection, controls if DuckDB may convert
-intermediate results in DuckDB-managed memory to data frames in R memory.
+\item{prudence}{Memory protection,
+controls if DuckDB may convert intermediate results in DuckDB-managed memory to data frames in R memory.
 \itemize{
 \item \code{"thrifty"}: up to a maximum size of 1 million cells,
 \item \code{"lavish"}: regardless of size,
@@ -33,16 +32,14 @@ The default is \code{"thrifty"} for the ingestion functions,
 and may be different for other functions.
 See \code{vignette("prudence")} for more information.}
 
-\item{options}{Arguments to the DuckDB function
-indicated by \code{table_function}.}
+\item{options}{Arguments to the DuckDB function indicated by \code{table_function}.}
 }
 \value{
 A duckplyr frame, see \code{\link[=as_duckdb_tibble]{as_duckdb_tibble()}} for details.
 }
 \description{
 \code{read_file_duckdb()} uses arbitrary readers to read data.
-See \url{https://duckdb.org/docs/data/overview} for a documentation
-of the available functions and their options.
+See \url{https://duckdb.org/docs/data/overview} for a documentation of the available functions and their options.
 To read multiple files with the same schema,
 pass a wildcard or a character vector to the \code{path} argument,
 }
@@ -50,10 +47,8 @@ pass a wildcard or a character vector to the \code{path} argument,
 
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-The \code{prudence} argument can also be a named numeric vector
-with at least one of \code{cells} or \code{rows}
-to limit the cells (values) and rows in the resulting data frame
-after automatic materialization.
+The \code{prudence} argument can also be a named numeric vector with at least one of \code{cells} or \code{rows}
+to limit the cells (values) and rows in the resulting data frame after automatic materialization.
 If both limits are specified, both are enforced.
 The equivalent of \code{"thrifty"} is \code{c(cells = 1e6)}.
 }

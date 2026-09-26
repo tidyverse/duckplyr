@@ -17,18 +17,12 @@ db_exec(sql, ..., con = NULL)
 The return value of the \code{\link[DBI:dbExecute]{DBI::dbExecute()}} call, invisibly.
 }
 \description{
-The \pkg{duckplyr} package relies on a DBI connection
-to an in-memory database.
-The \code{db_exec()} function allows running SQL statements
-with side effects on this connection.
-It can be used to execute statements that start with
-\code{PRAGMA}, \code{SET}, or \code{ATTACH}
-to, e.g., set up credentials, change configuration options,
-or attach other databases.
-See \url{https://duckdb.org/docs/configuration/overview.html}
-for more information on the configuration options,
-and \url{https://duckdb.org/docs/sql/statements/attach.html}
-for attaching databases.
+The \pkg{duckplyr} package relies on a DBI connection to an in-memory database.
+The \code{db_exec()} function allows running SQL statements with side effects on this connection.
+It can be used to execute statements that start with \code{PRAGMA}, \code{SET}, or \code{ATTACH}
+to, e.g., set up credentials, change configuration options, or attach other databases.
+See \url{https://duckdb.org/docs/configuration/overview.html} for more information on the configuration options,
+and \url{https://duckdb.org/docs/sql/statements/attach.html} for attaching databases.
 }
 \examples{
 db_exec("SET threads TO 2")

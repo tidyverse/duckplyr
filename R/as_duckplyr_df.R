@@ -13,8 +13,8 @@
 #' This behavior is likely to change, do not rely on it.
 #'
 #' @details
-#' Set the `DUCKPLYR_FALLBACK_INFO` and `DUCKPLYR_FORCE` environment variables
-#' for more control over the behavior, see [config] for more details.
+#' Set the `DUCKPLYR_FALLBACK_INFO` and `DUCKPLYR_FORCE` environment variables for more control over the behavior,
+#' see [config] for more details.
 #'
 #' @param .data data frame or tibble to transform
 #'

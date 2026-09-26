@@ -7,11 +7,9 @@
 last_rel()
 }
 \value{
-A duckdb "relation" object, or \code{NULL} if no computation has been
-performed yet.
+A duckdb "relation" object, or \code{NULL} if no computation has been performed yet.
 }
 \description{
 Before a result is computed, it is specified as a "relation" object.
-This function retrieves this object for the last computation that led to the
-materialization of a data frame.
+This function retrieves this object for the last computation that led to the materialization of a data frame.
 }

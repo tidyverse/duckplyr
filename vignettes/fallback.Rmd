@@ -48,7 +48,8 @@ The duckplyr package aims at providing a fully compatible drop-in replacement fo
 All operations, R functions, and data types that are supported by dplyr should work in an identical way with duckplyr.
 This is achieved in two ways:
 
-- A carefully selected subset of dplyr operations, R functions, and R data types are implemented in DuckDB, focusing on faithful translation.
+- A carefully selected subset of dplyr operations, R functions, and R data types are implemented in DuckDB,
+  focusing on faithful translation.
 - When DuckDB does not support an operation, duckplyr falls back to dplyr, guaranteeing identical behavior.
 
 ## DuckDB mode
@@ -118,7 +119,8 @@ fallback <-
   select(-a)
 ```
 
-The `verbose_plus_one()` function is not supported by DuckDB, so the `mutate()` step is forwarded to dplyr and already executed (eagerly) when the pipeline is defined.
+The `verbose_plus_one()` function is not supported by DuckDB,
+so the `mutate()` step is forwarded to dplyr and already executed (eagerly) when the pipeline is defined.
 This is confirmed by the `last_rel()` function:
 
 ```{r}
@@ -126,7 +128,8 @@ duckplyr::last_rel()
 ```
 
 Only the `arrange()` step is executed by DuckDB.
-Because the dplyr implementation of `mutate()` needs the data before it can proceed, the data is first converted to a data frame, and this triggers the materialization of the first step.
+Because the dplyr implementation of `mutate()` needs the data before it can proceed,
+the data is first converted to a data frame, and this triggers the materialization of the first step.
 
 The `explain()` function also confirms indirectly that at least a part of the operation is handled by dplyr:
 
@@ -156,7 +159,8 @@ For fallbacks to dplyr, automatic materialization must be allowed for the duck f
 Therefore, by making a data frame stingy, one can ensure a pipeline will error when a fallback to dplyr would have normally happened.
 See `vignette("prudence")` for details.
 
-By using operations supported by duckplyr and avoiding fallbacks as much as possible, your pipelines will be executed by DuckDB in an optimized way.
+By using operations supported by duckplyr and avoiding fallbacks as much as possible,
+your pipelines will be executed by DuckDB in an optimized way.
 As of duckplyr 1.1.0, most DuckDB functions can be used directly, see `vignette("duckdb")` for details.
 
 ## Configure fallbacks
@@ -175,4 +179,8 @@ The fallback mechanism in duckplyr allows for a seamless integration of dplyr ve
 It is transparent to the user and only triggers when necessary.
 With small or medium-sized data sets, it will not even be noticeable in most settings.
 
-See `vignette("large")` for techniques for working with large data, `vignette("limits")` for the currently implementated translations, `vignette("duckdb")` for direct access to DuckDB functions, `vignette("prudence")` for details on controlling fallback behavior, and `vignette("telemetry")` for the automatic reporting of fallback situations.
+See `vignette("large")` for techniques for working with large data,
+`vignette("limits")` for the currently implementated translations,
+`vignette("duckdb")` for direct access to DuckDB functions,
+`vignette("prudence")` for details on controlling fallback behavior,
+and `vignette("telemetry")` for the automatic reporting of fallback situations.

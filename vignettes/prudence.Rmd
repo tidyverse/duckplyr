@@ -31,7 +31,8 @@ Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
 ```
 
 Unlike traditional data frames, duckplyr defers computation until absolutely necessary, allowing DuckDB to optimize execution.
-This article explains how to control the materialization of data to maintain a seamless dplyr-like experience while remaining cautious of memory usage.
+This article explains how to control the materialization of data to maintain a seamless dplyr-like experience
+while remaining cautious of memory usage.
 
 
 
@@ -62,19 +63,25 @@ nrow(df)
 
 Under the hood, two key differences provide improved performance and usability:
 
-- **lazy materialization**: Unlike traditional data frames, duckplyr defers computation until absolutely necessary, i.e. lazily, allowing DuckDB to optimize execution.
-- **prudence**: Automatic materialization is controllable, as automatic materialization of large data might otherwise inadvertently lead to memory problems.
+- **lazy materialization**: Unlike traditional data frames,
+  duckplyr defers computation until absolutely necessary, i.e. lazily, allowing DuckDB to optimize execution.
+- **prudence**: Automatic materialization is controllable,
+  as automatic materialization of large data might otherwise inadvertently lead to memory problems.
 
-The term "prudence" is introduced here to set a clear distinction from the concept of "laziness", and because "control of automatic materialization" is a mouthful.
+The term "prudence" is introduced here to set a clear distinction from the concept of "laziness",
+and because "control of automatic materialization" is a mouthful.
 
 ## Eager and lazy computation
 
-For a duckplyr frame that is the result of a dplyr operation, accessing column data or retrieving the number of rows will trigger a computation that is carried out by DuckDB, not dplyr.
-In this sense, duckplyr frames are also "lazy": the computation is deferred until the last possible moment, allowing DuckDB to optimize the whole pipeline.
+For a duckplyr frame that is the result of a dplyr operation,
+accessing column data or retrieving the number of rows will trigger a computation that is carried out by DuckDB, not dplyr.
+In this sense, duckplyr frames are also "lazy":
+the computation is deferred until the last possible moment, allowing DuckDB to optimize the whole pipeline.
 
 ### Example
 
-This is explained in the following example that computes the mean arrival delay for flights departing from Newark airport (EWR) by day and month:
+This is explained in the following example
+that computes the mean arrival delay for flights departing from Newark airport (EWR) by day and month:
 
 ```{r}
 flights <- duckplyr::flights_df()
@@ -114,8 +121,11 @@ system.time(mean_arr_delay_ewr$mean_arr_delay[[1]])
 
 ### Comparison
 
-The functionality is similar to lazy tables in [dbplyr](https://dbplyr.tidyverse.org/) and lazy frames in [dtplyr](https://dtplyr.tidyverse.org/).
-However, the behavior is different: at the time of writing, the internal structure of a lazy table or frame is different from a data frame, and columns cannot be accessed directly.
+The functionality is similar to lazy tables in [dbplyr](https://dbplyr.tidyverse.org/)
+and lazy frames in [dtplyr](https://dtplyr.tidyverse.org/).
+However, the behavior is different:
+at the time of writing, the internal structure of a lazy table or frame is different from a data frame,
+and columns cannot be accessed directly.
 
 |             | **Eager** 😃 | **Lazy** 😴 |
 |-------------|:------------:|:-----------:|
@@ -124,7 +134,9 @@ However, the behavior is different: at the time of writing, the internal structu
 | **dtplyr**  |              |      ✅     |
 | **duckplyr**|      ✅      |      ✅     |
 
-In contrast, with [dplyr](https://dplyr.tidyverse.org/), each intermediate step and also the final result is a proper data frame, and computed right away, forfeiting the opportunity for optimization:
+In contrast, with [dplyr](https://dplyr.tidyverse.org/),
+each intermediate step and also the final result is a proper data frame, and computed right away,
+forfeiting the opportunity for optimization:
 
 ```{r}
 system.time(
@@ -159,11 +171,14 @@ Three levels of prudence are available:
 
 For lavish duckplyr frames, as in the two previous examples, the underlying DuckDB computation is carried out upon the first request.
 Once the results are computed, they are cached and subsequent requests are fast.
-This is a good choice for small to medium-sized data, where DuckDB can provide a nice speedup but materializing the data is affordable at any stage.
+This is a good choice for small to medium-sized data,
+where DuckDB can provide a nice speedup but materializing the data is affordable at any stage.
 This is the default for `duckdb_tibble()` and `as_duckdb_tibble()`.
 
 For stingy duckplyr frames, accessing a column or requesting the number of rows triggers an error.
-This is a good choice for large data sets where the cost of materializing the data may be prohibitive due to size or computation time, and the user wants to control when the computation is carried out and where the results are stored.
+This is a good choice for large data sets
+where the cost of materializing the data may be prohibitive due to size or computation time,
+and the user wants to control when the computation is carried out and where the results are stored.
 Results can be materialized explicitly with `collect()` and other functions.
 
 Thrifty duckplyr frames are a compromise between lavish and stingy, discussed further below.
@@ -205,7 +220,8 @@ This means that stingy duckplyr frames can also be used to enforce DuckDB operat
 
 For operations not supported by duckplyr, the original dplyr implementation is used as a fallback.
 As the original dplyr implementation accesses columns directly, the data must be materialized before a fallback can be executed.
-Therefore, stingy frames allow you to check that all operations are supported by DuckDB: for a stingy frame, fallbacks to dplyr are not possible.
+Therefore, stingy frames allow you to check that all operations are supported by DuckDB:
+for a stingy frame, fallbacks to dplyr are not possible.
 
 ```{r error = TRUE}
 flights_stingy |>
@@ -224,7 +240,8 @@ flights_stingy |>
   ungroup()
 ```
 
-By using operations supported by duckplyr and avoiding fallbacks as much as possible, your pipelines will be executed by DuckDB in an optimized way.
+By using operations supported by duckplyr and avoiding fallbacks as much as possible,
+your pipelines will be executed by DuckDB in an optimized way.
 
 
 ### From stingy to lavish
@@ -257,7 +274,8 @@ flights_stingy |>
 
 ### Comparison
 
-Stingy duckplyr frames behave like lazy tables in dbplyr and lazy frames in dtplyr: the computation only starts when you _explicitly_ request it with `collect.duckplyr_df()` or through other means.
+Stingy duckplyr frames behave like lazy tables in dbplyr and lazy frames in dtplyr:
+the computation only starts when you _explicitly_ request it with `collect.duckplyr_df()` or through other means.
 However, stingy duckplyr frames can be converted to lavish ones at any time, and vice versa.
 In dtplyr and dbplyr, there are no lavish frames: collection always needs to be explicit.
 
@@ -318,7 +336,11 @@ The duckplyr package provides
 - a drop-in replacement for duckplyr, which necessitates "eager" data frames that automatically materialize like in dplyr,
 - optimization by DuckDB, which means "lazy" evaluation where the data is materialized at the latest possible stage.
 
-Automatic materialization can be dangerous for memory with large data, so duckplyr provides a setting called `prudence` that controls automatic materialization:
+Automatic materialization can be dangerous for memory with large data,
+so duckplyr provides a setting called `prudence` that controls automatic materialization:
 is the data automatically materialized _always_ ("lavish" frames), _never_ ("stingy" frames) or _up to a certain size_ ("thrifty" frames).
 
-See `vignette("large")` for more details on working with large data sets, `vignette("fallback")` for fallbacks to dplyr, `vignette("limits")` for the operations supported by duckplyr, and `vignette("duckdb")` for using DuckDB functions directly.
+See `vignette("large")` for more details on working with large data sets,
+`vignette("fallback")` for fallbacks to dplyr,
+`vignette("limits")` for the operations supported by duckplyr,
+and `vignette("duckdb")` for using DuckDB functions directly.

@@ -1,11 +1,9 @@
 #' Retrieve details about the most recent computation
 #'
 #' Before a result is computed, it is specified as a "relation" object.
-#' This function retrieves this object for the last computation that led to the
-#' materialization of a data frame.
+#' This function retrieves this object for the last computation that led to the materialization of a data frame.
 #'
-#' @return A duckdb "relation" object, or `NULL` if no computation has been
-#'   performed yet.
+#' @return A duckdb "relation" object, or `NULL` if no computation has been performed yet.
 #' @export
 last_rel <- function() {
   duckplyr_the$last_rel

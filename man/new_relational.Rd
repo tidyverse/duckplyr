@@ -116,8 +116,7 @@ to be used by \code{\link[dplyr:collect]{dplyr::collect()}}.
 to be used by \code{\link[dplyr:filter]{dplyr::filter()}}.
 
 \code{rel_project()} selects columns or creates new columns,
-to be used by \code{\link[dplyr:select]{dplyr::select()}}, \code{\link[dplyr:rename]{dplyr::rename()}},
-\code{\link[dplyr:mutate]{dplyr::mutate()}}, \code{\link[dplyr:relocate]{dplyr::relocate()}}, and others.
+to be used by \code{\link[dplyr:select]{dplyr::select()}}, \code{\link[dplyr:rename]{dplyr::rename()}}, \code{\link[dplyr:mutate]{dplyr::mutate()}}, \code{\link[dplyr:relocate]{dplyr::relocate()}}, and others.
 
 \code{rel_aggregate()} combines several rows into one,
 to be used by \code{\link[dplyr:summarize]{dplyr::summarize()}}.

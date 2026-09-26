@@ -1,29 +1,43 @@
 
-<!-- README.md and index.md are generated from README.Rmd. Please edit that file. -->
+<!-- README.md and index.md are generated from README.Rmd.
+     Edit that file and render it the usual way: rmarkdown::render(), devtools::build_readme(), or the Knit button.
+     The cynkratemplate package must be installed; it supplies the output format. -->
 
 # duckplyr <a href="https://duckplyr.tidyverse.org"><img src="man/figures/logo.png" align="right" height="138" /></a>
 
 <!-- badges: start -->
 
-[![Lifecycle:
-stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![R-CMD-check](https://github.com/tidyverse/duckplyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidyverse/duckplyr/actions/workflows/R-CMD-check.yaml)
-[![Codecov test
-coverage](https://codecov.io/gh/tidyverse/duckplyr/graph/badge.svg)](https://app.codecov.io/gh/tidyverse/duckplyr)
+[![Codecov test coverage](https://codecov.io/gh/tidyverse/duckplyr/graph/badge.svg)](https://app.codecov.io/gh/tidyverse/duckplyr)
 <!-- badges: end -->
 
 > A **drop-in replacement** for dplyr, powered by DuckDB for **speed**.
 
-[dplyr](https://dplyr.tidyverse.org/) is the grammar of data
-manipulation in the tidyverse. The duckplyr package will run all of your
-existing dplyr code with identical results, using
-[DuckDB](https://duckdb.org/) where possible to compute the results
-faster. In addition, you can analyze larger-than-memory datasets
-straight from files on your disk or from the web.
+[dplyr](https://dplyr.tidyverse.org/) is the grammar of data manipulation in the tidyverse.
+The duckplyr package will run all of your existing dplyr code with identical results,
+using [DuckDB](https://duckdb.org/) where possible to compute the results faster.
+In addition, you can analyze larger-than-memory datasets straight from files on your disk or from the web.
 
-If you are new to dplyr, the best place to start is the [data
-transformation chapter](https://r4ds.hadley.nz/data-transform) in *R for
-Data Science*.
+If you are new to dplyr,
+the best place to start is the [data transformation chapter](https://r4ds.hadley.nz/data-transform) in *R for Data Science*.
+
+## Goals and non-goals
+
+duckplyr aims to:
+
+- Run all existing dplyr code with identical results, using exactly the same syntax and semantics.
+- Compute those results with DuckDB wherever it can, for speed.
+- Fall back to dplyr whenever DuckDB cannot handle an operation, function or data type, so that a pipeline never breaks.
+- Analyze larger-than-memory data straight from Parquet, CSV and JSON files on disk or on the web.
+- Keep automatic materialization under control, so that a large intermediate result does not silently fill memory.
+
+It is explicitly not trying to:
+
+- Generate SQL, or target database engines other than DuckDB: DuckDB's relational interface is used directly.
+- Preserve dplyr's row order by default: DuckDB does not guarantee order stability, so ordering is opt-in via `DUCKPLYR_OUTPUT_ORDER`.
+- Cover DuckDB functions with no R equivalent in the translation layer: the experimental `as_tbl()` and `dd$fun()` escape hatches do that.
+- Upload anything by itself: fallback reports are collected locally by default, and uploading is opt-in.
 
 ## Installation
 
@@ -33,8 +47,7 @@ Install duckplyr from CRAN with:
 install.packages("duckplyr")
 ```
 
-You can also install the development version of duckplyr from
-[R-universe](https://tidyverse.r-universe.dev/builds):
+You can also install the development version of duckplyr from [R-universe](https://tidyverse.r-universe.dev/builds):
 
 ``` r
 install.packages("duckplyr", repos = c("https://tidyverse.r-universe.dev", "https://cloud.r-project.org"))
@@ -49,8 +62,7 @@ pak::pak("tidyverse/duckplyr")
 
 ## Drop-in replacement for dplyr
 
-Calling `library(duckplyr)` overwrites dplyr methods, enabling duckplyr
-for the entire session.
+Calling `library(duckplyr)` overwrites dplyr methods, enabling duckplyr for the entire session.
 
 ``` r
 library(conflicted)
@@ -66,11 +78,10 @@ conflict_prefer("filter", "dplyr")
 #> over any other package.
 ```
 
-The following code aggregates the inflight delay by year and month for
-the first half of the year. We use a variant of the
-`nycflights13::flights` dataset, where the timezone has been set to UTC
-to work around a current limitation of duckplyr, see
-[`vignette("limits")`](https://duckplyr.tidyverse.org/articles/limits.html).
+The following code aggregates the inflight delay by year and month for the first half of the year.
+We use a variant of the `nycflights13::flights` dataset,
+where the timezone has been set to UTC to work around a current limitation of duckplyr,
+see [`vignette("limits")`](https://duckplyr.tidyverse.org/articles/limits.html).
 
 ``` r
 flights_df()
@@ -113,16 +124,16 @@ class(out)
 #> [1] "tbl_df"     "tbl"        "data.frame"
 ```
 
-Nothing has been computed yet. Querying the number of rows, or a column,
-starts the computation:
+Nothing has been computed yet.
+Querying the number of rows, or a column, starts the computation:
 
 ``` r
 out$month
 #> [1] 1 2 3 4 5 6
 ```
 
-Note that, unlike dplyr, the results are not ordered, see `?config` for
-details. However, once materialized, the results are stable:
+Note that, unlike dplyr, the results are not ordered, see `?config` for details.
+However, once materialized, the results are stable:
 
 ``` r
 out
@@ -137,8 +148,7 @@ out
 #> 6  2013     6               -4.24                    -7
 ```
 
-If a computation is not supported by DuckDB, duckplyr will automatically
-fall back to dplyr.
+If a computation is not supported by DuckDB, duckplyr will automatically fall back to dplyr.
 
 ``` r
 flights_df() |>
@@ -154,8 +164,7 @@ flights_df() |>
 #> 3 JFK    ABQ ACK ATL AUS BHM BNA BOS BQN BTV BUF BUR BWI CHS CLE CLT C…
 ```
 
-Restart R, or call `duckplyr::methods_restore()` to revert to the
-default dplyr implementation.
+Restart R, or call `duckplyr::methods_restore()` to revert to the default dplyr implementation.
 
 ``` r
 duckplyr::methods_restore()
@@ -164,8 +173,7 @@ duckplyr::methods_restore()
 
 ## Analyzing larger-than-memory data
 
-An extended variant of the `nycflights13::flights` dataset is also
-available for download as Parquet files.
+An extended variant of the `nycflights13::flights` dataset is also available for download as Parquet files.
 
 ``` r
 year <- 2022:2024
@@ -181,10 +189,13 @@ tibble(urls)
 #> 3 https://blobs.duckdb.org/flight-data-partitioned/Year=2024/data_0.pa…
 ```
 
-Using the [httpfs DuckDB
-extension](https://duckdb.org/docs/extensions/httpfs/overview.html), we
-can query these files directly from R, without even downloading them
-first.
+Using the [httpfs DuckDB extension](https://duckdb.org/docs/extensions/httpfs/overview.html),
+we can query these files directly from R, without even downloading them first.
+
+The output of the remaining chunks in this section is a recording, replayed from `README-fixtures/`.
+They query a remote dataset that we do not control,
+so a live render would need network access and would still differ from one render to the next.
+The setup chunk of `README.Rmd` says how to refresh the recording.
 
 ``` r
 db_exec("INSTALL httpfs")
@@ -193,11 +204,9 @@ db_exec("LOAD httpfs")
 flights <- read_parquet_duckdb(urls)
 ```
 
-Like with local data frames, queries on the remote data are executed
-lazily. Unlike with local data frames, the default is to disallow
-automatic materialization if the result is too large in order to protect
-memory: the results are not materialized until explicitly requested,
-with a `collect()` call for instance.
+Like with local data frames, queries on the remote data are executed lazily.
+Unlike with local data frames, the default is to disallow automatic materialization if the result is too large in order to protect memory:
+the results are not materialized until explicitly requested, with a `collect()` call for instance.
 
 ``` r
 nrow(flights)
@@ -246,9 +255,8 @@ flights |>
 #> 3  2024 3461319
 ```
 
-Complex queries can be executed on the remote data. Note how only the
-relevant columns are fetched and the 2024 data isn’t even touched, as
-it’s not needed for the result.
+Complex queries can be executed on the remote data.
+Note how only the relevant columns are fetched and the 2024 data isn't even touched, as it's not needed for the result.
 
 ``` r
 out <-
@@ -315,10 +323,12 @@ out |>
 #> │                           │
 #> │       ~13458250 Rows      │
 #> └───────────────────────────┘
+```
 
-out |>
-  print() |>
-  system.time()
+Printing the result runs the query:
+
+``` r
+out
 #> # A duckplyr data frame: 4 variables
 #>     Year Month MeanInFlightDelay MedianInFlightDelay
 #>    <dbl> <dbl>             <dbl>               <dbl>
@@ -333,16 +343,13 @@ out |>
 #>  9  2022     2             -6.52                  -8
 #> 10  2023     5             -6.17                  -7
 #> # ℹ more rows
-#>    user  system elapsed 
-#>   1.145   0.455   9.402
 ```
 
-Over 10M rows analyzed in about 10 seconds over the internet, that’s not
-bad. Of course, working with Parquet, CSV, or JSON files downloaded
-locally is possible as well.
+Over 13M rows analyzed over the internet,
+reading only the four columns the query needs, and only two of the three files.
+Of course, working with Parquet, CSV, or JSON files downloaded locally is possible as well.
 
-For full compatibility, `na.rm = FALSE` by default in the aggregation
-functions:
+For full compatibility, `na.rm = FALSE` by default in the aggregation functions:
 
 ``` r
 flights |>
@@ -355,37 +362,27 @@ flights |>
 
 ## Further reading
 
-- [`vignette("large")`](https://duckplyr.tidyverse.org/articles/large.html):
-  Tools for working with large data
+- [`vignette("large")`](https://duckplyr.tidyverse.org/articles/large.html): Tools for working with large data
 
-- [`vignette("prudence")`](https://duckplyr.tidyverse.org/articles/prudence.html):
-  How duckplyr can help protect memory when working with large data
+- [`vignette("prudence")`](https://duckplyr.tidyverse.org/articles/prudence.html): How duckplyr can help protect memory when working with large data
 
-- [`vignette("fallback")`](https://duckplyr.tidyverse.org/articles/fallback.html):
-  How the fallback to dplyr works internally
+- [`vignette("fallback")`](https://duckplyr.tidyverse.org/articles/fallback.html): How the fallback to dplyr works internally
 
-- [`vignette("limits")`](https://duckplyr.tidyverse.org/articles/limits.html):
-  Translation of dplyr employed by duckplyr, and current limitations
+- [`vignette("limits")`](https://duckplyr.tidyverse.org/articles/limits.html): Translation of dplyr employed by duckplyr, and current limitations
 
-- [`vignette("duckdb")`](https://duckplyr.tidyverse.org/articles/duckdb.html):
-  Using the full power of DuckDB
+- [`vignette("duckdb")`](https://duckplyr.tidyverse.org/articles/duckdb.html): Using the full power of DuckDB
 
-- [`vignette("developers")`](https://duckplyr.tidyverse.org/articles/developers.html):
-  Using duckplyr for individual data frames and in other packages
+- [`vignette("developers")`](https://duckplyr.tidyverse.org/articles/developers.html): Using duckplyr for individual data frames and in other packages
 
-- [`vignette("telemetry")`](https://duckplyr.tidyverse.org/articles/telemetry.html):
-  Telemetry in duckplyr
+- [`vignette("telemetry")`](https://duckplyr.tidyverse.org/articles/telemetry.html): Telemetry in duckplyr
 
 ## Getting help
 
-If you encounter a clear bug, please file an issue with a minimal
-reproducible example on
-[GitHub](https://github.com/tidyverse/duckplyr/issues). For questions
-and other discussion, please use
-[forum.posit.co](https://forum.posit.co/).
+If you encounter a clear bug,
+please file an issue with a minimal reproducible example on [GitHub](https://github.com/tidyverse/duckplyr/issues).
+For questions and other discussion, please use [forum.posit.co](https://forum.posit.co/).
 
 ## Code of conduct
 
-Please note that this project is released with a [Contributor Code of
-Conduct](https://duckplyr.tidyverse.org/CODE_OF_CONDUCT). By
-participating in this project you agree to abide by its terms.
+Please note that this project is released with a [Contributor Code of Conduct](https://duckplyr.tidyverse.org/CODE_OF_CONDUCT).
+By participating in this project you agree to abide by its terms.

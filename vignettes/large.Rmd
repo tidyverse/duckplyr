@@ -33,8 +33,10 @@ Sys.setenv(DUCKPLYR_FALLBACK_COLLECT = 0)
 ```
 
 Working with large datasets in R can be challenging, especially when performance and memory constraints are a concern.
-The duckplyr package, built on top of DuckDB, offers a powerful solution by enabling efficient data manipulation using familiar dplyr syntax.
-This article explores strategies for handling large datasets with duckplyr, covering ingestion, materialization of intermediate and final results, and good practice.
+The duckplyr package, built on top of DuckDB,
+offers a powerful solution by enabling efficient data manipulation using familiar dplyr syntax.
+This article explores strategies for handling large datasets with duckplyr,
+covering ingestion, materialization of intermediate and final results, and good practice.
 
 ```{r attach}
 library(conflicted)
@@ -53,8 +55,10 @@ This can become problematic:
 - RAM is limited, and data sets can be larger than the available RAM.
 
 A variety of tools have been developed to work with large data sets, also in R.
-One example is the dbplyr package, a dplyr backend that connects to SQL databases and is designed to work with various databases that support SQL.
-This is a viable approach if the data is already stored in a database, or if the data is stored in Parquet or CSV files and loaded as a lazy table via `duckdb::tbl_file()`.
+One example is the dbplyr package,
+a dplyr backend that connects to SQL databases and is designed to work with various databases that support SQL.
+This is a viable approach if the data is already stored in a database,
+or if the data is stored in Parquet or CSV files and loaded as a lazy table via `duckdb::tbl_file()`.
 
 The dbplyr package translates dplyr code to SQL.
 The syntax and semantics are very similar, but not identical to plain dplyr.
@@ -67,9 +71,13 @@ In contrast, the duckplyr package aims to be a fully compatible drop-in replacem
 
 Full compatibility means fewer surprises and less cognitive load for the user.
 With DuckDB as the backend, duckplyr can also handle large data sets that do not fit into RAM, keeping full dplyr compatibility.
-The tools for bringing data into and out of R memory are modeled after the dplyr and dbplyr packages, and are described in the following sections.
+The tools for bringing data into and out of R memory are modeled after the dplyr and dbplyr packages,
+and are described in the following sections.
 
-See `vignette("prudence")` on eager and lazy data, `vignette("limits")` for limitations in the translation employed by duckplyr, `vignette("duckdb")` for a way to overcome these limitations, and `vignette("fallback")` for more information on fallback.
+See `vignette("prudence")` on eager and lazy data,
+`vignette("limits")` for limitations in the translation employed by duckplyr,
+`vignette("duckdb")` for a way to overcome these limitations,
+and `vignette("fallback")` for more information on fallback.
 
 
 ## To duckplyr
@@ -174,7 +182,8 @@ The `options` argument can be used to control the reading.
 
 Similarly, the `read_parquet_duckdb()` and `read_json_duckdb()` functions can be used to read Parquet and JSON files, respectively.
 
-For reading from HTTPS or S3 URLs, the [httpfs extension](https://duckdb.org/docs/extensions/httpfs/overview.html) must be installed and loaded in each session.
+For reading from HTTPS or S3 URLs,
+the [httpfs extension](https://duckdb.org/docs/extensions/httpfs/overview.html) must be installed and loaded in each session.
 
 ```{r}
 db_exec("INSTALL httpfs")
@@ -192,7 +201,8 @@ flights_parquet
 
 In all cases, the data is read lazily: only the metadata is read initially, and the data is read as required.
 This means that data can be read from files that are larger than the available RAM.
-The Parquet format is particularly efficient for this purpose, as it stores data in a columnar format and allows reading only the columns that are required.
+The Parquet format is particularly efficient for this purpose,
+as it stores data in a columnar format and allows reading only the columns that are required.
 See `vignette("prudence")` for more details on the concept of lazy data.
 
 ## From DuckDB
@@ -217,7 +227,8 @@ read_sql_duckdb("SELECT * FROM external.data")
 
 ## Materialization
 
-In dbplyr, `compute()` is used to materialize a lazy table in a temporary table on the database, and `collect()` is used to bring the data into R memory.
+In dbplyr, `compute()` is used to materialize a lazy table in a temporary table on the database,
+and `collect()` is used to bring the data into R memory.
 This interface works exactly the same in duckplyr:
 
 ```{r}
@@ -274,7 +285,9 @@ duckdb_tibble(a = 1) |>
   explain()
 ```
 
-Just like with `compute.duckplyr_df()`, the return value of `compute_csv()` and `compute_parquet()` is a duckplyr frame that uses the created CSV or Parquet file and can be used in further computations.
+Just like with `compute.duckplyr_df()`,
+the return value of `compute_csv()` and `compute_parquet()` is a duckplyr frame that uses the created CSV or Parquet file
+and can be used in further computations.
 At the time of writing, direct JSON export is not supported.
 
 ## Memory usage
@@ -295,7 +308,8 @@ See [the DuckDB documentation](https://duckdb.org/docs/configuration/overview.ht
 
 ## The big picture
 
-The functions shown in this vignette allow the construction of data transformation pipelines spanning multiple data sources and data that is too large to fit into memory.
+The functions shown in this vignette allow the construction of data transformation pipelines
+spanning multiple data sources and data that is too large to fit into memory.
 Full compatibility with dplyr is provided, so existing code can be used with duckplyr with minimal changes.
 The lazy computation of duckplyr frames allows for efficient data processing, as only the required data is read from disk.
 The materialization functions allow the data to be persisted in temporary tables or files, depending on the use case.
@@ -304,11 +318,15 @@ A typical workflow might look like this:
 - Prepare all data sources as duckplyr frames: local data frames and files
 - Combine the data sources using dplyr verbs
 - Preview intermediate results as usual: the computation will be faster because only the first few rows are requested
-- To avoid rerunning the whole pipeline all over, use `compute.duckplyr_df()` or `compute_parquet()` to materialize any intermediate result that is too large to fit into memory
+- To avoid rerunning the whole pipeline all over,
+  use `compute.duckplyr_df()` or `compute_parquet()` to materialize any intermediate result that is too large to fit into memory
 - Collect the final result using `collect.duckplyr_df()` or write it to a file using `compute_csv()` or `compute_parquet()`
 
-There is a caveat: due to the design of duckplyr, if a dplyr verb is not supported or uses a function that is not supported, the data will be read into memory before being processed further.
-By default, if the data pipeline starts with an ingestion function, the data will only be read into memory if it has less than 1 million cells or values in the table:
+There is a caveat: due to the design of duckplyr,
+if a dplyr verb is not supported or uses a function that is not supported,
+the data will be read into memory before being processed further.
+By default, if the data pipeline starts with an ingestion function,
+the data will only be read into memory if it has less than 1 million cells or values in the table:
 
 ```{r error = TRUE}
 flights_parquet |>
@@ -324,4 +342,5 @@ flights_parquet |>
   group_by(Month)
 ```
 
-See `vignette("prudence")` for the concepts and mechanisms at play, and `vignette("fallback")` for a detailed explanation of the fallback mechanism.
+See `vignette("prudence")` for the concepts and mechanisms at play,
+and `vignette("fallback")` for a detailed explanation of the fallback mechanism.

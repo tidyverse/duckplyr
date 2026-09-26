@@ -15,13 +15,10 @@ The return value of the \code{\link[DBI:dbExecute]{DBI::dbExecute()}} call, invi
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
-The \pkg{duckplyr} package relies on a DBI connection
-to an in-memory database.
-The \code{duckplyr_execute()} function allows running SQL statements
-with this connection to, e.g., set up credentials
-or attach other databases.
-See \url{https://duckdb.org/docs/configuration/overview.html}
-for more information on the configuration options.
+The \pkg{duckplyr} package relies on a DBI connection to an in-memory database.
+The \code{duckplyr_execute()} function allows running SQL statements with this connection
+to, e.g., set up credentials or attach other databases.
+See \url{https://duckdb.org/docs/configuration/overview.html} for more information on the configuration options.
 }
 \examples{
 duckplyr_execute("SET threads TO 2")

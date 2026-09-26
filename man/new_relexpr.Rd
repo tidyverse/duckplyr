@@ -74,8 +74,7 @@ an object of class \code{"relational_relexpr"}
 an object of class \code{"relational_relexpr"}
 }
 \description{
-These functions provide a backend-agnostic way to construct expression trees
-built of column references, constants, and functions.
+These functions provide a backend-agnostic way to construct expression trees built of column references, constants, and functions.
 All subexpressions in an expression tree can have an alias.
 
 \code{new_relexpr()} constructs an object of class \code{"relational_relexpr"}.

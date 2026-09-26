@@ -170,8 +170,7 @@ rel_find_call_candidates <- function(fun, call = caller_env()) {
     name <- name[[3]]
 
     if (my_pkg == "dd" || my_pkg %in% rel_find_packages(name)) {
-      # Package name provided by the user, shortcut if found in list of packages
-      # (requires non-NULL pkgs), no check needed
+      # Package name provided by the user, shortcut if found in list of packages (requires non-NULL pkgs), no check needed
       return(list(
         packages = my_pkg,
         name = name,
@@ -501,9 +500,8 @@ rel_translate_lang <- function(
     NULL
   )
 
-  # Named list of c(window_alias, non_window_alias) for functions that can
-  # appear in window context. NA_character_ means "not applicable" for that
-  # context (function can't be used there).
+  # Named list of c(window_alias, non_window_alias) for functions that can appear in window context.
+  # NA_character_ means "not applicable" for that context (function can't be used there).
   known_window <- list(
     # Window-only functions (no aggregate form)
     row_number = c("row_number", NA_character_),

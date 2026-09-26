@@ -2,19 +2,17 @@
 #'
 #' @description
 #' `read_file_duckdb()` uses arbitrary readers to read data.
-#' See <https://duckdb.org/docs/data/overview> for a documentation
-#' of the available functions and their options.
+#' See <https://duckdb.org/docs/data/overview> for a documentation of the available functions and their options.
 #' To read multiple files with the same schema,
 #' pass a wildcard or a character vector to the `path` argument,
 #'
 #' @inheritParams rlang::args_dots_empty
 #'
 #' @param path Path to files, glob patterns `*` and `?` are supported.
-#' @param table_function The name of a table-valued
-#'   DuckDB function such as `"read_parquet"`,
-#'   `"read_csv"`, `"read_csv_auto"` or `"read_json"`.
-#' @param prudence Memory protection, controls if DuckDB may convert
-#'   intermediate results in DuckDB-managed memory to data frames in R memory.
+#' @param table_function The name of a table-valued DuckDB function
+#'   such as `"read_parquet"`, `"read_csv"`, `"read_csv_auto"` or `"read_json"`.
+#' @param prudence Memory protection,
+#'   controls if DuckDB may convert intermediate results in DuckDB-managed memory to data frames in R memory.
 #'
 #'   - `"thrifty"`: up to a maximum size of 1 million cells,
 #'   - `"lavish"`: regardless of size,
@@ -24,8 +22,7 @@
 #' and may be different for other functions.
 #' See `vignette("prudence")` for more information.
 #'
-#' @param options Arguments to the DuckDB function
-#'   indicated by `table_function`.
+#' @param options Arguments to the DuckDB function indicated by `table_function`.
 #'
 #' @inheritSection duckdb_tibble Fine-tuning prudence
 #'

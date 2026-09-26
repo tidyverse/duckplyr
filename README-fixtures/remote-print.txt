@@ -1,0 +1,25 @@
+#> [38;5;246m# A duckplyr data frame: 110 variables[39m
+#>     [1mYear[22m [1mQuarter[22m [1mMonth[22m [1mDayofMonth[22m [1mDayOfWeek[22m [1mFlightDate[22m [1mReport…¹[22m [1mDOT_I…²[22m
+#>    [3m[38;5;246m<dbl>[39m[23m   [3m[38;5;246m<dbl>[39m[23m [3m[38;5;246m<dbl>[39m[23m      [3m[38;5;246m<dbl>[39m[23m     [3m[38;5;246m<dbl>[39m[23m [3m[38;5;246m<date>[39m[23m     [3m[38;5;246m<chr>[39m[23m      [3m[38;5;246m<dbl>[39m[23m
+#> [38;5;250m 1[39m  [4m2[24m022       1     1         14         5 2022-01-14 YX         [4m2[24m[4m0[24m452
+#> [38;5;250m 2[39m  [4m2[24m022       1     1         15         6 2022-01-15 YX         [4m2[24m[4m0[24m452
+#> [38;5;250m 3[39m  [4m2[24m022       1     1         16         7 2022-01-16 YX         [4m2[24m[4m0[24m452
+#> [38;5;250m 4[39m  [4m2[24m022       1     1         17         1 2022-01-17 YX         [4m2[24m[4m0[24m452
+#> [38;5;250m 5[39m  [4m2[24m022       1     1         18         2 2022-01-18 YX         [4m2[24m[4m0[24m452
+#> [38;5;250m 6[39m  [4m2[24m022       1     1         19         3 2022-01-19 YX         [4m2[24m[4m0[24m452
+#> [38;5;250m 7[39m  [4m2[24m022       1     1         20         4 2022-01-20 YX         [4m2[24m[4m0[24m452
+#> [38;5;250m 8[39m  [4m2[24m022       1     1         21         5 2022-01-21 YX         [4m2[24m[4m0[24m452
+#> [38;5;250m 9[39m  [4m2[24m022       1     1         22         6 2022-01-22 YX         [4m2[24m[4m0[24m452
+#> [38;5;250m10[39m  [4m2[24m022       1     1         23         7 2022-01-23 YX         [4m2[24m[4m0[24m452
+#> [38;5;246m# ℹ more rows[39m
+#> [38;5;246m# ℹ abbreviated names: ¹​Reporting_Airline, ²​DOT_ID_Reporting_Airline[39m
+#> [38;5;246m# ℹ 102 more variables: [1mIATA_CODE_Reporting_Airline[22m <chr>,[39m
+#> [38;5;246m#   [1mTail_Number[22m <chr>, [1mFlight_Number_Reporting_Airline[22m <dbl>,[39m
+#> [38;5;246m#   [1mOriginAirportID[22m <dbl>, [1mOriginAirportSeqID[22m <dbl>,[39m
+#> [38;5;246m#   [1mOriginCityMarketID[22m <dbl>, [1mOrigin[22m <chr>, [1mOriginCityName[22m <chr>,[39m
+#> [38;5;246m#   [1mOriginState[22m <chr>, [1mOriginStateFips[22m <chr>, [1mOriginStateName[22m <chr>,[39m
+#> [38;5;246m#   [1mOriginWac[22m <dbl>, [1mDestAirportID[22m <dbl>, [1mDestAirportSeqID[22m <dbl>,[39m
+#> [38;5;246m#   [1mDestCityMarketID[22m <dbl>, [1mDest[22m <chr>, [1mDestCityName[22m <chr>,[39m
+#> [38;5;246m#   [1mDestState[22m <chr>, [1mDestStateFips[22m <chr>, [1mDestStateName[22m <chr>,[39m
+#> [38;5;246m#   [1mDestWac[22m <dbl>, [1mCRSDepTime[22m <chr>, [1mDepTime[22m <chr>, [1mDepDelay[22m <dbl>,[39m
+#> [38;5;246m#   [1mDepDelayMinutes[22m <dbl>, [1mDepDel15[22m <dbl>, …[39m

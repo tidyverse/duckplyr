@@ -31,3 +31,4 @@
 ^air\.toml$
 ^\.vscode$
 ^\.ccache$
+^README-fixtures$

@@ -19,8 +19,8 @@ compute_parquet(x, path, ...)
 
 \item{...}{Additional arguments passed to methods.}
 
-\item{prudence}{Memory protection, controls if DuckDB may convert
-intermediate results in DuckDB-managed memory to data frames in R memory.
+\item{prudence}{Memory protection,
+controls if DuckDB may convert intermediate results in DuckDB-managed memory to data frames in R memory.
 \itemize{
 \item \code{"lavish"}: regardless of size,
 \item \code{"stingy"}: never,
@@ -29,13 +29,11 @@ intermediate results in DuckDB-managed memory to data frames in R memory.
 
 The default is to inherit from the input.
 This argument is provided here only for convenience.
-The same effect can be achieved by forwarding the output to \code{\link[=as_duckdb_tibble]{as_duckdb_tibble()}}
-with the desired prudence.
+The same effect can be achieved by forwarding the output to \code{\link[=as_duckdb_tibble]{as_duckdb_tibble()}} with the desired prudence.
 See \code{vignette("prudence")} for more information.}
 
 \item{options}{A list of additional options to pass to create the Parquet file,
-see \url{https://duckdb.org/docs/sql/statements/copy.html#parquet-options}
-for details.}
+see \url{https://duckdb.org/docs/sql/statements/copy.html#parquet-options} for details.}
 }
 \value{
 A data frame (the class may vary based on the input).

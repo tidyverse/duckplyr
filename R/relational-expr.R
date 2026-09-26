@@ -1,8 +1,7 @@
 #' Relational expressions
 #'
 #' @description
-#' These functions provide a backend-agnostic way to construct expression trees
-#' built of column references, constants, and functions.
+#' These functions provide a backend-agnostic way to construct expression trees built of column references, constants, and functions.
 #' All subexpressions in an expression tree can have an alias.
 #'
 #' `new_relexpr()` constructs an object of class `"relational_relexpr"`.

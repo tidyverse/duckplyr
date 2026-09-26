@@ -1,0 +1,4 @@
+#> [38;5;246m# A duckplyr data frame: 1 variable[39m
+#>   [1m`mean(ArrDelay - DepDelay)`[22m
+#>                         [3m[38;5;246m<dbl>[39m[23m
+#> [38;5;250m1[39m                          [31mNA[39m

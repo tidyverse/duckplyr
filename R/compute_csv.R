@@ -27,8 +27,7 @@ compute_csv <- function(x, path, ...) {
 
 #' @inheritParams compute.duckplyr_df
 #' @param options A list of additional options to pass to create the storage format,
-#'   see <https://duckdb.org/docs/sql/statements/copy.html#csv-options>
-#'   for details.
+#'   see <https://duckdb.org/docs/sql/statements/copy.html#csv-options> for details.
 #'
 #' @rdname compute_csv
 #' @export
