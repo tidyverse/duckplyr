@@ -70,7 +70,7 @@
     Output
       # A tibble: 5 x 2
             a     n
-        <int> <int>
+      * <int> <int>
       1     1     1
       2     2     1
       3     3     1
