@@ -432,6 +432,41 @@
       ! `mean(na.rm = FALSE)` not supported in window functions
       i Use `mean(na.rm = TRUE)` after checking for missing values
 
+# anyNA translation
+
+    Code
+      rel_translate(expr(anyNA(a)), df)
+    Output
+      List of 4
+       $ name     : chr "anyNA"
+       $ args     :List of 1
+        ..$ :List of 3
+        .. ..$ name : chr "a"
+        .. ..$ rel  : NULL
+        .. ..$ alias: NULL
+        .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
+       $ order_bys: NULL
+       $ alias    : NULL
+       - attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
+       - attr(*, "used")= chr "a"
+       - attr(*, "has_window")= logi FALSE
+
+---
+
+    Code
+      rel_translate(expr(anyNA(a)), df, need_window = TRUE)
+    Condition
+      Error:
+      ! `anyNA()` is not supported in window functions
+
+---
+
+    Code
+      rel_translate(expr(anyNA(a, recursive = TRUE)), df)
+    Condition
+      Error:
+      ! `anyNA(recursive = TRUE)` not supported
+
 # aggregation primitives with na.rm and window functions
 
     Code
