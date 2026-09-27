@@ -37,7 +37,7 @@ df
 tbl <- as_tbl(df)
 tbl
 #> # A query:  ?? x 1
-#> # Database: DuckDB 1.5.5 [unknown@Linux 7.0.0-1012-azure:R 4.6.1//tmp/RtmpKzbRg0/duckplyr/duckplyr3474438eef35.duckdb]
+#> # Database: DuckDB 1.5.5 [unknown@Linux 7.0.0-1012-azure:R 4.6.1//tmp/RtmpncdNMH/duckplyr/duckplyr3531777123c8.duckdb]
 #>       a
 #>   <int>
 #> 1     1

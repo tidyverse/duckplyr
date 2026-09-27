@@ -1,5 +1,42 @@
 # Changelog
 
+## duckplyr 1.2.1.9914 (2026-09-26)
+
+### Bug fixes
+
+- Correct wording in instructions for enabling fallback logging
+  ([\#141](https://github.com/tidyverse/duckplyr/issues/141)).
+
+### Chore
+
+- `pkg_review()`
+  ([\#150](https://github.com/tidyverse/duckplyr/issues/150)).
+
+### Documentation
+
+- Adopt the shared README rendering configuration
+  ([@krlmlr](https://github.com/krlmlr),
+  [\#955](https://github.com/tidyverse/duckplyr/issues/955)).
+
+### Testing
+
+- Test that `vec_ptype()` does not materialize
+  ([\#149](https://github.com/tidyverse/duckplyr/issues/149)).
+
+### Uncategorized
+
+- Feat(ci): Run R-hub checks on every `cran-*` push, through
+  `rhub-setup` and `rhub-check` actions (cynkra/cynkratemplate#145).
+
+- Feat(ci): Report coverage on pull requests from this repository
+  (cynkra/cynkratemplate#146).
+
+- Ci: Bound every job with `timeout-minutes`
+  (cynkra/cynkratemplate#144).
+
+- Fix(ci): Collect the fleet’s workflow fixes after the move to central
+  actions (cynkra/cynkratemplate#139).
+
 ## duckplyr 1.2.1.9913 (2026-09-13)
 
 ### Bug fixes
