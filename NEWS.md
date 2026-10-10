@@ -1,5 +1,12 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.2.1.9915 (2026-10-10)
+
+## Continuous integration
+
+- Run coverage checks after pkgdown push.
+
+
 # duckplyr 1.2.1.9914 (2026-09-26)
 
 ## Bug fixes
