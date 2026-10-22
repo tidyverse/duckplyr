@@ -7,7 +7,7 @@
       ---------------------
       --- Relation Tree ---
       ---------------------
-      Scan Table [duckplyr_4hYuvhNS26]
+      Scan Table ["temp".main.duckplyr_4hYuvhNS26]
       
       ---------------------
       -- Result Columns  --
