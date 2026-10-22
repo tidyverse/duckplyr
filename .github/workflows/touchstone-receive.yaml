@@ -1,0 +1,39 @@
+name: Continuous Benchmarks (Receive)
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    paths:
+      # Directories with source code and benchmarking code
+      - "R/**"
+      - "touchstone/**"
+      # Benchmarking config file
+      - ".github/workflows/touchstone-*.yaml"
+      # Package metadata
+      - DESCRIPTION
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      RSPM: "https://packagemanager.rstudio.com/all/__linux__/noble/latest"
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: lorenzwalthert/touchstone/actions/receive@main
+        with:
+          cache-version: 1
+          # Packages needed by the benchmark harness that aren't installed via
+          # the package's own dependencies:
+          # - qs2 is declared under Enhances (not installed by default) and is
+          #   used to cache the TPC-H tables (touchstone/script.R,
+          #   tools/31-tpch-load-qs.R).
+          # - pkgload and fs are undeclared but used by the data-generation
+          #   scripts (tools/30-tpch-export.R, tools/31-tpch-load-qs.R).
+          extra-packages: |
+            any::qs2
+            any::pkgload
+            any::fs
