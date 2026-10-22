@@ -44,7 +44,7 @@
       ---------------------
       Projection [a as a]
         Order [___row_number ASC]
-          Filter [(a = 1.0)]
+          Filter [(a = CAST(1.0 AS DOUBLE))]
             Projection [a as a, row_number() OVER () as ___row_number]
               r_dataframe_scan(0xdeadbeef)
       
