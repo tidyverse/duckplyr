@@ -2,12 +2,17 @@ rel_join_impl <- function(
   x,
   y,
   by,
+  copy,
   join,
   na_matches,
   suffix = c(".x", ".y"),
   keep = NULL,
   error_call = caller_env()
 ) {
+  # Forcing copy might be an error, fall back in this case
+  # Examples: joyn, gtsummary, crosshap
+  y <- auto_copy(x, y, copy = copy)
+
   mutating <- !(join %in% c("semi", "anti"))
 
   if (mutating) {
