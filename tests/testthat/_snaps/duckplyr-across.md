@@ -92,6 +92,23 @@
       tibble(x_mean = base::mean(x), x_median = stats::median(x), y_mean = base::mean(y), 
           y_median = stats::median(y))
 
+# duckplyr_expand_across() errors cleanly
+
+    Code
+      test_duckplyr_expand_across(tibble::tibble(x = 0, y = 0), across(zzz, mean))
+    Condition
+      Error in `test_duckplyr_expand_across()`:
+      ! Can't select columns that don't exist.
+      x Column `zzz` doesn't exist.
+
+---
+
+    Code
+      test_duckplyr_expand_across(tibble::tibble(x = 0, y = 0), across(x:y, 42))
+    Condition
+      Error in `test_duckplyr_expand_across()`:
+      ! `.fns` must be a function, a formula, or a list of functions/formulas.
+
 # duckplyr_expand_across() with primitive functions
 
     Code

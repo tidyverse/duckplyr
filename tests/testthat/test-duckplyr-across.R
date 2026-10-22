@@ -95,6 +95,22 @@ test_that("duckplyr_expand_across() failing", {
   ))
 })
 
+test_that("duckplyr_expand_across() errors cleanly", {
+  expect_snapshot(error = TRUE, {
+    test_duckplyr_expand_across(
+      tibble::tibble(x = 0, y = 0),
+      across(zzz, mean)
+    )
+  })
+
+  expect_snapshot(error = TRUE, {
+    test_duckplyr_expand_across(
+      tibble::tibble(x = 0, y = 0),
+      across(x:y, 42)
+    )
+  })
+})
+
 test_that("duckplyr_expand_across() with primitive functions", {
   expect_snapshot({
     test_duckplyr_expand_across(

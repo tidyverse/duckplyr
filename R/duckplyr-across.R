@@ -1,6 +1,6 @@
 # A simplified version of functions in dplyr's across.R
 
-duckplyr_expand_across <- function(data, quo) {
+duckplyr_expand_across <- function(data, quo, error_call = caller_env()) {
   stopifnot(is.data.frame(data))
 
   quo_data <- attr(quo, "dplyr:::data")
