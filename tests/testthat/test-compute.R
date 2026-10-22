@@ -3,7 +3,7 @@ test_that("compute()", {
 
   df <- duckdb_tibble(x = c(1, 2))
   out <- compute(df)
-  expect_snapshot({
+  expect_snapshot(transform = scrub_plan, {
     duckdb_rel_from_df(out)
   })
 

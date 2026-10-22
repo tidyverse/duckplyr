@@ -123,7 +123,7 @@ test_that("duckdb_rel_from_df() uses materialized results", {
 
   transform <- function(x) {
     x <- gsub("0x[0-9a-f]+", "0xdeadbeef", x)
-    x
+    scrub_plan(x)
   }
 
   expect_equal(n_calls, 0)
