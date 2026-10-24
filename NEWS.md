@@ -1,5 +1,20 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.2.1.9915 (2026-10-24)
+
+## Chore
+
+- Auto-update from GitHub Actions (#964).
+
+- Auto-update from GitHub Actions.
+
+  Run: https://github.com/krlmlr/duckplyr/actions/runs/36367062553
+
+## Continuous integration
+
+- Run coverage checks after pkgdown push.
+
+
 # duckplyr 1.2.1.9914 (2026-09-26)
 
 ## Bug fixes
