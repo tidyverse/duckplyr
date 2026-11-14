@@ -4,7 +4,6 @@
 right_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ..., keep = NULL, na_matches = c("na", "never"), multiple = "all", unmatched = "drop", relationship = NULL) {
   check_dots_empty0(...)
   error_call <- caller_env()
-  y <- auto_copy(x, y, copy = copy)
 
   # Our implementation
   duckplyr_error <- rel_try(list(name = "right_join", x = x, y = y, args = try_list(by = if (!is.null(by) && !is_cross_by(by)) as_join_by(by), copy = copy, keep = keep, na_matches = na_matches, multiple = multiple, unmatched = unmatched, relationship = relationship)),
@@ -19,7 +18,7 @@ right_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, suffix = c(".x
     "{.arg multiple} not supported" = !identical(multiple, "all"),
     "{.arg unmatched} not supported" = !identical(unmatched, "drop"),
     {
-      out <- rel_join_impl(x, y, by, "right", na_matches, suffix, keep, error_call)
+      out <- rel_join_impl(x, y, by, copy, "right", na_matches, suffix, keep, error_call)
       return(out)
     }
   )

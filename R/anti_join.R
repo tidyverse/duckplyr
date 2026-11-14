@@ -4,7 +4,6 @@
 anti_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches = c("na", "never")) {
   check_dots_empty0(...)
   error_call <- caller_env()
-  y <- auto_copy(x, y, copy = copy)
 
   # https://github.com/duckdb/duckdb/issues/6597
   na_matches <- check_na_matches(na_matches, error_call = error_call)
@@ -13,7 +12,7 @@ anti_join.duckplyr_df <- function(x, y, by = NULL, copy = FALSE, ..., na_matches
   duckplyr_error <- rel_try(list(name = "anti_join", x = x, y = y, args = try_list(by = if (!is.null(by) && !is_cross_by(by)) as_join_by(by), copy = copy, na_matches = na_matches)),
     "No restrictions" = FALSE,
     {
-      out <- rel_join_impl(x, y, by, "anti", na_matches, error_call = error_call)
+      out <- rel_join_impl(x, y, by, copy, "anti", na_matches, error_call = error_call)
       return(out)
     }
   )
