@@ -16,7 +16,7 @@ on_load({
 }
 
 .onAttach <- function(lib, pkg) {
-  if (!exists(".__DEVTOOLS__", asNamespace("duckplyr"))) {
+  if (!exists(".__DEVTOOLS__", asNamespace("duckplyr")) & Sys.getenv("DUCKPLYR_METHODS_OVERWRITE") != "FALSE") {
     msg <- character()
     suppressMessages(try_fetch(methods_overwrite(), message = function(cond) {
       msg <<- c(msg, conditionMessage(cond))
