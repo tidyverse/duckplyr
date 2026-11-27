@@ -73,7 +73,7 @@ function creates a duckplyr data frame from vectors:
 
 df <- duckdb_tibble(x = 1:3, y = letters[1:3])
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/Rtmp3qrQPu/duckdb
+#> ℹ /tmp/RtmpK585vB/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
@@ -133,7 +133,7 @@ table:
 path_duckdb <- tempfile(fileext = ".duckdb")
 con <- DBI::dbConnect(duckdb::duckdb(path_duckdb))
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/Rtmp3qrQPu/duckdb
+#> ℹ /tmp/RtmpK585vB/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
@@ -145,7 +145,7 @@ DBI::dbWriteTable(con, "data", data.frame(x = 1:3, y = letters[1:3]))
 dbplyr_data <- tbl(con, "data")
 dbplyr_data
 #> # A query:  ?? x 2
-#> # Database: DuckDB 1.5.5 [unknown@Linux 7.0.0-1012-azure:R 4.6.1//tmp/Rtmp3qrQPu/file3d6a59fbaa2.duckdb]
+#> # Database: DuckDB 2.0.1 [unknown@Linux 7.0.0-1020-azure:R 4.6.2//tmp/RtmpK585vB/file5effcc789b4.duckdb]
 #>       x y    
 #>   <int> <chr>
 #> 1     1 a    
@@ -160,20 +160,12 @@ dbplyr_data |>
 #> 
 #> <PLAN>
 #> physical_plan
-#> ┌---------------------------┐
-#> │          SEQ_SCAN         │
-#> │    --------------------   │
-#> │           Table:          │
-#> │file3d6a59fbaa2.main."data"│
-#> │                           │
-#> │   Type: Sequential Scan   │
-#> │                           │
-#> │        Projections:       │
-#> │             x             │
-#> │             y             │
-#> │                           │
-#> │          ~3 rows          │
-#> └---------------------------┘
+#> ╭- Seq Scan -------------------------╮
+#> │ Table: file5effcc789b4.main."data" │
+#> │ Type: Sequential Scan              │
+#> │ Projections: x, y                  │
+#> │ ~3 rows                            │
+#> ╰------------------------------------╯
 ```
 
 The [`explain()`](https://dplyr.tidyverse.org/reference/explain.html)
@@ -196,20 +188,12 @@ dbplyr_data |>
 dbplyr_data |>
   as_duckdb_tibble() |>
   explain()
-#> ┌---------------------------┐
-#> │          SEQ_SCAN         │
-#> │    --------------------   │
-#> │           Table:          │
-#> │file3d6a59fbaa2.main."data"│
-#> │                           │
-#> │   Type: Sequential Scan   │
-#> │                           │
-#> │        Projections:       │
-#> │             x             │
-#> │             y             │
-#> │                           │
-#> │          ~3 rows          │
-#> └---------------------------┘
+#> ╭- Seq Scan -------------------------╮
+#> │ Table: file5effcc789b4.main."data" │
+#> │ Type: Sequential Scan              │
+#> │ Projections: x, y                  │
+#> │ ~3 rows                            │
+#> ╰------------------------------------╯
 ```
 
 This only works for DuckDB connections. For other databases, turn the
@@ -433,22 +417,15 @@ simple_data <-
 
 simple_data |>
   explain()
-#> ┌---------------------------┐
-#> │         PROJECTION        │
-#> │    --------------------   │
-#> │             a             │
-#> │             b             │
-#> │                           │
-#> │           ~1 row          │
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │      R_DATAFRAME_SCAN     │
-#> │    --------------------   │
-#> │      Text: data.frame     │
-#> │       Projections: a      │
-#> │                           │
-#> │           ~1 row          │
-#> └---------------------------┘
+#> ╭- Projection -------╮
+#> │ Projections: a, b  │
+#> │ ~1 row             │
+#> ╰----------┬---------╯
+#> ╭- R Dataframe Scan -╮
+#> │ data.frame         │
+#> │ Projections: a     │
+#> │ ~1 row             │
+#> ╰--------------------╯
 
 simple_data_computed <-
   simple_data |>
@@ -466,21 +443,12 @@ table, so the data is not persisted after the session ends:
 
 simple_data_computed |>
   explain()
-#> ┌---------------------------┐
-#> │          SEQ_SCAN         │
-#> │    --------------------   │
-#> │           Table:          │
-#> │        "temp".main        │
-#> │    .duckplyr_eexomb92Q9   │
-#> │                           │
-#> │   Type: Sequential Scan   │
-#> │                           │
-#> │        Projections:       │
-#> │             a             │
-#> │             b             │
-#> │                           │
-#> │           ~1 row          │
-#> └---------------------------┘
+#> ╭- Seq Scan -----------------------------╮
+#> │ Table: "temp".main.duckplyr_eexomb92Q9 │
+#> │ Type: Sequential Scan                  │
+#> │ Projections: a, b                      │
+#> │ ~1 row                                 │
+#> ╰----------------------------------------╯
 ```
 
 The [`collect()`](https://dplyr.tidyverse.org/reference/compute.html)
@@ -534,18 +502,11 @@ duckdb_tibble(a = 1) |>
   mutate(b = 2) |>
   compute_parquet(path_parquet_out) |>
   explain()
-#> ┌---------------------------┐
-#> │        READ_PARQUET       │
-#> │    --------------------   │
-#> │         Function:         │
-#> │        READ_PARQUET       │
-#> │                           │
-#> │        Projections:       │
-#> │             a             │
-#> │             b             │
-#> │                           │
-#> │           ~1 row          │
-#> └---------------------------┘
+#> ╭- Read Parquet ---------╮
+#> │ Function: READ_PARQUET │
+#> │ Projections: a, b      │
+#> │ ~1 row                 │
+#> ╰------------------------╯
 ```
 
 Just like with

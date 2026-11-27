@@ -29,7 +29,7 @@ df <-
   duckplyr::duckdb_tibble(x = 1:3) |>
   mutate(y = x + 1)
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/RtmpfjRImW/duckdb
+#> ℹ /tmp/RtmpCITJgC/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
@@ -103,7 +103,7 @@ system.time(
     )
 )
 #>    user  system elapsed 
-#>   0.009   0.002   0.011
+#>    0.01    0.00    0.01
 ```
 
 Setting up the pipeline is fast, the size of the data does not affect
@@ -114,88 +114,42 @@ optimize the whole pipeline, which can be seen in the output below:
 
 mean_arr_delay_ewr |>
   explain()
-#> ┌---------------------------┐
-#> │         PROJECTION        │
-#> │    --------------------   │
-#> │           month           │
-#> │       mean_arr_delay      │
-#> │       min_arr_delay       │
-#> │       max_arr_delay       │
-#> │      median_arr_delay     │
-#> │                           │
-#> │        ~61,046 rows       │
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │         PROJECTION        │
-#> │    --------------------   │
-#> │           month           │
-#> │     (sum(CASE  WHEN (     │
-#> │ (arr_delay IS NULL)) THEN │
-#> │ (CAST(1 AS INTEGER)) ELSE │
-#> │  CAST(0 AS INTEGER) END) >│
-#> │             0)            │
-#> │       avg(arr_delay)      │
-#> │       min(arr_delay)      │
-#> │       max(arr_delay)      │
-#> │  quantile_cont(arr_delay) │
-#> │                           │
-#> │        ~61,046 rows       │
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │       HASH_GROUP_BY       │
-#> │    --------------------   │
-#> │         Groups: #0        │
-#> │                           │
-#> │        Aggregates:        │
-#> │    sum_no_overflow(#1)    │
-#> │          avg(#2)          │
-#> │          min(#3)          │
-#> │          max(#4)          │
-#> │     quantile_cont(#5)     │
-#> │                           │
-#> │        ~61,046 rows       │
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │         PROJECTION        │
-#> │    --------------------   │
-#> │           month           │
-#> │ CASE  WHEN ((arr_delay IS │
-#> │ NULL)) THEN (1) ELSE 0 END│
-#> │         arr_delay         │
-#> │         arr_delay         │
-#> │         arr_delay         │
-#> │         arr_delay         │
-#> │                           │
-#> │        ~67,355 rows       │
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │         PROJECTION        │
-#> │    --------------------   │
-#> │             #0            │
-#> │             #1            │
-#> │                           │
-#> │        ~67,355 rows       │
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │           FILTER          │
-#> │    --------------------   │
-#> │ ((NOT (arr_delay IS NULL))│
-#> │    AND (origin = 'EWR'))  │
-#> │                           │
-#> │        ~67,355 rows       │
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │      R_DATAFRAME_SCAN     │
-#> │    --------------------   │
-#> │      Text: data.frame     │
-#> │                           │
-#> │        Projections:       │
-#> │           month           │
-#> │         arr_delay         │
-#> │           origin          │
-#> │                           │
-#> │       ~336,776 rows       │
-#> └---------------------------┘
+#> ╭- Projection -------------------------------------------------------------------------------------╮
+#> │ Projections: month, mean_arr_delay, min_arr_delay, max_arr_delay, median_arr_delay               │
+#> │ ~67,355 rows                                                                                     │
+#> ╰-------------------------------------------------┬------------------------------------------------╯
+#> ╭- Projection ------------------------------------┴------------------------------------------------╮
+#> │ Projections:                                                                                     │
+#> │ month,                                                                                           │
+#> │ sum(CASE  WHEN ((arr_delay IS NULL)) THEN (CAST(1 AS INTEGER)) ELSE CAST(0 AS INTEGER) END) > 0, │
+#> │ avg(arr_delay), min(arr_delay), max(arr_delay), quantile_cont(arr_delay, CAST(0.5 AS DOUBLE))    │
+#> │ ~67,355 rows                                                                                     │
+#> ╰-------------------------------------------------┬------------------------------------------------╯
+#> ╭- Hash Group By ---------------------------------┴------------------------------------------------╮
+#> │ Groups: #0                                                                                       │
+#> │ Aggregates: sum_no_overflow(#1), avg(#2), min(#3), max(#4), quantile_cont(#5, #6)                │
+#> │ ~67,355 rows                                                                                     │
+#> ╰-------------------------------------------------┬------------------------------------------------╯
+#> ╭- Projection ------------------------------------┴------------------------------------------------╮
+#> │ Projections:                                                                                     │
+#> │ month, CASE  WHEN ((arr_delay IS NULL)) THEN (1) ELSE 0 END, arr_delay, arr_delay, arr_delay,    │
+#> │ arr_delay, 0.5                                                                                   │
+#> │ ~67,355 rows                                                                                     │
+#> ╰-------------------------------------------------┬------------------------------------------------╯
+#> ╭- Projection ------------------------------------┴------------------------------------------------╮
+#> │ Projections: #0, #1                                                                              │
+#> │ ~67,355 rows                                                                                     │
+#> ╰-------------------------------------------------┬------------------------------------------------╯
+#> ╭- Filter ----------------------------------------┴------------------------------------------------╮
+#> │ Expression:                                                                                      │
+#> │ (NOT (arr_delay IS NULL)) AND (origin = 'EWR')                                                   │
+#> │ ~67,355 rows                                                                                     │
+#> ╰-------------------------------------------------┬------------------------------------------------╯
+#> ╭- R Dataframe Scan ------------------------------┴------------------------------------------------╮
+#> │ data.frame                                                                                       │
+#> │ Projections: month, arr_delay, origin                                                            │
+#> │ ~336,776 rows                                                                                    │
+#> ╰--------------------------------------------------------------------------------------------------╯
 ```
 
 The first step in the pipeline is to prune the unneeded columns, only
@@ -206,7 +160,7 @@ available when accessed:
 
 system.time(mean_arr_delay_ewr$mean_arr_delay[[1]])
 #>    user  system elapsed 
-#>   0.026   0.003   0.021
+#>   0.023   0.001   0.020
 ```
 
 ### Comparison
@@ -243,7 +197,7 @@ system.time(
     )
 )
 #>    user  system elapsed 
-#>   0.040   0.007   0.048
+#>   0.039   0.009   0.047
 ```
 
 See also the [duckplyr: dplyr Powered by
@@ -349,13 +303,11 @@ triggers an error:
 
 nrow(flights_stingy)
 #> Error:
-#> ! Materialization is disabled, use `collect()` or `as_tibble()` to materialize.
-#> ℹ Context: GetQueryResult
+#> ! GetQueryResult: Materialization is disabled, use `collect()` or `as_tibble()` to materialize.
 
 flights_stingy[[1]]
 #> Error:
-#> ! Materialization is disabled, use `collect()` or `as_tibble()` to materialize.
-#> ℹ Context: GetQueryResult
+#> ! GetQueryResult: Materialization is disabled, use `collect()` or `as_tibble()` to materialize.
 ```
 
 This means that stingy duckplyr frames can also be used to enforce
@@ -480,8 +432,7 @@ flights_partial |>
   select(origin, dest, dep_delay, arr_delay) |>
   nrow()
 #> Error:
-#> ! Materialization would result in more than 250000 rows. Use `collect()` or `as_tibble()` to materialize.
-#> ℹ Context: GetQueryResult
+#> ! GetQueryResult: Materialization would result in more than 250000 rows. Use `collect()` or `as_tibble()` to materialize.
 ```
 
 The original input is too large to be materialized, so the operation

@@ -218,7 +218,7 @@ left_join(band_members, band_instruments)
 #> # A tibble: 3 × 3
 #>   name  band    plays 
 #> * <chr> <chr>   <chr> 
-#> 1 John  Beatles guitar
-#> 2 Paul  Beatles bass  
-#> 3 Mick  Stones  NA    
+#> 1 Mick  Stones  NA    
+#> 2 John  Beatles guitar
+#> 3 Paul  Beatles bass  
 ```

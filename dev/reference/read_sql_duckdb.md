@@ -58,18 +58,18 @@ Using data frames from the calling environment is not supported yet, see
 
 ``` r
 read_sql_duckdb("FROM duckdb_settings()")
-#> # A duckplyr data frame: 6 variables
-#>    name                      value description input_type scope aliases
-#>    <chr>                     <chr> <chr>       <chr>      <chr> <list> 
-#>  1 __delta_only_variant_enc… false Enables th… BOOLEAN    GLOB… <chr>  
-#>  2 access_mode               auto… Access mod… VARCHAR    GLOB… <chr>  
-#>  3 allocator_background_thr… false Whether to… BOOLEAN    GLOB… <chr>  
-#>  4 allocator_bulk_deallocat… 512.… If a bulk … VARCHAR    GLOB… <chr>  
-#>  5 allocator_flush_threshold 128.… Peak alloc… VARCHAR    GLOB… <chr>  
-#>  6 allow_community_extensio… true  Allow to l… BOOLEAN    GLOB… <chr>  
-#>  7 allow_extensions_metadat… false Allow to l… BOOLEAN    GLOB… <chr>  
-#>  8 allow_parser_override_ex… DEFA… Allow exte… VARCHAR    GLOB… <chr>  
-#>  9 allow_persistent_secrets  true  Allow the … BOOLEAN    GLOB… <chr>  
-#> 10 allow_unredacted_secrets  false Allow prin… BOOLEAN    GLOB… <chr>  
+#> # A duckplyr data frame: 7 variables
+#>    name          value description input_type scope aliases typed_value
+#>    <chr>         <chr> <chr>       <chr>      <chr> <list>  <list>     
+#>  1 access_mode   auto… Access mod… VARCHAR    GLOB… <chr>   <chr [1]>  
+#>  2 active_gramm… []    The gramma… VARCHAR[]  LOCAL <chr>   <list [0]> 
+#>  3 allocator_ba… false Whether to… BOOLEAN    GLOB… <chr>   <lgl [1]>  
+#>  4 allocator_bu… 512.… If a bulk … VARCHAR    GLOB… <chr>   <chr [1]>  
+#>  5 allocator_fl… 1342… Peak alloc… VARCHAR    GLOB… <chr>   <chr [1]>  
+#>  6 allowed_conf… []    List of co… VARCHAR[]  GLOB… <chr>   <list [0]> 
+#>  7 allowed_dire… []    List of di… VARCHAR[]  GLOB… <chr>   <list [0]> 
+#>  8 allowed_paths []    List of fi… VARCHAR[]  GLOB… <chr>   <list [0]> 
+#>  9 allow_commun… true  Allow load… BOOLEAN    GLOB… <chr>   <lgl [1]>  
+#> 10 allow_extens… false Allow to l… BOOLEAN    GLOB… <chr>   <lgl [1]>  
 #> # ℹ more rows
 ```

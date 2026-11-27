@@ -45,7 +45,7 @@ lazy <-
   ) |>
   filter(month <= 6)
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/RtmpofKCKD/duckdb
+#> ℹ /tmp/RtmpLYStmf/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
@@ -74,59 +74,34 @@ the raw data.
 
 lazy |>
   explain()
-#> ┌---------------------------┐
-#> │       HASH_GROUP_BY       │
-#> │    --------------------   │
-#> │          Groups:          │
-#> │             #0            │
-#> │             #1            │
-#> │                           │
-#> │        Aggregates:        │
-#> │          mean(#2)         │
-#> │         median(#3)        │
-#> │                           │
-#> │        ~67,354 rows       │
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │         PROJECTION        │
-#> │    --------------------   │
-#> │            year           │
-#> │           month           │
-#> │       inflight_delay      │
-#> │       inflight_delay      │
-#> │                           │
-#> │        ~67,355 rows       │
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │         PROJECTION        │
-#> │    --------------------   │
-#> │            year           │
-#> │           month           │
-#> │       inflight_delay      │
-#> │                           │
-#> │        ~67,355 rows       │
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │           FILTER          │
-#> │    --------------------   │
-#> │ (CAST(month AS DOUBLE) <= │
-#> │            6.0)           │
-#> │                           │
-#> │        ~67,355 rows       │
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │      R_DATAFRAME_SCAN     │
-#> │    --------------------   │
-#> │      Text: data.frame     │
-#> │                           │
-#> │        Projections:       │
-#> │            year           │
-#> │           month           │
-#> │         dep_delay         │
-#> │         arr_delay         │
-#> │                           │
-#> │       ~336,776 rows       │
-#> └---------------------------┘
+#> ╭- Hash Group By --------------╮
+#> │ Groups: #0, #1               │
+#> │ Aggregates: mean(#2),        │
+#> │             median(#3)       │
+#> │ ~67,354 rows                 │
+#> ╰---------------┬--------------╯
+#> ╭- Projection --┴--------------╮
+#> │ Projections: year, month,    │
+#> │              inflight_delay, │
+#> │              inflight_delay  │
+#> │ ~67,355 rows                 │
+#> ╰---------------┬--------------╯
+#> ╭- Projection --┴--------------╮
+#> │ Projections: year, month,    │
+#> │              inflight_delay  │
+#> │ ~67,355 rows                 │
+#> ╰---------------┬--------------╯
+#> ╭- Filter ------┴--------------╮
+#> │ Expression: month <= 6       │
+#> │ ~67,355 rows                 │
+#> ╰---------------┬--------------╯
+#> ╭- R Dataframe Scan -----------╮
+#> │ data.frame                   │
+#> │ Projections: year, month,    │
+#> │              dep_delay,      │
+#> │              arr_delay       │
+#> │ ~336,776 rows                │
+#> ╰------------------------------╯
 ```
 
 All data frame operations are supported. Computation happens upon the
@@ -135,7 +110,7 @@ first request.
 ``` r
 
 lazy$mean_inflight_delay
-#> [1] -3.855519 -5.147220 -9.370201 -7.356713 -2.673124 -4.244284
+#> [1] -5.147220 -3.855519 -9.370201 -7.356713 -2.673124 -4.244284
 ```
 
 After the computation has been carried out, the results are preserved
@@ -147,8 +122,8 @@ lazy
 #> # A duckplyr data frame: 4 variables
 #>    year month mean_inflight_delay median_inflight_delay
 #>   <int> <int>               <dbl>                 <dbl>
-#> 1  2013     1               -3.86                    -5
-#> 2  2013     2               -5.15                    -6
+#> 1  2013     2               -5.15                    -6
+#> 2  2013     1               -3.86                    -5
 #> 3  2013     5               -9.37                   -10
 #> 4  2013     3               -7.36                    -9
 #> 5  2013     4               -2.67                    -5

@@ -12,8 +12,8 @@
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.10/font.css" rel="stylesheet">
-<link href="../deps/Source_Code_Pro-0.4.10/font.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.5.0/font.css" rel="stylesheet">
+<link href="../deps/Source_Code_Pro-0.5.0/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Translations">
@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.2.1.9914</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.2.2.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -131,7 +131,7 @@ be bypassed, see <code><a href="../articles/duckdb.html">vignette("duckdb")</a><
 <span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">compute</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; duckdb keeps downloaded extensions and secrets in a temporary directory:</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> /tmp/RtmpmPqKqD/duckdb</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> /tmp/RtmpN0SENd/duckdb</span></span>
 <span><span class="co">#&gt; This is removed when the R session ends.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Extensions are re-downloaded each session.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Secrets are lost.</span></span>
@@ -478,7 +478,7 @@ a constant with up to 100 values:</p>
 <span><span class="co">#&gt; ---------------------</span></span>
 <span><span class="co">#&gt; --- Relation Tree ---</span></span>
 <span><span class="co">#&gt; ---------------------</span></span>
-<span><span class="co">#&gt; Projection [a as a, ___coalesce("|"("r_base::=="(a, 1.0), "r_base::=="(a, 3.0)), false) as a %in% c(1, 3)]</span></span>
+<span><span class="co">#&gt; Projection [a as a, ___coalesce("|"("r_base::=="(a, CAST(1.0 AS DOUBLE)), "r_base::=="(a, CAST(3.0 AS DOUBLE))), false) as a %in% c(1, 3)]</span></span>
 <span><span class="co">#&gt;   r_dataframe_scan(0xdeadbeef)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ---------------------</span></span>
@@ -492,20 +492,15 @@ a constant with up to 100 values:</p>
 <code class="sourceCode R"><span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, .prudence <span class="op">=</span> <span class="st">"stingy"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ┌---------------------------┐</span></span>
-<span><span class="co">#&gt; │          ORDER_BY         │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │      dataframe_42_42      │</span></span>
-<span><span class="co">#&gt; │      84391854.a DESC      │</span></span>
-<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
-<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
-<span><span class="co">#&gt; │      R_DATAFRAME_SCAN     │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │      Text: data.frame     │</span></span>
-<span><span class="co">#&gt; │       Projections: a      │</span></span>
-<span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │          ~3 rows          │</span></span>
-<span><span class="co">#&gt; └---------------------------┘</span></span></code></pre></div>
+<span><span class="co">#&gt; ╭- Order By ---------╮</span></span>
+<span><span class="co">#&gt; │ Order By: a DESC   │</span></span>
+<span><span class="co">#&gt; │ ~3 rows            │</span></span>
+<span><span class="co">#&gt; ╰----------┬---------╯</span></span>
+<span><span class="co">#&gt; ╭- R Dataframe Scan -╮</span></span>
+<span><span class="co">#&gt; │ data.frame         │</span></span>
+<span><span class="co">#&gt; │ Projections: a     │</span></span>
+<span><span class="co">#&gt; │ ~3 rows            │</span></span>
+<span><span class="co">#&gt; ╰--------------------╯</span></span></code></pre></div>
 <p><code><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings()</a></code> is a no-op:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">duckdb_tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, .prudence <span class="op">=</span> <span class="st">"stingy"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -546,7 +541,7 @@ default.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A duckplyr data frame: 1 variable</span></span></span>
 <span><span class="co">#&gt;   `paste(day, collapse = " ")`                                         </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                                </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 5 9 11 14 15 16 17 22 26 30 31 2 10 18 28 29 3 4 6 12 20 23 24 1 7 8…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 5 9 11 14 15 16 17 22 26 30 31 1 7 8 13 19 21 25 27 3 4 6 12 20 23 2…</span></span>
 <span></span>
 <span><span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/flights_df.html">flights_df</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -565,28 +560,19 @@ work.</p>
 <span>  <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="../reference/duckdb_tibble.html">as_duckdb_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ┌---------------------------┐</span></span>
-<span><span class="co">#&gt; │       HASH_GROUP_BY       │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │         Groups: #0        │</span></span>
-<span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │       ~336,776 rows       │</span></span>
-<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
-<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
-<span><span class="co">#&gt; │         PROJECTION        │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │            day            │</span></span>
-<span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │       ~336,776 rows       │</span></span>
-<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
-<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
-<span><span class="co">#&gt; │      R_DATAFRAME_SCAN     │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │      Text: data.frame     │</span></span>
-<span><span class="co">#&gt; │      Projections: day     │</span></span>
-<span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │       ~336,776 rows       │</span></span>
-<span><span class="co">#&gt; └---------------------------┘</span></span>
+<span><span class="co">#&gt; ╭- Hash Group By ----╮</span></span>
+<span><span class="co">#&gt; │ Groups: #0         │</span></span>
+<span><span class="co">#&gt; │ ~336,776 rows      │</span></span>
+<span><span class="co">#&gt; ╰----------┬---------╯</span></span>
+<span><span class="co">#&gt; ╭- Projection -------╮</span></span>
+<span><span class="co">#&gt; │ Projections: day   │</span></span>
+<span><span class="co">#&gt; │ ~336,776 rows      │</span></span>
+<span><span class="co">#&gt; ╰----------┬---------╯</span></span>
+<span><span class="co">#&gt; ╭- R Dataframe Scan -╮</span></span>
+<span><span class="co">#&gt; │ data.frame         │</span></span>
+<span><span class="co">#&gt; │ Projections: day   │</span></span>
+<span><span class="co">#&gt; │ ~336,776 rows      │</span></span>
+<span><span class="co">#&gt; ╰--------------------╯</span></span>
 <span></span>
 <span><span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://withr.r-lib.org/reference/with_envvar.html" class="external-link">with_envvar</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>DUCKPLYR_OUTPUT_ORDER <span class="op">=</span> <span class="st">"TRUE"</span><span class="op">)</span>,</span>
@@ -595,50 +581,32 @@ work.</p>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; ┌---------------------------┐</span></span>
-<span><span class="co">#&gt; │          ORDER_BY         │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │      dataframe_42_42      │</span></span>
-<span><span class="co">#&gt; │42.___row_number ASC│</span></span>
-<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
-<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
-<span><span class="co">#&gt; │       HASH_GROUP_BY       │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │         Groups: #0        │</span></span>
-<span><span class="co">#&gt; │    Aggregates: min(#1)    │</span></span>
-<span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │          ~0 rows          │</span></span>
-<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
-<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
-<span><span class="co">#&gt; │         PROJECTION        │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │            day            │</span></span>
-<span><span class="co">#&gt; │       ___row_number       │</span></span>
-<span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │       ~336,776 rows       │</span></span>
-<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
-<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
-<span><span class="co">#&gt; │         PROJECTION        │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │             #0            │</span></span>
-<span><span class="co">#&gt; │             #1            │</span></span>
-<span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │       ~336,776 rows       │</span></span>
-<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
-<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
-<span><span class="co">#&gt; │      STREAMING_WINDOW     │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │        Projections:       │</span></span>
-<span><span class="co">#&gt; │    ROW_NUMBER() OVER ()   │</span></span>
-<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
-<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
-<span><span class="co">#&gt; │      R_DATAFRAME_SCAN     │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │      Text: data.frame     │</span></span>
-<span><span class="co">#&gt; │      Projections: day     │</span></span>
-<span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │       ~336,776 rows       │</span></span>
-<span><span class="co">#&gt; └---------------------------┘</span></span></code></pre></div>
+<span><span class="co">#&gt; ╭- Order By ------------------------╮</span></span>
+<span><span class="co">#&gt; │ Order By: ___row_number ASC       │</span></span>
+<span><span class="co">#&gt; │ ~67,355 rows                      │</span></span>
+<span><span class="co">#&gt; ╰-----------------┬-----------------╯</span></span>
+<span><span class="co">#&gt; ╭- Hash Group By -┴-----------------╮</span></span>
+<span><span class="co">#&gt; │ Groups: #0                        │</span></span>
+<span><span class="co">#&gt; │ Aggregates: min(#1)               │</span></span>
+<span><span class="co">#&gt; │ ~336,776 rows                     │</span></span>
+<span><span class="co">#&gt; ╰-----------------┬-----------------╯</span></span>
+<span><span class="co">#&gt; ╭- Projection ----┴-----------------╮</span></span>
+<span><span class="co">#&gt; │ Projections: day, ___row_number   │</span></span>
+<span><span class="co">#&gt; │ ~336,776 rows                     │</span></span>
+<span><span class="co">#&gt; ╰-----------------┬-----------------╯</span></span>
+<span><span class="co">#&gt; ╭- Projection ----┴-----------------╮</span></span>
+<span><span class="co">#&gt; │ Projections: #0, #1               │</span></span>
+<span><span class="co">#&gt; │ ~336,776 rows                     │</span></span>
+<span><span class="co">#&gt; ╰-----------------┬-----------------╯</span></span>
+<span><span class="co">#&gt; ╭- Streaming Window ----------------╮</span></span>
+<span><span class="co">#&gt; │ Projections: row_number() OVER () │</span></span>
+<span><span class="co">#&gt; │ ~336,776 rows                     │</span></span>
+<span><span class="co">#&gt; ╰-----------------┬-----------------╯</span></span>
+<span><span class="co">#&gt; ╭- R Dataframe Scan ----------------╮</span></span>
+<span><span class="co">#&gt; │ data.frame                        │</span></span>
+<span><span class="co">#&gt; │ Projections: day                  │</span></span>
+<span><span class="co">#&gt; │ ~336,776 rows                     │</span></span>
+<span><span class="co">#&gt; ╰-----------------------------------╯</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="sum">

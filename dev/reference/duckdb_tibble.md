@@ -107,9 +107,7 @@ y
 #>   <dbl>
 #> 1     1
 try(length(y$a))
-#> Error in (function (context, message, error_type = NULL, raw_message = NULL,  : 
-#>   Materialization is disabled, use `collect()` or `as_tibble()` to materialize.
-#> ℹ Context: GetQueryResult
+#> Error : GetQueryResult: Materialization is disabled, use `collect()` or `as_tibble()` to materialize.
 length(collect(y)$a)
 #> [1] 1
 ```

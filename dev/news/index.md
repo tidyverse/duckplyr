@@ -1,22 +1,129 @@
 # Changelog
 
-## duckplyr 1.2.1.9914 (2026-09-26)
+## duckplyr 1.2.2.9000 (2026-10-25)
+
+### fledge
+
+- CRAN pre-release v1.2.1.9900
+  ([\#928](https://github.com/tidyverse/duckplyr/issues/928)).
+
+### Compatibility
+
+- [`as_tbl()`](https://duckplyr.tidyverse.org/dev/reference/as_tbl.md)
+  attaches finalizer to `lazy_query`, not `tbl`, for compatibility with
+  dbplyr 2.6.0
+  ([\#919](https://github.com/tidyverse/duckplyr/issues/919)).
 
 ### Bug fixes
 
 - Correct wording in instructions for enabling fallback logging
   ([\#141](https://github.com/tidyverse/duckplyr/issues/141)).
 
+- Improve and test fallback telemetry
+  ([\#115](https://github.com/tidyverse/duckplyr/issues/115)).
+
+- Forbid reuse of new columns created in
+  [`summarize()`](https://dplyr.tidyverse.org/reference/summarise.html)
+  ([\#72](https://github.com/tidyverse/duckplyr/issues/72),
+  [\#106](https://github.com/tidyverse/duckplyr/issues/106)).
+
+#### ci
+
+- Backport kit fixes from `rigraph`, `duckdb-r` and `dm`.
+
+- Emit empty package matrix when there are no (rev)deps.
+
+### Features
+
+- Prefer
+  [`cli::cli_abort()`](https://cli.r-lib.org/reference/cli_abort.html)
+  over [`stop()`](https://rdrr.io/r/base/stop.html) or
+  [`rlang::abort()`](https://rlang.r-lib.org/reference/abort.html)
+  ([\#114](https://github.com/tidyverse/duckplyr/issues/114)).
+
+- Enable [`across()`](https://dplyr.tidyverse.org/reference/across.html)
+  translation for primitive functions such as
+  [`sum()`](https://rdrr.io/r/base/sum.html)
+  ([\#906](https://github.com/tidyverse/duckplyr/issues/906),
+  [\#907](https://github.com/tidyverse/duckplyr/issues/907)).
+
+#### ci
+
+- Align the `revdep2`, `revdep4` and `revdepx` subsystems with
+  `rigraph`.
+
 ### Chore
+
+- Auto-update from GitHub Actions
+  ([\#964](https://github.com/tidyverse/duckplyr/issues/964)).
+
+- Auto-update from GitHub Actions.
+
+  Run: <https://github.com/krlmlr/duckplyr/actions/runs/36367062553>
 
 - `pkg_review()`
   ([\#150](https://github.com/tidyverse/duckplyr/issues/150)).
+
+- Remove Copilot setup steps.
+
+- Implement almost all dplyr methods
+  ([\#105](https://github.com/tidyverse/duckplyr/issues/105)).
+
+- Auto-update from GitHub Actions
+  ([\#943](https://github.com/tidyverse/duckplyr/issues/943)).
+
+- New `ext_install()`, use rfuns extension to implement equality
+  ([\#83](https://github.com/tidyverse/duckplyr/issues/83),
+  [\#93](https://github.com/tidyverse/duckplyr/issues/93)).
+
+- Auto-update from GitHub Actions
+  ([\#932](https://github.com/tidyverse/duckplyr/issues/932)).
+
+### Continuous integration
+
+- Run coverage checks after pkgdown push.
+
+- Survive an archived CRAN package, cache revdep compiles
+  ([@krlmlr](https://github.com/krlmlr),
+  [\#952](https://github.com/tidyverse/duckplyr/issues/952)).
+
+- Fix Windows ARM build.
+
+- Wrap the commit status update into an action.
+
+- Route ccache through one-word compiler wrappers on Unix.
+
+- Name every step and restore the log entry `setup-pandoc` swallows.
+
+- Add sharded `revdep2` workflow.
+
+- Remove unused pr-commands workflow.
+
+- Fix continuous benchmark (touchstone) workflow
+  ([@krlmlr](https://github.com/krlmlr),
+  [\#938](https://github.com/tidyverse/duckplyr/issues/938)).
+
+- Lock down `format-suggest` egress (audit → block).
+
+- Run on Ubuntu 26.04.
+
+- Align workflows with template.
 
 ### Documentation
 
 - Adopt the shared README rendering configuration
   ([@krlmlr](https://github.com/krlmlr),
   [\#955](https://github.com/tidyverse/duckplyr/issues/955)).
+
+- New
+  [`fallback_sitrep()`](https://duckplyr.tidyverse.org/dev/reference/fallback.md)
+  and related functionality for collecting telemetry data
+  ([\#102](https://github.com/tidyverse/duckplyr/issues/102),
+  [\#111](https://github.com/tidyverse/duckplyr/issues/111)).
+
+- Update Plausible analytics snippet
+  ([@jeroenjanssens](https://github.com/jeroenjanssens),
+  [\#910](https://github.com/tidyverse/duckplyr/issues/910)).
 
 ### Testing
 
@@ -37,110 +144,11 @@
 - Fix(ci): Collect the fleet’s workflow fixes after the move to central
   actions (cynkra/cynkratemplate#139).
 
-## duckplyr 1.2.1.9913 (2026-09-13)
-
-### Bug fixes
-
-- Improve and test fallback telemetry
-  ([\#115](https://github.com/tidyverse/duckplyr/issues/115)).
-
-### Features
-
-- Prefer
-  [`cli::cli_abort()`](https://cli.r-lib.org/reference/cli_abort.html)
-  over [`stop()`](https://rdrr.io/r/base/stop.html) or
-  [`rlang::abort()`](https://rlang.r-lib.org/reference/abort.html)
-  ([\#114](https://github.com/tidyverse/duckplyr/issues/114)).
-
-### Chore
-
-- Remove Copilot setup steps.
-
-### Continuous integration
-
-- Survive an archived CRAN package, cache revdep compiles
-  ([@krlmlr](https://github.com/krlmlr),
-  [\#952](https://github.com/tidyverse/duckplyr/issues/952)).
-
-## duckplyr 1.2.1.9912 (2026-09-13)
-
-### Features
-
-#### ci
-
-- Align the `revdep2`, `revdep4` and `revdepx` subsystems with
-  `rigraph`.
-
-### Documentation
-
-- New
-  [`fallback_sitrep()`](https://duckplyr.tidyverse.org/dev/reference/fallback.md)
-  and related functionality for collecting telemetry data
-  ([\#102](https://github.com/tidyverse/duckplyr/issues/102),
-  [\#111](https://github.com/tidyverse/duckplyr/issues/111)).
-
-## duckplyr 1.2.1.9911 (2026-09-05)
-
-### Bug fixes
-
-#### ci
-
-- Backport kit fixes from `rigraph`, `duckdb-r` and `dm`.
-
-### Continuous integration
-
-- Fix Windows ARM build.
-
-### Uncategorized
-
 - Chore: Drop the last traces of `allow_materialization` from
   `prudence_parse()`.
 
-## duckplyr 1.2.1.9910 (2026-08-08)
-
-### Continuous integration
-
-- Wrap the commit status update into an action.
-
-- Route ccache through one-word compiler wrappers on Unix.
-
-- Name every step and restore the log entry `setup-pandoc` swallows.
-
-## duckplyr 1.2.1.9909 (2026-08-06)
-
-### Bug fixes
-
-- Forbid reuse of new columns created in
-  [`summarize()`](https://dplyr.tidyverse.org/reference/summarise.html)
-  ([\#72](https://github.com/tidyverse/duckplyr/issues/72),
-  [\#106](https://github.com/tidyverse/duckplyr/issues/106)).
-
-### Chore
-
-- Implement almost all dplyr methods
-  ([\#105](https://github.com/tidyverse/duckplyr/issues/105)).
-
-### Continuous integration
-
-- Add sharded `revdep2` workflow.
-
-## duckplyr 1.2.1.9908 (2026-08-05)
-
-### Chore
-
-- Auto-update from GitHub Actions
-  ([\#943](https://github.com/tidyverse/duckplyr/issues/943)).
-
-### Continuous integration
-
-- Remove unused pr-commands workflow.
-
-### Uncategorized
-
 - Ci: Pass workflow context through the environment, not into script
   text ([\#102](https://github.com/tidyverse/duckplyr/issues/102)).
-
-## duckplyr 1.2.1.9907 (2026-07-28)
 
 - Ci: Run all smoke-test checks even when one fails
   ([\#97](https://github.com/tidyverse/duckplyr/issues/97)).
@@ -151,78 +159,14 @@
 - Ci: Link the responsible workflow run in snapshot update PRs
   ([\#96](https://github.com/tidyverse/duckplyr/issues/96)).
 
-## duckplyr 1.2.1.9906 (2026-07-27)
+## duckplyr 1.2.2 (2026-10-22)
 
-### Continuous integration
-
-- Fix continuous benchmark (touchstone) workflow
-  ([@krlmlr](https://github.com/krlmlr),
-  [\#938](https://github.com/tidyverse/duckplyr/issues/938)).
-
-## duckplyr 1.2.1.9905 (2026-07-25)
-
-### Continuous integration
-
-- Lock down `format-suggest` egress (audit → block).
-
-## duckplyr 1.2.1.9904 (2026-07-24)
-
-### Bug fixes
-
-#### ci
-
-- Emit empty package matrix when there are no (rev)deps.
-
-### Chore
-
-- New `ext_install()`, use rfuns extension to implement equality
-  ([\#83](https://github.com/tidyverse/duckplyr/issues/83),
-  [\#93](https://github.com/tidyverse/duckplyr/issues/93)).
-
-## duckplyr 1.2.1.9903 (2026-07-22)
-
-### Continuous integration
-
-- Run on Ubuntu 26.04.
-
-- Align workflows with template.
-
-## duckplyr 1.2.1.9902 (2026-07-02)
-
-### Chore
-
-- Auto-update from GitHub Actions
-  ([\#932](https://github.com/tidyverse/duckplyr/issues/932)).
-
-## duckplyr 1.2.1.9901 (2026-06-21)
-
-### fledge
-
-- CRAN pre-release v1.2.1.9900
-  ([\#928](https://github.com/tidyverse/duckplyr/issues/928)).
-
-## duckplyr 1.2.1.9900 (2026-06-17)
+CRAN release: 2026-10-22
 
 ### Features
 
-- Enable [`across()`](https://dplyr.tidyverse.org/reference/across.html)
-  translation for primitive functions such as
-  [`sum()`](https://rdrr.io/r/base/sum.html)
-  ([\#906](https://github.com/tidyverse/duckplyr/issues/906),
-  [\#907](https://github.com/tidyverse/duckplyr/issues/907)).
-
-### Compatibility
-
-- [`as_tbl()`](https://duckplyr.tidyverse.org/dev/reference/as_tbl.md)
-  attaches finalizer to `lazy_query`, not `tbl`, for compatibility with
-  dbplyr 2.6.0
-  ([\#919](https://github.com/tidyverse/duckplyr/issues/919)).
-
-### Documentation
-
-- Update Plausible analytics snippet
-  ([@jeroenjanssens](https://github.com/jeroenjanssens),
-  [\#910](https://github.com/tidyverse/duckplyr/issues/910)).
+- duckplyr now works with duckdb 2.0.0. It refuses to load with duckdb
+  3.0.0 or later and asks to upgrade duckplyr instead.
 
 ## duckplyr 1.2.1 (2026-03-09)
 

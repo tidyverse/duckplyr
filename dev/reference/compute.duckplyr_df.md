@@ -78,37 +78,21 @@ library(duckplyr)
 df <- duckdb_tibble(x = c(1, 2))
 df <- mutate(df, y = 2)
 explain(df)
-#> ┌───────────────────────────┐
-#> │         PROJECTION        │
-#> │    ────────────────────   │
-#> │             x             │
-#> │             y             │
-#> │                           │
-#> │          ~2 rows          │
-#> └─────────────┬─────────────┘
-#> ┌─────────────┴─────────────┐
-#> │      R_DATAFRAME_SCAN     │
-#> │    ────────────────────   │
-#> │      Text: data.frame     │
-#> │       Projections: x      │
-#> │                           │
-#> │          ~2 rows          │
-#> └───────────────────────────┘
+#> ╭─ Projection ───────╮
+#> │ Projections: x, y  │
+#> │ ~2 rows            │
+#> ╰──────────┬─────────╯
+#> ╭─ R Dataframe Scan ─╮
+#> │ data.frame         │
+#> │ Projections: x     │
+#> │ ~2 rows            │
+#> ╰────────────────────╯
 df <- compute(df)
 explain(df)
-#> ┌───────────────────────────┐
-#> │          SEQ_SCAN         │
-#> │    ────────────────────   │
-#> │           Table:          │
-#> │        "temp".main        │
-#> │    .duckplyr_ieexomb92Q   │
-#> │                           │
-#> │   Type: Sequential Scan   │
-#> │                           │
-#> │        Projections:       │
-#> │             x             │
-#> │             y             │
-#> │                           │
-#> │          ~2 rows          │
-#> └───────────────────────────┘
+#> ╭─ Seq Scan ─────────────────────────────╮
+#> │ Table: "temp".main.duckplyr_ieexomb92Q │
+#> │ Type: Sequential Scan                  │
+#> │ Projections: x, y                      │
+#> │ ~2 rows                                │
+#> ╰────────────────────────────────────────╯
 ```

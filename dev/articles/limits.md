@@ -45,7 +45,7 @@ duckplyr::duckdb_tibble(
 ) |>
   compute()
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/RtmpmPqKqD/duckdb
+#> ℹ /tmp/RtmpN0SENd/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
@@ -431,7 +431,7 @@ duckplyr::last_rel()
 #> ---------------------
 #> --- Relation Tree ---
 #> ---------------------
-#> Projection [a as a, ___coalesce("|"("r_base::=="(a, 1.0), "r_base::=="(a, 3.0)), false) as a %in% c(1, 3)]
+#> Projection [a as a, ___coalesce("|"("r_base::=="(a, CAST(1.0 AS DOUBLE)), "r_base::=="(a, CAST(3.0 AS DOUBLE))), false) as a %in% c(1, 3)]
 #>   r_dataframe_scan(0xdeadbeef)
 #> 
 #> ---------------------
@@ -450,20 +450,15 @@ only implemented in the context of
 duckplyr::duckdb_tibble(a = 1:3, .prudence = "stingy") |>
   arrange(desc(a)) |>
   explain()
-#> ┌---------------------------┐
-#> │          ORDER_BY         │
-#> │    --------------------   │
-#> │      dataframe_42_42      │
-#> │      84391854.a DESC      │
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │      R_DATAFRAME_SCAN     │
-#> │    --------------------   │
-#> │      Text: data.frame     │
-#> │       Projections: a      │
-#> │                           │
-#> │          ~3 rows          │
-#> └---------------------------┘
+#> ╭- Order By ---------╮
+#> │ Order By: a DESC   │
+#> │ ~3 rows            │
+#> ╰----------┬---------╯
+#> ╭- R Dataframe Scan -╮
+#> │ data.frame         │
+#> │ Projections: a     │
+#> │ ~3 rows            │
+#> ╰--------------------╯
 ```
 
 [`suppressWarnings()`](https://rdrr.io/r/base/warning.html) is a no-op:
@@ -508,7 +503,7 @@ duckplyr::flights_df() |>
 #> # A duckplyr data frame: 1 variable
 #>   `paste(day, collapse = " ")`                                         
 #>   <chr>                                                                
-#> 1 5 9 11 14 15 16 17 22 26 30 31 2 10 18 28 29 3 4 6 12 20 23 24 1 7 8…
+#> 1 5 9 11 14 15 16 17 22 26 30 31 1 7 8 13 19 21 25 27 3 4 6 12 20 23 2…
 
 duckplyr::flights_df() |>
   distinct(day) |>
@@ -531,28 +526,19 @@ duckplyr::flights_df() |>
   duckplyr::as_duckdb_tibble() |>
   distinct(day) |>
   explain()
-#> ┌---------------------------┐
-#> │       HASH_GROUP_BY       │
-#> │    --------------------   │
-#> │         Groups: #0        │
-#> │                           │
-#> │       ~336,776 rows       │
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │         PROJECTION        │
-#> │    --------------------   │
-#> │            day            │
-#> │                           │
-#> │       ~336,776 rows       │
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │      R_DATAFRAME_SCAN     │
-#> │    --------------------   │
-#> │      Text: data.frame     │
-#> │      Projections: day     │
-#> │                           │
-#> │       ~336,776 rows       │
-#> └---------------------------┘
+#> ╭- Hash Group By ----╮
+#> │ Groups: #0         │
+#> │ ~336,776 rows      │
+#> ╰----------┬---------╯
+#> ╭- Projection -------╮
+#> │ Projections: day   │
+#> │ ~336,776 rows      │
+#> ╰----------┬---------╯
+#> ╭- R Dataframe Scan -╮
+#> │ data.frame         │
+#> │ Projections: day   │
+#> │ ~336,776 rows      │
+#> ╰--------------------╯
 
 withr::with_envvar(
   c(DUCKPLYR_OUTPUT_ORDER = "TRUE"),
@@ -561,50 +547,32 @@ withr::with_envvar(
     distinct(day) |>
     explain()
 )
-#> ┌---------------------------┐
-#> │          ORDER_BY         │
-#> │    --------------------   │
-#> │      dataframe_42_42      │
-#> │42.___row_number ASC│
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │       HASH_GROUP_BY       │
-#> │    --------------------   │
-#> │         Groups: #0        │
-#> │    Aggregates: min(#1)    │
-#> │                           │
-#> │          ~0 rows          │
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │         PROJECTION        │
-#> │    --------------------   │
-#> │            day            │
-#> │       ___row_number       │
-#> │                           │
-#> │       ~336,776 rows       │
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │         PROJECTION        │
-#> │    --------------------   │
-#> │             #0            │
-#> │             #1            │
-#> │                           │
-#> │       ~336,776 rows       │
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │      STREAMING_WINDOW     │
-#> │    --------------------   │
-#> │        Projections:       │
-#> │    ROW_NUMBER() OVER ()   │
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │      R_DATAFRAME_SCAN     │
-#> │    --------------------   │
-#> │      Text: data.frame     │
-#> │      Projections: day     │
-#> │                           │
-#> │       ~336,776 rows       │
-#> └---------------------------┘
+#> ╭- Order By ------------------------╮
+#> │ Order By: ___row_number ASC       │
+#> │ ~67,355 rows                      │
+#> ╰-----------------┬-----------------╯
+#> ╭- Hash Group By -┴-----------------╮
+#> │ Groups: #0                        │
+#> │ Aggregates: min(#1)               │
+#> │ ~336,776 rows                     │
+#> ╰-----------------┬-----------------╯
+#> ╭- Projection ----┴-----------------╮
+#> │ Projections: day, ___row_number   │
+#> │ ~336,776 rows                     │
+#> ╰-----------------┬-----------------╯
+#> ╭- Projection ----┴-----------------╮
+#> │ Projections: #0, #1               │
+#> │ ~336,776 rows                     │
+#> ╰-----------------┬-----------------╯
+#> ╭- Streaming Window ----------------╮
+#> │ Projections: row_number() OVER () │
+#> │ ~336,776 rows                     │
+#> ╰-----------------┬-----------------╯
+#> ╭- R Dataframe Scan ----------------╮
+#> │ data.frame                        │
+#> │ Projections: day                  │
+#> │ ~336,776 rows                     │
+#> ╰-----------------------------------╯
 ```
 
 ### `sum()`

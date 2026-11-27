@@ -75,16 +75,9 @@ df <- mutate(df, y = 2)
 path <- tempfile(fileext = ".parquet")
 df <- compute_parquet(df, path)
 explain(df)
-#> ┌───────────────────────────┐
-#> │        READ_PARQUET       │
-#> │    ────────────────────   │
-#> │         Function:         │
-#> │        READ_PARQUET       │
-#> │                           │
-#> │        Projections:       │
-#> │             x             │
-#> │             y             │
-#> │                           │
-#> │          ~2 rows          │
-#> └───────────────────────────┘
+#> ╭─ Read Parquet ─────────╮
+#> │ Function: READ_PARQUET │
+#> │ Projections: x, y      │
+#> │ ~2 rows                │
+#> ╰────────────────────────╯
 ```

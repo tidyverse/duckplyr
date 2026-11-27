@@ -37,7 +37,7 @@ duckdb <-
   mutate(b = a + 1) |>
   select(-a)
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/RtmptgiTEa/duckdb
+#> ℹ /tmp/Rtmp5saK2u/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
@@ -53,27 +53,19 @@ function shows what happens under the hood:
 
 duckdb |>
   explain()
-#> ┌---------------------------┐
-#> │         PROJECTION        │
-#> │    --------------------   │
-#> │             b             │
-#> │                           │
-#> │          ~3 rows          │
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │          ORDER_BY         │
-#> │    --------------------   │
-#> │      dataframe_42_42      │
-#> │       3409599.a DESC      │
-#> └-------------┬-------------┘
-#> ┌-------------┴-------------┐
-#> │      R_DATAFRAME_SCAN     │
-#> │    --------------------   │
-#> │      Text: data.frame     │
-#> │       Projections: a      │
-#> │                           │
-#> │          ~3 rows          │
-#> └---------------------------┘
+#> ╭- Projection -------╮
+#> │ Projections: b     │
+#> │ ~3 rows            │
+#> ╰----------┬---------╯
+#> ╭- Order By ---------╮
+#> │ Order By: a DESC   │
+#> │ ~3 rows            │
+#> ╰----------┬---------╯
+#> ╭- R Dataframe Scan -╮
+#> │ data.frame         │
+#> │ Projections: a     │
+#> │ ~3 rows            │
+#> ╰--------------------╯
 ```
 
 The plan shows three operations:
@@ -120,7 +112,7 @@ duckplyr::last_rel()
 #> --- Relation Tree ---
 #> ---------------------
 #> Projection [b as b]
-#>   Projection [a as a, "+"(a, 1.0) as b]
+#>   Projection [a as a, "+"(a, CAST(1.0 AS DOUBLE)) as b]
 #>     Order [a DESC]
 #>       r_dataframe_scan(0xdeadbeef)
 #> 
@@ -193,14 +185,11 @@ is handled by dplyr:
 
 fallback |>
   explain()
-#> ┌---------------------------┐
-#> │      R_DATAFRAME_SCAN     │
-#> │    --------------------   │
-#> │      Text: data.frame     │
-#> │       Projections: b      │
-#> │                           │
-#> │          ~3 rows          │
-#> └---------------------------┘
+#> ╭- R Dataframe Scan -╮
+#> │ data.frame         │
+#> │ Projections: b     │
+#> │ ~3 rows            │
+#> ╰--------------------╯
 ```
 
 The final plan now only consists of a data frame scan. This is the

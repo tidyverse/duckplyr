@@ -12,8 +12,8 @@
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.10/font.css" rel="stylesheet">
-<link href="../deps/Source_Code_Pro-0.4.10/font.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.5.0/font.css" rel="stylesheet">
+<link href="../deps/Source_Code_Pro-0.5.0/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Fallback to dplyr">
@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">duckplyr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.2.1.9914</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.2.2.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -125,7 +125,7 @@ dplyr, guaranteeing identical behavior.</li>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>b <span class="op">=</span> <span class="va">a</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">a</span><span class="op">)</span></span>
 <span><span class="co">#&gt; duckdb keeps downloaded extensions and secrets in a temporary directory:</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> /tmp/RtmptgiTEa/duckdb</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> /tmp/Rtmp5saK2u/duckdb</span></span>
 <span><span class="co">#&gt; This is removed when the R session ends.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Extensions are re-downloaded each session.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> Secrets are lost.</span></span>
@@ -137,27 +137,19 @@ hood:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">duckdb</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ┌---------------------------┐</span></span>
-<span><span class="co">#&gt; │         PROJECTION        │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │             b             │</span></span>
-<span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │          ~3 rows          │</span></span>
-<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
-<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
-<span><span class="co">#&gt; │          ORDER_BY         │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │      dataframe_42_42      │</span></span>
-<span><span class="co">#&gt; │       3409599.a DESC      │</span></span>
-<span><span class="co">#&gt; └-------------┬-------------┘</span></span>
-<span><span class="co">#&gt; ┌-------------┴-------------┐</span></span>
-<span><span class="co">#&gt; │      R_DATAFRAME_SCAN     │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │      Text: data.frame     │</span></span>
-<span><span class="co">#&gt; │       Projections: a      │</span></span>
-<span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │          ~3 rows          │</span></span>
-<span><span class="co">#&gt; └---------------------------┘</span></span></code></pre></div>
+<span><span class="co">#&gt; ╭- Projection -------╮</span></span>
+<span><span class="co">#&gt; │ Projections: b     │</span></span>
+<span><span class="co">#&gt; │ ~3 rows            │</span></span>
+<span><span class="co">#&gt; ╰----------┬---------╯</span></span>
+<span><span class="co">#&gt; ╭- Order By ---------╮</span></span>
+<span><span class="co">#&gt; │ Order By: a DESC   │</span></span>
+<span><span class="co">#&gt; │ ~3 rows            │</span></span>
+<span><span class="co">#&gt; ╰----------┬---------╯</span></span>
+<span><span class="co">#&gt; ╭- R Dataframe Scan -╮</span></span>
+<span><span class="co">#&gt; │ data.frame         │</span></span>
+<span><span class="co">#&gt; │ Projections: a     │</span></span>
+<span><span class="co">#&gt; │ ~3 rows            │</span></span>
+<span><span class="co">#&gt; ╰--------------------╯</span></span></code></pre></div>
 <p>The plan shows three operations:</p>
 <ul>
 <li>a data frame scan (the input),</li>
@@ -197,7 +189,7 @@ Converting the object to a data frame triggers the computation:</p>
 <span><span class="co">#&gt; --- Relation Tree ---</span></span>
 <span><span class="co">#&gt; ---------------------</span></span>
 <span><span class="co">#&gt; Projection [b as b]</span></span>
-<span><span class="co">#&gt;   Projection [a as a, "+"(a, 1.0) as b]</span></span>
+<span><span class="co">#&gt;   Projection [a as a, "+"(a, CAST(1.0 AS DOUBLE)) as b]</span></span>
 <span><span class="co">#&gt;     Order [a DESC]</span></span>
 <span><span class="co">#&gt;       r_dataframe_scan(0xdeadbeef)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -251,14 +243,11 @@ least a part of the operation is handled by dplyr:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fallback</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">explain</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ┌---------------------------┐</span></span>
-<span><span class="co">#&gt; │      R_DATAFRAME_SCAN     │</span></span>
-<span><span class="co">#&gt; │    --------------------   │</span></span>
-<span><span class="co">#&gt; │      Text: data.frame     │</span></span>
-<span><span class="co">#&gt; │       Projections: b      │</span></span>
-<span><span class="co">#&gt; │                           │</span></span>
-<span><span class="co">#&gt; │          ~3 rows          │</span></span>
-<span><span class="co">#&gt; └---------------------------┘</span></span></code></pre></div>
+<span><span class="co">#&gt; ╭- R Dataframe Scan -╮</span></span>
+<span><span class="co">#&gt; │ data.frame         │</span></span>
+<span><span class="co">#&gt; │ Projections: b     │</span></span>
+<span><span class="co">#&gt; │ ~3 rows            │</span></span>
+<span><span class="co">#&gt; ╰--------------------╯</span></span></code></pre></div>
 <p>The final plan now only consists of a data frame scan. This is the
 result of the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> step, which at this stage already
 has been executed by dplyr.</p>

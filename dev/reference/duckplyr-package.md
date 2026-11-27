@@ -28,5 +28,5 @@ Authors:
 
 Other contributors:
 
-- Posit Software, PBC ([ROR](https://ror.org/03wc8by49)) \[copyright
-  holder, funder\]
+- Posit Software, PBC (ROR: 03wc8by49, `https://ror.org/03wc8by49`)
+  \[copyright holder, funder\]
