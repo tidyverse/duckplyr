@@ -34,8 +34,8 @@ rel_try <- function(call, rel, ...) {
   for (i in seq_along(dots)) {
     if (isTRUE(dots[[i]])) {
       stats$fallback <- stats$fallback + 1L
+      message <- names(dots)[[i]]
       if (!dplyr_mode) {
-        message <- names(dots)[[i]]
         if (message != "-") {
           tel_collect(message, call)
         }
@@ -108,7 +108,7 @@ rel_translate_dots_summarise <- function(dots, data, call = caller_env()) {
     current_names <- c(names(data), .x$new)
 
     dot <- dots[[.y]]
-    expanded <- duckplyr_expand_across(data, dot)
+    expanded <- duckplyr_expand_across(data, dot, error_call = call)
 
     if (is.null(expanded)) {
       new <- names(dots)[[.y]]
