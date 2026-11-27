@@ -15,12 +15,12 @@
 ^res-duckplyr\.csv$
 ^res-relational-duckdb\.csv$
 ^R/meta\.R$
+^R/construct_[a-z]+\.R$
 ^R/tpch_raw_(?:oo_)?[0-9]+\.R$
 ^.ccache$
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
-^cran-comments\.md$
 ^CRAN-SUBMISSION$
 ^codecov\.yml$
 ^R/revdep\.R$

@@ -1,3 +1,5 @@
+# Excluded via .Rbuildignore while constructive is not on CRAN.
+# The methods are registered on load instead of in NAMESPACE.
 #' Constructive options for class 'relational_relexpr_window'
 #'
 #' These options will be used on objects of class 'relational_relexpr_window'.
@@ -37,8 +39,6 @@ is_corrupted_relational_relexpr_window <- function(x) {
   FALSE
 }
 
-#' @export
-#' @method .cstr_construct.relational_relexpr_window relexpr_window
 .cstr_construct.relational_relexpr_window.relexpr_window <- function(x, ...) {
   # opts <- list(...)$opts$relational_relexpr_window %||% opts_relational_relexpr_window()
   args <- Filter(
@@ -65,5 +65,10 @@ on_load({
   vctrs::s3_register(
     "constructive::.cstr_construct",
     "relational_relexpr_window"
+  )
+  registerS3method(
+    ".cstr_construct.relational_relexpr_window",
+    "relexpr_window",
+    .cstr_construct.relational_relexpr_window.relexpr_window
   )
 })

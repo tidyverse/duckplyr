@@ -1,0 +1,58 @@
+# Adapted from r-dbi/RSQLite's .github/actions/cran-submit/action.yml at c110c21e2 (branch claude/rsqlite-cran-release).
+name: "CRAN submission"
+description: >
+  Builds the source package and recompresses it with zopfli (stage `tarball`),
+  or uploads a tarball to CRAN's submission form (stage `upload`),
+  with cran-submit.sh beside this file.
+  Used by .github/workflows/cran-submission.yaml.
+
+inputs:
+  stage:
+    description: "`tarball` or `upload`"
+    required: true
+  out-dir:
+    description: "Stage `tarball`: where the zopfli tarball goes"
+    default: ""
+  tarball:
+    description: "Stage `upload`: the tarball to upload"
+    default: ""
+  dry-run:
+    description: "Stage `upload`: `true` sends nothing and reports what would be sent"
+    default: "false"
+
+outputs:
+  package:
+    description: "Stage `tarball`: the package name"
+    value: ${{ steps.run.outputs.package }}
+  version:
+    description: "Stage `tarball`: the package version"
+    value: ${{ steps.run.outputs.version }}
+  tarball:
+    description: "Stage `tarball`: the path of the zopfli tarball"
+    value: ${{ steps.run.outputs.tarball }}
+  sha256:
+    description: "Stage `tarball`: the tarball's sha256"
+    value: ${{ steps.run.outputs.sha256 }}
+
+runs:
+  using: "composite"
+  steps:
+    - id: run
+      env:
+        STAGE: ${{ inputs.stage }}
+        OUT_DIR: ${{ inputs.out-dir }}
+        TARBALL: ${{ inputs.tarball }}
+        DRY_RUN: ${{ inputs.dry-run }}
+      run: |
+        case "$STAGE" in
+          tarball) "$GITHUB_ACTION_PATH/cran-submit.sh" tarball "$OUT_DIR" "$GITHUB_WORKSPACE" ;;
+          upload)
+            if [ "$DRY_RUN" = true ]; then
+              "$GITHUB_ACTION_PATH/cran-submit.sh" upload --dry-run "$TARBALL"
+            else
+              "$GITHUB_ACTION_PATH/cran-submit.sh" upload "$TARBALL"
+            fi
+            ;;
+          *) echo "::error::Unknown stage: $STAGE"; exit 2 ;;
+        esac
+      shell: bash

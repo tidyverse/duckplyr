@@ -36,7 +36,7 @@ It is explicitly not trying to:
 
 - Generate SQL, or target database engines other than DuckDB: DuckDB's relational interface is used directly.
 - Preserve dplyr's row order by default: DuckDB does not guarantee order stability, so ordering is opt-in via `DUCKPLYR_OUTPUT_ORDER`.
-- Cover DuckDB functions with no R equivalent in the translation layer: the experimental `as_tbl()` and `dd$fun()` escape hatches do that.
+- Cover DuckDB functions with no R equivalent in the translation layer: the experimental [`as_tbl()`](https://duckplyr.tidyverse.org/reference/as_tbl.html) and `dd$fun()` escape hatches do that.
 - Upload anything by itself: fallback reports are collected locally by default, and uploading is opt-in.
 
 ## Installation
@@ -62,7 +62,7 @@ pak::pak("tidyverse/duckplyr")
 
 ## Drop-in replacement for dplyr
 
-Calling `library(duckplyr)` overwrites dplyr methods, enabling duckplyr for the entire session.
+Calling [`library(duckplyr)`](https://duckplyr.tidyverse.org) overwrites dplyr methods, enabling duckplyr for the entire session.
 
 ``` r
 library(conflicted)
@@ -79,7 +79,7 @@ conflict_prefer("filter", "dplyr")
 ```
 
 The following code aggregates the inflight delay by year and month for the first half of the year.
-We use a variant of the `nycflights13::flights` dataset,
+We use a variant of the [`nycflights13::flights`](https://rdrr.io/pkg/nycflights13/man/flights.html) dataset,
 where the timezone has been set to UTC to work around a current limitation of duckplyr,
 see [`vignette("limits")`](https://duckplyr.tidyverse.org/articles/limits.html).
 
@@ -132,7 +132,7 @@ out$month
 #> [1] 1 2 3 4 5 6
 ```
 
-Note that, unlike dplyr, the results are not ordered, see `?config` for details.
+Note that, unlike dplyr, the results are not ordered, see [`?config`](https://duckplyr.tidyverse.org/reference/config.html) for details.
 However, once materialized, the results are stable:
 
 ``` r
@@ -164,7 +164,7 @@ flights_df() |>
 #> 3 JFK    ABQ ACK ATL AUS BHM BNA BOS BQN BTV BUF BUR BWI CHS CLE CLT C…
 ```
 
-Restart R, or call `duckplyr::methods_restore()` to revert to the default dplyr implementation.
+Restart R, or call [`duckplyr::methods_restore()`](https://duckplyr.tidyverse.org/reference/methods_overwrite.html) to revert to the default dplyr implementation.
 
 ``` r
 duckplyr::methods_restore()
@@ -173,7 +173,7 @@ duckplyr::methods_restore()
 
 ## Analyzing larger-than-memory data
 
-An extended variant of the `nycflights13::flights` dataset is also available for download as Parquet files.
+An extended variant of the [`nycflights13::flights`](https://rdrr.io/pkg/nycflights13/man/flights.html) dataset is also available for download as Parquet files.
 
 ``` r
 year <- 2022:2024

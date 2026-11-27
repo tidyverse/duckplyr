@@ -1,7 +1,7 @@
 Type: Package
 Package: duckplyr
 Title: A 'DuckDB'-Backed Version of 'dplyr'
-Version: 1.2.1.9914
+Version: 1.2.2.9000
 Authors@R: c(
     person("Hannes", "Mühleisen", role = "aut",
            comment = c(ORCID = "0000-0001-8552-0029")),
@@ -40,7 +40,6 @@ Suggests:
     brio,
     callr,
     conflicted,
-    constructive (>= 1.0.0),
     curl,
     dbplyr,
     hms,
@@ -83,4 +82,4 @@ Encoding: UTF-8
 Roxygen: list( markdown = TRUE, roclets = c("collate", "namespace", "rd",
     "roxyglobals::global_roclet") )
 VignetteBuilder: knitr
-Config/roxygen2/version: 8.1.0.9000
+Config/roxygen2/version: 8.1.1.9000

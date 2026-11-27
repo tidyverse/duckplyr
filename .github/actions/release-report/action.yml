@@ -1,0 +1,42 @@
+# Adapted from r-dbi/RSQLite's .github/actions/release-report/action.yml at c110c21e2 (branch claude/rsqlite-cran-release).
+name: "Report to the release pull request"
+description: >
+  Posts a workflow's result to the open release pull request, or to the checklist issue,
+  as one comment per workflow that later runs update in place,
+  with release-report.sh beside this file.
+  The job that uses it needs `pull-requests: write`, or `issues: write` with `issue-marker`.
+
+inputs:
+  key:
+    description: "Identifies the workflow's comment, for instance the workflow file's name"
+    required: true
+  title:
+    description: "The comment's heading"
+    required: true
+  results:
+    description: "One `<job>=<result>` per line"
+    required: true
+  details:
+    description: "Markdown appended below the job results"
+    default: ""
+  issue-marker:
+    description: "Report to the open issue whose body carries this text instead of a pull request"
+    default: ""
+  token:
+    description: "A token with `pull-requests: write`"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - env:
+        GH_TOKEN: ${{ inputs.token }}
+        GH_REPO: ${{ github.repository }}
+        RESULTS: ${{ inputs.results }}
+        DETAILS: ${{ inputs.details }}
+        ISSUE_MARKER: ${{ inputs.issue-marker }}
+        KEY: ${{ inputs.key }}
+        TITLE: ${{ inputs.title }}
+      run: |
+        "$GITHUB_ACTION_PATH/release-report.sh" "$KEY" "$TITLE"
+      shell: bash

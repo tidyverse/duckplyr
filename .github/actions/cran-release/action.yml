@@ -1,0 +1,35 @@
+# Adapted from r-dbi/RSQLite's .github/actions/cran-release/action.yml at c110c21e2 (branch claude/rsqlite-cran-release).
+name: "CRAN release"
+description: >
+  Publishes the draft GitHub releases of CRAN submissions once Posit's package manager serves their version,
+  with cran-release.sh beside this file.
+  Used by .github/workflows/cran-release.yaml.
+
+inputs:
+  token:
+    description: "A token that may read and edit the repository's releases"
+    required: true
+  dry-run:
+    description: "`true` publishes nothing and reports what would be published"
+    default: "false"
+
+outputs:
+  published:
+    description: "One `<package> <version>` per line for each release published by this run"
+    value: ${{ steps.run.outputs.published }}
+
+runs:
+  using: "composite"
+  steps:
+    - id: run
+      env:
+        GH_TOKEN: ${{ inputs.token }}
+        GH_REPO: ${{ github.repository }}
+        DRY_RUN: ${{ inputs.dry-run }}
+      run: |
+        if [ "$DRY_RUN" = true ]; then
+          "$GITHUB_ACTION_PATH/cran-release.sh" --dry-run
+        else
+          "$GITHUB_ACTION_PATH/cran-release.sh"
+        fi
+      shell: bash

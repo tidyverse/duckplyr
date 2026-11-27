@@ -1,18 +1,92 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# duckplyr 1.2.1.9914 (2026-09-26)
+# duckplyr 1.2.2.9000 (2026-10-25)
+
+## fledge
+
+- CRAN pre-release v1.2.1.9900 (#928).
+
+## Compatibility
+
+- `as_tbl()` attaches finalizer to `lazy_query`, not `tbl`, for compatibility with dbplyr 2.6.0 (#919).
 
 ## Bug fixes
 
 - Correct wording in instructions for enabling fallback logging (#141).
 
+- Improve and test fallback telemetry (#115).
+
+- Forbid reuse of new columns created in `summarize()` (#72, #106).
+
+### ci
+
+- Backport kit fixes from `rigraph`, `duckdb-r` and `dm`.
+
+- Emit empty package matrix when there are no (rev)deps.
+
+## Features
+
+- Prefer `cli::cli_abort()` over `stop()` or `rlang::abort()` (#114).
+
+- Enable `across()` translation for primitive functions such as `sum()` (#906, #907).
+
+### ci
+
+- Align the `revdep2`, `revdep4` and `revdepx` subsystems with `rigraph`.
+
 ## Chore
 
+- Auto-update from GitHub Actions (#964).
+
+- Auto-update from GitHub Actions.
+
+  Run: https://github.com/krlmlr/duckplyr/actions/runs/36367062553
+
 - `pkg_review()` (#150).
+
+- Remove Copilot setup steps.
+
+- Implement almost all dplyr methods (#105).
+
+- Auto-update from GitHub Actions (#943).
+
+- New `ext_install()`, use rfuns extension to implement equality (#83, #93).
+
+- Auto-update from GitHub Actions (#932).
+
+## Continuous integration
+
+- Run coverage checks after pkgdown push.
+
+- Survive an archived CRAN package, cache revdep compiles (@krlmlr, #952).
+
+- Fix Windows ARM build.
+
+- Wrap the commit status update into an action.
+
+- Route ccache through one-word compiler wrappers on Unix.
+
+- Name every step and restore the log entry `setup-pandoc` swallows.
+
+- Add sharded `revdep2` workflow.
+
+- Remove unused pr-commands workflow.
+
+- Fix continuous benchmark (touchstone) workflow (@krlmlr, #938).
+
+- Lock down `format-suggest` egress (audit → block).
+
+- Run on Ubuntu 26.04.
+
+- Align workflows with template.
 
 ## Documentation
 
 - Adopt the shared README rendering configuration (@krlmlr, #955).
+
+- New `fallback_sitrep()` and related functionality for collecting telemetry data (#102, #111).
+
+- Update Plausible analytics snippet (@jeroenjanssens, #910).
 
 ## Testing
 
@@ -28,98 +102,9 @@
 
 - Fix(ci): Collect the fleet's workflow fixes after the move to central actions (cynkra/cynkratemplate#139).
 
-
-# duckplyr 1.2.1.9913 (2026-09-13)
-
-## Bug fixes
-
-- Improve and test fallback telemetry (#115).
-
-## Features
-
-- Prefer `cli::cli_abort()` over `stop()` or `rlang::abort()` (#114).
-
-## Chore
-
-- Remove Copilot setup steps.
-
-## Continuous integration
-
-- Survive an archived CRAN package, cache revdep compiles (@krlmlr, #952).
-
-
-# duckplyr 1.2.1.9912 (2026-09-13)
-
-## Features
-
-### ci
-
-- Align the `revdep2`, `revdep4` and `revdepx` subsystems with `rigraph`.
-
-## Documentation
-
-- New `fallback_sitrep()` and related functionality for collecting telemetry data (#102, #111).
-
-
-# duckplyr 1.2.1.9911 (2026-09-05)
-
-## Bug fixes
-
-### ci
-
-- Backport kit fixes from `rigraph`, `duckdb-r` and `dm`.
-
-## Continuous integration
-
-- Fix Windows ARM build.
-
-## Uncategorized
-
 - Chore: Drop the last traces of `allow_materialization` from `prudence_parse()`.
 
-
-# duckplyr 1.2.1.9910 (2026-08-08)
-
-## Continuous integration
-
-- Wrap the commit status update into an action.
-
-- Route ccache through one-word compiler wrappers on Unix.
-
-- Name every step and restore the log entry `setup-pandoc` swallows.
-
-
-# duckplyr 1.2.1.9909 (2026-08-06)
-
-## Bug fixes
-
-- Forbid reuse of new columns created in `summarize()` (#72, #106).
-
-## Chore
-
-- Implement almost all dplyr methods (#105).
-
-## Continuous integration
-
-- Add sharded `revdep2` workflow.
-
-
-# duckplyr 1.2.1.9908 (2026-08-05)
-
-## Chore
-
-- Auto-update from GitHub Actions (#943).
-
-## Continuous integration
-
-- Remove unused pr-commands workflow.
-
-## Uncategorized
-
 - Ci: Pass workflow context through the environment, not into script text (#102).
-
-
-# duckplyr 1.2.1.9907 (2026-07-28)
 
 - Ci: Run all smoke-test checks even when one fails (#97).
 
@@ -128,69 +113,12 @@
 - Ci: Link the responsible workflow run in snapshot update PRs (#96).
 
 
-# duckplyr 1.2.1.9906 (2026-07-27)
 
-## Continuous integration
-
-- Fix continuous benchmark (touchstone) workflow (@krlmlr, #938).
-
-
-# duckplyr 1.2.1.9905 (2026-07-25)
-
-## Continuous integration
-
-- Lock down `format-suggest` egress (audit → block).
-
-
-# duckplyr 1.2.1.9904 (2026-07-24)
-
-## Bug fixes
-
-### ci
-
-- Emit empty package matrix when there are no (rev)deps.
-
-## Chore
-
-- New `ext_install()`, use rfuns extension to implement equality (#83, #93).
-
-
-# duckplyr 1.2.1.9903 (2026-07-22)
-
-## Continuous integration
-
-- Run on Ubuntu 26.04.
-
-- Align workflows with template.
-
-
-# duckplyr 1.2.1.9902 (2026-07-02)
-
-## Chore
-
-- Auto-update from GitHub Actions (#932).
-
-
-# duckplyr 1.2.1.9901 (2026-06-21)
-
-## fledge
-
-- CRAN pre-release v1.2.1.9900 (#928).
-
-
-# duckplyr 1.2.1.9900 (2026-06-17)
+# duckplyr 1.2.2 (2026-10-22)
 
 ## Features
 
-- Enable `across()` translation for primitive functions such as `sum()` (#906, #907).
-
-## Compatibility
-
-- `as_tbl()` attaches finalizer to `lazy_query`, not `tbl`, for compatibility with dbplyr 2.6.0 (#919).
-
-## Documentation
-
-- Update Plausible analytics snippet (@jeroenjanssens, #910).
+- duckplyr now works with duckdb 2.0.0. It refuses to load with duckdb 3.0.0 or later and asks to upgrade duckplyr instead.
 
 
 # duckplyr 1.2.1 (2026-03-09)

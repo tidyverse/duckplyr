@@ -1,3 +1,5 @@
+# Excluded via .Rbuildignore while constructive is not on CRAN.
+# The methods are registered on load instead of in NAMESPACE.
 #' Constructive options for class 'relational_relexpr_constant'
 #'
 #' These options will be used on objects of class 'relational_relexpr_constant'.
@@ -39,8 +41,6 @@ is_corrupted_relational_relexpr_constant <- function(x) {
   FALSE
 }
 
-#' @export
-#' @method .cstr_construct.relational_relexpr_constant relexpr_constant
 .cstr_construct.relational_relexpr_constant.relexpr_constant <- function(
   x,
   ...
@@ -63,5 +63,10 @@ on_load({
   vctrs::s3_register(
     "constructive::.cstr_construct",
     "relational_relexpr_constant"
+  )
+  registerS3method(
+    ".cstr_construct.relational_relexpr_constant",
+    "relexpr_constant",
+    .cstr_construct.relational_relexpr_constant.relexpr_constant
   )
 })

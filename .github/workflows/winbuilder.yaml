@@ -1,0 +1,134 @@
+# Adapted from r-dbi/RSQLite's .github/workflows/winbuilder.yaml at c110c21e2 (branch claude/rsqlite-cran-release).
+# Copied from duckdb/duckdb-r's .github/workflows/winbuilder.yaml at 86ac17f6b.
+# Derived from igraph/rigraph's .github/workflows/winbuilder.yaml at fe3538b925.
+#
+# Uploads the source package to win-builder (https://win-builder.r-project.org),
+# which checks it on Windows and mails the result to the maintainer in DESCRIPTION
+# 15 to 30 minutes later.
+# This is devtools::check_win_devel(), with the tarball built in CI instead of locally.
+#
+# Every upload is started by hand, because each one sends an email:
+# `gh workflow run winbuilder.yaml --repo tidyverse/duckplyr --ref <branch> [-f queues="R-devel R-release"]`.
+# The `report` job posts what was uploaded to the open release pull request;
+# win-builder's verdict arrives only by e-mail.
+on:
+  workflow_dispatch:
+    inputs:
+      queues:
+        description: "Space-separated win-builder queues: R-devel, R-release, R-oldrelease"
+        type: string
+        default: "R-devel"
+
+name: win-builder
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  winbuilder:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 60
+
+    name: "Upload to win-builder"
+
+    outputs:
+      tarball: ${{ steps.build.outputs.tarball }}
+
+    env:
+      QUEUES: ${{ inputs.queues || 'R-devel' }}
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Check the queue names
+        run: |
+          for queue in $QUEUES; do
+            case "$queue" in
+              R-devel|R-release|R-oldrelease) ;;
+              *) echo "::error::Unknown win-builder queue: $queue"; exit 1 ;;
+            esac
+          done
+        shell: bash
+
+      - name: Run the repository-specific before-install steps
+        uses: ./.github/workflows/custom/before-install
+        if: hashFiles('.github/workflows/custom/before-install/action.yml') != ''
+
+      - name: Install R and the package dependencies
+        uses: cynkra/cynkratemplate/.github/actions/install@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          cache-version: winbuilder-1
+          needs: build
+
+      - name: Run the repository-specific after-install steps
+        uses: ./.github/workflows/custom/after-install
+        if: hashFiles('.github/workflows/custom/after-install/action.yml') != ''
+
+      - name: Build the source package
+        id: build
+        run: |
+          R CMD build .
+          tarball="$(ls -1 -- *.tar.gz)"
+          echo "tarball=$tarball" | tee -a "$GITHUB_OUTPUT"
+        shell: bash
+
+      - name: Upload the source package to win-builder
+        env:
+          TARBALL: ${{ steps.build.outputs.tarball }}
+        run: |
+          for queue in $QUEUES; do
+            curl --fail --silent --show-error --retry 3 -T "$TARBALL" "ftp://win-builder.r-project.org/$queue/"
+            echo "Uploaded $TARBALL to $queue."
+          done
+          {
+            echo "### win-builder"
+            echo
+            echo "Uploaded \`$TARBALL\` to: $QUEUES."
+            echo "The results are mailed to the maintainer in \`DESCRIPTION\`."
+          } >> "$GITHUB_STEP_SUMMARY"
+        shell: bash
+
+      - name: Keep the uploaded source package
+        uses: actions/upload-artifact@v6
+        with:
+          name: winbuilder-source-package
+          path: ${{ steps.build.outputs.tarball }}
+
+  # Posts the result to the open release pull request, one comment per workflow, updated in place.
+  report:
+    needs: [winbuilder]
+    if: always()
+
+    runs-on: ubuntu-26.04
+    timeout-minutes: 5
+
+    name: "Report to the release pull request"
+
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          sparse-checkout: .github/actions
+
+      - name: Post or update the comment
+        uses: ./.github/actions/release-report
+        with:
+          key: winbuilder
+          title: "win-builder upload"
+          results: |
+            upload=${{ needs.winbuilder.result }}
+          details: |
+            Uploaded `${{ needs.winbuilder.outputs.tarball }}` to: ${{ inputs.queues }}.
+            win-builder mails its results to the maintainer in `DESCRIPTION`, 15 to 30 minutes after the upload.
+          token: ${{ github.token }}
