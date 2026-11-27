@@ -36,6 +36,12 @@
 
 ## Chore
 
+- Auto-update from GitHub Actions (#964).
+
+- Auto-update from GitHub Actions.
+
+  Run: https://github.com/krlmlr/duckplyr/actions/runs/36367062553
+
 - `pkg_review()` (#150).
 
 - Remove Copilot setup steps.
@@ -49,6 +55,8 @@
 - Auto-update from GitHub Actions (#932).
 
 ## Continuous integration
+
+- Run coverage checks after pkgdown push.
 
 - Survive an archived CRAN package, cache revdep compiles (@krlmlr, #952).
 
