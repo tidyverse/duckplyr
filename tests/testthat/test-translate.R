@@ -129,6 +129,22 @@ test_that("aggregation primitives", {
   })
 })
 
+test_that("anyNA translation", {
+  df <- data.frame(a = 1L, b = TRUE)
+
+  expect_snapshot({
+    rel_translate(expr(anyNA(a)), df)
+  })
+
+  expect_snapshot(error = TRUE, {
+    rel_translate(expr(anyNA(a)), df, need_window = TRUE)
+  })
+
+  expect_snapshot(error = TRUE, {
+    rel_translate(expr(anyNA(a, recursive = TRUE)), df)
+  })
+})
+
 test_that("aggregation primitives with na.rm and window functions", {
   df <- data.frame(a = 1L, b = TRUE)
 
