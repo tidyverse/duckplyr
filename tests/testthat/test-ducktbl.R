@@ -12,12 +12,12 @@ test_that('.prudence = "stingy" forbids materialization', {
   expect_error(length(tbl$a))
 })
 
-test_that('.prudence = c(rows = ) forbids materialization', {
+test_that(".prudence = c(rows = ) forbids materialization", {
   tbl <- duckdb_tibble(a = 1:10, .prudence = c(rows = 5))
   expect_error(length(tbl$a))
 })
 
-test_that('.prudence = c(cells = ) forbids materialization', {
+test_that(".prudence = c(cells = ) forbids materialization", {
   tbl <- duckdb_tibble(a = 1:10, b = 1, .prudence = c(cells = 10))
   expect_error(length(tbl$a))
 })
@@ -45,9 +45,11 @@ test_that("as_duckdb_tibble() and readr data", {
   path <- withr::local_tempfile(fileext = ".csv")
   readr::write_csv(data.frame(a = 1), path)
 
-  expect_snapshot(error = TRUE, {
-    as_duckdb_tibble(readr::read_csv(path, show_col_types = FALSE))
-  })
+  expect_snapshot(
+    out <- as_duckdb_tibble(readr::read_csv(path, show_col_types = FALSE))
+  )
+
+  expect_equal(out, duckdb_tibble(a = 1))
 
   expect_equal(
     as_duckdb_tibble(as_tibble(readr::read_csv(path, show_col_types = FALSE))),
