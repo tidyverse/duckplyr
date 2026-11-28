@@ -21,13 +21,13 @@
     Output
       List of 4
        $ name     : chr "+"
-       $ args     :List of 2
-        ..$ :List of 3
+       $ args     : List of 2
+        ..$ : List of 3
         .. ..$ name : chr "column"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-        ..$ :List of 2
+        ..$ : List of 2
         .. ..$ val  : num 42
         .. ..$ alias: chr "fortytwo"
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_constant" "relational_relexpr"

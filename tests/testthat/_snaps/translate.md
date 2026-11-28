@@ -21,13 +21,13 @@
     Output
       List of 2
        $ cmp_op: chr ">"
-       $ exprs :List of 2
-        ..$ :List of 3
+       $ exprs : List of 2
+        ..$ : List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-        ..$ :List of 2
+        ..$ : List of 2
         .. ..$ val  : int 123
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_constant" "relational_relexpr"
@@ -42,13 +42,13 @@
     Output
       List of 2
        $ cmp_op: chr ">"
-       $ exprs :List of 2
-        ..$ :List of 3
+       $ exprs : List of 2
+        ..$ : List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-        ..$ :List of 2
+        ..$ : List of 2
         .. ..$ val  : num 123
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_constant" "relational_relexpr"
@@ -63,13 +63,13 @@
     Output
       List of 2
        $ cmp_op: chr "=="
-       $ exprs :List of 2
-        ..$ :List of 3
+       $ exprs : List of 2
+        ..$ : List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-        ..$ :List of 3
+        ..$ : List of 3
         .. ..$ name : chr "b"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
@@ -85,13 +85,13 @@
     Output
       List of 2
        $ cmp_op: chr "<="
-       $ exprs :List of 2
-        ..$ :List of 3
+       $ exprs : List of 2
+        ..$ : List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-        ..$ :List of 3
+        ..$ : List of 3
         .. ..$ name : chr "c"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
@@ -107,8 +107,8 @@
     Output
       List of 4
        $ name     : chr "___sum_na"
-       $ args     :List of 1
-        ..$ :List of 3
+       $ args     : List of 1
+        ..$ : List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
@@ -134,8 +134,8 @@
     Output
       List of 4
        $ name     : chr "sum"
-       $ args     :List of 1
-        ..$ :List of 3
+       $ args     : List of 1
+        ..$ : List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
@@ -153,8 +153,8 @@
     Output
       List of 4
        $ name     : chr "___sum_na"
-       $ args     :List of 1
-        ..$ :List of 3
+       $ args     : List of 1
+        ..$ : List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
@@ -197,8 +197,8 @@
     Output
       List of 4
        $ name     : chr "___min_na"
-       $ args     :List of 1
-        ..$ :List of 3
+       $ args     : List of 1
+        ..$ : List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
@@ -216,8 +216,8 @@
     Output
       List of 4
        $ name     : chr "min"
-       $ args     :List of 1
-        ..$ :List of 3
+       $ args     : List of 1
+        ..$ : List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
@@ -235,8 +235,8 @@
     Output
       List of 4
        $ name     : chr "___max_na"
-       $ args     :List of 1
-        ..$ :List of 3
+       $ args     : List of 1
+        ..$ : List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
@@ -254,8 +254,8 @@
     Output
       List of 4
        $ name     : chr "max"
-       $ args     :List of 1
-        ..$ :List of 3
+       $ args     : List of 1
+        ..$ : List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
@@ -273,8 +273,8 @@
     Output
       List of 4
        $ name     : chr "___any_na"
-       $ args     :List of 1
-        ..$ :List of 3
+       $ args     : List of 1
+        ..$ : List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
@@ -292,8 +292,8 @@
     Output
       List of 4
        $ name     : chr "any"
-       $ args     :List of 1
-        ..$ :List of 3
+       $ args     : List of 1
+        ..$ : List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
@@ -311,8 +311,8 @@
     Output
       List of 4
        $ name     : chr "___all_na"
-       $ args     :List of 1
-        ..$ :List of 3
+       $ args     : List of 1
+        ..$ : List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
@@ -330,8 +330,8 @@
     Output
       List of 4
        $ name     : chr "all"
-       $ args     :List of 1
-        ..$ :List of 3
+       $ args     : List of 1
+        ..$ : List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
@@ -349,8 +349,8 @@
     Output
       List of 4
        $ name     : chr "___mean_na"
-       $ args     :List of 1
-        ..$ x:List of 3
+       $ args     : List of 1
+        ..$ x: List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
@@ -376,8 +376,8 @@
     Output
       List of 4
        $ name     : chr "mean"
-       $ args     :List of 1
-        ..$ x:List of 3
+       $ args     : List of 1
+        ..$ x: List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
@@ -395,8 +395,8 @@
     Output
       List of 4
        $ name     : chr "___mean_na"
-       $ args     :List of 1
-        ..$ x:List of 3
+       $ args     : List of 1
+        ..$ x: List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
@@ -439,10 +439,10 @@
       rel_translate(expr(sum(a, na.rm = TRUE)), df, need_window = TRUE)
     Output
       List of 6
-       $ expr        :List of 4
+       $ expr        : List of 4
         ..$ name     : chr "sum"
-        ..$ args     :List of 1
-        .. ..$ :List of 3
+        ..$ args     : List of 1
+        .. ..$ : List of 3
         .. .. ..$ name : chr "a"
         .. .. ..$ rel  : NULL
         .. .. ..$ alias: NULL
@@ -465,10 +465,10 @@
       rel_translate(expr(min(a, na.rm = TRUE)), df, need_window = TRUE)
     Output
       List of 6
-       $ expr        :List of 4
+       $ expr        : List of 4
         ..$ name     : chr "min"
-        ..$ args     :List of 1
-        .. ..$ :List of 3
+        ..$ args     : List of 1
+        .. ..$ : List of 3
         .. .. ..$ name : chr "a"
         .. .. ..$ rel  : NULL
         .. .. ..$ alias: NULL
@@ -491,10 +491,10 @@
       rel_translate(expr(max(a, na.rm = TRUE)), df, need_window = TRUE)
     Output
       List of 6
-       $ expr        :List of 4
+       $ expr        : List of 4
         ..$ name     : chr "max"
-        ..$ args     :List of 1
-        .. ..$ :List of 3
+        ..$ args     : List of 1
+        .. ..$ : List of 3
         .. .. ..$ name : chr "a"
         .. .. ..$ rel  : NULL
         .. .. ..$ alias: NULL
@@ -517,10 +517,10 @@
       rel_translate(expr(mean(a, na.rm = TRUE)), df, need_window = TRUE)
     Output
       List of 6
-       $ expr        :List of 4
+       $ expr        : List of 4
         ..$ name     : chr "mean"
-        ..$ args     :List of 1
-        .. ..$ x:List of 3
+        ..$ args     : List of 1
+        .. ..$ x: List of 3
         .. .. ..$ name : chr "a"
         .. .. ..$ rel  : NULL
         .. .. ..$ alias: NULL
@@ -564,9 +564,9 @@
     Output
       List of 4
        $ name     : chr "r_base::as.integer"
-       $ args     :List of 1
-        ..$ :List of 6
-        .. ..$ expr        :List of 4
+       $ args     : List of 1
+        ..$ : List of 6
+        .. ..$ expr        : List of 4
         .. .. ..$ name     : chr "count_star"
         .. .. ..$ args     : list()
         .. .. ..$ order_bys: NULL
@@ -592,16 +592,16 @@
     Output
       List of 4
        $ name     : chr "r_base::as.integer"
-       $ args     :List of 1
-        ..$ :List of 6
-        .. ..$ expr        :List of 4
+       $ args     : List of 1
+        ..$ : List of 6
+        .. ..$ expr        : List of 4
         .. .. ..$ name     : chr "count_star"
         .. .. ..$ args     : list()
         .. .. ..$ order_bys: NULL
         .. .. ..$ alias    : NULL
         .. .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_function" "relational_relexpr"
-        .. ..$ partitions  :List of 1
-        .. .. ..$ :List of 3
+        .. ..$ partitions  : List of 1
+        .. .. ..$ : List of 3
         .. .. .. ..$ name : chr "b"
         .. .. .. ..$ rel  : NULL
         .. .. .. ..$ alias: NULL
@@ -743,13 +743,13 @@
     Output
       List of 4
        $ name     : chr "___coalesce"
-       $ args     :List of 2
-        ..$ :List of 3
+       $ args     : List of 2
+        ..$ : List of 3
         .. ..$ name : chr "a"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
         .. ..- attr(*, "class")= chr [1:2] "relational_relexpr_reference" "relational_relexpr"
-        ..$ :List of 3
+        ..$ : List of 3
         .. ..$ name : chr "b"
         .. ..$ rel  : NULL
         .. ..$ alias: NULL
