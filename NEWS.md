@@ -1,5 +1,168 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# duckplyr 1.2.2.9001 (2026-11-28)
+
+## Bug fixes
+
+- Correct wording in instructions for enabling fallback logging (#141).
+
+- Improve and test fallback telemetry (#115).
+
+### ci
+
+- Backport kit fixes from `rigraph`, `duckdb-r` and `dm`.
+
+- Forbid reuse of new columns created in `summarize()` (#72, #106).
+
+### ci
+
+- Emit empty package matrix when there are no (rev)deps.
+
+## Features
+
+- Prefer `cli::cli_abort()` over `stop()` or `rlang::abort()` (#114).
+
+### ci
+
+- Align the `revdep2`, `revdep4` and `revdepx` subsystems with `rigraph`.
+
+- Enable `across()` translation for primitive functions such as `sum()` (#906, #907).
+
+## Chore
+
+- Remove `dplyr_reconstruct()` method (#48).
+
+- Auto-update from GitHub Actions.
+
+  Run: https://github.com/krlmlr/duckplyr/actions/runs/45921665875
+
+- Auto-update from GitHub Actions.
+
+  Run: https://github.com/krlmlr/duckplyr/actions/runs/39884708841
+
+- Auto-update from GitHub Actions.
+
+  Run: https://github.com/krlmlr/duckplyr/actions/runs/36367062553
+
+- `pkg_review()` (#150).
+
+- Remove Copilot setup steps.
+
+- Implement almost all dplyr methods (#105).
+
+- Auto-update from GitHub Actions (#943).
+
+- New `ext_install()`, use rfuns extension to implement equality (#83, #93).
+
+- Auto-update from GitHub Actions (#932).
+
+- Add ccache to `.gitignore` and `.Rbuildignore`.
+
+- Auto-update from GitHub Actions (#913).
+
+- Auto-update from GitHub Actions (#902).
+
+- Auto-update from GitHub Actions (#900).
+
+## Continuous integration
+
+- Run coverage checks after pkgdown push.
+
+- Survive an archived CRAN package, cache revdep compiles (@krlmlr, #952).
+
+- Fix Windows ARM build.
+
+- Wrap the commit status update into an action.
+
+- Route ccache through one-word compiler wrappers on Unix.
+
+- Name every step and restore the log entry `setup-pandoc` swallows.
+
+- Add sharded `revdep2` workflow.
+
+- Remove unused pr-commands workflow.
+
+- Fix continuous benchmark (touchstone) workflow (@krlmlr, #938).
+
+- Lock down `format-suggest` egress (audit → block).
+
+- Run on Ubuntu 26.04.
+
+- Align workflows with template.
+
+- Update ccache-action reference.
+
+- Bump action version.
+
+- Create snapshot update PR against correct branch.
+
+- Clarify rationale for not deploying on schedule.
+
+- Only run fledge on pushes to main.
+
+- Tweak fledge workflow and ccache action.
+
+- Cosmetics.
+
+- Bump action versions.
+
+- Install clang-format-21.
+
+- Align fledge workflow.
+
+- Harmonize.
+
+- Ignore failing test with duckdb 1.5.0.
+
+## Documentation
+
+- Adopt the shared README rendering configuration (@krlmlr, #955).
+
+- New `fallback_sitrep()` and related functionality for collecting telemetry data (#102, #111).
+
+- Update Plausible analytics snippet (@jeroenjanssens, #910).
+
+## Testing
+
+- Test that `vec_ptype()` does not materialize (#149).
+
+- Scrub volatile factor hashes from snapshots for dev rlang (@krlmlr, #929).
+
+## fledge
+
+- CRAN pre-release v1.2.1.9900 (#928).
+
+- CRAN release v1.2.1 (#898).
+
+## compat
+
+- `as_tbl()` attach finalizer to `lazy_query`, not `tbl`, for compatibility with dbplyr 2.6.0 (#919).
+
+## Uncategorized
+
+- Merge pull request #41 from krlmlr/claude/release-1.2.2.
+
+- Feat(ci): Run R-hub checks on every `cran-*` push, through `rhub-setup` and `rhub-check` actions (cynkra/cynkratemplate#145).
+
+- Feat(ci): Report coverage on pull requests from this repository (cynkra/cynkratemplate#146).
+
+- Ci: Bound every job with `timeout-minutes` (cynkra/cynkratemplate#144).
+
+- Fix(ci): Collect the fleet's workflow fixes after the move to central actions (cynkra/cynkratemplate#139).
+
+- Chore: Drop the last traces of `allow_materialization` from `prudence_parse()`.
+
+- Ci: Pass workflow context through the environment, not into script text (#102).
+
+- Ci: Run all smoke-test checks even when one fails (#97).
+
+- Ci: Apply matrix `env` vars in the workflow, not in custom actions (#95).
+
+- Ci: Link the responsible workflow run in snapshot update PRs (#96).
+
+- Ci: Unify fledge.yaml across cynkratemplate and fledge (#86).
+
+
 # duckplyr 1.2.2.9000 (2026-10-25)
 
 ## fledge
